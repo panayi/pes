@@ -1,0 +1,252 @@
+[
+  {
+    "name": "classes",
+    "categories": [
+      {
+        "name": "language_classes"
+      },
+      {
+        "name": "computers_multimedia_classes"
+      },
+      {
+        "name": "music_classes"
+      },
+      {
+        "name": "dance_classes"
+      },
+      {
+        "name": "other_classes"
+      }
+    ]
+  },
+  {
+    "name": "community",
+    "categories": [
+      {
+        "name": "seminars_conferences"
+      },
+      {
+        "name": "community_activities"
+      },
+      {
+        "name": "events"
+      },
+      {
+        "name": "volunteers"
+      },
+      {
+        "name": "lost_and_found"
+      }
+    ]
+  },
+  {
+    "name": "for_sale",
+    "categories": [
+      {
+        "name": "home_appliances"
+      },
+      {
+        "name": "electronics"
+      },
+      {
+        "name": "home_and_garden"
+      },
+      {
+        "name": "hunting_stuff"
+      },
+      {
+        "name": "fishing_diving_stuff"
+      },
+      {
+        "name": "computing"
+      },
+      {
+        "name": "cell_phones"
+      },
+      {
+        "name": "cameras_and_accessories"
+      },
+      {
+        "name": "books"
+      },
+      {
+        "name": "musical_instruments"
+      },
+      {
+        "name": "jewelry_watches"
+      },
+      {
+        "name": "health_and_beauty"
+      },
+      {
+        "name": "clothing"
+      },
+      {
+        "name": "food"
+      },
+      {
+        "name": "toys_and_hobbies"
+      },
+      {
+        "name": "video_games"
+      },
+      {
+        "name": "sporting_goods"
+      },
+      {
+        "name": "antiques_collectibles"
+      },
+      {
+        "name": "everything_else"
+      }
+    ]
+  },
+  {
+    "name": "jobs",
+    "categories": [
+      {
+        "name": "education_teaching_jobs"
+      },
+      {
+        "name": "sales_jobs"
+      },
+      {
+        "name": "hotel_tourist_jobs"
+      },
+      {
+        "name": "customer_service_jobs"
+      },
+      {
+        "name": "marketing_administration_jobs"
+      },
+      {
+        "name": "advertising_public_relation_jobs"
+      },
+      {
+        "name": "accounting_finance_jobs"
+      },
+      {
+        "name": "restaurant_food_service_jobs"
+      },
+      {
+        "name": "construction_development_jobs"
+      },
+      {
+        "name": "internet_based_jobs"
+      },
+      {
+        "name": "engineering_architecture_jobs"
+      },
+      {
+        "name": "hairdresser_beauty_jobs"
+      },
+      {
+        "name": "manual_labor_jobs"
+      },
+      {
+        "name": "secretarial_jobs"
+      },
+      {
+        "name": "transportation_delivery_jobs"
+      },
+      {
+        "name": "other_jobs"
+      }
+    ]
+  },
+  {
+    "name": "personals",
+    "categories": [
+      {
+        "name": "men_looking_for_women"
+      },
+      {
+        "name": "women_looking_for_men"
+      },
+      {
+        "name": "men_looking_for_men"
+      },
+      {
+        "name": "women_looking_for_women"
+      },
+      {
+        "name": "astrology_medium"
+      },
+      {
+        "name": "massage"
+      }
+    ]
+  },
+  {
+    "name": "pets",
+    "categories": [
+      {
+        "name": "dogs"
+      },
+      {
+        "name": "cats"
+      },
+      {
+        "name": "fish"
+      },
+      {
+        "name": "birds"
+      },
+      {
+        "name": "horses"
+      },
+      {
+        "name": "reptiles"
+      },
+      {
+        "name": "other_pets"
+      }
+    ]
+  },
+  {
+    "name": "real_estate",
+    "categories": [
+      {
+        "name": "homes"
+      },
+      {
+        "name": "apartments"
+      },
+      {
+        "name": "land_plots"
+      },
+      {
+        "name": "offices_commercial_space"
+      },
+      {
+        "name": "looking_for_roommates"
+      }
+    ]
+  },
+  {
+    "name": "vehicles",
+    "categories": [
+      {
+        "name": "cars"
+      },
+      {
+        "name": "parts_and_accessories"
+      },
+      {
+        "name": "motorcycles"
+      },
+      {
+        "name": "boats"
+      },
+      {
+        "name": "trucks_commercial"
+      },
+      {
+        "name": "caravans"
+      },
+      {
+        "name": "other_vehicles"
+      }
+    ]
+  }
+]
