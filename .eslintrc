@@ -3,5 +3,9 @@
   "parser": "babel-eslint",
   "rules": {
     "react/jsx-filename-extension": "off"
+  },
+  "env": {
+    "browser": true,
+    "es6": true
   }
 }

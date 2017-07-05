@@ -13,6 +13,7 @@
     "re-base": "^3.0.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.10",
     "recompose": "^0.23.5",
     "semantic-ui-css": "^2.2.10",
