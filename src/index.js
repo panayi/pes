@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import registerServiceWorker from './registerServiceWorker';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
+import createStore from './@store/createStore';
 import App from './app';
+import registerServiceWorker from './registerServiceWorker';
+
+const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-underscore-dangle
 
 ReactDOM.render((
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <ConnectedRouter history={store.history}>
+      <App />
+    </ConnectedRouter>
+  </Provider>
 ), document.getElementById('root'));
 
 registerServiceWorker();

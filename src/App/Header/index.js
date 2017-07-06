@@ -18,6 +18,7 @@ export default () => (
       name="home"
       to="/"
       as={NavLink}
+      exact
     />
   </Menu>
 );
