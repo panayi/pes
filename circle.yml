@@ -1,0 +1,23 @@
+machine:
+  node:
+    version: 7.10.0
+
+dependencies:
+  cache_directories:
+    - ~/.yarn
+    - ~/.cache/yarn
+  override:
+    - yarn install --ignore-engines
+
+test:
+  override:
+    # - yarn test
+    # - yarn lint
+    # - yarn stylelint
+
+deployment:
+  dev:
+    branch: [master]
+    commands:
+      - npm install -g now
+      - now
