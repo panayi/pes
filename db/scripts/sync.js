@@ -60,6 +60,8 @@ const syncPosts = async () => {
 
   const ref = base.ref('posts');
   await ref.set(finalPosts);
+
+  console.log('Posts: synced');
 };
 
 const main = async () => {
