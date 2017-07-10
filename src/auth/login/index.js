@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form, Message, Grid } from 'semantic-ui-react';
 import { login, resetPassword } from '../auth';
 
 const setErrorMsg = error => ({
@@ -8,11 +9,20 @@ const setErrorMsg = error => ({
 export default class Login extends Component {
   state = {
     loginMessage: null,
+    email: '',
+    password: '',
+  }
+
+  handleChange = (e, { name, value }) => {
+    this.setState({
+      [name]: value,
+    });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    login(this.email.value, this.pw.value)
+    const { email, password } = this.state;
+    login(email, password)
       .catch(() => {
         this.setState(setErrorMsg('Invalid username/password.'));
       });
@@ -20,55 +30,59 @@ export default class Login extends Component {
 
   resetPassword = (e) => {
     e.stopPropagation();
-    resetPassword(this.email.value)
-      .then(() => this.setState(setErrorMsg(`Password reset email sent to ${this.email.value}.`)))
+    resetPassword(this.state.email)
+      .then(() => this.setState(setErrorMsg(`Password reset email sent to ${this.state.email}.`)))
       .catch(() => this.setState(setErrorMsg('Email address not found.')));
   }
 
   render() {
+    const { email, password, loginMessage } = this.state;
+
     return (
-      <div className="col-sm-6 col-sm-offset-3">
-        <h1>Login</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="loginEmail">Email</label>
-            <input
-              id="loginEmail"
-              className="form-control"
-              ref={(email) => { this.email = email; }}
-              placeholder="Email"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="loginPassword">Password</label>
-            <input
-              type="password"
-              id="loginPassword"
-              className="form-control"
-              placeholder="Password"
-              ref={(pw) => { this.pw = pw; }}
-            />
-          </div>
-          {
-            this.state.loginMessage &&
-            <div className="alert alert-danger" role="alert">
-              <span
-                className="glyphicon glyphicon-exclamation-sign"
-                aria-hidden="true"
+      <Grid
+        verticalAlign="middle"
+        centered
+        columns={1}
+        textAlign="center"
+        relaxed
+        className="full-height"
+      >
+        <Grid.Row>
+          <Grid.Column tablet={10} mobile={16} computer={6}>
+            <Form
+              onSubmit={this.handleSubmit}
+              error={loginMessage}
+            >
+              {loginMessage &&
+                <Message
+                  error
+                  content={loginMessage}
+                />}
+              <Form.Input
+                placeholder="Email"
+                name="email"
+                label="Email"
+                value={email}
+                onChange={this.handleChange}
               />
-              <span className="sr-only">Error:</span>{' '}
-              {this.state.loginMessage}{' '}
-              <button
-                onClick={this.resetPassword}
-                className="alert-link"
-              >
-                Forgot Password?
-              </button>
-            </div>
-          }
-          <button type="submit" className="btn btn-primary">Login</button>
-        </form>
-      </div>
+              <Form.Input
+                placeholder="Password"
+                type="password"
+                name="password"
+                label="Password"
+                value={password}
+                onChange={this.handleChange}
+              />
+              <Form.Button
+                content="Login"
+                icon="sign in"
+                floated="right"
+              />
+            </Form>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+
     );
   }
 }

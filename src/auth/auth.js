@@ -1,4 +1,4 @@
-import base, { app } from '../api/rebase';
+import base, { app } from '../lib/api/rebase';
 
 const auth = app.auth();
 

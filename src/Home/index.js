@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import R from 'ramda';
 import { Container, Grid, Menu, Image, Card } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
-import base from '../api/rebase';
+import base from '../lib/api/rebase';
 
 export default class Home extends Component {
   state = {
