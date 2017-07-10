@@ -33,16 +33,22 @@
     "sync": "babel-node ./db/scripts/sync",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
+    "lint": "./node_modules/eslint/bin/eslint.js ./ --cache --ext .js,.es6,.jsx --ignore-pattern '*.spec.js'",
     "stylelint": "./node_modules/stylelint/bin/stylelint.js --config .stylelintrc {'**/*.scss','**/*.css'}",
     "generate": "./node_modules/redux-cli/bin/redux.js generate"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "eslint-config-airbnb": "^15.0.2",
     "redux-cli": "^1.9.0",
     "stylelint": "^7.12.0",
     "stylelint-config-standard": "^16.0.0"
-  }
+  },
+  "pre-push": [
+    "lint",
+    "stylelint"
+  ]
 }
