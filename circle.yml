@@ -22,5 +22,5 @@ deployment:
   dev:
     branch: [master]
     commands:
-      - now -t ${NOW_SH_TOKEN}
+      - now --public -t ${NOW_SH_TOKEN}
       - now -t ${NOW_SH_TOKEN} alias pesposa-dev
