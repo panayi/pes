@@ -8,6 +8,8 @@ dependencies:
     - ~/.cache/yarn
   override:
     - yarn install --ignore-engines
+  pre:
+    - yarn global add now
 
 test:
   override:
@@ -20,5 +22,5 @@ deployment:
   dev:
     branch: [master]
     commands:
-      - npm install -g now
-      - now
+      - now -t ${NOW_SH_TOKEN}
+      - now -t ${NOW_SH_TOKEN} alias pesposa-dev
