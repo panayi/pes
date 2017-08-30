@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
-import { Form, Message, Grid } from 'semantic-ui-react';
+import { Flex, Box, Input, Button } from 'rebass';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 
@@ -22,12 +22,6 @@ export class Login extends Component {
     password: '',
   }
 
-  handleChange = (e, { name, value }) => {
-    this.setState({
-      [name]: value,
-    });
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
@@ -45,52 +39,40 @@ export class Login extends Component {
   }
 
   render() {
-    const { email, password, loginMessage } = this.state;
+    const { email, password } = this.state;
 
     return (
-      <Grid
-        verticalAlign="middle"
-        centered
-        columns={1}
-        textAlign="center"
-        relaxed
-        className="full-height"
+      <Flex
+        align="center"
+        justify="center"
+        style={{ height: '100vh' }}
       >
-        <Grid.Row>
-          <Grid.Column tablet={10} mobile={16} computer={6}>
-            <Form
-              onSubmit={this.handleSubmit}
-              error={loginMessage}
+        <Box>
+          <form onSubmit={this.handleSubmit}>
+            <Input
+              placeholder="Email"
+              name="email"
+              label="Email"
+              value={email}
+              onChange={e => this.setState({ email: e.target.value })}
+            />
+            <Input
+              placeholder="Password"
+              type="password"
+              name="password"
+              label="Password"
+              value={password}
+              onChange={e => this.setState({ password: e.target.value })}
+            />
+            <Button
+              icon="sign in"
+              floated="right"
             >
-              {loginMessage &&
-                <Message
-                  error
-                  content={loginMessage}
-                />}
-              <Form.Input
-                placeholder="Email"
-                name="email"
-                label="Email"
-                value={email}
-                onChange={this.handleChange}
-              />
-              <Form.Input
-                placeholder="Password"
-                type="password"
-                name="password"
-                label="Password"
-                value={password}
-                onChange={this.handleChange}
-              />
-              <Form.Button
-                content="Login"
-                icon="sign in"
-                floated="right"
-              />
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+              Login
+            </Button>
+          </form>
+        </Box>
+      </Flex>
     );
   }
 }

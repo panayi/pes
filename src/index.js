@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { Provider as RebassProvider } from 'rebass';
 import { ConnectedRouter } from 'react-router-redux';
 import createStore from './lib/store/createStore';
-import App from './app';
+import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -11,9 +12,11 @@ const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-u
 
 ReactDOM.render((
   <Provider store={store}>
-    <ConnectedRouter history={store.history}>
-      <App />
-    </ConnectedRouter>
+    <RebassProvider>
+      <ConnectedRouter history={store.history}>
+        <App />
+      </ConnectedRouter>
+    </RebassProvider>
   </Provider>
 ), document.getElementById('root'));
 

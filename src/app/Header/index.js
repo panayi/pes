@@ -1,24 +1,22 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
-import logo from './logo.svg';
+import { Toolbar, NavLink as RebassNavLink } from 'rebass';
 
 export default () => (
-  <Menu
-    fixed="top"
-    inverted
-  >
-    <Menu.Item>
-      <img
-        src={logo}
-        alt="logo"
-      />
-    </Menu.Item>
-    <Menu.Item
+  <Toolbar>
+    <RebassNavLink>
+      Pesposa
+    </RebassNavLink>
+    <RebassNavLink
       name="home"
       to="/"
-      as={NavLink}
+      is={NavLink}
       exact
-    />
-  </Menu>
+    >
+      Home
+    </RebassNavLink>
+    <RebassNavLink ml="auto">
+      Login
+    </RebassNavLink>
+  </Toolbar>
 );
