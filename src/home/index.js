@@ -1,30 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import R from 'ramda';
 import { Container, Grid, Menu, Image, Card } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { firebaseConnect } from 'react-redux-firebase';
 import 'semantic-ui-css/semantic.min.css';
-import base from '../lib/api/rebase';
 
-export default class Home extends Component {
-  state = {
+export class Home extends Component {
+  static propTypes = {
+    categories: PropTypes.arrayOf(PropTypes.shape({})),
+    posts: PropTypes.arrayOf(PropTypes.shape({})),
+  };
+
+  static defaultProps = {
     categories: [],
     posts: [],
-  }
-
-  componentWillMount() {
-    base.bindToState('posts', {
-      context: this,
-      state: 'posts',
-      asArray: true,
-    });
-    base.bindToState('categories', {
-      context: this,
-      state: 'categories',
-      asArray: true,
-    });
-  }
+  };
 
   render() {
-    const { categories, posts } = this.state;
+    const { categories, posts } = this.props;
 
     return (
       <Container fluid style={{ marginTop: '7em' }}>
@@ -72,3 +66,14 @@ export default class Home extends Component {
     );
   }
 }
+
+export default R.compose(
+  firebaseConnect([
+    'categories',
+    'posts',
+  ]),
+  connect(state => ({
+    categories: state.firebase.data.categories,
+    posts: state.firebase.data.posts,
+  })),
+)(Home);

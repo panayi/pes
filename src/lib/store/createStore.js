@@ -1,12 +1,22 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
-import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
+import { routerMiddleware } from 'react-router-redux';
+import { reactReduxFirebase } from 'react-redux-firebase';
+import * as firebase from 'firebase';
 import makeRootReducer from './reducers';
+import firebaseConfig from './firebase_config';
 
 export default (initialState = {}) => {
   // Create a history of your choosing (we're using a browser history in this case)
   const history = createHistory();
+
+  const reduxFirebaseConfig = {
+    userProfile: 'users',
+  };
+
+  // initialize firebase instance
+  firebase.initializeApp(firebaseConfig);
 
   // Middleware Configuration
   const middleware = [
@@ -31,6 +41,7 @@ export default (initialState = {}) => {
     initialState,
     composeEnhancers(
       applyMiddleware(...middleware),
+      reactReduxFirebase(firebase, reduxFirebaseConfig),
       ...enhancers,
     ),
   );

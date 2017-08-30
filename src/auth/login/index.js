@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import R from 'ramda';
 import { Form, Message, Grid } from 'semantic-ui-react';
-import { login, resetPassword } from '../auth';
+import { connect } from 'react-redux';
+import { firebaseConnect } from 'react-redux-firebase';
 
-const setErrorMsg = error => ({
-  loginMessage: error,
-});
+export class Login extends Component {
+  static propTypes = {
+    firebase: PropTypes.shape({
+      login: PropTypes.func.isRequired,
+    }).isRequired,
+    authError: PropTypes.string,
+  };
 
-export default class Login extends Component {
+  static defaultProps = {
+    authError: '',
+  };
+
   state = {
-    loginMessage: null,
     email: '',
     password: '',
   }
@@ -22,17 +31,17 @@ export default class Login extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { email, password } = this.state;
-    login(email, password)
-      .catch(() => {
-        this.setState(setErrorMsg('Invalid username/password.'));
+    return this.props.firebase
+      .login({ email, password })
+      .then(() => {
+        this.setState({ isLoading: false });
+        // this is where you can redirect to another route
+      })
+      .catch((error) => {
+        this.setState({ isLoading: false });
+        console.log('there was an error', error);
+        console.log('error prop:', this.props.authError); // thanks to connect
       });
-  }
-
-  resetPassword = (e) => {
-    e.stopPropagation();
-    resetPassword(this.state.email)
-      .then(() => this.setState(setErrorMsg(`Password reset email sent to ${this.state.email}.`)))
-      .catch(() => this.setState(setErrorMsg('Email address not found.')));
   }
 
   render() {
@@ -82,7 +91,13 @@ export default class Login extends Component {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-
     );
   }
 }
+
+export default R.compose(
+  firebaseConnect(),
+  connect(({ firebase: { authError } }) => ({
+    authError,
+  })),
+)(Login);

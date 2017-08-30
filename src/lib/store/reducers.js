@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
+import { firebaseStateReducer } from 'react-redux-firebase';
 
 export const makeRootReducer = asyncReducers =>
   combineReducers({
     router: routerReducer,
+    firebase: firebaseStateReducer,
     ...asyncReducers,
   });
 
