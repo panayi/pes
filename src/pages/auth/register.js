@@ -1,3 +1,5 @@
+export default () => null;
+
 // import React, { Component } from 'react';
 // import { register } from '../auth';
 //
