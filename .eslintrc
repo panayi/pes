@@ -3,7 +3,8 @@
   "parser": "babel-eslint",
   "rules": {
     "react/jsx-filename-extension": "off",
-    "import/no-named-as-default": "off"
+    "import/no-named-as-default": "off",
+    "import/prefer-default-export": "off"
   },
   "env": {
     "browser": true,

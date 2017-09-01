@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Button } from 'rebass';
+import { Input, Button, Text } from 'rebass';
+import { authErrorPropType } from '../../../lib/helpers/propTypes';
 
 export default class WithPassword extends Component {
   static propTypes = {
     login: PropTypes.func.isRequired,
     onSuccess: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
+    authError: authErrorPropType,
+  };
+
+  static defaultProps = {
+    authError: {},
   };
 
   state = {
@@ -27,6 +33,7 @@ export default class WithPassword extends Component {
 
   render() {
     const { email, password } = this.state;
+    const { authError } = this.props;
 
     return (
       <form onSubmit={this.handleSubmit}>
@@ -45,12 +52,12 @@ export default class WithPassword extends Component {
           value={password}
           onChange={e => this.setState({ password: e.target.value })}
         />
-        <Button
-          icon="sign in"
-          floated="right"
-        >
+        <Button icon="sign in">
           Login
         </Button>
+        <Text>
+          {authError && authError.message}
+        </Text>
       </form>
     );
   }

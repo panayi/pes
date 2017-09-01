@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import R from 'ramda';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
+import { authErrorPropType } from '../../lib/helpers/propTypes';
 import WithPassword from './WithPassword';
 import WithGoogle from './WithGoogle';
 
@@ -16,7 +17,7 @@ export class Login extends Component {
     firebase: PropTypes.shape({
       login: PropTypes.func.isRequired,
     }).isRequired,
-    authError: PropTypes.object,
+    authError: authErrorPropType,
     with: PropTypes.oneOf([
       'password',
       'google',
@@ -28,18 +29,13 @@ export class Login extends Component {
   };
 
   handleSuccess = () => {
-    this.setState({ isLoading: false });
-    // this is where you can redirect to another route
   }
 
-  handleError = (error) => {
-    this.setState({ isLoading: false });
-    console.log('there was an error', error);
-    console.log('error prop:', this.props.authError); // thanks to connect
+  handleError = () => {
   }
 
   render() {
-    const { with: withName, firebase } = this.props;
+    const { with: withName, firebase, authError } = this.props;
     const LoginComponent = loginComponentMap[withName];
 
     return (
@@ -47,6 +43,7 @@ export class Login extends Component {
         login={firebase.login}
         onSuccess={this.handleSuccess}
         onError={this.handleError}
+        authError={authError}
       />
     );
   }
