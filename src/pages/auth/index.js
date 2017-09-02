@@ -42,7 +42,7 @@ export default connectedRouterRedirect({
       R.not,
       isAuthenticatingSelector,
     ),
-    isNotAuthenticatedSelector
+    isNotAuthenticatedSelector,
   ),
   authenticatingSelector: isAuthenticatingSelector,
   AuthenticatingComponent: Loader,
