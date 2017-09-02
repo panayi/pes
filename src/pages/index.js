@@ -6,8 +6,8 @@ import Profile from './profile';
 
 export default () => (
   <Switch>
-    <Route exact path="/" component={Home} />
     <Route path="/auth" component={Auth} />
     <Route exact path="/profile" component={Profile} />
+    <Route path="/" component={Home} />
   </Switch>
 );

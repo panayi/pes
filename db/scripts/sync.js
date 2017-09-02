@@ -26,7 +26,7 @@ const mapPost = R.compose(
     'address',
     'body',
     'categoryChild',
-    'categoryParent',
+    'category',
     'email',
     'images',
     'oldId',
@@ -51,6 +51,7 @@ const mapPost = R.compose(
   computedProp('address', ({ level4, level3 }) => `${level4} ${level3}`),
   computedProp('oldId', R.prop('id')),
   computedProp('body', R.prop('description')),
+  computedProp('category', R.prop('categoryParent')),
 );
 
 const syncPosts = async () => {
