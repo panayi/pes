@@ -1,10 +1,17 @@
 {
-  "extends": "airbnb",
+  "extends": [
+    "plugin:flowtype/recommended",
+    "airbnb"
+  ],
   "parser": "babel-eslint",
+  "plugins": [
+    "flowtype"
+  ],
   "rules": {
     "react/jsx-filename-extension": "off",
     "import/no-named-as-default": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "react/prop-types": "off",
   },
   "env": {
     "browser": true,

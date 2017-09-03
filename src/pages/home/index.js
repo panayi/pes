@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import R from 'ramda';
 import { Route } from 'react-router-dom';
 import { Flex, Text } from 'rebass';
@@ -8,11 +7,12 @@ import { firebaseConnect } from 'react-redux-firebase';
 import Link from '../../lib/components/Link';
 import Posts from './posts';
 
-export class Home extends Component {
-  static propTypes = {
-    categories: PropTypes.arrayOf(PropTypes.shape({})),
-  };
+// @flow
+type Props = {
+  categories: Array<Object>,
+};
 
+export class Home extends Component<Props> {
   static defaultProps = {
     categories: [],
   };
