@@ -21,8 +21,14 @@ export class Home extends Component {
     const { categories } = this.props;
 
     return (
-      <Flex mt={4} ml={3}>
-        <Flex w="300px" column>
+      <Flex
+        mt={4}
+        ml={3}
+      >
+        <Flex
+          w="300px"
+          column
+        >
           <Text bold>Categories</Text>
           {R.map(({ name }) => (
             <Link
@@ -33,7 +39,10 @@ export class Home extends Component {
             </Link>
           ), categories)}
         </Flex>
-        <Route path="/:categoryName?" component={Posts} />
+        <Route
+          path="/:categoryName?"
+          component={Posts}
+        />
       </Flex>
     );
   }

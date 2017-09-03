@@ -13,3 +13,5 @@ const WithGoogle = ({ login }) => (
 WithGoogle.propTypes = {
   login: PropTypes.func.isRequired,
 };
+
+export default WithGoogle;

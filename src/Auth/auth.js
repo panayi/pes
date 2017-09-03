@@ -46,18 +46,23 @@ export const isAuthenticatingSelector = createSelector(
 );
 
 // isAuthenticatedSelector :: State -> Boolean
+// Equals to: !isAuthenticatingSelector && hasUidSelector
 export const isAuthenticatedSelector = createSelector(
   isAuthenticatingSelector,
   hasUidSelector,
-  R.or,
+  R.useWith(R.and, [
+    R.not,
+    R.identity,
+  ]),
 );
 
 // isNotAuthenticatedSelector :: State -> Boolean
+// Equals to: !isAuthenticatingSelector && !hasUidSelector
 export const isNotAuthenticatedSelector = createSelector(
   isAuthenticatingSelector,
   hasUidSelector,
-  R.useWith(R.or, [
-    R.identity,
+  R.useWith(R.and, [
+    R.not,
     R.not,
   ]),
 );
