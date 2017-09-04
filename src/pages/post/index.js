@@ -1,17 +1,22 @@
-import React, { Component } from 'react';
+/* @flow */
+import React from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import Page from '../../lib/components/Page';
 import NewPost from '../../Post/New';
 
-export default class Post extends Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
-  }
+type Props = {
+  onCreate: Function,
+};
 
-  render() {
-    return (
-      <Page>
-        <NewPost />
-      </Page>
-    );
-  }
-}
+const Post = (props: Props) => (
+  <Page>
+    <NewPost onCreate={() => props.onCreate()} />
+  </Page>
+);
+
+const actions = {
+  onCreate: () => push('/'),
+};
+
+export default connect(null, actions)(Post);

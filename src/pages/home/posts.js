@@ -21,9 +21,9 @@ export class Home extends Component<Props> {
     return (
       <Flex wrap>
         {
-          R.map(post => (
+          R.addIndex(R.map)((post, index) => (
             <Column
-              key={post.oldId + post.categoryChild}
+              key={index}
               w="300px"
             >
               <Card
