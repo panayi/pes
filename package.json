@@ -18,6 +18,7 @@
     "react-icons": "^2.2.5",
     "react-redux": "^5.0.5",
     "react-redux-firebase": "canary",
+    "react-redux-form": "^1.14.1",
     "react-router-dom": "^4.1.1",
     "react-router-redux": "5.0.0-alpha.6",
     "react-scripts": "1.0.10",

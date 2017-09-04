@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Flex, Button } from 'rebass';
 import Page from '../../lib/components/Page';
-import Input from '../../lib/components/Input';
+import NewPost from '../../Post/New';
 
 export default class Post extends Component {
   handleSubmit = (e) => {
@@ -11,19 +10,7 @@ export default class Post extends Component {
   render() {
     return (
       <Page>
-        <form onSubmit={this.handleSubmit}>
-          <Flex column>
-            <Input
-              id="title"
-              label="Title"
-            />
-            <Input
-              id="description"
-              label="Description"
-            />
-          </Flex>
-          <Button type="submit">Post</Button>
-        </form>
+        <NewPost />
       </Page>
     );
   }
