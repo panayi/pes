@@ -1,5 +1,6 @@
 /* @flow */
 import R from 'ramda';
+import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { withProps, defaultProps } from 'recompose';
 import Form from '../Form';
@@ -11,6 +12,9 @@ type Props = {
 };
 
 export default R.compose(
+  connect(state => ({
+    filesPath: `users/${state.firebase.auth.uid}/pendingPost`,
+  })),
   firebaseConnect([
     'props',
   ]),

@@ -2,6 +2,8 @@
 import React from 'react';
 import { Flex, Button, Input, Label } from 'rebass';
 import { Control, Form } from 'react-redux-form';
+import UploadFile from '../../lib/components/UploadFile';
+import { jpeg, png, gif } from '../../lib/constants/filetypes';
 
 export const initialState = {
   title: '',
@@ -10,6 +12,7 @@ export const initialState = {
 
 type Props = {
   onSubmit: Function,
+  filesPath: string,
 };
 
 export default (props: Props) => (
@@ -33,6 +36,10 @@ export default (props: Props) => (
         is={Control.text}
         model="forms.post.body"
         id="forms.post.body"
+      />
+      <UploadFile
+        filesPath={props.filesPath}
+        acceptedTypes={[jpeg, png, gif]}
       />
     </Flex>
     <Button type="submit">
