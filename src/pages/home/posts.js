@@ -1,16 +1,16 @@
+/* @flow */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import R from 'ramda';
 import { Flex, Column, Card, BackgroundImage, Subhead, Badge, Text, Small } from 'rebass';
 import { withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 
-export class Home extends Component {
-  static propTypes = {
-    posts: PropTypes.arrayOf(PropTypes.shape({})),
-  };
+type Props = {
+  posts: Array<Post>,
+};
 
+export class Home extends Component<Props> {
   static defaultProps = {
     posts: [],
   };
@@ -54,7 +54,7 @@ export class Home extends Component {
 }
 
 export default R.compose(
-  withProps(props => ({
+  withProps((props: Props) => ({
     categoryName: R.path(['match', 'params', 'categoryName'], props),
   })),
   firebaseConnect(({ categoryName }) => (
@@ -78,7 +78,7 @@ export default R.compose(
       // FIXME: For some reason when querying (i.e., when categoryName is defined),
       // it returns an object instead of an array. Below line ensures `posts` is an array.
       R.values,
-      R.pathOr([], ['firebase', 'data', 'posts']),
+      R.pathOr({}, ['firebase', 'data', 'posts']),
     )(state),
   })),
 )(Home);

@@ -1,3 +1,4 @@
+/* @flow */
 import React, { Component } from 'react';
 import R from 'ramda';
 import { Route } from 'react-router-dom';
@@ -7,9 +8,8 @@ import { firebaseConnect } from 'react-redux-firebase';
 import Link from '../../lib/components/Link';
 import Posts from './posts';
 
-// @flow
 type Props = {
-  categories: Array<Object>,
+  categories: Array<Category>,
 };
 
 export class Home extends Component<Props> {
@@ -52,7 +52,7 @@ export default R.compose(
   firebaseConnect([
     'categories',
   ]),
-  connect(state => ({
+  connect((state: Object): Object => ({
     categories: state.firebase.data.categories,
   })),
 )(Home);

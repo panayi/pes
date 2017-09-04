@@ -6,7 +6,6 @@ import Input from '../../lib/components/Input';
 export default class Post extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submit');
   }
 
   render() {

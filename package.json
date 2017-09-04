@@ -40,6 +40,7 @@
     "styleguide:build": "styleguidist build",
     "lint": "./node_modules/eslint/bin/eslint.js ./ --cache --ext .js,.es6,.jsx --ignore-pattern '*.spec.js'",
     "stylelint": "./node_modules/stylelint/bin/stylelint.js --config .stylelintrc {'**/*.scss','**/*.css'}",
+    "flow": "flow",
     "generate": "./node_modules/redux-cli/bin/redux.js generate"
   },
   "devDependencies": {
