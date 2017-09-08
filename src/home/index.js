@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import R from 'ramda';
 import { Flex, Box, Column, Card, BackgroundImage, Subhead, Badge, Text, Small } from 'rebass';
-import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import withCategories from '../Categories/withCategoriesHoc';
+import withPosts from '../Posts/withPostsHoc';
 
 export class Home extends Component {
   static propTypes = {
@@ -65,12 +65,6 @@ export class Home extends Component {
 }
 
 export default R.compose(
-  firebaseConnect([
-    'categories',
-    'posts',
-  ]),
-  connect(state => ({
-    categories: state.firebase.data.categories,
-    posts: state.firebase.data.posts,
-  })),
+  withCategories,
+  withPosts,
 )(Home);

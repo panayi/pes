@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import R from 'ramda';
 import { Route } from 'react-router-dom';
 import { Flex, Text } from 'rebass';
-import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
 import Link from '../../lib/components/Link';
+import withCategories from '../../Categories/withCategoriesHoc';
 import Posts from './posts';
 
 type Props = {
@@ -48,11 +47,4 @@ export class Home extends Component<Props> {
   }
 }
 
-export default R.compose(
-  firebaseConnect([
-    'categories',
-  ]),
-  connect((state: Object): Object => ({
-    categories: state.firebase.data.categories,
-  })),
-)(Home);
+export default withCategories(Home);

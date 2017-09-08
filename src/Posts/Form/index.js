@@ -3,27 +3,32 @@ import React from 'react';
 import R from 'ramda';
 import { Flex, Button, Input, Label } from 'rebass';
 import { Control, Form } from 'react-redux-form';
-import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
 import UploadFile from '../../lib/components/UploadFile';
-import { jpeg, png, gif } from '../../lib/constants/filetypes';
+import { jpeg, png, gif } from '../../lib/helpers/filetypes';
+import noop from '../../lib/helpers/noop';
+import withCategories from '../../Categories/withCategoriesHoc';
 
-export const initialState = {
+export const INITIAL_STATE = {
   title: '',
   body: '',
   category: '',
 };
 
+export const MODEL_KEY = 'post';
+export const MODEL_PATH = `forms.${MODEL_KEY}`;
+
 type Props = {
   onSubmit: Function,
+  onChange: ?Function,
   filesPath: string,
   categories: Array<Category>,
 };
 
 const PostForm = (props: Props) => (
   <Form
-    model="forms.post"
+    model={MODEL_PATH}
     onSubmit={props.onSubmit}
+    onChange={props.onChange}
   >
     <Flex column>
       <Label htmlFor="forms.post.title">
@@ -70,14 +75,7 @@ const PostForm = (props: Props) => (
 );
 
 PostForm.defaultProps = {
-  categories: [],
+  onChange: noop,
 };
 
-export default R.compose(
-  firebaseConnect([
-    'categories',
-  ]),
-  connect((state: Object): Object => ({
-    categories: state.firebase.data.categories,
-  })),
-)(PostForm);
+export default withCategories(PostForm);

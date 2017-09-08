@@ -1,9 +1,10 @@
 import R from 'ramda';
 import { createSelector } from 'reselect';
+import { FIREBASE_PATH } from '../Firebase/firebase';
+
 // ------------------------------------
 // Constants
 // ------------------------------------
-const FIREBASE_PATH = ['firebase'];
 const FIREBASE_AUTH_PATH = [...FIREBASE_PATH, 'auth'];
 
 // ------------------------------------
@@ -25,13 +26,17 @@ const isLoadedSelector = createSelector(
 // isInitializingSelector :: State -> Maybe(Boolean)
 const isInitializingSelector = R.path([...FIREBASE_PATH, 'isInitializing']);
 
+export const uidSelector = createSelector(
+  firebaseAuthSelector,
+  R.prop('uid'),
+);
+
 // hasUidSelector :: State -> Maybe(String)
 const hasUidSelector = createSelector(
-  firebaseAuthSelector,
+  uidSelector,
   R.compose(
     R.not,
     R.isNil,
-    R.prop('uid'),
   ),
 );
 
