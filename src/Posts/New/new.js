@@ -2,42 +2,48 @@ import R from 'ramda';
 import { createSelector } from 'reselect';
 import { actions as formActions } from 'react-redux-form';
 import { uidSelector } from '../../Auth/auth';
-import { FIREBASE_PATH } from '../../Firebase/firebase';
+import { DATA_PATH } from '../../Firebase/firebase';
 import { MODEL_PATH, INITIAL_STATE } from '../Form';
 import type { Props } from './types';
+
+// ------------------------------------
+// Constants
+// ------------------------------------
+const PENDING_POSTS_KEY = 'pendingPosts';
 
 // ------------------------------------
 // Selectors
 // ------------------------------------
 
-// pendingPostSelector :: State -> Object
-export const pendingPostSelector = R.path([...FIREBASE_PATH, 'profile', 'pendingPost']);
-
-// currentUserPathSelector :: State -> String
-export const currentUserPathSelector = createSelector(
-  uidSelector,
-  R.compose(
-    uid => `users/${uid}`,
-    R.defaultTo(''),
-  ),
-);
-
-// pendingPostPathSelector :: State -> String
+// pendingPostPathSelector :: State -> String | Nil
 export const pendingPostPathSelector = createSelector(
-  currentUserPathSelector,
-  R.compose(
-    R.concat(R.__, '/pendingPost'),
-    R.defaultTo(''),
+  uidSelector,
+  R.unless(
+    R.isNil,
+    uid => `${PENDING_POSTS_KEY}/${uid}`,
   ),
 );
 
-// pendingPostImagesPathSelector :: State -> String
+// pendingPostImagesPathSelector :: State -> String | Nil
 export const pendingPostImagesPathSelector = createSelector(
   pendingPostPathSelector,
-  R.compose(
+  R.unless(
+    R.isNil,
     R.concat(R.__, '/images'),
-    R.defaultTo(''),
   ),
+);
+
+// pendingPostsSelector :: State -> Object
+const pendingPostsSelector = R.compose(
+  R.defaultTo({}),
+  R.path([...DATA_PATH, PENDING_POSTS_KEY]),
+);
+
+// pendingPostSelector :: State -> Object | Nil
+export const pendingPostSelector = createSelector(
+  uidSelector,
+  pendingPostsSelector,
+  R.prop,
 );
 
 // ------------------------------------
@@ -57,12 +63,12 @@ export const initializeForm = (props: Props) => (dispatch: Dispatch) => {
 };
 
 // @flow
-export const createPost = (props: Props) => (post: Post) =>
-  (dispatch: Dispatch, getState: Function) => {
-    const { firebase, onCreate } = props;
+export const createPost = (onCreate: Function) => (post: Post) =>
+  (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
     // FIXME: if for some reason pendingPostPath is nil,
     // this will delete everything!
     const pendingPostPath = pendingPostPathSelector(getState());
+    const firebase = getFirebase();
 
     firebase
       .push('/posts', post)
@@ -73,10 +79,10 @@ export const createPost = (props: Props) => (post: Post) =>
       .then(onCreate);
   };
 
-export const savePendingPost = (props: Props) => (post: Post) =>
-  (dispatch: Dispatch, getState: Function) => {
+export const savePendingPost = (post: Post) =>
+  (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
     const pendingPostPath = pendingPostPathSelector(getState());
-    props.firebase.update(pendingPostPath, post);
+    getFirebase().update(pendingPostPath, post);
   };
 
 export const actions = {

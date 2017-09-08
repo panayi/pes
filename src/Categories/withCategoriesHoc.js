@@ -10,11 +10,11 @@ const mapStateToProps = createStructuredSelector({
 });
 
 export default R.compose(
-  defaultProps({
-    categories: [],
-  }),
   firebaseConnect([
     'categories',
   ]),
   connect(mapStateToProps),
+  defaultProps({
+    categories: [],
+  }),
 );

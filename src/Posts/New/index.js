@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { createStructuredSelector } from 'reselect';
 import { lifecycle } from 'recompose';
+import needsAnonymousUser from '../../Auth/needsAnonymousUserHoc';
 import Form from '../Form';
 import type { Props } from './types';
 import {
@@ -22,16 +23,19 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch: Dispatch, props: Props) => bindActionCreators({
   initializeForm: actions.initializeForm,
-  onSubmit: actions.createPost(props),
-  onChange: actions.savePendingPost(props),
+  onSubmit: actions.createPost(props.onCreate),
+  onChange: actions.savePendingPost,
 }, dispatch);
 
 export default R.compose(
-  firebaseConnect(),
   connect(mapStateToProps, mapDispatchToProps),
+  firebaseConnect(props => (
+    props.pendingPostPath ? [props.pendingPostPath] : null
+  )),
   lifecycle({
     componentWillReceiveProps(nextProps) {
       nextProps.initializeForm(nextProps);
     },
   }),
+  needsAnonymousUser,
 )(Form);

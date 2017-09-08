@@ -11,11 +11,6 @@ export class Home extends Component {
     posts: PropTypes.arrayOf(PropTypes.shape({})),
   };
 
-  static defaultProps = {
-    categories: [],
-    posts: [],
-  };
-
   render() {
     const { categories, posts } = this.props;
 
