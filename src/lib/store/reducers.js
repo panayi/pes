@@ -3,12 +3,14 @@ import { combineForms } from 'react-redux-form';
 import { routerReducer } from 'react-router-redux';
 import { firebaseStateReducer } from 'react-redux-firebase';
 import forms from './forms';
+import authReducer from '../../Auth/auth';
 
 export const makeRootReducer = asyncReducers =>
   combineReducers({
     router: routerReducer,
     firebase: firebaseStateReducer,
     forms: combineForms(forms, 'forms'),
+    auth: authReducer,
     ...asyncReducers,
   });
 

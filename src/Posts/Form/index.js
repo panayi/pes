@@ -12,6 +12,7 @@ export const INITIAL_STATE = {
   title: '',
   body: '',
   category: '',
+  images: [],
 };
 
 export const MODEL_KEY = 'post';
@@ -47,10 +48,13 @@ const PostForm = (props: Props) => (
         model="forms.post.body"
         id="forms.post.body"
       />
-      <UploadFile
-        filesPath={props.filesPath}
-        acceptedTypes={[jpeg, png, gif]}
-      />
+      {
+        props.filesPath &&
+        <UploadFile
+          filesPath={props.filesPath}
+          acceptedTypes={[jpeg, png, gif]}
+        />
+      }
       <Label htmlFor="forms.post.category">
         Category:
       </Label>

@@ -2,7 +2,7 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
 import { routerMiddleware } from 'react-router-redux';
-import { reactReduxFirebase } from 'react-redux-firebase';
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
 import makeRootReducer from './reducers';
 import firebaseConfig from './firebase_config';
@@ -21,7 +21,7 @@ export default (initialState = {}) => {
   // Middleware Configuration
   const middleware = [
     routerMiddleware(history),
-    thunk,
+    thunk.withExtraArgument(getFirebase),
   ];
 
   // Store Enhancers

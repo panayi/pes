@@ -1,82 +1,80 @@
+/* @flow */
 import R from 'ramda';
 import { createSelector } from 'reselect';
 import { actions as formActions } from 'react-redux-form';
-import { uidSelector } from '../../Auth/auth';
-import { FIREBASE_PATH } from '../../Firebase/firebase';
+import { isLoaded, isEmpty } from 'react-redux-firebase';
+import { uidSelector, profileSelector } from '../../Auth/auth';
 import { MODEL_PATH, INITIAL_STATE } from '../Form';
-import type { Props } from './types';
+
+// ------------------------------------
+// Constants
+// ------------------------------------
+const PENDING_POST_KEY = 'pendingPost';
 
 // ------------------------------------
 // Selectors
 // ------------------------------------
 
-// pendingPostSelector :: State -> Object
-export const pendingPostSelector = R.path([...FIREBASE_PATH, 'profile', 'pendingPost']);
-
-// currentUserPathSelector :: State -> String
-export const currentUserPathSelector = createSelector(
-  uidSelector,
+// pendingPostSelector :: State -> Object | Nil
+export const pendingPostSelector = createSelector(
+  profileSelector,
   R.compose(
-    uid => `users/${uid}`,
-    R.defaultTo(''),
+    R.prop(PENDING_POST_KEY),
+    R.defaultTo({}),
   ),
 );
 
-// pendingPostPathSelector :: State -> String
-export const pendingPostPathSelector = createSelector(
-  currentUserPathSelector,
-  R.compose(
-    R.concat(R.__, '/pendingPost'),
-    R.defaultTo(''),
-  ),
-);
-
-// pendingPostImagesPathSelector :: State -> String
+// pendingPostImagesSelector :: State -> Object | Nil
 export const pendingPostImagesPathSelector = createSelector(
-  pendingPostPathSelector,
-  R.compose(
-    R.concat(R.__, '/images'),
-    R.defaultTo(''),
+  uidSelector,
+  R.unless(
+    R.isNil,
+    uid => `users/${uid}/${PENDING_POST_KEY}/images`,
   ),
 );
 
 // ------------------------------------
 // Actions
 // ------------------------------------
+export const initializeForm = () => (dispatch: Dispatch, getState: Function) => {
+  const state = getState();
+  const profile = profileSelector(state);
 
-// @flow
-export const initializeForm = (props: Props) => (dispatch: Dispatch) => {
+  if (!isLoaded(profile) || isEmpty(profile)) {
+    return;
+  }
+
   const initialState = R.compose(
     R.pick(R.keys(INITIAL_STATE)),
     R.defaultTo({}),
-  )(props.pendingPost);
+    pendingPostSelector,
+  )(state);
+
+  if (R.either(R.isNil, R.isEmpty)(initialState)) {
+    return;
+  }
 
   // FIXME: This calls load multiple times
   // How to call load only once, as soon as the data becomes available?
   dispatch(formActions.load(MODEL_PATH, initialState));
 };
 
-// @flow
-export const createPost = (props: Props) => (post: Post) =>
-  (dispatch: Dispatch, getState: Function) => {
-    const { firebase, onCreate } = props;
-    // FIXME: if for some reason pendingPostPath is nil,
-    // this will delete everything!
-    const pendingPostPath = pendingPostPathSelector(getState());
-
-    firebase
-      .push('/posts', post)
-      .then(() => {
-        firebase.set(pendingPostPath, {});
-      })
-      .then(() => dispatch(formActions.load(MODEL_PATH, {})))
-      .then(onCreate);
+export const savePendingPost = (post: Post | {}) =>
+  (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
+    getFirebase().updateProfile({
+      [PENDING_POST_KEY]: post,
+    });
   };
 
-export const savePendingPost = (props: Props) => (post: Post) =>
-  (dispatch: Dispatch, getState: Function) => {
-    const pendingPostPath = pendingPostPathSelector(getState());
-    props.firebase.update(pendingPostPath, post);
+export const createPost = (onCreate: ?Function) => (post: Post) =>
+  (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
+    // FIXME: if for some reason pendingPostPath is nil,
+    // this will delete everything!
+    getFirebase()
+      .push('/posts', post)
+      .then(() => dispatch(savePendingPost({})))
+      .then(() => dispatch(formActions.load(MODEL_PATH, {})))
+      .then(onCreate);
   };
 
 export const actions = {
