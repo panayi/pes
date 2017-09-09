@@ -113,6 +113,15 @@ export const isNotAuthenticatedSelector = createSelector(
 // profileSelector :: State -> Object | Nil
 export const profileSelector = R.path([...FIREBASE_PATH, 'profile']);
 
+// profileImageSelector :: State -> String | Nil
+export const profileImageSelector = createSelector(
+  profileSelector,
+  R.compose(
+    R.prop('avatarUrl'),
+    R.defaultTo({}),
+  ),
+);
+
 // ------------------------------------
 // Actions
 // ------------------------------------

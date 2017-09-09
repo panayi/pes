@@ -2,6 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import { Toolbar } from 'rebass';
 import Link from '../../../lib/components/Link';
+import ProfileImage from '../../../lib/components/ProfileImage';
 import hideUser from '../../../Auth/hideUserHoc';
 import hideVisitor from '../../../Auth/hideVisitorHoc';
 import logoutHoc from '../../../Auth/logoutHoc';
@@ -37,5 +38,8 @@ export default () => (
     <LogoutLink>
       Logout
     </LogoutLink>
+    <Link to="/profile">
+      <ProfileImage />
+    </Link>
   </Toolbar>
 );
