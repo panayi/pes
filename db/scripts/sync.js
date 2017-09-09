@@ -32,7 +32,7 @@ const mapPost = R.compose(
     'oldId',
     'permalink',
     'phone',
-    'posterId',
+    'oldPosterId',
     'title',
   ]),
   computedProp('images', R.compose(
@@ -41,7 +41,7 @@ const mapPost = R.compose(
     R.defaultTo(''),
     R.prop('images'),
   )),
-  computedProp('posterId', R.compose(
+  computedProp('oldPosterId', R.compose(
     R.head,
     R.split(' '),
     R.trim,

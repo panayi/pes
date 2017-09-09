@@ -2,8 +2,9 @@
 import R from 'ramda';
 import { createSelector } from 'reselect';
 import { actions as formActions } from 'react-redux-form';
+import { push } from 'react-router-redux';
 import { isLoaded, isEmpty } from 'react-redux-firebase';
-import { uidSelector, profileSelector } from '../../Auth/auth';
+import { uidSelector, isAuthenticatedSelector, profileSelector } from '../../Auth/auth';
 import { MODEL_PATH, INITIAL_STATE } from '../Form';
 
 // ------------------------------------
@@ -54,8 +55,6 @@ export const initializeForm = () => (dispatch: Dispatch, getState: Function) => 
     return;
   }
 
-  // FIXME: This calls load multiple times
-  // How to call load only once, as soon as the data becomes available?
   dispatch(formActions.load(MODEL_PATH, initialState));
 };
 
@@ -68,12 +67,24 @@ export const savePendingPost = (post: Post | {}) =>
 
 export const createPost = (onCreate: ?Function) => (post: Post) =>
   (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
-    // FIXME: if for some reason pendingPostPath is nil,
-    // this will delete everything!
-    getFirebase()
-      .push('/posts', post)
+    const state = getState();
+    const isAuthenticated = isAuthenticatedSelector(getState());
+
+    if (!isAuthenticated) {
+      return dispatch(push({
+        pathname: '/auth/login',
+        search: '?redirect=/post',
+      }));
+    }
+
+    const finalPost = R.merge(post, {
+      user: uidSelector(state),
+    });
+
+    return getFirebase()
+      .push('/posts', finalPost)
       .then(() => dispatch(savePendingPost({})))
-      .then(() => dispatch(formActions.load(MODEL_PATH, {})))
+      .then(() => dispatch(formActions.load(MODEL_PATH, INITIAL_STATE)))
       .then(onCreate);
   };
 
