@@ -1,15 +1,14 @@
 import R from 'ramda';
-import { createSelector } from 'reselect';
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 import { actionTypes, getFirebase as g } from 'react-redux-firebase';
-import { FIREBASE_PATH } from '../Firebase/firebase';
+import linkedAccountsReducer from './Link/link';
+import { anonymousProfileSelector } from './auth.selectors';
 
 // ------------------------------------
 // Constants
 // ------------------------------------
 const RESET = 'auth/anonymousProfile/RESET';
-const FIREBASE_AUTH_PATH = [...FIREBASE_PATH, 'auth'];
 
 // ------------------------------------
 // Reducer
@@ -32,95 +31,8 @@ const anonymousProfileReducer = handleActions({
 
 export default combineReducers({
   anonymousProfile: anonymousProfileReducer,
+  linkedAccounts: linkedAccountsReducer,
 });
-
-// ------------------------------------
-// Selectors
-// ------------------------------------
-
-// anonymousProfileSelector :: State -> Object | Nil
-const anonymousProfileSelector = R.path(['auth', 'anonymousProfile']);
-
-// authErrorSelector :: State -> Object | Nil
-export const authErrorSelector = R.path([...FIREBASE_PATH, 'authError']);
-
-// firebaseSelector :: State -> Object
-const firebaseAuthSelector = R.compose(
-  R.defaultTo({}),
-  R.path(FIREBASE_AUTH_PATH),
-);
-
-// isLoadedSelector :: State -> Maybe(Boolean)
-const isLoadedSelector = createSelector(
-  firebaseAuthSelector,
-  R.prop('isLoaded'),
-);
-
-// isInitializingSelector :: State -> Maybe(Boolean)
-const isInitializingSelector = R.path([...FIREBASE_PATH, 'isInitializing']);
-
-export const uidSelector = createSelector(
-  firebaseAuthSelector,
-  R.prop('uid'),
-);
-
-// hasUidSelector :: State -> Maybe(String)
-const hasUidSelector = createSelector(
-  uidSelector,
-  R.compose(
-    R.not,
-    R.isNil,
-  ),
-);
-
-const isAnonymousSelector = createSelector(
-  firebaseAuthSelector,
-  R.prop('isAnonymous'),
-);
-
-// isAuthenticatingSelector :: State -> Boolean
-export const isAuthenticatingSelector = createSelector(
-  isInitializingSelector,
-  isLoadedSelector,
-  R.useWith(R.or, [
-    R.identity,
-    R.not,
-  ]),
-);
-
-// isAuthenticatedSelector :: State -> Boolean
-// Equals to: !isAuthenticatingSelector && hasUidSelector
-export const isAuthenticatedSelector = createSelector(
-  isAuthenticatingSelector,
-  hasUidSelector,
-  isAnonymousSelector,
-  (isAuthenticating, hasUid, isAnonymous) => (
-    !isAuthenticating && hasUid && !isAnonymous
-  ),
-);
-
-// isNotAuthenticatedSelector :: State -> Boolean
-// Equals to: !isAuthenticatingSelector && !hasUidSelector
-export const isNotAuthenticatedSelector = createSelector(
-  isAuthenticatingSelector,
-  hasUidSelector,
-  isAnonymousSelector,
-  (isAuthenticating, hasUid, isAnonymous) => (
-    !isAuthenticating && (!hasUid || isAnonymous)
-  ),
-);
-
-// profileSelector :: State -> Object | Nil
-export const profileSelector = R.path([...FIREBASE_PATH, 'profile']);
-
-// profileImageSelector :: State -> String | Nil
-export const profileImageSelector = createSelector(
-  profileSelector,
-  R.compose(
-    R.prop('avatarUrl'),
-    R.defaultTo({}),
-  ),
-);
 
 // ------------------------------------
 // Actions
@@ -142,3 +54,5 @@ export const maybeMergeAnonymousProfile = () => (dispatch, getState, getFirebase
   // TODO: Need to also delete the anonymous User and profile
   // No idea how to do that...
 };
+
+export * from './auth.selectors';
