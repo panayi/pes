@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 import { Button } from 'rebass';
 import { auth } from '../../../lib/config';
 
-const WithGoogle = ({ login, onSuccess, onError }) => (
+const WithFacebook = ({ login, onSuccess, onError }) => (
   <Button
     onClick={() =>
-      login({ provider: 'google', ...auth.google })
+      login({ provider: 'facebook', ...auth.facebook })
         .then(onSuccess)
         .catch(onError)
     }
   >
-    Sign in with Google
+    Sign in with Facebook
   </Button>
 );
 
-WithGoogle.propTypes = {
+WithFacebook.propTypes = {
   login: PropTypes.func.isRequired,
   onSuccess: PropTypes.func.isRequired,
   onError: PropTypes.func.isRequired,
 };
 
-export default WithGoogle;
+export default WithFacebook;

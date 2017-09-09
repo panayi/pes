@@ -1,6 +1,8 @@
 import React from 'react';
 import { Flex, Box } from 'rebass';
 import Login from '../../Auth/Login';
+import WithGoogle from '../../Auth/Login/WithGoogle';
+import WithFacebook from '../../Auth/Login/WithFacebook';
 
 export default () => (
   <Flex
@@ -9,8 +11,10 @@ export default () => (
     style={{ height: '100vh' }}
   >
     <Box>
-      <Login with="password" />
-      <Login with="google" />
+      <Login component={WithGoogle} />
+    </Box>
+    <Box>
+      <Login component={WithFacebook} />
     </Box>
   </Flex>
 );
