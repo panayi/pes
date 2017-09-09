@@ -12,6 +12,7 @@ export const INITIAL_STATE = {
   title: '',
   body: '',
   category: '',
+  images: [],
 };
 
 export const MODEL_KEY = 'post';
