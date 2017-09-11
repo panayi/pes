@@ -1,7 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import R from 'ramda';
-import { isEmpty } from 'react-redux-firebase';
+import { isLoaded } from 'react-redux-firebase';
 import { branch, renderNothing } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -48,7 +48,8 @@ const ConnectedLink = R.compose(
   // as the profile.email is needed for fetching linked-accounts.
   branch(
     R.compose(
-      isEmpty,
+      R.not,
+      isLoaded,
       R.prop('profile'),
     ),
     renderNothing,
