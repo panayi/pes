@@ -1,5 +1,6 @@
 import R from 'ramda';
 import { createSelector } from 'reselect';
+import { isLoaded } from 'react-redux-firebase';
 import { FIREBASE_PATH } from '../Firebase/firebase';
 
 // ------------------------------------
@@ -26,7 +27,7 @@ const firebaseAuthSelector = R.compose(
 // isLoadedSelector :: State -> Maybe(Boolean)
 const isLoadedSelector = createSelector(
   firebaseAuthSelector,
-  R.prop('isLoaded'),
+  isLoaded,
 );
 
 // isInitializingSelector :: State -> Maybe(Boolean)
@@ -85,6 +86,12 @@ export const isNotAuthenticatedSelector = createSelector(
 
 // profileSelector :: State -> Object | Nil
 export const profileSelector = R.path([...FIREBASE_PATH, 'profile']);
+
+// isProfileLoadedSelector :: State -> Boolean
+export const isProfileLoadedSelector = createSelector(
+  profileSelector,
+  isLoaded,
+);
 
 // profilePropSelector :: String -> State -> Any
 const profilePropSelector = propKey => createSelector(

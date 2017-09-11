@@ -1,11 +1,10 @@
 /* @flow */
 import React, { Component } from 'react';
 import R from 'ramda';
-import { isLoaded } from 'react-redux-firebase';
 import { branch, renderNothing } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { profileSelector } from '../auth.selectors';
+import { isProfileLoadedSelector } from '../auth.selectors';
 import { actions, linkedAccountsSelector } from './link';
 import LinkButton from './LinkButton';
 
@@ -34,7 +33,7 @@ export class Link extends Component<Props> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  profile: profileSelector,
+  isProfileLoaded: isProfileLoadedSelector,
   linkedAccounts: linkedAccountsSelector,
 });
 
@@ -49,8 +48,7 @@ const ConnectedLink = R.compose(
   branch(
     R.compose(
       R.not,
-      isLoaded,
-      R.prop('profile'),
+      R.prop('isProfileLoaded'),
     ),
     renderNothing,
   ),
