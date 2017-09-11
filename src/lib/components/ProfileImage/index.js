@@ -4,7 +4,7 @@ import { defaultProps, mapProps, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { Avatar } from 'rebass';
-import { isProfileLoadedSelector, profileImageSelector } from '../../../Auth/auth';
+import { isProfileLoadedSelector, profileImageSelector } from '../../../auth/auth';
 
 const mapStateToProps = createStructuredSelector({
   isProfileLoaded: isProfileLoadedSelector,

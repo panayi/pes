@@ -4,7 +4,7 @@ import { createSelector } from 'reselect';
 import { actions as formActions } from 'react-redux-form';
 import { push } from 'react-router-redux';
 import { isLoaded, isEmpty } from 'react-redux-firebase';
-import { uidSelector, isAuthenticatedSelector, profileSelector } from '../../Auth/auth';
+import { uidSelector, isAuthenticatedSelector, profileSelector } from '../../auth/auth';
 import { MODEL_PATH, INITIAL_STATE } from '../Form';
 
 // ------------------------------------

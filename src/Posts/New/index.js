@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { firebaseConnect, isEmpty } from 'react-redux-firebase';
 import { createStructuredSelector } from 'reselect';
 import { branch, renderNothing, lifecycle } from 'recompose';
-import withAnonymousUser from '../../Auth/withAnonymousUserHoc';
-import { profileSelector } from '../../Auth/auth';
+import withAnonymousUser from '../../auth/withAnonymousUserHoc';
+import { profileSelector } from '../../auth/auth';
 import Form from '../Form';
 import {
   pendingPostImagesPathSelector,

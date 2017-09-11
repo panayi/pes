@@ -6,7 +6,7 @@ import { Control, Form } from 'react-redux-form';
 import UploadFile from '../../lib/components/UploadFile';
 import { jpeg, png, gif } from '../../lib/helpers/filetypes';
 import noop from '../../lib/helpers/noop';
-import withCategories from '../../Categories/withCategoriesHoc';
+import withCategories from '../../categories/withCategoriesHoc';
 
 export const INITIAL_STATE = {
   title: '',

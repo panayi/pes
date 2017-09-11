@@ -4,7 +4,7 @@ import R from 'ramda';
 import { Route } from 'react-router-dom';
 import { Flex, Text } from 'rebass';
 import Link from '../../lib/components/Link';
-import withCategories from '../../Categories/withCategoriesHoc';
+import withCategories from '../../categories/withCategoriesHoc';
 import Posts from './posts';
 
 type Props = {

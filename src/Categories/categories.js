@@ -1,5 +1,5 @@
 import R from 'ramda';
-import { DATA_PATH } from '../Firebase/firebase';
+import { DATA_PATH } from '../firebase/firebase';
 
 // ------------------------------------
 // Selectors
