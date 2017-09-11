@@ -1,5 +1,5 @@
 import React from 'react';
-import needsUser from '../../auth/needsUserHoc';
+import needsUser from '../../auth/visibility/needsUserHoc';
 import Link from '../../auth/Link';
 
 export const Profile = () => (

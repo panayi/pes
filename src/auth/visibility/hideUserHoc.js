@@ -1,6 +1,6 @@
 import connectedAuthWrapper from 'redux-auth-wrapper/connectedAuthWrapper';
-import { isAuthenticatedSelector } from './auth';
+import { isNotAuthenticatedSelector } from '../auth';
 
 export default connectedAuthWrapper({
-  authenticatedSelector: isAuthenticatedSelector,
+  authenticatedSelector: isNotAuthenticatedSelector,
 });

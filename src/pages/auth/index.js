@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import needsVisitor from '../../auth/needsVisitorHoc';
+import needsVisitor from '../../auth/visibility/needsVisitorHoc';
 import Login from './login';
 
 const Auth = () => (

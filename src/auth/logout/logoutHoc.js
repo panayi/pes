@@ -1,7 +1,7 @@
 import R from 'ramda';
 import { firebaseConnect } from 'react-redux-firebase';
 import { defaultProps, withProps } from 'recompose';
-import noop from '../lib/helpers/noop';
+import noop from '../../lib/helpers/noop';
 
 export default R.compose(
   firebaseConnect(),
