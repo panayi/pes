@@ -2,8 +2,9 @@ import R from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 import { actionTypes, getFirebase as g } from 'react-redux-firebase';
-import linkedAccountsReducer from './Link/link';
 import { anonymousProfileSelector } from './auth.selectors';
+import linkedAccountsReducer from './Link/link';
+import withPhoneNumberReducer from './Login/WithPhoneNumber/withPhoneNumber';
 
 // ------------------------------------
 // Constants
@@ -32,6 +33,7 @@ const anonymousProfileReducer = handleActions({
 export default combineReducers({
   anonymousProfile: anonymousProfileReducer,
   linkedAccounts: linkedAccountsReducer,
+  withPhoneNumber: withPhoneNumberReducer,
 });
 
 // ------------------------------------

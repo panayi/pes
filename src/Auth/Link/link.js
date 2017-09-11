@@ -36,10 +36,10 @@ export const fetchLinkedAccounts = () => (dispatch, getState, getFirebase) => {
   const email = profileEmailSelector(getState());
 
   if (R.isNil(email)) {
-    return;
+    return dispatch(receiveLinkedAccounts([]));
   }
 
-  getFirebase().auth().fetchProvidersForEmail(email)
+  return getFirebase().auth().fetchProvidersForEmail(email)
     .then(linkedAccounts => dispatch(receiveLinkedAccounts(linkedAccounts)));
 };
 
