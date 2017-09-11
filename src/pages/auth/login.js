@@ -1,8 +1,8 @@
 import React from 'react';
 import { Flex, Box } from 'rebass';
-import Login from '../../Auth/Login';
-import WithFacebook from '../../Auth/Login/WithFacebook';
-import WithPhoneNumber from '../../Auth/Login/WithPhoneNumber';
+import Login from '../../auth/Login';
+import WithFacebook from '../../auth/Login/WithFacebook';
+import WithPhoneNumber from '../../auth/Login/WithPhoneNumber';
 
 export default () => (
   <Flex
