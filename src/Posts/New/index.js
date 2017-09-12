@@ -2,11 +2,11 @@
 import R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { firebaseConnect, isEmpty } from 'react-redux-firebase';
+import { firebaseConnect } from 'react-redux-firebase';
 import { createStructuredSelector } from 'reselect';
 import { branch, renderNothing, lifecycle } from 'recompose';
 import withAnonymousUser from '../../auth/Login/withAnonymousUserHoc';
-import { profileSelector } from '../../auth/auth';
+import { isProfileLoadedSelector } from '../../auth/auth';
 import Form from '../Form';
 import {
   pendingPostImagesPathSelector,
@@ -17,6 +17,7 @@ type Props = {
   onCreate: ?Function,
   firebase: Object,
   filesPath: String,
+  isProfileLoaded: Boolean,
   initializeForm: Function,
   onSubmit: Function,
   onChange: Function,
@@ -24,7 +25,7 @@ type Props = {
 
 const mapStateToProps = createStructuredSelector({
   filesPath: pendingPostImagesPathSelector,
-  profile: profileSelector,
+  isProfileLoaded: isProfileLoadedSelector,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, props: Props) => bindActionCreators({
@@ -41,8 +42,8 @@ export default R.compose(
     // so that the form is properly initialized
     // when profile.pendingPost exists.
     R.compose(
-      isEmpty,
-      R.prop('profile'),
+      R.not,
+      R.prop('isProfileLoaded'),
     ),
     renderNothing,
   ),

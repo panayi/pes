@@ -1,7 +1,6 @@
 import React from 'react';
 import { Flex, Box } from 'rebass';
 import Login from '../../auth/Login';
-import WithFacebook from '../../auth/Login/WithFacebook';
 import WithPhoneNumber from '../../auth/Login/WithPhoneNumber';
 
 export default () => (
@@ -11,9 +10,6 @@ export default () => (
     style={{ height: '100vh' }}
     column
   >
-    <Box>
-      <Login component={WithFacebook} />
-    </Box>
     <Box>
       <Login component={WithPhoneNumber} />
     </Box>
