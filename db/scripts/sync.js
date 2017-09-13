@@ -67,6 +67,7 @@ const syncPosts = async () => {
 
 const main = async () => {
   await syncPosts();
+  process.exit();
 };
 
 // Begin
