@@ -2,6 +2,7 @@ import R from 'ramda';
 import { createSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';
 import { FIREBASE_PATH } from '../firebase/firebase';
+import { ADMIN } from './constants/roles';
 
 // ------------------------------------
 // Constants
@@ -86,6 +87,15 @@ export const isNotAuthenticatedSelector = createSelector(
 
 // profileSelector :: State -> Object | Nil
 export const profileSelector = R.path([...FIREBASE_PATH, 'profile']);
+
+
+export const isAdminSelector = createSelector(
+  profileSelector,
+  R.compose(
+    R.propEq('role', ADMIN),
+    R.defaultTo({}),
+  ),
+);
 
 // isProfileLoadedSelector :: State -> Boolean
 export const isProfileLoadedSelector = createSelector(

@@ -5,6 +5,7 @@ import Link from '../../../lib/components/Link';
 import ProfileImage from '../../../lib/components/ProfileImage';
 import hideUser from '../../../auth/visibility/hideUserHoc';
 import hideVisitor from '../../../auth/visibility/hideVisitorHoc';
+import hideNonAdmin from '../../../auth/visibility/hideNonAdminHoc';
 import logoutHoc from '../../../auth/logout/logoutHoc';
 
 const LoginLink = hideUser(Link.Nav);
@@ -13,6 +14,8 @@ const LogoutLink = R.compose(
   hideVisitor,
   logoutHoc,
 )(Link.Nav);
+
+const AdminLink = hideNonAdmin(Link.Nav);
 
 export default () => (
   <Toolbar>
@@ -29,6 +32,11 @@ export default () => (
     >
       Sell your stuff
     </Link.Nav>
+    <AdminLink
+      to="/admin"
+    >
+      Admin
+    </AdminLink>
     <LoginLink
       to="/auth/login"
       exact

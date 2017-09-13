@@ -2,13 +2,15 @@
 import React, { Component } from 'react';
 import R from 'ramda';
 import { Route } from 'react-router-dom';
-import { Flex, Text } from 'rebass';
-import Link from '../../lib/components/Link';
+import { withProps } from 'recompose';
+import Page from '../../lib/components/Page';
+import SideNav from '../../lib/components/SideNav';
 import withCategories from '../../categories/withCategoriesHoc';
 import Posts from './posts';
 
 type Props = {
   categories: Array<Category>,
+  categoryLinks: Array<Object>,
 };
 
 export class Home extends Component<Props> {
@@ -17,34 +19,32 @@ export class Home extends Component<Props> {
   };
 
   render() {
-    const { categories } = this.props;
+    const { categoryLinks } = this.props;
 
     return (
-      <Flex
-        mt={4}
-        ml={3}
-      >
-        <Flex
-          w="300px"
-          column
-        >
-          <Text bold>Categories</Text>
-          {R.map(({ name }) => (
-            <Link
-              key={name}
-              to={`/${name}`}
-            >
-              {name}
-            </Link>
-          ), categories)}
-        </Flex>
+      <Page>
+        <SideNav
+          header="Categories"
+          links={categoryLinks}
+        />
         <Route
           path="/:categoryName?"
           component={Posts}
         />
-      </Flex>
+      </Page>
     );
   }
 }
 
-export default withCategories(Home);
+export default R.compose(
+  withCategories,
+  withProps(({ categories }) => ({
+    categoryLinks: R.map(
+      ({ name }) => ({
+        label: name,
+        to: `/${name}`,
+      }),
+      categories,
+    ),
+  })),
+)(Home);

@@ -7,7 +7,7 @@
 // run `yarn seed`
 // ------------------------------------
 
-import roles from '../seeds/roles.json';
+import roles from '../seeds/roles';
 import categories from '../seeds/categories.json';
 import base from './common/firebase';
 
