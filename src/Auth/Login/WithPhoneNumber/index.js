@@ -54,7 +54,7 @@ type CodeValues = {
 
 export class WithPhoneNumber extends Component<Props> {
   componentDidMount() {
-    this.createRecaptcha();
+    this.reset();
   }
 
   componentWillUnmount() {
@@ -62,6 +62,11 @@ export class WithPhoneNumber extends Component<Props> {
   }
 
   recaptchaVerifier: Object
+
+  reset() {
+    this.props.reset();
+    this.createRecaptcha();
+  }
 
   createRecaptcha = () => {
     const { RecaptchaVerifier } = this.props.firebase.auth;
@@ -76,7 +81,8 @@ export class WithPhoneNumber extends Component<Props> {
 
     sendSmsStart();
 
-    firebase.auth().signInWithPhoneNumber(phoneNumber, this.recaptchaVerifier)
+    firebase.auth()
+      .signInWithPhoneNumber(phoneNumber, this.recaptchaVerifier)
       .then(sendSmsSuccess)
       .catch(sendSmsFail);
   }
@@ -98,7 +104,8 @@ export class WithPhoneNumber extends Component<Props> {
       confirmationResult.verificationId,
       code,
     );
-    firebase.auth().signInWithCredential(credential)
+    firebase.auth()
+      .signInWithCredential(credential)
       .then((result) => {
         const user = result.toJSON();
 
@@ -192,7 +199,7 @@ export class WithPhoneNumber extends Component<Props> {
 
     return (
       <a
-        onClick={() => this.props.reset()}
+        onClick={() => this.reset()}
         role="button"
         tabIndex="-1"
       >
