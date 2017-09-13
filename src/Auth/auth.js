@@ -2,6 +2,7 @@ import R from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 import { actionTypes, getFirebase as g } from 'react-redux-firebase';
+import profileFactory from './helpers/profileFactory';
 import { anonymousProfileSelector } from './auth.selectors';
 import linkedAccountsReducer from './Link/link';
 import withPhoneNumberReducer from './Login/WithPhoneNumber/withPhoneNumber';
@@ -55,6 +56,17 @@ export const maybeMergeAnonymousProfile = () => (dispatch, getState, getFirebase
 
   // TODO: Need to also delete the anonymous User and profile
   // No idea how to do that...
+};
+
+export const updateProfile = user => (dispatch, getState, getFirebase) => {
+  const firebase = getFirebase();
+
+  firebase.updateProfile(profileFactory(user));
+};
+
+export const actions = {
+  maybeMergeAnonymousProfile,
+  updateProfile,
 };
 
 export * from './auth.selectors';

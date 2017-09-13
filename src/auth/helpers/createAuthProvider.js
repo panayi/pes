@@ -3,7 +3,7 @@ import capitalize from 'lodash.capitalize';
 
 // Based on https://github.com/prescottprue/react-redux-firebase/blob/master/src/utils/auth.js
 // as it is not exposed by react-redux-firebase
-export const createAuthProvider = (firebase, providerName, scopes) => {
+export default (firebase, providerName, scopes) => {
   const provider = new firebase.auth[`${capitalize(providerName)}AuthProvider`]();
 
   // Handle providers without scopes

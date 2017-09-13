@@ -9,6 +9,7 @@ import { LocalForm, Control } from 'react-redux-form';
 import PhoneInput from 'react-phone-input';
 import { Button } from 'rebass';
 import generateClassName from '../../../lib/helpers/generateClassName';
+import { actions as authActions } from '../../auth';
 import {
   actions,
   selectors,
@@ -34,6 +35,7 @@ type Props = {
   codeValidationStart: Function,
   codeValidationSuccess: Function,
   codeValidationFail: Function,
+  updateProfile: Function,
   firebase: Object,
   showPhoneNumberForm: Boolean,
   showCodeForm: Boolean,
@@ -82,6 +84,7 @@ export class WithPhoneNumber extends Component<Props> {
       codeValidationSuccess,
       codeValidationFail,
       firebase,
+      updateProfile,
     } = this.props;
 
     codeValidationStart();
@@ -91,6 +94,17 @@ export class WithPhoneNumber extends Component<Props> {
       code,
     );
     firebase.auth().signInWithCredential(credential)
+      .then((result) => {
+        const user = result.toJSON();
+
+        // FIXME: for some reason updateProfile doesn't work
+        // unless we add some delay
+        setTimeout(() => {
+          updateProfile(user);
+        }, 1000);
+
+        return Promise.resolve(result);
+      })
       .then(codeValidationSuccess)
       .catch(codeValidationFail);
   }
@@ -180,9 +194,14 @@ const mapStateToProps = createStructuredSelector({
   error: selectors.errorSelector,
 });
 
+const mapDispatchToProps = {
+  ...actions,
+  updateProfile: authActions.updateProfile,
+};
+
 export default R.compose(
   firebaseConnect(),
-  connect(mapStateToProps, actions),
+  connect(mapStateToProps, mapDispatchToProps),
   withProps(({ status }) => ({
     showPhoneNumberForm: R.contains(status, [
       STATUS_IDLE,
