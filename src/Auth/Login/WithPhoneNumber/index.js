@@ -41,6 +41,7 @@ type Props = {
   showCodeForm: Boolean,
   showError: Boolean,
   showLoading: Boolean,
+  showTryAgain: Boolean,
 };
 
 type PhoneNumberValues = {
@@ -54,6 +55,10 @@ type CodeValues = {
 export class WithPhoneNumber extends Component<Props> {
   componentDidMount() {
     this.createRecaptcha();
+  }
+
+  componentWillUnmount() {
+    this.props.reset();
   }
 
   recaptchaVerifier: Object
@@ -165,7 +170,11 @@ export class WithPhoneNumber extends Component<Props> {
       return null;
     }
 
-    return 'error';
+    return (
+      <span>
+        {this.props.error.message}
+      </span>
+    );
   }
 
   renderLoading() {
@@ -176,6 +185,22 @@ export class WithPhoneNumber extends Component<Props> {
     return 'loading';
   }
 
+  renderTryAgain() {
+    if (!this.props.showTryAgain) {
+      return null;
+    }
+
+    return (
+      <a
+        onClick={() => this.props.reset()}
+        role="button"
+        tabIndex="-1"
+      >
+        Try again
+      </a>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -183,6 +208,7 @@ export class WithPhoneNumber extends Component<Props> {
         {this.renderCodeForm()}
         {this.renderError()}
         {this.renderLoading()}
+        {this.renderTryAgain()}
       </div>
     );
   }
@@ -221,6 +247,9 @@ export default R.compose(
     showLoading: R.contains(status, [
       STATUS_SMS_SEND_STARTED,
       STATUS_CODE_VALIDATION_STARTED,
+    ]),
+    showTryAgain: R.contains(status, [
+      STATUS_CODE_VALIDATION_FAILED,
     ]),
   })),
 )(WithPhoneNumber);

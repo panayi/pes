@@ -31,7 +31,7 @@ const initialState = {
 };
 
 const statusReducer = handleActions({
-  [RESET]: R.always(initialState),
+  [RESET]: R.always(initialState.status),
   [SMS_SEND_STARTED]: R.always(STATUS_SMS_SEND_STARTED),
   [SMS_SEND_SUCCEEDED]: R.always(STATUS_SMS_SEND_SUCCEEDED),
   [SMS_SEND_FAILED]: R.always(STATUS_SMS_SEND_FAILED),
@@ -48,7 +48,7 @@ const confirmationResultResetActionTypes = combineActions(
 );
 
 const confirmationResultReducer = handleActions({
-  [confirmationResultResetActionTypes]: R.always(initialState),
+  [confirmationResultResetActionTypes]: R.always(initialState.confirmationResult),
   [SMS_SEND_SUCCEEDED]: (state, { payload }) => payload,
 }, initialState.confirmationResult);
 
@@ -66,7 +66,7 @@ const errorSetActionTypes = combineActions(
 );
 
 const errorReducer = handleActions({
-  [errorResetActionTypes]: R.always(initialState),
+  [errorResetActionTypes]: R.always(initialState.error),
   [errorSetActionTypes]: (state, { payload }) => payload,
 }, initialState.error);
 
