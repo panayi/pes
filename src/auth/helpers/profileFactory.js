@@ -25,4 +25,5 @@ export default user => ({
   displayName: getDisplayName(user),
   avatarUrl: getPhotoUrl(user),
   providerData: user.providerData,
+  role: 'user',
 });

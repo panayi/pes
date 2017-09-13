@@ -14,6 +14,10 @@ export default (initialState = {}) => {
 
   const reduxFirebaseConfig = {
     userProfile: 'users',
+    profileParamsToPopulate: [
+      // populates user's role with matching role object from roles
+      { child: 'role', root: 'roles' },
+    ],
     profileFactory,
   };
 
