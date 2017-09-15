@@ -3,6 +3,7 @@ import R from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 import { createSelector } from 'reselect';
+import { uploadFile } from '../../files/UploadFile/uploadFile';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
@@ -91,8 +92,7 @@ const syncFail = createAction(SYNC_FAILED);
 const postSyncSuccess = createAction(POST_SYNC_SUCCESS);
 const imageSyncSuccess = createAction(IMAGE_SYNC_SUCCESS);
 
-const syncImages = post => (dispatch, getState, getFirebase) => {
-  const storageRef = getFirebase().storage().ref();
+const syncImages = post => (dispatch) => {
   const postPath = getPostPath(post);
   const imagePromises = R.compose(
     R.map(image => (
@@ -100,9 +100,9 @@ const syncImages = post => (dispatch, getState, getFirebase) => {
         .then(result => result.blob())
         .then((blob) => {
           const filename = image.split('/').pop();
-          const imageRef = storageRef.child(`${postPath}/${filename}`);
-
-          return imageRef.put(blob)
+          const finalBlob = blob;
+          finalBlob.name = filename;
+          return dispatch(uploadFile(postPath, finalBlob, `${postPath}/images`))
             .then(() => dispatch(imageSyncSuccess(post)));
         })
         .catch(error => Promise.resolve(error))
@@ -124,13 +124,10 @@ const syncPosts = () => (dispatch, getState, getFirebase) => {
       R.map((post) => {
         const postPath = getPostPath(post);
         const finalPost = R.omit(['images'], post);
-        const postPromise = firebase.update(postPath, finalPost);
-        postPromise.then(() => dispatch(postSyncSuccess(post)));
 
-        return Promise.all([
-          postPromise,
-          dispatch(syncImages(post)),
-        ]);
+        return firebase.update(postPath, finalPost)
+          .then(() => dispatch(syncImages(post)))
+          .then(() => dispatch(postSyncSuccess(post)));
       }),
       R.map(mapPost),
     ));

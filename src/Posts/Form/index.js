@@ -3,8 +3,7 @@ import React from 'react';
 import R from 'ramda';
 import { Flex, Button, Input, Label } from 'rebass';
 import { Control, Form } from 'react-redux-form';
-import UploadFile from '../../lib/components/UploadFile';
-import { jpeg, png, gif } from '../../lib/helpers/filetypes';
+import UploadFile from '../../files/UploadFile';
 import noop from '../../lib/helpers/noop';
 import withCategories from '../../categories/withCategoriesHoc';
 
@@ -21,7 +20,7 @@ export const MODEL_PATH = `forms.${MODEL_KEY}`;
 type Props = {
   onSubmit: Function,
   onChange: ?Function,
-  filesPath: string,
+  filesPath: String,
   categories: Array<Category>,
 };
 
@@ -50,10 +49,7 @@ const PostForm = (props: Props) => (
       />
       {
         props.filesPath &&
-        <UploadFile
-          filesPath={props.filesPath}
-          acceptedTypes={[jpeg, png, gif]}
-        />
+        <UploadFile.Image filesPath={props.filesPath} />
       }
       <Label htmlFor="forms.post.category">
         Category:

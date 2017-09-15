@@ -17,6 +17,7 @@ type Props = {
   onCreate: ?Function,
   firebase: Object,
   filesPath: String,
+  storageBasePath: String,
   isProfileLoaded: Boolean,
   initializeForm: Function,
   onSubmit: Function,

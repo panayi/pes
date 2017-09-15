@@ -6,10 +6,13 @@ import { defaultProps, withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import Dropzone from 'react-dropzone';
+import * as filetypes from '../constants/filetypes';
+import { actions } from './uploadFile';
 
 type Props = {
   filesPath: string,
   acceptedTypes: string,
+  uploadFile: Function,
   uploadedFiles: Object,
   firebase: Object,
 };
@@ -24,8 +27,11 @@ export class UploadFile extends Component<Props> {
   }
 
   handleDropAccepted = (files: FileList) => {
-    const { filesPath } = this.props;
-    this.props.firebase.uploadFiles(filesPath, files, filesPath);
+    const { filesPath, uploadFile } = this.props;
+
+    R.forEach(file => (
+      uploadFile(file, filesPath)
+    ), files);
   }
 
   handleDropRejected() { // eslint-disable-line
@@ -57,7 +63,19 @@ export class UploadFile extends Component<Props> {
   }
 }
 
-export default R.compose(
+const mapStateToProps = (state, props) => ({
+  uploadedFiles: R.pathOr(
+    {},
+    ['firebase', 'data', ...R.split('/', props.filesPath)],
+    state,
+  ),
+});
+
+const mapDispatchToProps = {
+  uploadFile: actions.uploadFile,
+};
+
+const ConnectedUploadFile = R.compose(
   defaultProps({
     acceptedTypes: [],
   }),
@@ -68,13 +86,17 @@ export default R.compose(
   firebaseConnect(props => ([
     props.filesPath,
   ])),
-  connect(
-    (state, props) => ({
-      uploadedFiles: R.pathOr(
-        {},
-        ['firebase', 'data', ...R.split('/', props.filesPath)],
-        state,
-      ),
-    }),
-  ),
+  connect(mapStateToProps, mapDispatchToProps),
 )(UploadFile);
+
+
+ConnectedUploadFile.Image = R.compose(
+  defaultProps({
+    acceptedTypes: filetypes.IMAGE,
+  }),
+  connect(null, {
+    uploadFile: actions.uploadImage,
+  }),
+)(ConnectedUploadFile);
+
+export default ConnectedUploadFile;
