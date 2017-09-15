@@ -1,34 +1,17 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Heading } from 'rebass';
 import Page from '../../lib/components/Page';
-import SideNav from '../../lib/components/SideNav';
 import needsAdmin from '../../auth/visibility/needsAdminHoc';
-import Users from './users';
-
-const adminLinks = [
-  {
-    label: 'Users',
-    to: '/admin/users',
-  },
-  {
-    label: 'Categories',
-    to: '/admin/categories',
-  },
-  {
-    label: 'Posts',
-    to: '/admin/posts',
-  },
-];
+import Sync from '../../admin/Sync';
 
 const Admin = () => (
   <Page>
-    <SideNav
-      header="Admin"
-      links={adminLinks}
-    />
-    <Switch>
-      <Route exact path="/admin/users" component={Users} />
-    </Switch>
+    <div>
+      <Heading>
+        Sync
+      </Heading>
+      <Sync />
+    </div>
   </Page>
 );
 
