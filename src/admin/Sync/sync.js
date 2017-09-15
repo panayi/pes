@@ -144,7 +144,10 @@ export const syncAll = () => (dispatch) => {
     dispatch(syncPosts()),
   ])
     .then(() => dispatch(syncSuccess()))
-    .catch(() => dispatch(syncFail()));
+    .catch((error) => {
+      console.log(error); // eslint-disable-line no-console
+      dispatch(syncFail());
+    });
 };
 
 export const actions = {
