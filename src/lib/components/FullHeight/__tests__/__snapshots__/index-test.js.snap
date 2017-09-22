@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[Component] FullHeight should render correctly 1`] = `
+<div
+  className="full-height"
+>
+  <header>
+    I am a header
+  </header>
+  <article>
+    I am an article
+  </article>
+</div>
+`;
