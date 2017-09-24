@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login WithFacebook should render correctly 1`] = `
+<Styled(Styled(Base))
+  name="facebook"
+  onClick={[Function]}
+>
+  Sign in with Facebook
+</Styled(Styled(Base))>
+`;
