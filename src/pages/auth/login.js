@@ -2,6 +2,7 @@ import React from 'react';
 import { Flex, Box } from 'rebass';
 import Login from '../../auth/Login';
 import WithPhoneNumber from '../../auth/Login/WithPhoneNumber';
+import WithFacebook from '../../auth/Login/WithFacebook';
 
 export default () => (
   <Flex
@@ -12,6 +13,7 @@ export default () => (
   >
     <Box>
       <Login component={WithPhoneNumber} />
+      <Login component={WithFacebook} />
     </Box>
   </Flex>
 );

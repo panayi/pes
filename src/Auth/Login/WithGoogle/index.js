@@ -10,6 +10,7 @@ const WithGoogle = ({ login, onSuccess, onError }) => (
         .then(onSuccess)
         .catch(onError)
     }
+    name="google"
   >
     Sign in with Google
   </Button>

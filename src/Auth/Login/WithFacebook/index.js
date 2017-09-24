@@ -10,6 +10,7 @@ const WithFacebook = ({ login, onSuccess, onError }) => (
         .then(onSuccess)
         .catch(onError)
     }
+    name="facebook"
   >
     Sign in with Facebook
   </Button>
