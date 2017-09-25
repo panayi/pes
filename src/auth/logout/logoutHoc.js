@@ -3,8 +3,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { defaultProps, withProps } from 'recompose';
 import noop from '../../lib/helpers/noop';
 
-export default R.compose(
-  firebaseConnect(),
+export const logoutHoc = R.compose(
   defaultProps({
     onLogout: noop,
   }),
@@ -18,4 +17,9 @@ export default R.compose(
       window.location.reload();
     },
   })),
+);
+
+export default R.compose(
+  firebaseConnect(),
+  logoutHoc,
 );

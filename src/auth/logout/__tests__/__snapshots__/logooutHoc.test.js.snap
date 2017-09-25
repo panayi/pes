@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`logout should render correctly 1`] = `
+<defaultProps(withProps(Component))
+  firebase={
+    Object {
+      "logout": [Function],
+    }
+  }
+  onLogout={[Function]}
+>
+  <withProps(Component)
+    firebase={
+      Object {
+        "logout": [Function],
+      }
+    }
+    onLogout={[Function]}
+  >
+    <Component
+      firebase={
+        Object {
+          "logout": [Function],
+        }
+      }
+      onClick={[Function]}
+      onLogout={[Function]}
+    >
+      <button>
+        Log out
+      </button>
+    </Component>
+  </withProps(Component)>
+</defaultProps(withProps(Component))>
+`;
