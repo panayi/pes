@@ -2,9 +2,9 @@
 import React from 'react';
 import * as Firebase from 'firebase';
 import { Provider } from 'react-redux';
-import { applyMiddleware, compose } from 'redux';
+import { applyMiddleware, createStore, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
+import { reactReduxFirebase, firebaseStateReducer, getFirebase } from 'react-redux-firebase';
 import FirebaseServer from 'firebase-server';
 import configureMockStore from 'redux-mock-store';
 import detectPort from 'detect-port';
@@ -69,12 +69,32 @@ global.firebase = Object.defineProperty(Firebase, '_', {
 // Helpers
 // ------------------------------------
 
-global.withProvider = (children, state = {}) => {
+global.withMockStore = (children, state = {}) => {
   const store = configureMockStore(compose(
     reactReduxFirebase(Firebase, { userProfile: 'users', enableRedirectHandling: false }),
     applyMiddleware(thunk.withExtraArgument(getFirebase)),
   ))(state);
   store.firebase = global.firebase;
+
+  return {
+    component: (
+      <Provider store={store}>
+        {children}
+      </Provider>
+    ),
+    store,
+  };
+};
+
+global.withStore = (children, state = {}) => {
+  const store = createStore(
+    combineReducers({ firebase: firebaseStateReducer }),
+    state,
+    compose(
+      reactReduxFirebase(Firebase, { userProfile: 'users', enableRedirectHandling: false }),
+      applyMiddleware(thunk.withExtraArgument(getFirebase)),
+    ),
+  );
 
   return {
     component: (

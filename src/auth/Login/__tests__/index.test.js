@@ -2,6 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import { mount } from 'enzyme';
 import ConnectedLogin, { Login } from '../index';
+import WithFacebook from '../WithFacebook';
 
 describe('Login', () => {
   it('should render correctly', () => {
@@ -67,7 +68,7 @@ describe('Login', () => {
           },
         },
       };
-      const { component, store } = withProvider(
+      const { component, store } = withMockStore(
         <ConnectedLogin component={LoginComponent} />,
         state,
       );
