@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WithPhoneNumber should render correctly when showCodeForm is true 1`] = `
+<div>
+  <LocalForm
+    initialState={Object {}}
+    model="local"
+    onSubmit={[Function]}
+  >
+    <DefaultConnectedControlText
+      model=".code"
+      placeholder="Enter SMS code"
+    />
+    <Styled(Styled(Base))
+      id="mockButtonId"
+      type="submit"
+    >
+      Submit
+    </Styled(Styled(Base))>
+  </LocalForm>
+</div>
+`;
+
+exports[`WithPhoneNumber should render correctly when showError is true 1`] = `
+<div>
+  <span>
+    something went wrong
+  </span>
+</div>
+`;
+
+exports[`WithPhoneNumber should render correctly when showLoading is true 1`] = `
+<div>
+  loading
+</div>
+`;
+
+exports[`WithPhoneNumber should render correctly when showPhoneNumberForm is true 1`] = `
+<div>
+  <LocalForm
+    initialState={Object {}}
+    model="local"
+    onSubmit={[Function]}
+  >
+    <DefaultConnectedControlText
+      component={[Function]}
+      defaultCountry="cy"
+      model=".phoneNumber"
+      placeholder="Enter phone number"
+      validators={
+        Object {
+          "required": [Function],
+        }
+      }
+    />
+    <Styled(Styled(Base))
+      id="mockButtonId"
+      type="submit"
+    >
+      Sign in with phone number
+    </Styled(Styled(Base))>
+  </LocalForm>
+</div>
+`;
+
+exports[`WithPhoneNumber should render correctly when showTryAgain is true 1`] = `
+<div>
+  <a
+    onClick={[Function]}
+    role="button"
+    tabIndex="-1"
+  >
+    Try again
+  </a>
+</div>
+`;

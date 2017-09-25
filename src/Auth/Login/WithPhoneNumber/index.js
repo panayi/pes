@@ -3,39 +3,26 @@ import React, { Component } from 'react';
 import R from 'ramda';
 import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
-import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { LocalForm, Control } from 'react-redux-form';
+import { Form, Control } from 'react-redux-form';
 import PhoneInput from 'react-phone-input';
 import { Button } from 'rebass';
+import { Helmet } from 'react-helmet';
 import generateClassName from '../../../lib/helpers/generateClassName';
-import { actions as authActions } from '../../auth';
 import {
-  actions,
-  selectors,
-  STATUS_IDLE,
-  STATUS_SMS_SEND_STARTED,
-  STATUS_SMS_SEND_SUCCEEDED,
-  STATUS_SMS_SEND_FAILED,
-  STATUS_CODE_VALIDATION_STARTED,
-  STATUS_CODE_VALIDATION_SUCCEEDED,
-  STATUS_CODE_VALIDATION_FAILED,
+  type PhoneNumberValues,
+  type CodeValues,
 } from './withPhoneNumber';
-
-const BUTTON_ID: String = generateClassName();
+import * as actions from './withPhoneNumber.actions';
+import * as selectors from './withPhoneNumber.selectors';
 
 type Props = {
   status: String,
   confirmationResult: Object,
   error: Object,
   reset: Function,
-  sendSmsStart: Function,
-  sendSmsSuccess: Function,
-  sendSmsFail: Function,
-  codeValidationStart: Function,
-  codeValidationSuccess: Function,
-  codeValidationFail: Function,
-  updateProfile: Function,
+  submitPhoneNumberForm: Function,
+  submitCodeForm: Function,
   firebase: Object,
   showPhoneNumberForm: Boolean,
   showCodeForm: Boolean,
@@ -44,81 +31,37 @@ type Props = {
   showTryAgain: Boolean,
 };
 
-type PhoneNumberValues = {
-  phoneNumber: String,
+export const INITIAL_STATE = {
+  phoneNumber: '',
+  code: '',
 };
 
-type CodeValues = {
-  code: String,
-};
+export const MODEL_KEY = 'phoneNumberLogin';
+export const MODEL_PATH = `forms.${MODEL_KEY}`;
 
 export class WithPhoneNumber extends Component<Props> {
+  static BUTTON_ID: String = generateClassName();
+
   componentDidMount() {
     this.reset();
-  }
-
-  componentWillUnmount() {
-    this.props.reset();
   }
 
   recaptchaVerifier: Object
 
   reset() {
     this.props.reset();
-    this.createRecaptcha();
+    // FIXME: Timeout needed to
+    // solve an error when clicking tryAgain
+    setTimeout(() => {
+      this.createRecaptcha();
+    }, 100);
   }
 
   createRecaptcha = () => {
     const { RecaptchaVerifier } = this.props.firebase.auth;
-    this.recaptchaVerifier = new RecaptchaVerifier(BUTTON_ID, {
+    this.recaptchaVerifier = new RecaptchaVerifier(WithPhoneNumber.BUTTON_ID, {
       size: 'invisible',
     });
-  }
-
-  handleSubmitPhoneNumberForm = (values: PhoneNumberValues) => {
-    const { phoneNumber } = values;
-    const { firebase, sendSmsStart, sendSmsSuccess, sendSmsFail } = this.props;
-
-    sendSmsStart();
-
-    firebase.auth()
-      .signInWithPhoneNumber(phoneNumber, this.recaptchaVerifier)
-      .then(sendSmsSuccess)
-      .catch(sendSmsFail);
-  }
-
-  handleSubmitCodeForm = (values: CodeValues) => {
-    const { code } = values;
-    const {
-      confirmationResult,
-      codeValidationStart,
-      codeValidationSuccess,
-      codeValidationFail,
-      firebase,
-      updateProfile,
-    } = this.props;
-
-    codeValidationStart();
-
-    const credential = firebase.auth.PhoneAuthProvider.credential(
-      confirmationResult.verificationId,
-      code,
-    );
-    firebase.auth()
-      .signInWithCredential(credential)
-      .then((result) => {
-        const user = result.toJSON();
-
-        // FIXME: for some reason updateProfile doesn't work
-        // unless we add some delay
-        setTimeout(() => {
-          updateProfile(user);
-        }, 1000);
-
-        return Promise.resolve(result);
-      })
-      .then(codeValidationSuccess)
-      .catch(codeValidationFail);
   }
 
   renderPhoneNumberForm() {
@@ -127,25 +70,28 @@ export class WithPhoneNumber extends Component<Props> {
     }
 
     return (
-      <LocalForm
-        onSubmit={(values: PhoneNumberValues) => this.handleSubmitPhoneNumberForm(values)}
+      <Form
+        model={MODEL_PATH}
+        onSubmit={(values: PhoneNumberValues) =>
+          this.props.submitPhoneNumberForm(values, this.recaptchaVerifier)
+        }
       >
         <Control.text
           component={PhoneInput}
           defaultCountry="cy"
-          model=".phoneNumber"
+          model="forms.phoneNumberLogin.phoneNumber"
           placeholder="Enter phone number"
           validators={{
             required: (val: String) => val && val.length,
           }}
         />
         <Button
-          id={BUTTON_ID}
+          id={WithPhoneNumber.BUTTON_ID}
           type="submit"
         >
           Sign in with phone number
         </Button>
-      </LocalForm>
+      </Form>
     );
   }
 
@@ -155,20 +101,21 @@ export class WithPhoneNumber extends Component<Props> {
     }
 
     return (
-      <LocalForm
-        onSubmit={(values: CodeValues) => this.handleSubmitCodeForm(values)}
+      <Form
+        model={MODEL_PATH}
+        onSubmit={(values: CodeValues) => this.props.submitCodeForm(values)}
       >
         <Control.text
-          model=".code"
+          model="forms.phoneNumberLogin.code"
           placeholder="Enter SMS code"
         />
         <Button
-          id={BUTTON_ID}
+          id={WithPhoneNumber.BUTTON_ID}
           type="submit"
         >
           Submit
         </Button>
-      </LocalForm>
+      </Form>
     );
   }
 
@@ -189,7 +136,11 @@ export class WithPhoneNumber extends Component<Props> {
       return null;
     }
 
-    return 'loading';
+    return (
+      <span>
+        loading
+      </span>
+    );
   }
 
   renderTryAgain() {
@@ -216,6 +167,9 @@ export class WithPhoneNumber extends Component<Props> {
         {this.renderError()}
         {this.renderLoading()}
         {this.renderTryAgain()}
+        <Helmet>
+          <script src="https://www.google.com/recaptcha/api.js" async defer />
+        </Helmet>
       </div>
     );
   }
@@ -225,38 +179,20 @@ const mapStateToProps = createStructuredSelector({
   status: selectors.statusSelector,
   confirmationResult: selectors.confirmationResultSelector,
   error: selectors.errorSelector,
+  showPhoneNumberForm: selectors.showPhoneNumberFormSelector,
+  showCodeForm: selectors.showCodeFormSelector,
+  showError: selectors.showErrorSelector,
+  showLoading: selectors.showLoadingSelector,
+  showTryAgain: selectors.showTryAgainSelector,
 });
 
 const mapDispatchToProps = {
-  ...actions,
-  updateProfile: authActions.updateProfile,
+  reset: actions.reset,
+  submitPhoneNumberForm: actions.submitPhoneNumberForm,
+  submitCodeForm: actions.submitCodeForm,
 };
 
 export default R.compose(
   firebaseConnect(),
   connect(mapStateToProps, mapDispatchToProps),
-  withProps(({ status }) => ({
-    showPhoneNumberForm: R.contains(status, [
-      STATUS_IDLE,
-      STATUS_SMS_SEND_STARTED,
-      STATUS_SMS_SEND_FAILED,
-    ]),
-    showCodeForm: R.contains(status, [
-      STATUS_SMS_SEND_SUCCEEDED,
-      STATUS_CODE_VALIDATION_STARTED,
-      STATUS_CODE_VALIDATION_SUCCEEDED,
-      STATUS_CODE_VALIDATION_FAILED,
-    ]),
-    showError: R.contains(status, [
-      STATUS_SMS_SEND_FAILED,
-      STATUS_CODE_VALIDATION_FAILED,
-    ]),
-    showLoading: R.contains(status, [
-      STATUS_SMS_SEND_STARTED,
-      STATUS_CODE_VALIDATION_STARTED,
-    ]),
-    showTryAgain: R.contains(status, [
-      STATUS_CODE_VALIDATION_FAILED,
-    ]),
-  })),
 )(WithPhoneNumber);
