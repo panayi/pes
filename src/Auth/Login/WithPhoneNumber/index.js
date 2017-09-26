@@ -7,8 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { Form, Control } from 'react-redux-form';
 import PhoneInput from 'react-phone-input';
 import { Button } from 'rebass';
-import { Helmet } from 'react-helmet';
-import generateClassName from '../../../lib/helpers/generateClassName';
+import Recaptcha from '../../../lib/components/Recaptcha';
 import {
   type PhoneNumberValues,
   type CodeValues,
@@ -20,7 +19,7 @@ type Props = {
   status: String,
   confirmationResult: Object,
   error: Object,
-  reset: Function,
+  resetAll: Function,
   submitPhoneNumberForm: Function,
   submitCodeForm: Function,
   firebase: Object,
@@ -40,29 +39,11 @@ export const MODEL_KEY = 'phoneNumberLogin';
 export const MODEL_PATH = `forms.${MODEL_KEY}`;
 
 export class WithPhoneNumber extends Component<Props> {
-  static BUTTON_ID: String = generateClassName();
-
-  componentDidMount() {
-    this.reset();
+  componentWillMount() {
+    this.props.resetAll();
   }
 
-  recaptchaVerifier: Object
-
-  reset() {
-    this.props.reset();
-    // FIXME: Timeout needed to
-    // solve an error when clicking tryAgain
-    setTimeout(() => {
-      this.createRecaptcha();
-    }, 100);
-  }
-
-  createRecaptcha = () => {
-    const { RecaptchaVerifier } = this.props.firebase.auth;
-    this.recaptchaVerifier = new RecaptchaVerifier(WithPhoneNumber.BUTTON_ID, {
-      size: 'invisible',
-    });
-  }
+  recaptcha: ?Object
 
   renderPhoneNumberForm() {
     if (!this.props.showPhoneNumberForm) {
@@ -73,7 +54,7 @@ export class WithPhoneNumber extends Component<Props> {
       <Form
         model={MODEL_PATH}
         onSubmit={(values: PhoneNumberValues) =>
-          this.props.submitPhoneNumberForm(values, this.recaptchaVerifier)
+          this.props.submitPhoneNumberForm(values, this.recaptcha || {})
         }
       >
         <Control.text
@@ -85,10 +66,7 @@ export class WithPhoneNumber extends Component<Props> {
             required: (val: String) => val && val.length,
           }}
         />
-        <Button
-          id={WithPhoneNumber.BUTTON_ID}
-          type="submit"
-        >
+        <Button type="submit">
           Sign in with phone number
         </Button>
       </Form>
@@ -109,10 +87,7 @@ export class WithPhoneNumber extends Component<Props> {
           model="forms.phoneNumberLogin.code"
           placeholder="Enter SMS code"
         />
-        <Button
-          id={WithPhoneNumber.BUTTON_ID}
-          type="submit"
-        >
+        <Button type="submit">
           Submit
         </Button>
       </Form>
@@ -150,7 +125,7 @@ export class WithPhoneNumber extends Component<Props> {
 
     return (
       <a
-        onClick={() => this.reset()}
+        onClick={() => this.props.resetAll(this.recaptcha)}
         role="button"
         tabIndex="-1"
       >
@@ -167,9 +142,10 @@ export class WithPhoneNumber extends Component<Props> {
         {this.renderError()}
         {this.renderLoading()}
         {this.renderTryAgain()}
-        <Helmet>
-          <script src="https://www.google.com/recaptcha/api.js" async defer />
-        </Helmet>
+        <Recaptcha
+          firebase={this.props.firebase}
+          ref={(instance) => { this.recaptcha = instance; }}
+        />
       </div>
     );
   }
@@ -187,7 +163,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  reset: actions.reset,
+  resetAll: actions.resetAll,
   submitPhoneNumberForm: actions.submitPhoneNumberForm,
   submitCodeForm: actions.submitCodeForm,
 };

@@ -1,23 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`WithPhoneNumber should always render recaptcha 1`] = `
+<div>
+  <Recaptcha />
+</div>
+`;
+
 exports[`WithPhoneNumber should render correctly when showCodeForm is true 1`] = `
 <div>
-  <LocalForm
-    initialState={Object {}}
-    model="local"
+  <Form
+    model="forms.phoneNumberLogin"
     onSubmit={[Function]}
   >
-    <DefaultConnectedControlText
-      model=".code"
+    <text
+      model="forms.phoneNumberLogin.code"
       placeholder="Enter SMS code"
     />
     <Styled(Styled(Base))
-      id="mockButtonId"
       type="submit"
     >
       Submit
     </Styled(Styled(Base))>
-  </LocalForm>
+  </Form>
+  <Recaptcha />
 </div>
 `;
 
@@ -26,26 +31,29 @@ exports[`WithPhoneNumber should render correctly when showError is true 1`] = `
   <span>
     something went wrong
   </span>
+  <Recaptcha />
 </div>
 `;
 
 exports[`WithPhoneNumber should render correctly when showLoading is true 1`] = `
 <div>
-  loading
+  <span>
+    loading
+  </span>
+  <Recaptcha />
 </div>
 `;
 
 exports[`WithPhoneNumber should render correctly when showPhoneNumberForm is true 1`] = `
 <div>
-  <LocalForm
-    initialState={Object {}}
-    model="local"
+  <Form
+    model="forms.phoneNumberLogin"
     onSubmit={[Function]}
   >
-    <DefaultConnectedControlText
+    <text
       component={[Function]}
       defaultCountry="cy"
-      model=".phoneNumber"
+      model="forms.phoneNumberLogin.phoneNumber"
       placeholder="Enter phone number"
       validators={
         Object {
@@ -54,12 +62,12 @@ exports[`WithPhoneNumber should render correctly when showPhoneNumberForm is tru
       }
     />
     <Styled(Styled(Base))
-      id="mockButtonId"
       type="submit"
     >
       Sign in with phone number
     </Styled(Styled(Base))>
-  </LocalForm>
+  </Form>
+  <Recaptcha />
 </div>
 `;
 
@@ -72,5 +80,6 @@ exports[`WithPhoneNumber should render correctly when showTryAgain is true 1`] =
   >
     Try again
   </a>
+  <Recaptcha />
 </div>
 `;

@@ -19,7 +19,6 @@ export const showPhoneNumberFormSelector = createSelector(
   R.contains(R.__, [
     constants.STATUS_IDLE,
     constants.STATUS_SMS_SEND_STARTED,
-    constants.STATUS_SMS_SEND_FAILED,
   ]),
 );
 
@@ -27,7 +26,6 @@ export const showCodeFormSelector = createSelector(
   statusSelector,
   R.contains(R.__, [
     constants.STATUS_SMS_SEND_SUCCEEDED,
-    constants.STATUS_CODE_VALIDATION_STARTED,
     constants.STATUS_CODE_VALIDATION_SUCCEEDED,
   ]),
 );

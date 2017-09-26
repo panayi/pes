@@ -1,6 +1,7 @@
 /* @flow */
 import R from 'ramda';
 import { createAction } from 'redux-actions';
+import { actions } from 'react-redux-form';
 import { updateProfile } from '../../auth';
 import * as constants from './withPhoneNumber.constants';
 import * as selectors from './withPhoneNumber.selectors';
@@ -12,7 +13,7 @@ import {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const reset = createAction(constants.RESET);
+const reset = createAction(constants.RESET);
 const sendSmsStart = createAction(constants.SMS_SEND_STARTED);
 const sendSmsSuccess = createAction(constants.SMS_SEND_SUCCEEDED);
 const sendSmsFail = createAction(constants.SMS_SEND_FAILED);
@@ -20,7 +21,19 @@ const codeValidationStart = createAction(constants.CODE_VALIDATION_STARTED);
 const codeValidationSuccess = createAction(constants.CODE_VALIDATION_SUCCEEDED);
 const codeValidationFail = createAction(constants.CODE_VALIDATION_FAILED);
 
-export const submitPhoneNumberForm = (values: PhoneNumberValues, recaptchaVerifier: Object) =>
+const resetRecaptcha = (recaptcha) => {
+  if (recaptcha && recaptcha.reset) {
+    recaptcha.reset();
+  }
+};
+
+export const resetAll = (recaptcha: Object) => (dispatch: Dispatch) => {
+  resetRecaptcha(recaptcha);
+  dispatch(actions.reset('forms.phoneNumberLogin'));
+  dispatch(reset());
+};
+
+export const submitPhoneNumberForm = (values: PhoneNumberValues, recaptcha: Object) =>
   (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
     const { phoneNumber } = values;
     const firebase = getFirebase();
@@ -28,12 +41,11 @@ export const submitPhoneNumberForm = (values: PhoneNumberValues, recaptchaVerifi
     dispatch(sendSmsStart());
 
     firebase.auth()
-      .signInWithPhoneNumber(phoneNumber, recaptchaVerifier)
+      .signInWithPhoneNumber(phoneNumber, recaptcha.verifier)
       .then((result) => {
         dispatch(sendSmsSuccess(result));
       })
       .catch((error) => {
-        window.grecaptcha.reset();
         dispatch(sendSmsFail(error));
       });
   };
@@ -65,7 +77,6 @@ export const submitCodeForm = (values: CodeValues) =>
       })
       .then(R.compose(dispatch, codeValidationSuccess))
       .catch((error) => {
-        window.grecaptcha.reset();
         dispatch(codeValidationFail(error));
       });
   };
