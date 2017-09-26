@@ -4,13 +4,13 @@ import R from 'ramda';
 import { Route } from 'react-router-dom';
 import { withProps } from 'recompose';
 import Page from '../../lib/components/Page';
-import SideNav from '../../lib/components/SideNav';
+import SideNav, { type LinkType } from '../../lib/components/SideNav';
 import withCategories from '../../categories/withCategoriesHoc';
 import Posts from './posts';
 
 type Props = {
   categories: Array<Category>,
-  categoryLinks: Array<Object>,
+  categoryLinks: Array<LinkType>,
 };
 
 export class Home extends Component<Props> {
@@ -25,7 +25,7 @@ export class Home extends Component<Props> {
       <Page>
         <SideNav
           header="Categories"
-          links={categoryLinks}
+          links={categoryLinks || []}
         />
         <Route
           path="/:categoryName?"

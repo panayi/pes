@@ -4,7 +4,7 @@ import R from 'ramda';
 import { Flex, Text } from 'rebass';
 import Link from '../Link';
 
-type LinkType = {
+export type LinkType = {
   key: ?String,
   label: String,
   to: String,
