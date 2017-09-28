@@ -6,18 +6,19 @@ import { ConnectedRouter } from 'react-router-redux';
 import 'normalize.css/normalize.css';
 import registerServiceWorker from './lib/registerServiceWorker';
 import createStore from './lib/store/createStore';
-import Index from './pages';
-import Layout from './pages/layout';
+import App from './pages';
+import Layout from './layout';
+import theme from './theme';
 import './index.css';
 
 const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-underscore-dangle
 
 ReactDOM.render((
   <Provider store={store}>
-    <RebassProvider>
+    <RebassProvider theme={theme}>
       <ConnectedRouter history={store.history}>
         <Layout>
-          <Index />
+          <App />
         </Layout>
       </ConnectedRouter>
     </RebassProvider>

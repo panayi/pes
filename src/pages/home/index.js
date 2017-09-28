@@ -13,6 +13,10 @@ type Props = {
   categoryLinks: Array<LinkType>,
 };
 
+const SIDEBAR_WIDTH = 200;
+
+const PostsWithProps = withProps({ sidebarWidth: SIDEBAR_WIDTH })(Posts);
+
 export class Home extends Component<Props> {
   static defaultProps = {
     categories: [],
@@ -26,10 +30,11 @@ export class Home extends Component<Props> {
         <SideNav
           header="Categories"
           links={categoryLinks || []}
+          width={SIDEBAR_WIDTH}
         />
         <Route
           path="/:categoryName?"
-          component={Posts}
+          component={PostsWithProps}
         />
       </Page>
     );

@@ -1,15 +1,23 @@
 /* @flow */
 import React, { Component } from 'react';
 import R from 'ramda';
-import { Flex, Column, Card, BackgroundImage, Subhead, Badge, Text, Small } from 'rebass';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
+import { withProps } from 'recompose';
+import Masonry from 'react-masonry-infinite';
 import { postsByCategorySelector } from '../posts';
+import PostCard from '../Card';
+import { sizesSelector } from './feed';
 
 type Props = {
   categoryName: String,
   posts: Array<Post>,
+  sidebarWidth: Number,
+  sizes: Array<Object>,
 };
+
+const COLUMN_WIDTH = 350;
+
 
 export class Posts extends Component<Props> {
   static defaultProps = {
@@ -17,39 +25,21 @@ export class Posts extends Component<Props> {
   };
 
   render() {
-    const { posts } = this.props;
+    const { posts, sizes } = this.props;
 
     return (
-      <Flex wrap>
+      <Masonry sizes={sizes}>
         {
           R.addIndex(R.map)((post, index) => (
-            <Column
+            <PostCard
+              // FIXME: Should not use index for key
               key={index}
-              w="300px"
-            >
-              <Card
-                href={post.permalink}
-                target="_blank"
-              >
-                <BackgroundImage
-                  src="http://via.placeholder.com/400x200"
-                  alt={post.title}
-                />
-                <Subhead p={2}>
-                  {post.title}
-                  <Badge>
-                    {post.oldId}
-                  </Badge>
-                </Subhead>
-                <Small>
-                  {post.phone}
-                </Small>
-                <Text dangerouslySetInnerHTML={{ __html: post.body }} />
-              </Card>
-            </Column>
+              post={post}
+              width={COLUMN_WIDTH}
+            />
           ), posts)
         }
-      </Flex>
+      </Masonry>
     );
   }
 }
@@ -62,5 +52,14 @@ export default R.compose(
   )),
   connect((state, { categoryName }) => ({
     posts: postsByCategorySelector(categoryName)(state),
+  })),
+  withProps(({ sidebarWidth }) => ({
+    sizes: sizesSelector({
+      columnWidth: COLUMN_WIDTH,
+      gutter: 20,
+      maxScreenWidth: 5000,
+      // FIXME: use variable for Page margin
+      wastedWidth: sidebarWidth + (2 * 16),
+    }),
   })),
 )(Posts);

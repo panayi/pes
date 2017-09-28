@@ -1,12 +1,12 @@
 import React from 'react';
 import R from 'ramda';
 import { Toolbar } from 'rebass';
-import Link from '../../../lib/components/Link';
-import ProfileImage from '../../../lib/components/ProfileImage';
-import hideUser from '../../../auth/visibility/hideUserHoc';
-import hideVisitor from '../../../auth/visibility/hideVisitorHoc';
-import hideNonAdmin from '../../../auth/visibility/hideNonAdminHoc';
-import logoutHoc from '../../../auth/logout/logoutHoc';
+import Link from '../../lib/components/Link';
+import ProfileImage from '../../lib/components/ProfileImage';
+import hideUser from '../../auth/visibility/hideUserHoc';
+import hideVisitor from '../../auth/visibility/hideVisitorHoc';
+import hideNonAdmin from '../../auth/visibility/hideNonAdminHoc';
+import logoutHoc from '../../auth/logout/logoutHoc';
 
 const LoginLink = hideUser(Link.Nav);
 
@@ -18,7 +18,7 @@ const LogoutLink = R.compose(
 const AdminLink = hideNonAdmin(Link.Nav);
 
 export default () => (
-  <Toolbar>
+  <Toolbar bg="blue">
     <Link.Nav
       to="/"
       exact
