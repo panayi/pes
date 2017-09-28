@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import R from 'ramda';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
-import { withProps } from 'recompose';
+import { withState, withProps } from 'recompose';
 import Masonry from 'react-masonry-infinite';
 import { postsByCategorySelector } from '../posts';
 import PostCard from '../Card';
@@ -14,6 +14,7 @@ type Props = {
   posts: Array<Post>,
   sidebarWidth: Number,
   sizes: Array<Object>,
+  setCount: Function,
 };
 
 const COLUMN_WIDTH = 350;
@@ -25,10 +26,14 @@ export class Posts extends Component<Props> {
   };
 
   render() {
-    const { posts, sizes } = this.props;
+    const { posts, sizes, setCount } = this.props;
 
     return (
-      <Masonry sizes={sizes}>
+      <Masonry
+        sizes={sizes}
+        loadMore={() => setCount(posts.length)}
+        hasMore
+      >
         {
           R.addIndex(R.map)((post, index) => (
             <PostCard
@@ -45,10 +50,11 @@ export class Posts extends Component<Props> {
 }
 
 export default R.compose(
-  firebaseConnect(({ categoryName }) => (
+  withState('count', 'setCount', 0),
+  firebaseConnect(({ categoryName, count }) => (
     categoryName
       ? [`posts#orderByChild=category&equalTo=${categoryName}`]
-      : ['posts']
+      : [`posts#orderByKey&startAt=${count}&limitToFirst=20`]
   )),
   connect((state, { categoryName }) => ({
     posts: postsByCategorySelector(categoryName)(state),
