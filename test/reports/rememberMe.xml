@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="2">
+
+  <testsuite name="rememberMe"
+    errors="1" failures="0" hostname="" id="" package="rememberMe" skipped="1"
+    tests="2" time="0.04600" timestamp="Sun, 24 Sep 2017 14:35:56 GMT">
+  
+    <testcase name="User is remembered on page refresh" classname="rememberMe" time="0.04600" assertions="0">
+    </testcase>
+  
+
+  
+    <system-err>
+        Error while running [Remember Me / User is remembered on page refresh]:
+
+  TypeError: loggedInPage.isLoggedIn(...).refresh is not a function
+    at Object.UserIsRememberedOnPageRefresh [as User is remembered on page refresh] (/Users/ppanagi/Dropbox/Development/pesposa-next/e2e/tests/rememberMe.js:15:8)
+    at Module.call (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:796:13)
+    at /Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:556:49
+    at runSingle (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:137:13)
+    at flush (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:125:13)
+    at _combinedTickCallback (internal/process/next_tick.js:67:7)
+    </system-err>
+  
+
+  
+    
+    <testcase
+      name="User is remembered in a new window" classname="rememberMe">
+      <skipped />
+    </testcase>
+    
+  
+  </testsuite>
+</testsuites>

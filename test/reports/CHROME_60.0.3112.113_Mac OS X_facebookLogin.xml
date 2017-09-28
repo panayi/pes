@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="1"
+            failures="0"
+            tests="2">
+
+  <testsuite name="facebookLogin"
+    errors="1" failures="0" hostname="" id="" package="facebookLogin" skipped="0"
+    tests="2" time="6.304" timestamp="Sun, 24 Sep 2017 19:05:43 GMT">
+  
+    <testcase name="Facebook button exists on login page" classname="facebookLogin" time="3.348" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="Facebook button opens facebook login popup on click" classname="facebookLogin" time="2.956" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+
+  
+    <system-err>
+        Error while running [Facebook Login / Facebook button opens facebook login popup on click]:
+
+  TypeError: loginPage.waitForElementVisible(...).verify.title(...).end is not a function
+    at Object.&lt;anonymous&gt; (/Users/ppanagi/Dropbox/Development/pesposa-next/e2e/tests/facebookLogin.js:26:10)
+    at HttpRequest.&lt;anonymous&gt; (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/nightwatch/lib/index.js:366:18)
+    at emitTwo (events.js:106:13)
+    at HttpRequest.emit (events.js:191:7)
+    at HttpRequest.&lt;anonymous&gt; (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/nightwatch/lib/index.js:382:15)
+    at emitThree (events.js:116:13)
+    at HttpRequest.emit (events.js:194:7)
+    at IncomingMessage.&lt;anonymous&gt; (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/nightwatch/lib/http/request.js:166:16)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+ERROR: Unable to locate element: &quot;button[name=facebook]&quot; using: css selector
+    at Object.click (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/nightwatch/lib/page-object/command-wrapper.js:117:25)
+    at Object.loginWithFacebook (/Users/ppanagi/Dropbox/Development/pesposa-next/e2e/pages/loginPage.js:5:8)
+    at Object.UserIsRememberedOnPageRefresh [as User is remembered on page refresh] (/Users/ppanagi/Dropbox/Development/pesposa-next/e2e/tests/rememberMe.js:8:8)
+    at Module.call (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/nightwatch/lib/runner/module.js:62:34)
+    at /Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/nightwatch/lib/runner/testcase.js:70:29
+    at _fulfilled (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:834:54)
+    at self.promiseDispatch.done (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:863:30)
+    at Promise.promise.promiseDispatch (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:796:13)
+    at /Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:556:49
+    at runSingle (/Users/ppanagi/Dropbox/Development/pesposa-next/node_modules/q/q.js:137:13)
+    </system-err>
+  
+
+  
+  </testsuite>
+</testsuites>

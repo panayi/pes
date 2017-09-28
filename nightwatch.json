@@ -1,15 +1,15 @@
 {
-  "src_folders": ["e2e/tests"],
-  "output_folder": "e2e/reports",
+  "src_folders": ["test/tests"],
+  "output_folder": "test/reports",
   "custom_commands_path": "",
   "custom_assertions_path": "",
-  "page_objects_path": "e2e/pages",
-  "globals_path": "e2e/globals",
+  "page_objects_path": "test/pages",
+  "globals_path": "test/globals",
 
   "selenium": {
     "start_process": true,
     "server_path": "./node_modules/selenium-standalone/.selenium/selenium-server/3.5.3-server.jar",
-    "log_path": "./e2e/reports",
+    "log_path": "./test/reports",
     "host": "127.0.0.1",
     "port": 4444,
     "cli_args": {
