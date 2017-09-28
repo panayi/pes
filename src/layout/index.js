@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FullHeight from '../../lib/components/FullHeight';
+import FullHeight from '../lib/components/FullHeight';
 import Header from './Header';
 
 const Layout = ({ children }) => (
