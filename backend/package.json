@@ -1,0 +1,27 @@
+{
+  "name": "pesposa-backend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-scripts": "1.0.14"
+  },
+  "scripts": {
+    "ui:start": "react-scripts start",
+    "ui:build": "react-scripts build",
+    "ui:test": "react-scripts test --env=jsdom",
+    "ui:eject": "react-scripts eject",
+    "functions:start": "firebase serve --only functions",
+    "functions:build": "cd functions && webpack",
+    "start": "run-p ui:start functions:start",
+    "build": "npm run ui:build && npm run functions:build",
+    "deploy:ui": "npm run ui:build && firebase deploy --only hosting",
+    "deploy:functions": "npm run functions:build && firebase deploy --only functions",
+    "deploy:database": "firebase deploy --only database",
+    "deploy": "npm run build && firebase deploy"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.1"
+  }
+}

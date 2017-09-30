@@ -1,18 +1,22 @@
-# OS X
-.DS_Store*
-
-# Linux
-.directory
-*~
-
-# npm
+# dependencies
+/node_modules
 functions/node_modules
-package-lock.json
-*.log
-*.gz
 
-# Build output
-functions/index.js
+# testing
+/coverage
 
-# Coveralls
-coverage
+# production
+/build
+/functions/index.js
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+firebase-debug.log
