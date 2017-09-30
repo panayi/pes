@@ -49,6 +49,6 @@ yarn e2e
 
 `yarn build`
 
-## Deploy to now.sh
+## Deploy to Firebase Hosting
 
-`now`
+`yarn deploy`

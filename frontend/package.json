@@ -38,23 +38,6 @@
     "shortid": "^2.2.8",
     "styled-components": "^2.1.2"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "e2e-setup": "selenium-standalone install",
-    "e2e": "nightwatch",
-    "eject": "react-scripts eject",
-    "seed": "babel-node ./db/scripts/seed",
-    "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build",
-    "lint": "./node_modules/eslint/bin/eslint.js ./ --cache --ext .js,.es6,.jsx --ignore-pattern '*.spec.js'",
-    "stylelint": "./node_modules/stylelint/bin/stylelint.js --config .stylelintrc {'**/*.scss','**/*.css'}",
-    "flow": "flow",
-    "generate": "./node_modules/redux-cli/bin/redux.js generate",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.6",
     "@storybook/addon-links": "^3.2.6",
@@ -84,5 +67,23 @@
   "pre-push": [
     "lint",
     "stylelint"
-  ]
+  ],
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "e2e-setup": "selenium-standalone install",
+    "e2e": "nightwatch",
+    "eject": "react-scripts eject",
+    "seed": "babel-node ./db/scripts/seed",
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build",
+    "lint": "./node_modules/eslint/bin/eslint.js ./ --cache --ext .js,.es6,.jsx --ignore-pattern '*.spec.js'",
+    "stylelint": "./node_modules/stylelint/bin/stylelint.js --config .stylelintrc {'**/*.scss','**/*.css'}",
+    "flow": "flow",
+    "generate": "./node_modules/redux-cli/bin/redux.js generate",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public",
+    "deploy": "npm run build && firebase deploy -P development"
+  }
 }
