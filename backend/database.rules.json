@@ -1,0 +1,30 @@
+{
+  "rules": {
+    ".read": true,
+    "posts": {
+      // Can "write" only when authenticated
+      // Can "update"/"delete" only when post belongs to current user
+      // FIXME: temporarily requiring only phone-number auth, until merging-accounts is implemented
+      "$postid": {
+      	".write": "auth !== null && auth.provider == 'phone' && (!data.exists() || data.child('user').val() === auth.uid)"
+      },
+
+      // When creating a Post, user must match the logged-in user
+      "user": {
+      	".validate": "newData.val() === auth.uid"
+      },
+
+      ".indexOn": ["category"]
+    },
+    "oldPosts": {
+      // FIXME: temporarily allow everything,
+      ".write": true
+    },
+    "users": {
+      "$uid": {
+        // Allow update only the current user
+        ".write": "auth.uid == $uid"
+      }
+    }
+  }
+}
