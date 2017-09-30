@@ -1,20 +1,21 @@
 /* @flow */
 import React, { Component } from 'react';
 import R from 'ramda';
-import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
-import { withState, withProps } from 'recompose';
+import { withProps } from 'recompose';
 import Masonry from 'react-masonry-infinite';
-import { postsByCategorySelector } from '../posts';
+import { Configure } from 'react-instantsearch/dom';
+import { connectInfiniteHits } from 'react-instantsearch/connectors';
 import PostCard from '../Card';
-import { sizesSelector } from './feed';
+import { sizesSelector, searchParamsSelector } from './feed';
 
 type Props = {
   categoryName: String,
-  posts: Array<Post>,
+  hits: Array<Post>,
+  hasMore: Boolean,
+  refine: Function,
   sidebarWidth: Number,
   sizes: Array<Object>,
-  setCount: Function,
+  searchParams: Object,
 };
 
 const COLUMN_WIDTH = 350;
@@ -22,50 +23,46 @@ const COLUMN_WIDTH = 350;
 
 export class Posts extends Component<Props> {
   static defaultProps = {
-    posts: [],
+    hits: [],
   };
 
   render() {
-    const { posts, sizes, setCount } = this.props;
+    const { hits, hasMore, refine, sizes, searchParams } = this.props;
 
     return (
-      <Masonry
-        sizes={sizes}
-        loadMore={() => setCount(posts.length)}
-        hasMore
-      >
-        {
-          R.addIndex(R.map)((post, index) => (
-            <PostCard
-              // FIXME: Should not use index for key
-              key={index}
-              post={post}
-              width={COLUMN_WIDTH}
-            />
-          ), posts)
-        }
-      </Masonry>
+      <div>
+        <Masonry
+          sizes={sizes}
+          hasMore={hasMore}
+          loadMore={refine}
+        >
+          {
+            R.addIndex(R.map)((post, index) => (
+              <PostCard
+                // FIXME: Should not use index for key
+                key={index}
+                post={post}
+                width={COLUMN_WIDTH}
+              />
+            ), hits)
+          }
+        </Masonry>
+        <Configure {...searchParams} />
+      </div>
     );
   }
 }
 
 export default R.compose(
-  withState('count', 'setCount', 0),
-  firebaseConnect(({ categoryName, count }) => (
-    categoryName
-      ? [`posts#orderByChild=category&equalTo=${categoryName}`]
-      : [`posts#orderByKey&startAt=${count}&limitToFirst=20`]
-  )),
-  connect((state, { categoryName }) => ({
-    posts: postsByCategorySelector(categoryName)(state),
-  })),
-  withProps(({ sidebarWidth }) => ({
+  connectInfiniteHits,
+  withProps(props => ({
     sizes: sizesSelector({
       columnWidth: COLUMN_WIDTH,
       gutter: 20,
       maxScreenWidth: 5000,
       // FIXME: use variable for Page margin
-      wastedWidth: sidebarWidth + (2 * 16),
+      wastedWidth: props.sidebarWidth + (2 * 16),
     }),
+    searchParams: searchParamsSelector(props),
   })),
 )(Posts);

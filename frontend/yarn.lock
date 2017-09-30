@@ -202,6 +202,10 @@ agent-base@2:
     extend "~3.0.0"
     semver "~5.0.1"
 
+agentkeepalive@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/agentkeepalive/-/agentkeepalive-2.2.0.tgz#c5d1bd4b129008f1163f236f86e5faea2026e2ef"
+
 airbnb-js-shims@^1.1.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/airbnb-js-shims/-/airbnb-js-shims-1.3.0.tgz#aac46d80057fb0b414f70e06d07e362fd99ee2fa"
@@ -240,6 +244,35 @@ ajv@^5.0.0, ajv@^5.1.5, ajv@^5.2.0:
     fast-deep-equal "^0.1.0"
     json-schema-traverse "^0.3.0"
     json-stable-stringify "^1.0.1"
+
+algoliasearch-helper@^2.21.0:
+  version "2.21.2"
+  resolved "https://registry.yarnpkg.com/algoliasearch-helper/-/algoliasearch-helper-2.21.2.tgz#73a1f9a9e60be0ed04ce93d5f63fc7105e599f5b"
+  dependencies:
+    events "^1.1.0"
+    lodash "^4.13.1"
+    qs "^6.2.1"
+    util "^0.10.3"
+
+algoliasearch@^3.24.0:
+  version "3.24.4"
+  resolved "https://registry.yarnpkg.com/algoliasearch/-/algoliasearch-3.24.4.tgz#03062e18eeba0ce9e1b52ff55914c4fcc0136a20"
+  dependencies:
+    agentkeepalive "^2.2.0"
+    debug "^2.6.8"
+    envify "^4.0.0"
+    es6-promise "^4.1.0"
+    events "^1.1.0"
+    foreach "^2.0.5"
+    global "^4.3.2"
+    inherits "^2.0.1"
+    isarray "^2.0.1"
+    load-script "^1.0.0"
+    object-keys "^1.0.11"
+    querystring-es3 "^0.2.1"
+    reduce "^1.0.1"
+    semver "^5.1.0"
+    tunnel-agent "^0.6.0"
 
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
@@ -2948,6 +2981,13 @@ entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
+envify@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/envify/-/envify-4.1.0.tgz#f39ad3db9d6801b4e6b478b61028d3f0b6819f7e"
+  dependencies:
+    esprima "^4.0.0"
+    through "~2.3.4"
+
 enzyme-matchers@^3.8.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/enzyme-matchers/-/enzyme-matchers-3.8.3.tgz#6269d47b0d81d5222745da503f27ac003ba208d2"
@@ -3050,7 +3090,7 @@ es6-map@^0.1.3:
     es6-symbol "~3.1.1"
     event-emitter "~0.3.5"
 
-es6-promise@^4.0.5, es6-promise@^4.1.1:
+es6-promise@^4.0.5, es6-promise@^4.1.0, es6-promise@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.1.1.tgz#8811e90915d9a0dba36274f0b242dbda78f9c92a"
 
@@ -3314,7 +3354,7 @@ eventemitter3@1.x.x:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
 
-events@^1.0.0, events@^1.1.1:
+events@^1.0.0, events@^1.1.0, events@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
@@ -4713,6 +4753,10 @@ isarray@1.0.0, isarray@^1.0.0, isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
 
+isarray@^2.0.1:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/isarray/-/isarray-2.0.2.tgz#5aa99638daf2248b10b9598b763a045688ece3ee"
+
 isemail@1.x.x:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/isemail/-/isemail-1.2.0.tgz#be03df8cc3e29de4d2c5df6501263f1fa4595e9a"
@@ -5276,6 +5320,10 @@ load-json-file@^2.0.0:
     parse-json "^2.2.0"
     pify "^2.0.0"
     strip-bom "^3.0.0"
+
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
 
 loader-fs-cache@^1.0.0:
   version "1.0.1"
@@ -6106,7 +6154,7 @@ object-is@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/object-is/-/object-is-1.0.1.tgz#0aa60ec9989a0b3ed795cf4d06f62cf1ad6539b6"
 
-object-keys@^1.0.10, object-keys@^1.0.8:
+object-keys@^1.0.10, object-keys@^1.0.11, object-keys@^1.0.8, object-keys@~1.0.0:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
 
@@ -6987,7 +7035,7 @@ q@1.4.1, q@^1.1.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
 
-qs@6.4.0, qs@^6.4.0, qs@~6.4.0:
+qs@6.4.0, qs@^6.2.1, qs@^6.4.0, qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
@@ -7002,7 +7050,7 @@ query-string@4.3.4, query-string@^4.1.0:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-querystring-es3@^0.2.0:
+querystring-es3@^0.2.0, querystring-es3@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
 
@@ -7172,6 +7220,16 @@ react-inspector@^2.1.1:
   dependencies:
     babel-runtime "^6.23.0"
     is-dom "^1.0.9"
+
+react-instantsearch@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/react-instantsearch/-/react-instantsearch-4.1.2.tgz#d9d688147ce088cc3ea117f9561e58ef85d9dd00"
+  dependencies:
+    algoliasearch "^3.24.0"
+    algoliasearch-helper "^2.21.0"
+    classnames "^2.2.5"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
 
 react-komposer@^1.9.0:
   version "1.13.1"
@@ -7556,6 +7614,12 @@ reduce-function-call@^1.0.1:
 reduce-reducers@^0.1.0:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-0.1.2.tgz#fa1b4718bc5292a71ddd1e5d839c9bea9770f14b"
+
+reduce@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/reduce/-/reduce-1.0.1.tgz#14fa2e5ff1fc560703a020cbb5fbaab691565804"
+  dependencies:
+    object-keys "~1.0.0"
 
 redux-actions@^2.2.1:
   version "2.2.1"
@@ -8649,7 +8713,7 @@ throat@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/throat/-/throat-3.2.0.tgz#50cb0670edbc40237b9e347d7e1f88e4620af836"
 
-through@^2.3.6, through@^2.3.8:
+through@^2.3.6, through@^2.3.8, through@~2.3.4:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 
