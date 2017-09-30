@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import R from 'ramda';
 import { Route } from 'react-router-dom';
 import { withProps } from 'recompose';
+import { InstantSearch } from 'react-instantsearch/dom';
 import Page from '../../lib/components/Page';
 import SideNav, { type LinkType } from '../../lib/components/SideNav';
 import withCategories from '../../categories/withCategoriesHoc';
@@ -26,17 +27,23 @@ export class Home extends Component<Props> {
     const { categoryLinks } = this.props;
 
     return (
-      <Page>
-        <SideNav
-          header="Categories"
-          links={categoryLinks || []}
-          width={SIDEBAR_WIDTH}
-        />
-        <Route
-          path="/:categoryName?"
-          component={PostsWithProps}
-        />
-      </Page>
+      <InstantSearch
+        appId={process.env.REACT_APP_ALGOLIA_APP_ID}
+        apiKey={process.env.REACT_APP_ALGOLIA_SEARCH_KEY}
+        indexName={process.env.REACT_APP_ALGOLIA_INDEX_NAME}
+      >
+        <Page>
+          <SideNav
+            header="Categories"
+            links={categoryLinks || []}
+            width={SIDEBAR_WIDTH}
+          />
+          <Route
+            path="/:categoryName?"
+            component={PostsWithProps}
+          />
+        </Page>
+      </InstantSearch>
     );
   }
 }
