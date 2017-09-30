@@ -16,10 +16,10 @@
     "functions:build": "cd functions && webpack",
     "start": "run-p ui:start functions:start",
     "build": "npm run ui:build && npm run functions:build",
-    "deploy:ui": "npm run ui:build && firebase deploy --only hosting",
-    "deploy:functions": "npm run functions:build && firebase deploy --only functions",
-    "deploy:database": "firebase deploy --only database",
-    "deploy": "npm run build && firebase deploy"
+    "deploy:ui": "npm run ui:build && firebase deploy --only hosting -P development",
+    "deploy:functions": "npm run functions:build && firebase deploy --only functions -P development",
+    "deploy:database": "firebase deploy --only database -P development",
+    "deploy": "npm run build && firebase deploy -P development"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.1"

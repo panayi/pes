@@ -1,4 +1,4 @@
 import algoliasearch from 'algoliasearch';
 
 // configure algolia
-export default algoliasearch('CC8NTUTBBH', '76c82f407ad09e325905941b5982f287');
+export default algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_API_KEY);

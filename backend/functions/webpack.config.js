@@ -1,5 +1,6 @@
 'use strict';
 
+var Dotenv = require('dotenv-webpack');
 var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -25,5 +26,10 @@ module.exports = {
   resolve: {
     extensions: ['.js']
   },
-  externals: [nodeExternals()] // <-- Important
+  externals: [nodeExternals()], // <-- Important
+  plugins: [
+    new Dotenv({
+      path: '../.env'
+    })
+  ]
 };
