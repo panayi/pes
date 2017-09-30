@@ -1,0 +1,18 @@
+# OS X
+.DS_Store*
+
+# Linux
+.directory
+*~
+
+# npm
+functions/node_modules
+package-lock.json
+*.log
+*.gz
+
+# Build output
+functions/index.js
+
+# Coveralls
+coverage
