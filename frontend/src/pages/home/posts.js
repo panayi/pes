@@ -3,7 +3,7 @@ import React from 'react';
 import R from 'ramda';
 import { Flex } from 'rebass';
 import { withProps } from 'recompose';
-import PostsFeed from '../../posts/Feed';
+import PostsFeed from '../../postsFeed';
 
 type Props = {
   categoryName: String,

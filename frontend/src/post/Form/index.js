@@ -3,7 +3,7 @@ import React from 'react';
 import R from 'ramda';
 import { Flex, Button, Input, Label } from 'rebass';
 import { Control, Form } from 'react-redux-form';
-import UploadFile from '../../files/UploadFile';
+import UploadFile from '../../uploadFile';
 import noop from '../../lib/helpers/noop';
 import withCategories from '../../categories/withCategoriesHoc';
 

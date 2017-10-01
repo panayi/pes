@@ -6,7 +6,7 @@ import { defaultProps, withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import Dropzone from 'react-dropzone';
-import * as filetypes from '../constants/filetypes';
+import * as filetypes from './constants/filetypes';
 import { actions } from './uploadFile';
 
 type Props = {

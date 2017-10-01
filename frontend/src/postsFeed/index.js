@@ -5,7 +5,7 @@ import { withProps } from 'recompose';
 import Masonry from 'react-masonry-infinite';
 import { Configure } from 'react-instantsearch/dom';
 import { connectInfiniteHits } from 'react-instantsearch/connectors';
-import PostCard from '../Card';
+import PostCard from './Card';
 import { sizesSelector, searchParamsSelector } from './feed';
 
 type Props = {
@@ -21,7 +21,7 @@ type Props = {
 const COLUMN_WIDTH = 350;
 
 
-export class Posts extends Component<Props> {
+export class PostsFeed extends Component<Props> {
   static defaultProps = {
     hits: [],
   };

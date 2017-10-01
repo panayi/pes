@@ -1,6 +1,6 @@
 /* @flow */
-import generateId from '../../lib/helpers/generateId';
-import * as storagePaths from '../constants/storagePaths';
+import generateId from '../lib/helpers/generateId';
+import * as storagePaths from './constants/storagePaths';
 
 // ------------------------------------
 // Actions

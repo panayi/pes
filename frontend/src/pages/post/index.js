@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Page from '../../lib/components/Page';
-import NewPost from '../../posts/New';
+import NewPost from '../../post/New';
 
 type Props = {
   onCreate: Function,
