@@ -73,7 +73,8 @@ export const sizesSelector = createSelector(
 
 export const searchParamsSelector = createSelector(
   R.prop('categoryName'),
-  categoryName => ({
+  R.prop('currentRefinement'),
+  (categoryName, query) => ({
     facetFilters: categoryName ? [`category:${categoryName}`] : undefined,
     hitsPerPage: 20,
   }),

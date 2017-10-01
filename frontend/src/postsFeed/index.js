@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import R from 'ramda';
 import { withProps } from 'recompose';
 import Masonry from 'react-masonry-infinite';
-import { Configure } from 'react-instantsearch/dom';
 import { connectInfiniteHits } from 'react-instantsearch/connectors';
 import PostCard from './Card';
-import { sizesSelector, searchParamsSelector } from './feed';
+import { sizesSelector } from './feed';
+import ConfigureSearchParams from './ConfigureSearchParams';
 
 type Props = {
   categoryName: String,
@@ -15,7 +15,6 @@ type Props = {
   refine: Function,
   sidebarWidth: Number,
   sizes: Array<Object>,
-  searchParams: Object,
 };
 
 const COLUMN_WIDTH = 350;
@@ -26,12 +25,23 @@ export class PostsFeed extends Component<Props> {
     hits: [],
   };
 
+  componentDidUpdate(prevProps: Props) {
+    // If the search hits have changed,
+    // force Masonry to recalulate layout
+    if (this.masonry && !R.equals(prevProps.hits, this.props.hits)) {
+      this.masonry.forcePack();
+    }
+  }
+
+  masonry: Object
+
   render() {
-    const { hits, hasMore, refine, sizes, searchParams } = this.props;
+    const { categoryName, hits, hasMore, refine, sizes } = this.props;
 
     return (
       <div>
         <Masonry
+          ref={(instance) => { this.masonry = instance; }}
           sizes={sizes}
           hasMore={hasMore}
           loadMore={refine}
@@ -47,7 +57,7 @@ export class PostsFeed extends Component<Props> {
             ), hits)
           }
         </Masonry>
-        <Configure {...searchParams} />
+        <ConfigureSearchParams categoryName={categoryName} />
       </div>
     );
   }
@@ -63,6 +73,5 @@ export default R.compose(
       // FIXME: use variable for Page margin
       wastedWidth: props.sidebarWidth + (2 * 16),
     }),
-    searchParams: searchParamsSelector(props),
   })),
-)(Posts);
+)(PostsFeed);

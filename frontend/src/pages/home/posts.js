@@ -3,6 +3,7 @@ import React from 'react';
 import R from 'ramda';
 import { Flex } from 'rebass';
 import { withProps } from 'recompose';
+import Search from '../../search';
 import PostsFeed from '../../postsFeed';
 
 type Props = {
@@ -15,10 +16,13 @@ const Posts = (props: Props) => (
     width={`calc(100% - ${props.sidebarWidth}px)`}
     justify="center"
   >
-    <PostsFeed
-      categoryName={props.categoryName}
-      sidebarWidth={props.sidebarWidth}
-    />
+    <Flex column>
+      <Search />
+      <PostsFeed
+        categoryName={props.categoryName}
+        sidebarWidth={props.sidebarWidth}
+      />
+    </Flex>
   </Flex>
 );
 
