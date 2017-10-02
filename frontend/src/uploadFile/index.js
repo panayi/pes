@@ -71,32 +71,28 @@ const mapStateToProps = (state, props) => ({
   ),
 });
 
-const mapDispatchToProps = {
-  uploadFile: actions.uploadFile,
-};
-
-const ConnectedUploadFile = R.compose(
+const connectUploadFile = ({ acceptedTypes, uploadFile }) => R.compose(
   defaultProps({
-    acceptedTypes: [],
+    acceptedTypes,
   }),
   withProps(R.over(
     R.lensProp('acceptedTypes'),
-    R.when(R.is(Array), R.join(',')),
+    R.join(','),
   )),
   firebaseConnect(props => ([
     props.filesPath,
   ])),
-  connect(mapStateToProps, mapDispatchToProps),
-)(UploadFile);
+  connect(mapStateToProps, { uploadFile }),
+);
 
+const ConnectedUploadFile = connectUploadFile({
+  acceptedTypes: [],
+  uploadFile: actions.uploadFile,
+})(UploadFile);
 
-ConnectedUploadFile.Image = R.compose(
-  defaultProps({
-    acceptedTypes: filetypes.IMAGE,
-  }),
-  connect(null, {
-    uploadFile: actions.uploadImage,
-  }),
-)(ConnectedUploadFile);
+ConnectedUploadFile.Image = connectUploadFile({
+  acceptedTypes: filetypes.IMAGE,
+  uploadFile: actions.uploadImage,
+})(UploadFile);
 
 export default ConnectedUploadFile;

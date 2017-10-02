@@ -2,8 +2,8 @@
 
 1. <http://bazaraki.com/>
 2. <https://www.tokopedia.com/>
-2. <https://us.letgo.com/en>
-3. <https://www.close5.com/>
+2. <https://us.letgo.com/en>  ***
+3. <https://www.close5.com/> ***
 4. <http://www.xe.gr/>
 5. <http://www.wallapop.com/>
 6. <https://offerup.com/>
