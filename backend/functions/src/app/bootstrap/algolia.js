@@ -1,5 +1,24 @@
+import R from 'ramda';
 import { database } from '../../lib/firebase';
 import algolia from '../../lib/algolia';
+
+const serializePost = R.compose(
+  R.over(
+    R.lensProp('body'),
+    R.compose(
+      str => str.substring(0, 1500),
+      R.defaultTo(''),
+    ),
+  ),
+  R.over(
+    R.lensProp('images')
+    R.compose(
+      R.pluck('downloadURL'),
+      R.defaultTo([]),
+    ),
+  ),
+  R.pick(['title', 'body', 'category', 'categoryChild', 'price', 'images']),
+);
 
 const initialImport = (dataSnapshot, req, res) => {
   const index = algolia.initIndex('posts');
@@ -16,9 +35,7 @@ const initialImport = (dataSnapshot, req, res) => {
     childData.objectID = childKey;
     // Add object for indexing
 
-    delete childData.body;
-
-    objectsToIndex.push(childData);
+    objectsToIndex.push(serializePost(childData));
   }));
 
   // Add or update new objects
