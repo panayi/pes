@@ -3,7 +3,7 @@ import R from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 import { createSelector } from 'reselect';
-import { uploadFile } from '../../files/UploadFile/uploadFile';
+import { uploadFile } from '../../uploadFile/uploadFile';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');

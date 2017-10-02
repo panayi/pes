@@ -57,6 +57,7 @@
     "flow-bin": "^0.54.1",
     "jest-enzyme": "^3.8.3",
     "nightwatch": "^0.9.16",
+    "npm-run-all": "^4.1.1",
     "pre-push": "^0.1.1",
     "react-test-renderer": "^15.6.1",
     "redux-cli": "^1.9.0",
@@ -65,18 +66,13 @@
     "stylelint": "^8.1.1",
     "stylelint-config-standard": "^17.0.0"
   },
-  "pre-push": [
-    "lint",
-    "stylelint"
-  ],
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "ui:start": "react-scripts start",
+    "ui:build": "react-scripts build",
+    "ui:test": "react-scripts test --env=jsdom",
     "e2e-setup": "selenium-standalone install",
     "e2e": "nightwatch",
     "eject": "react-scripts eject",
-    "seed": "babel-node ./db/scripts/seed",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
     "lint": "./node_modules/eslint/bin/eslint.js ./ --cache --ext .js,.es6,.jsx --ignore-pattern '*.spec.js'",
@@ -85,6 +81,17 @@
     "generate": "./node_modules/redux-cli/bin/redux.js generate",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
+    "functions:start": "firebase serve --only functions",
+    "functions:build": "cd functions && webpack",
+    "start": "run-p ui:start functions:start",
+    "build": "npm run ui:build && npm run functions:build",
+    "deploy:ui": "npm run ui:build && firebase deploy --only hosting -P development",
+    "deploy:functions": "npm run functions:build && firebase deploy --only functions -P development",
+    "deploy:database": "firebase deploy --only database -P development",
     "deploy": "npm run build && firebase deploy -P development"
-  }
+  },
+  "pre-push": [
+    "lint",
+    "stylelint"
+  ]
 }

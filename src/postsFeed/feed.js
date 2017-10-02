@@ -77,5 +77,6 @@ export const searchParamsSelector = createSelector(
   (categoryName, query) => ({
     facetFilters: categoryName ? [`category:${categoryName}`] : undefined,
     hitsPerPage: 20,
+    query,
   }),
 );

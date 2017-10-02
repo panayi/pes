@@ -1,0 +1,15 @@
+# dependencies
+/node_modules
+functions/node_modules
+
+# testing
+/coverage
+/e2e/reports
+
+# production
+/build
+
+# other
+/functions
+flow-typed/
+**/__tests__/

@@ -12,7 +12,7 @@ type Props = {
 export const Search = (props: Props) => (
   <Input
     value={props.value}
-    onChange={e => props.refine(e.target.value)}
+    onChange={e => props.refine(e.target.value)}
   />
 );
 
