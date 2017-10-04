@@ -13,11 +13,15 @@ type Props = {
   acceptedTypes: string,
   onUpload: Function,
   uploadFile: Function,
-  files: Object,
+  files: Array<Object>,
   firebase: Object,
 };
 
 export class UploadFile extends Component<Props> {
+  static defaultProps = {
+    files: [],
+  };
+
   renderContent() { // eslint-disable-line
     return (
       <div>
