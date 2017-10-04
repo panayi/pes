@@ -10,6 +10,6 @@ functions/node_modules
 /build
 
 # other
-/functions
+/functions/index.js
 flow-typed/
 **/__tests__/

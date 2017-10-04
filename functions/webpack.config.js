@@ -1,15 +1,14 @@
-'use strict';
-
-var Dotenv = require('dotenv-webpack');
-var nodeExternals = require('webpack-node-externals');
+const Dotenv = require('dotenv-webpack');
+const nodeExternals = require('webpack-node-externals');
+const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'index.js', // <-- Important
-    libraryTarget: 'this' // <-- Important
+    filename: 'index.js',
+    libraryTarget: 'this',
   },
-  target: 'node', // <-- Important
+  target: 'node',
   module: {
     rules: [
       {
@@ -19,17 +18,17 @@ module.exports = {
       },
       {
         test: /\.json$/,
-        loader: 'json-loader'
-      }
-    ]
+        loader: 'json-loader',
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js'],
   },
-  externals: [nodeExternals()], // <-- Important
+  externals: [nodeExternals()],
   plugins: [
     new Dotenv({
-      path: '../.env'
-    })
-  ]
+      path: path.join(__dirname, '..', '.env'),
+    }),
+  ],
 };

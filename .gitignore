@@ -1,6 +1,6 @@
 # dependencies
 /node_modules
-functions/node_modules
+/functions/node_modules
 
 # testing
 /coverage
@@ -9,6 +9,9 @@ functions/node_modules
 # production
 /build
 /functions/index.js
+
+# seed data
+/functions/src/lib/seeds/data.json
 
 # OS X
 .DS_Store

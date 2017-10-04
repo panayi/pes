@@ -13,7 +13,6 @@ export type LinkType = {
 type Props = {
   header: String,
   links: Array<LinkType>,
-  width: String,
 };
 
 export class SideNav extends Component<Props> {
@@ -22,13 +21,10 @@ export class SideNav extends Component<Props> {
   };
 
   render() {
-    const { header, links, width } = this.props;
+    const { header, links } = this.props;
 
     return (
-      <Flex
-        w={width}
-        column
-      >
+      <Flex column>
         <Text bold>{header}</Text>
         {R.map(({ key, label, to }) => (
           <Link

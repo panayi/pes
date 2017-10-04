@@ -12,17 +12,12 @@ type Props = {
 };
 
 const Posts = (props: Props) => (
-  <Flex
-    width={`calc(100% - ${props.sidebarWidth}px)`}
-    justify="center"
-  >
-    <Flex column>
-      <Search />
-      <PostsFeed
-        categoryName={props.categoryName}
-        sidebarWidth={props.sidebarWidth}
-      />
-    </Flex>
+  <Flex column align="center">
+    <Search />
+    <PostsFeed
+      categoryName={props.categoryName}
+      sidebarWidth={props.sidebarWidth}
+    />
   </Flex>
 );
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express from 'express';
 import createCors from 'cors';
 import { auth, database } from '../lib/firebase';
@@ -34,10 +35,10 @@ const validateFirebaseIdToken = (req, res, next) => {
   }
 
   auth.verifyIdToken(idToken).then((decodedIdToken) => {
-    console.log('Authenticated with id=' + decodedIdToken.user_id);
-    var userRef = database.ref('users/' + decodedIdToken.user_id);
+    console.log(`Authenticated with id = ${decodedIdToken.user_id}`);
+    const userRef = database.ref(`users/${decodedIdToken.user_id}`);
 
-    userRef.on('value', function(snapshot) {
+    userRef.on('value', (snapshot) => {
       const user = snapshot.val();
       if (user.role === 'admin') {
         req.user = decodedIdToken;
@@ -45,7 +46,7 @@ const validateFirebaseIdToken = (req, res, next) => {
       } else {
         throw new Error('Unauthorized');
       }
-    }, function (errorObject) {
+    }, (errorObject) => {
       throw new Error(errorObject);
     });
   }).catch((error) => {

@@ -117,3 +117,8 @@ export const profileImageSelector = profilePropSelector('avatarUrl');
 
 // profileEmailSelector :: State -> String | Nil
 export const profileEmailSelector = profilePropSelector('email');
+
+export const tokenSelector = createSelector(
+  firebaseAuthSelector,
+  R.path(['stsTokenManager', 'accessToken']),
+);
