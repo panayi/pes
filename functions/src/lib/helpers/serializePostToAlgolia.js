@@ -1,6 +1,10 @@
 import R from 'ramda';
 
 export default R.compose(
+  R.unless(
+    R.has('createdAt'),
+    post => R.assoc('createdAt', (new Date()).getTime(), post),
+  ),
   R.over(
     R.lensProp('body'),
     R.compose(
@@ -18,5 +22,15 @@ export default R.compose(
       R.defaultTo({}),
     ),
   ),
-  R.pick(['objectID', 'title', 'body', 'category', 'categoryChild', 'price', 'images', 'address']),
+  R.pick([
+    'objectID',
+    'title',
+    'body',
+    'category',
+    'categoryChild',
+    'price',
+    'images',
+    'address',
+    'createdAt',
+  ]),
 );

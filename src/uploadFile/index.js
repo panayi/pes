@@ -12,8 +12,9 @@ import { actions } from './uploadFile';
 type Props = {
   filesPath: string,
   acceptedTypes: string,
+  onUpload: Function,
   uploadFile: Function,
-  uploadedFiles: Object,
+  files: Object,
   firebase: Object,
 };
 
@@ -27,11 +28,18 @@ export class UploadFile extends Component<Props> {
   }
 
   handleDropAccepted = (files: FileList) => {
-    const { filesPath, uploadFile } = this.props;
+    const { filesPath, uploadFile, onUpload } = this.props;
 
-    R.forEach(file => (
+    const promises = R.map(file => (
       uploadFile(file, filesPath)
     ), files);
+
+    Promise
+      .all(promises)
+      .then(R.compose(
+        onUpload,
+        R.pluck('File'),
+      ));
   }
 
   handleDropRejected() { // eslint-disable-line
@@ -39,8 +47,7 @@ export class UploadFile extends Component<Props> {
   }
 
   render() {
-    const { acceptedTypes, uploadedFiles } = this.props;
-
+    const { acceptedTypes, files } = this.props;
     return (
       <div>
         <Dropzone
@@ -56,20 +63,12 @@ export class UploadFile extends Component<Props> {
             <Column w={200} key={id}>
               <Image src={file.downloadURL} />
             </Column>
-          ), R.toPairs(uploadedFiles))}
+          ), R.toPairs(files))}
         </Flex>
       </div>
     );
   }
 }
-
-const mapStateToProps = (state, props) => ({
-  uploadedFiles: R.pathOr(
-    {},
-    ['firebase', 'data', ...R.split('/', props.filesPath)],
-    state,
-  ),
-});
 
 const connectUploadFile = ({ acceptedTypes, uploadFile }) => R.compose(
   defaultProps({
@@ -82,7 +81,7 @@ const connectUploadFile = ({ acceptedTypes, uploadFile }) => R.compose(
   firebaseConnect(props => ([
     props.filesPath,
   ])),
-  connect(mapStateToProps, { uploadFile }),
+  connect(null, { uploadFile }),
 );
 
 const ConnectedUploadFile = connectUploadFile({

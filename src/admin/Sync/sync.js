@@ -44,6 +44,7 @@ const mapPost = R.compose(
   R.assoc('isOld', true),
   R.pick([
     'id',
+    'createdAt',
     'address',
     'body',
     'categoryChild',
@@ -80,6 +81,10 @@ const mapPost = R.compose(
   )),
   computedProp('body', R.prop('description')),
   computedProp('category', R.prop('categoryParent')),
+  computedProp('createdAt', R.compose(
+    insertDate => (new Date(insertDate)).getTime(),
+    R.prop('insertDate'),
+  )),
 );
 
 const getPostPath = post => `/posts/${post.id}`;
