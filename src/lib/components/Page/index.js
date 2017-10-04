@@ -65,7 +65,7 @@ const Page = R.cond([
 
 Page.propTypes = {
   children: PropTypes.node,
-  widths: PropTypes.array,
+  widths: PropTypes.array, // eslint-disable-line react/forbid-prop-types
 };
 
 Page.defaultProps = {
