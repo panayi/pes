@@ -9,6 +9,7 @@ import withCategories from '../../categories/withCategoriesHoc';
 
 export const INITIAL_STATE = {
   title: '',
+  price: null,
   body: '',
   category: '',
   images: [],
@@ -39,13 +40,21 @@ const PostForm = (props: Props) => (
         model="forms.post.title"
         id="forms.post.title"
       />
-      <Label htmlFor="forms.post.title">
+      <Label htmlFor="forms.post.body">
         Description:
       </Label>
       <Input
         is={Control.text}
         model="forms.post.body"
         id="forms.post.body"
+      />
+      <Label htmlFor="forms.post.price">
+        Price:
+      </Label>
+      <Input
+        is={Control.text}
+        model="forms.post.price"
+        id="forms.post.price"
       />
       {
         props.filesPath &&
