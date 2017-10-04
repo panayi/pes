@@ -54,6 +54,7 @@ const mapPost = R.compose(
     'phone',
     'oldPosterId',
     'title',
+    'price',
   ]),
   computedProp('images', R.compose(
     R.when(

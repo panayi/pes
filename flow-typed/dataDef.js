@@ -17,4 +17,5 @@ declare type Post = {
   phone: string,
   posterId: string,
   title: string,
+  price: number,
 };

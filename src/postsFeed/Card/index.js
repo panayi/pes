@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import R from 'ramda';
-import { Card, BackgroundImage, Subhead } from 'rebass';
+import { Card, BackgroundImage, Subhead, Absolute, Badge } from 'rebass';
 import randomInt from '../../lib/helpers/randomInt';
 
 type Props = {
@@ -29,7 +29,23 @@ export default ({ post, width }: Props) => (
     <BackgroundImage
       src={getImage(post)}
       alt={post.title}
-    />
+      style={{ position: 'relative' }}
+    >
+      {
+        post.price && post.price > 0 &&
+          <Absolute
+            bottom
+            left
+            ml={2}
+            mb={2}
+            color="white"
+          >
+            <Badge>
+              €&nbsp;{post.price}
+            </Badge>
+          </Absolute>
+      }
+    </BackgroundImage>
     <Subhead
       is="h4"
       p={3}
