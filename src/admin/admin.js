@@ -8,9 +8,9 @@ const getFunctionsUrl = path => `${process.env.REACT_APP_FIREBASE_FUNCTIONS_BASE
 // Actions
 // ------------------------------------
 
-export const seed = () => (dispatch, getState) => {
+export const initializeFirebaseDb = () => (dispatch, getState) => {
   const token = tokenSelector(getState());
-  const url = getFunctionsUrl('bootstrap/seed');
+  const url = getFunctionsUrl('firebase/initialize');
 
   /* eslint-disable no-alert */
   fetch(url, {
@@ -23,9 +23,9 @@ export const seed = () => (dispatch, getState) => {
   /* eslint-enable no-alert */
 };
 
-export const bootstrapAlgolia = () => (dispatch, getState) => {
+export const initializeAlgolia = () => (dispatch, getState) => {
   const token = tokenSelector(getState());
-  const url = getFunctionsUrl('bootstrap/algolia');
+  const url = getFunctionsUrl('algolia/initialize');
 
   /* eslint-disable no-alert */
   fetch(url, {
@@ -39,8 +39,8 @@ export const bootstrapAlgolia = () => (dispatch, getState) => {
 };
 
 export const actions = {
-  seed,
-  bootstrapAlgolia,
+  initializeFirebaseDb,
+  initializeAlgolia,
 };
 
 // ------------------------------------

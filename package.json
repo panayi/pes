@@ -82,6 +82,7 @@
     "build-storybook": "build-storybook -s public",
     "functions:start": "npm run functions:build && firebase serve --only functions",
     "functions:build": "cd functions && webpack",
+    "functions:shell": "cd functions && webpack && firebase experimental:functions:shell",
     "start": "run-p ui:start functions:start",
     "build": "npm run ui:build && npm run functions:build",
     "deploy:ui": "npm run ui:build && firebase deploy --only hosting -P development",

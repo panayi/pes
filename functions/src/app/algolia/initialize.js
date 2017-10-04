@@ -1,32 +1,9 @@
 /* eslint-disable no-console */
-import R from 'ramda';
 import { database } from '../../lib/firebase';
 import algolia from '../../lib/algolia';
+import serializePost from '../../lib/helpers/serializePostToAlgolia';
 
-const serializePost = R.compose(
-  R.over(
-    R.lensProp('body'),
-    R.compose(
-      str => str.substring(0, 1500),
-      R.defaultTo(''),
-    ),
-  ),
-  R.over(
-    R.lensProp('images'),
-    R.compose(
-      R.filter(R.identity),
-      R.pluck('downloadURL'),
-      R.defaultTo([]),
-      R.values,
-      R.defaultTo({}),
-    ),
-  ),
-  R.pick(['objectID', 'title', 'body', 'category', 'categoryChild', 'price', 'images', 'address']),
-);
-
-const initialImport = (dataSnapshot, req, res) => {
-  const index = algolia.initIndex('posts');
-
+const initialImport = (dataSnapshot, index, req, res) => {
   // Array of data to index
   const objectsToIndex = [];
 
@@ -54,6 +31,14 @@ const initialImport = (dataSnapshot, req, res) => {
 };
 
 export default (req, res) => {
-  const postsRef = database.ref('/posts');
-  postsRef.once('value', dataSnapshot => initialImport(dataSnapshot, req, res));
+  const index = algolia.initIndex('posts');
+
+  index.clearIndex((err) => {
+    if (err) {
+      throw err;
+    }
+
+    const postsRef = database.ref('/posts');
+    postsRef.once('value', dataSnapshot => initialImport(dataSnapshot, index, req, res));
+  });
 };

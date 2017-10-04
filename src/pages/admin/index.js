@@ -7,20 +7,20 @@ import needsAdmin from '../../auth/visibility/needsAdminHoc';
 import Sync from '../../admin/Sync';
 import { actions } from '../../admin/admin';
 
-const Admin = ({ seed, bootstrapAlgolia }) => (
+const Admin = ({ initializeFirebaseDb, initializeAlgolia }) => (
   <Page widths={['50%', '50%']}>
     <Box>
       <PanelHeader mb={3}>
-        Bootstrap
+        Initialize
       </PanelHeader>
       <Column>
-        <Button onClick={seed}>
-          Seed
+        <Button onClick={initializeFirebaseDb}>
+          Initialize Firebase Database
         </Button>
       </Column>
       <Column>
-        <Button onClick={bootstrapAlgolia}>
-          Import Algolia data
+        <Button onClick={initializeAlgolia}>
+          Initialize Algolia
         </Button>
       </Column>
     </Box>
@@ -34,8 +34,8 @@ const Admin = ({ seed, bootstrapAlgolia }) => (
 );
 
 const mapDispatchToProps = {
-  seed: actions.seed,
-  bootstrapAlgolia: actions.bootstrapAlgolia,
+  initializeFirebaseDb: actions.initializeFirebaseDb,
+  initializeAlgolia: actions.initializeAlgolia,
 };
 
 export default R.compose(

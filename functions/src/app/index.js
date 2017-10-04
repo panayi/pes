@@ -2,8 +2,8 @@
 import express from 'express';
 import createCors from 'cors';
 import { auth, database } from '../lib/firebase';
-import seed from './bootstrap/seed';
-import bootstrapAlgolia from './bootstrap/algolia';
+import firebaseInitialize from './firebase/initialize';
+import algoliaInitialize from './algolia/initialize';
 
 const app = express();
 const cors = createCors({ credentials: true, origin: '*' });
@@ -58,7 +58,7 @@ const validateFirebaseIdToken = (req, res, next) => {
 app.use(cors);
 app.use(validateFirebaseIdToken);
 
-app.get('/bootstrap/seed', seed);
-app.get('/bootstrap/algolia', bootstrapAlgolia);
+app.get('firebase/initialize', firebaseInitialize);
+app.get('/algolia/initialize', algoliaInitialize);
 
 export default app;
