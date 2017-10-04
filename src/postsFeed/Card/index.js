@@ -2,14 +2,19 @@
 import React from 'react';
 import R from 'ramda';
 import { Card, BackgroundImage, Subhead } from 'rebass';
+import randomInt from '../../lib/helpers/randomInt';
 
 type Props = {
   post: Post,
   width: Number,
 };
 
+const getPlaceholderImage = () => (
+  `https://unsplash.it/${randomInt(1, 7) * 100}/${randomInt(1, 7) * 100}/?random`
+);
+
 const getImage = R.compose(
-  R.defaultTo('http://via.placeholder.com/400x200'),
+  url => R.defaultTo(getPlaceholderImage(), url),
   R.head,
   R.propOr([], 'images'),
 );
