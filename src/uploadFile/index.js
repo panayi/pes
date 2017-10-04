@@ -4,7 +4,6 @@ import R from 'ramda';
 import { Flex, Column, Image } from 'rebass';
 import { defaultProps, withProps } from 'recompose';
 import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
 import Dropzone from 'react-dropzone';
 import * as filetypes from './constants/filetypes';
 import { actions } from './uploadFile';
@@ -48,6 +47,7 @@ export class UploadFile extends Component<Props> {
 
   render() {
     const { acceptedTypes, files } = this.props;
+
     return (
       <div>
         <Dropzone
@@ -59,11 +59,11 @@ export class UploadFile extends Component<Props> {
           {this.renderContent()}
         </Dropzone>
         <Flex width={500} wrap>
-          {R.map(([id, file]) => (
-            <Column w={200} key={id}>
+          {R.map(file => (
+            <Column w={200} key={file.fullPath}>
               <Image src={file.downloadURL} />
             </Column>
-          ), R.toPairs(files))}
+          ), files)}
         </Flex>
       </div>
     );
@@ -78,9 +78,6 @@ const connectUploadFile = ({ acceptedTypes, uploadFile }) => R.compose(
     R.lensProp('acceptedTypes'),
     R.join(','),
   )),
-  firebaseConnect(props => ([
-    props.filesPath,
-  ])),
   connect(null, { uploadFile }),
 );
 

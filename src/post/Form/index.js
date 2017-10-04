@@ -55,13 +55,11 @@ const PostForm = (props: Props) => (
             model="forms.post.images"
             mapProps={{
               onUpload: p => (newFiles) => {
-                // FIXME: For some reason it renders the last image twice
-                // for some seconds, and then the new image(s).
                 const { modelValue, onChange } = p;
                 const existingFiles = modelValue || [];
                 onChange([...newFiles, ...existingFiles]);
               },
-              files: p => p.viewValue,
+              files: p => p.modelValue,
             }}
           />
       }
