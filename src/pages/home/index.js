@@ -32,11 +32,10 @@ export class Home extends Component<Props> {
         apiKey={process.env.REACT_APP_ALGOLIA_SEARCH_KEY}
         indexName={process.env.REACT_APP_ALGOLIA_INDEX_NAME}
       >
-        <Page>
+        <Page widths={[SIDEBAR_WIDTH]}>
           <SideNav
             header="Categories"
             links={categoryLinks || []}
-            width={SIDEBAR_WIDTH}
           />
           <Route
             path="/:categoryName?"

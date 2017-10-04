@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { database } from '../../lib/firebase';
 import roles from '../../lib/seeds/roles';
 import categories from '../../lib/seeds/categories.json';

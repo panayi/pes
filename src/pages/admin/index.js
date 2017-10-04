@@ -1,18 +1,44 @@
 import React from 'react';
-import { Heading } from 'rebass';
+import R from 'ramda';
+import { Box, PanelHeader, Button, Column } from 'rebass';
+import { connect } from 'react-redux';
 import Page from '../../lib/components/Page';
 import needsAdmin from '../../auth/visibility/needsAdminHoc';
 import Sync from '../../admin/Sync';
+import { actions } from '../../admin/admin';
 
-const Admin = () => (
-  <Page>
-    <div>
-      <Heading>
+const Admin = ({ seed, bootstrapAlgolia }) => (
+  <Page widths={['50%', '50%']}>
+    <Box>
+      <PanelHeader mb={3}>
+        Bootstrap
+      </PanelHeader>
+      <Column>
+        <Button onClick={seed}>
+          Seed
+        </Button>
+      </Column>
+      <Column>
+        <Button onClick={bootstrapAlgolia}>
+          Import Algolia data
+        </Button>
+      </Column>
+    </Box>
+    <Box>
+      <PanelHeader mb={3}>
         Sync
-      </Heading>
+      </PanelHeader>
       <Sync />
-    </div>
+    </Box>
   </Page>
 );
 
-export default needsAdmin()(Admin);
+const mapDispatchToProps = {
+  seed: actions.seed,
+  bootstrapAlgolia: actions.bootstrapAlgolia,
+};
+
+export default R.compose(
+  needsAdmin(),
+  connect(null, mapDispatchToProps),
+)(Admin);

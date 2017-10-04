@@ -22,7 +22,8 @@ export class Login extends Component<Props> {
     this.props.maybeMergeAnonymousProfile();
   }
 
-  handleError = () => {
+  handleError = (error: Object) => {
+    console.error(error); // eslint-disable-line no-console
   }
 
   render() {

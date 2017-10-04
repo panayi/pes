@@ -33,7 +33,7 @@ export class PostsFeed extends Component<Props> {
     }
   }
 
-  masonry: Object
+  masonry: ?Object
 
   render() {
     const { categoryName, hits, hasMore, refine, sizes } = this.props;

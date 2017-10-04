@@ -1,15 +1,14 @@
+/* eslint-disable no-console */
 import functions from 'firebase-functions';
-import firebase from '../lib/firebase';
-import algolia from './shared/algolia';
+import firebase from '../../lib/firebase';
+import algolia from '../../lib/algolia';
 
 // configure algolia
 const index = algolia.initIndex('posts');
 const postsRef = firebase.ref('/posts');
 
 
-export default functions.https.onRequest((req, res) => {
-  
-});
+export default functions.https.onRequest(/* (req, res) => {} */);
 
 
 //
@@ -59,7 +58,7 @@ function addOrUpdateIndexRecord(dataSnapshot) {
   firebaseObject.body = firebaseObject.body ? firebaseObject.body.substring(0, 1000) : null;
 
   // Add or update object
-  index.saveObject(firebaseObject, (err, content) => {
+  index.saveObject(firebaseObject, (err) => {
     if (err) {
       throw err;
     }
@@ -71,7 +70,7 @@ function deleteIndexRecord(dataSnapshot) {
   // Get Algolia's objectID from the Firebase object key
   const objectID = dataSnapshot.key;
   // Remove the object from Algolia
-  index.deleteObject(objectID, (err, content) => {
+  index.deleteObject(objectID, (err) => {
     if (err) {
       throw err;
     }

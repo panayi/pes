@@ -1,10 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import asyncComponent from '../lib/hocs/asyncComponent';
 import Home from './home';
 import Auth from './auth';
 import Profile from './profile';
 import Post from './post';
-import Admin from './admin';
+
+const Admin = asyncComponent(() => import('./admin'));
 
 export default () => (
   <Switch>
