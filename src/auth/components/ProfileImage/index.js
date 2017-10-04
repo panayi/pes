@@ -3,15 +3,15 @@ import { createStructuredSelector } from 'reselect';
 import { defaultProps, mapProps, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
-import { Avatar } from 'rebass';
-import { isProfileLoadedSelector, profileImageSelector } from '../../../auth/auth';
+import { Image, Avatar } from 'rebass';
+import { isProfileLoadedSelector, profilePropSelector } from '../../auth';
 
 const mapStateToProps = createStructuredSelector({
   isProfileLoaded: isProfileLoadedSelector,
-  src: profileImageSelector,
+  src: profilePropSelector('avatarUrl'),
 });
 
-export default R.compose(
+const connectProfileImage = R.compose(
   firebaseConnect(),
   connect(mapStateToProps),
   defaultProps({
@@ -25,4 +25,10 @@ export default R.compose(
     renderNothing,
   ),
   mapProps(R.pick(['size', 'src'])),
-)(Avatar);
+);
+
+const ProfileImage = connectProfileImage(Image);
+
+ProfileImage.Avatar = connectProfileImage(Avatar);
+
+export default ProfileImage;

@@ -3,10 +3,17 @@ import R from 'ramda';
 import PropTypes from 'prop-types';
 import { Flex, Box } from 'rebass';
 
-const CONTAINER_PROPS = {
-  m: 3,
+const FIXED_LAYOUT_WIDTH = 1128;
+const MARGIN = 3;
+
+const getContainerProps = ({ fixedWidth, center, ...otherProps }) => ({
   flex: 1,
-};
+  width: fixedWidth ? FIXED_LAYOUT_WIDTH : null,
+  my: MARGIN,
+  ml: center ? 'auto' : null,
+  mr: center ? 'auto' : null,
+  ...otherProps,
+});
 
 const numberOfChildrenEquals = number => R.compose(
   R.equals(number),
@@ -16,14 +23,14 @@ const numberOfChildrenEquals = number => R.compose(
 );
 
 
-const OneColumn = ({ children }) => (
-  <Flex {...CONTAINER_PROPS}>
+const OneColumn = ({ children, ...otherProps }) => (
+  <Flex {...getContainerProps(otherProps)}>
     {children}
   </Flex>
 );
 
-const TwoColumn = ({ children, widths = ['300px', null] }) => (
-  <Flex {...CONTAINER_PROPS}>
+const TwoColumn = ({ children, widths = ['300px', null], ...otherProps }) => (
+  <Flex {...getContainerProps(otherProps)}>
     <Box
       flex={`0 0 ${widths[0]}`}
       mr={1}
@@ -40,8 +47,8 @@ const TwoColumn = ({ children, widths = ['300px', null] }) => (
   </Flex>
 );
 
-const ThreeColumn = ({ children, widths = ['300px', null, '300px'] }) => (
-  <Flex {...CONTAINER_PROPS}>
+const ThreeColumn = ({ children, widths = ['300px', null, '300px'], ...otherProps }) => (
+  <Flex {...getContainerProps(otherProps)}>
     <Box flex={`0 0 ${widths[0]}`}>
       {children[0]}
     </Box>

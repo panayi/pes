@@ -1,14 +1,16 @@
 import React from 'react';
 import needsUser from '../../auth/visibility/needsUserHoc';
-import Link from '../../auth/Link';
+import Page from '../../lib/components/Page';
+import ProfilePage from '../../profile';
 
 export const Profile = () => (
-  <div>
-    <Link>
-      <Link.Button withProvider="google" />
-      <Link.Button withProvider="facebook" />
-    </Link>
-  </div>
+  <Page
+    fixedWidth
+    center
+    justify="center"
+  >
+    <ProfilePage />
+  </Page>
 );
 
 export default needsUser()(Profile);
