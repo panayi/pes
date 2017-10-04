@@ -73,7 +73,11 @@ const mapPost = R.compose(
     R.defaultTo(''),
     R.prop('user'),
   )),
-  computedProp('address', ({ level4, level3 }) => `${level4} ${level3}`),
+  computedProp('address', R.compose(
+    R.join(' '),
+    R.filter(R.identity),
+    ({ level4, level3 }) => ([level4, level3]),
+  )),
   computedProp('body', R.prop('description')),
   computedProp('category', R.prop('categoryParent')),
 );

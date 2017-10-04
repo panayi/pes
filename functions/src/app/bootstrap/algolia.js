@@ -21,7 +21,7 @@ const serializePost = R.compose(
       R.defaultTo({}),
     ),
   ),
-  R.pick(['objectID', 'title', 'body', 'category', 'categoryChild', 'price', 'images']),
+  R.pick(['objectID', 'title', 'body', 'category', 'categoryChild', 'price', 'images', 'address']),
 );
 
 const initialImport = (dataSnapshot, req, res) => {
