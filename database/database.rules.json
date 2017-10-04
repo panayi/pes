@@ -2,6 +2,9 @@
   "rules": {
     ".read": true,
     "posts": {
+      // FIXME: temporarily allow everything,
+      ".write": true,
+
       // Can "write" only when authenticated
       // Can "update"/"delete" only when post belongs to current user
       // FIXME: temporarily requiring only phone-number auth, until merging-accounts is implemented
@@ -15,10 +18,6 @@
       },
 
       ".indexOn": ["category"]
-    },
-    "oldPosts": {
-      // FIXME: temporarily allow everything,
-      ".write": true
     },
     "users": {
       "$uid": {

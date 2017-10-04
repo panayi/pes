@@ -15,9 +15,7 @@ const serializePost = R.compose(
     R.lensProp('images'),
     R.compose(
       R.filter(R.identity),
-      R.map(
-        R.when(R.is(Object), R.prop('downloadURL')),
-      ),
+      R.pluck('downloadURL'),
       R.defaultTo([]),
       R.values,
       R.defaultTo({}),

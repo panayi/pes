@@ -3,7 +3,7 @@ import R from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 import { createSelector } from 'reselect';
-import { uploadFile } from '../../uploadFile/uploadFile';
+import { uploadImage } from '../../uploadFile/uploadFile';
 
 // ------------------------------------
 // Constants
@@ -41,6 +41,7 @@ const computedProp = R.curry((key, computer, obj) => R.converge(R.assoc(key), [
 
 // Maps old post attributes (MySQL DB) to new post attributes (Graphcool)
 const mapPost = R.compose(
+  R.assoc('isOld', true),
   R.pick([
     'id',
     'address',
@@ -76,7 +77,7 @@ const mapPost = R.compose(
   computedProp('category', R.prop('categoryParent')),
 );
 
-const getPostPath = post => `/oldPosts/${post.id}`;
+const getPostPath = post => `/posts/${post.id}`;
 
 // ------------------------------------
 // Actions
@@ -99,7 +100,7 @@ const syncImages = post => (dispatch) => {
           const filename = image.split('/').pop();
           const finalBlob = blob;
           finalBlob.name = filename;
-          return dispatch(uploadFile(postPath, finalBlob, `${postPath}/images`))
+          return dispatch(uploadImage(finalBlob, `${postPath}/images`))
             .then(() => dispatch(imageSyncSuccess(post)));
         })
         .catch(error => Promise.resolve(error))

@@ -26,12 +26,12 @@ const Sync = (props: Props) => (
     <Flex column>
       {R.map(([id, post]) => (
         <Box key={id}>
-          Synced <a href={dataUrl(`oldPosts/${id}`)} target="_blank">post with id={id}</a>
+          Synced <a href={dataUrl(`posts/${id}`)} target="_blank">post with id={id}</a>
           {
             post.syncedImagesCount
               ? <span>
                 &nbsp;-&nbsp;
-                <a href={storageUrl(`oldPosts/${id}`)} target="_blank">
+                <a href={storageUrl(`posts/${id}`)} target="_blank">
                   {post.syncedImagesCount} images
                 </a>
               </span>
