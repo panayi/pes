@@ -13,9 +13,9 @@ export default () => (
   <Switch>
     <Route path="/admin" component={Admin} />
     <Route path="/auth" component={Auth} />
-    <Route exact path="/profile" component={Profile} />
-    <Route exact path="/post" component={Post} />
-    <Route exact path="/i/:postId" component={ViewPost} />
+    <Route path="/profile" component={Profile} />
+    <Route path="/p" component={Post} />
+    <Route path="/i/:postId" component={ViewPost} />
     <Route path="/" component={Home} />
   </Switch>
 );

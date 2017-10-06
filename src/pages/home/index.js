@@ -6,7 +6,7 @@ import { withProps } from 'recompose';
 import { InstantSearch } from 'react-instantsearch/dom';
 import Page from '../../lib/components/Page';
 import SideNav, { type LinkType } from '../../lib/components/SideNav';
-import withCategories from '../../categories/withCategoriesHoc';
+import { modelConnections, connectData } from '../../firebase';
 import Posts from './posts';
 
 type Props = {
@@ -48,7 +48,7 @@ export class Home extends Component<Props> {
 }
 
 export default R.compose(
-  withCategories,
+  connectData({ categories: modelConnections.categories.all }),
   withProps(({ categories }) => ({
     categoryLinks: R.map(
       ({ name }) => ({

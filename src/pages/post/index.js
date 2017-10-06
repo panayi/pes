@@ -2,21 +2,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { Route, Switch } from 'react-router-dom';
 import Page from '../../lib/components/Page';
 import NewPost from '../../post/New';
+import EditPost from '../../post/Edit';
 
-type Props = {
-  onCreate: Function,
-};
+const NewPostPage = connect(null, { onCreate: () => push('/') })(NewPost);
 
-const Post = (props: Props) => (
+const Post = () => (
   <Page>
-    <NewPost onCreate={() => props.onCreate()} />
+    <Switch>
+      <Route path="/p/:postId" component={EditPost} />
+      <Route exact path="/p" component={NewPostPage} />
+    </Switch>
   </Page>
 );
 
-const actions = {
-  onCreate: () => push('/'),
-};
 
-export default connect(null, actions)(Post);
+export default Post;

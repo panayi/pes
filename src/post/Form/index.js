@@ -4,8 +4,8 @@ import R from 'ramda';
 import { Flex, Button, Input, Label } from 'rebass';
 import { Control, Form } from 'react-redux-form';
 import UploadFile from '../../uploadFile';
+import { modelConnections, connectData } from '../../firebase';
 import noop from '../../lib/helpers/noop';
-import withCategories from '../../categories/withCategoriesHoc';
 
 export const INITIAL_STATE = {
   title: '',
@@ -99,4 +99,4 @@ PostForm.defaultProps = {
   onChange: noop,
 };
 
-export default withCategories(PostForm);
+export default connectData({ categories: modelConnections.categories.all })(PostForm);

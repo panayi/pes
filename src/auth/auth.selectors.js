@@ -1,7 +1,7 @@
 import R from 'ramda';
 import { createSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';
-import { FIREBASE_PATH } from '../firebase/firebase';
+import { FIREBASE_PATH } from '../firebase/modelConnections';
 import { ADMIN } from './constants/roles';
 
 // ------------------------------------

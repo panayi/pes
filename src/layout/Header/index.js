@@ -27,7 +27,7 @@ export default () => (
     </Link.Nav>
     <Link.Nav
       ml="auto"
-      to="/post"
+      to="/p"
       exact
     >
       Sell your stuff
