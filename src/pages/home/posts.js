@@ -4,7 +4,7 @@ import R from 'ramda';
 import { Flex } from 'rebass';
 import { withProps } from 'recompose';
 import Search from '../../search';
-import PostsFeed from '../../postsFeed';
+import PostsList from './PostsList';
 
 type Props = {
   categoryName: String,
@@ -14,7 +14,7 @@ type Props = {
 const Posts = (props: Props) => (
   <Flex column align="center">
     <Search />
-    <PostsFeed
+    <PostsList
       categoryName={props.categoryName}
       sidebarWidth={props.sidebarWidth}
     />

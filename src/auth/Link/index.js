@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { isProfileLoadedSelector } from '../auth.selectors';
 import { actions, linkedAccountsSelector } from './link';
 import LinkButton from './LinkButton';
+import LinkButtons from './LinkButtons';
 
 type Props = {
   children: React$Node,
@@ -55,5 +56,6 @@ const ConnectedLink = R.compose(
 )(Link);
 
 ConnectedLink.Button = LinkButton;
+ConnectedLink.Buttons = LinkButtons;
 
 export default ConnectedLink;

@@ -3,16 +3,13 @@ import React, { Component } from 'react';
 import R from 'ramda';
 import { withProps } from 'recompose';
 import Masonry from 'react-masonry-infinite';
-import { connectInfiniteHits } from 'react-instantsearch/connectors';
 import PostCard from './Card';
-import { sizesSelector } from './feed';
-import ConfigureSearchParams from './ConfigureSearchParams';
+import { sizesSelector } from './posts';
 
 type Props = {
-  categoryName: String,
   hits: Array<Post>,
+  loadMore: Function,
   hasMore: Boolean,
-  refine: Function,
   sidebarWidth: Number,
   sizes: Array<Object>,
 };
@@ -20,7 +17,7 @@ type Props = {
 const COLUMN_WIDTH = 350;
 
 
-export class PostsFeed extends Component<Props> {
+export class Posts extends Component<Props> {
   static defaultProps = {
     hits: [],
   };
@@ -36,15 +33,15 @@ export class PostsFeed extends Component<Props> {
   masonry: ?Object
 
   render() {
-    const { categoryName, hits, hasMore, refine, sizes } = this.props;
+    const { hits, hasMore, loadMore, sizes } = this.props;
 
     return (
       <div>
         <Masonry
           ref={(instance) => { this.masonry = instance; }}
-          sizes={sizes}
           hasMore={hasMore}
-          loadMore={refine}
+          loadMore={loadMore}
+          sizes={sizes}
         >
           {
             R.addIndex(R.map)((post, index) => (
@@ -57,14 +54,12 @@ export class PostsFeed extends Component<Props> {
             ), hits)
           }
         </Masonry>
-        <ConfigureSearchParams categoryName={categoryName} />
       </div>
     );
   }
 }
 
 export default R.compose(
-  connectInfiniteHits,
   withProps(props => ({
     sizes: sizesSelector({
       columnWidth: COLUMN_WIDTH,
@@ -74,4 +69,4 @@ export default R.compose(
       wastedWidth: props.sidebarWidth + (2 * 16),
     }),
   })),
-)(PostsFeed);
+)(Posts);

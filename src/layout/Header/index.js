@@ -2,7 +2,7 @@ import React from 'react';
 import R from 'ramda';
 import { Toolbar } from 'rebass';
 import Link from '../../lib/components/Link';
-import ProfileImage from '../../lib/components/ProfileImage';
+import ProfileImage from '../../auth/components/ProfileImage';
 import hideUser from '../../auth/visibility/hideUserHoc';
 import hideVisitor from '../../auth/visibility/hideVisitorHoc';
 import hideNonAdmin from '../../auth/visibility/hideNonAdminHoc';
@@ -47,7 +47,7 @@ export default () => (
       Logout
     </LogoutLink>
     <Link to="/profile">
-      <ProfileImage />
+      <ProfileImage.Avatar />
     </Link>
   </Toolbar>
 );

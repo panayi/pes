@@ -70,13 +70,3 @@ export const sizesSelector = createSelector(
     R.range(0),
   )(maxScreenWidth),
 );
-
-export const searchParamsSelector = createSelector(
-  R.prop('categoryName'),
-  R.prop('currentRefinement'),
-  (categoryName, query) => ({
-    facetFilters: categoryName ? [`category:${categoryName}`] : undefined,
-    hitsPerPage: 20,
-    query,
-  }),
-);

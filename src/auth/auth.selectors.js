@@ -104,16 +104,13 @@ export const isProfileLoadedSelector = createSelector(
 );
 
 // profilePropSelector :: String -> State -> Any
-const profilePropSelector = propKey => createSelector(
+export const profilePropSelector = propKey => createSelector(
   profileSelector,
   R.compose(
     R.prop(propKey),
     R.defaultTo({}),
   ),
 );
-
-// profileImageSelector :: State -> String | Nil
-export const profileImageSelector = profilePropSelector('avatarUrl');
 
 // profileEmailSelector :: State -> String | Nil
 export const profileEmailSelector = profilePropSelector('email');
