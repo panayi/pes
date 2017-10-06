@@ -2,6 +2,7 @@
 import React from 'react';
 import R from 'ramda';
 import { Card, BackgroundImage, Subhead, Absolute, Badge, Text, Small } from 'rebass';
+import { Link } from 'react-router-dom';
 import randomInt from '../../lib/helpers/randomInt';
 
 type Props = {
@@ -21,10 +22,10 @@ const getImage = R.compose(
 
 export default ({ post, width }: Props) => (
   <Card
-    href={post.permalink}
-    target="_blank"
     width={width}
     mb={3}
+    is={Link}
+    to={`/i/${post.objectID}`}
   >
     <BackgroundImage
       src={getImage(post)}

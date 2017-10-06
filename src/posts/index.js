@@ -44,10 +44,9 @@ export class Posts extends Component<Props> {
           sizes={sizes}
         >
           {
-            R.addIndex(R.map)((post, index) => (
+            R.map(post => (
               <PostCard
-                // FIXME: Should not use index for key
-                key={index}
+                key={post.objectID}
                 post={post}
                 width={COLUMN_WIDTH}
               />

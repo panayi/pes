@@ -10,8 +10,8 @@ const getContainerProps = ({ fixedWidth, center, ...otherProps }) => ({
   flex: 1,
   width: fixedWidth ? FIXED_LAYOUT_WIDTH : null,
   my: MARGIN,
-  ml: center ? 'auto' : null,
-  mr: center ? 'auto' : null,
+  ml: center ? 'auto' : MARGIN,
+  mr: center ? 'auto' : MARGIN,
   ...otherProps,
 });
 
