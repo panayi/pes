@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Page from '../../lib/components/Page';
 
 type Props = {
-  postId: String,
+  postId: String, // eslint-disable-line react/no-unused-prop-types
   post: Post,
 };
 

@@ -73,7 +73,7 @@ export const createPost = (onCreate: ?Function) => (post: Post) =>
     if (!isAuthenticated) {
       return dispatch(push({
         pathname: '/auth/login',
-        search: '?redirect=/post',
+        search: '?redirect=/p',
       }));
     }
 
