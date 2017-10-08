@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Box, PanelHeader, Button, Column } from 'rebass';
+import { Button } from 'material-ui';
 import { connect } from 'react-redux';
 import Page from '../../lib/components/Page';
 import needsAdmin from '../../auth/visibility/needsAdmin';
@@ -9,27 +9,13 @@ import { actions } from '../../admin/admin';
 
 const Admin = ({ initializeFirebaseDb, initializeAlgolia }) => (
   <Page widths={['50%', '50%']}>
-    <Box>
-      <PanelHeader mb={3}>
-        Initialize
-      </PanelHeader>
-      <Column>
-        <Button onClick={initializeFirebaseDb}>
-          Initialize Firebase Database
-        </Button>
-      </Column>
-      <Column>
-        <Button onClick={initializeAlgolia}>
-          Initialize Algolia
-        </Button>
-      </Column>
-    </Box>
-    <Box>
-      <PanelHeader mb={3}>
-        Sync
-      </PanelHeader>
-      <Sync />
-    </Box>
+    <Button onClick={initializeFirebaseDb}>
+      Initialize Firebase Database
+    </Button>
+    <Button onClick={initializeAlgolia}>
+      Initialize Algolia
+    </Button>
+    <Sync />
   </Page>
 );
 

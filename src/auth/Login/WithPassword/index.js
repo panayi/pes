@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Button, Text } from 'rebass';
+import { Input, Button, Typography } from 'material-ui';
 import { authErrorPropType } from '../../../lib/helpers/propTypes';
 
 export default class WithPassword extends Component {
@@ -55,9 +55,9 @@ export default class WithPassword extends Component {
         <Button icon="sign in">
           Login
         </Button>
-        <Text>
+        <Typography>
           {authError && authError.message}
-        </Text>
+        </Typography>
       </form>
     );
   }

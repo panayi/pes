@@ -1,7 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { Flex, Column, Image } from 'rebass';
+import { GridList, GridListTile } from 'material-ui/GridList';
 import { defaultProps, withProps } from 'recompose';
 import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
@@ -62,13 +62,16 @@ export class UploadFile extends Component<Props> {
         >
           {this.renderContent()}
         </Dropzone>
-        <Flex width={500} wrap>
+        <GridList cellHeight={180}>
           {R.map(file => (
-            <Column w={200} key={file.fullPath}>
-              <Image src={file.downloadURL} />
-            </Column>
+            <GridListTile key={file.fullPath}>
+              <img
+                src={file.downloadURL}
+                alt={file.fullPath}
+              />
+            </GridListTile>
           ), files)}
-        </Flex>
+        </GridList>
       </div>
     );
   }

@@ -1,4 +1,4 @@
-// flow-typed signature: 272fc7245b78ab6aae56c4e2d0537c69
+// flow-typed signature: 3fc5a4ff7b16e74817928d1106c4dd25
 // flow-typed version: <<STUB>>/react-dropzone_v^4.1.2/flow_v0.54.1
 
 /**
@@ -23,6 +23,18 @@ declare module 'react-dropzone' {
  * needed.
  */
 declare module 'react-dropzone/commitlint.config' {
+  declare module.exports: any;
+}
+
+declare module 'react-dropzone/dist/es/index' {
+  declare module.exports: any;
+}
+
+declare module 'react-dropzone/dist/es/utils/index' {
+  declare module.exports: any;
+}
+
+declare module 'react-dropzone/dist/es/utils/styles' {
   declare module.exports: any;
 }
 
@@ -69,6 +81,15 @@ declare module 'react-dropzone/webpack.config' {
 // Filename aliases
 declare module 'react-dropzone/commitlint.config.js' {
   declare module.exports: $Exports<'react-dropzone/commitlint.config'>;
+}
+declare module 'react-dropzone/dist/es/index.js' {
+  declare module.exports: $Exports<'react-dropzone/dist/es/index'>;
+}
+declare module 'react-dropzone/dist/es/utils/index.js' {
+  declare module.exports: $Exports<'react-dropzone/dist/es/utils/index'>;
+}
+declare module 'react-dropzone/dist/es/utils/styles.js' {
+  declare module.exports: $Exports<'react-dropzone/dist/es/utils/styles'>;
 }
 declare module 'react-dropzone/dist/index.js' {
   declare module.exports: $Exports<'react-dropzone/dist/index'>;

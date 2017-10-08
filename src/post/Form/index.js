@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { Flex, Button, Input, Label } from 'rebass';
+import { FormGroup, Button, Input, InputLabel } from 'material-ui';
 import { Control, Form } from 'react-redux-form';
 import UploadFile from '../../uploadFile';
 import { modelConnections, connectData } from '../../firebase';
@@ -31,26 +31,26 @@ const PostForm = (props: Props) => (
     onSubmit={props.onSubmit}
     onChange={props.onChange}
   >
-    <Flex column>
-      <Label htmlFor="forms.post.title">
+    <FormGroup>
+      <InputLabel htmlFor="forms.post.title">
         Title
-      </Label>
+      </InputLabel>
       <Input
         is={Control.text}
         model="forms.post.title"
         id="forms.post.title"
       />
-      <Label htmlFor="forms.post.body">
+      <InputLabel htmlFor="forms.post.body">
         Description:
-      </Label>
+      </InputLabel>
       <Input
         is={Control.text}
         model="forms.post.body"
         id="forms.post.body"
       />
-      <Label htmlFor="forms.post.price">
+      <InputLabel htmlFor="forms.post.price">
         Price:
-      </Label>
+      </InputLabel>
       <Input
         is={Control.text}
         model="forms.post.price"
@@ -72,9 +72,9 @@ const PostForm = (props: Props) => (
             }}
           />
       }
-      <Label htmlFor="forms.post.category">
+      <InputLabel htmlFor="forms.post.category">
         Category:
-      </Label>
+      </InputLabel>
       <Control.select
         model="forms.post.category"
         id="forms.posts.category"
@@ -88,7 +88,7 @@ const PostForm = (props: Props) => (
           </option>
         ), props.categories)}
       </Control.select>
-    </Flex>
+    </FormGroup>
     <Button type="submit">
       Post
     </Button>

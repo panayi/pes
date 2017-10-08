@@ -3,7 +3,7 @@ import { createStructuredSelector } from 'reselect';
 import { mapProps, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
-import { Text } from 'rebass';
+import { Typography } from 'material-ui';
 import { isProfileLoadedSelector, profilePropSelector } from '../../auth';
 
 const mapStateToProps = createStructuredSelector({
@@ -22,4 +22,4 @@ export default R.compose(
     renderNothing,
   ),
   mapProps(R.omit(['isProfileLoaded'])),
-)(Text);
+)(Typography);
