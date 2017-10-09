@@ -3,7 +3,7 @@ import R from 'ramda';
 import { Box, PanelHeader, Button, Column } from 'rebass';
 import { connect } from 'react-redux';
 import Page from '../../lib/components/Page';
-import needsAdmin from '../../auth/visibility/needsAdminHoc';
+import needsAdmin from '../../auth/visibility/needsAdmin';
 import Sync from '../../admin/Sync';
 import { actions } from '../../admin/admin';
 

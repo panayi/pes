@@ -3,10 +3,10 @@ import R from 'ramda';
 import { Toolbar } from 'rebass';
 import Link from '../../lib/components/Link';
 import ProfileImage from '../../auth/components/ProfileImage';
-import hideUser from '../../auth/visibility/hideUserHoc';
-import hideVisitor from '../../auth/visibility/hideVisitorHoc';
-import hideNonAdmin from '../../auth/visibility/hideNonAdminHoc';
-import logoutHoc from '../../auth/logout/logoutHoc';
+import hideUser from '../../auth/visibility/hideUser';
+import hideVisitor from '../../auth/visibility/hideVisitor';
+import hideNonAdmin from '../../auth/visibility/hideNonAdmin';
+import logoutHoc from '../../auth/logout/logout';
 
 const LoginLink = hideUser(Link.Nav);
 

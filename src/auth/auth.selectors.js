@@ -119,3 +119,10 @@ export const tokenSelector = createSelector(
   firebaseAuthSelector,
   R.path(['stsTokenManager', 'accessToken']),
 );
+
+export const isUserSelector = userSelector => createSelector(
+  isAuthenticatedSelector,
+  uidSelector,
+  userSelector,
+  (isAuthenticated, currentUserId, userId) => isAuthenticated && R.equals(currentUserId, userId),
+);

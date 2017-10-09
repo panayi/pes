@@ -1,5 +1,5 @@
 import React from 'react';
-import needsUser from '../../auth/visibility/needsUserHoc';
+import needsUser from '../../auth/visibility/needsUser';
 import Page from '../../lib/components/Page';
 import ProfilePage from '../../profile';
 

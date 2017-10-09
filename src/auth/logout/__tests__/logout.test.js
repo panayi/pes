@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme'
-import { logoutHoc } from '../logoutHoc';
+import { logout } from '../logout';
 
 describe('logout', () => {
   it('should render correctly', () => {
     const firebase = {
       logout: noop,
     };
-    const Button = logoutHoc(() => (
+    const Button = logout(() => (
       <button>
         Log out
       </button>
@@ -18,13 +18,13 @@ describe('logout', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it.only('should call firebase.logout on click', () => {
+  it('should call firebase.logout on click', () => {
     const mockLogout = jest.fn();
     const firebase = {
       logout: mockLogout,
     };
     const LogoutButton = 'button';
-    const Hoc = logoutHoc(LogoutButton);
+    const Hoc = logout(LogoutButton);
     const mockOnLogout = jest.fn();
     const wrapper = mount(
       <Hoc

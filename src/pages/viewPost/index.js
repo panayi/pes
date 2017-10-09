@@ -4,17 +4,33 @@ import R from 'ramda';
 import { withProps } from 'recompose';
 import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
+import propsSelector from '../../lib/selectors/props';
 import Page from '../../lib/components/Page';
+import Link from '../../lib/components/Link';
+import withUserWithId from '../../auth/visibility/withUserWithId';
 
 type Props = {
   postId: String, // eslint-disable-line react/no-unused-prop-types
   post: Post,
 };
 
-const PostView = ({ post }: Props) => (
+const EditPostLink = withUserWithId(R.compose(
+  R.path(['post', 'user']),
+  propsSelector,
+))(({ postId }) => (
+  <Link to={`/p/${postId}`}>
+    Edit
+  </Link>
+));
+
+const PostView = ({ post, postId }: Props) => (
   <Page>
     <div>
       {post.title}
+      <EditPostLink
+        post={post}
+        postId={postId}
+      />
     </div>
   </Page>
 );

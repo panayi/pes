@@ -5,6 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';
 import { withProps, lifecycle, branch, renderNothing } from 'recompose';
 import { modelConnections, connectData } from '../../firebase';
+import needsUserWithId from '../../auth/visibility/needsUserWithId';
+import propsSelector from '../../lib/selectors/props';
 import Form from '../Form';
 import { postIdSelector, postImagesPathSelector, actions } from './edit';
 
@@ -40,6 +42,10 @@ export default R.compose(
     ),
     renderNothing,
   ),
+  needsUserWithId(R.compose(
+    R.path(['post', 'user']),
+    propsSelector,
+  )),
   lifecycle({
     componentWillMount() {
       this.props.initializeForm(this.props.post);
