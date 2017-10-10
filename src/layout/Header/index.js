@@ -1,5 +1,5 @@
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Toolbar } from 'rebass';
 import Link from '../../lib/components/Link';
 import ProfileImage from '../../auth/components/ProfileImage';

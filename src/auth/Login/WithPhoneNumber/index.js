@@ -1,11 +1,11 @@
 /* @flow */
 import React, { Component } from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Form, Control } from 'react-redux-form';
-import PhoneInput from 'react-phone-input';
+import PhoneInput from 'react-telephone-input';
 import { Button } from 'rebass';
 import Recaptcha from '../../../lib/components/Recaptcha';
 import {

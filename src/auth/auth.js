@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { combineReducers } from 'redux';
 import { createAction, handleActions } from 'redux-actions';
 import { actionTypes, getFirebase as g } from 'react-redux-firebase';

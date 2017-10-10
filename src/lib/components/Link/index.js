@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { Link as RebassLink, NavLink as RebassNavLink } from 'rebass';
 import { NavLink as RouterNavlink } from 'react-router-dom';
 import { defaultProps, withProps } from 'recompose';

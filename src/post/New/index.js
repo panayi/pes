@@ -1,5 +1,5 @@
 /* @flow */
-import R from 'ramda';
+import * as R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';

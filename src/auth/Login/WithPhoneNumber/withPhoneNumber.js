@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { combineReducers } from 'redux';
 import { handleActions, combineActions } from 'redux-actions';
 import * as constants from './withPhoneNumber.constants';

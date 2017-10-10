@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Flex, Box, Button } from 'rebass';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';

@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { withProps } from 'recompose';
 import { connectSearchBox } from 'react-instantsearch/connectors';

@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { createSelector, createStructuredSelector } from 'reselect';
 import withSizes from 'react-sizes';
 import theme from '../index';

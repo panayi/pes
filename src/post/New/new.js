@@ -1,5 +1,5 @@
 /* @flow */
-import R from 'ramda';
+import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { actions as formActions } from 'react-redux-form';
 import { push } from 'react-router-redux';

@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { branch, renderNothing } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';

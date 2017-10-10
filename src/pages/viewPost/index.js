@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';

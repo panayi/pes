@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import capitalize from 'lodash.capitalize';
 
 // Based on https://github.com/prescottprue/react-redux-firebase/blob/master/src/utils/auth.js

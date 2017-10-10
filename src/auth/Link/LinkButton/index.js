@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import capitalize from 'lodash.capitalize';
 import { withProps } from 'recompose';
 import { firebaseConnect } from 'react-redux-firebase';

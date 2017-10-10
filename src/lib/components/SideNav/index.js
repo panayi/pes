@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Flex, Text } from 'rebass';
 import Link from '../Link';
 

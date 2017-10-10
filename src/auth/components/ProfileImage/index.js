@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
 import { defaultProps, mapProps, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';

@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { withProps } from 'recompose';
 import Masonry from 'react-masonry-infinite';
 import PostCard from './Card';

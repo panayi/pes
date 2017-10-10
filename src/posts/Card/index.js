@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Card, BackgroundImage, Subhead, Absolute, Badge, Text, Small } from 'rebass';
 import { Link } from 'react-router-dom';
 import randomInt from '../../lib/helpers/randomInt';

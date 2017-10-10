@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { USER } from '../constants/roles';
 
 // getPropInProviderData :: String -> Any

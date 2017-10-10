@@ -2,7 +2,7 @@ import React from 'react';
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect';
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper';
 import { Flex } from 'rebass';
-import BounceLoader from 'halogen/BounceLoader';
+import { BounceLoader } from 'react-spinners';
 import { isNotAuthenticatedSelector, isAuthenticatingSelector } from '../auth';
 
 const locationHelper = locationHelperBuilder({});

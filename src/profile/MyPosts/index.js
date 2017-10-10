@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { createStructuredSelector } from 'reselect';

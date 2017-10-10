@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Flex } from 'rebass';
 import { withProps } from 'recompose';
 import Search from '../../search';

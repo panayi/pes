@@ -1,5 +1,5 @@
 /* @flow */
-import R from 'ramda';
+import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import { actions } from 'react-redux-form';
 import { updateProfile } from '../../auth';

@@ -1,5 +1,5 @@
 /* @flow */
-import R from 'ramda';
+import * as R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';

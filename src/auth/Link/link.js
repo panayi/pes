@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import { createAction, handleAction } from 'redux-actions';
 import { profileEmailSelector } from '../auth.selectors';
 

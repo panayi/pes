@@ -1,5 +1,5 @@
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { mount } from 'enzyme';
 import ConnectedLogin, { Login } from '../index';
 import WithFacebook from '../WithFacebook';

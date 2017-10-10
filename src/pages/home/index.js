@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Route } from 'react-router-dom';
 import { withProps } from 'recompose';
 import { InstantSearch } from 'react-instantsearch/dom';

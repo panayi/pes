@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Input } from 'rebass';
 import { connectSearchBox } from 'react-instantsearch/connectors';
 

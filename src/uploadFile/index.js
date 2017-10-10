@@ -1,6 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { Flex, Column, Image } from 'rebass';
 import { defaultProps, withProps } from 'recompose';
 import { connect } from 'react-redux';
