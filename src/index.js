@@ -13,11 +13,11 @@ const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-u
 
 ReactDOM.render((
   <Provider store={store}>
-      <ConnectedRouter history={store.history}>
-        <Layout>
-          <App />
-        </Layout>
-      </ConnectedRouter>
+    <ConnectedRouter history={store.history}>
+      <Layout>
+        <App />
+      </Layout>
+    </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'));
 
