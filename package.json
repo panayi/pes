@@ -29,7 +29,6 @@
     "react-sizes": "^0.3.1",
     "react-spinners": "^0.1.6",
     "react-telephone-input": "^4.2.3",
-    "rebass": "^1.0.4",
     "recompose": "^0.26.0",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
