@@ -1,4 +1,4 @@
-// flow-typed signature: 581bbc83edd79385d9e56ffd49f62e3d
+// flow-typed signature: 01cdf5134d462f98259869aeca92d94f
 // flow-typed version: <<STUB>>/@storybook/react_v^3.2.8/flow_v0.54.1
 
 /**
@@ -23,6 +23,14 @@ declare module '@storybook/react' {
  * needed.
  */
 declare module '@storybook/react/addons' {
+  declare module.exports: any;
+}
+
+declare module '@storybook/react/bin/build' {
+  declare module.exports: any;
+}
+
+declare module '@storybook/react/bin/index' {
   declare module.exports: any;
 }
 
@@ -169,6 +177,12 @@ declare module '@storybook/react/dist/server/utils' {
 // Filename aliases
 declare module '@storybook/react/addons.js' {
   declare module.exports: $Exports<'@storybook/react/addons'>;
+}
+declare module '@storybook/react/bin/build.js' {
+  declare module.exports: $Exports<'@storybook/react/bin/build'>;
+}
+declare module '@storybook/react/bin/index.js' {
+  declare module.exports: $Exports<'@storybook/react/bin/index'>;
 }
 declare module '@storybook/react/demo.js' {
   declare module.exports: $Exports<'@storybook/react/demo'>;

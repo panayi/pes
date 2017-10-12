@@ -1,9 +1,9 @@
 import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
-import { defaultProps, mapProps, branch, renderNothing } from 'recompose';
+import { mapProps, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
-import { Image, Avatar } from 'rebass';
+import { Avatar } from 'material-ui';
 import { isProfileLoadedSelector, profilePropSelector } from '../../auth';
 
 const mapStateToProps = createStructuredSelector({
@@ -14,9 +14,6 @@ const mapStateToProps = createStructuredSelector({
 const connectProfileImage = R.compose(
   firebaseConnect(),
   connect(mapStateToProps),
-  defaultProps({
-    size: 32,
-  }),
   branch(
     R.compose(
       R.not,
@@ -27,7 +24,7 @@ const connectProfileImage = R.compose(
   mapProps(R.pick(['size', 'src'])),
 );
 
-const ProfileImage = connectProfileImage(Image);
+const ProfileImage = connectProfileImage('img');
 
 ProfileImage.Avatar = connectProfileImage(Avatar);
 

@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { Input } from 'rebass';
+import { Input } from 'material-ui';
 import { connectSearchBox } from 'react-instantsearch/connectors';
 
 type Props = {

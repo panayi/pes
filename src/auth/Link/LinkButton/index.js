@@ -6,7 +6,7 @@ import { withProps } from 'recompose';
 import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Button } from 'rebass';
+import { Button } from 'material-ui';
 import createAuthProvider from '../../helpers/createAuthProvider';
 import { auth as authConfig } from '../../../lib/config';
 import { actions, linkedAccountsSelector } from '../link';

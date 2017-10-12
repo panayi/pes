@@ -1,14 +1,14 @@
 import React from 'react';
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect';
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper';
-import { Flex } from 'rebass';
-import { BounceLoader } from 'react-spinners';
+import { Grid } from 'material-ui';
+import BounceLoader from 'react-spinners';
 import { isNotAuthenticatedSelector, isAuthenticatingSelector } from '../auth';
 
 const locationHelper = locationHelperBuilder({});
 
 const Loader = () => (
-  <Flex
+  <Grid
     align="center"
     justify="center"
     style={{ height: '100vh' }}
@@ -17,7 +17,7 @@ const Loader = () => (
       color="#26A65B"
       size="60px"
     />
-  </Flex>
+  </Grid>
 );
 
 

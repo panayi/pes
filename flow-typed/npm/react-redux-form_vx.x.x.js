@@ -1,4 +1,4 @@
-// flow-typed signature: 228b61b7f074f1a5b6be92c5d4911e01
+// flow-typed signature: 7ac86d52d0618e629eb565ec2950dc4e
 // flow-typed version: <<STUB>>/react-redux-form_v^1.14.2/flow_v0.54.1
 
 /**
@@ -139,6 +139,10 @@ declare module 'react-redux-form/lib/combineForms' {
 }
 
 declare module 'react-redux-form/lib/components/control-component' {
+  declare module.exports: any;
+}
+
+declare module 'react-redux-form/lib/components/control-strip-defaults-component' {
   declare module.exports: any;
 }
 
@@ -992,6 +996,9 @@ declare module 'react-redux-form/lib/combineForms.js' {
 }
 declare module 'react-redux-form/lib/components/control-component.js' {
   declare module.exports: $Exports<'react-redux-form/lib/components/control-component'>;
+}
+declare module 'react-redux-form/lib/components/control-strip-defaults-component.js' {
+  declare module.exports: $Exports<'react-redux-form/lib/components/control-strip-defaults-component'>;
 }
 declare module 'react-redux-form/lib/components/errors-component.js' {
   declare module.exports: $Exports<'react-redux-form/lib/components/errors-component'>;

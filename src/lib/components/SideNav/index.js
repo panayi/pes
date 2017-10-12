@@ -1,7 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { Flex, Text } from 'rebass';
+import { List, ListItem, Typography } from 'material-ui';
 import Link from '../Link';
 
 export type LinkType = {
@@ -24,17 +24,19 @@ export class SideNav extends Component<Props> {
     const { header, links } = this.props;
 
     return (
-      <Flex column>
-        <Text bold>{header}</Text>
+      <List>
+        <Typography>{header}</Typography>
         {R.map(({ key, label, to }) => (
-          <Link
+          <ListItem
+            button
+            component={Link}
             key={key || label}
             to={to}
           >
             {label}
-          </Link>
+          </ListItem>
         ), links)}
-      </Flex>
+      </List>
     );
   }
 }

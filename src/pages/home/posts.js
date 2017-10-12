@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { Flex } from 'rebass';
+import { Grid } from 'material-ui';
 import { withProps } from 'recompose';
 import Search from '../../search';
 import PostsList from './PostsList';
@@ -12,13 +12,16 @@ type Props = {
 };
 
 const Posts = (props: Props) => (
-  <Flex column align="center">
+  <Grid
+    direction="column"
+    align="center"
+  >
     <Search />
     <PostsList
       categoryName={props.categoryName}
       sidebarWidth={props.sidebarWidth}
     />
-  </Flex>
+  </Grid>
 );
 
 export default R.compose(

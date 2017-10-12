@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'rebass';
+import { Button } from 'material-ui';
 import { auth } from '../../../lib/config';
 
 const WithFacebook = ({ login, onSuccess, onError }) => (

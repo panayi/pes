@@ -1,13 +1,20 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { Card, BackgroundImage, Subhead, Absolute, Badge, Text, Small } from 'rebass';
+import { Card, CardMedia, CardHeader, CardContent, Typography, withStyles } from 'material-ui';
 import { Link } from 'react-router-dom';
 import randomInt from '../../lib/helpers/randomInt';
 
 type Props = {
   post: Post,
   width: Number,
+  classes: Object,
+};
+
+const styles = {
+  media: {
+    minHeight: '200px',
+  },
 };
 
 const getPlaceholderImage = () => (
@@ -20,53 +27,38 @@ const getImage = R.compose(
   R.propOr([], 'images'),
 );
 
-export default ({ post, width }: Props) => (
+const PostCard = ({ post, width, classes }: Props) => (
   <Card
-    width={width}
-    mb={3}
-    is={Link}
+    style={{ width }}
+    component={Link}
     to={`/i/${post.objectID}`}
   >
-    <BackgroundImage
-      src={getImage(post)}
-      alt={post.title}
+    <CardMedia
+      className={classes.media}
+      image={getImage(post)}
+      title={post.title}
       style={{ position: 'relative' }}
     >
       {
         post.price && post.price > 0 &&
-          <Absolute
-            bottom
-            left
-            ml={2}
-            mb={2}
-          >
-            <Badge>
-              €&nbsp;{post.price}
-            </Badge>
-          </Absolute>
+          <span>
+            €&nbsp;{post.price}
+          </span>
       }
-    </BackgroundImage>
-    <Subhead
-      is="h4"
-      p={3}
-      pb={0}
-      center
-    >
-      {post.title}
-    </Subhead>
-    {
-      post.address &&
-        <Text
-          bold
-          center
-          p={3}
-          pt={1}
-          color="#aaa"
-        >
-          <Small>
+    </CardMedia>
+    <CardHeader title={post.title} />
+    <CardContent>
+      {
+        post.address &&
+          <Typography
+            type="caption"
+            align="center"
+          >
             {post.address}
-          </Small>
-        </Text>
-    }
+          </Typography>
+      }
+    </CardContent>
   </Card>
 );
+
+export default withStyles(styles)(PostCard);

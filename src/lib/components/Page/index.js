@@ -1,19 +1,9 @@
 import React from 'react';
 import * as R from 'ramda';
 import PropTypes from 'prop-types';
-import { Flex, Box } from 'rebass';
+import { Grid } from 'material-ui';
 
 const FIXED_LAYOUT_WIDTH = 1128;
-const MARGIN = 3;
-
-const getContainerProps = ({ fixedWidth, center, ...otherProps }) => ({
-  flex: 1,
-  width: fixedWidth ? FIXED_LAYOUT_WIDTH : null,
-  my: MARGIN,
-  ml: center ? 'auto' : MARGIN,
-  mr: center ? 'auto' : MARGIN,
-  ...otherProps,
-});
 
 const numberOfChildrenEquals = number => R.compose(
   R.equals(number),
@@ -23,45 +13,61 @@ const numberOfChildrenEquals = number => R.compose(
 );
 
 
-const OneColumn = ({ children, ...otherProps }) => (
-  <Flex {...getContainerProps(otherProps)}>
-    {children}
-  </Flex>
+const OneColumn = ({ children, fixedWidth, ...otherProps }) => (
+  <Grid
+    container
+    {...otherProps}
+  >
+    <Grid
+      item
+      style={{ width: fixedWidth ? FIXED_LAYOUT_WIDTH : null }}
+    >
+      {children}
+    </Grid>
+  </Grid>
 );
 
 const TwoColumn = ({ children, widths = ['300px', null], ...otherProps }) => (
-  <Flex {...getContainerProps(otherProps)}>
-    <Box
-      flex={`0 0 ${widths[0]}`}
-      mr={1}
+  <Grid
+    container
+    {...otherProps}
+  >
+    <Grid
+      item
+      style={{ flex: `0 0 ${widths[0]}` }}
     >
       {children[0]}
-    </Box>
-    <Box
-      flex="1"
-      width={widths[1]}
-      ml={1}
+    </Grid>
+    <Grid
+      item
+      style={{ flex: 1, width: widths[1] }}
     >
       {children[1]}
-    </Box>
-  </Flex>
+    </Grid>
+  </Grid>
 );
 
 const ThreeColumn = ({ children, widths = ['300px', null, '300px'], ...otherProps }) => (
-  <Flex {...getContainerProps(otherProps)}>
-    <Box flex={`0 0 ${widths[0]}`}>
+  <Grid
+    container
+    {...otherProps}
+  >
+    <Grid item style={{ flex: `0 0 ${widths[0]}` }}>
       {children[0]}
-    </Box>
-    <Box
-      flex="1"
-      width={widths[1]}
+    </Grid>
+    <Grid
+      item
+      style={{ flex: 1, width: widths[1] }}
     >
       {children[1]}
-    </Box>
-    <Box flex={`0 0 ${widths[2]}`}>
+    </Grid>
+    <Grid
+      item
+      style={{ flex: `0 0 ${widths[2]}` }}
+    >
       {children[2]}
-    </Box>
-  </Flex>
+    </Grid>
+  </Grid>
 );
 
 const Page = R.cond([
