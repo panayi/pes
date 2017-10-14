@@ -1,7 +1,8 @@
 /* @flow */
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { List, ListItem, Typography } from 'material-ui';
+import { Toolbar, List, ListItem, Typography } from 'material-ui';
+import { withStyles } from 'material-ui/styles';
 import Link from '../Link';
 
 export type LinkType = {
@@ -11,8 +12,21 @@ export type LinkType = {
 };
 
 type Props = {
-  header: String,
   links: Array<LinkType>,
+  classes: Object,
+  width: number,
+};
+
+const styles = {
+  toolbar: {
+    flexGrow: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  link: {
+    justifyContent: 'left',
+  },
 };
 
 export class SideNav extends Component<Props> {
@@ -21,24 +35,32 @@ export class SideNav extends Component<Props> {
   };
 
   render() {
-    const { header, links } = this.props;
+    const { links, classes, width } = this.props;
 
     return (
-      <List>
-        <Typography>{header}</Typography>
-        {R.map(({ key, label, to }) => (
-          <ListItem
-            button
-            component={Link}
-            key={key || label}
-            to={to}
-          >
-            {label}
-          </ListItem>
-        ), links)}
-      </List>
+      <div
+        style={{ width }}
+      >
+        <Toolbar className={classes.toolbar}>
+          <List>
+            {R.map(({ key, label, to }) => (
+              <ListItem
+                key={key || label}
+                disableGutters
+              >
+                <Link
+                  to={to}
+                  className={classes.link}
+                >
+                  {label}
+                </Link>
+              </ListItem>
+            ), links)}
+          </List>
+        </Toolbar>
+      </div>
     );
   }
 }
 
-export default SideNav;
+export default withStyles(styles)(SideNav);

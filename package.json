@@ -9,6 +9,7 @@
     "history": "^4.7.2",
     "lodash.capitalize": "^4.2.1",
     "material-ui": "next",
+    "material-ui-icons": "^1.0.0-beta.15",
     "normalize.css": "^7.0.0",
     "palx": "^1.0.2",
     "prop-types": "^15.6.0",

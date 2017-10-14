@@ -18,7 +18,7 @@ const LogoutLink = R.compose(
 const AdminLink = hideNonAdmin(Link);
 
 export default () => (
-  <AppBar bg="blue">
+  <AppBar color="default">
     <Toolbar>
       <Link
         to="/"
@@ -26,6 +26,7 @@ export default () => (
       >
         Pesposa
       </Link>
+      <div style={{ flex: '1 1 auto' }} />
       <Link
         ml="auto"
         to="/p"

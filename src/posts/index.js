@@ -15,7 +15,7 @@ type Props = {
 };
 
 const COLUMN_WIDTH = 350;
-
+const GUTTER = 20;
 
 export class Posts extends Component<Props> {
   static defaultProps = {
@@ -62,10 +62,10 @@ export default R.compose(
   withProps(props => ({
     sizes: sizesSelector({
       columnWidth: COLUMN_WIDTH,
-      gutter: 20,
+      gutter: GUTTER,
       maxScreenWidth: 5000,
-      // FIXME: use variable for Page margin
-      wastedWidth: props.sidebarWidth + (2 * 16),
+      // sidebar + gutter (to the right)
+      wastedWidth: props.sidebarWidth + GUTTER,
     }),
   })),
 )(Posts);

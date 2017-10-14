@@ -5,7 +5,7 @@ import { withProps } from 'recompose';
 import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import propsSelector from '../../lib/selectors/props';
-import Page from '../../lib/components/Page';
+import Layout from '../../layout';
 import Link from '../../lib/components/Link';
 import withUserWithId from '../../auth/visibility/withUserWithId';
 
@@ -24,15 +24,13 @@ const EditPostLink = withUserWithId(R.compose(
 ));
 
 const PostView = ({ post, postId }: Props) => (
-  <Page>
-    <div>
-      {post.title}
-      <EditPostLink
-        post={post}
-        postId={postId}
-      />
-    </div>
-  </Page>
+  <Layout>
+    {post.title}
+    <EditPostLink
+      post={post}
+      postId={postId}
+    />
+  </Layout>
 );
 
 PostView.defaultProps = {

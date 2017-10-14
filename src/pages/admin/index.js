@@ -2,21 +2,23 @@ import React from 'react';
 import * as R from 'ramda';
 import { Button } from 'material-ui';
 import { connect } from 'react-redux';
-import Page from '../../lib/components/Page';
+import Layout from '../../layout';
 import needsAdmin from '../../auth/visibility/needsAdmin';
 import Sync from '../../admin/Sync';
 import { actions } from '../../admin/admin';
 
 const Admin = ({ initializeFirebaseDb, initializeAlgolia }) => (
-  <Page widths={['50%', '50%']}>
-    <Button onClick={initializeFirebaseDb}>
-      Initialize Firebase Database
-    </Button>
-    <Button onClick={initializeAlgolia}>
-      Initialize Algolia
-    </Button>
-    <Sync />
-  </Page>
+  <Layout>
+    <div>
+      <Button onClick={initializeFirebaseDb}>
+        Initialize Firebase Database
+      </Button>
+      <Button onClick={initializeAlgolia}>
+        Initialize Algolia
+      </Button>
+      <Sync />
+    </div>
+  </Layout>
 );
 
 const mapDispatchToProps = {

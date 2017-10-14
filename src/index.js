@@ -6,7 +6,6 @@ import 'normalize.css/normalize.css';
 import registerServiceWorker from './lib/registerServiceWorker';
 import createStore from './lib/store/createStore';
 import App from './pages';
-import Layout from './layout';
 import './index.css';
 
 const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-underscore-dangle
@@ -14,9 +13,7 @@ const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-u
 ReactDOM.render((
   <Provider store={store}>
     <ConnectedRouter history={store.history}>
-      <Layout>
-        <App />
-      </Layout>
+      <App />
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'));

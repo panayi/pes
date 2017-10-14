@@ -1,21 +1,32 @@
+/* @flow */
 import React from 'react';
-import PropTypes from 'prop-types';
-import FullHeight from '../lib/components/FullHeight';
+import { withStyles } from 'material-ui/styles';
 import Header from './Header';
 
-const Layout = ({ children }) => (
-  <FullHeight>
+type Props = {
+  children: React$Node,
+  classes: Object,
+};
+
+const styles = {
+  '@global': {
+    body: {
+      marginTop: '64px',
+    },
+  },
+  root: {
+    display: 'flex',
+    alignItems: 'stretch',
+    minHeight: '100vh',
+    width: '100%',
+  },
+};
+
+const Layout = ({ children, classes }: Props) => (
+  <div className={classes.root}>
     <Header />
     {children}
-  </FullHeight>
+  </div>
 );
 
-Layout.propTypes = {
-  children: PropTypes.node,
-};
-
-Layout.defaultProps = {
-  children: null,
-};
-
-export default Layout;
+export default withStyles(styles)(Layout);
