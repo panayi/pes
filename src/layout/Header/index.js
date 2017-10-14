@@ -1,6 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { AppBar, Toolbar } from 'material-ui';
+import { withStyles } from 'material-ui/styles';
 import Link from '../../lib/components/Link';
 import ProfileImage from '../../auth/components/ProfileImage';
 import hideUser from '../../auth/visibility/hideUser';
@@ -17,12 +18,19 @@ const LogoutLink = R.compose(
 
 const AdminLink = hideNonAdmin(Link);
 
-export default () => (
-  <AppBar color="default">
+const styles = {
+  header: {
+    boxShadow: 'none',
+  },
+};
+
+const Header = ({ classes }) => (
+  <AppBar className={classes.header}>
     <Toolbar>
       <Link
         to="/"
         exact
+        color="contrast"
       >
         Pesposa
       </Link>
@@ -31,26 +39,34 @@ export default () => (
         ml="auto"
         to="/p"
         exact
+        color="contrast"
       >
         Sell your stuff
       </Link>
       <AdminLink
         to="/admin"
+        color="contrast"
       >
         Admin
       </AdminLink>
       <LoginLink
         to="/auth/login"
         exact
+        color="contrast"
       >
         Login
       </LoginLink>
-      <LogoutLink>
+      <LogoutLink color="contrast">
         Logout
       </LogoutLink>
-      <Link to="/profile">
+      <Link
+        to="/profile"
+        color="contrast"
+      >
         <ProfileImage.Avatar />
       </Link>
     </Toolbar>
   </AppBar>
 );
+
+export default withStyles(styles)(Header);
