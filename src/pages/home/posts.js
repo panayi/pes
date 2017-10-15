@@ -13,8 +13,9 @@ type Props = {
 
 const Posts = (props: Props) => (
   <Grid
-    direction="column"
+    container
     align="center"
+    direction="column"
   >
     <Search />
     <PostsList

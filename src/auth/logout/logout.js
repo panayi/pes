@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { firebaseConnect } from 'react-redux-firebase';
 import { defaultProps, withProps } from 'recompose';
+import omitProps from '../../lib/helpers/omitProps';
 import noop from '../../lib/helpers/noop';
 
 export const logout = R.compose(
@@ -17,6 +18,7 @@ export const logout = R.compose(
       window.location.reload();
     },
   })),
+  omitProps(['onLogout']),
 );
 
 export default R.compose(

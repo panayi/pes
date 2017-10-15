@@ -1,23 +1,28 @@
 import * as R from 'ramda';
+import classNames from 'classnames';
 import { Button, withStyles } from 'material-ui';
 import { NavLink } from 'react-router-dom';
 import { defaultProps, withProps } from 'recompose';
-import generateClassName from '../../helpers/generateClassName';
+import omitProps from '../../helpers/omitProps';
 
-const DEFAULT_ACTIVE_CLASS_NAME = generateClassName();
+const DEFAULT_ACTIVE_CLASS_NAME = 'link--active';
 
 const styles = {
-  [DEFAULT_ACTIVE_CLASS_NAME]: {
-    color: 'red',
+  button: {
+    [`&.${DEFAULT_ACTIVE_CLASS_NAME}`]: {
+      color: 'red',
+    },
   },
 };
 
 export default R.compose(
-  withStyles(styles),
   defaultProps({
     activeClassName: DEFAULT_ACTIVE_CLASS_NAME,
   }),
-  withProps(({ to }) => ({
+  withStyles(styles),
+  withProps(({ to, classes, className }) => ({
     component: to ? NavLink : null,
+    className: classNames(className, classes.button),
   })),
+  omitProps(['classes', 'dispatch']),
 )(Button);

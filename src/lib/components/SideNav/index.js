@@ -1,7 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { Toolbar, List, ListItem, Typography } from 'material-ui';
+import { Toolbar, List, ListItem } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import Link from '../Link';
 

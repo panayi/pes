@@ -11,6 +11,8 @@ import logoutHoc from '../../auth/logout/logout';
 
 const LoginLink = hideUser(Link);
 
+const ProfileLink = hideVisitor(Link);
+
 const LogoutLink = R.compose(
   hideVisitor,
   logoutHoc,
@@ -59,12 +61,12 @@ const Header = ({ classes }) => (
       <LogoutLink color="contrast">
         Logout
       </LogoutLink>
-      <Link
+      <ProfileLink
         to="/profile"
         color="contrast"
       >
         <ProfileImage.Avatar />
-      </Link>
+      </ProfileLink>
     </Toolbar>
   </AppBar>
 );

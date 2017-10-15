@@ -6,6 +6,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import propsSelector from '../../lib/selectors/props';
 import Layout from '../../layout';
+import Content from '../../lib/components/Content';
 import Link from '../../lib/components/Link';
 import withUserWithId from '../../auth/visibility/withUserWithId';
 
@@ -25,11 +26,13 @@ const EditPostLink = withUserWithId(R.compose(
 
 const PostView = ({ post, postId }: Props) => (
   <Layout>
-    {post.title}
-    <EditPostLink
-      post={post}
-      postId={postId}
-    />
+    <Content>
+      {post.title}
+      <EditPostLink
+        post={post}
+        postId={postId}
+      />
+    </Content>
   </Layout>
 );
 
