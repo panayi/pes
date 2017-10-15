@@ -64,8 +64,7 @@ export default R.compose(
       columnWidth: COLUMN_WIDTH,
       gutter: GUTTER,
       maxScreenWidth: 5000,
-      // sidebar + gutter (to the right)
-      wastedWidth: props.sidebarWidth + GUTTER,
+      wastedWidth: props.sidebarWidth + (2 * GUTTER),
     }),
   })),
 )(Posts);

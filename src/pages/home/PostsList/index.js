@@ -2,6 +2,7 @@
 import React from 'react';
 import { connectInfiniteHits } from 'react-instantsearch/connectors';
 import Posts from '../../../posts';
+import { WIDTH } from '../../../layout/Sidebar';
 import ConfigureSearchParams from '../ConfigureSearchParams';
 
 type Props = {
@@ -9,16 +10,15 @@ type Props = {
   hasMore: Boolean,
   refine: Function,
   categoryName: String,
-  sidebarWidth: Number,
 };
 
-const PostsList = ({ categoryName, hits, hasMore, refine, sidebarWidth }: Props) => (
+const PostsList = ({ categoryName, hits, hasMore, refine }: Props) => (
   <div>
     <Posts
       hits={hits}
       hasMore={hasMore}
       loadMore={refine}
-      sidebarWidth={sidebarWidth}
+      sidebarWidth={WIDTH}
     />
     <ConfigureSearchParams categoryName={categoryName} />
   </div>

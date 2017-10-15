@@ -8,7 +8,6 @@ import PostsList from './PostsList';
 
 type Props = {
   categoryName: String,
-  sidebarWidth: String,
 };
 
 const Posts = (props: Props) => (
@@ -18,10 +17,7 @@ const Posts = (props: Props) => (
     direction="column"
   >
     <Search />
-    <PostsList
-      categoryName={props.categoryName}
-      sidebarWidth={props.sidebarWidth}
-    />
+    <PostsList categoryName={props.categoryName} />
   </Grid>
 );
 

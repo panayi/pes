@@ -7,8 +7,8 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { InstantSearch } from 'react-instantsearch/dom';
 import { withStyles } from 'material-ui/styles';
 import propsSelector from '../../lib/selectors/props';
-import SideNav, { type LinkType } from '../../lib/components/SideNav';
 import { modelConnections, connectData } from '../../firebase';
+import Sidebar, { type LinkType } from '../../layout/Sidebar';
 import Layout from '../../layout';
 import Posts from './posts';
 
@@ -16,10 +16,6 @@ type Props = {
   categoryLinks: Array<LinkType>,
   classes: Object,
 };
-
-const SIDEBAR_WIDTH = 200;
-
-const PostsWithProps = withProps({ sidebarWidth: SIDEBAR_WIDTH })(Posts);
 
 const styles = {
   page: {
@@ -34,14 +30,13 @@ const Home = ({ categoryLinks, classes }: Props) => (
     indexName={process.env.REACT_APP_ALGOLIA_INDEX_NAME}
   >
     <Layout>
-      <SideNav
+      <Sidebar
         links={categoryLinks}
-        width={SIDEBAR_WIDTH}
       />
       <div className={classes.page}>
         <Route
           path="/:categoryName?"
-          component={PostsWithProps}
+          component={Posts}
         />
       </div>
     </Layout>

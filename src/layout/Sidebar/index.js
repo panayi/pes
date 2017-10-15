@@ -1,9 +1,11 @@
 /* @flow */
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { Toolbar, List, ListItem } from 'material-ui';
+import { Drawer, List, ListItem, ListItemText } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import Link from '../Link';
+import Link from '../../lib/components/Link';
+
+export const WIDTH = 240;
 
 export type LinkType = {
   key: ?String,
@@ -14,53 +16,57 @@ export type LinkType = {
 type Props = {
   links: Array<LinkType>,
   classes: Object,
-  width: number,
 };
 
 const styles = {
+  drawerPaper: {
+    width: WIDTH,
+  },
+  drawerAnchor: {
+    top: 64,
+  },
   toolbar: {
     flexGrow: 1,
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
-  link: {
-    justifyContent: 'left',
-  },
 };
 
-export class SideNav extends Component<Props> {
+export class Sidebar extends Component<Props> {
   static defaultProps = {
     categories: [],
   };
 
   render() {
-    const { links, classes, width } = this.props;
+    const { links, classes } = this.props;
 
     return (
-      <div
-        style={{ width }}
-      >
-        <Toolbar className={classes.toolbar}>
+      <div className={classes.drawerPaper}>
+        <Drawer
+          type="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+            paperAnchorDockedLeft: classes.drawerAnchor,
+          }}
+        >
           <List>
             {R.map(({ key, label, to }) => (
               <ListItem
+                button
                 key={key || label}
+                component={Link}
+                to={to}
                 disableGutters
               >
-                <Link
-                  to={to}
-                  className={classes.link}
-                >
-                  {label}
-                </Link>
+                <ListItemText primary={label} />
               </ListItem>
             ), links)}
           </List>
-        </Toolbar>
+        </Drawer>
       </div>
     );
   }
 }
 
-export default withStyles(styles)(SideNav);
+export default withStyles(styles)(Sidebar);
