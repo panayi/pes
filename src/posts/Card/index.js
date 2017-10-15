@@ -1,9 +1,8 @@
 /* @flow */
 import React from 'react';
-import * as R from 'ramda';
 import { Card, CardMedia, CardHeader, CardContent, Typography, withStyles } from 'material-ui';
 import { Link } from 'react-router-dom';
-import randomInt from '../../lib/helpers/randomInt';
+import { getMediaProps } from './card';
 
 type Props = {
   post: Post,
@@ -11,42 +10,58 @@ type Props = {
   classes: Object,
 };
 
-const styles = {
-  media: {
-    minHeight: '200px',
+const DEFAULT_HEIGHT = 200;
+
+const styles = theme => !console.log(theme) && ({
+  post: {
+    textDecoration: 'none',
   },
-};
-
-const getPlaceholderImage = () => (
-  `https://unsplash.it/${randomInt(1, 7) * 100}/${randomInt(1, 7) * 100}/?random`
-);
-
-const getImage = R.compose(
-  url => R.defaultTo(getPlaceholderImage(), url),
-  R.head,
-  R.propOr([], 'images'),
-);
+  media: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  price: {
+    padding: theme.spacing.unit,
+  },
+  header: {
+    textAlign: 'center',
+  },
+  headerTitle: {
+    fontSize: theme.typography.title.fontSize,
+  },
+});
 
 const PostCard = ({ post, width, classes }: Props) => (
   <Card
+    className={classes.post}
     style={{ width }}
     component={Link}
     to={`/i/${post.objectID}`}
   >
     <CardMedia
       className={classes.media}
-      image={getImage(post)}
       title={post.title}
-      style={{ position: 'relative' }}
+      {...getMediaProps(post, { defaultHeight: DEFAULT_HEIGHT })}
     >
       {
         post.price && post.price > 0 &&
-          <span>
+          <Typography
+            className={classes.price}
+            color="accent"
+            type="title"
+          >
             €&nbsp;{post.price}
-          </span>
+          </Typography>
       }
     </CardMedia>
-    <CardHeader title={post.title} />
+    <CardHeader
+      className={classes.header}
+      classes={{
+        title: classes.headerTitle,
+      }}
+      title={post.title}
+    />
     <CardContent>
       {
         post.address &&
