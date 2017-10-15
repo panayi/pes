@@ -12,14 +12,18 @@ type Props = {
 
 const DEFAULT_HEIGHT = 200;
 
-const styles = theme => !console.log(theme) && ({
+const styles = theme => ({
   post: {
     textDecoration: 'none',
+  },
+  postPaperRoot: {
+    borderRadius: theme.custom.borderRadius.xl,
   },
   media: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    borderRadius: `${theme.custom.borderRadius.xl}px ${theme.custom.borderRadius.xl}px 0 0`,
   },
   price: {
     padding: theme.spacing.unit,
@@ -35,7 +39,11 @@ const styles = theme => !console.log(theme) && ({
 const PostCard = ({ post, width, classes }: Props) => (
   <Card
     className={classes.post}
+    classes={{
+      root: classes.postPaperRoot,
+    }}
     style={{ width }}
+    elevation={1}
     component={Link}
     to={`/i/${post.objectID}`}
   >

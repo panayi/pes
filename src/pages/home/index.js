@@ -17,11 +17,12 @@ type Props = {
   classes: Object,
 };
 
-const styles = {
+const styles = theme => ({
   page: {
     flex: '1 1 100%',
+    backgroundColor: theme.palette.background.contentFrame,
   },
-};
+});
 
 const Home = ({ categoryLinks, classes }: Props) => (
   <InstantSearch

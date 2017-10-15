@@ -14,7 +14,7 @@ type Props = {
   sizes: Array<Object>,
 };
 
-const COLUMN_WIDTH = 350;
+const COLUMN_WIDTH = 280;
 const GUTTER = 20;
 
 export class Posts extends Component<Props> {
