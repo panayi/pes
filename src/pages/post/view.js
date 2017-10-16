@@ -2,8 +2,6 @@
 import React from 'react';
 import * as R from 'ramda';
 import propsSelector from '../../lib/selectors/props';
-import Layout from '../layout';
-import Content from '../../lib/components/Content';
 import Link from '../../lib/components/Link';
 import withUserWithId from '../../auth/visibility/withUserWithId';
 
@@ -22,15 +20,13 @@ const EditPostLink = withUserWithId(R.compose(
 ));
 
 const ViewPost = ({ post, postId }: Props) => (
-  <Layout>
-    <Content>
-      {post.title}
-      <EditPostLink
-        post={post}
-        postId={postId}
-      />
-    </Content>
-  </Layout>
+  <div>
+    {post.title}
+    <EditPostLink
+      post={post}
+      postId={postId}
+    />
+  </div>
 );
 
 ViewPost.defaultProps = {

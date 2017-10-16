@@ -3,14 +3,14 @@ import * as R from 'ramda';
 import { Button } from 'material-ui';
 import { connect } from 'react-redux';
 import Layout from '../layout';
-import Content from '../../lib/components/Content';
+import Page from '../../lib/components/Page';
 import needsAdmin from '../../auth/visibility/needsAdmin';
 import Sync from '../../admin/Sync';
 import { actions } from '../../admin/admin';
 
 const Admin = ({ initializeFirebaseDb, initializeAlgolia }) => (
   <Layout>
-    <Content>
+    <Page>
       <Button
         color="primary"
         raised
@@ -26,7 +26,7 @@ const Admin = ({ initializeFirebaseDb, initializeAlgolia }) => (
         Initialize Algolia
       </Button>
       <Sync />
-    </Content>
+    </Page>
   </Layout>
 );
 

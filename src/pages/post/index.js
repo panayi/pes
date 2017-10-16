@@ -5,7 +5,7 @@ import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Route } from 'react-router-dom';
 import urlParamsSelector from '../../lib/selectors/urlParams';
-import Content from '../../lib/components/Content';
+import Page from '../../lib/components/Page';
 import { modelConnections, connectData } from '../../firebase';
 import Layout from '../layout';
 import ViewPost from './view';
@@ -18,7 +18,7 @@ type Props = {
 
 const PostPage = ({ post, postId }: Props) => (
   <Layout>
-    <Content>
+    <Page fixed>
       <ViewPost
         post={post}
         postId={postId}
@@ -33,7 +33,7 @@ const PostPage = ({ post, postId }: Props) => (
           />
         )}
       />
-    </Content>
+    </Page>
   </Layout>
 );
 

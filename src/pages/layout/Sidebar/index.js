@@ -19,6 +19,9 @@ type Props = {
 };
 
 const styles = {
+  sidebar: {
+    flex: `0 0 ${WIDTH}px`,
+  },
   drawerPaper: {
     width: WIDTH,
   },
@@ -42,7 +45,7 @@ export class Sidebar extends Component<Props> {
     const { links, classes } = this.props;
 
     return (
-      <div className={classes.drawerPaper}>
+      <div className={classes.sidebar}>
         <Drawer
           type="permanent"
           classes={{

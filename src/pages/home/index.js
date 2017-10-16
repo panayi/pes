@@ -5,8 +5,8 @@ import { Route } from 'react-router-dom';
 import { withProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { InstantSearch } from 'react-instantsearch/dom';
-import { withStyles } from 'material-ui/styles';
 import propsSelector from '../../lib/selectors/props';
+import Page from '../../lib/components/Page';
 import { modelConnections, connectData } from '../../firebase';
 import Sidebar, { type LinkType } from '../layout/Sidebar';
 import Layout from '../layout';
@@ -14,17 +14,9 @@ import Posts from './posts';
 
 type Props = {
   categoryLinks: Array<LinkType>,
-  classes: Object,
 };
 
-const styles = theme => ({
-  page: {
-    flex: '1 1 100%',
-    backgroundColor: theme.palette.background.contentFrame,
-  },
-});
-
-const Home = ({ categoryLinks, classes }: Props) => (
+const Home = ({ categoryLinks }: Props) => (
   <InstantSearch
     appId={process.env.REACT_APP_ALGOLIA_APP_ID}
     apiKey={process.env.REACT_APP_ALGOLIA_SEARCH_KEY}
@@ -34,12 +26,12 @@ const Home = ({ categoryLinks, classes }: Props) => (
       <Sidebar
         links={categoryLinks}
       />
-      <div className={classes.page}>
+      <Page>
         <Route
           path="/:categoryName?"
           component={Posts}
         />
-      </div>
+      </Page>
     </Layout>
   </InstantSearch>
 );
@@ -60,5 +52,4 @@ export default R.compose(
   withProps(createStructuredSelector({
     categoryLinks: categoryLinksSelector,
   })),
-  withStyles(styles),
 )(Home);
