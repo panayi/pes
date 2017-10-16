@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { Drawer, List, ListItem, ListItemText } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import Link from '../../lib/components/Link';
+import Link from '../../../lib/components/Link';
 
 export const WIDTH = 240;
 

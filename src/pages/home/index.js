@@ -8,8 +8,8 @@ import { InstantSearch } from 'react-instantsearch/dom';
 import { withStyles } from 'material-ui/styles';
 import propsSelector from '../../lib/selectors/props';
 import { modelConnections, connectData } from '../../firebase';
-import Sidebar, { type LinkType } from '../../layout/Sidebar';
-import Layout from '../../layout';
+import Sidebar, { type LinkType } from '../layout/Sidebar';
+import Layout from '../layout';
 import Posts from './posts';
 
 type Props = {

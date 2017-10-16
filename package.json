@@ -21,6 +21,7 @@
     "react-icons": "^2.2.5",
     "react-instantsearch": "^4.1.2",
     "react-masonry-infinite": "^1.2.1",
+    "react-portal": "^4.0.0-beta.2",
     "react-redux": "^5.0.6",
     "react-redux-firebase": "canary",
     "react-redux-form": "^1.14.2",

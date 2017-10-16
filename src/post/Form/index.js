@@ -32,36 +32,36 @@ const PostForm = (props: Props) => (
     onChange={props.onChange}
   >
     <FormGroup>
-      <InputLabel htmlFor="forms.post.title">
+      <InputLabel htmlFor="title">
         Title
       </InputLabel>
-      <Input
-        is={Control.text}
-        model="forms.post.title"
-        id="forms.post.title"
+      <Control.text
+        model=".title"
+        id="title"
+        component={Input}
       />
-      <InputLabel htmlFor="forms.post.body">
+      <InputLabel htmlFor="body">
         Description:
       </InputLabel>
-      <Input
-        is={Control.text}
-        model="forms.post.body"
-        id="forms.post.body"
+      <Control.text
+        model=".body"
+        id="body"
+        component={Input}
       />
-      <InputLabel htmlFor="forms.post.price">
+      <InputLabel htmlFor="price">
         Price:
       </InputLabel>
-      <Input
-        is={Control.text}
-        model="forms.post.price"
-        id="forms.post.price"
+      <Control.text
+        model=".price"
+        id="price"
+        component={Input}
       />
       {
         props.filesPath &&
           <Control.custom
             component={UploadFile.Image}
             filesPath={props.filesPath}
-            model="forms.post.images"
+            model=".images"
             mapProps={{
               onUpload: p => (newFiles) => {
                 const { modelValue, onChange } = p;
@@ -72,12 +72,12 @@ const PostForm = (props: Props) => (
             }}
           />
       }
-      <InputLabel htmlFor="forms.post.category">
+      <InputLabel htmlFor="category">
         Category:
       </InputLabel>
       <Control.select
-        model="forms.post.category"
-        id="forms.posts.category"
+        model=".category"
+        id="category"
       >
         {R.map(category => (
           <option

@@ -5,7 +5,6 @@ import Home from './home';
 import Auth from './auth';
 import Profile from './profile';
 import Post from './post';
-import ViewPost from './viewPost';
 
 const Admin = asyncComponent(() => import('./admin'));
 
@@ -14,8 +13,7 @@ export default () => (
     <Route path="/admin" component={Admin} />
     <Route path="/auth" component={Auth} />
     <Route path="/profile" component={Profile} />
-    <Route path="/p" component={Post} />
-    <Route path="/i/:postId" component={ViewPost} />
+    <Route path="/i/:postId" component={Post} />
     <Route path="/" component={Home} />
   </Switch>
 );

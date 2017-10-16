@@ -3,18 +3,16 @@ import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { actions as formActions } from 'react-redux-form';
 import { MODEL_PATH, INITIAL_STATE } from '../Form';
-import urlParamsSelector from '../../lib/selectors/urlParams';
+import propsSelector from '../../lib/selectors/props';
 
 // ------------------------------------
 // Selectors
 // ------------------------------------
-export const postIdSelector = createSelector(
-  urlParamsSelector,
-  R.prop('postId'),
-);
-
 export const postImagesPathSelector = createSelector(
-  postIdSelector,
+  R.compose(
+    R.prop('postId'),
+    propsSelector,
+  ),
   postId => `posts/${postId}/images`,
 );
 

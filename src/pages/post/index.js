@@ -1,25 +1,47 @@
 /* @flow */
 import React from 'react';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
-import { Route, Switch } from 'react-router-dom';
-import Layout from '../../layout';
+import * as R from 'ramda';
+import { withProps } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+import { Route } from 'react-router-dom';
+import urlParamsSelector from '../../lib/selectors/urlParams';
 import Content from '../../lib/components/Content';
-import NewPost from '../../post/New';
-import EditPost from '../../post/Edit';
+import { modelConnections, connectData } from '../../firebase';
+import Layout from '../layout';
+import ViewPost from './view';
+import EditPost from './edit';
 
-const NewPostPage = connect(null, { onCreate: () => push('/') })(NewPost);
+type Props = {
+  postId: String, // eslint-disable-line react/no-unused-prop-types
+  post: Post,
+};
 
-const Post = () => (
+const PostPage = ({ post, postId }: Props) => (
   <Layout>
     <Content>
-      <Switch>
-        <Route path="/p/:postId" component={EditPost} />
-        <Route exact path="/p" component={NewPostPage} />
-      </Switch>
+      <ViewPost
+        post={post}
+        postId={postId}
+      />
+      <Route
+        path="/i/:postId/edit"
+        render={props => (
+          <EditPost
+            {...props}
+            post={post}
+            postId={postId}
+          />
+        )}
+      />
     </Content>
   </Layout>
 );
 
-
-export default Post;
+export default R.compose(
+  withProps(createStructuredSelector({
+    postId: R.compose(R.prop('postId'), urlParamsSelector),
+  })),
+  connectData({
+    post: modelConnections.posts.one((state, props) => props.postId),
+  }),
+)(PostPage);

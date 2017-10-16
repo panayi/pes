@@ -2,7 +2,7 @@
 import React from 'react';
 import { connectInfiniteHits } from 'react-instantsearch/connectors';
 import Posts from '../../../posts';
-import { WIDTH } from '../../../layout/Sidebar';
+import { WIDTH } from '../../layout/Sidebar';
 import ConfigureSearchParams from '../ConfigureSearchParams';
 
 type Props = {

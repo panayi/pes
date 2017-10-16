@@ -1,9 +1,11 @@
+import * as R from 'ramda';
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect';
-import { isUserSelector, isAuthenticatingSelector } from '../auth';
+import { isUserSelector, isAuthenticatedSelector, isAuthenticatingSelector } from '../auth';
 
-export default userSelector => connectedRouterRedirect({
+export default ({ userSelector, ...otherOptions }) => connectedRouterRedirect({
   redirectPath: '/',
   allowRedirectBack: false,
-  authenticatedSelector: isUserSelector(userSelector),
+  authenticatedSelector: R.both(isAuthenticatedSelector, isUserSelector(userSelector)),
   authenticatingSelector: isAuthenticatingSelector,
+  ...otherOptions,
 });

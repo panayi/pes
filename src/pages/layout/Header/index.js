@@ -2,12 +2,14 @@ import React from 'react';
 import * as R from 'ramda';
 import { AppBar, Toolbar } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import Link from '../../lib/components/Link';
-import ProfileImage from '../../auth/components/ProfileImage';
-import hideUser from '../../auth/visibility/hideUser';
-import hideVisitor from '../../auth/visibility/hideVisitor';
-import hideNonAdmin from '../../auth/visibility/hideNonAdmin';
-import logoutHoc from '../../auth/logout/logout';
+import Link from '../../../lib/components/Link';
+import ProfileImage from '../../../auth/components/ProfileImage';
+import hideUser from '../../../auth/visibility/hideUser';
+import hideVisitor from '../../../auth/visibility/hideVisitor';
+import hideNonAdmin from '../../../auth/visibility/hideNonAdmin';
+import logoutHoc from '../../../auth/logout/logout';
+import Modal from '../../../modal';
+import NewPost from '../../../post/New';
 
 const LoginLink = hideUser(Link);
 
@@ -37,14 +39,14 @@ const Header = ({ classes }) => (
         Pesposa
       </Link>
       <div style={{ flex: '1 1 auto' }} />
-      <Link
-        ml="auto"
-        to="/p"
-        exact
-        color="contrast"
+      <Modal
+        toggleContent="Sell your stuff"
+        buttonProps={{ color: 'contrast' }}
+        ignoreBackdropClick
+        ignoreEscapeKeyUp
       >
-        Sell your stuff
-      </Link>
+        <NewPost />
+      </Modal>
       <AdminLink
         to="/admin"
         color="contrast"

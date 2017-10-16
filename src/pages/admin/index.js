@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { Button } from 'material-ui';
 import { connect } from 'react-redux';
-import Layout from '../../layout';
+import Layout from '../layout';
 import Content from '../../lib/components/Content';
 import needsAdmin from '../../auth/visibility/needsAdmin';
 import Sync from '../../admin/Sync';
