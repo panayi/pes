@@ -1,0 +1,232 @@
+// ------------------------------------
+// Types
+// ------------------------------------
+
+// Base Types
+type Alpha extends String {
+  validate() { this.test(/^[a-zA-Z]*$/) }
+}
+
+type Alphanumeric extends String{
+  validate() { this.test(/^[a-zA-Z0-9]*$/) }
+}
+
+type Ascii extends String {
+  validate() { this.test(/^[\x00-\x7F]+$/) }
+}
+
+type Base64 extends String {
+  validate() { this.test(/[^A-Z0-9+\/=]/i) }
+}
+
+type CreditCard extends String {
+  validate() { this.test(/^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/) }
+}
+
+type URL extends String {
+  validate() { this.startsWith('http') }
+}
+
+type DataURI extends String {
+  validate() { this.test(/^\s*data:([a-z]+\/[a-z0-9\-\+]+(;[a-z\-]+\=[a-z0-9\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i) }
+}
+
+type Date extends String {
+  validate() { this.test(/(?:\s|gmt\s*)(-|\+)(\d{1,4})(\s|$)/) }
+}
+
+type Decimal extends String {
+  validate() { this.test(/^[-+]?([0-9]+|\.[0-9]+|[0-9]+\.[0-9]+)$/) }
+}
+
+type Email extends String {
+  validate() { this.test(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/) }
+}
+
+type Float extends String {
+  validate() { this.test(/^(?:[-+]?(?:[0-9]+))?(?:\.[0-9]*)?(?:[eE][\+\-]?(?:[0-9]+))?$/) }
+}
+
+type Hexadecimal extends String {
+  validate() { this.test(/^[0-9A-F]+$/i) }
+}
+
+type HexColor extends String {
+  validate() { this.test(/^#?([0-9A-F]{3}|[0-9A-F]{6})$/i) }
+}
+
+type IPv4 extends String {
+  validate() { this.test(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/) }
+}
+
+type IPv6 extends String {
+  validate() { this.test(/^[0-9A-F]{1,4}$/i) }
+}
+
+type ISIN extends String {
+  validate() { this.test(/^[A-Z]{2}[0-9A-Z]{9}[0-9]$/) }
+}
+
+type ISO8601 extends String {
+  validate() { this.test(/^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/) }
+}
+
+type LowercaseAlpha extends String {
+  validate() { this.test(/^[a-z]$/) }
+}
+
+type UppercaseAlpha extends String {
+  validate() { this.test(/^[A-Z]$/) }
+}
+
+type MACAddress extends String {
+  validate() { this.test(/^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$/) }
+}
+
+type SocialSecurity extends String {
+  validate() { this.test(/^\d\d\d-\d\d-\d\d\d\d$/) }
+}
+
+type Multibyte extends String {
+  validate() { this.test(/[^\x00-\x7F]/) }
+}
+
+type UUID extends String {
+  validate() { this.test(/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i) }
+}
+
+type Price extends Decimal {
+  validate() { this >= 0 }
+}
+
+type PhoneNumber extends String {
+  validate() {
+    this.test(/^\+357\d{8}$/i) // Cyprus
+  }
+}
+
+// Application Types
+type Category {
+  name: String,
+  categories: Map<String, SubCategory>
+}
+
+type SubCategory {
+  name: String,
+}
+
+type Image {
+  downloadURL: URL,
+  fullPath: String,
+  name: String,
+}
+
+type PostTitle extends String {
+  validate() { this.length > 0 && this.length <= 60 }
+}
+
+type PostBody extends String {
+  validate() { this.length <= 2000 }
+}
+
+type Post {
+  title: PostTitle,
+  body: PostBody,
+  price: Price,
+  category: String,
+  images: Map<String, Image> | Null
+  user: String,
+}
+
+type PendingPost {
+  title: PostTitle | Null,
+  body: PostBody | Null,
+  price: Price | Null,
+  category: String | Null,
+  images: Map<String, Image> | Null
+}
+
+type Roles {
+  admin: Boolean
+}
+
+type Provider {
+  displayName: String | Null,
+  email: Email | Null,
+  phoneNumber: PhoneNumber | Null,
+  photoURL: URL | Null,
+  providerId: String,
+  uid: String,
+
+  validate() {
+    requireAuthenticatedWithSocial(this.displayName, this.providerId) &&
+    requireAuthenticatedWithSocial(this.email, this.providerId) &&
+    requireWhenAuthenticatedWithPhone(this.phoneNumber, this.providerId) &&
+    requireAuthenticatedWithSocial(this.photoURL, this.providerId)
+  }
+}
+
+type Profile {
+  displayName: String | Null,
+  avatarUrl: URL | Null,
+}
+
+type User {
+  email: Email | Null,
+  providerData: Map<String, Provider>,
+  profile: Profile | Null,
+  roles: Roles | Null,
+}
+
+// ------------------------------------
+// Functions
+// ------------------------------------
+isAuthenticated() { auth != null }
+isAuthenticatedWithPhone() { auth != null && auth.provider == 'phone' }
+isAdmin() { auth != null && root.users[auth.uid].roles.admin.val() }
+isCurrentUser(uid) { auth != null && auth.uid == uid }
+categoryIsValid(categoryId) { root.categories[categoryId] != null }
+userIsValid(uid) { root.user[uid] != null }
+isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook' || providerId == 'twitter' || providerId == 'github' }
+requireAuthenticatedWithSocial(value, providerId) { !isSocialProvider(providerId) || value != null }
+requireWhenAuthenticatedWithPhone(value, providerId) { providerId != 'phone' || value != null }
+
+// ------------------------------------
+// Paths
+// ------------------------------------
+path /categories is Category[] {
+  read() { true }
+  write() { isAdmin() }
+}
+
+path /posts/{id} is Post {
+  read() { true }
+
+  // TODO: Temporarily require phone-number auth, until merging-accounts is implemented
+  create() { isAuthenticatedWithPhone() }
+  update() { isCurrentUser(this.user) }
+  delete() { isCurrentUser(this.user) }
+
+  validate() { userIsValid(this.user) && categoryIsValid(this.category) }
+}
+
+path /users/{uid} is User {
+  read() { isCurrentUser(uid) }
+  create() { true }
+  update() { isCurrentUser(uid) }
+
+  validate() {
+    this.roles == null &&
+    requireAuthenticatedWithSocial(this.profile, auth.provider)
+  }
+}
+
+path /users/{uid}/profile is Profile {
+  read() { true }
+}
+
+path /pendingPosts/{uid} is PendingPost {
+  read() { isCurrentUser(uid) }
+  create() { isCurrentUser(uid) }
+  update() { isCurrentUser(uid) }
+}

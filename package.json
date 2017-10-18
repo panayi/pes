@@ -53,6 +53,7 @@
     "enzyme": "^3.1.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-flowtype": "^2.35.1",
+    "firebase-bolt": "^0.8.2",
     "firebase-server": "^0.11.0",
     "flow-bin": "^0.54.1",
     "jest-enzyme": "^4.0.1",
@@ -88,7 +89,7 @@
     "build": "npm run ui:build && npm run functions:build",
     "deploy:ui": "npm run ui:build && firebase deploy --only hosting -P development",
     "deploy:functions": "npm run functions:build && firebase deploy --only functions -P development",
-    "deploy:database": "firebase deploy --only database -P development",
+    "deploy:database": "firebase-bolt database/rules.bolt && firebase deploy --only database -P development",
     "deploy": "npm run build && firebase deploy -P development"
   },
   "pre-push": [

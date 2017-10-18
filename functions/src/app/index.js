@@ -40,7 +40,7 @@ const validateFirebaseIdToken = (req, res, next) => {
 
     userRef.on('value', (snapshot) => {
       const user = snapshot.val();
-      if (user.role === 'admin') {
+      if (user.roles && user.roles.admin) {
         req.user = decodedIdToken;
         next();
       } else {

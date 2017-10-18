@@ -3,26 +3,24 @@ import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { actions as formActions } from 'react-redux-form';
 import { push } from 'react-router-redux';
-import { isLoaded, isEmpty } from 'react-redux-firebase';
-import { uidSelector, isAuthenticatedSelector, profileSelector } from '../../auth/auth';
+import propsSelector from '../../lib/selectors/props';
+import { uidSelector, isAuthenticatedSelector } from '../../auth/auth';
 import { MODEL_PATH, INITIAL_STATE } from '../Form';
 
 // ------------------------------------
 // Constants
 // ------------------------------------
-const PENDING_POST_KEY = 'pendingPost';
+const PENDING_POSTS_KEY = 'pendingPosts';
 
 // ------------------------------------
 // Selectors
 // ------------------------------------
 
-// pendingPostSelector :: State -> Object | Nil
+// pendingPostSelector :: State -> Post | Nil
+//   Post = Object
 export const pendingPostSelector = createSelector(
-  profileSelector,
-  R.compose(
-    R.prop(PENDING_POST_KEY),
-    R.defaultTo({}),
-  ),
+  propsSelector,
+  R.prop('pendingPost'),
 );
 
 // pendingPostImagesSelector :: State -> Object | Nil
@@ -30,39 +28,25 @@ export const pendingPostImagesPathSelector = createSelector(
   uidSelector,
   R.unless(
     R.isNil,
-    uid => `users/${uid}/${PENDING_POST_KEY}/images`,
+    uid => `${PENDING_POSTS_KEY}/${uid}/images`,
   ),
 );
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const initializeForm = () => (dispatch: Dispatch, getState: Function) => {
-  const state = getState();
-  const profile = profileSelector(state);
-
-  if (!isLoaded(profile) || isEmpty(profile)) {
+export const initializeForm = (pendingPost: ?Post) => (dispatch: Dispatch) => {
+  if (R.either(R.isNil, R.isEmpty)(pendingPost)) {
     return;
   }
 
-  const initialState = R.compose(
-    R.pick(R.keys(INITIAL_STATE)),
-    R.defaultTo({}),
-    pendingPostSelector,
-  )(state);
-
-  if (R.either(R.isNil, R.isEmpty)(initialState)) {
-    return;
-  }
-
-  dispatch(formActions.load(MODEL_PATH, initialState));
+  dispatch(formActions.load(MODEL_PATH, pendingPost));
 };
 
 export const savePendingPost = (post: Post | {}) =>
   (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
-    getFirebase().updateProfile({
-      [PENDING_POST_KEY]: post,
-    });
+    const uid = uidSelector(getState());
+    getFirebase().update(`${PENDING_POSTS_KEY}/${uid}`, post);
   };
 
 export const createPost = (onCreate: ?Function) => (post: Post) =>

@@ -1,5 +1,4 @@
 import * as R from 'ramda';
-import { USER } from '../constants/roles';
 
 // getPropInProviderData :: String -> Any
 const getPropInProviderData = propKey => R.compose(
@@ -23,8 +22,9 @@ const getPhotoUrl = R.compose(
 // profileFactory :: User -> Object
 export default user => ({
   email: user.email,
-  displayName: getDisplayName(user),
-  avatarUrl: getPhotoUrl(user),
   providerData: user.providerData,
-  role: USER,
+  profile: {
+    displayName: getDisplayName(user),
+    avatarUrl: getPhotoUrl(user),
+  },
 });

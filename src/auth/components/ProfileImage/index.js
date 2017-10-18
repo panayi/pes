@@ -8,7 +8,7 @@ import { isProfileLoadedSelector, profilePropSelector } from '../../auth';
 
 const mapStateToProps = createStructuredSelector({
   isProfileLoaded: isProfileLoadedSelector,
-  src: profilePropSelector('avatarUrl'),
+  src: profilePropSelector(['profile', 'avatarUrl']),
 });
 
 const connectProfileImage = R.compose(
