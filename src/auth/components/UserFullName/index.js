@@ -8,7 +8,7 @@ import { isProfileLoadedSelector, profilePropSelector } from '../../auth';
 
 const mapStateToProps = createStructuredSelector({
   isProfileLoaded: isProfileLoadedSelector,
-  children: profilePropSelector('displayName'),
+  children: profilePropSelector(['profile', 'displayName']),
 });
 
 export default R.compose(

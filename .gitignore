@@ -8,6 +8,7 @@
 
 # production
 /build
+/database/rules.json
 /functions/index.js
 
 # seed data

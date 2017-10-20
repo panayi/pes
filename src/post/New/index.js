@@ -2,11 +2,12 @@
 import * as R from 'ramda';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import { isLoaded } from 'react-redux-firebase';
 import { createStructuredSelector } from 'reselect';
 import { branch, renderNothing, lifecycle } from 'recompose';
+import { modelConnections, connectData } from '../../firebase';
 import withAnonymousUser from '../../auth/Login/withAnonymousUser';
-import { isProfileLoadedSelector } from '../../auth/auth';
+import { uidSelector } from '../../auth/auth';
 import Form from '../Form';
 import {
   pendingPostImagesPathSelector,
@@ -25,7 +26,6 @@ type Props = {
 
 const mapStateToProps = createStructuredSelector({
   filesPath: pendingPostImagesPathSelector,
-  isProfileLoaded: isProfileLoadedSelector,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, props: Props) => bindActionCreators({
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: Props) => bindActionCreat
 }, dispatch);
 
 export default R.compose(
-  firebaseConnect(),
+  connectData({ pendingPost: modelConnections.pendingPosts.one(uidSelector) }),
   connect(mapStateToProps, mapDispatchToProps),
   branch(
     // Wait for `profile` to become available,
@@ -43,13 +43,14 @@ export default R.compose(
     // when profile.pendingPost exists.
     R.compose(
       R.not,
-      R.prop('isProfileLoaded'),
+      isLoaded,
+      R.prop('pendingPost'),
     ),
     renderNothing,
   ),
   lifecycle({
     componentWillMount() {
-      this.props.initializeForm();
+      this.props.initializeForm(this.props.pendingPost);
     },
   }),
   withAnonymousUser,
