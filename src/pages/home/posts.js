@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { Grid } from 'material-ui';
 import { withProps } from 'recompose';
-import Search from '../../search';
+import SearchInput from 'components/molecules/SearchInput';
 import PostsList from './PostsList';
 
 type Props = {
@@ -16,7 +16,7 @@ const Posts = (props: Props) => (
     align="center"
     direction="column"
   >
-    <Search />
+    <SearchInput />
     <PostsList categoryName={props.categoryName} />
   </Grid>
 );

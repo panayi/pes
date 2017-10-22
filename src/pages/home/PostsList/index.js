@@ -1,8 +1,8 @@
 /* @flow */
 import React from 'react';
 import { connectInfiniteHits } from 'react-instantsearch/connectors';
-import Posts from '../../../posts';
-import { WIDTH } from '../../layout/Sidebar';
+import BasePostsList from 'components/organisms/PostsList';
+import { WIDTH } from 'components/organisms/Sidebar';
 import ConfigureSearchParams from '../ConfigureSearchParams';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 
 const PostsList = ({ categoryName, hits, hasMore, refine }: Props) => (
   <div>
-    <Posts
+    <BasePostsList
       hits={hits}
       hasMore={hasMore}
       loadMore={refine}

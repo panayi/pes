@@ -2,11 +2,11 @@ import React from 'react';
 import * as R from 'ramda';
 import { Button } from 'material-ui';
 import { connect } from 'react-redux';
-import Layout from '../layout';
-import Page from '../../lib/components/Page';
-import needsAdmin from '../../auth/visibility/needsAdmin';
-import Sync from '../../admin/Sync';
-import { actions } from '../../admin/admin';
+import Layout from 'components/organisms/Layout';
+import Page from 'components/organisms/Page';
+import needsAdmin from 'components/hocs/needsAdmin';
+import Sync from 'components/smarts/Sync';
+import { actions } from 'store/admin';
 
 const Admin = ({ initializeFirebaseDb, initializeAlgolia }) => (
   <Layout>

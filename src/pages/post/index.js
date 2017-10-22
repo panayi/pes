@@ -4,10 +4,10 @@ import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Route } from 'react-router-dom';
-import urlParamsSelector from '../../lib/selectors/urlParams';
-import Page from '../../lib/components/Page';
-import { modelConnections, connectData } from '../../firebase';
-import Layout from '../layout';
+import urlParamsSelector from 'utils/urlParamsSelector';
+import Page from 'components/organisms/Page';
+import { modelConnections, connectData } from 'services/firebase';
+import Layout from 'components/organisms/Layout';
 import ViewPost from './view';
 import EditPost from './edit';
 

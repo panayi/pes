@@ -4,10 +4,10 @@ import { branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 import { replace as _replace } from 'react-router-redux';
 import { isLoaded } from 'react-redux-firebase';
-import needsUserWithId from '../../auth/visibility/needsUserWithId';
-import propsSelector from '../../lib/selectors/props';
-import Modal from '../../modal';
-import EditPostForm from '../../post/Edit';
+import needsUserWithId from 'components/hocs/needsUserWithId';
+import propsSelector from 'utils/propsSelector';
+import Modal from 'components/organisms/Modal';
+import EditPostForm from 'components/smarts/EditPostForm';
 
 const EditPost = ({ postId, post, replace }) => (
   <Modal

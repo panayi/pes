@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { MuiThemeProvider } from 'material-ui/styles';
 import 'normalize.css/normalize.css';
-import registerServiceWorker from './lib/registerServiceWorker';
-import createStore from './lib/store/createStore';
+import createStore from 'store/createStore';
+import theme from 'config/theme';
+import registerServiceWorker from './registerServiceWorker';
 import App from './pages';
-import theme from './theme';
 
 const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-underscore-dangle
 
