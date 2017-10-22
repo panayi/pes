@@ -5,11 +5,11 @@ import { Route } from 'react-router-dom';
 import { withProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { InstantSearch } from 'react-instantsearch/dom';
-import propsSelector from '../../lib/selectors/props';
-import Page from '../../lib/components/Page';
-import { modelConnections, connectData } from '../../firebase';
-import Sidebar, { type LinkType } from '../layout/Sidebar';
-import Layout from '../layout';
+import propsSelector from 'utils/propsSelector';
+import Page from 'components/organisms/Page';
+import { modelConnections, connectData } from 'services/firebase';
+import Sidebar, { type LinkType } from 'components/organisms/Sidebar';
+import Layout from 'components/organisms/Layout';
 import Posts from './posts';
 
 type Props = {

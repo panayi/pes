@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import needsVisitor from '../../auth/visibility/needsVisitor';
-import Layout from '../layout';
+import needsVisitor from 'components/hocs/needsVisitor';
+import Layout from 'components/organisms/Layout';
 import Login from './login';
 
 const Auth = () => (

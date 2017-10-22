@@ -1,11 +1,15 @@
 import React from 'react';
-import needsUser from '../../auth/visibility/needsUser';
-import Layout from '../layout';
-import ProfilePage from '../../profile';
+import needsUser from 'components/hocs/needsUser';
+import Layout from 'components/organisms/Layout';
+import Link from 'components/smarts/Link';
+import ProfileBanner from 'components/organisms/ProfileBanner';
+import MyPosts from 'components/smarts/MyPosts';
 
 export const Profile = () => (
   <Layout>
-    <ProfilePage />
+    <ProfileBanner />
+    <Link.Buttons />
+    <MyPosts />
   </Layout>
 );
 

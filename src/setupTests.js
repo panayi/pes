@@ -8,7 +8,11 @@ import { reactReduxFirebase, firebaseStateReducer, getFirebase } from 'react-red
 import FirebaseServer from 'firebase-server';
 import configureMockStore from 'redux-mock-store';
 import detectPort from 'detect-port';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
+
+Enzyme.configure({ adapter: new Adapter() });
 
 global.noop = () => {};
 

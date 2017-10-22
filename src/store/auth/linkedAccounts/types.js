@@ -1,0 +1,1 @@
+export const RECEIVE_LINKED_ACCOUNTS = 'auth/link/RECEIVE_LINKED_ACCOUNTS';

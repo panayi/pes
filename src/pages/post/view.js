@@ -1,9 +1,9 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import propsSelector from '../../lib/selectors/props';
-import Link from '../../lib/components/Link';
-import withUserWithId from '../../auth/visibility/withUserWithId';
+import propsSelector from 'utils/propsSelector';
+import Link from 'components/molecules/Link';
+import withUserWithId from 'components/hocs/withUserWithId';
 
 type Props = {
   postId: String, // eslint-disable-line react/no-unused-prop-types

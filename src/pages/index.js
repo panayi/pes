@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import asyncComponent from '../lib/hocs/asyncComponent';
+import asyncComponent from 'components/hocs/asyncComponent';
 import Home from './home';
 import Auth from './auth';
 import Profile from './profile';
