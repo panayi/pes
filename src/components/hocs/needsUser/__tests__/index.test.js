@@ -6,7 +6,7 @@ import needsUser from '../index';
 describe('[HOC] needsUser', () => {
   authSelectors.isAuthenticatedSelector = jest.fn();
   authSelectors.isAuthenticatingSelector = jest.fn();
-  
+
   const location = {
     pathname: '/some-user-protected-url',
     search: '',
@@ -18,7 +18,7 @@ describe('[HOC] needsUser', () => {
     redirectPath: '/you-cant-see-user',
   })(MyComponent);
   const { component, store } = withMockStore(<Hoc location={location} />);
-  
+
   it('should render wrappedComponent correctly', () => {
     authSelectors.isAuthenticatedSelector.mockReturnValueOnce(true);
     authSelectors.isAuthenticatingSelector.mockReturnValueOnce(false);
@@ -32,7 +32,7 @@ describe('[HOC] needsUser', () => {
     const wrapper = mount(component);
     expect(wrapper.find(MyComponent).exists()).toBe(true);
   });
-  
+
   it('should not render wrappedComponent and redirect, when isAuthenticatedSelector = false', () => {
     authSelectors.isAuthenticatedSelector.mockReturnValueOnce(false);
     authSelectors.isAuthenticatingSelector.mockReturnValueOnce(false);

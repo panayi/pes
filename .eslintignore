@@ -12,4 +12,3 @@ functions/node_modules
 # other
 /functions/index.js
 flow-typed/
-**/__tests__/

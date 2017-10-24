@@ -19,7 +19,7 @@ describe('[HOC] hideNonAdmin', () => {
     const wrapper = mount(component);
     expect(wrapper.find(MyComponent).exists()).toBe(true);
   });
-  
+
   it('should not render wrappedComponent when isAdminSelector = false', () => {
     authSelectors.isAdminSelector.mockReturnValueOnce(false);
     const wrapper = mount(component);

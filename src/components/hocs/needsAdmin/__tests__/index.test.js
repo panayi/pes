@@ -6,7 +6,7 @@ import needsAdmin from '../index';
 describe('[HOC] needsAdmin', () => {
   authSelectors.isAdminSelector = jest.fn();
   authSelectors.isAuthenticatingSelector = jest.fn();
-  
+
   const location = {
     pathname: '/some-admin-protected-url',
     search: '',
@@ -18,7 +18,7 @@ describe('[HOC] needsAdmin', () => {
     redirectPath: '/you-cant-see-admin',
   })(MyComponent);
   const { component, store } = withMockStore(<Hoc location={location} />);
-  
+
   it('should render wrappedComponent correctly', () => {
     authSelectors.isAdminSelector.mockReturnValueOnce(true);
     authSelectors.isAuthenticatingSelector.mockReturnValueOnce(false);
@@ -32,7 +32,7 @@ describe('[HOC] needsAdmin', () => {
     const wrapper = mount(component);
     expect(wrapper.find(MyComponent).exists()).toBe(true);
   });
-  
+
   it('should not render wrappedComponent and redirect, when isAdminSelector = false', () => {
     authSelectors.isAdminSelector.mockReturnValueOnce(false);
     authSelectors.isAuthenticatingSelector.mockReturnValueOnce(false);

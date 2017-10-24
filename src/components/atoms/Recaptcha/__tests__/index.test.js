@@ -13,9 +13,9 @@ describe('[Component] Recaptcha', () => {
 
   it('should render correctly', () => {
     generate.default = jest.fn();
-    generate.default.mockReturnValueOnce('myRecaptchaId')
+    generate.default.mockReturnValueOnce('myRecaptchaId');
     const wrapper = shallow(
-      <Recaptcha {...defaultProps} />
+      <Recaptcha {...defaultProps} />,
     );
     expect(wrapper).toMatchSnapshot();
     generate.default.mockClear();
@@ -25,13 +25,13 @@ describe('[Component] Recaptcha', () => {
     generate.default = jest.fn();
     generate.default
       .mockReturnValueOnce('first')
-      .mockReturnValueOnce('second')
-    
+      .mockReturnValueOnce('second');
+
     const wrapper = shallow(
-      <Recaptcha {...defaultProps} />
+      <Recaptcha {...defaultProps} />,
     );
     const wrapper2 = shallow(
-      <Recaptcha {...defaultProps} />
+      <Recaptcha {...defaultProps} />,
     );
 
     expect(wrapper.instance().RECAPTCHA_ID).toBe('first');
@@ -45,7 +45,7 @@ describe('[Component] Recaptcha', () => {
     const props = {
       firebase: {
         auth: {
-          RecaptchaVerifier
+          RecaptchaVerifier,
         },
       },
     };
@@ -57,7 +57,7 @@ describe('[Component] Recaptcha', () => {
       };
 
       const wrapper = shallow(
-        <Recaptcha {...props} />
+        <Recaptcha {...props} />,
       );
 
       return wrapper.instance().reset().then(() => {

@@ -12,7 +12,7 @@ describe('logout', () => {
       </button>
     ));
     const wrapper = mount(
-      <Button firebase={firebase} />
+      <Button firebase={firebase} />,
     );
     expect(wrapper).toMatchSnapshot();
   });
@@ -29,7 +29,7 @@ describe('logout', () => {
       <Hoc
         firebase={firebase}
         onLogout={mockOnLogout}
-      />
+      />,
     );
 
     expect(mockLogout.mock.calls.length).toBe(0);
@@ -39,5 +39,5 @@ describe('logout', () => {
 
     expect(mockLogout.mock.calls.length).toBe(1);
     expect(mockOnLogout.mock.calls.length).toBe(1);
-  })
+  });
 });

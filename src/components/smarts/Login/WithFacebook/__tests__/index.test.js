@@ -9,7 +9,7 @@ describe('Login', () => {
           login={noop}
           onSuccess={noop}
           onError={noop}
-        />
+        />,
       );
       expect(wrapper).toMatchSnapshot();
     });
@@ -22,7 +22,7 @@ describe('Login', () => {
           login={mockLogin}
           onSuccess={noop}
           onError={noop}
-        />
+        />,
       );
 
       expect(mockLogin.mock.calls.length).toBe(0);
@@ -40,7 +40,7 @@ describe('Login', () => {
           login={() => Promise.resolve('success 👍')}
           onSuccess={mockOnSuccess}
           onError={noop}
-        />
+        />,
       );
 
       expect(mockOnSuccess.mock.calls.length).toBe(0);
@@ -60,7 +60,7 @@ describe('Login', () => {
           login={() => Promise.reject('error 😭')}
           onSuccess={noop}
           onError={mockOnError}
-        />
+        />,
       );
 
       expect(mockOnError.mock.calls.length).toBe(0);

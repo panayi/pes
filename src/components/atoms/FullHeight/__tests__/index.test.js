@@ -7,7 +7,7 @@ describe('[Component] FullHeight', () => {
       <FullHeight>
         <header>I am a header</header>
         <article>I am an article</article>
-      </FullHeight>
+      </FullHeight>,
     );
     expect(wrapper).toMatchSnapshot();
   });

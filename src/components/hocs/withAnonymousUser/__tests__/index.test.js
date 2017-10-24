@@ -1,5 +1,4 @@
 import React from 'react';
-import { withProps } from 'recompose';
 import * as maybeSignInAnonymously from '../utils/maybeSignInAnonymously';
 import { withAnonymousUser } from '../index';
 
@@ -17,7 +16,7 @@ describe('[HOC] withAnonymousUser', () => {
   beforeEach(() => {
     mockSignIn.mockClear();
   });
-  
+
   describe('lifecycle', () => {
     const originalMaybeSignInAnonymously = maybeSignInAnonymously.default;
 
@@ -46,17 +45,17 @@ describe('[HOC] withAnonymousUser', () => {
 
   describe('signInAnonymously', () => {
     it('should do nothing when isAuthenticating', () => {
-      const wrapper = mount(<Hoc firebase={firebase} isAuthenticating isAuthenticated={false} />);
+      mount(<Hoc firebase={firebase} isAuthenticating isAuthenticated={false} />);
       expect(mockSignIn.mock.calls.length).toBe(0);
     });
-    
+
     it('should do nothing when isAuthenticated', () => {
-      const wrapper = mount(<Hoc firebase={firebase} isAuthenticating={false} isAuthenticated />);
+      mount(<Hoc firebase={firebase} isAuthenticating={false} isAuthenticated />);
       expect(mockSignIn.mock.calls.length).toBe(0);
     });
 
     it('should sign-in anonymously when both isAuthenticating and isAuthenticated are false', () => {
-      const wrapper = mount(<Hoc firebase={firebase} isAuthenticating={false} isAuthenticated={false} />);
+      mount(<Hoc firebase={firebase} isAuthenticating={false} isAuthenticated={false} />);
       expect(mockSignIn.mock.calls.length).toBe(1);
     });
   });

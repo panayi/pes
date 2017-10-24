@@ -7,7 +7,7 @@ describe('[HOC] hideVisitor', () => {
   authSelectors.isAuthenticatedSelector = jest.fn();
   const Hoc = hideVisitor(MyComponent);
   const { component } = withMockStore(<Hoc />);
-  
+
   it('should render wrappedComponent correctly', () => {
     authSelectors.isAuthenticatedSelector.mockReturnValueOnce(true);
     const wrapper = mount(component);
@@ -19,7 +19,7 @@ describe('[HOC] hideVisitor', () => {
     const wrapper = mount(component);
     expect(wrapper.find(MyComponent).exists()).toBe(true);
   });
-  
+
   it('should not render wrappedComponent when isAuthenticatedSelector = false', () => {
     authSelectors.isAuthenticatedSelector.mockReturnValueOnce(false);
     const wrapper = mount(component);

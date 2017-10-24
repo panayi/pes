@@ -6,7 +6,7 @@ it('should render correctly', () => {
     <Layout>
       <span>I am a child</span>
       <span>I am another child</span>
-    </Layout>
+    </Layout>,
   );
   expect(wrapper).toMatchSnapshot();
 });

@@ -1,13 +1,13 @@
 import React from 'react';
-import { WithPhoneNumber } from '../index';
 import Recaptcha from 'components/atoms/Recaptcha';
+import { WithPhoneNumber } from '../index';
 
-jest.mock('react-redux-form', () =>  ({
-  Field: (props) => (<div {...props} />),
-  Form: (props) => (<form {...props} />),
-  Errors: (props) => null,
+jest.mock('react-redux-form', () => ({
+  Field: props => (<div {...props} />),
+  Form: props => (<form {...props} />),
+  Errors: () => null,
   Control: {
-    text: (props) => (<input {...props} />)
+    text: props => (<input {...props} />),
   },
 }));
 
@@ -57,8 +57,8 @@ describe('WithPhoneNumber', () => {
     const mockFirebase = {
       auth: {
         RecaptchaVerifier: Object,
-      }
-    }
+      },
+    };
     const wrapper = mount(<WithPhoneNumber {...defaultProps} firebase={mockFirebase} />);
     expect(wrapper.instance().recaptcha instanceof Recaptcha).toBe(true);
   });
@@ -66,7 +66,7 @@ describe('WithPhoneNumber', () => {
   it('should resetAll on mount', () => {
     const mockResetAll = jest.fn();
     expect(mockResetAll.mock.calls.length).toBe(0);
-    const wrapper = shallow(<WithPhoneNumber {...defaultProps} resetAll={mockResetAll} />);
+    shallow(<WithPhoneNumber {...defaultProps} resetAll={mockResetAll} />);
     expect(mockResetAll.mock.calls.length).toBe(1);
   });
 
@@ -86,7 +86,7 @@ describe('WithPhoneNumber', () => {
           firebase={mockFirebase}
           showPhoneNumberForm
           submitPhoneNumberForm={mockSubmit}
-        />
+        />,
       );
       wrapper.find('form').simulate('submit');
       expect(mockSubmit.mock.calls.length).toBe(1);
@@ -108,7 +108,7 @@ describe('WithPhoneNumber', () => {
           firebase={mockFirebase}
           showCodeForm
           submitCodeForm={mockSubmit}
-        />
+        />,
       );
       wrapper.find('form').simulate('submit');
       expect(mockSubmit.mock.calls.length).toBe(1);

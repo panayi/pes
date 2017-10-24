@@ -1,6 +1,5 @@
 import React from 'react';
 import ConnectedLogin, { Login } from '../index';
-import WithFacebook from '../WithFacebook';
 
 describe('Login', () => {
   it('should render correctly', () => {
@@ -14,7 +13,7 @@ describe('Login', () => {
       <Login
         component={LoginComponent}
         firebase={{ login }}
-      />
+      />,
     );
     expect(wrapper).toMatchSnapshot();
   });
@@ -30,7 +29,7 @@ describe('Login', () => {
         component={LoginComponent}
         firebase={{ login }}
         authError={authError}
-      />
+      />,
     );
     const loginComponent = wrapper.find(LoginComponent);
     expect(loginComponent.prop('login')).toBe(login);
@@ -48,7 +47,7 @@ describe('Login', () => {
         component={LoginComponent}
         firebase={{ login }}
         maybeMergeAnonymousProfile={mockMaybeMergeAnonymousProfile}
-      />
+      />,
     );
 
     expect(mockMaybeMergeAnonymousProfile.mock.calls.length).toBe(0);
@@ -66,7 +65,7 @@ describe('Login', () => {
           },
         },
       };
-      const { component, store } = withMockStore(
+      const { component } = withMockStore(
         <ConnectedLogin component={LoginComponent} />,
         state,
       );
