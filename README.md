@@ -40,6 +40,9 @@ Unit testing files should be placed in a `__tests__/` folder, relative to the fi
 
 `yarn start`
 
+## Lint
+
+`yarn lint`
 
 ## Unit testing
 
@@ -66,7 +69,6 @@ Read more at [create-react-app Docs](https://github.com/facebookincubator/create
 
 - Seed Firebase DB: `yarn seed`
 - Sync with legacy MySQL DB: http://localhost:3000/admin
-
 
 ## Build
 
