@@ -1,8 +1,13 @@
+/* @flow */
 import React from 'react';
 import PropTypes from 'prop-types';
 import './index.css';
 
-const FullHeight = ({ children }) => (
+type Props = {
+  children: React$Node,
+};
+
+const FullHeight = ({ children }: Props) => (
   <div className="full-height">
     {children}
   </div>

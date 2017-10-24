@@ -1,5 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import 'raf/polyfill';
 import React from 'react';
+import * as R from 'ramda';
 import * as Firebase from 'firebase';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose, combineReducers } from 'redux';
@@ -8,16 +10,24 @@ import { reactReduxFirebase, firebaseStateReducer, getFirebase } from 'react-red
 import FirebaseServer from 'firebase-server';
 import configureMockStore from 'redux-mock-store';
 import detectPort from 'detect-port';
-import Enzyme from 'enzyme';
+import Enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import 'jest-enzyme';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-global.noop = () => {};
+// Fail tests on any warning
+// console.error = (message) => {
+//   throw new Error(message);
+// };
 
 // ------------------------------------
-// Setup store and Firebase
+// Setup Enzyme
+// ------------------------------------
+
+// React 16 Enzyme adapter
+Enzyme.configure({ adapter: new Adapter() });
+
+// ------------------------------------
+// Setup Firebase
 // ------------------------------------
 
 global.Firebase = Firebase;
@@ -29,27 +39,6 @@ const firebaseConfig = {
   storageBucket: 'asdf', // placeholder
   messagingSenderId: 'asdf', // placeholder
 };
-
-detectPort(5000)
-  .then((port) => {
-    if (port === 5000) {
-      new FirebaseServer(5000, 'localhost.firebaseio.test', { // eslint-disable-line no-new
-        users: {
-          Iq5b0qK2NtgggT6U3bU6iZRGyma2: {
-            displayName: 'Tester',
-          },
-        },
-      });
-    }
-
-    // Swallow firebase reinitialize error (useful when using watch)
-    try {
-      Firebase.initializeApp(firebaseConfig);
-    } catch (err) {
-      // do nothing
-    }
-  });
-
 
 global.firebase = Object.defineProperty(Firebase, '_', {
   value: {
@@ -70,8 +59,34 @@ global.firebase = Object.defineProperty(Firebase, '_', {
 });
 
 // ------------------------------------
+// Globals
+// ------------------------------------
+
+global.shallow = shallow;
+global.mount = mount;
+global.R = R;
+
+// ------------------------------------
 // Helpers
 // ------------------------------------
+
+global.noop = () => {};
+
+global.startFirebaseTestServer = async () => {
+  const port = await detectPort(5000);
+
+  if (port === 5000) {
+    new FirebaseServer(5000, 'localhost.firebaseio.test', { // eslint-disable-line no-new
+      users: {
+        Iq5b0qK2NtgggT6U3bU6iZRGyma2: {
+          displayName: 'Tester',
+        },
+      },
+    });
+  }
+
+  Firebase.initializeApp(firebaseConfig);
+};
 
 global.withMockStore = (children, state = {}) => {
   const store = configureMockStore(compose(

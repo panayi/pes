@@ -6,7 +6,7 @@ import { MuiThemeProvider } from 'material-ui/styles';
 import 'normalize.css/normalize.css';
 import createStore from 'store/createStore';
 import theme from 'config/theme';
-import registerServiceWorker from './registerServiceWorker';
+import registerServiceWorker from 'lib/registerServiceWorker';
 import App from './pages';
 
 const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-underscore-dangle

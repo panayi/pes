@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import FullHeight from '../index';
 
 describe('[Component] FullHeight', () => {

@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[HOC] needsUserWithId should not render wrappedComponent and redirect, when isAuthenticatedSelector = false 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "args": Array [
+        Object {
+          "hash": null,
+          "pathname": "/you-cant-see-other-user-stuff",
+          "search": "",
+        },
+      ],
+      "method": "replace",
+    },
+    "type": "@@router/CALL_HISTORY_METHOD",
+  },
+]
+`;
+
+exports[`[HOC] needsUserWithId should not render wrappedComponent and redirect, when isUserSelector = false 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "args": Array [
+        Object {
+          "hash": null,
+          "pathname": "/you-cant-see-other-user-stuff",
+          "search": "",
+        },
+      ],
+      "method": "replace",
+    },
+    "type": "@@router/CALL_HISTORY_METHOD",
+  },
+]
+`;
+
+exports[`[HOC] needsUserWithId should render wrappedComponent correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "firebase": Object {
+        "INTERNAL": Object {
+          "ErrorFactory": [Function],
+          "Promise": [Function],
+          "createFirebaseNamespace": [Function],
+          "createSubscribe": [Function],
+          "deepExtend": [Function],
+          "extendNamespace": [Function],
+          "factories": Object {
+            "auth": [Function],
+            "database": [Function],
+          },
+          "node": Object {
+            "XMLHttpRequest": [Function],
+            "localStorage": Storage {},
+            "sessionStorage": Storage {},
+          },
+          "registerService": [Function],
+          "removeApp": [Function],
+          "useAsService": [Function],
+        },
+        "Promise": [Function],
+        "SDK_VERSION": "4.5.0",
+        "User": [Function],
+        "_": Object {
+          "authUid": null,
+          "config": Object {
+            "apiKey": "asdf",
+            "authDomain": "asdf",
+            "databaseURL": "ws://127.0.1:5000",
+            "enableRedirectHandling": false,
+            "messagingSenderId": "asdf",
+            "storageBucket": "asdf",
+            "userProfile": "users",
+          },
+          "watchers": Object {},
+        },
+        "__esModule": true,
+        "app": [Function],
+        "apps": Array [],
+        "auth": [Function],
+        "database": [Function],
+        "default": [Circular],
+        "initializeApp": [Function],
+      },
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(AuthWrapper(MyComponent))
+    location={
+      Object {
+        "hash": "",
+        "pathname": "/some-user-specific-protected-url",
+        "search": "",
+      }
+    }
+  >
+    <AuthWrapper(MyComponent)
+      dispatch={[Function]}
+      isAuthenticated={true}
+      isAuthenticating={false}
+      location={
+        Object {
+          "hash": "",
+          "pathname": "/some-user-specific-protected-url",
+          "search": "",
+        }
+      }
+      redirectPath="/you-cant-see-other-user-stuff"
+    >
+      <MyComponent
+        dispatch={[Function]}
+        isAuthenticated={true}
+        isAuthenticating={false}
+        location={
+          Object {
+            "hash": "",
+            "pathname": "/some-user-specific-protected-url",
+            "search": "",
+          }
+        }
+        redirectPath="/you-cant-see-other-user-stuff"
+      >
+        <div>
+          i am this user
+        </div>
+      </MyComponent>
+    </AuthWrapper(MyComponent)>
+  </Connect(AuthWrapper(MyComponent))>
+</Provider>
+`;

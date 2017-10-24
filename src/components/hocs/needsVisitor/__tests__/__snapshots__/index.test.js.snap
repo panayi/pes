@@ -1,0 +1,495 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[HOC] needsVisitor should not render wrappedComponent and redirect, when isNotAuthenticatedSelector = false 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "args": Array [
+        Object {
+          "hash": null,
+          "pathname": "/you-cant-see-visitor-page",
+          "search": "",
+        },
+      ],
+      "method": "replace",
+    },
+    "type": "@@router/CALL_HISTORY_METHOD",
+  },
+]
+`;
+
+exports[`[HOC] needsVisitor should render Loader when isAuthenticatingSelector = true 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "firebase": Object {
+        "INTERNAL": Object {
+          "ErrorFactory": [Function],
+          "Promise": [Function],
+          "createFirebaseNamespace": [Function],
+          "createSubscribe": [Function],
+          "deepExtend": [Function],
+          "extendNamespace": [Function],
+          "factories": Object {
+            "auth": [Function],
+            "database": [Function],
+          },
+          "node": Object {
+            "XMLHttpRequest": [Function],
+            "localStorage": Storage {},
+            "sessionStorage": Storage {},
+          },
+          "registerService": [Function],
+          "removeApp": [Function],
+          "useAsService": [Function],
+        },
+        "Promise": [Function],
+        "SDK_VERSION": "4.5.0",
+        "User": [Function],
+        "_": Object {
+          "authUid": null,
+          "config": Object {
+            "apiKey": "asdf",
+            "authDomain": "asdf",
+            "databaseURL": "ws://127.0.1:5000",
+            "enableRedirectHandling": false,
+            "messagingSenderId": "asdf",
+            "storageBucket": "asdf",
+            "userProfile": "users",
+          },
+          "watchers": Object {},
+        },
+        "__esModule": true,
+        "app": [Function],
+        "apps": Array [],
+        "auth": [Function],
+        "database": [Function],
+        "default": [Circular],
+        "initializeApp": [Function],
+      },
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(AuthWrapper(MyComponent))
+    location={
+      Object {
+        "hash": "",
+        "pathname": "/some-visitor-specific-url",
+        "search": "",
+      }
+    }
+  >
+    <AuthWrapper(MyComponent)
+      dispatch={[Function]}
+      isAuthenticated={false}
+      isAuthenticating={true}
+      location={
+        Object {
+          "hash": "",
+          "pathname": "/some-visitor-specific-url",
+          "search": "",
+        }
+      }
+      redirectPath="/you-cant-see-visitor-page"
+    >
+      <Loader
+        dispatch={[Function]}
+        isAuthenticated={false}
+        isAuthenticating={true}
+        location={
+          Object {
+            "hash": "",
+            "pathname": "/some-visitor-specific-url",
+            "search": "",
+          }
+        }
+        redirectPath="/you-cant-see-visitor-page"
+      >
+        <withStyles(GridWrapper)
+          align="center"
+          justify="center"
+          style={
+            Object {
+              "height": "100vh",
+            }
+          }
+        >
+          <GridWrapper
+            align="center"
+            classes={
+              Object {
+                ".MuiGrid-spacing-xs-16-16 > .MuiGrid-typeItem-2": "MuiGrid-spacing-xs-16-16 > .MuiGrid-typeItem-2",
+                ".MuiGrid-spacing-xs-24-17 > .MuiGrid-typeItem-2": "MuiGrid-spacing-xs-24-17 > .MuiGrid-typeItem-2",
+                ".MuiGrid-spacing-xs-40-18 > .MuiGrid-typeItem-2": "MuiGrid-spacing-xs-40-18 > .MuiGrid-typeItem-2",
+                ".MuiGrid-spacing-xs-8-15 > .MuiGrid-typeItem-2": "MuiGrid-spacing-xs-8-15 > .MuiGrid-typeItem-2",
+                "align-xs-baseline": "MuiGrid-align-xs-baseline-10",
+                "align-xs-center": "MuiGrid-align-xs-center-7",
+                "align-xs-flex-end": "MuiGrid-align-xs-flex-end-9",
+                "align-xs-flex-start": "MuiGrid-align-xs-flex-start-8",
+                "direction-xs-column": "MuiGrid-direction-xs-column-3",
+                "direction-xs-column-reverse": "MuiGrid-direction-xs-column-reverse-4",
+                "direction-xs-row-reverse": "MuiGrid-direction-xs-row-reverse-5",
+                "grid-lg": "MuiGrid-grid-lg-58",
+                "grid-lg-1": "MuiGrid-grid-lg-1-59",
+                "grid-lg-10": "MuiGrid-grid-lg-10-68",
+                "grid-lg-11": "MuiGrid-grid-lg-11-69",
+                "grid-lg-12": "MuiGrid-grid-lg-12-70",
+                "grid-lg-2": "MuiGrid-grid-lg-2-60",
+                "grid-lg-3": "MuiGrid-grid-lg-3-61",
+                "grid-lg-4": "MuiGrid-grid-lg-4-62",
+                "grid-lg-5": "MuiGrid-grid-lg-5-63",
+                "grid-lg-6": "MuiGrid-grid-lg-6-64",
+                "grid-lg-7": "MuiGrid-grid-lg-7-65",
+                "grid-lg-8": "MuiGrid-grid-lg-8-66",
+                "grid-lg-9": "MuiGrid-grid-lg-9-67",
+                "grid-md": "MuiGrid-grid-md-45",
+                "grid-md-1": "MuiGrid-grid-md-1-46",
+                "grid-md-10": "MuiGrid-grid-md-10-55",
+                "grid-md-11": "MuiGrid-grid-md-11-56",
+                "grid-md-12": "MuiGrid-grid-md-12-57",
+                "grid-md-2": "MuiGrid-grid-md-2-47",
+                "grid-md-3": "MuiGrid-grid-md-3-48",
+                "grid-md-4": "MuiGrid-grid-md-4-49",
+                "grid-md-5": "MuiGrid-grid-md-5-50",
+                "grid-md-6": "MuiGrid-grid-md-6-51",
+                "grid-md-7": "MuiGrid-grid-md-7-52",
+                "grid-md-8": "MuiGrid-grid-md-8-53",
+                "grid-md-9": "MuiGrid-grid-md-9-54",
+                "grid-sm": "MuiGrid-grid-sm-32",
+                "grid-sm-1": "MuiGrid-grid-sm-1-33",
+                "grid-sm-10": "MuiGrid-grid-sm-10-42",
+                "grid-sm-11": "MuiGrid-grid-sm-11-43",
+                "grid-sm-12": "MuiGrid-grid-sm-12-44",
+                "grid-sm-2": "MuiGrid-grid-sm-2-34",
+                "grid-sm-3": "MuiGrid-grid-sm-3-35",
+                "grid-sm-4": "MuiGrid-grid-sm-4-36",
+                "grid-sm-5": "MuiGrid-grid-sm-5-37",
+                "grid-sm-6": "MuiGrid-grid-sm-6-38",
+                "grid-sm-7": "MuiGrid-grid-sm-7-39",
+                "grid-sm-8": "MuiGrid-grid-sm-8-40",
+                "grid-sm-9": "MuiGrid-grid-sm-9-41",
+                "grid-xl": "MuiGrid-grid-xl-71",
+                "grid-xl-1": "MuiGrid-grid-xl-1-72",
+                "grid-xl-10": "MuiGrid-grid-xl-10-81",
+                "grid-xl-11": "MuiGrid-grid-xl-11-82",
+                "grid-xl-12": "MuiGrid-grid-xl-12-83",
+                "grid-xl-2": "MuiGrid-grid-xl-2-73",
+                "grid-xl-3": "MuiGrid-grid-xl-3-74",
+                "grid-xl-4": "MuiGrid-grid-xl-4-75",
+                "grid-xl-5": "MuiGrid-grid-xl-5-76",
+                "grid-xl-6": "MuiGrid-grid-xl-6-77",
+                "grid-xl-7": "MuiGrid-grid-xl-7-78",
+                "grid-xl-8": "MuiGrid-grid-xl-8-79",
+                "grid-xl-9": "MuiGrid-grid-xl-9-80",
+                "grid-xs": "MuiGrid-grid-xs-19",
+                "grid-xs-1": "MuiGrid-grid-xs-1-20",
+                "grid-xs-10": "MuiGrid-grid-xs-10-29",
+                "grid-xs-11": "MuiGrid-grid-xs-11-30",
+                "grid-xs-12": "MuiGrid-grid-xs-12-31",
+                "grid-xs-2": "MuiGrid-grid-xs-2-21",
+                "grid-xs-3": "MuiGrid-grid-xs-3-22",
+                "grid-xs-4": "MuiGrid-grid-xs-4-23",
+                "grid-xs-5": "MuiGrid-grid-xs-5-24",
+                "grid-xs-6": "MuiGrid-grid-xs-6-25",
+                "grid-xs-7": "MuiGrid-grid-xs-7-26",
+                "grid-xs-8": "MuiGrid-grid-xs-8-27",
+                "grid-xs-9": "MuiGrid-grid-xs-9-28",
+                "justify-xs-center": "MuiGrid-justify-xs-center-11",
+                "justify-xs-flex-end": "MuiGrid-justify-xs-flex-end-12",
+                "justify-xs-space-around": "MuiGrid-justify-xs-space-around-14",
+                "justify-xs-space-between": "MuiGrid-justify-xs-space-between-13",
+                "spacing-xs-16": "MuiGrid-spacing-xs-16-16",
+                "spacing-xs-24": "MuiGrid-spacing-xs-24-17",
+                "spacing-xs-40": "MuiGrid-spacing-xs-40-18",
+                "spacing-xs-8": "MuiGrid-spacing-xs-8-15",
+                "typeContainer": "MuiGrid-typeContainer-1",
+                "typeItem": "MuiGrid-typeItem-2",
+                "wrap-xs-nowrap": "MuiGrid-wrap-xs-nowrap-6",
+              }
+            }
+            justify="center"
+            style={
+              Object {
+                "height": "100vh",
+              }
+            }
+          >
+            <Grid
+              align="center"
+              classes={
+                Object {
+                  ".MuiGrid-spacing-xs-16-16 > .MuiGrid-typeItem-2": "MuiGrid-spacing-xs-16-16 > .MuiGrid-typeItem-2",
+                  ".MuiGrid-spacing-xs-24-17 > .MuiGrid-typeItem-2": "MuiGrid-spacing-xs-24-17 > .MuiGrid-typeItem-2",
+                  ".MuiGrid-spacing-xs-40-18 > .MuiGrid-typeItem-2": "MuiGrid-spacing-xs-40-18 > .MuiGrid-typeItem-2",
+                  ".MuiGrid-spacing-xs-8-15 > .MuiGrid-typeItem-2": "MuiGrid-spacing-xs-8-15 > .MuiGrid-typeItem-2",
+                  "align-xs-baseline": "MuiGrid-align-xs-baseline-10",
+                  "align-xs-center": "MuiGrid-align-xs-center-7",
+                  "align-xs-flex-end": "MuiGrid-align-xs-flex-end-9",
+                  "align-xs-flex-start": "MuiGrid-align-xs-flex-start-8",
+                  "direction-xs-column": "MuiGrid-direction-xs-column-3",
+                  "direction-xs-column-reverse": "MuiGrid-direction-xs-column-reverse-4",
+                  "direction-xs-row-reverse": "MuiGrid-direction-xs-row-reverse-5",
+                  "grid-lg": "MuiGrid-grid-lg-58",
+                  "grid-lg-1": "MuiGrid-grid-lg-1-59",
+                  "grid-lg-10": "MuiGrid-grid-lg-10-68",
+                  "grid-lg-11": "MuiGrid-grid-lg-11-69",
+                  "grid-lg-12": "MuiGrid-grid-lg-12-70",
+                  "grid-lg-2": "MuiGrid-grid-lg-2-60",
+                  "grid-lg-3": "MuiGrid-grid-lg-3-61",
+                  "grid-lg-4": "MuiGrid-grid-lg-4-62",
+                  "grid-lg-5": "MuiGrid-grid-lg-5-63",
+                  "grid-lg-6": "MuiGrid-grid-lg-6-64",
+                  "grid-lg-7": "MuiGrid-grid-lg-7-65",
+                  "grid-lg-8": "MuiGrid-grid-lg-8-66",
+                  "grid-lg-9": "MuiGrid-grid-lg-9-67",
+                  "grid-md": "MuiGrid-grid-md-45",
+                  "grid-md-1": "MuiGrid-grid-md-1-46",
+                  "grid-md-10": "MuiGrid-grid-md-10-55",
+                  "grid-md-11": "MuiGrid-grid-md-11-56",
+                  "grid-md-12": "MuiGrid-grid-md-12-57",
+                  "grid-md-2": "MuiGrid-grid-md-2-47",
+                  "grid-md-3": "MuiGrid-grid-md-3-48",
+                  "grid-md-4": "MuiGrid-grid-md-4-49",
+                  "grid-md-5": "MuiGrid-grid-md-5-50",
+                  "grid-md-6": "MuiGrid-grid-md-6-51",
+                  "grid-md-7": "MuiGrid-grid-md-7-52",
+                  "grid-md-8": "MuiGrid-grid-md-8-53",
+                  "grid-md-9": "MuiGrid-grid-md-9-54",
+                  "grid-sm": "MuiGrid-grid-sm-32",
+                  "grid-sm-1": "MuiGrid-grid-sm-1-33",
+                  "grid-sm-10": "MuiGrid-grid-sm-10-42",
+                  "grid-sm-11": "MuiGrid-grid-sm-11-43",
+                  "grid-sm-12": "MuiGrid-grid-sm-12-44",
+                  "grid-sm-2": "MuiGrid-grid-sm-2-34",
+                  "grid-sm-3": "MuiGrid-grid-sm-3-35",
+                  "grid-sm-4": "MuiGrid-grid-sm-4-36",
+                  "grid-sm-5": "MuiGrid-grid-sm-5-37",
+                  "grid-sm-6": "MuiGrid-grid-sm-6-38",
+                  "grid-sm-7": "MuiGrid-grid-sm-7-39",
+                  "grid-sm-8": "MuiGrid-grid-sm-8-40",
+                  "grid-sm-9": "MuiGrid-grid-sm-9-41",
+                  "grid-xl": "MuiGrid-grid-xl-71",
+                  "grid-xl-1": "MuiGrid-grid-xl-1-72",
+                  "grid-xl-10": "MuiGrid-grid-xl-10-81",
+                  "grid-xl-11": "MuiGrid-grid-xl-11-82",
+                  "grid-xl-12": "MuiGrid-grid-xl-12-83",
+                  "grid-xl-2": "MuiGrid-grid-xl-2-73",
+                  "grid-xl-3": "MuiGrid-grid-xl-3-74",
+                  "grid-xl-4": "MuiGrid-grid-xl-4-75",
+                  "grid-xl-5": "MuiGrid-grid-xl-5-76",
+                  "grid-xl-6": "MuiGrid-grid-xl-6-77",
+                  "grid-xl-7": "MuiGrid-grid-xl-7-78",
+                  "grid-xl-8": "MuiGrid-grid-xl-8-79",
+                  "grid-xl-9": "MuiGrid-grid-xl-9-80",
+                  "grid-xs": "MuiGrid-grid-xs-19",
+                  "grid-xs-1": "MuiGrid-grid-xs-1-20",
+                  "grid-xs-10": "MuiGrid-grid-xs-10-29",
+                  "grid-xs-11": "MuiGrid-grid-xs-11-30",
+                  "grid-xs-12": "MuiGrid-grid-xs-12-31",
+                  "grid-xs-2": "MuiGrid-grid-xs-2-21",
+                  "grid-xs-3": "MuiGrid-grid-xs-3-22",
+                  "grid-xs-4": "MuiGrid-grid-xs-4-23",
+                  "grid-xs-5": "MuiGrid-grid-xs-5-24",
+                  "grid-xs-6": "MuiGrid-grid-xs-6-25",
+                  "grid-xs-7": "MuiGrid-grid-xs-7-26",
+                  "grid-xs-8": "MuiGrid-grid-xs-8-27",
+                  "grid-xs-9": "MuiGrid-grid-xs-9-28",
+                  "justify-xs-center": "MuiGrid-justify-xs-center-11",
+                  "justify-xs-flex-end": "MuiGrid-justify-xs-flex-end-12",
+                  "justify-xs-space-around": "MuiGrid-justify-xs-space-around-14",
+                  "justify-xs-space-between": "MuiGrid-justify-xs-space-between-13",
+                  "spacing-xs-16": "MuiGrid-spacing-xs-16-16",
+                  "spacing-xs-24": "MuiGrid-spacing-xs-24-17",
+                  "spacing-xs-40": "MuiGrid-spacing-xs-40-18",
+                  "spacing-xs-8": "MuiGrid-spacing-xs-8-15",
+                  "typeContainer": "MuiGrid-typeContainer-1",
+                  "typeItem": "MuiGrid-typeItem-2",
+                  "wrap-xs-nowrap": "MuiGrid-wrap-xs-nowrap-6",
+                }
+              }
+              component="div"
+              container={false}
+              direction="row"
+              hidden={undefined}
+              item={false}
+              justify="center"
+              spacing={16}
+              style={
+                Object {
+                  "height": "100vh",
+                }
+              }
+              wrap="wrap"
+            >
+              <div
+                className="MuiGrid-align-xs-center-7 MuiGrid-justify-xs-center-11"
+                style={
+                  Object {
+                    "height": "100vh",
+                  }
+                }
+              >
+                <Spinner
+                  fadeIn="full"
+                  name="circle"
+                  noFadeIn={false}
+                  overrideSpinnerClassName=""
+                >
+                  <div
+                    className="sk-fade-in sk-spinner sk-circle"
+                  >
+                    <div
+                      key="0"
+                    />
+                    <div
+                      key="1"
+                    />
+                    <div
+                      key="2"
+                    />
+                    <div
+                      key="3"
+                    />
+                    <div
+                      key="4"
+                    />
+                    <div
+                      key="5"
+                    />
+                    <div
+                      key="6"
+                    />
+                    <div
+                      key="7"
+                    />
+                    <div
+                      key="8"
+                    />
+                    <div
+                      key="9"
+                    />
+                    <div
+                      key="10"
+                    />
+                    <div
+                      key="11"
+                    />
+                  </div>
+                </Spinner>
+              </div>
+            </Grid>
+          </GridWrapper>
+        </withStyles(GridWrapper)>
+      </Loader>
+    </AuthWrapper(MyComponent)>
+  </Connect(AuthWrapper(MyComponent))>
+</Provider>
+`;
+
+exports[`[HOC] needsVisitor should render wrappedComponent correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "firebase": Object {
+        "INTERNAL": Object {
+          "ErrorFactory": [Function],
+          "Promise": [Function],
+          "createFirebaseNamespace": [Function],
+          "createSubscribe": [Function],
+          "deepExtend": [Function],
+          "extendNamespace": [Function],
+          "factories": Object {
+            "auth": [Function],
+            "database": [Function],
+          },
+          "node": Object {
+            "XMLHttpRequest": [Function],
+            "localStorage": Storage {},
+            "sessionStorage": Storage {},
+          },
+          "registerService": [Function],
+          "removeApp": [Function],
+          "useAsService": [Function],
+        },
+        "Promise": [Function],
+        "SDK_VERSION": "4.5.0",
+        "User": [Function],
+        "_": Object {
+          "authUid": null,
+          "config": Object {
+            "apiKey": "asdf",
+            "authDomain": "asdf",
+            "databaseURL": "ws://127.0.1:5000",
+            "enableRedirectHandling": false,
+            "messagingSenderId": "asdf",
+            "storageBucket": "asdf",
+            "userProfile": "users",
+          },
+          "watchers": Object {},
+        },
+        "__esModule": true,
+        "app": [Function],
+        "apps": Array [],
+        "auth": [Function],
+        "database": [Function],
+        "default": [Circular],
+        "initializeApp": [Function],
+      },
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Connect(AuthWrapper(MyComponent))
+    location={
+      Object {
+        "hash": "",
+        "pathname": "/some-visitor-specific-url",
+        "search": "",
+      }
+    }
+  >
+    <AuthWrapper(MyComponent)
+      dispatch={[Function]}
+      isAuthenticated={true}
+      isAuthenticating={false}
+      location={
+        Object {
+          "hash": "",
+          "pathname": "/some-visitor-specific-url",
+          "search": "",
+        }
+      }
+      redirectPath="/you-cant-see-visitor-page"
+    >
+      <MyComponent
+        dispatch={[Function]}
+        isAuthenticated={true}
+        isAuthenticating={false}
+        location={
+          Object {
+            "hash": "",
+            "pathname": "/some-visitor-specific-url",
+            "search": "",
+          }
+        }
+        redirectPath="/you-cant-see-visitor-page"
+      >
+        <div>
+          i am a visitor
+        </div>
+      </MyComponent>
+    </AuthWrapper(MyComponent)>
+  </Connect(AuthWrapper(MyComponent))>
+</Provider>
+`;

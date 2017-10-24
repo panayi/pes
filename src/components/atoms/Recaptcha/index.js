@@ -1,8 +1,14 @@
+/* @flow */
 import React, { Component } from 'react';
+import * as R from 'ramda';
 import { Helmet } from 'react-helmet';
 import generateClassName from 'utils/generateClassName';
 
-export default class Recaptcha extends Component {
+type Props = {
+  firebase: Object,
+};
+
+export default class Recaptcha extends Component<Props> {
   componentDidMount() {
     this.createRecaptcha();
   }
@@ -20,11 +26,14 @@ export default class Recaptcha extends Component {
     });
   }
 
-  reset() {
+  reset = () => (
     this.verifier.render().then((widgetId) => {
-      window.grecaptcha.reset(widgetId);
-    });
-  }
+      const reset = R.path(['grecaptcha', 'reset'], window);
+      if (reset) {
+        reset(widgetId);
+      }
+    })
+  )
 
   render() {
     return (

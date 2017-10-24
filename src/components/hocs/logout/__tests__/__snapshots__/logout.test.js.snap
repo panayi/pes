@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`logout should render correctly 1`] = `
-<defaultProps(withProps(Component))
+<defaultProps(withProps(mapProps(Component)))
   firebase={
     Object {
       "logout": [Function],
@@ -9,7 +9,7 @@ exports[`logout should render correctly 1`] = `
   }
   onLogout={[Function]}
 >
-  <withProps(Component)
+  <withProps(mapProps(Component))
     firebase={
       Object {
         "logout": [Function],
@@ -17,7 +17,7 @@ exports[`logout should render correctly 1`] = `
     }
     onLogout={[Function]}
   >
-    <Component
+    <mapProps(Component)
       firebase={
         Object {
           "logout": [Function],
@@ -26,10 +26,19 @@ exports[`logout should render correctly 1`] = `
       onClick={[Function]}
       onLogout={[Function]}
     >
-      <button>
-        Log out
-      </button>
-    </Component>
-  </withProps(Component)>
-</defaultProps(withProps(Component))>
+      <Component
+        firebase={
+          Object {
+            "logout": [Function],
+          }
+        }
+        onClick={[Function]}
+      >
+        <button>
+          Log out
+        </button>
+      </Component>
+    </mapProps(Component)>
+  </withProps(mapProps(Component))>
+</defaultProps(withProps(mapProps(Component)))>
 `;

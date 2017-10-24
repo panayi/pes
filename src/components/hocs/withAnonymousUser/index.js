@@ -4,15 +4,16 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { isAuthenticatingSelector, isAuthenticatedSelector } from 'store/auth/selectors';
+import maybeSignInAnonymously from './utils/maybeSignInAnonymously';
 
-const maybeSignInAnonymously = (props) => {
-  const { isAuthenticating, isAuthenticated, firebase } = props;
-  if (isAuthenticating || isAuthenticated) {
-    return;
-  }
-
-  firebase.auth().signInAnonymously();
-};
+export const withAnonymousUser = lifecycle({
+  componentDidMount() {
+    maybeSignInAnonymously(this.props);
+  },
+  componentWillReceiveProps(nextProps) {
+    maybeSignInAnonymously(nextProps);
+  },
+});
 
 const mapStateToProps = createStructuredSelector({
   isAuthenticating: isAuthenticatingSelector,
@@ -22,12 +23,5 @@ const mapStateToProps = createStructuredSelector({
 export default R.compose(
   firebaseConnect(),
   connect(mapStateToProps),
-  lifecycle({
-    componentDidMount() {
-      maybeSignInAnonymously(this.props);
-    },
-    componentWillReceiveProps(nextProps) {
-      maybeSignInAnonymously(nextProps);
-    },
-  }),
+  withAnonymousUser,
 );

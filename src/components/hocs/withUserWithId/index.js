@@ -1,6 +1,7 @@
+import * as R from 'ramda';
 import connectedAuthWrapper from 'redux-auth-wrapper/connectedAuthWrapper';
-import { isUserSelector } from 'store/auth/selectors';
+import { isAuthenticatedSelector, isUserSelector } from 'store/auth/selectors';
 
 export default userSelector => connectedAuthWrapper({
-  authenticatedSelector: isUserSelector(userSelector),
+  authenticatedSelector: R.both(isAuthenticatedSelector, isUserSelector(userSelector)),
 });

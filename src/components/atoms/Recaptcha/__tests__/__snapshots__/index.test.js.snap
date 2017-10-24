@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[Component] Recaptcha should render correctly 1`] = `
+<div>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+  >
+    <script
+      async={true}
+      defer={true}
+      src="https://www.google.com/recaptcha/api.js"
+    />
+  </HelmetWrapper>
+  <div
+    id="myRecaptchaId"
+  />
+</div>
+`;

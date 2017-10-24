@@ -1,9 +1,12 @@
-import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect';
+import * as R from 'ramda';
+import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
+import { routerActions } from 'react-router-redux';
 import { isAdminSelector, isAuthenticatingSelector } from 'store/auth/selectors';
 
-export default (options = {}) => connectedRouterRedirect({
+export default options => connectedReduxRedirect({
   redirectPath: '/',
   authenticatedSelector: isAdminSelector,
   authenticatingSelector: isAuthenticatingSelector,
-  ...options,
+  redirectAction: routerActions.replace,
+  ...R.defaultTo({}, options),
 });
