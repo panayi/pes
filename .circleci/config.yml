@@ -63,7 +63,7 @@ jobs:
 
       - run:
           name: Run unit tests
-          command: yarn test:ui
+          command: yarn test:unit
 
       - run:
           name: Run end-to-end tests
