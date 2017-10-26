@@ -53,17 +53,21 @@ jobs:
           key: v1-dependencies-{{ checksum "functions/package.json" }}
 
       - run:
-          name: Run unit tests
-          command: yarn ui:test
-
-      - run:
           name: Start app
-          command: yarn ui:start
+          command: yarn start:ui
           background: true
 
       - run:
+          name: Run lint
+          command: yarn lint
+
+      - run:
+          name: Run unit tests
+          command: yarn test:ui
+
+      - run:
           name: Run end-to-end tests
-          command: yarn e2e-setup && yarn e2e
+          command: yarn setup:e2e && yarn test:e2e
 
       - deploy:
           name: Deploy master to Firebase Hosting

@@ -49,21 +49,21 @@ Unit testing files should be placed in a `__tests__/` folder, relative to the fi
 Run tests with watch:
 
 ```shell
-yarn ui:test
+yarn test:unit
 ```
 
 Run once:
 
 ```shell
-CI=true yarn ui:test
+CI=true yarn test:unit
 ```
 
 Read more at [create-react-app Docs](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests).
 
 ## End-to-End Testing
 
-1. Setup Selenium server: `yarn e2e-setup`
-2. Run the e2e tests: `yarn e2e`
+1. Setup Selenium server: `yarn setup:e2e`
+2. Run the e2e tests: `yarn test:e2e`
 
 ## Data tools
 
