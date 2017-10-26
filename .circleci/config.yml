@@ -49,3 +49,7 @@ jobs:
       - run:
           name: Run end-to-end tests
           command: yarn e2e-setup && yarn e2e
+
+      - deploy:
+          name: Deploy master to Firebase Hosting
+          command: yarn deploy
