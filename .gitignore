@@ -4,7 +4,7 @@
 
 # testing
 /coverage
-/e2e/reports
+/test/reports
 
 # production
 /build

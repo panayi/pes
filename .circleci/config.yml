@@ -7,7 +7,9 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:8.6.0
+      - image: circleci/node:8.6.0-browsers
+        environment:
+          - DBUS_SESSION_BUS_ADDRESS: /dev/null
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -26,7 +28,9 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run:
+          name: Install dependencies
+          command: yarn install
 
       - save_cache:
           paths:
@@ -34,5 +38,14 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: test
+          name: Run unit tests
           command: yarn ui:test
+
+      - run:
+          name: Start app
+          command: yarn ui:start
+          background: true
+
+      - run:
+          name: Run end-to-end tests
+          command: yarn e2e-setup && yarn e2e
