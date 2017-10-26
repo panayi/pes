@@ -71,4 +71,4 @@ jobs:
 
       - deploy:
           name: Deploy master to Firebase Hosting
-          command: yarn deploy
+          command: yarn deploy --token=$FIREBASE_TOKEN --non-interactive
