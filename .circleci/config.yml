@@ -28,14 +28,29 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "functions/package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
       - run:
           name: Install dependencies
           command: yarn install
+
+      - run:
+          name: Install /functions dependencies
+          command: cd functions && yarn install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - save_cache:
+          paths:
+            - functions/node_modules
+          key: v1-dependencies-{{ checksum "functions/package.json" }}
 
       - run:
           name: Run unit tests
