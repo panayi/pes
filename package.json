@@ -56,6 +56,7 @@
     "eslint-plugin-flowtype": "^2.35.1",
     "firebase-bolt": "^0.8.2",
     "firebase-server": "^0.11.0",
+    "firebase-tools": "^3.13.1",
     "flow-bin": "^0.57.3",
     "jest-enzyme": "^4.0.1",
     "nightwatch": "^0.9.16",
@@ -70,6 +71,8 @@
     "stylelint-config-standard": "^17.0.0"
   },
   "scripts": {
+    "firebase": "./node_modules/firebase-tools/bin/firebase",
+    "firebase-bolt": "./node_modules/firebase-bolt/bin/firebase-bolt",
     "ui:start": "cross-env NODE_PATH=src/ react-scripts start",
     "ui:build": "cross-env NODE_PATH=src/ react-scripts build",
     "ui:test": "cross-env NODE_PATH=src/ react-scripts test --env=jsdom",
@@ -86,15 +89,15 @@
     "generate": "./node_modules/redux-cli/bin/redux.js generate",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "functions:start": "npm run functions:build && firebase serve --only functions",
+    "functions:start": "npm run functions:build && npm run firebase serve --only functions",
     "functions:build": "cd functions && webpack",
-    "functions:shell": "cd functions && webpack && firebase experimental:functions:shell",
+    "functions:shell": "cd functions && webpack && npm run firebase experimental:functions:shell",
     "start": "run-p ui:start functions:start",
     "build": "npm run ui:build && npm run functions:build",
-    "deploy:ui": "npm run ui:build && firebase deploy --only hosting -P development",
-    "deploy:functions": "npm run functions:build && firebase deploy --only functions -P development",
-    "deploy:database": "firebase-bolt database/rules.bolt && firebase deploy --only database -P development",
-    "deploy": "npm run build && firebase deploy -P development"
+    "deploy:ui": "npm run ui:build && npm run firebase deploy --only hosting -P development",
+    "deploy:functions": "npm run functions:build && npm run firebase deploy --only functions -P development",
+    "deploy:database": "npm run firebase-bolt database/rules.bolt && npm run firebase deploy --only database -P development",
+    "deploy": "npm run build && npm run firebase deploy -P development"
   },
   "pre-push": [
     "lint",
