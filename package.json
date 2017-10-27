@@ -72,7 +72,7 @@
   },
   "scripts": {
     "start:ui": "cross-env NODE_PATH=src/ react-scripts start",
-    "start:functions": "npm run functions:build && npm run firebase serve -- --only functions",
+    "start:functions": "npm run build:functions && npm run firebase serve -- --only functions",
     "start": "run-p start:ui start:functions",
     "functions:shell": "cd functions && webpack && npm run firebase experimental:functions:shell",
     "test:unit": "cross-env NODE_PATH=src/ react-scripts test --env=jsdom",
