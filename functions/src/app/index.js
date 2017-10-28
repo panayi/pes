@@ -58,7 +58,7 @@ const validateFirebaseIdToken = (req, res, next) => {
 app.use(cors);
 app.use(validateFirebaseIdToken);
 
-app.get('firebase/initialize', firebaseInitialize);
+app.get('/firebase/initialize', firebaseInitialize);
 app.get('/algolia/initialize', algoliaInitialize);
 
 export default app;
