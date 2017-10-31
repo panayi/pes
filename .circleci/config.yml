@@ -1,27 +1,51 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
+
+references:
+    workspace_root: &workspace_root
+      ~/repo
+
+    attach_workspace: &attach_workspace
+      attach_workspace:
+        at: *workspace_root
+
+defaults: &defaults
+  docker:
+    - image: circleci/node:8.6.0-browsers
+      environment:
+        - DBUS_SESSION_BUS_ADDRESS: /dev/null
+  working_directory: *workspace_root
+
+development_branches: &development_branches
+  only:
+    - dev
+    - /^feat\/.*/
+
+staging_branches: &staging_branches
+  only:
+    - master
+
+production_branches: &production_branches
+  only:
+    - production
+
+deployment_branches: &deployment_branches
+  only:
+    - dev
+    - /^feat\/.*/
+    - master
+    - production
+
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:8.6.0-browsers
-        environment:
-          - DBUS_SESSION_BUS_ADDRESS: /dev/null
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+  # Install dependencies
+  setup:
+    <<: *defaults
     steps:
       - checkout
 
-      # Download and cache dependencies
+      - run:
+          name: Fetch submodules
+          command: git submodule update --init --recursive
+
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
@@ -39,7 +63,7 @@ jobs:
           command: yarn install
 
       - run:
-          name: Install /functions dependencies
+          name: Install /backend dependencies
           command: cd backend && yarn install
 
       - save_cache:
@@ -49,26 +73,101 @@ jobs:
 
       - save_cache:
           paths:
-            - functions/node_modules
+            - backend/node_modules
           key: v1-dependencies-{{ checksum "backend/package.json" }}
 
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .
+
+  lint:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - run:
+          name: Run lint
+          command: yarn lint
+
+  unit_test:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - run:
+          name: Run unit tests
+          command: yarn test:unit
+
+  e2e_test:
+    <<: *defaults
+    steps:
+      - *attach_workspace
       - run:
           name: Start app
           command: yarn start:ui
           background: true
 
       - run:
-          name: Run lint
-          command: yarn lint
-
-      - run:
-          name: Run unit tests
-          command: yarn test:unit
-
-      - run:
           name: Run end-to-end tests
           command: yarn setup:e2e && yarn test:e2e
 
+  deploy_development:
+    <<: *defaults
+    steps:
+      - *attach_workspace
       - deploy:
-          name: Deploy master to Firebase Hosting
-          command: yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+          name: Deploy to Development environment
+          command: DEPLOYMENT=development ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+
+  deploy_staging:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - deploy:
+          name: Deploy to Staging environment
+          command: DEPLOYMENT=staging ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+
+  deploy_production:
+    <<: *defaults
+    steps:
+      - *attach_workspace
+      - deploy:
+          name: Deploy to Production environment
+          command: DEPLOYMENT=production ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - setup
+      - lint:
+          requires:
+            - setup
+      - unit_test:
+          requires:
+            - setup
+      - e2e_test:
+          requires:
+            - setup
+          filters:
+            branches: *deployment_branches
+      - deploy_development:
+          requires:
+            - lint
+            - unit_test
+            - e2e_test
+          filters:
+            branches: *development_branches
+      - deploy_staging:
+          requires:
+            - lint
+            - unit_test
+            - e2e_test
+          filters:
+            branches: *staging_branches
+      - deploy_production:
+          requires:
+            - lint
+            - unit_test
+            - e2e_test
+          filters:
+            branches: *production_branches
