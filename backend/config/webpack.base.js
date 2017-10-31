@@ -1,13 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies */
+const path = require('path');
 const Dotenv = require('dotenv-webpack');
 const nodeExternals = require('webpack-node-externals');
-const path = require('path');
+const constants = require('./constants');
 
 module.exports = {
-  entry: './src/index.js',
-  output: {
-    filename: 'index.js',
-    libraryTarget: 'this',
-  },
   target: 'node',
   module: {
     rules: [
@@ -24,11 +21,15 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js'],
+    modules: [
+      'node_modules',
+      'shared',
+    ],
   },
   externals: [nodeExternals()],
   plugins: [
     new Dotenv({
-      path: path.join(__dirname, '..', '.env'),
+      path: path.join(constants.paths.root, constants.files.env),
     }),
   ],
 };

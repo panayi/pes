@@ -8,6 +8,7 @@
   "dependencies": {
     "algoliasearch": "^3.24.4",
     "babel-runtime": "^6.26.0",
+    "chalk": "^2.3.0",
     "cors": "^2.8.4",
     "express": "^4.16.0",
     "firebase-admin": "^5.2.1",
@@ -24,6 +25,7 @@
     "dotenv-webpack": "^1.5.4",
     "json-loader": "^0.5.7",
     "webpack": "^3.6.0",
+    "webpack-merge": "^4.1.0",
     "webpack-node-externals": "^1.6.0"
   }
 }
