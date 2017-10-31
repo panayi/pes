@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as functions from 'firebase-functions';
-import algolia from '../lib/algolia';
-import serializePost from '../lib/helpers/serializePostToAlgolia';
+import algolia from 'algoliaClient';
+import serializePost from 'helpers/serializePostToAlgolia';
 
 const addOrUpdateIndexRecord = (event) => {
   const index = algolia.initIndex('posts');

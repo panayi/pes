@@ -25,8 +25,41 @@ module.exports = {
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": [path.resolve(__dirname, './src')],
+        "paths": [path.join(__dirname, 'src')],
       },
     },
   },
+  "overrides": [
+    {
+      "files": ["backend/**/*.js"],
+      "rules": {
+        "no-console": "off",
+      },
+    },
+    {
+      "files": ["backend/functions/**/*.js", "backend/admin/**/*.js"],
+      "settings": {
+        "import/resolver": {
+          "node": {
+            "paths": [
+              path.join(__dirname, 'backend', 'shared'),
+            ],
+          },
+        },
+      },
+    },
+    {
+      "files": ["**/__tests__/**/*.js"],
+      "env": {
+        "jest": true
+      },
+      "globals": {
+        "R": true,
+        "shallow": true,
+        "mount": true,
+        "withMockStore": true,
+        "noop": true,
+      },
+    },
+  ],
 };

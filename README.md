@@ -2,10 +2,10 @@
 
 [![CircleCI](https://circleci.com/bb/pesposa/webapp.svg?style=svg&circle-token=672fc70422242f2252d394f0f1a33ef08a27e830)](https://circleci.com/bb/pesposa/webapp)
 
-## Code guidelines
+## 1. Code guidelines
 Our folder structure is based on atomic design. Read more about atomic design [here](http://bradfrost.com/blog/post/atomic-web-design/) and [here](https://medium.com/joeydinardo/a-brief-look-at-atomic-components-39cbe71d38b5), and find an example project [here](https://github.com/diegohaz/arc).
 
-#### Atomic design
+### Atomic design
 `src/components` is split into the following folders:
 
 - `src/components/atoms`: An **atom** is the most basic component, that renders only HTML tags (i.e., they don't import other components). An atom should represent the smallest possible component within which it wouldn’t make sense to abstract further. For example, an input label, or a button.
@@ -17,7 +17,7 @@ Our folder structure is based on atomic design. Read more about atomic design [h
 
 Unit testing files should be placed in a `__tests__/` folder, relative to the file being tested.
 
-#### Other folders
+### Other folders
 - `src/store`: Contains anything related to state management with redux. We follow most of the recommendations found [here](https://hackernoon.com/redux-step-by-step-a-simple-and-robust-workflow-for-real-life-apps-1fdf7df46092).
 - `src/services`: Contains abstraction for external APIs, such as Firebase.
 - `src/config`: Contains configuration variables that are internal to the frontend code. If a configuration variable needs to be exposed to the backend or to the continuous-integration script, it should be defined as a NODE ENV in `.env`.
@@ -31,49 +31,67 @@ Unit testing files should be placed in a `__tests__/` folder, relative to the fi
 - `stories`: [Storybook](https://github.com/storybooks/storybook) files.
 - `test`: Contains End-to-End tests.
 
-## Getting started
+## 2. Development
 
 1. Clone the repo locally: `git clone git@gitlab.com:pesposa/webapp.git`
 2. Install dependencies: `cd webapp && yarn`
 
-## Development
+### `yarn start`
+Run the app in development mode.
 
-`yarn start`
+### `yarn lint`
+Lint all code.
 
-## Lint
+### `yarn test:unit`
+Run unit tests with watch.
 
-`yarn lint`
+### `CI=true yarn test:unit`
+Run unit tests once.
 
-## Unit testing
+### `yarn test:unit -- --coverage`
+Run unit tests once and generate coverage report.
 
-Run tests with watch:
+### `yarn test:e2e`
+Run end-to-end tests with Nightwatch. Make sure you run `yarn setup:e2e` to install Selenium.
 
-```shell
-yarn test:unit
-```
+### Tools
+1. [Firebase Tools](https://github.com/firebase/firebase-tools): `npm install -g firebase-tools`.
+2. CircleCI CLI: Visit https://circleci.com/docs/2.0/local-jobs/#nav-button and follow the instructions.
 
-Run once:
+<!-- ### Data tools -->
+<!-- - Seed Firebase DB: `yarn seed` -->
+<!-- - Sync with legacy MySQL DB: http://localhost:3000/admin -->
 
-```shell
-CI=true yarn test:unit
-```
+## 3. Deploy
+We use CircleCI to automatically deploy the latest code to Firebase Hosting. You can find CircleCI configuration at `.circleci/config.yml`. You should never need to run the following commands manually, besides `yarn admin` for setting a new deployment.
 
-Read more at [create-react-app Docs](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#running-tests).
+### `yarn admin initialize`
+Seed a Firebase DB, and initial import to Algolia. You should typically run this to setup a new deployment.
 
-## End-to-End Testing
+### `yarn build`
+Build all the apps (UI, functions, database, admin).
 
-1. Setup Selenium server: `yarn setup:e2e`
-2. Run the e2e tests: `yarn test:e2e`
+### `yarn deploy`
+Deploy all apps Firebase Hosting.
 
-## Data tools
+## 5. Environment Variables
+Find variables inherited by create-react-app [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration).
 
-- Seed Firebase DB: `yarn seed`
-- Sync with legacy MySQL DB: http://localhost:3000/admin
+Variable | Frontend | Development | Production | Usage
+:--- | :---: | :---: | :---: | :---
+REACT_APP_FIREBASE_API_KEY | :white_check_mark: | :white_check_mark: | :white_check_mark: | Firebase API key. Find Firebase setup instructions here: https://firebase.google.com/docs/storage/web/start.
+REACT_APP_FIREBASE_PROJECT_ID | :white_check_mark: | :white_check_mark: | :white_check_mark: | Firebase Project ID. Instructions to locate the project ID here:https://support.google.com/cloud/answer/6158840?hl=en.
+REACT_APP_FIREBASE_AUTH_DOMAIN | :white_check_mark: | :white_check_mark: | :white_check_mark: | Firebase auth domain. Given by `<REACT_APP_FIREBASE_PROJECT_ID>.firebaseapp.com` <!-- TODO: Since this is computed, we can remove. -->
+REACT_APP_FIREBASE_DATABASE_URL | :white_check_mark: | :white_check_mark: | :white_check_mark: | Firebase database URL.
+REACT_APP_ALGOLIA_APP_ID | :white_check_mark: | :white_check_mark: | :white_check_mark: | Algolia app ID. Find all your Algolia apps here: https://www.algolia.com/manage/applications.
+REACT_APP_ALGOLIA_SEARCH_KEY | :white_check_mark: | :white_check_mark: | :white_check_mark: | Algolia search-only API key. Get this from this URL: `https://www.algolia.com/apps/<REACT_APP_ALGOLIA_APP_ID>/api-keys`.
+REACT_APP_ALGOLIA_POSTS_INDEX_NAME | :white_check_mark: | :white_check_mark: | :white_check_mark: | Algolia index for Posts.
+REACT_APP_FIREBASE_FUNCTIONS_BASE_URL | :white_check_mark: | :white_check_mark: | :white_check_mark: | Base URL for Firebase functions.
+ALGOLIA_API_KEY | :x: | :white_check_mark: | :white_check_mark: | Algolia Admin API key. Should be kept secret (not to be used on the frontend).
 
-## Build
-
-`yarn build`
-
-## Deploy to Firebase Hosting
-
-`yarn deploy`
+## 4. Deployments
+Name | Branch  | Description
+:--- | :---: | :---:
+Development | `dev` | After passing tests on CI, the latest code is deployed here (in `development` mode). This environment does not share any resources (database, algolia, etc.) with the production environment. Access is restricted to development team.
+Staging | `staging` | Runs the "next" version of the application, i.e., the release candidate. It is an exact mirror of the production environment, and shares the same resources (database, algolia, etc.) as the production environment. This environment is used for stress testing and comprehensive QA. Access is restricted to development team.
+Production | `production` | Runs the currently released version of the application.
