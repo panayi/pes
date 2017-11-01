@@ -81,12 +81,9 @@ Variable | Frontend | Development | Production | Usage
 :--- | :---: | :---: | :---: | :---
 REACT_APP_FIREBASE_API_KEY | :white_check_mark: | :white_check_mark: | :white_check_mark: | Firebase API key. Find Firebase setup instructions here: https://firebase.google.com/docs/storage/web/start.
 REACT_APP_FIREBASE_PROJECT_ID | :white_check_mark: | :white_check_mark: | :white_check_mark: | Firebase Project ID. Instructions to locate the project ID here:https://support.google.com/cloud/answer/6158840?hl=en.
-REACT_APP_FIREBASE_AUTH_DOMAIN | :white_check_mark: | :white_check_mark: | :white_check_mark: | Firebase auth domain. Given by `<REACT_APP_FIREBASE_PROJECT_ID>.firebaseapp.com` <!-- TODO: Since this is computed, we can remove. -->
-REACT_APP_FIREBASE_DATABASE_URL | :white_check_mark: | :white_check_mark: | :white_check_mark: | Firebase database URL.
 REACT_APP_ALGOLIA_APP_ID | :white_check_mark: | :white_check_mark: | :white_check_mark: | Algolia app ID. Find all your Algolia apps here: https://www.algolia.com/manage/applications.
 REACT_APP_ALGOLIA_SEARCH_KEY | :white_check_mark: | :white_check_mark: | :white_check_mark: | Algolia search-only API key. Get this from this URL: `https://www.algolia.com/apps/<REACT_APP_ALGOLIA_APP_ID>/api-keys`.
 REACT_APP_ALGOLIA_POSTS_INDEX_NAME | :white_check_mark: | :white_check_mark: | :white_check_mark: | Algolia index for Posts.
-REACT_APP_FIREBASE_FUNCTIONS_BASE_URL | :white_check_mark: | :white_check_mark: | :white_check_mark: | Base URL for Firebase functions.
 ALGOLIA_API_KEY | :x: | :white_check_mark: | :white_check_mark: | Algolia Admin API key. Should be kept secret (not to be used on the frontend).
 
 ## 4. Deployments
