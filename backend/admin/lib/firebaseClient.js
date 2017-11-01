@@ -1,7 +1,7 @@
 import createFirebaseClient from 'createFirebaseClient';
 
 const firebaseClient = createFirebaseClient({
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  databaseURL: `https://${process.env.REACT_APP_FIREBASE_PROJECT_ID}.firebaseio.com`,
 });
 
 export const database = firebaseClient.database();
