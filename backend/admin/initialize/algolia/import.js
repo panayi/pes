@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import algolia from 'algoliaClient';
 import serializePost from 'helpers/serializePostToAlgolia';
-import { database } from '../lib/firebaseClient';
+import { database } from '../../lib/firebaseClient';
 
 export const canInitialize = async () => {
   const indexes = await algolia.listIndexes();
@@ -43,8 +43,7 @@ const initialImportPosts = async (dataSnapshot, index) => {
 };
 
 export default async () => {
-  const index = algolia.initIndex('posts');
-  await index.clearIndex();
+  const index = algolia.initIndex(process.env.REACT_APP_ALGOLIA_POSTS_INDEX_NAME);
 
   const dataSnapshot = await database.ref('/posts').once('value');
   const posts = await initialImportPosts(dataSnapshot, index);
