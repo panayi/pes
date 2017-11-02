@@ -57,6 +57,7 @@ const mapPost = R.compose(
     ),
     R.prop('images'),
   )),
+  computedProp('id', ({ id, categoryParent }) => `${categoryParent}-${id}`),
   computedProp('oldPosterId', R.compose(
     R.head,
     R.split(' '),
