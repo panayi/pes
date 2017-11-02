@@ -6,7 +6,6 @@ import Link from 'components/molecules/Link';
 import ProfileImage from 'components/molecules/ProfileImage';
 import hideUser from 'components/hocs/hideUser';
 import hideVisitor from 'components/hocs/hideVisitor';
-import hideNonAdmin from 'components/hocs/hideNonAdmin';
 import logoutHoc from 'components/hocs/logout/logout';
 import Modal from 'components/organisms/Modal';
 import CreatePostForm from 'components/smarts/CreatePostForm';
@@ -19,8 +18,6 @@ const LogoutLink = R.compose(
   hideVisitor,
   logoutHoc,
 )(Link);
-
-const AdminLink = hideNonAdmin(Link);
 
 const styles = {
   header: {
@@ -47,12 +44,6 @@ const Header = ({ classes }) => (
       >
         <CreatePostForm />
       </Modal>
-      <AdminLink
-        to="/admin"
-        color="contrast"
-      >
-        Admin
-      </AdminLink>
       <LoginLink
         to="/auth/login"
         exact

@@ -1,6 +1,7 @@
 import * as R from 'ramda';
-import categories from 'seeds/categories.json';
-import { database } from '../lib/firebaseClient';
+import { database } from '../../lib/firebaseClient';
+import seed from './seed';
+import importData from './import';
 
 export const canInitialize = async () => {
   const ref = database.ref();
@@ -10,26 +11,22 @@ export const canInitialize = async () => {
     throw new Error('Firebase: Error getting value of database');
   }
 
-  const isEmpty = R.isEmpty(snapshot.val());
+  const value = snapshot.val();
+  const noData = R.either(R.isNil, R.isEmpty)(value);
 
-  if (!isEmpty) {
+  if (!noData) {
     throw new Error('Firebase: Database is not empty.');
   }
 
   return true;
 };
 
-const seedCategories = async () => {
-  await database.ref('categories').set(categories);
-
-  return ['categories'];
-};
-
 export default async () => {
-  try {
-    await seedCategories();
-    return null;
-  } catch (error) {
-    return error;
-  }
+  const seedResult = await seed();
+  const importResult = await importData();
+
+  return [
+    seedResult,
+    importResult,
+  ];
 };

@@ -1,5 +1,5 @@
-// flow-typed signature: 5d481558cc234f09af44ab9616b7ec13
-// flow-typed version: 0bdbd3d3e8/ramda_v0.x.x/flow_>=v0.39.x
+// flow-typed signature: ec316d559a3b0b658022f0258028011d
+// flow-typed version: af37803ea6/ramda_v0.x.x/flow_>=v0.49.x
 
 /* eslint-disable no-unused-vars, no-redeclare */
 
@@ -23,7 +23,7 @@ declare module ramda {
   declare type BinaryPredicateFn2<T, S> = (x: T, y: S) => boolean;
 
   declare interface ObjPredicate {
-    (value: any, key: string): boolean
+    (value: any, key: string): boolean;
   }
 
   declare type __CurriedFunction1<A, R, AA: A> = (...r: [AA]) => R;
@@ -312,22 +312,22 @@ declare module ramda {
     ) => (xs: T) => T);
 
   declare class Monad<T> {
-    chain: Function
+    chain: Function;
   }
 
   declare class Semigroup<T> {}
 
   declare class Chain {
-    chain<T, V: Monad<T> | Array<T>>(fn: (a: T) => V, x: V): V,
-    chain<T, V: Monad<T> | Array<T>>(fn: (a: T) => V): (x: V) => V
+    chain<T, V: Monad<T> | Array<T>>(fn: (a: T) => V, x: V): V;
+    chain<T, V: Monad<T> | Array<T>>(fn: (a: T) => V): (x: V) => V;
   }
 
   declare class GenericContructor<T> {
-    constructor(x: T): GenericContructor<any>
+    constructor(x: T): GenericContructor<any>;
   }
 
   declare class GenericContructorMulti {
-    constructor(...args: Array<any>): GenericContructor<any>
+    constructor(...args: Array<any>): GenericContructor<any>;
   }
 
   /**
@@ -1448,15 +1448,15 @@ declare module ramda {
     val: Array<{ [key: string]: T }>
   ): Array<{ [key: string]: T }>;
 
-  declare function prop<T, O: { [k: string]: T }>(
-    key: $Keys<O>,
+  declare function prop<T: string, O>(
+    key: T,
     ...rest: Array<void>
-  ): (o: O) => ?T;
-  declare function prop<T, O: { [k: string]: T }>(
+  ): (o: O) => $ElementType<O, T>;
+  declare function prop<T: string, O>(
     __: $npm$ramda$Placeholder,
     o: O
-  ): (key: $Keys<O>) => ?T;
-  declare function prop<T, O: { [k: string]: T }>(key: $Keys<O>, o: O): ?T;
+  ): (key: T) => $ElementType<O, T>;
+  declare function prop<T: string, O>(key: T, o: O): $ElementType<O, T>;
 
   declare function propOr<T, V, A: { [k: string]: V }>(
     or: T,

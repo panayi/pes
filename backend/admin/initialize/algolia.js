@@ -43,17 +43,11 @@ const initialImportPosts = async (dataSnapshot, index) => {
 };
 
 export default async () => {
-  try {
-    const index = algolia.initIndex('posts');
-    await index.clearIndex();
+  const index = algolia.initIndex('posts');
+  await index.clearIndex();
 
-    const dataSnapshot = await database.ref('/posts').once('value');
-    const posts = await initialImportPosts(dataSnapshot, index);
+  const dataSnapshot = await database.ref('/posts').once('value');
+  const posts = await initialImportPosts(dataSnapshot, index);
 
-    return {
-      posts: posts.length,
-    };
-  } catch (error) {
-    return error;
-  }
+  return [`Imported ${posts.length} posts`];
 };

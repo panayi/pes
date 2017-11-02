@@ -6,7 +6,7 @@ import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
 import profileFactory from 'services/firebase/profileFactory';
 import makeRootReducer from './reducers';
-import firebaseConfig from './firebase_config';
+import firebaseConfig from './firebaseConfig';
 
 export default (initialState = {}) => {
   // Create a history of your choosing (we're using a browser history in this case)

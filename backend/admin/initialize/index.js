@@ -1,4 +1,4 @@
-import R from 'ramda';
+import * as R from 'ramda';
 import log from 'helpers/log';
 import initializeFirebase, { canInitialize as canInitializeFirebase } from './firebase';
 import initializeAlgolia, { canInitialize as canInitializeAlgolia } from './algolia';
@@ -18,20 +18,12 @@ const initialize = async () => {
   await canInitialize();
 
   const firebaseResult = await initializeFirebase();
-  log.success(`Firebase: Initialized ${R.join(' ', firebaseResult)}`);
+  log.success('Firebase: Initialized');
+  R.forEach(msg => log.info(`Firebase: ${msg}`), firebaseResult);
 
   const algoliaResult = await initializeAlgolia();
-  log.success(`Algolia: Imported ${algoliaResult} objects`);
+  log.success('Algolia: Initialized');
+  R.forEach(msg => log.info(`Algolia: ${msg}`), algoliaResult);
 };
 
-const main = async () => {
-  try {
-    await initialize();
-  } catch (error) {
-    log.error(error);
-  }
-
-  process.exit();
-};
-
-main();
+export default initialize;

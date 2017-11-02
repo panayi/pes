@@ -13,19 +13,25 @@
     "express": "^4.16.0",
     "firebase-admin": "^5.2.1",
     "firebase-functions": "^0.6.3",
-    "ramda": "^0.24.1"
+    "google-cloud": "^0.57.0",
+    "node-fetch": "^1.7.3",
+    "ramda": "^0.25.0",
+    "uuid-v4": "^0.1.0",
+    "yargs": "^10.0.3"
   },
   "devDependencies": {
+    "@babel/plugin-transform-flow-strip-types": "^7.0.0-beta.4",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-latest": "^6.24.1",
     "dotenv-webpack": "^1.5.4",
     "json-loader": "^0.5.7",
-    "webpack": "^3.6.0",
-    "webpack-merge": "^4.1.0",
+    "webpack": "^3.8.1",
+    "webpack-merge": "^4.1.1",
     "webpack-node-externals": "^1.6.0"
   }
 }
