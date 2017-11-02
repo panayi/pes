@@ -1,6 +1,6 @@
 /* @flow */
 import generateId from 'utils/generateId';
-import * as storagePaths from './constants/storagePaths';
+import * as storagePaths from 'services/firebase/storagePaths';
 
 // ------------------------------------
 // Actions

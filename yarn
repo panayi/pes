@@ -19,6 +19,11 @@ SOURCE_ENV_PATH="$BASE_PATH/secrets/$ENV_FILE"
 TARGET_ENV_PATH="$BASE_PATH/.env"
 BACKUP_ENV_PATH="$BASE_PATH/.env.backup"
 
+SERVICE_ACCOUNT_KEY_FILE="$DEPLOYMENT.json"
+SOURCE_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/secrets/serviceAccountKeys/$SERVICE_ACCOUNT_KEY_FILE"
+TARGET_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/backend/shared/serviceAccountKey.json"
+BACKUP_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/backend/shared/serviceAccountKey.json.backup"
+
 # Backup existing env file
 if [ -f "$TARGET_ENV_PATH" ]
 then
@@ -27,6 +32,15 @@ fi
 
 # Copy source env file
 cp -v "$SOURCE_ENV_PATH" "$TARGET_ENV_PATH"
+
+# Backup existing serviceAccountKey file
+if [ -f "$TARGET_SERVICE_ACCOUNT_KEY_PATH" ]
+then
+  mv -v "$TARGET_SERVICE_ACCOUNT_KEY_PATH" "$BACKUP_SERVICE_ACCOUNT_KEY_PATH"
+fi
+
+# Copy serviceAccountKey file
+cp -v "$SOURCE_SERVICE_ACCOUNT_KEY_PATH" "$TARGET_SERVICE_ACCOUNT_KEY_PATH"
 
 # Run command
 yarn $ARGUMENTS -P $DEPLOYMENT
@@ -38,4 +52,10 @@ rm "$TARGET_ENV_PATH"
 if [ -f "$BACKUP_ENV_PATH" ]
 then
   mv -v "$BACKUP_ENV_PATH" "$TARGET_ENV_PATH"
+fi
+
+# Restore existing serviceAccountKey file
+if [ -f "$BACKUP_SERVICE_ACCOUNT_KEY_PATH" ]
+then
+  mv -v "$BACKUP_SERVICE_ACCOUNT_KEY_PATH" "$TARGET_SERVICE_ACCOUNT_KEY_PATH"
 fi
