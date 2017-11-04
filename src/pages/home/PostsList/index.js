@@ -2,7 +2,6 @@
 import React from 'react';
 import { connectInfiniteHits } from 'react-instantsearch/connectors';
 import BasePostsList from 'components/organisms/PostsList';
-import { WIDTH } from 'components/organisms/Sidebar';
 import ConfigureSearchParams from '../ConfigureSearchParams';
 
 type Props = {
@@ -18,7 +17,6 @@ const PostsList = ({ categoryName, hits, hasMore, refine }: Props) => (
       hits={hits}
       hasMore={hasMore}
       loadMore={refine}
-      sidebarWidth={WIDTH}
     />
     <ConfigureSearchParams categoryName={categoryName} />
   </div>

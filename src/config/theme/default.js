@@ -50,5 +50,6 @@ export default R.compose(
       lg: 10,
       xl: 12,
     },
+    sidebarWidth: 240,
   },
 });

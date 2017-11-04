@@ -5,8 +5,6 @@ import { Drawer, List, ListItem, ListItemText } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import Link from 'components/molecules/Link';
 
-export const WIDTH = 240;
-
 export type LinkType = {
   key: ?String,
   label: String,
@@ -18,12 +16,12 @@ type Props = {
   classes: Object,
 };
 
-const styles = {
+const styles = theme => ({
   sidebar: {
-    flex: `0 0 ${WIDTH}px`,
+    flex: `0 0 ${theme.custom.sidebarWidth}px`,
   },
   drawerPaper: {
-    width: WIDTH,
+    width: theme.custom.sidebarWidth,
   },
   drawerAnchor: {
     top: 64,
@@ -34,7 +32,7 @@ const styles = {
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
-};
+});
 
 export class Sidebar extends Component<Props> {
   static defaultProps = {

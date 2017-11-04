@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { withProps } from 'recompose';
 import Masonry from 'react-masonry-infinite';
+import theme from 'config/theme';
 import PostCard from '../PostCard';
 import { sizesSelector } from './utils';
 
@@ -10,7 +11,6 @@ type Props = {
   hits: Array<Post>,
   loadMore: Function,
   hasMore: Boolean,
-  sidebarWidth: Number,
   sizes: Array<Object>,
 };
 
@@ -59,12 +59,12 @@ export class Posts extends Component<Props> {
 }
 
 export default R.compose(
-  withProps(props => ({
+  withProps({
     sizes: sizesSelector({
       columnWidth: COLUMN_WIDTH,
       gutter: GUTTER,
       maxScreenWidth: 5000,
-      wastedWidth: props.sidebarWidth + (2 * GUTTER),
+      wastedWidth: theme.custom.sidebarWidth + (2 * GUTTER),
     }),
-  })),
+  }),
 )(Posts);
