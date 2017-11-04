@@ -54,6 +54,12 @@ Run unit tests once and generate coverage report.
 ### `yarn test:e2e`
 Run end-to-end tests with Nightwatch. Make sure you run `yarn setup:e2e` to install Selenium.
 
+Firebase functions URL:
+
+```
+https://us-central1-<project_id>.cloudfunctions.net/
+```
+
 ### Tools
 1. [Firebase Tools](https://github.com/firebase/firebase-tools): `npm install -g firebase-tools`.
 2. CircleCI CLI: Visit https://circleci.com/docs/2.0/local-jobs/#nav-button and follow the instructions.
@@ -100,14 +106,14 @@ Production | `production` | Runs the currently released version of the applicati
 ssh deploy@178.79.164.250 -p 16888 -R 52698:localhost:52698
 ```
 
-Edit `migratePosts`:
+Edit model actions:
 
 ```
 cd /var/www/html/pesposa.com/public_html/system/application/frontend/models
 sudo rsub mposts.php
 ```
 
-Edit `controller actions`
+Edit controller actions:
 
 ```
 cd /var/www/html/pesposa.com/public_html/system/application/frontend/controllers
