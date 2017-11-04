@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import * as functions from 'firebase-functions';
 import algolia from 'algoliaClient';
 import serializePost from 'helpers/serializePostToAlgolia';

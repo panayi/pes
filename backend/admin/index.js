@@ -8,11 +8,8 @@ const COMMANDS = {
   initialize,
 };
 
-const commandKey = R.compose(
-  R.prop('c'),
-  R.propOr({}, 'argv'),
-)(yargs);
-
+const args = R.propOr({}, 'argv', yargs);
+const commandKey = R.prop('c', args);
 const command = R.prop(commandKey, COMMANDS);
 
 if (R.isNil(command)) {
@@ -22,7 +19,7 @@ if (R.isNil(command)) {
 
 const caller = async () => {
   try {
-    await command();
+    await command(args);
   } catch (error) {
     log.error(error);
   }

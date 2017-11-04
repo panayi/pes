@@ -12,9 +12,6 @@
 /backend/index.js
 /database/rules.json
 
-# seed data
-/backend/functions/lib/seeds/data.json
-
 # OS X
 .DS_Store
 
