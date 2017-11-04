@@ -23,9 +23,7 @@ const Home = ({ categoryLinks }: Props) => (
     indexName={process.env.REACT_APP_ALGOLIA_POSTS_INDEX_NAME}
   >
     <Layout>
-      <Sidebar
-        links={categoryLinks}
-      />
+      <Sidebar links={categoryLinks} />
       <Page>
         <Route
           path="/:categoryName?"
