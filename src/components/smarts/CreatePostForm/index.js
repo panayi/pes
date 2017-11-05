@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: Props) => bindActionCreat
 }, dispatch);
 
 export default R.compose(
+  withAnonymousUser,
   connectData({ pendingPost: modelConnections.pendingPosts.one(uidSelector) }),
   connect(mapStateToProps, mapDispatchToProps),
   branch(
@@ -53,5 +54,4 @@ export default R.compose(
       this.props.initializeForm(this.props.pendingPost);
     },
   }),
-  withAnonymousUser,
 )(PostForm);

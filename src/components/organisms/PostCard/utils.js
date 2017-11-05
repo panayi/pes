@@ -1,15 +1,36 @@
 import * as R from 'ramda';
 import randomInt from 'utils/randomInt';
 
+// Cache dimensions, to avoid changing
+// when component re-renders
+const mapIdToDimensions = {};
+
 // getImageUrl :: Post -> String | Object | Nil
 const getImage = R.compose(
   R.head,
   R.propOr([], 'images'),
 );
 
-const getPlaceholderImage = () => {
-  const width = randomInt(1, 7) * 100;
-  const height = randomInt(1, 7) * 100;
+// getDimensions :: Id -> { width, height }
+//   Id = String | Number
+const getDimensions = id => R.compose(
+  R.when(
+    R.isNil,
+    () => {
+      const dimensions = {
+        width: randomInt(2, 7) * 100,
+        height: randomInt(2, 7) * 100,
+      };
+      mapIdToDimensions[id] = dimensions;
+      return dimensions;
+    },
+  ),
+  R.prop(R.__, mapIdToDimensions),
+)(id);
+
+// getPlaceholderImage :: Id -> Object
+const getPlaceholderImage = (id) => {
+  const { width, height } = getDimensions(id);
 
   return {
     image: `https://unsplash.it/${width}/${height}/?random`,
@@ -19,6 +40,7 @@ const getPlaceholderImage = () => {
   };
 };
 
+// getMediaProps :: Post, Object -> Object
 export const getMediaProps = (post, { defaultHeight }) => {
   const image = getImage(post);
 
@@ -35,5 +57,5 @@ export const getMediaProps = (post, { defaultHeight }) => {
     };
   }
 
-  return getPlaceholderImage();
+  return getPlaceholderImage(post.objectID);
 };
