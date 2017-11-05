@@ -22,6 +22,9 @@ export class Posts extends Component<Props> {
     hits: [],
   };
 
+  // TODO: Find a way to avoid this
+  // Seems it's only needed when changing filter (categories),
+  // not when loading more.
   componentDidUpdate(prevProps: Props) {
     // If the search hits have changed,
     // force Masonry to recalulate layout

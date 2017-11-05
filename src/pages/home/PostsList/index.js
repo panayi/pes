@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import * as R from 'ramda';
 import { connectInfiniteHits } from 'react-instantsearch/connectors';
 import BasePostsList from 'components/organisms/PostsList';
 import ConfigureSearchParams from '../ConfigureSearchParams';
@@ -22,4 +23,6 @@ const PostsList = ({ categoryName, hits, hasMore, refine }: Props) => (
   </div>
 );
 
-export default connectInfiniteHits(PostsList);
+export default R.compose(
+  connectInfiniteHits,
+)(PostsList);
