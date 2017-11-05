@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { withProps } from 'recompose';
+import { Grid, withStyles } from 'material-ui';
 import Masonry from 'react-masonry-infinite';
+import Spinner from 'react-spinkit';
 import theme from 'config/theme';
 import PostCard from '../PostCard';
 import { sizesSelector } from './utils';
@@ -12,10 +14,18 @@ type Props = {
   loadMore: Function,
   hasMore: Boolean,
   sizes: Array<Object>,
+  classes: Object,
 };
 
 const COLUMN_WIDTH = 280;
 const GUTTER = 20;
+
+const styles = t => ({
+  spinner: {
+    marginTop: t.spacing.unit * 3,
+    marginBottom: t.spacing.unit * 1,
+  },
+});
 
 export class Posts extends Component<Props> {
   static defaultProps = {
@@ -36,7 +46,7 @@ export class Posts extends Component<Props> {
   masonry: ?Object
 
   render() {
-    const { hits, hasMore, loadMore, sizes } = this.props;
+    const { hits, hasMore, loadMore, sizes, classes } = this.props;
 
     return (
       <div>
@@ -45,6 +55,18 @@ export class Posts extends Component<Props> {
           hasMore={hasMore}
           loadMore={loadMore}
           sizes={sizes}
+          loader={
+            <Grid
+              container
+              justify="center"
+              className={classes.spinner}
+            >
+              <Spinner
+                name="wordpress"
+                color={theme.palette.primary.A200}
+              />
+            </Grid>
+          }
         >
           {
             R.map(post => (
@@ -70,4 +92,5 @@ export default R.compose(
       wastedWidth: theme.custom.sidebarWidth + (2 * GUTTER),
     }),
   }),
+  withStyles(styles),
 )(Posts);
