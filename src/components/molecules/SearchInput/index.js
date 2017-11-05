@@ -55,6 +55,9 @@ const styles = theme => ({
     '&:focus': {
       outline: 0,
     },
+    '&::placeholder': {
+      color: fade(theme.palette.common.white, 0.25),
+    },
   },
 });
 
@@ -67,6 +70,7 @@ export const SearchInput = ({ value, refine, classes }: Props) => (
       className={classes.input}
       value={value}
       onChange={e => refine(e.target.value)}
+      placeholder="What are you looking for?"
     />
   </div>
 );
