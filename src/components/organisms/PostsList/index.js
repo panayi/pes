@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { withProps } from 'recompose';
-import { Grid, withStyles } from 'material-ui';
+import { Grid, Typography, withStyles } from 'material-ui';
 import Masonry from 'react-masonry-infinite';
 import Spinner from 'react-spinkit';
 import theme from 'config/theme';
@@ -17,11 +17,11 @@ type Props = {
   classes: Object,
 };
 
-const COLUMN_WIDTH = 280;
-const GUTTER = 20;
+const COLUMN_WIDTH = 290;
+const GUTTER = 10;
 
 const styles = t => ({
-  spinner: {
+  vspacing: {
     marginTop: t.spacing.unit * 3,
     marginBottom: t.spacing.unit * 1,
   },
@@ -59,7 +59,7 @@ export class Posts extends Component<Props> {
             <Grid
               container
               justify="center"
-              className={classes.spinner}
+              className={classes.vspacing}
             >
               <Spinner
                 name="wordpress"
@@ -78,6 +78,18 @@ export class Posts extends Component<Props> {
             ), hits)
           }
         </Masonry>
+        {
+          !hasMore &&
+            <Grid
+              container
+              justify="center"
+              className={classes.vspacing}
+            >
+              <Typography type="subheading" color="secondary">
+                End of results
+              </Typography>
+            </Grid>
+        }
       </div>
     );
   }
