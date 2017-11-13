@@ -1,13 +1,10 @@
 import {
-  INITIAL_STATE as POST_INITIAL_STATE,
-  MODEL_KEY as POST_MODEL_KEY,
-} from 'components/organisms/PostForm';
-import {
   INITIAL_STATE as PHONE_NUMBER_LOGIN_INITIAL_STATE,
   MODEL_KEY as PHONE_NUMBER_LOGIN_MODEL_KEY,
 } from 'components/smarts/Login/WithPhoneNumber';
+import { POST_INITIAL_STATE, POST_FORM_MODEL_KEY } from './post/constants';
 
 export default {
-  [POST_MODEL_KEY]: POST_INITIAL_STATE,
+  [POST_FORM_MODEL_KEY]: POST_INITIAL_STATE,
   [PHONE_NUMBER_LOGIN_MODEL_KEY]: PHONE_NUMBER_LOGIN_INITIAL_STATE,
 };

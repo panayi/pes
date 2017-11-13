@@ -6,8 +6,8 @@ import { replace as _replace } from 'react-router-redux';
 import { isLoaded } from 'react-redux-firebase';
 import needsUserWithId from 'components/hocs/needsUserWithId';
 import propsSelector from 'utils/propsSelector';
-import Modal from 'components/organisms/Modal';
-import EditPostForm from 'components/smarts/EditPostForm';
+import Modal from 'components/molecules/Modal';
+import PostForm from 'components/organisms/PostForm';
 
 const EditPost = ({ postId, post, replace }) => (
   <Modal
@@ -16,7 +16,7 @@ const EditPost = ({ postId, post, replace }) => (
     ignoreBackdropClick
     ignoreEscapeKeyUp
   >
-    <EditPostForm
+    <PostForm.Edit
       postId={postId}
       post={post}
     />

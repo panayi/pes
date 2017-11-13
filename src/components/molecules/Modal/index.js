@@ -1,20 +1,20 @@
 // @flow weak
 import React from 'react';
 import { withStateHandlers } from 'recompose';
-import { Dialog, DialogTitle, Button } from 'material-ui';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from 'material-ui';
 
 type Props = {
   children: React$Node,
   isOpen: boolean,
   open: Function,
   close: Function,
-  toggleContent: String | React$Node,
   modalTitle: String | React$Node,
-  buttonProps: Object,
+  actions: React$Node,
+  openButtonProps: Object,
 };
 
 const Modal = (props: Props) => {
-  const { isOpen, open, close, children, toggleContent, modalTitle, buttonProps,
+  const { isOpen, open, close, children, modalTitle, actions, openButtonProps,
     ...otherProps } = props;
 
   const dialog = (
@@ -30,19 +30,25 @@ const Modal = (props: Props) => {
             {modalTitle}
           </DialogTitle>
       }
-      {children}
+      <DialogContent>
+        {children}
+      </DialogContent>
+      {
+        actions &&
+          <DialogActions>
+            {actions}
+          </DialogActions>
+      }
     </Dialog>
   );
 
-  if (toggleContent) {
+  if (openButtonProps) {
     return [
       <Button
         key="0"
-        {...buttonProps}
+        {...openButtonProps}
         onClick={open}
-      >
-        {toggleContent}
-      </Button>,
+      />,
       dialog,
     ];
   }

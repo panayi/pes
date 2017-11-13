@@ -7,7 +7,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Button } from 'material-ui';
-import createAuthProvider from 'services/firebase/createAuthProvider';
+import { utils } from 'store/firebase';
 import { auth as authConfig } from 'config';
 import { actions as authActions } from 'store/auth';
 import * as actions from 'store/auth/linkedAccounts/actions';
@@ -27,7 +27,7 @@ type Props = {
 export class LinkButton extends Component<Props> {
   handleClick = () => {
     const { firebase, withProvider, fetchLinkedAccounts, updateProfile } = this.props;
-    const provider = createAuthProvider(
+    const provider = utils.createAuthProvider(
       firebase,
       withProvider,
       authConfig[withProvider].scopes,

@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withProps, lifecycle } from 'recompose';
-import PostForm from 'components/organisms/PostForm';
-import { postImagesPathSelector, actions } from './edit';
+import { actions, selectors } from 'store/post';
+import PostForm from '../Form';
 
 type Props = {
   onSave: ?Function,
@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: Props) => bindActionCreat
 
 export default R.compose(
   withProps(createStructuredSelector({
-    filesPath: postImagesPathSelector,
+    filesPath: selectors.postImagesPathSelector,
   })),
   connect(null, mapDispatchToProps),
   lifecycle({

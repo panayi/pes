@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';
-import { FIREBASE_PATH } from 'services/firebase/modelConnections';
+import { FIREBASE_PATH } from 'services/connectData/modelConnections';
 
 // ------------------------------------
 // Constants

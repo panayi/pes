@@ -4,7 +4,7 @@ import createHistory from 'history/createBrowserHistory';
 import { routerMiddleware } from 'react-router-redux';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
-import profileFactory from 'services/firebase/profileFactory';
+import { utils } from './firebase';
 import makeRootReducer from './reducers';
 import firebaseConfig from './firebaseConfig';
 
@@ -14,7 +14,7 @@ export default (initialState = {}) => {
 
   const reduxFirebaseConfig = {
     userProfile: 'users',
-    profileFactory,
+    profileFactory: utils.profileFactory,
   };
 
   // initialize firebase instance

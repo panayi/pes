@@ -4,6 +4,8 @@ import { Card, CardMedia, CardHeader, CardContent, Typography, withStyles } from
 import { Link } from 'react-router-dom';
 import { getMediaProps } from './utils';
 
+// TODO: this needs to be broken into several molecules
+
 type Props = {
   post: Post,
   width: Number,
