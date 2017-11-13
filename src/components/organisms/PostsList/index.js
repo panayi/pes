@@ -6,7 +6,7 @@ import { Grid, Typography, withStyles } from 'material-ui';
 import Masonry from 'react-masonry-infinite';
 import Spinner from 'react-spinkit';
 import theme from 'config/theme';
-import PostCard from '../PostCard';
+import PostCard from 'components/molecules/PostCard';
 import { sizesSelector } from './utils';
 
 type Props = {
@@ -27,7 +27,7 @@ const styles = t => ({
   },
 });
 
-export class Posts extends Component<Props> {
+export class PostsList extends Component<Props> {
   static defaultProps = {
     hits: [],
   };
@@ -105,4 +105,4 @@ export default R.compose(
     }),
   }),
   withStyles(styles),
-)(Posts);
+)(PostsList);

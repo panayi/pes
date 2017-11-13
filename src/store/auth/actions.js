@@ -1,7 +1,7 @@
-import profileFactory from 'services/firebase/profileFactory';
+import { utils } from 'store/firebase';
 
 export const updateProfile = user => (dispatch, getState, getFirebase) => {
   const firebase = getFirebase();
 
-  firebase.updateProfile(profileFactory(user));
+  firebase.updateProfile(utils.profileFactory(user));
 };

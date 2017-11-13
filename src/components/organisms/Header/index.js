@@ -7,9 +7,8 @@ import ProfileImage from 'components/molecules/ProfileImage';
 import hideUser from 'components/hocs/hideUser';
 import hideVisitor from 'components/hocs/hideVisitor';
 import logoutHoc from 'components/hocs/logout/logout';
-import Modal from 'components/organisms/Modal';
 import SearchInput from 'components/molecules/SearchInput';
-import CreatePostForm from 'components/smarts/CreatePostForm';
+import PostForm from 'components/organisms/PostForm';
 
 const LoginLink = hideUser(Link);
 
@@ -57,13 +56,15 @@ const Header = ({ classes }) => (
         <div className={classes.searchInput}>
           <SearchInput />
         </div>
-        <Modal
-          toggleContent="Sell your stuff"
-          buttonProps={{ color: 'contrast' }}
-          ignoreEscapeKeyUp
-        >
-          <CreatePostForm />
-        </Modal>
+        <PostForm.Create
+          dialogProps={{
+            ignoreEscapeKeyUp: true,
+            openButtonProps: {
+              children: 'Sell your stuff',
+              color: 'contrast',
+            },
+          }}
+        />
         <LoginLink
           to="/auth/login"
           exact

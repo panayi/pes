@@ -5,19 +5,17 @@ import { connect } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
 import { createStructuredSelector } from 'reselect';
 import { branch, renderNothing, lifecycle } from 'recompose';
-import { modelConnections, connectData } from 'services/firebase';
+import { modelConnections, connectData } from 'services/connectData';
 import withAnonymousUser from 'components/hocs/withAnonymousUser';
 import { uidSelector } from 'store/auth/selectors';
-import PostForm from 'components/organisms/PostForm';
-import {
-  pendingPostImagesPathSelector,
-  actions,
-} from './new';
+import { actions, selectors } from 'store/post';
+import PostForm from '../Form';
 
 type Props = {
   onCreate: ?Function,
   firebase: Object,
   filesPath: String,
+  post: Post,
   isProfileLoaded: Boolean,
   initializeForm: Function,
   onSubmit: Function,
@@ -25,7 +23,7 @@ type Props = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  filesPath: pendingPostImagesPathSelector,
+  filesPath: selectors.pendingPostImagesPathSelector,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, props: Props) => bindActionCreators({
@@ -36,7 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: Props) => bindActionCreat
 
 export default R.compose(
   withAnonymousUser,
-  connectData({ pendingPost: modelConnections.pendingPosts.one(uidSelector) }),
+  connectData({ post: modelConnections.pendingPosts.one(uidSelector) }),
   connect(mapStateToProps, mapDispatchToProps),
   branch(
     // Wait for `profile` to become available,
@@ -45,13 +43,13 @@ export default R.compose(
     R.compose(
       R.not,
       isLoaded,
-      R.prop('pendingPost'),
+      R.prop('post'),
     ),
     renderNothing,
   ),
   lifecycle({
     componentWillMount() {
-      this.props.initializeForm(this.props.pendingPost);
+      this.props.initializeForm(this.props.post);
     },
   }),
 )(PostForm);
