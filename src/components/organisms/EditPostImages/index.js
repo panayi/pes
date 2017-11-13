@@ -37,30 +37,29 @@ export class EditPostImages extends Component<Props> {
     const { images, isLoading, canUploadImage } = this.props;
 
     return (
-      <div>
-        <GridList
-          cellHeight={110}
-          cols={constants.MAXIMUM_IMAGES_PER_POST}
-        >
-          {R.map(image => (
-            <GridListTile key={image.fullPath}>
-              <img
-                src={image.downloadURL}
-                alt={image.fullPath}
-              />
-            </GridListTile>
-          ), images)}
-        </GridList>
+      <GridList
+        cellHeight={87}
+        cols={constants.MAXIMUM_IMAGES_PER_POST}
+      >
+        {R.map(image => (
+          <GridListTile key={image.fullPath}>
+            <img
+              src={image.downloadURL}
+              alt={image.fullPath}
+            />
+          </GridListTile>
+        ), images)}
         {
           canUploadImage &&
-            <Dropzone
+            <GridListTile
+              component={Dropzone}
               acceptedFileTypes={fileTypes.IMAGE}
               onDrop={this.handleDrop}
               isLoading={isLoading}
               multiple
             />
         }
-      </div>
+      </GridList>
     );
   }
 }

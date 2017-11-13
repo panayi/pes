@@ -2,7 +2,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { withProps } from 'recompose';
-import { FormGroup, FormControl, Button, Select, TextField, withStyles } from 'material-ui';
+import { FormGroup, FormControl, Button, TextField, withStyles } from 'material-ui';
 import { Control, Form } from 'react-redux-form';
 import { POST_FORM_MODEL_PATH } from 'store/post/constants';
 import { modelConnections, connectData } from 'services/connectData';
@@ -20,69 +20,84 @@ type Props = {
   classes: Object,
 };
 
-const styles = {
-};
+const styles = theme => ({
+  root: {
+    width: 450,
+  },
+  selectWrap: {
+    marginTop: theme.spacing.unit * 2,
+  },
+});
 
-const PostForm = (props: Props) => (
-  <Modal
-    {...props.dialogProps}
-    actions={
-      <Button onClick={props.onSubmit}>
-        Post
-      </Button>
-    }
-  >
-    <EditPostImages
-      images={props.images}
-      postImagesDbPath={props.filesPath}
-    />
-    <Form
-      className={props.classes.form}
-      model={POST_FORM_MODEL_PATH}
-      onChange={props.onChange}
+const Select = withProps({ select: true })(TextField);
+
+const PostForm = (props: Props) => {
+  const { dialogProps, filesPath, onSubmit, onChange, classes, images, categories } = props;
+
+  return (
+    <Modal
+      {...dialogProps}
+      classes={{
+        paper: classes.root,
+      }}
+      actions={
+        <Button onClick={onSubmit}>
+          Post
+        </Button>
+      }
     >
-      <FormGroup>
-        <Control.text
-          model=".title"
-          id="title"
-          label="Title"
-          component={TextField}
-          fullWidth
-        />
-        <Control.text
-          model=".body"
-          id="body"
-          label="Description"
-          type="textarea"
-          component={TextField}
-        />
-        <Control.text
-          model=".price"
-          id="price"
-          label="Price"
-          component={TextField}
-        />
-        <FormControl>
-          <Control.select
-            model=".category"
-            component={Select}
-            native
-          >
-            <option value="">Select category</option>
-            {R.map(category => (
-              <option
-                key={category.name}
-                value={category.name}
-              >
-                {category.name}
-              </option>
-            ), props.categories)}
-          </Control.select>
-        </FormControl>
-      </FormGroup>
-    </Form>
-  </Modal>
-);
+      <EditPostImages
+        images={images}
+        postImagesDbPath={filesPath}
+      />
+      <Form
+        className={classes.form}
+        model={POST_FORM_MODEL_PATH}
+        onChange={onChange}
+      >
+        <FormGroup>
+          <Control.text
+            model=".title"
+            id="title"
+            label="What are you selling?"
+            component={TextField}
+            fullWidth
+          />
+          <Control.text
+            model=".body"
+            id="body"
+            label="Please write a short description"
+            type="textarea"
+            component={TextField}
+          />
+          <Control.text
+            model=".price"
+            id="price"
+            label="Price"
+            component={TextField}
+          />
+          <FormControl className={classes.selectWrap}>
+            <Control.select
+              model=".category"
+              component={Select}
+              SelectProps={{ native: true }}
+            >
+              <option value="">Select category</option>
+              {R.map(category => (
+                <option
+                  key={category.name}
+                  value={category.name}
+                >
+                  {category.name}
+                </option>
+              ), categories)}
+            </Control.select>
+          </FormControl>
+        </FormGroup>
+      </Form>
+    </Modal>
+  );
+};
 
 PostForm.defaultProps = {
   onChange: noop,
