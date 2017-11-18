@@ -4,7 +4,6 @@ import * as R from 'ramda';
 import { Route } from 'react-router-dom';
 import { withProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
-import { InstantSearch } from 'react-instantsearch/dom';
 import propsSelector from 'utils/propsSelector';
 import Page from 'components/molecules/Page';
 import { modelConnections, connectData } from 'services/connectData';
@@ -17,26 +16,21 @@ type Props = {
 };
 
 const Home = ({ categoryLinks }: Props) => (
-  <InstantSearch
-    appId={process.env.REACT_APP_ALGOLIA_APP_ID}
-    apiKey={process.env.REACT_APP_ALGOLIA_SEARCH_KEY}
-    indexName={process.env.REACT_APP_ALGOLIA_POSTS_INDEX_NAME}
-  >
-    <Layout>
-      <Sidebar links={categoryLinks} />
-      <Page>
-        <Route
-          path="/:categoryName?"
-          component={Posts}
-        />
-      </Page>
-    </Layout>
-  </InstantSearch>
+  <Layout>
+    <Sidebar links={categoryLinks} />
+    <Page>
+      <Route
+        path="/:categoryName?"
+        component={Posts}
+      />
+    </Page>
+  </Layout>
 );
 
 const categoryLinksSelector = createSelector(
   R.compose(
-    R.propOr([], 'categories'),
+    R.values,
+    R.propOr({}, 'categories'),
     propsSelector,
   ),
   R.map(({ name }) => ({

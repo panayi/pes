@@ -1,5 +1,5 @@
-// flow-typed signature: b026cc068cac48bd0a7caef9d7bde999
-// flow-typed version: 50f25cb3dc/firebase_v4.x.x/flow_>=v0.34.x
+// flow-typed signature: a7b8f0098b92d3aa18384a8bba40247b
+// flow-typed version: 3c3546d42d/firebase_v4.x.x/flow_>=v0.34.x
 
 /* @flow */
 /** ** firebase ****/
@@ -122,6 +122,9 @@ declare class $npm$firebase$auth$Auth {
     phoneNumber: string,
     applicationVerifier: $npm$firebase$auth$ApplicationVerifier
   ): Promise<$npm$firebase$auth$ConfirmationResult>;
+  signInWithPopup(
+    provider: $npm$firebase$auth$AuthProvider
+  ): Promise<$npm$firebase$auth$UserCredential>;
   signOut(): Promise<void>;
   verifyIdToken(idToken: string): Promise<Object>;
   verifyPasswordResetCode(code: string): Promise<string>;

@@ -4,8 +4,8 @@ import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { Grid, Typography, withStyles } from 'material-ui';
 import Masonry from 'react-masonry-infinite';
-import Spinner from 'react-spinkit';
 import theme from 'config/theme';
+import Spinner from 'components/atoms/Spinner';
 import PostCard from 'components/molecules/PostCard';
 import { sizesSelector } from './utils';
 
@@ -61,10 +61,7 @@ export class PostsList extends Component<Props> {
               justify="center"
               className={classes.vspacing}
             >
-              <Spinner
-                name="wordpress"
-                color={theme.palette.primary.A200}
-              />
+              <Spinner spinnerColor={theme.palette.primary.A200} />
             </Grid>
           }
         >

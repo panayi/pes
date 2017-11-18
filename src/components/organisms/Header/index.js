@@ -8,7 +8,7 @@ import hideUser from 'components/hocs/hideUser';
 import hideVisitor from 'components/hocs/hideVisitor';
 import logoutHoc from 'components/hocs/logout/logout';
 import SearchInput from 'components/molecules/SearchInput';
-import PostForm from 'components/organisms/PostForm';
+import CreatePost from 'components/organisms/CreatePost';
 
 const LoginLink = hideUser(Link);
 
@@ -56,15 +56,7 @@ const Header = ({ classes }) => (
         <div className={classes.searchInput}>
           <SearchInput />
         </div>
-        <PostForm.Create
-          dialogProps={{
-            ignoreEscapeKeyUp: true,
-            openButtonProps: {
-              children: 'Sell your stuff',
-              color: 'contrast',
-            },
-          }}
-        />
+        <CreatePost />
         <LoginLink
           to="/auth/login"
           exact

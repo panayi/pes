@@ -1,26 +1,19 @@
 import React from 'react';
 import * as R from 'ramda';
-import { branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 import { replace as _replace } from 'react-router-redux';
-import { isLoaded } from 'react-redux-firebase';
 import needsUserWithId from 'components/hocs/needsUserWithId';
 import propsSelector from 'utils/propsSelector';
-import Modal from 'components/molecules/Modal';
-import PostForm from 'components/organisms/PostForm';
+import EditPost from 'components/organisms/EditPost';
 
-const EditPost = ({ postId, post, replace }) => (
-  <Modal
-    defaultOpen
-    onExited={() => replace(`/i/${postId}`)}
-    ignoreBackdropClick
-    ignoreEscapeKeyUp
-  >
-    <PostForm.Edit
-      postId={postId}
-      post={post}
-    />
-  </Modal>
+const EditPostPage = ({ postId, post, replace }) => (
+  <EditPost
+    postId={postId}
+    post={post}
+    modalProps={{
+      onExited: () => replace(`/i/${postId}`),
+    }}
+  />
 );
 
 const mapDispatchToProps = {
@@ -28,16 +21,6 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  branch(
-    // Wait for `post` to become available,
-    // so that the form is properly initialized.
-    R.compose(
-      R.not,
-      isLoaded,
-      R.prop('post'),
-    ),
-    renderNothing,
-  ),
   connect(null, mapDispatchToProps),
   needsUserWithId({
     redirectPath: (state, { postId }) => `/i/${postId}`,
@@ -46,4 +29,4 @@ export default R.compose(
       propsSelector,
     ),
   }),
-)(EditPost);
+)(EditPostPage);
