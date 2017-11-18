@@ -1,6 +1,6 @@
 export const POST_INITIAL_STATE = {
   title: '',
-  price: null,
+  price: '',
   body: '',
   category: '',
   images: [],

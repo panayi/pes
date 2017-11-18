@@ -1,12 +1,17 @@
 import * as R from 'ramda';
-import { isNilOrEmpty } from 'ramda-adjunct';
+import { isNilOrEmpty, isNaN } from 'ramda-adjunct';
 
-export const serializePost = R.compose(
+const serializePrice = R.compose(
+  R.when(
+    R.propSatisfies(R.either(isNilOrEmpty, isNaN), 'price'),
+    R.dissoc('price'),
+  ),
   R.over(
     R.lensProp('price'),
-    R.unless(
-      isNilOrEmpty,
-      parseFloat,
-    ),
+    parseFloat,
   ),
+);
+
+export const serializePost = R.compose(
+  serializePrice,
 );

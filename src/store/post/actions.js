@@ -55,7 +55,7 @@ export const createPost = (post: Post) =>
     return getFirebase()
       .push('/posts', finalPost)
       .then(() => dispatch(removePendingPost()))
-      .then(() => dispatch(formActions.load(POST_FORM_MODEL_PATH, POST_INITIAL_STATE)));
+      .then(() => dispatch(formActions.reset(POST_FORM_MODEL_PATH)));
   };
 
 export const savePost = (postId: string, onSave: ?Function) => (post: Post) =>
