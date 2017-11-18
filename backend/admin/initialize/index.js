@@ -3,8 +3,14 @@ import log from 'helpers/log';
 import initializeFirebase, { canInitialize as canInitializeFirebase } from './firebase';
 import initializeAlgolia, { canInitialize as canInitializeAlgolia } from './algolia';
 
-const shouldInitializeFirebase = R.either(R.isNil, R.propEq('only', 'firebase'));
-const shouldInitializeAlgolia = R.either(R.isNil, R.propEq('only', 'algolia'));
+const shouldInitializeService = name => R.compose(
+  R.either(R.isNil, R.equals(name)),
+  R.prop('only'),
+  R.defaultTo({}),
+);
+
+const shouldInitializeFirebase = shouldInitializeService('firebase');
+const shouldInitializeAlgolia = shouldInitializeService('algolia');
 
 const canInitialize = async (options) => {
   log.info('Checking ability to initialize');

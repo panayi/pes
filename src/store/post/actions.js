@@ -5,6 +5,7 @@ import { push } from 'react-router-redux';
 import { uidSelector, isAuthenticatedSelector } from 'store/auth/selectors';
 import { PENDING_POSTS } from 'services/connectData/types';
 import { POST_FORM_MODEL_PATH, POST_INITIAL_STATE } from './constants';
+import { serializePost } from './utils';
 
 export const initializeForm = (post: ?Post) => (dispatch: Dispatch) => {
   if (R.either(R.isNil, R.isEmpty)(post)) {
@@ -22,10 +23,16 @@ export const initializeForm = (post: ?Post) => (dispatch: Dispatch) => {
 export const savePendingPost = (post: Post | {}) =>
   (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
     const uid = uidSelector(getState());
-    getFirebase().update(`${PENDING_POSTS}/${uid}`, post);
+    return getFirebase().update(`${PENDING_POSTS}/${uid}`, serializePost(post));
   };
 
-export const createPost = (onCreate: ?Function) => (post: Post) =>
+const removePendingPost = () =>
+  (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
+    const uid = uidSelector(getState());
+    return getFirebase().remove(`${PENDING_POSTS}/${uid}`);
+  };
+
+export const createPost = (post: Post) =>
   (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
     const state = getState();
     const isAuthenticated = isAuthenticatedSelector(getState());
@@ -37,15 +44,18 @@ export const createPost = (onCreate: ?Function) => (post: Post) =>
       }));
     }
 
-    const finalPost = R.merge(post, {
+    const userObj = {
       user: uidSelector(state),
-    });
+    };
+    const finalPost = R.compose(
+      serializePost,
+      R.merge(post),
+    )(userObj);
 
     return getFirebase()
       .push('/posts', finalPost)
-      .then(() => dispatch(savePendingPost({})))
-      .then(() => dispatch(formActions.load(POST_FORM_MODEL_PATH, POST_INITIAL_STATE)))
-      .then(onCreate);
+      .then(() => dispatch(removePendingPost()))
+      .then(() => dispatch(formActions.load(POST_FORM_MODEL_PATH, POST_INITIAL_STATE)));
   };
 
 export const savePost = (postId: string, onSave: ?Function) => (post: Post) =>

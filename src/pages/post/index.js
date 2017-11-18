@@ -12,7 +12,7 @@ import ViewPost from './view';
 import EditPost from './edit';
 
 type Props = {
-  postId: String, // eslint-disable-line react/no-unused-prop-types
+  postId: String,
   post: Post,
 };
 

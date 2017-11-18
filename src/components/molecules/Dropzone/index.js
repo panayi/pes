@@ -7,7 +7,7 @@ import { Grid, withStyles } from 'material-ui';
 import ReactDropzone from 'react-dropzone';
 import AddIcon from 'material-ui-icons/Add';
 import BlockIcon from 'material-ui-icons/Block';
-import Spinner from 'react-spinkit';
+import Spinner from 'components/atoms/Spinner';
 import * as utils from './utils';
 import * as fileTypes from './constants/fileTypes';
 
@@ -23,6 +23,7 @@ const dropzonePropKeys = R.keys(ReactDropzone.propTypes);
 
 const styles = theme => ({
   root: {
+    position: 'relative',
     height: '100%',
     border: `2px dashed ${theme.palette.grey['200']}`,
     cursor: 'pointer',
@@ -49,7 +50,7 @@ export class Dropzone extends Component<Props> {
     const { isLoading } = this.props;
 
     if (isLoading) {
-      return <Spinner name="circle" />;
+      return <Spinner size={30} spinnerWidth={3} />;
     }
 
     if (isDragReject) {

@@ -1,29 +1,25 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { withProps } from 'recompose';
-import { FormGroup, FormControl, Button, TextField, withStyles } from 'material-ui';
+import { isLoaded } from 'react-redux-firebase';
+import { withProps, branch, renderComponent, lifecycle } from 'recompose';
+import { FormGroup, FormControl, TextField, withStyles } from 'material-ui';
 import { Control, Form } from 'react-redux-form';
-import { POST_FORM_MODEL_PATH } from 'store/post/constants';
+import { actions, constants } from 'store/post';
 import { modelConnections, connectData } from 'services/connectData';
 import noop from 'utils/noop';
-import Modal from 'components/molecules/Modal';
-import EditPostImages from 'components/organisms/EditPostImages';
+import Spinner from 'components/atoms/Spinner';
+import EditPostImages from 'components/molecules/EditPostImages';
 
 type Props = {
-  onSubmit: Function,
   onChange: ?Function,
   images: Array<Object>,
   filesPath: String,
   categories: Array<Category>,
-  dialogProps: Object,
   classes: Object,
 };
 
 const styles = theme => ({
-  root: {
-    width: 450,
-  },
   selectWrap: {
     marginTop: theme.spacing.unit * 2,
   },
@@ -31,28 +27,20 @@ const styles = theme => ({
 
 const Select = withProps({ select: true })(TextField);
 
+const Loading = withProps({ centered: true })(Spinner);
+
 const PostForm = (props: Props) => {
-  const { dialogProps, filesPath, onSubmit, onChange, classes, images, categories } = props;
+  const { filesPath, onChange, classes, images, categories } = props;
 
   return (
-    <Modal
-      {...dialogProps}
-      classes={{
-        paper: classes.root,
-      }}
-      actions={
-        <Button onClick={onSubmit}>
-          Post
-        </Button>
-      }
-    >
+    <div>
       <EditPostImages
         images={images}
         postImagesDbPath={filesPath}
       />
       <Form
         className={classes.form}
-        model={POST_FORM_MODEL_PATH}
+        model={constants.POST_FORM_MODEL_PATH}
         onChange={onChange}
       >
         <FormGroup>
@@ -90,12 +78,12 @@ const PostForm = (props: Props) => {
                 >
                   {category.name}
                 </option>
-              ), categories)}
+              ), R.values(categories))}
             </Control.select>
           </FormControl>
         </FormGroup>
       </Form>
-    </Modal>
+    </div>
   );
 };
 
@@ -103,14 +91,31 @@ PostForm.defaultProps = {
   onChange: noop,
 };
 
+const mapDispatchToProps = {
+  initializeForm: actions.initializeForm,
+};
+
 export default R.compose(
+  withStyles(styles),
+  connectData({ categories: modelConnections.categories.all }, null, mapDispatchToProps),
+  branch(
+    R.compose(
+      R.not,
+      isLoaded,
+      R.prop('post'),
+    ),
+    renderComponent(Loading),
+  ),
+  lifecycle({
+    componentWillMount() {
+      this.props.initializeForm(this.props.post);
+    },
+  }),
   withProps(({ post }) => ({
     images: R.compose(
       R.values,
       R.propOr({}, 'images'),
-      R.defaultTo('post'),
+      R.defaultTo({}),
     )(post),
   })),
-  connectData({ categories: modelConnections.categories.all }),
-  withStyles(styles),
 )(PostForm);

@@ -95,7 +95,7 @@ type UUID extends String {
   validate() { this.test(/^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i) }
 }
 
-type Price extends Decimal {
+type Price extends Number {
   validate() { this >= 0 }
 }
 
@@ -186,7 +186,7 @@ isAuthenticatedWithPhone() { auth != null && auth.provider == 'phone' }
 isAdmin() { auth != null && root.users[auth.uid].roles.admin.val() }
 isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
-userIsValid(uid) { root.user[uid] != null }
+userIsValid(uid) { root.users[uid] != null }
 isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook' || providerId == 'twitter' || providerId == 'github' }
 requireAuthenticatedWithSocial(value, providerId) { !isSocialProvider(providerId) || value != null }
 requireWhenAuthenticatedWithPhone(value, providerId) { providerId != 'phone' || value != null }
@@ -229,4 +229,5 @@ path /pendingPosts/{uid} is PendingPost {
   read() { isCurrentUser(uid) }
   create() { isCurrentUser(uid) }
   update() { isCurrentUser(uid) }
+  delete() { isCurrentUser(uid) }
 }

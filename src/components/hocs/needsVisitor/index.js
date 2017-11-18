@@ -3,8 +3,8 @@ import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper';
 import { routerActions } from 'react-router-redux';
 import { Grid } from 'material-ui';
-import Spinner from 'react-spinkit';
 import { isNotAuthenticatedSelector, isAuthenticatingSelector } from 'store/auth/selectors';
+import Spinner from 'components/atoms/Spinner';
 
 const locationHelper = locationHelperBuilder({});
 
@@ -14,7 +14,7 @@ const Loader = () => (
     justify="center"
     style={{ height: '100vh' }}
   >
-    <Spinner name="circle" />
+    <Spinner />
   </Grid>
 );
 
