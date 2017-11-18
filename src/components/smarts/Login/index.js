@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { firebaseConnect } from 'react-redux-firebase';
 import { authErrorSelector } from 'store/auth/selectors';
-import { maybeMergeAnonymousProfile } from 'store/auth/anonymousProfile/actions';
+import { maybeSetAnonymousUserId } from 'store/auth/anonymousUserId/actions';
 
 type Props = {
   firebase: Object,
   authError: Object,
   component: React$ElementType,
-  maybeMergeAnonymousProfile: Function,
+  maybeSetAnonymousUserId: Function,
 };
 
 export class Login extends Component<Props> {
@@ -20,7 +20,7 @@ export class Login extends Component<Props> {
   };
 
   handleSuccess = () => {
-    this.props.maybeMergeAnonymousProfile();
+    this.props.maybeSetAnonymousUserId();
   }
 
   handleError = (error: Object) => {
@@ -46,7 +46,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  maybeMergeAnonymousProfile,
+  maybeSetAnonymousUserId,
 };
 
 export default R.compose(

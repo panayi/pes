@@ -8,7 +8,7 @@ const initialState = null;
 export default handleActions({
   [actionTypes.LOGIN]: (state, { auth }) => {
     if (auth.isAnonymous) {
-      return auth;
+      return auth.uid;
     }
 
     return state;

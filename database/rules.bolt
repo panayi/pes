@@ -176,6 +176,7 @@ type User {
   providerData: Map<String, Provider>,
   profile: Profile | Null,
   roles: Roles | Null,
+  anonymousUserId: String | Null,
 }
 
 // ------------------------------------
@@ -217,7 +218,7 @@ path /users/{uid} is User {
 
   validate() {
     this.roles == null &&
-    requireAuthenticatedWithSocial(this.profile, auth.provider)
+      requireAuthenticatedWithSocial(this.profile, auth.provider)
   }
 }
 
