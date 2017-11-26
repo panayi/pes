@@ -1,5 +1,5 @@
-// flow-typed signature: e49131b589fd6cf5b00e33d898f0ff34
-// flow-typed version: 55bef7ff62/ramda_v0.x.x/flow_>=v0.49.x
+// flow-typed signature: b2c5584525357db0529e998438eda437
+// flow-typed version: 8cd387e8be/ramda_v0.x.x/flow_>=v0.49.x
 
 /* eslint-disable no-unused-vars, no-redeclare */
 
@@ -158,29 +158,14 @@ declare module ramda {
     ) => CurriedFunction6<A, B, C, D, E, F, R>);
 
   declare type Partial = (<A, R>((...r: [A]) => R, args: [A]) => () => R) &
-    (<A, B, R>((...r: [A, B]) => R, args: [A]) => CurriedFunction1<B, R>) &
+    (<A, B, R>((...r: [A, B]) => R, args: [A]) => B => R) &
     (<A, B, R>((...r: [A, B]) => R, args: [A, B]) => () => R) &
-    (<A, B, C, R>(
-      (...r: [A, B, C]) => R,
-      args: [A]
-    ) => CurriedFunction2<B, C, R>) &
-    (<A, B, C, R>(
-      (...r: [A, B, C]) => R,
-      args: [A, B]
-    ) => CurriedFunction1<C, R>) &
+    (<A, B, C, R>((...r: [A, B, C]) => R, args: [A]) => (B, C) => R) &
+    (<A, B, C, R>((...r: [A, B, C]) => R, args: [A, B]) => C => R) &
     (<A, B, C, R>((...r: [A, B, C]) => R, args: [A, B, C]) => () => R) &
-    (<A, B, C, D, R>(
-      (...r: [A, B, C, D]) => R,
-      args: [A]
-    ) => CurriedFunction3<B, C, D, R>) &
-    (<A, B, C, D, R>(
-      (...r: [A, B, C, D]) => R,
-      args: [A, B]
-    ) => CurriedFunction2<C, D, R>) &
-    (<A, B, C, D, R>(
-      (...r: [A, B, C, D]) => R,
-      args: [A, B, C]
-    ) => CurriedFunction1<D, R>) &
+    (<A, B, C, D, R>((...r: [A, B, C, D]) => R, args: [A]) => (B, C, D) => R) &
+    (<A, B, C, D, R>((...r: [A, B, C, D]) => R, args: [A, B]) => (C, D) => R) &
+    (<A, B, C, D, R>((...r: [A, B, C, D]) => R, args: [A, B, C]) => D => R) &
     (<A, B, C, D, R>(
       (...r: [A, B, C, D]) => R,
       args: [A, B, C, D]
@@ -188,19 +173,19 @@ declare module ramda {
     (<A, B, C, D, E, R>(
       (...r: [A, B, C, D, E]) => R,
       args: [A]
-    ) => CurriedFunction4<B, C, D, E, R>) &
+    ) => (B, C, D, E) => R) &
     (<A, B, C, D, E, R>(
       (...r: [A, B, C, D, E]) => R,
       args: [A, B]
-    ) => CurriedFunction3<C, D, E, R>) &
+    ) => (C, D, E) => R) &
     (<A, B, C, D, E, R>(
       (...r: [A, B, C, D, E]) => R,
       args: [A, B, C]
-    ) => CurriedFunction2<D, E, R>) &
+    ) => (D, E) => R) &
     (<A, B, C, D, E, R>(
       (...r: [A, B, C, D, E]) => R,
       args: [A, B, C, D]
-    ) => CurriedFunction1<E, R>) &
+    ) => E => R) &
     (<A, B, C, D, E, R>(
       (...r: [A, B, C, D, E]) => R,
       args: [A, B, C, D, E]
@@ -208,26 +193,122 @@ declare module ramda {
     (<A, B, C, D, E, F, R>(
       (...r: [A, B, C, D, E, F]) => R,
       args: [A]
-    ) => CurriedFunction5<B, C, D, E, F, R>) &
+    ) => (B, C, D, E, F) => R) &
     (<A, B, C, D, E, F, R>(
       (...r: [A, B, C, D, E, F]) => R,
       args: [A, B]
-    ) => CurriedFunction4<C, D, E, F, R>) &
+    ) => (C, D, E, F) => R) &
     (<A, B, C, D, E, F, R>(
       (...r: [A, B, C, D, E, F]) => R,
       args: [A, B, C]
-    ) => CurriedFunction3<D, E, F, R>) &
+    ) => (D, E, F) => R) &
     (<A, B, C, D, E, F, R>(
       (...r: [A, B, C, D, E, F]) => R,
       args: [A, B, C, D]
-    ) => CurriedFunction2<E, F, R>) &
+    ) => (E, F) => R) &
     (<A, B, C, D, E, F, R>(
       (...r: [A, B, C, D, E, F]) => R,
       args: [A, B, C, D, E]
-    ) => CurriedFunction1<F, R>) &
+    ) => F => R) &
     (<A, B, C, D, E, F, R>(
       (...r: [A, B, C, D, E, F]) => R,
       args: [A, B, C, D, E, F]
+    ) => () => R) &
+    (<A, B, C, D, E, F, G, R>(
+      (...r: [A, B, C, D, E, F, G]) => R,
+      args: [A]
+    ) => (B, C, D, E, F, G) => R) &
+    (<A, B, C, D, E, F, G, R>(
+      (...r: [A, B, C, D, E, F, G]) => R,
+      args: [A, B]
+    ) => (C, D, E, F, G) => R) &
+    (<A, B, C, D, E, F, G, R>(
+      (...r: [A, B, C, D, E, F, G]) => R,
+      args: [A, B, C]
+    ) => (D, E, F, G) => R) &
+    (<A, B, C, D, E, F, G, R>(
+      (...r: [A, B, C, D, E, F, G]) => R,
+      args: [A, B, C, D]
+    ) => (E, F, G) => R) &
+    (<A, B, C, D, E, F, G, R>(
+      (...r: [A, B, C, D, E, F, G]) => R,
+      args: [A, B, C, D, E]
+    ) => (F, G) => R) &
+    (<A, B, C, D, E, F, G, R>(
+      (...r: [A, B, C, D, E, F, G]) => R,
+      args: [A, B, C, D, E, F]
+    ) => G => R) &
+    (<A, B, C, D, E, F, G, R>(
+      (...r: [A, B, C, D, E, F, G]) => R,
+      args: [A, B, C, D, E, F, G]
+    ) => () => R) &
+    (<A, B, C, D, E, F, G, H, R>(
+      (...r: [A, B, C, D, E, F, G, H]) => R,
+      args: [A]
+    ) => (B, C, D, E, F, G, H) => R) &
+    (<A, B, C, D, E, F, G, H, R>(
+      (...r: [A, B, C, D, E, F, G, H]) => R,
+      args: [A, B]
+    ) => (C, D, E, F, G, H) => R) &
+    (<A, B, C, D, E, F, G, H, R>(
+      (...r: [A, B, C, D, E, F, G, H]) => R,
+      args: [A, B, C]
+    ) => (D, E, F, G, H) => R) &
+    (<A, B, C, D, E, F, G, H, R>(
+      (...r: [A, B, C, D, E, F, G, H]) => R,
+      args: [A, B, C, D]
+    ) => (E, F, G, H) => R) &
+    (<A, B, C, D, E, F, G, H, R>(
+      (...r: [A, B, C, D, E, F, G, H]) => R,
+      args: [A, B, C, D, E]
+    ) => (F, G, H) => R) &
+    (<A, B, C, D, E, F, G, H, R>(
+      (...r: [A, B, C, D, E, F, G, H]) => R,
+      args: [A, B, C, D, E, F]
+    ) => (G, H) => R) &
+    (<A, B, C, D, E, F, G, H, R>(
+      (...r: [A, B, C, D, E, F, G, H]) => R,
+      args: [A, B, C, D, E, F, G]
+    ) => H => R) &
+    (<A, B, C, D, E, F, G, H, R>(
+      (...r: [A, B, C, D, E, F, G, H]) => R,
+      args: [A, B, C, D, E, F, G, H]
+    ) => () => R) &
+    (<A, B, C, D, E, F, G, H, I, R>(
+      (...r: [A, B, C, D, E, F, G, H, I]) => R,
+      args: [A]
+    ) => (B, C, D, E, F, G, H, I) => R) &
+    (<A, B, C, D, E, F, G, H, I, R>(
+      (...r: [A, B, C, D, E, F, G, H, I]) => R,
+      args: [A, B]
+    ) => (C, D, E, F, G, H, I) => R) &
+    (<A, B, C, D, E, F, G, H, I, R>(
+      (...r: [A, B, C, D, E, F, G, H, I]) => R,
+      args: [A, B, C]
+    ) => (D, E, F, G, H, I) => R) &
+    (<A, B, C, D, E, F, G, H, I, R>(
+      (...r: [A, B, C, D, E, F, G, H, I]) => R,
+      args: [A, B, C, D]
+    ) => (E, F, G, H, I) => R) &
+    (<A, B, C, D, E, F, G, H, I, R>(
+      (...r: [A, B, C, D, E, F, G, H, I]) => R,
+      args: [A, B, C, D, E]
+    ) => (F, G, H, I) => R) &
+    (<A, B, C, D, E, F, G, H, I, R>(
+      (...r: [A, B, C, D, E, F, G, H, I]) => R,
+      args: [A, B, C, D, E, F]
+    ) => (G, H, I) => R) &
+    (<A, B, C, D, E, F, G, H, I, R>(
+      (...r: [A, B, C, D, E, F, G, H, I]) => R,
+      args: [A, B, C, D, E, F, G]
+    ) => (H, I) => R) &
+    (<A, B, C, D, E, F, G, H, I, R>(
+      (...r: [A, B, C, D, E, F, G, H, I]) => R,
+      args: [A, B, C, D, E, F, G, H]
+    ) => I => R) &
+    (<A, B, C, D, E, F, G, H, I, R>(
+      (...r: [A, B, C, D, E, F, G, H, I]) => R,
+      args: [A, B, C, D, E, F, G, H, I]
     ) => () => R);
 
   declare type Pipe = (<A, B, C, D, E, F, G>(
@@ -250,7 +331,6 @@ declare module ramda {
     (<A, B, C, D, E>(
       ab: UnaryFn<A, B>,
       bc: UnaryFn<B, C>,
-      cd: UnaryFn<C, D>,
       de: UnaryFn<D, E>,
       ...rest: Array<void>
     ) => UnaryFn<A, E>) &
@@ -1288,12 +1368,8 @@ declare module ramda {
     src: { [k: string]: T }
   ): { [k: string]: T };
 
-  // TODO: Started failing in v31... (Attempt to fix below)
-  // declare type __UnwrapNestedObjectR<T, U, V: NestedObject<(t: T) => U>> = U
-  // declare type UnwrapNestedObjectR<T> = UnwrapNestedObjectR<*, *, T>
-  //
-  // declare function evolve<R, T: NestedObject<(x:any) => R>>(fn: T, ...rest: Array<void>): (src: NestedObject<any>) => UnwrapNestedObjectR<T>;
-  // declare function evolve<R: NestedObject<(x:any) => R>>(fn: T, src: NestedObject<any>): UnwrapNestedObjectR<T>;
+  declare function evolve<A: Object>(NestedObject<Function>, A): A;
+  declare function evolve<A: Object>(NestedObject<Function>): A => A;
 
   declare function eqProps(
     key: string,
@@ -1823,12 +1899,12 @@ declare module ramda {
   declare function or(x: boolean, y: boolean): boolean;
   declare function or(x: boolean): (y: boolean) => boolean;
 
-  // TODO: pathSatisfies: Started failing in v39...
-  // declare function pathSatisfies<T>(cond: (x: T) => boolean, path: Array<string>, o: NestedObject<T>): boolean;
-  // declare function pathSatisfies<T>(cond: (x: T) => boolean, path: Array<string>, ...rest: Array<void>): (o: NestedObject<T>) => boolean;
-  // declare function pathSatisfies<T>(cond: (x: T) => boolean, ...rest: Array<void>):
-  // ((path: Array<string>, ...rest: Array<void>) => (o: NestedObject<T>) => boolean)
-  // & ((path: Array<string>, o: NestedObject<T>) => boolean)
+  declare var pathSatisfies: CurriedFunction3<
+    UnaryPredicateFn<any>,
+    string[],
+    Object,
+    boolean
+  >;
 
   declare function propSatisfies<T>(
     cond: (x: T) => boolean,
