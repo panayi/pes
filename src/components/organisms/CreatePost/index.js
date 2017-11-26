@@ -1,61 +1,48 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { withState } from 'recompose';
-import { Button } from 'material-ui';
+import { withState, withProps } from 'recompose';
 import { modelConnections, connectData } from 'services/connectData';
 import { actions, selectors } from 'store/post';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import withAnonymousUser from 'components/hocs/withAnonymousUser';
-import PostModal from 'components/molecules/PostModal';
-import PostForm from 'components/molecules/PostForm';
+import { Button } from 'material-ui';
 import { uidSelector } from 'store/auth/selectors';
-
-type Props = {
-  post: Post,
-  filesPath: String,
-  createPost: Function,
-  savePendingPost: Function,
-};
-
-const CreatePost = (props: Props) => {
-  const { post, filesPath, createPost, savePendingPost } = props;
-
-  return (
-    <PostModal
-      openButtonProps={{
-        children: 'Sell your stuff',
-        color: 'contrast',
-      }}
-      actions={
-        <Button onClick={() => createPost(post)}>
-          Post
-        </Button>
-      }
-      ignoreEscapeKeyUp
-    >
-      <PostForm
-        post={post}
-        filesPath={filesPath}
-        onChange={savePendingPost}
-      />
-    </PostModal>
-  );
-};
+import pickProps from 'utils/pickProps';
+import withAnonymousUser from 'components/hocs/withAnonymousUser';
+import Modal from 'components/molecules/Modal';
+import PostForm from 'components/molecules/PostForm';
 
 const mapStateToProps = createStructuredSelector({
   filesPath: selectors.pendingPostImagesPathSelector,
 });
 
-const mapDispatchToProps = {
-  createPost: actions.createPost,
-  savePendingPost: actions.savePendingPost,
-};
-
-export default R.compose(
+const CreatePost = R.compose(
   withAnonymousUser,
   withState('created', 'setCreated', false),
-  connectData({ post: modelConnections.pendingPosts.one(uidSelector) }),
-  connect(mapStateToProps, mapDispatchToProps),
-)(CreatePost);
+  connectData(
+    { post: modelConnections.pendingPosts.one(uidSelector) },
+    mapStateToProps,
+    { savePendingPost: actions.savePendingPost },
+  ),
+  pickProps(['post', 'filesPath', 'onChange']),
+)(PostForm);
+
+CreatePost.showModalButton = R.compose(
+  connectData(
+    { post: modelConnections.pendingPosts.one(uidSelector) },
+    null,
+    { createPost: actions.createPost },
+  ),
+  withProps(({ createPost, post }) => ({
+    modalComponent: CreatePost,
+    modalProps: {
+      actions: [
+        <Button key={0} onClick={() => createPost(post)}>
+          Post
+        </Button>,
+      ],
+    },
+  })),
+)(Modal.showButton);
+
+export default CreatePost;
