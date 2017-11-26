@@ -7,6 +7,7 @@ import { MuiThemeProvider } from 'material-ui/styles';
 import 'normalize.css/normalize.css';
 import createStore from 'store/createStore';
 import theme from 'config/theme';
+import Modal from 'components/molecules/Modal';
 import registerServiceWorker from 'lib/registerServiceWorker';
 import App from './pages';
 
@@ -21,7 +22,10 @@ ReactDOM.render((
         indexName={process.env.REACT_APP_ALGOLIA_POSTS_INDEX_NAME}
       >
         <MuiThemeProvider theme={theme}>
-          <App />
+          <div>
+            <App />
+            <Modal />
+          </div>
         </MuiThemeProvider>
       </InstantSearch>
     </ConnectedRouter>

@@ -1,37 +1,44 @@
 // @flow weak
 import React from 'react';
-import { withStateHandlers } from 'recompose';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from 'material-ui';
+import * as R from 'ramda';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { Dialog, DialogTitle, DialogContent, DialogActions } from 'material-ui';
+import { selectors, actions as modalActions } from 'store/modal';
+import ShowButton from './ShowButton';
+import HideButton from './HideButton';
+
+type ModalProps = {
+  title: String, // eslint-disable-line react/no-unused-prop-types
+  actions: React$Node | Array<React$Node>, // eslint-disable-line react/no-unused-prop-types
+};
 
 type Props = {
-  children: React$Node,
+  content: React$Component<*>,
+  modalProps: ModalProps,
   isOpen: boolean,
-  open: Function,
-  close: Function,
-  modalTitle: String | React$Node,
-  actions: React$Node,
-  openButtonProps: Object,
+  hideModal: Function,
 };
 
 const Modal = (props: Props) => {
-  const { isOpen, open, close, children, modalTitle, actions, openButtonProps,
-    ...otherProps } = props;
+  const { content: Content, modalProps, isOpen, hideModal } = props;
+  const { title, actions, ...passthroughProps } = modalProps;
 
-  const dialog = (
+  return (
     <Dialog
       key="1"
-      {...otherProps}
       open={isOpen}
-      onRequestClose={close}
+      onRequestClose={hideModal}
+      ignoreEscapeKeyUp
     >
       {
-        modalTitle &&
+        title &&
           <DialogTitle>
-            {modalTitle}
+            {title}
           </DialogTitle>
       }
       <DialogContent>
-        {children}
+        {Content && <Content {...passthroughProps} />}
       </DialogContent>
       {
         actions &&
@@ -41,36 +48,25 @@ const Modal = (props: Props) => {
       }
     </Dialog>
   );
-
-  if (openButtonProps) {
-    return [
-      <Button
-        key="0"
-        {...openButtonProps}
-        onClick={open}
-      />,
-      dialog,
-    ];
-  }
-
-  return dialog;
 };
 
 Modal.defaultProps = {
-  defaultOpen: false,
-  buttonProps: {},
+  modalProps: {},
 };
 
-export default withStateHandlers(
-  ({ defaultOpen = false }) => ({
-    isOpen: defaultOpen,
-  }),
-  {
-    open: () => () => ({
-      isOpen: true,
-    }),
-    close: () => () => ({
-      isOpen: false,
-    }),
-  },
+const mapStateToProps = createStructuredSelector({
+  content: selectors.modalComponentSelector,
+  modalProps: selectors.modalPropsSelector,
+  isOpen: selectors.isOpenSelector,
+});
+
+const mapDispatchToProps = {
+  hideModal: modalActions.hideModal,
+};
+
+Modal.showButton = ShowButton;
+Modal.hideButton = HideButton;
+
+export default R.compose(
+  connect(mapStateToProps, mapDispatchToProps),
 )(Modal);
