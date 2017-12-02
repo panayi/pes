@@ -14,14 +14,12 @@ import * as actions from 'store/auth/linkedAccounts/actions';
 import { linkedAccountsSelector } from 'store/auth/linkedAccounts/selectors';
 
 type Props = {
-  getProvider: Function,
   withProvider: String,
   providerLabel: String,
   firebase: Object,
   fetchLinkedAccounts: Function,
   updateProfile: Function,
   disabled: Boolean,
-  linkedAccounts: Array<String>,
 };
 
 export class LinkButton extends Component<Props> {

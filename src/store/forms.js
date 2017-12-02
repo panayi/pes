@@ -1,7 +1,7 @@
 import {
   INITIAL_STATE as PHONE_NUMBER_LOGIN_INITIAL_STATE,
   MODEL_KEY as PHONE_NUMBER_LOGIN_MODEL_KEY,
-} from 'components/smarts/Login/WithPhoneNumber';
+} from 'components/molecules/Login/WithPhoneNumber';
 import { POST_INITIAL_STATE, POST_FORM_MODEL_KEY } from './post/constants';
 
 export default {

@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { replace as _replace } from 'react-router-redux';
@@ -6,17 +6,33 @@ import needsUserWithId from 'components/hocs/needsUserWithId';
 import propsSelector from 'utils/propsSelector';
 import EditPost from 'components/organisms/EditPost';
 
-const EditPostPage = ({ postId, post, replace }) => (
-  <EditPost
-    postId={postId}
-    post={post}
-    modalProps={{
+class EditPostPage extends Component {
+  componentWillMount() {
+    const { post, postId, showModal, replace } = this.props;
+    showModal({
+      post,
+      postId,
+      onSave: this.hideModal,
       onExited: () => replace(`/i/${postId}`),
-    }}
-  />
-);
+    });
+  }
+
+  componentWillUnmount() {
+    this.props.hideModal();
+  }
+
+  hideModal = () => {
+    this.props.hideModal();
+  }
+
+  render() {
+    return null;
+  }
+}
 
 const mapDispatchToProps = {
+  showModal: EditPost.showAction,
+  hideModal: EditPost.hideAction,
   replace: _replace,
 };
 

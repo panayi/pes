@@ -1,12 +1,29 @@
+import { Component } from 'react';
 import * as R from 'ramda';
-import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
-import { routerActions } from 'react-router-redux';
+import { connect } from 'react-redux';
+import connectedAuthWrapper from 'redux-auth-wrapper/connectedAuthWrapper';
 import { isAuthenticatedSelector, isAuthenticatingSelector } from 'store/auth/selectors';
+import LoginModal from 'components/organisms/LoginModal';
 
-export default options => connectedReduxRedirect({
-  redirectPath: '/auth/login',
+export class DisplayLoginModal extends Component {
+  componentWillMount() {
+    this.props.showLoginModal();
+  }
+
+  render() {
+    return null;
+  }
+}
+
+const mapDispatchToProps = {
+  showLoginModal: LoginModal.showAction,
+};
+
+const ConnectedDisplayLoginModal = connect(null, mapDispatchToProps)(DisplayLoginModal);
+
+export default options => connectedAuthWrapper({
   authenticatedSelector: isAuthenticatedSelector,
   authenticatingSelector: isAuthenticatingSelector,
-  redirectAction: routerActions.replace,
+  FailureComponent: ConnectedDisplayLoginModal,
   ...R.defaultTo({}, options),
 });

@@ -13,11 +13,12 @@ describe('[HOC] needsUser', () => {
     hash: '',
   };
 
-  const MyComponent = () => <div>i am a user</div>;
+  const SecretComponent = () => <div>i am a user</div>;
+  const FailureComponent = () => <div>unauthorized</div>;
   const Hoc = needsUser({
-    redirectPath: '/you-cant-see-user',
-  })(MyComponent);
-  const { component, store } = withMockStore(<Hoc location={location} />);
+    FailureComponent,
+  })(SecretComponent);
+  const { component } = withMockStore(<Hoc location={location} />);
 
   it('should render wrappedComponent correctly', () => {
     authSelectors.isAuthenticatedSelector.mockReturnValueOnce(true);
@@ -30,14 +31,14 @@ describe('[HOC] needsUser', () => {
     authSelectors.isAuthenticatedSelector.mockReturnValueOnce(true);
     authSelectors.isAuthenticatingSelector.mockReturnValueOnce(false);
     const wrapper = mount(component);
-    expect(wrapper.find(MyComponent).exists()).toBe(true);
+    expect(wrapper.find(SecretComponent).exists()).toBe(true);
   });
 
-  it('should not render wrappedComponent and redirect, when isAuthenticatedSelector = false', () => {
+  it('should render failureComponent, when isAuthenticatedSelector = false', () => {
     authSelectors.isAuthenticatedSelector.mockReturnValueOnce(false);
     authSelectors.isAuthenticatingSelector.mockReturnValueOnce(false);
     const wrapper = mount(component);
-    expect(wrapper.find(MyComponent).exists()).toBe(false);
-    expect(store.getActions()).toMatchSnapshot();
+    expect(wrapper.find(SecretComponent).exists()).toBe(false);
+    expect(wrapper.find(FailureComponent).exists()).toBe(true);
   });
 });
