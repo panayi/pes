@@ -121,26 +121,26 @@ type Image {
   name: String,
 }
 
-type PostTitle extends String {
+type AdTitle extends String {
   validate() { this.length > 0 && this.length <= 60 }
 }
 
-type PostBody extends String {
+type AdBody extends String {
   validate() { this.length <= 2000 }
 }
 
-type Post {
-  title: PostTitle,
-  body: PostBody,
+type Ad {
+  title: AdTitle,
+  body: AdBody,
   price: Price,
   category: String,
   images: Map<String, Image> | Null
   user: String,
 }
 
-type PendingPost {
-  title: PostTitle | Null,
-  body: PostBody | Null,
+type PendingAd {
+  title: AdTitle | Null,
+  body: AdBody | Null,
   price: Price | Null,
   category: String | Null,
   images: Map<String, Image> | Null
@@ -200,7 +200,7 @@ path /categories is Category[] {
   write() { isAdmin() }
 }
 
-path /posts/{id} is Post {
+path /ads/{id} is Ad {
   read() { true }
 
   // TODO: Temporarily require phone-number auth, until merging-accounts is implemented
@@ -226,7 +226,7 @@ path /users/{uid}/profile is Profile {
   read() { true }
 }
 
-path /pendingPosts/{uid} is PendingPost {
+path /pendingAds/{uid} is PendingAd {
   read() { isCurrentUser(uid) }
   create() { isCurrentUser(uid) }
   update() { isCurrentUser(uid) }

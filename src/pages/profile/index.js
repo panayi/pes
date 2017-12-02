@@ -3,13 +3,13 @@ import needsUser from 'components/hocs/needsUser';
 import Layout from 'components/organisms/Layout';
 import Link from 'components/smarts/Link';
 import ProfileBanner from 'components/organisms/ProfileBanner';
-import MyPosts from 'components/smarts/MyPosts';
+import MyAds from 'components/smarts/MyAds';
 
 export const Profile = () => (
   <Layout>
     <ProfileBanner />
     <Link.Buttons />
-    <MyPosts />
+    <MyAds />
   </Layout>
 );
 

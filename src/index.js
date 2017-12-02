@@ -19,7 +19,7 @@ ReactDOM.render(
       <InstantSearch
         appId={process.env.REACT_APP_ALGOLIA_APP_ID}
         apiKey={process.env.REACT_APP_ALGOLIA_SEARCH_KEY}
-        indexName={process.env.REACT_APP_ALGOLIA_POSTS_INDEX_NAME}
+        indexName={process.env.REACT_APP_ALGOLIA_ADS_INDEX_NAME}
       >
         <MuiThemeProvider theme={theme}>
           <div>

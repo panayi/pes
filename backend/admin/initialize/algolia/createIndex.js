@@ -1,8 +1,8 @@
 import algolia from 'algoliaClient';
 
 export default async () => {
-  const postsIndexName = process.env.REACT_APP_ALGOLIA_POSTS_INDEX_NAME;
-  const index = algolia.initIndex(postsIndexName);
+  const adsIndexName = process.env.REACT_APP_ALGOLIA_ADS_INDEX_NAME;
+  const index = algolia.initIndex(adsIndexName);
 
   await index.setSettings({
     searchableAttributes: ['title', 'body'],
@@ -20,5 +20,5 @@ export default async () => {
     ],
   });
 
-  return [`Created ${postsIndexName} index`];
+  return [`Created ${adsIndexName} index`];
 };

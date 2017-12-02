@@ -5,7 +5,7 @@ declare type Category = {
   categories: Array<Category>,
 };
 
-declare type Post = {
+declare type Ad = {
   address: string,
   body: string,
   category: string,
@@ -15,7 +15,7 @@ declare type Post = {
   oldId: string,
   permalink: string,
   phone: string,
-  posterId: string,
+  user: string,
   title: string,
   price: number,
 };

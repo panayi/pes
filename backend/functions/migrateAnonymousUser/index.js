@@ -11,11 +11,11 @@ const migrateAnonymousUser = async event => {
     return;
   }
 
-  const oldRef = database.ref(`/pendingPosts/${anonymousUserId}`);
-  const newRef = database.ref(`/pendingPosts/${uid}`);
+  const oldRef = database.ref(`/pendingAds/${anonymousUserId}`);
+  const newRef = database.ref(`/pendingAds/${uid}`);
 
   const snapshot = await database
-    .ref(`/pendingPosts/${anonymousUserId}`)
+    .ref(`/pendingAds/${anonymousUserId}`)
     .once('value');
   await newRef.set(snapshot.val());
   await oldRef.remove();

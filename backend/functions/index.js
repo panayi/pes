@@ -1,7 +1,7 @@
-import algoliaPost from './algolia/post';
-import syncPost from './syncPost';
+import algoliaAd from './algolia/ad';
+import syncAd from './syncAd';
 import migrateAnonymousUser from './migrateAnonymousUser';
 
-exports.algoliaPost = algoliaPost;
-exports.syncPost = syncPost;
+exports.algoliaAd = algoliaAd;
+exports.syncAd = syncAd;
 exports.migrateAnonymousUser = migrateAnonymousUser;

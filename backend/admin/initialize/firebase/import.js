@@ -1,31 +1,31 @@
 import * as R from 'ramda';
 import fetch from 'node-fetch';
 import log from 'helpers/log';
-import importPost from 'legacy/importPost';
-import { POSTS_ENDPOINT } from 'legacy/urls';
+import importAd from 'legacy/importAd';
+import { ADS_ENDPOINT } from 'legacy/urls';
 import { database } from '../../lib/firebaseClient';
 
-const sequentialImportPost = async (index, posts) => {
-  const post = posts[index];
-  await importPost(post, database);
-  log.info(`Firebase: Synced ${post.categoryParent} post with id = ${post.id}`);
+const sequentialImportAd = async (index, ads) => {
+  const ad = ads[index];
+  await importAd(ad, database);
+  log.info(`Firebase: Synced ${ad.categoryParent} ad with id = ${ad.id}`);
 
-  if (R.isNil(posts[index + 1])) {
+  if (R.isNil(ads[index + 1])) {
     return Promise.resolve();
   }
 
-  return sequentialImportPost(index + 1, posts);
+  return sequentialImportAd(index + 1, ads);
 };
 
-const importPosts = async () => {
-  const response = await fetch(POSTS_ENDPOINT);
-  const posts = await response.json();
-  await sequentialImportPost(0, posts);
+const importAds = async () => {
+  const response = await fetch(ADS_ENDPOINT);
+  const ads = await response.json();
+  await sequentialImportAd(0, ads);
 
-  return R.compose(R.length, R.values)(posts);
+  return R.compose(R.length, R.values)(ads);
 };
 
 export default async () => {
-  const numberOfPosts = await importPosts();
-  return `Synced ${numberOfPosts} posts`;
+  const numberOfAds = await importAds();
+  return `Synced ${numberOfAds} ads`;
 };

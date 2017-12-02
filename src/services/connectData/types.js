@@ -1,11 +1,11 @@
 export const CATEGORIES = 'categories';
 export const USERS = 'users';
-export const POSTS = 'posts';
-export const PENDING_POSTS = 'pendingPosts';
+export const ADS = 'ads';
+export const PENDING_ADS = 'pendingAds';
 
 export default {
   categories: CATEGORIES,
   users: USERS,
-  posts: POSTS,
-  pendingPosts: PENDING_POSTS,
+  ads: ADS,
+  pendingAds: PENDING_ADS,
 };

@@ -9,7 +9,7 @@ import Page from 'components/molecules/Page';
 import { modelConnections, connectData } from 'services/connectData';
 import Sidebar, { type LinkType } from 'components/organisms/Sidebar';
 import Layout from 'components/organisms/Layout';
-import Posts from './posts';
+import Ads from './ads';
 
 type Props = {
   categoryLinks: Array<LinkType>,
@@ -19,7 +19,7 @@ const Home = ({ categoryLinks }: Props) => (
   <Layout>
     <Sidebar links={categoryLinks} />
     <Page>
-      <Route path="/:categoryName?" component={Posts} />
+      <Route path="/:categoryName?" component={Ads} />
     </Page>
   </Layout>
 );

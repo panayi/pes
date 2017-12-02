@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import algolia from 'algoliaClient';
-import serializePost from 'helpers/serializePostToAlgolia';
+import serializeAd from 'helpers/serializeAdToAlgolia';
 import { database } from '../../lib/firebaseClient';
 
 export const canInitialize = async () => {
@@ -17,7 +17,7 @@ export const canInitialize = async () => {
   return true;
 };
 
-const initialImportPosts = async (dataSnapshot, index) => {
+const initialImportAds = async (dataSnapshot, index) => {
   // Array of data to index
   const objectsToIndex = [];
 
@@ -31,7 +31,7 @@ const initialImportPosts = async (dataSnapshot, index) => {
     childData.objectID = childKey;
 
     // Add object for indexing
-    objectsToIndex.push(serializePost(childData));
+    objectsToIndex.push(serializeAd(childData));
   });
 
   // Add or update new objects
@@ -41,12 +41,10 @@ const initialImportPosts = async (dataSnapshot, index) => {
 };
 
 export default async () => {
-  const index = algolia.initIndex(
-    process.env.REACT_APP_ALGOLIA_POSTS_INDEX_NAME,
-  );
+  const index = algolia.initIndex(process.env.REACT_APP_ALGOLIA_ADS_INDEX_NAME);
 
-  const dataSnapshot = await database.ref('/posts').once('value');
-  const posts = await initialImportPosts(dataSnapshot, index);
+  const dataSnapshot = await database.ref('/ads').once('value');
+  const ads = await initialImportAds(dataSnapshot, index);
 
-  return [`Imported ${posts.length} posts`];
+  return [`Imported ${ads.length} ads`];
 };

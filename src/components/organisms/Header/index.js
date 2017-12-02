@@ -8,7 +8,7 @@ import logoutHoc from 'components/hocs/logout/logout';
 import Link from 'components/molecules/Link';
 import ProfileImage from 'components/molecules/ProfileImage';
 import SearchInput from 'components/molecules/SearchInput';
-import CreatePost from 'components/organisms/CreatePost';
+import CreateAd from 'components/organisms/CreateAd';
 import LoginModal from 'components/organisms/LoginModal';
 
 const LoginModalButton = hideUser(LoginModal.showButton);
@@ -50,9 +50,9 @@ const Header = ({ classes }) => (
         <div className={classes.searchInput}>
           <SearchInput />
         </div>
-        <CreatePost.showButton color="contrast">
+        <CreateAd.showButton color="contrast">
           Sell your stuff
-        </CreatePost.showButton>
+        </CreateAd.showButton>
         <LoginModalButton color="contrast">Login</LoginModalButton>
         <LogoutLink color="contrast">Logout</LogoutLink>
         <ProfileLink to="/profile" color="contrast">
