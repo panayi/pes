@@ -73,6 +73,7 @@
     "selenium-standalone": "^6.9.0"
   },
   "scripts": {
+    "precommit": "lint-staged",
     "start:ui": "cross-env NODE_PATH=src/ react-scripts start",
     "start:functions": "npm run build:functions && npm run firebase serve -- --only functions",
     "start": "run-p start:ui start:functions",
@@ -98,6 +99,12 @@
     "flow": "flow",
     "generate": "./node_modules/redux-cli/bin/redux.js generate",
     "eject": "react-scripts eject"
+  },
+  "lint-staged": {
+    "./**/*.{js,jsx}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
   },
   "pre-push": [
     "lint"
