@@ -101,8 +101,8 @@
     "eject": "react-scripts eject"
   },
   "lint-staged": {
-    "./**/*.{js,jsx}": [
-      "prettier --single-quote --write",
+    "{backend,src,stories,test}/**/*.{js,jsx}": [
+      "prettier --write",
       "git add"
     ]
   },
