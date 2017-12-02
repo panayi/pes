@@ -1,0 +1,218 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login LoginWithFacebook should render correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "firebase": Object {
+        "INTERNAL": Object {
+          "ErrorFactory": [Function],
+          "Promise": [Function],
+          "createFirebaseNamespace": [Function],
+          "createSubscribe": [Function],
+          "deepExtend": [Function],
+          "extendNamespace": [Function],
+          "factories": Object {
+            "auth": [Function],
+            "database": [Function],
+          },
+          "node": Object {
+            "XMLHttpRequest": [Function],
+            "localStorage": Storage {},
+            "sessionStorage": Storage {},
+          },
+          "registerService": [Function],
+          "removeApp": [Function],
+          "useAsService": [Function],
+        },
+        "Promise": [Function],
+        "SDK_VERSION": "4.6.1",
+        "User": [Function],
+        "_": Object {
+          "authUid": null,
+          "config": Object {
+            "apiKey": "asdf",
+            "authDomain": "asdf",
+            "databaseURL": "ws://127.0.1:5000",
+            "enableRedirectHandling": false,
+            "messagingSenderId": "asdf",
+            "storageBucket": "asdf",
+            "userProfile": "users",
+          },
+          "watchers": Object {},
+        },
+        "__esModule": true,
+        "app": [Function],
+        "apps": Array [],
+        "auth": [Function],
+        "database": [Function],
+        "default": [Circular],
+        "initializeApp": [Function],
+      },
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <Wrapper>
+    <withContext(Component)>
+      <Component>
+        <getContext(withProps(withStyles(Button)))>
+          <withProps(withStyles(Button))
+            login={[Function]}
+          >
+            <withStyles(Button)
+              login={[Function]}
+              name="facebook"
+              onClick={[Function]}
+            >
+              <Button
+                classes={
+                  Object {
+                    ".MuiButton-fab-14:active": "MuiButton-fab-14:active",
+                    ".MuiButton-flatAccent-5:hover": "MuiButton-flatAccent-5:hover",
+                    ".MuiButton-flatContrast-6:hover": "MuiButton-flatContrast-6:hover",
+                    ".MuiButton-flatPrimary-4:hover": "MuiButton-flatPrimary-4:hover",
+                    ".MuiButton-raised-8.MuiButton-disabled-13": "MuiButton-raised-8.MuiButton-disabled-13",
+                    ".MuiButton-raised-8.MuiButton-keyboardFocused-9": "MuiButton-raised-8.MuiButton-keyboardFocused-9",
+                    ".MuiButton-raised-8:active": "MuiButton-raised-8:active",
+                    ".MuiButton-raised-8:hover": "MuiButton-raised-8:hover",
+                    ".MuiButton-raised-8:hover.MuiButton-disabled-13": "MuiButton-raised-8:hover.MuiButton-disabled-13",
+                    ".MuiButton-raisedAccent-11:hover": "MuiButton-raisedAccent-11:hover",
+                    ".MuiButton-raisedPrimary-10:hover": "MuiButton-raisedPrimary-10:hover",
+                    ".MuiButton-root-1:hover": "MuiButton-root-1:hover",
+                    ".MuiButton-root-1:hover.MuiButton-disabled-13": "MuiButton-root-1:hover.MuiButton-disabled-13",
+                    "colorInherit": "MuiButton-colorInherit-7",
+                    "dense": "MuiButton-dense-2",
+                    "disabled": "MuiButton-disabled-13",
+                    "fab": "MuiButton-fab-14",
+                    "flatAccent": "MuiButton-flatAccent-5",
+                    "flatContrast": "MuiButton-flatContrast-6",
+                    "flatPrimary": "MuiButton-flatPrimary-4",
+                    "keyboardFocused": "MuiButton-keyboardFocused-9",
+                    "label": "MuiButton-label-3",
+                    "raised": "MuiButton-raised-8",
+                    "raisedAccent": "MuiButton-raisedAccent-11",
+                    "raisedContrast": "MuiButton-raisedContrast-12",
+                    "raisedPrimary": "MuiButton-raisedPrimary-10",
+                    "root": "MuiButton-root-1",
+                  }
+                }
+                color="default"
+                dense={false}
+                disableFocusRipple={false}
+                disableRipple={false}
+                disabled={false}
+                fab={false}
+                login={[Function]}
+                name="facebook"
+                onClick={[Function]}
+                raised={false}
+                type="button"
+              >
+                <withStyles(ButtonBase)
+                  className="MuiButton-root-1"
+                  disableRipple={false}
+                  disabled={false}
+                  focusRipple={true}
+                  keyboardFocusedClassName="MuiButton-keyboardFocused-9"
+                  login={[Function]}
+                  name="facebook"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <ButtonBase
+                    centerRipple={false}
+                    className="MuiButton-root-1"
+                    classes={
+                      Object {
+                        ".MuiButtonBase-root-15::-moz-focus-inner": "MuiButtonBase-root-15::-moz-focus-inner",
+                        "disabled": "MuiButtonBase-disabled-16",
+                        "root": "MuiButtonBase-root-15",
+                      }
+                    }
+                    disableRipple={false}
+                    disabled={false}
+                    focusRipple={true}
+                    keyboardFocusedClassName="MuiButton-keyboardFocused-9"
+                    login={[Function]}
+                    name="facebook"
+                    onClick={[Function]}
+                    tabIndex={0}
+                    type="button"
+                  >
+                    <button
+                      className="MuiButtonBase-root-15 MuiButton-root-1"
+                      disabled={false}
+                      login={[Function]}
+                      name="facebook"
+                      onBlur={[Function]}
+                      onClick={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      onKeyUp={[Function]}
+                      onMouseDown={[Function]}
+                      onMouseLeave={[Function]}
+                      onMouseUp={[Function]}
+                      onTouchEnd={[Function]}
+                      onTouchMove={[Function]}
+                      onTouchStart={[Function]}
+                      role="button"
+                      tabIndex={0}
+                      type="button"
+                    >
+                      <span
+                        className="MuiButton-label-3"
+                      >
+                        Sign in with Facebook
+                      </span>
+                      <withStyles(TouchRipple)
+                        center={false}
+                        innerRef={[Function]}
+                      >
+                        <TouchRipple
+                          center={false}
+                          classes={
+                            Object {
+                              "0%": "%",
+                              "100%": "00%",
+                              "50%": "0%",
+                              "ripple": "MuiTouchRipple-ripple-21",
+                              "rippleFast": "MuiTouchRipple-rippleFast-23",
+                              "rippleVisible": "MuiTouchRipple-rippleVisible-22",
+                              "root": "MuiTouchRipple-root-17",
+                              "wrapper": "MuiTouchRipple-wrapper-18",
+                              "wrapperLeaving": "MuiTouchRipple-wrapperLeaving-19",
+                              "wrapperPulsating": "MuiTouchRipple-wrapperPulsating-20",
+                            }
+                          }
+                        >
+                          <TransitionGroup
+                            childFactory={[Function]}
+                            className="MuiTouchRipple-root-17"
+                            component="span"
+                            enter={true}
+                            exit={true}
+                          >
+                            <span
+                              className="MuiTouchRipple-root-17"
+                            />
+                          </TransitionGroup>
+                        </TouchRipple>
+                      </withStyles(TouchRipple)>
+                    </button>
+                  </ButtonBase>
+                </withStyles(ButtonBase)>
+              </Button>
+            </withStyles(Button)>
+          </withProps(withStyles(Button))>
+        </getContext(withProps(withStyles(Button)))>
+      </Component>
+    </withContext(Component)>
+  </Wrapper>
+</Provider>
+`;

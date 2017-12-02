@@ -7,7 +7,7 @@ import { MuiThemeProvider } from 'material-ui/styles';
 import 'normalize.css/normalize.css';
 import createStore from 'store/createStore';
 import theme from 'config/theme';
-import Modal from 'components/molecules/Modal';
+import ModalProvider from 'components/molecules/ModalProvider';
 import registerServiceWorker from 'lib/registerServiceWorker';
 import App from './pages';
 
@@ -24,7 +24,7 @@ ReactDOM.render((
         <MuiThemeProvider theme={theme}>
           <div>
             <App />
-            <Modal />
+            <ModalProvider />
           </div>
         </MuiThemeProvider>
       </InstantSearch>

@@ -2,15 +2,16 @@ import React from 'react';
 import * as R from 'ramda';
 import { AppBar, Toolbar } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import CreatePost from 'components/organisms/CreatePost';
-import Link from 'components/molecules/Link';
-import ProfileImage from 'components/molecules/ProfileImage';
 import hideUser from 'components/hocs/hideUser';
 import hideVisitor from 'components/hocs/hideVisitor';
 import logoutHoc from 'components/hocs/logout/logout';
+import Link from 'components/molecules/Link';
+import ProfileImage from 'components/molecules/ProfileImage';
 import SearchInput from 'components/molecules/SearchInput';
+import CreatePost from 'components/organisms/CreatePost';
+import LoginModal from 'components/organisms/LoginModal';
 
-const LoginLink = hideUser(Link);
+const LoginModalButton = hideUser(LoginModal.showButton);
 
 const ProfileLink = hideVisitor(Link);
 
@@ -56,18 +57,14 @@ const Header = ({ classes }) => (
         <div className={classes.searchInput}>
           <SearchInput />
         </div>
-        <CreatePost.showModalButton
+        <CreatePost.showButton
           color="contrast"
         >
           Sell your stuff
-        </CreatePost.showModalButton>
-        <LoginLink
-          to="/auth/login"
-          exact
-          color="contrast"
-        >
+        </CreatePost.showButton>
+        <LoginModalButton color="contrast">
           Login
-        </LoginLink>
+        </LoginModalButton>
         <LogoutLink color="contrast">
           Logout
         </LogoutLink>

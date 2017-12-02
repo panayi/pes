@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import { actions } from 'react-redux-form';
 import { updateProfile } from 'store/auth/actions';
+import { actions as anonymousUserIdActions } from '../anonymousUserId';
 import * as types from './types';
 import * as selectors from './selectors';
 import { type PhoneNumberValues, type CodeValues } from './flowtypes';
@@ -38,6 +39,7 @@ export const submitPhoneNumberForm = (values: PhoneNumberValues, recaptcha: Obje
       .signInWithPhoneNumber(phoneNumber, recaptcha.verifier)
       .then((result) => {
         dispatch(sendSmsSuccess(result));
+        dispatch(anonymousUserIdActions.maybeSetAnonymousUserId());
       })
       .catch((error) => {
         dispatch(sendSmsFail(error));

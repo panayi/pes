@@ -1,23 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`[HOC] needsUser should not render wrappedComponent and redirect, when isAuthenticatedSelector = false 1`] = `
-Array [
-  Object {
-    "payload": Object {
-      "args": Array [
-        Object {
-          "hash": null,
-          "pathname": "/you-cant-see-user",
-          "search": "redirect=%2Fsome-user-protected-url",
-        },
-      ],
-      "method": "replace",
-    },
-    "type": "@@router/CALL_HISTORY_METHOD",
-  },
-]
-`;
-
 exports[`[HOC] needsUser should render wrappedComponent correctly 1`] = `
 <Provider
   store={
@@ -46,7 +28,7 @@ exports[`[HOC] needsUser should render wrappedComponent correctly 1`] = `
           "useAsService": [Function],
         },
         "Promise": [Function],
-        "SDK_VERSION": "4.5.0",
+        "SDK_VERSION": "4.6.1",
         "User": [Function],
         "_": Object {
           "authUid": null,
@@ -76,7 +58,7 @@ exports[`[HOC] needsUser should render wrappedComponent correctly 1`] = `
     }
   }
 >
-  <Connect(AuthWrapper(MyComponent))
+  <Connect(AuthWrapper(SecretComponent))
     location={
       Object {
         "hash": "",
@@ -85,7 +67,7 @@ exports[`[HOC] needsUser should render wrappedComponent correctly 1`] = `
       }
     }
   >
-    <AuthWrapper(MyComponent)
+    <AuthWrapper(SecretComponent)
       dispatch={[Function]}
       isAuthenticated={true}
       isAuthenticating={false}
@@ -96,9 +78,8 @@ exports[`[HOC] needsUser should render wrappedComponent correctly 1`] = `
           "search": "",
         }
       }
-      redirectPath="/you-cant-see-user"
     >
-      <MyComponent
+      <SecretComponent
         dispatch={[Function]}
         isAuthenticated={true}
         isAuthenticating={false}
@@ -109,13 +90,12 @@ exports[`[HOC] needsUser should render wrappedComponent correctly 1`] = `
             "search": "",
           }
         }
-        redirectPath="/you-cant-see-user"
       >
         <div>
           i am a user
         </div>
-      </MyComponent>
-    </AuthWrapper(MyComponent)>
-  </Connect(AuthWrapper(MyComponent))>
+      </SecretComponent>
+    </AuthWrapper(SecretComponent)>
+  </Connect(AuthWrapper(SecretComponent))>
 </Provider>
 `;
