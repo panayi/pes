@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Taken from: https://gist.github.com/acdlite/a68433004f9d6b4cbc83b5cc3990c194
-export default getComponent => (
+export default getComponent =>
   class AsyncComponent extends React.Component {
     static Component = null;
 
@@ -27,5 +27,4 @@ export default getComponent => (
 
       return null;
     }
-  }
-);
+  };

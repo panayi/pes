@@ -22,10 +22,7 @@ const importPosts = async () => {
   const posts = await response.json();
   await sequentialImportPost(0, posts);
 
-  return R.compose(
-    R.length,
-    R.values,
-  )(posts);
+  return R.compose(R.length, R.values)(posts);
 };
 
 export default async () => {

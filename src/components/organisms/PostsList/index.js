@@ -43,7 +43,7 @@ export class PostsList extends Component<Props> {
     }
   }
 
-  masonry: ?Object
+  masonry: ?Object;
 
   render() {
     const { hits, hasMore, loadMore, sizes, classes } = this.props;
@@ -51,42 +51,32 @@ export class PostsList extends Component<Props> {
     return (
       <div>
         <Masonry
-          ref={(instance) => { this.masonry = instance; }}
+          ref={instance => {
+            this.masonry = instance;
+          }}
           hasMore={hasMore}
           loadMore={loadMore}
           sizes={sizes}
           loader={
-            <Grid
-              container
-              justify="center"
-              className={classes.vspacing}
-            >
+            <Grid container justify="center" className={classes.vspacing}>
               <Spinner spinnerColor={theme.palette.primary.A200} />
             </Grid>
           }
         >
-          {
-            R.map(post => (
-              <PostCard
-                key={post.objectID}
-                post={post}
-                width={COLUMN_WIDTH}
-              />
-            ), hits)
-          }
+          {R.map(
+            post => (
+              <PostCard key={post.objectID} post={post} width={COLUMN_WIDTH} />
+            ),
+            hits,
+          )}
         </Masonry>
-        {
-          !hasMore &&
-            <Grid
-              container
-              justify="center"
-              className={classes.vspacing}
-            >
-              <Typography type="subheading" color="secondary">
-                End of results
-              </Typography>
-            </Grid>
-        }
+        {!hasMore && (
+          <Grid container justify="center" className={classes.vspacing}>
+            <Typography type="subheading" color="secondary">
+              End of results
+            </Typography>
+          </Grid>
+        )}
       </div>
     );
   }
@@ -98,7 +88,7 @@ export default R.compose(
       columnWidth: COLUMN_WIDTH,
       gutter: GUTTER,
       maxScreenWidth: 5000,
-      wastedWidth: theme.custom.sidebarWidth + (2 * GUTTER),
+      wastedWidth: theme.custom.sidebarWidth + 2 * GUTTER,
     }),
   }),
   withStyles(styles),

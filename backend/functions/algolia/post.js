@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 import algolia from 'algoliaClient';
 import serializePost from 'helpers/serializePostToAlgolia';
 
-const addOrUpdateIndexRecord = (event) => {
+const addOrUpdateIndexRecord = event => {
   const index = algolia.initIndex('posts');
 
   // Get Firebase object
@@ -12,7 +12,7 @@ const addOrUpdateIndexRecord = (event) => {
   firebaseObject.objectID = event.params.postId;
 
   // Add or update object
-  index.saveObject(serializePost(firebaseObject), (err) => {
+  index.saveObject(serializePost(firebaseObject), err => {
     if (err) {
       throw err;
     }
@@ -21,14 +21,14 @@ const addOrUpdateIndexRecord = (event) => {
   });
 };
 
-const deleteIndexRecord = (event) => {
+const deleteIndexRecord = event => {
   const index = algolia.initIndex('posts');
 
   // Get Algolia's objectID from the Firebase object key
   const objectID = event.params.postId;
 
   // Remove the object from Algolia
-  index.deleteObject(objectID, (err) => {
+  index.deleteObject(objectID, err => {
     if (err) {
       console.error(err);
     } else {
@@ -37,7 +37,7 @@ const deleteIndexRecord = (event) => {
   });
 };
 
-export default functions.database.ref('/posts/{postId}').onWrite((event) => {
+export default functions.database.ref('/posts/{postId}').onWrite(event => {
   if (!event.data.exists()) {
     deleteIndexRecord(event);
   } else {

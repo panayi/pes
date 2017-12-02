@@ -16,10 +16,9 @@ const FETCH_FAILED = 'fetchFailed';
 // ------------------------------------
 const getPostPath = post => `/posts/${post.id}`;
 
-const computedProp = R.curry((key, computer, obj) => R.converge(R.assoc(key), [
-  computer,
-  R.identity,
-])(obj));
+const computedProp = R.curry((key, computer, obj) =>
+  R.converge(R.assoc(key), [computer, R.identity])(obj),
+);
 
 // Transform old post attributes (MySQL DB) to new post attributes
 const transformPost = R.compose(
@@ -39,43 +38,49 @@ const transformPost = R.compose(
     'title',
     'price',
   ]),
-  computedProp('images', R.compose(
-    R.ifElse(
-      R.is(String),
-      R.compose(
-        R.map(file => `http://cdn.pesposa.com/data/images/${file}`),
-        R.split(';'),
+  computedProp(
+    'images',
+    R.compose(
+      R.ifElse(
+        R.is(String),
+        R.compose(
+          R.map(file => `http://cdn.pesposa.com/data/images/${file}`),
+          R.split(';'),
+        ),
+        R.always([]),
       ),
-      R.always([]),
+      R.prop('images'),
     ),
-    R.prop('images'),
-  )),
+  ),
   computedProp('id', ({ id, categoryParent }) => `${categoryParent}-${id}`),
-  computedProp('oldPosterId', R.compose(
-    R.head,
-    R.split(' '),
-    R.trim,
-    R.defaultTo(''),
-    R.prop('user'),
-  )),
-  computedProp('address', R.compose(
-    R.join(' '),
-    R.filter(R.identity),
-    ({ level4, level3 }) => ([level4, level3]),
-  )),
+  computedProp(
+    'oldPosterId',
+    R.compose(R.head, R.split(' '), R.trim, R.defaultTo(''), R.prop('user')),
+  ),
+  computedProp(
+    'address',
+    R.compose(R.join(' '), R.filter(R.identity), ({ level4, level3 }) => [
+      level4,
+      level3,
+    ]),
+  ),
   computedProp('body', R.prop('description')),
   computedProp('category', R.prop('categoryParent')),
-  computedProp('createdAt', R.compose(
-    insertDate => (new Date(insertDate)).getTime(),
-    R.prop('insertDate'),
-  )),
+  computedProp(
+    'createdAt',
+    R.compose(
+      insertDate => new Date(insertDate).getTime(),
+      R.prop('insertDate'),
+    ),
+  ),
 );
 
-const getFileUrl = (path, token) => (
-  `https://firebasestorage.googleapis.com/v0/b/${constants.BUCKET}/o/${encodeURIComponent(path)}?alt=media&token=${token}`
-);
+const getFileUrl = (path, token) =>
+  `https://firebasestorage.googleapis.com/v0/b/${
+    constants.BUCKET
+  }/o/${encodeURIComponent(path)}?alt=media&token=${token}`;
 
-const uploadImage = async (buffer, filename, contentType, dbPath, database) => (
+const uploadImage = async (buffer, filename, contentType, dbPath, database) =>
   new Promise((resolve, reject) => {
     const path = `${constants.IMAGES_PATH}/${generateId()}/${filename}`;
     const file = storage.file(path);
@@ -105,8 +110,7 @@ const uploadImage = async (buffer, filename, contentType, dbPath, database) => (
       resolve();
     });
     stream.end(buffer);
-  })
-);
+  });
 
 const sequentialImportImage = async (index, images, postPath, database) => {
   const image = images[index];
@@ -121,7 +125,13 @@ const sequentialImportImage = async (index, images, postPath, database) => {
     const buffer = await response.buffer();
     const filename = image.split('/').pop();
 
-    await uploadImage(buffer, filename, contentType, `${postPath}/images`, database);
+    await uploadImage(
+      buffer,
+      filename,
+      contentType,
+      `${postPath}/images`,
+      database,
+    );
   } catch (error) {
     if (R.equals(error.message, FETCH_FAILED)) {
       log.error(`Failed to fetch ${image}`);

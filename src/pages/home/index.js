@@ -19,20 +19,13 @@ const Home = ({ categoryLinks }: Props) => (
   <Layout>
     <Sidebar links={categoryLinks} />
     <Page>
-      <Route
-        path="/:categoryName?"
-        component={Posts}
-      />
+      <Route path="/:categoryName?" component={Posts} />
     </Page>
   </Layout>
 );
 
 const categoryLinksSelector = createSelector(
-  R.compose(
-    R.values,
-    R.propOr({}, 'categories'),
-    propsSelector,
-  ),
+  R.compose(R.values, R.propOr({}, 'categories'), propsSelector),
   R.map(({ name }) => ({
     label: name,
     to: `/${name}`,
@@ -41,7 +34,9 @@ const categoryLinksSelector = createSelector(
 
 export default R.compose(
   connectData({ categories: modelConnections.categories.all }),
-  withProps(createStructuredSelector({
-    categoryLinks: categoryLinksSelector,
-  })),
+  withProps(
+    createStructuredSelector({
+      categoryLinks: categoryLinksSelector,
+    }),
+  ),
 )(Home);

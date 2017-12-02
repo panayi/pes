@@ -1,8 +1,8 @@
 const loginCommands = {
   isLoggedIn() {
-    return this
-      .waitForElementVisible('body')
-      .waitForElementVisible('@profileButton');
+    return this.waitForElementVisible('body').waitForElementVisible(
+      '@profileButton',
+    );
   },
 };
 

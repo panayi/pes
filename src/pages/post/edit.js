@@ -23,7 +23,7 @@ class EditPostPage extends Component {
 
   hideModal = () => {
     this.props.hideModal();
-  }
+  };
 
   render() {
     return null;
@@ -40,9 +40,6 @@ export default R.compose(
   connect(null, mapDispatchToProps),
   needsUserWithId({
     redirectPath: (state, { postId }) => `/i/${postId}`,
-    userSelector: R.compose(
-      R.path(['post', 'user']),
-      propsSelector,
-    ),
+    userSelector: R.compose(R.path(['post', 'user']), propsSelector),
   }),
 )(EditPostPage);

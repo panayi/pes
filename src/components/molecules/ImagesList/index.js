@@ -28,18 +28,15 @@ const styles = theme => ({
 
 const ImagesList = ({ images, classes, ...gridListProps }: Props) => (
   <div className={classes.root}>
-    <GridList
-      className={classes.gridList}
-      {...gridListProps}
-    >
-      {R.map(({ src, title }) => (
-        <GridListTile key={src}>
-          <img
-            src={src}
-            alt={title}
-          />
-        </GridListTile>
-      ), images)}
+    <GridList className={classes.gridList} {...gridListProps}>
+      {R.map(
+        ({ src, title }) => (
+          <GridListTile key={src}>
+            <img src={src} alt={title} />
+          </GridListTile>
+        ),
+        images,
+      )}
     </GridList>
   </div>
 );

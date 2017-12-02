@@ -4,7 +4,4 @@ import * as selectors from './selectors';
 
 export default reducer;
 
-export {
-  actions,
-  selectors,
-};
+export { actions, selectors };

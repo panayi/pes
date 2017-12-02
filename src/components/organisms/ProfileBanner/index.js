@@ -10,10 +10,7 @@ export const ProfileBanner = () => (
       alt="Profile background"
     />
     <ProfileImage.Avatar />
-    <UserFullName
-      mt={2}
-      color="white"
-    />
+    <UserFullName mt={2} color="white" />
   </div>
 );
 

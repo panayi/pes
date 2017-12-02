@@ -25,40 +25,31 @@ export class EditPostImages extends Component<Props> {
   handleDrop = (files: FileList) => {
     const { postImagesDbPath, uploadImages, setIsLoading } = this.props;
     setIsLoading(true);
-    uploadImages(files, postImagesDbPath)
-      .then(() => setIsLoading(false));
-  }
-
-  handleDropRejected() { // eslint-disable-line
-    alert('Upload Rejected'); // eslint-disable-line
-  }
+    uploadImages(files, postImagesDbPath).then(() => setIsLoading(false));
+  };
 
   render() {
     const { images, isLoading, canUploadImage } = this.props;
 
     return (
-      <GridList
-        cellHeight={87}
-        cols={constants.MAXIMUM_IMAGES_PER_POST}
-      >
-        {R.map(image => (
-          <GridListTile key={image.fullPath}>
-            <img
-              src={image.downloadURL}
-              alt={image.fullPath}
-            />
-          </GridListTile>
-        ), images)}
-        {
-          canUploadImage &&
-            <GridListTile
-              component={Dropzone}
-              acceptedFileTypes={fileTypes.IMAGE}
-              onDrop={this.handleDrop}
-              isLoading={isLoading}
-              multiple
-            />
-        }
+      <GridList cellHeight={87} cols={constants.MAXIMUM_IMAGES_PER_POST}>
+        {R.map(
+          image => (
+            <GridListTile key={image.fullPath}>
+              <img src={image.downloadURL} alt={image.fullPath} />
+            </GridListTile>
+          ),
+          images,
+        )}
+        {canUploadImage && (
+          <GridListTile
+            component={Dropzone}
+            acceptedFileTypes={fileTypes.IMAGE}
+            onDrop={this.handleDrop}
+            isLoading={isLoading}
+            multiple
+          />
+        )}
       </GridList>
     );
   }

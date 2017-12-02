@@ -20,47 +20,57 @@ export const initializeForm = (post: ?Post) => (dispatch: Dispatch) => {
   dispatch(formActions.load(POST_FORM_MODEL_PATH, initialState));
 };
 
-export const savePendingPost = (post: Post | {}) =>
-  (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
-    const uid = uidSelector(getState());
-    return getFirebase().update(`${PENDING_POSTS}/${uid}`, serializePost(post));
-  };
+export const savePendingPost = (post: Post | {}) => (
+  dispatch: Dispatch,
+  getState: Function,
+  getFirebase: Function,
+) => {
+  const uid = uidSelector(getState());
+  return getFirebase().update(`${PENDING_POSTS}/${uid}`, serializePost(post));
+};
 
-const removePendingPost = () =>
-  (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
-    const uid = uidSelector(getState());
-    return getFirebase().remove(`${PENDING_POSTS}/${uid}`);
-  };
+const removePendingPost = () => (
+  dispatch: Dispatch,
+  getState: Function,
+  getFirebase: Function,
+) => {
+  const uid = uidSelector(getState());
+  return getFirebase().remove(`${PENDING_POSTS}/${uid}`);
+};
 
-export const createPost = (post: Post) =>
-  (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
-    const state = getState();
-    const isAuthenticated = isAuthenticatedSelector(getState());
+export const createPost = (post: Post) => (
+  dispatch: Dispatch,
+  getState: Function,
+  getFirebase: Function,
+) => {
+  const state = getState();
+  const isAuthenticated = isAuthenticatedSelector(getState());
 
-    if (!isAuthenticated) {
-      return dispatch(push({
+  if (!isAuthenticated) {
+    return dispatch(
+      push({
         pathname: '/auth/login',
         search: '?redirect=/p',
-      }));
-    }
+      }),
+    );
+  }
 
-    const userObj = {
-      user: uidSelector(state),
-    };
-    const finalPost = R.compose(
-      serializePost,
-      R.merge(post),
-    )(userObj);
-
-    return getFirebase()
-      .push('/posts', finalPost)
-      .then(() => dispatch(removePendingPost()))
-      .then(() => dispatch(formActions.reset(POST_FORM_MODEL_PATH)));
+  const userObj = {
+    user: uidSelector(state),
   };
+  const finalPost = R.compose(serializePost, R.merge(post))(userObj);
 
-export const savePost = (postId: string, onSave: ?Function) => (post: Post) =>
-  (dispatch: Dispatch, getState: Function, getFirebase: Function) => (
-    getFirebase()
-      .update(`/posts/${postId}`, post)
-      .then(onSave)
-  );
+  return getFirebase()
+    .push('/posts', finalPost)
+    .then(() => dispatch(removePendingPost()))
+    .then(() => dispatch(formActions.reset(POST_FORM_MODEL_PATH)));
+};
+
+export const savePost = (postId: string, onSave: ?Function) => (post: Post) => (
+  dispatch: Dispatch,
+  getState: Function,
+  getFirebase: Function,
+) =>
+  getFirebase()
+    .update(`/posts/${postId}`, post)
+    .then(onSave);

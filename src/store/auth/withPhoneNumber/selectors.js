@@ -6,16 +6,16 @@ const WITH_PHONE_NUMBER_PATH = ['auth', 'withPhoneNumber'];
 
 export const statusSelector = R.path([...WITH_PHONE_NUMBER_PATH, 'status']);
 
-export const confirmationResultSelector = R.path([...WITH_PHONE_NUMBER_PATH, 'confirmationResult']);
+export const confirmationResultSelector = R.path([
+  ...WITH_PHONE_NUMBER_PATH,
+  'confirmationResult',
+]);
 
 export const errorSelector = R.path([...WITH_PHONE_NUMBER_PATH, 'error']);
 
 export const showPhoneNumberFormSelector = createSelector(
   statusSelector,
-  R.contains(R.__, [
-    constants.STATUS_IDLE,
-    constants.STATUS_SMS_SEND_STARTED,
-  ]),
+  R.contains(R.__, [constants.STATUS_IDLE, constants.STATUS_SMS_SEND_STARTED]),
 );
 
 export const showCodeFormSelector = createSelector(

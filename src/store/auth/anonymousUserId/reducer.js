@@ -5,14 +5,17 @@ import * as types from './types';
 
 const initialState = null;
 
-export default handleActions({
-  [actionTypes.LOGIN]: (state, { auth }) => {
-    if (auth.isAnonymous) {
-      return auth.uid;
-    }
+export default handleActions(
+  {
+    [actionTypes.LOGIN]: (state, { auth }) => {
+      if (auth.isAnonymous) {
+        return auth.uid;
+      }
 
-    return state;
+      return state;
+    },
+
+    [types.RESET]: R.always(initialState),
   },
-
-  [types.RESET]: R.always(initialState),
-}, initialState);
+  initialState,
+);

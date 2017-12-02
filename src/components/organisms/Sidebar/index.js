@@ -78,23 +78,29 @@ export class Sidebar extends Component<Props> {
           }}
         >
           <List>
-            {R.map(({ key, label, to }) => (
-              <ListItem
-                key={key || label}
-                className={classes.navLink}
-                disableGutters
-              >
-                <Button
-                  className={classNames(classes.button, classes.navLinkButton)}
-                  component={Link}
-                  to={to}
-                  variant="button"
-                  disableRipple
+            {R.map(
+              ({ key, label, to }) => (
+                <ListItem
+                  key={key || label}
+                  className={classes.navLink}
+                  disableGutters
                 >
-                  {label}
-                </Button>
-              </ListItem>
-            ), links)}
+                  <Button
+                    className={classNames(
+                      classes.button,
+                      classes.navLinkButton,
+                    )}
+                    component={Link}
+                    to={to}
+                    variant="button"
+                    disableRipple
+                  >
+                    {label}
+                  </Button>
+                </ListItem>
+              ),
+              links,
+            )}
           </List>
         </Drawer>
       </div>

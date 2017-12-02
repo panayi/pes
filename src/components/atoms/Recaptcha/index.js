@@ -17,7 +17,7 @@ export default class Recaptcha extends Component<Props> {
     return false;
   }
 
-  RECAPTCHA_ID = generateClassName()
+  RECAPTCHA_ID = generateClassName();
 
   createRecaptcha() {
     const { RecaptchaVerifier } = this.props.firebase.auth;
@@ -26,14 +26,13 @@ export default class Recaptcha extends Component<Props> {
     });
   }
 
-  reset = () => (
-    this.verifier.render().then((widgetId) => {
+  reset = () =>
+    this.verifier.render().then(widgetId => {
       const reset = R.path(['grecaptcha', 'reset'], window);
       if (reset) {
         reset(widgetId);
       }
-    })
-  )
+    });
 
   render() {
     return (

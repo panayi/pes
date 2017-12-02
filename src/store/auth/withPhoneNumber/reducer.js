@@ -10,15 +10,24 @@ const initialState = {
   error: null,
 };
 
-const statusReducer = handleActions({
-  [types.RESET]: R.always(initialState.status),
-  [types.SMS_SEND_STARTED]: R.always(constants.STATUS_SMS_SEND_STARTED),
-  [types.SMS_SEND_SUCCEEDED]: R.always(constants.STATUS_SMS_SEND_SUCCEEDED),
-  [types.SMS_SEND_FAILED]: R.always(constants.STATUS_SMS_SEND_FAILED),
-  [types.CODE_VALIDATION_STARTED]: R.always(constants.STATUS_CODE_VALIDATION_STARTED),
-  [types.CODE_VALIDATION_SUCCEEDED]: R.always(constants.STATUS_CODE_VALIDATION_SUCCEEDED),
-  [types.CODE_VALIDATION_FAILED]: R.always(constants.STATUS_CODE_VALIDATION_FAILED),
-}, initialState.status);
+const statusReducer = handleActions(
+  {
+    [types.RESET]: R.always(initialState.status),
+    [types.SMS_SEND_STARTED]: R.always(constants.STATUS_SMS_SEND_STARTED),
+    [types.SMS_SEND_SUCCEEDED]: R.always(constants.STATUS_SMS_SEND_SUCCEEDED),
+    [types.SMS_SEND_FAILED]: R.always(constants.STATUS_SMS_SEND_FAILED),
+    [types.CODE_VALIDATION_STARTED]: R.always(
+      constants.STATUS_CODE_VALIDATION_STARTED,
+    ),
+    [types.CODE_VALIDATION_SUCCEEDED]: R.always(
+      constants.STATUS_CODE_VALIDATION_SUCCEEDED,
+    ),
+    [types.CODE_VALIDATION_FAILED]: R.always(
+      constants.STATUS_CODE_VALIDATION_FAILED,
+    ),
+  },
+  initialState.status,
+);
 
 const confirmationResultResetActionTypes = combineActions(
   types.RESET,
@@ -27,10 +36,15 @@ const confirmationResultResetActionTypes = combineActions(
   types.CODE_VALIDATION_FAILED,
 );
 
-const confirmationResultReducer = handleActions({
-  [confirmationResultResetActionTypes]: R.always(initialState.confirmationResult),
-  [types.SMS_SEND_SUCCEEDED]: (state, { payload }) => payload,
-}, initialState.confirmationResult);
+const confirmationResultReducer = handleActions(
+  {
+    [confirmationResultResetActionTypes]: R.always(
+      initialState.confirmationResult,
+    ),
+    [types.SMS_SEND_SUCCEEDED]: (state, { payload }) => payload,
+  },
+  initialState.confirmationResult,
+);
 
 const errorResetActionTypes = combineActions(
   types.RESET,
@@ -45,10 +59,13 @@ const errorSetActionTypes = combineActions(
   types.CODE_VALIDATION_FAILED,
 );
 
-const errorReducer = handleActions({
-  [errorResetActionTypes]: R.always(initialState.error),
-  [errorSetActionTypes]: (state, { payload }) => payload,
-}, initialState.error);
+const errorReducer = handleActions(
+  {
+    [errorResetActionTypes]: R.always(initialState.error),
+    [errorSetActionTypes]: (state, { payload }) => payload,
+  },
+  initialState.error,
+);
 
 export default combineReducers({
   status: statusReducer,

@@ -19,28 +19,21 @@ type Props = {
 const PostPage = ({ post, postId }: Props) => (
   <Layout>
     <Page fixed>
-      <ViewPost
-        post={post}
-        postId={postId}
-      />
+      <ViewPost post={post} postId={postId} />
       <Route
         path="/i/:postId/edit"
-        render={props => (
-          <EditPost
-            {...props}
-            post={post}
-            postId={postId}
-          />
-        )}
+        render={props => <EditPost {...props} post={post} postId={postId} />}
       />
     </Page>
   </Layout>
 );
 
 export default R.compose(
-  withProps(createStructuredSelector({
-    postId: R.compose(R.prop('postId'), urlParamsSelector),
-  })),
+  withProps(
+    createStructuredSelector({
+      postId: R.compose(R.prop('postId'), urlParamsSelector),
+    }),
+  ),
   connectData({
     post: modelConnections.posts.one((state, props) => props.postId),
   }),

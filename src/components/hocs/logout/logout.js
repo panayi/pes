@@ -21,7 +21,4 @@ export const logout = R.compose(
   omitProps(['onLogout']),
 );
 
-export default R.compose(
-  firebaseConnect(),
-  logout,
-);
+export default R.compose(firebaseConnect(), logout);

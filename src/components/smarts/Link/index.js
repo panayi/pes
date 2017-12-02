@@ -26,11 +26,7 @@ export class Link extends Component<Props> {
       return null;
     }
 
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
+    return <div>{this.props.children}</div>;
   }
 }
 
@@ -47,13 +43,7 @@ const ConnectedLink = R.compose(
   connect(mapStateToProps, mapDispatchToProps),
   // Render only when `profile` has been fetched,
   // as the profile.email is needed for fetching linked-accounts.
-  branch(
-    R.compose(
-      R.not,
-      R.prop('isProfileLoaded'),
-    ),
-    renderNothing,
-  ),
+  branch(R.compose(R.not, R.prop('isProfileLoaded')), renderNothing),
 )(Link);
 
 ConnectedLink.Button = LinkButton;

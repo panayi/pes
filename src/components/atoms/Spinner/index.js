@@ -25,18 +25,21 @@ const styles = {
   },
 };
 
-const CenteredSpinner = withStyles(styles)(({ classes, overlay, ...otherProps }) => (
-  <Grid
-    className={classNames(classes.spinnerWrap, { [classes.overlay]: overlay })}
-    container
-    justify="center"
-    alignItems="center"
-  >
-    <BaseSpinner {...otherProps} />
-  </Grid>
-));
+const CenteredSpinner = withStyles(styles)(
+  ({ classes, overlay, ...otherProps }) => (
+    <Grid
+      className={classNames(classes.spinnerWrap, {
+        [classes.overlay]: overlay,
+      })}
+      container
+      justify="center"
+      alignItems="center"
+    >
+      <BaseSpinner {...otherProps} />
+    </Grid>
+  ),
+);
 
-export default branch(
-  R.prop('centered'),
-  renderComponent(CenteredSpinner),
-)(BaseSpinner);
+export default branch(R.prop('centered'), renderComponent(CenteredSpinner))(
+  BaseSpinner,
+);

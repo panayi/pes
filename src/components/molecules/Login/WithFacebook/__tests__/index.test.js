@@ -7,14 +7,17 @@ describe('Login', () => {
   describe('LoginWithFacebook', () => {
     const setup = () => {
       const mockLogin = jest.fn();
-      const MockLogin = withContext({
-        login: PropTypes.func,
-      }, () => ({
-        login: mockLogin,
-      }))(({ children }) => children);
+      const MockLogin = withContext(
+        {
+          login: PropTypes.func,
+        },
+        () => ({
+          login: mockLogin,
+        }),
+      )(({ children }) => children);
 
       const Wrapper = () => (
-        <MockLogin >
+        <MockLogin>
           <LoginWithFacebook />
         </MockLogin>
       );
@@ -47,7 +50,7 @@ describe('Login', () => {
       expect(mockLogin.mock.calls[0][0]).toHaveProperty('provider', 'facebook');
     });
 
-    xit('should call onSuccess on login success', (done) => {
+    xit('should call onSuccess on login success', done => {
       const mockOnSuccess = jest.fn();
       const wrapper = shallow(
         <LoginWithFacebook
@@ -67,7 +70,7 @@ describe('Login', () => {
       });
     });
 
-    xit('should call onError on login error', (done) => {
+    xit('should call onError on login error', done => {
       const mockOnError = jest.fn();
       const wrapper = shallow(
         <LoginWithFacebook

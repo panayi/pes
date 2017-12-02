@@ -21,10 +21,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js'],
-    modules: [
-      'node_modules',
-      'shared',
-    ],
+    modules: ['node_modules', 'shared'],
   },
   externals: [nodeExternals()],
   plugins: [

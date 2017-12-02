@@ -10,10 +10,7 @@ type Props = {
 };
 
 const Posts = (props: Props) => (
-  <Grid
-    container
-    justify="center"
-  >
+  <Grid container justify="center">
     <Grid item>
       <PostsList categoryName={props.categoryName} />
     </Grid>

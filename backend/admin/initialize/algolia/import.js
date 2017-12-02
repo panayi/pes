@@ -6,11 +6,9 @@ import { database } from '../../lib/firebaseClient';
 export const canInitialize = async () => {
   const indexes = await algolia.listIndexes();
 
-  const isEmpty = R.compose(
-    R.isEmpty,
-    R.prop('items'),
-    R.defaultTo({}),
-  )(indexes);
+  const isEmpty = R.compose(R.isEmpty, R.prop('items'), R.defaultTo({}))(
+    indexes,
+  );
 
   if (!isEmpty) {
     throw new Error('Algolia: App already contains indexes.');
@@ -24,7 +22,7 @@ const initialImportPosts = async (dataSnapshot, index) => {
   const objectsToIndex = [];
 
   // Process each child Firebase object
-  dataSnapshot.forEach(((childSnapshot) => {
+  dataSnapshot.forEach(childSnapshot => {
     // Get the key and data from the snapshot
     const childKey = childSnapshot.key;
     const childData = childSnapshot.val();
@@ -34,7 +32,7 @@ const initialImportPosts = async (dataSnapshot, index) => {
 
     // Add object for indexing
     objectsToIndex.push(serializePost(childData));
-  }));
+  });
 
   // Add or update new objects
   await index.saveObjects(objectsToIndex);
@@ -43,7 +41,9 @@ const initialImportPosts = async (dataSnapshot, index) => {
 };
 
 export default async () => {
-  const index = algolia.initIndex(process.env.REACT_APP_ALGOLIA_POSTS_INDEX_NAME);
+  const index = algolia.initIndex(
+    process.env.REACT_APP_ALGOLIA_POSTS_INDEX_NAME,
+  );
 
   const dataSnapshot = await database.ref('/posts').once('value');
   const posts = await initialImportPosts(dataSnapshot, index);

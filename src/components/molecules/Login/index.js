@@ -12,13 +12,16 @@ Login.propTypes = {
 
 export default R.compose(
   firebaseConnect(),
-  withContext({
-    login: PropTypes.func.isRequired,
-  }, ({ firebase, onSuccess, onError }) => ({
-    login: (...args) => (
-      firebase.login(...args)
-        .then(onSuccess)
-        .catch(onError)
-    ),
-  })),
+  withContext(
+    {
+      login: PropTypes.func.isRequired,
+    },
+    ({ firebase, onSuccess, onError }) => ({
+      login: (...args) =>
+        firebase
+          .login(...args)
+          .then(onSuccess)
+          .catch(onError),
+    }),
+  ),
 )(Login);

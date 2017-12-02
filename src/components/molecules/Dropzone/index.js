@@ -95,6 +95,4 @@ export default R.compose(
   withStyles(styles),
 )(Dropzone);
 
-export {
-  fileTypes,
-};
+export { fileTypes };
