@@ -26,17 +26,19 @@ const styles = theme => ({
   },
 });
 
-const Page = ({ children, classes, className, fixed, ...otherProps }: Props) => (
+const Page = ({
+  children,
+  classes,
+  className,
+  fixed,
+  ...otherProps
+}: Props) => (
   <Paper
     className={classNames(classes.page, className)}
     elevation={0}
     {...otherProps}
   >
-    {
-      fixed
-        ? <div className={classes.fixed}>{children}</div>
-        : children
-    }
+    {fixed ? <div className={classes.fixed}>{children}</div> : children}
   </Paper>
 );
 

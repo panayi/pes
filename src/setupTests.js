@@ -6,7 +6,11 @@ import * as Firebase from 'firebase';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import { reactReduxFirebase, firebaseStateReducer, getFirebase } from 'react-redux-firebase';
+import {
+  reactReduxFirebase,
+  firebaseStateReducer,
+  getFirebase,
+} from 'react-redux-firebase';
 import FirebaseServer from 'firebase-server';
 import configureMockStore from 'redux-mock-store';
 import detectPort from 'detect-port';
@@ -44,14 +48,10 @@ global.firebase = Object.defineProperty(Firebase, '_', {
   value: {
     watchers: {},
     authUid: null,
-    config: Object.assign(
-      {},
-      firebaseConfig,
-      {
-        userProfile: 'users',
-        enableRedirectHandling: false, // disabled due to lack of http/https
-      },
-    ),
+    config: Object.assign({}, firebaseConfig, {
+      userProfile: 'users',
+      enableRedirectHandling: false, // disabled due to lack of http/https
+    }),
   },
   writable: true,
   enumerable: true,
@@ -76,31 +76,34 @@ global.startFirebaseTestServer = async () => {
   const port = await detectPort(5000);
 
   if (port === 5000) {
-    new FirebaseServer(5000, 'localhost.firebaseio.test', { // eslint-disable-line no-new
+    /* eslint-disable no-new */
+    new FirebaseServer(5000, 'localhost.firebaseio.test', {
       users: {
         Iq5b0qK2NtgggT6U3bU6iZRGyma2: {
           displayName: 'Tester',
         },
       },
     });
+    /* eslint-enable no-new */
   }
 
   Firebase.initializeApp(firebaseConfig);
 };
 
 global.withMockStore = (children, state = {}) => {
-  const store = configureMockStore(compose(
-    reactReduxFirebase(Firebase, { userProfile: 'users', enableRedirectHandling: false }),
-    applyMiddleware(thunk.withExtraArgument(getFirebase)),
-  ))(state);
+  const store = configureMockStore(
+    compose(
+      reactReduxFirebase(Firebase, {
+        userProfile: 'users',
+        enableRedirectHandling: false,
+      }),
+      applyMiddleware(thunk.withExtraArgument(getFirebase)),
+    ),
+  )(state);
   store.firebase = global.firebase;
 
   return {
-    component: (
-      <Provider store={store}>
-        {children}
-      </Provider>
-    ),
+    component: <Provider store={store}>{children}</Provider>,
     store,
   };
 };
@@ -110,17 +113,16 @@ global.withStore = (children, state = {}) => {
     combineReducers({ firebase: firebaseStateReducer }),
     state,
     compose(
-      reactReduxFirebase(Firebase, { userProfile: 'users', enableRedirectHandling: false }),
+      reactReduxFirebase(Firebase, {
+        userProfile: 'users',
+        enableRedirectHandling: false,
+      }),
       applyMiddleware(thunk.withExtraArgument(getFirebase)),
     ),
   );
 
   return {
-    component: (
-      <Provider store={store}>
-        {children}
-      </Provider>
-    ),
+    component: <Provider store={store}>{children}</Provider>,
     store,
   };
 };

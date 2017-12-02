@@ -13,7 +13,7 @@ import App from './pages';
 
 const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-underscore-dangle
 
-ReactDOM.render((
+ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={store.history}>
       <InstantSearch
@@ -29,7 +29,8 @@ ReactDOM.render((
         </MuiThemeProvider>
       </InstantSearch>
     </ConnectedRouter>
-  </Provider>
-), document.getElementById('root'));
+  </Provider>,
+  document.getElementById('root'),
+);
 
 registerServiceWorker();

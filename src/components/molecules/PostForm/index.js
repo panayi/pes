@@ -32,15 +32,19 @@ const styles = theme => ({
 const Select = withProps({ select: true })(TextField);
 
 const PostForm = (props: Props) => {
-  const { filesPath, onChange, images, categories, postIsLoaded, classes } = props;
+  const {
+    filesPath,
+    onChange,
+    images,
+    categories,
+    postIsLoaded,
+    classes,
+  } = props;
 
   return (
     <div className={classes.root}>
       {!postIsLoaded && <Spinner centered overlay />}
-      <EditPostImages
-        images={images}
-        postImagesDbPath={filesPath}
-      />
+      <EditPostImages images={images} postImagesDbPath={filesPath} />
       <Form
         className={classes.form}
         model={constants.POST_FORM_MODEL_PATH}
@@ -74,14 +78,14 @@ const PostForm = (props: Props) => {
               SelectProps={{ native: true }}
             >
               <option value="">Select category</option>
-              {R.map(category => (
-                <option
-                  key={category.name}
-                  value={category.name}
-                >
-                  {category.name}
-                </option>
-              ), R.values(categories))}
+              {R.map(
+                category => (
+                  <option key={category.name} value={category.name}>
+                    {category.name}
+                  </option>
+                ),
+                R.values(categories),
+              )}
             </Control.select>
           </FormControl>
         </FormGroup>
@@ -106,7 +110,11 @@ const maybeInitializeForm = (nextProps, props = {}) => {
 
 export default R.compose(
   withStyles(styles),
-  connectData({ categories: modelConnections.categories.all }, null, mapDispatchToProps),
+  connectData(
+    { categories: modelConnections.categories.all },
+    null,
+    mapDispatchToProps,
+  ),
   withProps(({ post }) => ({
     postIsLoaded: isLoaded(post),
   })),
@@ -119,10 +127,6 @@ export default R.compose(
     },
   }),
   withProps(({ post }) => ({
-    images: R.compose(
-      R.values,
-      R.propOr({}, 'images'),
-      R.defaultTo({}),
-    )(post),
+    images: R.compose(R.values, R.propOr({}, 'images'), R.defaultTo({}))(post),
   })),
 )(PostForm);

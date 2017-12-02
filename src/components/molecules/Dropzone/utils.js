@@ -32,10 +32,7 @@ export const getMimeTypes = R.compose(
 );
 
 // getAccept :: [FileType] -> String
-export const getAccept = R.compose(
-  R.join(','),
-  getMimeTypes,
-);
+export const getAccept = R.compose(R.join(','), getMimeTypes);
 
 // getPrettyPrintFileTypes :: [FileType] -> String
 export const getPrettyPrintFileTypes = R.compose(

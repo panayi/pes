@@ -4,19 +4,18 @@ import { storiesOf, action, linkTo } from '@storybook/react';
 import Button from './Button';
 import Welcome from './Welcome';
 
-storiesOf('Welcome', module)
-  .add('to Storybook', () => (
-    <Welcome showApp={linkTo('Button')} />
-  ));
+storiesOf('Welcome', module).add('to Storybook', () => (
+  <Welcome showApp={linkTo('Button')} />
+));
 
 storiesOf('Button', module)
   .add('with text', () => (
-    <Button onClick={action('clicked')}>
-      Hello Button
-    </Button>
+    <Button onClick={action('clicked')}>Hello Button</Button>
   ))
   .add('with some emoji', () => (
     <Button onClick={action('clicked')}>
-      <span role="img" aria-label="emojis">😀 😎 👍 💯</span>
+      <span role="img" aria-label="emojis">
+        😀 😎 👍 💯
+      </span>
     </Button>
   ));

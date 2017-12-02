@@ -30,32 +30,46 @@ describe('[HOC] withAnonymousUser', () => {
 
     it('should call maybeSignInAnonymously on mount and on props change', () => {
       expect(maybeSignInAnonymously.default.mock.calls.length).toBe(0);
-      const wrapper = mount(<Hoc firebase={firebase} isAuthenticating isAuthenticated={false} />);
+      const wrapper = mount(
+        <Hoc firebase={firebase} isAuthenticating isAuthenticated={false} />,
+      );
       expect(maybeSignInAnonymously.default.mock.calls.length).toBe(1);
       wrapper.setProps({ foo: 'bar' });
       expect(maybeSignInAnonymously.default.mock.calls.length).toBe(2);
-      expect(maybeSignInAnonymously.default.mock.calls[1]).toEqual([{
-        firebase,
-        isAuthenticating: true,
-        isAuthenticated: false,
-        foo: 'bar',
-      }]);
+      expect(maybeSignInAnonymously.default.mock.calls[1]).toEqual([
+        {
+          firebase,
+          isAuthenticating: true,
+          isAuthenticated: false,
+          foo: 'bar',
+        },
+      ]);
     });
   });
 
   describe('signInAnonymously', () => {
     it('should do nothing when isAuthenticating', () => {
-      mount(<Hoc firebase={firebase} isAuthenticating isAuthenticated={false} />);
+      mount(
+        <Hoc firebase={firebase} isAuthenticating isAuthenticated={false} />,
+      );
       expect(mockSignIn.mock.calls.length).toBe(0);
     });
 
     it('should do nothing when isAuthenticated', () => {
-      mount(<Hoc firebase={firebase} isAuthenticating={false} isAuthenticated />);
+      mount(
+        <Hoc firebase={firebase} isAuthenticating={false} isAuthenticated />,
+      );
       expect(mockSignIn.mock.calls.length).toBe(0);
     });
 
     it('should sign-in anonymously when both isAuthenticating and isAuthenticated are false', () => {
-      mount(<Hoc firebase={firebase} isAuthenticating={false} isAuthenticated={false} />);
+      mount(
+        <Hoc
+          firebase={firebase}
+          isAuthenticating={false}
+          isAuthenticated={false}
+        />,
+      );
       expect(mockSignIn.mock.calls.length).toBe(1);
     });
   });

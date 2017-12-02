@@ -12,12 +12,7 @@ type Props = {
 };
 
 const MyPosts = ({ hits }: Props) => (
-  <PostsList
-    hits={hits}
-    hasMore={false}
-    loadMore={() => {}}
-    sidebarWidth={0}
-  />
+  <PostsList hits={hits} hasMore={false} loadMore={() => {}} sidebarWidth={0} />
 );
 
 const mapStateToProps = createStructuredSelector({
@@ -26,9 +21,9 @@ const mapStateToProps = createStructuredSelector({
 
 export default R.compose(
   connect(mapStateToProps),
-  firebaseConnect(({ uid }) => (
-    uid ? [`posts#orderByChild=user&equalTo=${uid}`] : []
-  )),
+  firebaseConnect(
+    ({ uid }) => (uid ? [`posts#orderByChild=user&equalTo=${uid}`] : []),
+  ),
   connect((state, { uid }) => ({
     hits: R.compose(
       R.map(([objectID, value]) => ({ objectID, ...value })),

@@ -25,7 +25,9 @@ import { createSelector } from 'reselect';
 const calculateNumberOfColumns = (columnWidth, gutter, availableWidth) => {
   let numberOfColumns = 0;
 
-  while (R.lte(numberOfColumns * (columnWidth + gutter), availableWidth + gutter)) {
+  while (
+    R.lte(numberOfColumns * (columnWidth + gutter), availableWidth + gutter)
+  ) {
     numberOfColumns += 1;
   }
 
@@ -46,27 +48,39 @@ export const sizesSelector = createSelector(
   R.prop('wastedWidth'),
   R.prop('maxScreenWidth'),
   R.prop('gutter'),
-  (columnWidth, wastedWidth, maxScreenWidth, gutter) => R.compose(
-    sizes => R.prepend({
-      columns: sizes[0].columns,
-      gutter,
-    }, sizes),
-    R.reduce((acc, item) => {
-      const lastItem = R.last(acc);
-      if (lastItem && R.equals(item.columns, lastItem.columns)) {
-        return acc;
-      }
+  (columnWidth, wastedWidth, maxScreenWidth, gutter) =>
+    R.compose(
+      sizes =>
+        R.prepend(
+          {
+            columns: sizes[0].columns,
+            gutter,
+          },
+          sizes,
+        ),
+      R.reduce((acc, item) => {
+        const lastItem = R.last(acc);
+        if (lastItem && R.equals(item.columns, lastItem.columns)) {
+          return acc;
+        }
 
-      return R.append({
-        columns: item.columns,
-        mq: `${item.screenWidth}px`,
-        gutter,
-      }, acc);
-    }, []),
-    R.map(screenWidth => ({
-      screenWidth,
-      columns: calculateNumberOfColumns(columnWidth, gutter, screenWidth - wastedWidth),
-    })),
-    R.range(0),
-  )(maxScreenWidth),
+        return R.append(
+          {
+            columns: item.columns,
+            mq: `${item.screenWidth}px`,
+            gutter,
+          },
+          acc,
+        );
+      }, []),
+      R.map(screenWidth => ({
+        screenWidth,
+        columns: calculateNumberOfColumns(
+          columnWidth,
+          gutter,
+          screenWidth - wastedWidth,
+        ),
+      })),
+      R.range(0),
+    )(maxScreenWidth),
 );

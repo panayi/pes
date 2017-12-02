@@ -3,11 +3,11 @@ import Recaptcha from 'components/atoms/Recaptcha';
 import { LoginWithPhoneNumber } from '../index';
 
 jest.mock('react-redux-form', () => ({
-  Field: props => (<div {...props} />),
-  Form: props => (<form {...props} />),
+  Field: props => <div {...props} />,
+  Form: props => <form {...props} />,
   Errors: () => null,
   Control: {
-    text: props => (<input {...props} />),
+    text: props => <input {...props} />,
   },
 }));
 
@@ -21,12 +21,16 @@ describe('LoginWithPhoneNumber', () => {
   });
 
   it('should render correctly when showPhoneNumberForm is true', () => {
-    const wrapper = shallow(<LoginWithPhoneNumber {...defaultProps} showPhoneNumberForm />);
+    const wrapper = shallow(
+      <LoginWithPhoneNumber {...defaultProps} showPhoneNumberForm />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should render correctly when showCodeForm is true', () => {
-    const wrapper = shallow(<LoginWithPhoneNumber {...defaultProps} showCodeForm />);
+    const wrapper = shallow(
+      <LoginWithPhoneNumber {...defaultProps} showCodeForm />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -34,17 +38,23 @@ describe('LoginWithPhoneNumber', () => {
     const error = {
       message: 'something went wrong',
     };
-    const wrapper = shallow(<LoginWithPhoneNumber {...defaultProps} showError error={error} />);
+    const wrapper = shallow(
+      <LoginWithPhoneNumber {...defaultProps} showError error={error} />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should render correctly when showLoading is true', () => {
-    const wrapper = shallow(<LoginWithPhoneNumber {...defaultProps} showLoading />);
+    const wrapper = shallow(
+      <LoginWithPhoneNumber {...defaultProps} showLoading />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should render correctly when showTryAgain is true', () => {
-    const wrapper = shallow(<LoginWithPhoneNumber {...defaultProps} showTryAgain />);
+    const wrapper = shallow(
+      <LoginWithPhoneNumber {...defaultProps} showTryAgain />,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -59,7 +69,9 @@ describe('LoginWithPhoneNumber', () => {
         RecaptchaVerifier: Object,
       },
     };
-    const wrapper = mount(<LoginWithPhoneNumber {...defaultProps} firebase={mockFirebase} />);
+    const wrapper = mount(
+      <LoginWithPhoneNumber {...defaultProps} firebase={mockFirebase} />,
+    );
     expect(wrapper.instance().recaptcha instanceof Recaptcha).toBe(true);
   });
 

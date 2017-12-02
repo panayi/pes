@@ -15,10 +15,7 @@ const LoginModalButton = hideUser(LoginModal.showButton);
 
 const ProfileLink = hideVisitor(Link);
 
-const LogoutLink = R.compose(
-  hideVisitor,
-  logoutHoc,
-)(Link);
+const LogoutLink = R.compose(hideVisitor, logoutHoc)(Link);
 
 const styles = theme => ({
   header: {
@@ -45,11 +42,7 @@ const Header = ({ classes }) => (
   <AppBar className={classes.header}>
     <Toolbar className={classes.toolbar}>
       <div className={classes.logoArea}>
-        <Link
-          to="/"
-          exact
-          color="contrast"
-        >
+        <Link to="/" exact color="contrast">
           Pesposa
         </Link>
       </div>
@@ -57,21 +50,12 @@ const Header = ({ classes }) => (
         <div className={classes.searchInput}>
           <SearchInput />
         </div>
-        <CreatePost.showButton
-          color="contrast"
-        >
+        <CreatePost.showButton color="contrast">
           Sell your stuff
         </CreatePost.showButton>
-        <LoginModalButton color="contrast">
-          Login
-        </LoginModalButton>
-        <LogoutLink color="contrast">
-          Logout
-        </LogoutLink>
-        <ProfileLink
-          to="/profile"
-          color="contrast"
-        >
+        <LoginModalButton color="contrast">Login</LoginModalButton>
+        <LogoutLink color="contrast">Logout</LogoutLink>
+        <ProfileLink to="/profile" color="contrast">
           <ProfileImage.Avatar />
         </ProfileLink>
       </div>
@@ -79,6 +63,4 @@ const Header = ({ classes }) => (
   </AppBar>
 );
 
-export default R.compose(
-  withStyles(styles),
-)(Header);
+export default R.compose(withStyles(styles))(Header);

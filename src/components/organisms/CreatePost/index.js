@@ -25,7 +25,11 @@ const mapDispatchToProps = {
   createPost: actions.createPost,
 };
 
-const connector = connectData(mapDataToProps, mapStateToProps, mapDispatchToProps);
+const connector = connectData(
+  mapDataToProps,
+  mapStateToProps,
+  mapDispatchToProps,
+);
 
 const CreatePostContent = R.compose(
   withAnonymousUser,
@@ -34,11 +38,11 @@ const CreatePostContent = R.compose(
   pickProps(['post', 'filesPath', 'onChange']),
 )(PostForm);
 
-const CreatePostActions = connector(({ post, createPost }) => ([
+const CreatePostActions = connector(({ post, createPost }) => [
   <Button key={0} onClick={() => createPost(post)}>
     Post
   </Button>,
-]));
+]);
 
 export default modalFactory({
   content: CreatePostContent,

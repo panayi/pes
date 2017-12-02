@@ -1,14 +1,13 @@
 const loginCommands = {
   loginWithFacebook({ email, password }) {
-    this
-      .waitForElementVisible('@facebookLoginButton')
-      .click('@facebookLoginButton');
+    this.waitForElementVisible('@facebookLoginButton').click(
+      '@facebookLoginButton',
+    );
 
-    return this.api.window_handles((windows) => {
+    return this.api.window_handles(windows => {
       this.api.switchWindow(windows.value[1]);
 
-      this
-        .waitForElementVisible('@facebookPopupEmailInput')
+      this.waitForElementVisible('@facebookPopupEmailInput')
         .setValue('@facebookPopupEmailInput', email)
         .setValue('@facebookPopupPasswordInput', password)
         .waitForElementVisible('@facebookPopupLoginButton')
@@ -16,7 +15,7 @@ const loginCommands = {
         .waitForElementVisible('body');
 
       // FIXME: figure out how to use @facebookPopupConfirmButton
-      this.api.element('css selector', 'button[type=submit]', (res) => {
+      this.api.element('css selector', 'button[type=submit]', res => {
         // NOTE: If this is the first the user authenticates
         // a screen with "Confirm" button is shown.
         if (res.status !== -1) {

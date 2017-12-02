@@ -7,11 +7,7 @@ import Modal from './Modal';
 
 const ModalProvider = R.compose(
   R.map(([id, modalProps]) => (
-    <Modal
-      key={id}
-      id={id}
-      modalProps={modalProps}
-    />
+    <Modal key={id} id={id} modalProps={modalProps} />
   )),
   R.toPairs,
   R.prop('modals'),

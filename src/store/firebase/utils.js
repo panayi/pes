@@ -5,10 +5,15 @@ import * as constants from './constants';
 // Based on https://github.com/prescottprue/react-redux-firebase/blob/master/src/utils/auth.js
 // as it is not exposed by react-redux-firebase
 export const createAuthProvider = (firebase, providerName, scopes) => {
-  const provider = new firebase.auth[`${capitalize(providerName)}AuthProvider`]();
+  const provider = new firebase.auth[
+    `${capitalize(providerName)}AuthProvider`
+  ]();
 
   // Handle providers without scopes
-  if (providerName.toLowerCase() === 'twitter' || !R.is(Function, provider.addScope)) {
+  if (
+    providerName.toLowerCase() === 'twitter' ||
+    !R.is(Function, provider.addScope)
+  ) {
     return provider;
   }
 
@@ -16,7 +21,7 @@ export const createAuthProvider = (firebase, providerName, scopes) => {
 
   if (scopes) {
     if (R.is(Array, scopes)) {
-      scopes.forEach((scope) => {
+      scopes.forEach(scope => {
         provider.addScope(scope);
       });
     }
@@ -29,11 +34,8 @@ export const createAuthProvider = (firebase, providerName, scopes) => {
 };
 
 // getPropInProviderData :: String -> Any
-const getPropInProviderData = propKey => R.compose(
-  R.find(R.identity),
-  R.pluck(propKey),
-  R.propOr([], 'providerData'),
-);
+const getPropInProviderData = propKey =>
+  R.compose(R.find(R.identity), R.pluck(propKey), R.propOr([], 'providerData'));
 
 // getDisplayName :: User -> String | Nil
 const getDisplayName = R.converge(R.or, [
@@ -58,4 +60,6 @@ export const profileFactory = user => ({
 });
 
 export const getDataUrl = path =>
-  `${constants.FIREBASE_CONSOLE_BASE_URL}/${constants.FIREBASE_PROJECT_ID}/database/data/${path}`;
+  `${constants.FIREBASE_CONSOLE_BASE_URL}/${
+    constants.FIREBASE_PROJECT_ID
+  }/database/data/${path}`;

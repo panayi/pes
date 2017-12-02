@@ -8,9 +8,7 @@ type Props = {
 };
 
 const FullHeight = ({ children }: Props) => (
-  <div className="full-height">
-    {children}
-  </div>
+  <div className="full-height">{children}</div>
 );
 
 FullHeight.propTypes = {

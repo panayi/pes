@@ -1,18 +1,19 @@
 import * as R from 'ramda';
 import log from 'helpers/log';
-import initializeFirebase, { canInitialize as canInitializeFirebase } from './firebase';
-import initializeAlgolia, { canInitialize as canInitializeAlgolia } from './algolia';
+import initializeFirebase, {
+  canInitialize as canInitializeFirebase,
+} from './firebase';
+import initializeAlgolia, {
+  canInitialize as canInitializeAlgolia,
+} from './algolia';
 
-const shouldInitializeService = name => R.compose(
-  R.either(R.isNil, R.equals(name)),
-  R.prop('only'),
-  R.defaultTo({}),
-);
+const shouldInitializeService = name =>
+  R.compose(R.either(R.isNil, R.equals(name)), R.prop('only'), R.defaultTo({}));
 
 const shouldInitializeFirebase = shouldInitializeService('firebase');
 const shouldInitializeAlgolia = shouldInitializeService('algolia');
 
-const canInitialize = async (options) => {
+const canInitialize = async options => {
   log.info('Checking ability to initialize');
 
   if (shouldInitializeFirebase(options)) {
@@ -26,7 +27,7 @@ const canInitialize = async (options) => {
   }
 };
 
-const initialize = async (options) => {
+const initialize = async options => {
   log.info('Starting initialization script');
   await canInitialize(options);
 

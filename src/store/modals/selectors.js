@@ -9,21 +9,17 @@ const modalsPath = ['modals'];
 export const modalsSelector = R.path(modalsPath);
 
 const modalSelector = createSelector(
-  R.compose(
-    R.prop('id'),
-    propsSelector,
-  ),
+  R.compose(R.prop('id'), propsSelector),
   modalsSelector,
   R.prop,
 );
 
-export const modalContentSelector = (state, { id }) => R.path([id, 'content'], registry);
-export const modalActionsSelector = (state, { id }) => R.path([id, 'actions'], registry);
+export const modalContentSelector = (state, { id }) =>
+  R.path([id, 'content'], registry);
+export const modalActionsSelector = (state, { id }) =>
+  R.path([id, 'actions'], registry);
 
-export const modalPropsSelector = createSelector(
-  modalSelector,
-  R.omit(['id']),
-);
+export const modalPropsSelector = createSelector(modalSelector, R.omit(['id']));
 
 export const willHideModalSelector = createSelector(
   modalSelector,

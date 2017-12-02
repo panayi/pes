@@ -12,7 +12,9 @@ export const fetchLinkedAccounts = () => (dispatch, getState, getFirebase) => {
     return dispatch(receiveLinkedAccounts([]));
   }
 
-  return getFirebase().auth().fetchProvidersForEmail(email)
+  return getFirebase()
+    .auth()
+    .fetchProvidersForEmail(email)
     .then(linkedAccounts => dispatch(receiveLinkedAccounts(linkedAccounts)));
 };
 

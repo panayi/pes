@@ -16,7 +16,7 @@ describe('[HOC] needsUserWithId', () => {
   };
 
   const MyComponent = () => <div>i am this user</div>;
-  const createComponent = (userSelector) => {
+  const createComponent = userSelector => {
     const Hoc = needsUserWithId({
       redirectPath: '/you-cant-see-other-user-stuff',
       userSelector,

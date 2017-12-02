@@ -14,15 +14,9 @@ type Props = {
 
 const PostsList = ({ categoryName, hits, hasMore, refine }: Props) => (
   <div>
-    <BasePostsList
-      hits={hits}
-      hasMore={hasMore}
-      loadMore={refine}
-    />
+    <BasePostsList hits={hits} hasMore={hasMore} loadMore={refine} />
     <ConfigureSearchParams categoryName={categoryName} />
   </div>
 );
 
-export default R.compose(
-  connectInfiniteHits,
-)(PostsList);
+export default R.compose(connectInfiniteHits)(PostsList);

@@ -3,11 +3,14 @@ const path = require('path');
 module.exports = {
   "extends": [
     "plugin:flowtype/recommended",
-    "airbnb"
+    "airbnb",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react",
   ],
   "parser": "babel-eslint",
   "plugins": [
-    "flowtype"
+    "flowtype",
   ],
   "rules": {
     "react/jsx-filename-extension": "off",

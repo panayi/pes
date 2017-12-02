@@ -21,16 +21,16 @@ class LoginWithPassword extends Component {
   state = {
     email: '',
     password: '',
-  }
+  };
 
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
 
     const { email, password } = this.state;
     const { login } = this.props;
 
     return login({ email, password });
-  }
+  };
 
   render() {
     const { email, password } = this.state;
@@ -53,12 +53,8 @@ class LoginWithPassword extends Component {
           value={password}
           onChange={e => this.setState({ password: e.target.value })}
         />
-        <Button icon="sign in">
-          Login
-        </Button>
-        <Typography>
-          {authError && authError.message}
-        </Typography>
+        <Button icon="sign in">Login</Button>
+        <Typography>{authError && authError.message}</Typography>
       </form>
     );
   }
@@ -68,7 +64,6 @@ const mapStateToProps = createStructuredSelector({
   authError: authErrorSelector,
 });
 
-export default R.compose(
-  withLogin,
-  connect(mapStateToProps),
-)(LoginWithPassword);
+export default R.compose(withLogin, connect(mapStateToProps))(
+  LoginWithPassword,
+);

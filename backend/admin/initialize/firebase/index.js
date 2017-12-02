@@ -25,8 +25,5 @@ export default async () => {
   const seedResult = await seed();
   const importResult = await importData();
 
-  return [
-    seedResult,
-    importResult,
-  ];
+  return [seedResult, importResult];
 };

@@ -17,22 +17,30 @@ type Props = {
   post: Post,
 };
 
-const mapDispatchToProps = (dispatch: Dispatch, props: Props) => bindActionCreators({
-  savePost: actions.savePost(props.postId, props.onSave),
-}, dispatch);
+const mapDispatchToProps = (dispatch: Dispatch, props: Props) =>
+  bindActionCreators(
+    {
+      savePost: actions.savePost(props.postId, props.onSave),
+    },
+    dispatch,
+  );
 
 const EditPostContent = R.compose(
-  withProps(createStructuredSelector({
-    filesPath: selectors.postImagesPathSelector,
-  })),
+  withProps(
+    createStructuredSelector({
+      filesPath: selectors.postImagesPathSelector,
+    }),
+  ),
   pickProps(['post', 'filesPath']),
 )(PostForm);
 
-const EditPostActions = connect(null, mapDispatchToProps)(({ post, savePost }) => ([
-  <Button key={0} onClick={() => savePost(post)}>
-    Save
-  </Button>,
-]));
+const EditPostActions = connect(null, mapDispatchToProps)(
+  ({ post, savePost }) => [
+    <Button key={0} onClick={() => savePost(post)}>
+      Save
+    </Button>,
+  ],
+);
 
 export default modalFactory({
   content: EditPostContent,

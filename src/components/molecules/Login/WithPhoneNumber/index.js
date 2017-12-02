@@ -40,7 +40,7 @@ export class LoginWithPhoneNumber extends Component<Props> {
     this.props.resetAll();
   }
 
-  recaptcha: ?Object
+  recaptcha: ?Object;
 
   renderPhoneNumberForm() {
     if (!this.props.showPhoneNumberForm) {
@@ -63,9 +63,7 @@ export class LoginWithPhoneNumber extends Component<Props> {
             required: (val: String) => val && val.length,
           }}
         />
-        <Button type="submit">
-          Sign in with phone number
-        </Button>
+        <Button type="submit">Sign in with phone number</Button>
       </Form>
     );
   }
@@ -84,9 +82,7 @@ export class LoginWithPhoneNumber extends Component<Props> {
           model="forms.phoneNumberLogin.code"
           placeholder="Enter SMS code"
         />
-        <Button type="submit">
-          Submit
-        </Button>
+        <Button type="submit">Submit</Button>
       </Form>
     );
   }
@@ -96,11 +92,7 @@ export class LoginWithPhoneNumber extends Component<Props> {
       return null;
     }
 
-    return (
-      <span>
-        {this.props.error.message}
-      </span>
-    );
+    return <span>{this.props.error.message}</span>;
   }
 
   renderLoading() {
@@ -108,11 +100,7 @@ export class LoginWithPhoneNumber extends Component<Props> {
       return null;
     }
 
-    return (
-      <span>
-        loading
-      </span>
-    );
+    return <span>loading</span>;
   }
 
   renderTryAgain() {
@@ -141,7 +129,9 @@ export class LoginWithPhoneNumber extends Component<Props> {
         {this.renderTryAgain()}
         <Recaptcha
           firebase={this.props.firebase}
-          ref={(instance) => { this.recaptcha = instance; }}
+          ref={instance => {
+            this.recaptcha = instance;
+          }}
         />
       </div>
     );

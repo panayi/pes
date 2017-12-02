@@ -14,25 +14,17 @@ describe('[Component] Recaptcha', () => {
   it('should render correctly', () => {
     generate.default = jest.fn();
     generate.default.mockReturnValueOnce('myRecaptchaId');
-    const wrapper = shallow(
-      <Recaptcha {...defaultProps} />,
-    );
+    const wrapper = shallow(<Recaptcha {...defaultProps} />);
     expect(wrapper).toMatchSnapshot();
     generate.default.mockClear();
   });
 
   it('should have a unique RECAPTCHA_ID', () => {
     generate.default = jest.fn();
-    generate.default
-      .mockReturnValueOnce('first')
-      .mockReturnValueOnce('second');
+    generate.default.mockReturnValueOnce('first').mockReturnValueOnce('second');
 
-    const wrapper = shallow(
-      <Recaptcha {...defaultProps} />,
-    );
-    const wrapper2 = shallow(
-      <Recaptcha {...defaultProps} />,
-    );
+    const wrapper = shallow(<Recaptcha {...defaultProps} />);
+    const wrapper2 = shallow(<Recaptcha {...defaultProps} />);
 
     expect(wrapper.instance().RECAPTCHA_ID).toBe('first');
     expect(wrapper2.instance().RECAPTCHA_ID).toBe('second');
@@ -40,7 +32,7 @@ describe('[Component] Recaptcha', () => {
 
   describe('reset', () => {
     class RecaptchaVerifier {
-      render = () => Promise.resolve('myWidgetId')
+      render = () => Promise.resolve('myWidgetId');
     }
     const props = {
       firebase: {
@@ -56,13 +48,14 @@ describe('[Component] Recaptcha', () => {
         reset: mockReset,
       };
 
-      const wrapper = shallow(
-        <Recaptcha {...props} />,
-      );
+      const wrapper = shallow(<Recaptcha {...props} />);
 
-      return wrapper.instance().reset().then(() => {
-        expect(mockReset.mock.calls).toEqual([['myWidgetId']]);
-      });
+      return wrapper
+        .instance()
+        .reset()
+        .then(() => {
+          expect(mockReset.mock.calls).toEqual([['myWidgetId']]);
+        });
     });
   });
 });

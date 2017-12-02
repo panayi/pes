@@ -5,8 +5,4 @@ import factory from './factory';
 
 export default reducer;
 
-export {
-  actions,
-  selectors,
-  factory,
-};
+export { actions, selectors, factory };

@@ -10,7 +10,7 @@ describe('[HOC] withUserWithId', () => {
   authSelectors.isUserSelector.mockImplementation(R.identity);
 
   const MyComponent = () => <div>i am this user</div>;
-  const createComponent = (userSelector) => {
+  const createComponent = userSelector => {
     const Hoc = withUserWithId(userSelector)(MyComponent);
     return withMockStore(<Hoc />);
   };

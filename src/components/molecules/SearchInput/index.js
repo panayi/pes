@@ -9,7 +9,7 @@ import { connectSearchBox } from 'react-instantsearch/connectors';
 type Props = {
   value: String,
   refine: Function,
-}
+};
 
 // Based on:
 // https://github.com/callemall/material-ui/blob/v1-beta/docs/src/modules/components/AppSearch.js
@@ -42,8 +42,9 @@ const styles = theme => ({
   },
   input: {
     font: 'inherit',
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit}px ${theme.spacing.unit}px ${theme
-      .spacing.unit * 7}px`,
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit}px ${
+      theme.spacing.unit
+    }px ${theme.spacing.unit * 7}px`,
     border: 0,
     display: 'block',
     verticalAlign: 'middle',
@@ -75,7 +76,4 @@ export const SearchInput = ({ value, refine, classes }: Props) => (
   </div>
 );
 
-export default R.compose(
-  connectSearchBox,
-  withStyles(styles),
-)(SearchInput);
+export default R.compose(connectSearchBox, withStyles(styles))(SearchInput);

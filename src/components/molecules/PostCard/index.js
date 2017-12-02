@@ -1,6 +1,13 @@
 /* @flow */
 import React from 'react';
-import { Card, CardMedia, CardHeader, CardContent, Typography, withStyles } from 'material-ui';
+import {
+  Card,
+  CardMedia,
+  CardHeader,
+  CardContent,
+  Typography,
+  withStyles,
+} from 'material-ui';
 import { Link } from 'react-router-dom';
 import { getMediaProps } from './utils';
 
@@ -30,7 +37,9 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    borderRadius: `${theme.custom.borderRadius.xl}px ${theme.custom.borderRadius.xl}px 0 0`,
+    borderRadius: `${theme.custom.borderRadius.xl}px ${
+      theme.custom.borderRadius.xl
+    }px 0 0`,
   },
   price: {
     padding: theme.spacing.unit,
@@ -54,7 +63,9 @@ const styles = theme => ({
 });
 
 const PostCard = ({ post, width, classes }: Props) => {
-  const mediaProps = getMediaProps(post, { defaultHeight: DEFAULT_MEDIA_HEIGHT });
+  const mediaProps = getMediaProps(post, {
+    defaultHeight: DEFAULT_MEDIA_HEIGHT,
+  });
   const totalHeight = mediaProps.style.height + HEADER_HEIGHT + CONTENT_HEIGHT;
 
   return (
@@ -77,16 +88,12 @@ const PostCard = ({ post, width, classes }: Props) => {
           title={post.title}
           {...getMediaProps(post, { defaultHeight: DEFAULT_MEDIA_HEIGHT })}
         >
-          {
-            post.price && post.price > 0 &&
-              <Typography
-                className={classes.price}
-                color="accent"
-                type="title"
-              >
+          {post.price &&
+            post.price > 0 && (
+              <Typography className={classes.price} color="accent" type="title">
                 €&nbsp;{post.price}
               </Typography>
-          }
+            )}
         </CardMedia>
         <CardHeader
           className={classes.header}
@@ -96,15 +103,11 @@ const PostCard = ({ post, width, classes }: Props) => {
           title={post.title}
         />
         <CardContent className={classes.content}>
-          {
-            post.address &&
-              <Typography
-                type="caption"
-                align="center"
-              >
-                {post.address}
-              </Typography>
-          }
+          {post.address && (
+            <Typography type="caption" align="center">
+              {post.address}
+            </Typography>
+          )}
         </CardContent>
       </Card>
     </div>

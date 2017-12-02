@@ -6,14 +6,8 @@ describe('logout', () => {
     const firebase = {
       logout: noop,
     };
-    const Button = logout(() => (
-      <button>
-        Log out
-      </button>
-    ));
-    const wrapper = mount(
-      <Button firebase={firebase} />,
-    );
+    const Button = logout(() => <button>Log out</button>);
+    const wrapper = mount(<Button firebase={firebase} />);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -25,12 +19,7 @@ describe('logout', () => {
     const LogoutButton = 'button';
     const Hoc = logout(LogoutButton);
     const mockOnLogout = jest.fn();
-    const wrapper = mount(
-      <Hoc
-        firebase={firebase}
-        onLogout={mockOnLogout}
-      />,
-    );
+    const wrapper = mount(<Hoc firebase={firebase} onLogout={mockOnLogout} />);
 
     expect(mockLogout.mock.calls.length).toBe(0);
     expect(mockOnLogout.mock.calls.length).toBe(0);

@@ -5,8 +5,4 @@ import * as types from './types';
 
 export default reducer;
 
-export {
-  selectors,
-  actions,
-  types,
-};
+export { selectors, actions, types };

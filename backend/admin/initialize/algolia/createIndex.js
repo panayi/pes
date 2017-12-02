@@ -5,10 +5,7 @@ export default async () => {
   const index = algolia.initIndex(postsIndexName);
 
   await index.setSettings({
-    searchableAttributes: [
-      'title',
-      'body',
-    ],
+    searchableAttributes: ['title', 'body'],
     attributesForFaceting: ['category'],
     ranking: [
       'desc(createdAt)',

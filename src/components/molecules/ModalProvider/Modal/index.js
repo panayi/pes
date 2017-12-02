@@ -19,7 +19,14 @@ type Props = {
 };
 
 const Modal = (props: Props) => {
-  const { content: Content, actions: Actions, id, modalProps, isOpen, hideModal } = props;
+  const {
+    content: Content,
+    actions: Actions,
+    id,
+    modalProps,
+    isOpen,
+    hideModal,
+  } = props;
   // Pick more props as needed.
   // Dialog props: https://material-ui-next.com/api/dialog/
   const dialogProps = R.pick(['onExited'], modalProps);
@@ -33,21 +40,13 @@ const Modal = (props: Props) => {
       ignoreEscapeKeyUp
       {...dialogProps}
     >
-      {
-        title &&
-          <DialogTitle>
-            {title}
-          </DialogTitle>
-      }
-      <DialogContent>
-        {Content && <Content {...rest} />}
-      </DialogContent>
-      {
-        Actions &&
-          <DialogActions>
-            <Actions {...rest} />
-          </DialogActions>
-      }
+      {title && <DialogTitle>{title}</DialogTitle>}
+      <DialogContent>{Content && <Content {...rest} />}</DialogContent>
+      {Actions && (
+        <DialogActions>
+          <Actions {...rest} />
+        </DialogActions>
+      )}
     </Dialog>
   );
 };
@@ -66,6 +65,4 @@ const mapDispatchToProps = {
   hideModal: modalActions.hideModal,
 };
 
-export default R.compose(
-  connect(mapStateToProps, mapDispatchToProps),
-)(Modal);
+export default R.compose(connect(mapStateToProps, mapDispatchToProps))(Modal);

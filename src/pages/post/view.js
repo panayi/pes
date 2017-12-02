@@ -10,22 +10,14 @@ type Props = {
   post: Post,
 };
 
-const EditPostLink = withUserWithId(R.compose(
-  R.path(['post', 'user']),
-  propsSelector,
-))(({ postId }) => (
-  <Link to={`/i/${postId}/edit`}>
-    Edit
-  </Link>
-));
+const EditPostLink = withUserWithId(
+  R.compose(R.path(['post', 'user']), propsSelector),
+)(({ postId }) => <Link to={`/i/${postId}/edit`}>Edit</Link>);
 
 const ViewPost = ({ post, postId }: Props) => (
   <div>
     {post.title}
-    <EditPostLink
-      post={post}
-      postId={postId}
-    />
+    <EditPostLink post={post} postId={postId} />
   </div>
 );
 

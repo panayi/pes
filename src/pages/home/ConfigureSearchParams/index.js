@@ -25,9 +25,7 @@ const searchParamsSelector = createSelector(
       query,
     };
 
-    return R.isNil(page)
-      ? params
-      : R.assoc('page', page, params);
+    return R.isNil(page) ? params : R.assoc('page', page, params);
   },
 );
 

@@ -22,27 +22,15 @@ const firebaseAuthSelector = R.compose(
 );
 
 // isLoadedSelector :: State -> Boolean | Nil
-const isLoadedSelector = createSelector(
-  firebaseAuthSelector,
-  isLoaded,
-);
+const isLoadedSelector = createSelector(firebaseAuthSelector, isLoaded);
 
 // isInitializingSelector :: State -> Boolean | Nil
 const isInitializingSelector = R.path([...FIREBASE_PATH, 'isInitializing']);
 
-export const uidSelector = createSelector(
-  firebaseAuthSelector,
-  R.prop('uid'),
-);
+export const uidSelector = createSelector(firebaseAuthSelector, R.prop('uid'));
 
 // hasUidSelector :: State -> String | Nil
-const hasUidSelector = createSelector(
-  uidSelector,
-  R.compose(
-    R.not,
-    R.isNil,
-  ),
-);
+const hasUidSelector = createSelector(uidSelector, R.compose(R.not, R.isNil));
 
 // isAnonymousSelector :: State -> Boolean | Nil
 const isAnonymousSelector = createSelector(
@@ -54,10 +42,7 @@ const isAnonymousSelector = createSelector(
 export const isAuthenticatingSelector = createSelector(
   isInitializingSelector,
   isLoadedSelector,
-  R.useWith(R.or, [
-    R.identity,
-    R.not,
-  ]),
+  R.useWith(R.or, [R.identity, R.not]),
 );
 
 // isAuthenticatedSelector :: State -> Boolean
@@ -66,9 +51,8 @@ export const isAuthenticatedSelector = createSelector(
   isAuthenticatingSelector,
   hasUidSelector,
   isAnonymousSelector,
-  (isAuthenticating, hasUid, isAnonymous) => (
-    !isAuthenticating && hasUid && !isAnonymous
-  ),
+  (isAuthenticating, hasUid, isAnonymous) =>
+    !isAuthenticating && hasUid && !isAnonymous,
 );
 
 // isNotAuthenticatedSelector :: State -> Boolean
@@ -77,9 +61,8 @@ export const isNotAuthenticatedSelector = createSelector(
   isAuthenticatingSelector,
   hasUidSelector,
   isAnonymousSelector,
-  (isAuthenticating, hasUid, isAnonymous) => (
-    !isAuthenticating && (!hasUid || isAnonymous)
-  ),
+  (isAuthenticating, hasUid, isAnonymous) =>
+    !isAuthenticating && (!hasUid || isAnonymous),
 );
 
 // profileSelector :: State -> Object | Nil
@@ -87,10 +70,7 @@ export const profileSelector = R.path([...FIREBASE_PATH, 'profile']);
 
 export const isAdminSelector = createSelector(
   profileSelector,
-  R.compose(
-    R.path(['roles', 'admin']),
-    R.defaultTo({}),
-  ),
+  R.compose(R.path(['roles', 'admin']), R.defaultTo({})),
 );
 
 // isProfileLoadedSelector :: State -> Boolean
@@ -100,13 +80,8 @@ export const isProfileLoadedSelector = createSelector(
 );
 
 // profilePropSelector :: [String] -> State -> Any
-export const profilePropSelector = path => createSelector(
-  profileSelector,
-  R.compose(
-    R.path(path),
-    R.defaultTo({}),
-  ),
-);
+export const profilePropSelector = path =>
+  createSelector(profileSelector, R.compose(R.path(path), R.defaultTo({})));
 
 // profileEmailSelector :: State -> String | Nil
 export const profileEmailSelector = profilePropSelector('email');
@@ -116,9 +91,11 @@ export const tokenSelector = createSelector(
   R.path(['stsTokenManager', 'accessToken']),
 );
 
-export const isUserSelector = userSelector => createSelector(
-  isAuthenticatedSelector,
-  uidSelector,
-  userSelector,
-  (isAuthenticated, currentUserId, userId) => isAuthenticated && R.equals(currentUserId, userId),
-);
+export const isUserSelector = userSelector =>
+  createSelector(
+    isAuthenticatedSelector,
+    uidSelector,
+    userSelector,
+    (isAuthenticated, currentUserId, userId) =>
+      isAuthenticated && R.equals(currentUserId, userId),
+  );

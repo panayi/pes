@@ -7,11 +7,15 @@ import {
   isAuthenticatingSelector,
 } from 'store/auth/selectors';
 
-export default ({ userSelector, ...otherOptions }) => connectedReduxRedirect({
-  redirectPath: '/',
-  allowRedirectBack: false,
-  authenticatedSelector: R.both(isAuthenticatedSelector, isUserSelector(userSelector)),
-  authenticatingSelector: isAuthenticatingSelector,
-  redirectAction: routerActions.replace,
-  ...otherOptions,
-});
+export default ({ userSelector, ...otherOptions }) =>
+  connectedReduxRedirect({
+    redirectPath: '/',
+    allowRedirectBack: false,
+    authenticatedSelector: R.both(
+      isAuthenticatedSelector,
+      isUserSelector(userSelector),
+    ),
+    authenticatingSelector: isAuthenticatingSelector,
+    redirectAction: routerActions.replace,
+    ...otherOptions,
+  });
