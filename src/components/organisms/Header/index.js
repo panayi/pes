@@ -30,6 +30,7 @@ const styles = theme => ({
   content: {
     display: 'flex',
     flex: '1 1 auto',
+    alignItems: 'center',
   },
   searchInput: {
     flex: '1 1 auto',
@@ -56,7 +57,7 @@ const Header = ({ classes }) => (
         <LoginModalButton color="contrast">Login</LoginModalButton>
         <LogoutLink color="contrast">Logout</LogoutLink>
         <ProfileLink to="/profile" color="contrast">
-          <ProfileImage.Avatar />
+          <ProfileImage.Avatar withDefault />
         </ProfileLink>
       </div>
     </Toolbar>
