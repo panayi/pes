@@ -134,7 +134,7 @@ const sequentialImportImage = async (index, images, adPath, database) => {
     );
   } catch (error) {
     if (R.equals(error.message, FETCH_FAILED)) {
-      log.error(`Failed to fetch ${image}`);
+      log.warn(`Failed to fetch ${image}`);
     } else {
       throw error;
     }

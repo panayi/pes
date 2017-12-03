@@ -50,6 +50,7 @@ export default program =>
     .action(async service => {
       try {
         await initialize(service);
+        process.exit();
       } catch (error) {
         log.error(error);
         process.exit();
