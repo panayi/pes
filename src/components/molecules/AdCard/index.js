@@ -5,13 +5,13 @@ import {
   CardMedia,
   CardHeader,
   CardContent,
-  Typography,
   withStyles,
 } from 'material-ui';
 import { Link } from 'react-router-dom';
+import AdPrice from 'components/atoms/AdPrice';
+import AdAddress from 'components/atoms/AdAddress';
+import AdDate from 'components/atoms/AdDate';
 import { getMediaProps } from './utils';
-
-// TODO: this needs to be broken into several molecules
 
 type Props = {
   ad: Ad,
@@ -21,7 +21,7 @@ type Props = {
 
 const DEFAULT_MEDIA_HEIGHT = 200;
 const HEADER_HEIGHT = 60;
-const CONTENT_HEIGHT = 30;
+const CONTENT_HEIGHT = 40;
 
 const styles = theme => ({
   root: {
@@ -88,12 +88,12 @@ const AdCard = ({ ad, width, classes }: Props) => {
           title={ad.title}
           {...getMediaProps(ad, { defaultHeight: DEFAULT_MEDIA_HEIGHT })}
         >
-          {ad.price &&
-            ad.price > 0 && (
-              <Typography className={classes.price} color="accent" type="title">
-                €&nbsp;{ad.price}
-              </Typography>
-            )}
+          <AdPrice
+            className={classes.price}
+            color="accent"
+            type="title"
+            ad={ad}
+          />
         </CardMedia>
         <CardHeader
           className={classes.header}
@@ -103,11 +103,8 @@ const AdCard = ({ ad, width, classes }: Props) => {
           title={ad.title}
         />
         <CardContent className={classes.content}>
-          {ad.address && (
-            <Typography type="caption" align="center">
-              {ad.address}
-            </Typography>
-          )}
+          <AdAddress ad={ad} type="caption" align="center" />
+          <AdDate ad={ad} type="caption" align="center" />
         </CardContent>
       </Card>
     </div>
