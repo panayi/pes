@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import algolia from 'algoliaClient';
 import serializeAd from 'helpers/serializeAdToAlgolia';
-import { database } from '../../lib/firebaseClient';
+import { database } from '../../../lib/firebaseClient';
 
 export const canInitialize = async () => {
   const indexes = await algolia.listIndexes();

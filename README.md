@@ -74,6 +74,8 @@ We use CircleCI to automatically deploy the latest code to Firebase Hosting. You
 ### `yarn admin initialize`
 Seed a Firebase DB, and initial import to Algolia. You should typically run this to setup a new deployment.
 
+Run `yarn admin` to see all available admin operations.
+
 ### `yarn build`
 Build all the apps (UI, functions, database, admin).
 

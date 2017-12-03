@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import categories from 'seeds/categories.json';
-import { database } from '../../lib/firebaseClient';
+import { database } from '../../../lib/firebaseClient';
 
 const formatCategories = R.reduce(
   (acc, category) =>

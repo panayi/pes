@@ -7,41 +7,51 @@ import initializeAlgolia, {
   canInitialize as canInitializeAlgolia,
 } from './algolia';
 
-const shouldInitializeService = name =>
-  R.compose(R.either(R.isNil, R.equals(name)), R.prop('only'), R.defaultTo({}));
+const shouldInitializeService = name => R.either(R.isNil, R.equals(name));
 
 const shouldInitializeFirebase = shouldInitializeService('firebase');
 const shouldInitializeAlgolia = shouldInitializeService('algolia');
 
-const canInitialize = async options => {
+const canInitialize = async service => {
   log.info('Checking ability to initialize');
 
-  if (shouldInitializeFirebase(options)) {
+  if (shouldInitializeFirebase(service)) {
     await canInitializeFirebase();
     log.success('Firebase: OK');
   }
 
-  if (shouldInitializeAlgolia(options)) {
+  if (shouldInitializeAlgolia(service)) {
     await canInitializeAlgolia();
     log.success('Algolia: OK');
   }
 };
 
-const initialize = async options => {
+const initialize = async service => {
   log.info('Starting initialization script');
-  await canInitialize(options);
+  await canInitialize(service);
 
-  if (shouldInitializeFirebase(options)) {
+  if (shouldInitializeFirebase(service)) {
     const firebaseResult = await initializeFirebase();
     log.success('Firebase: Initialized');
     R.forEach(msg => log.info(`Firebase: ${msg}`), firebaseResult);
   }
 
-  if (shouldInitializeAlgolia(options)) {
+  if (shouldInitializeAlgolia(service)) {
     const algoliaResult = await initializeAlgolia();
     log.success('Algolia: Initialized');
     R.forEach(msg => log.info(`Algolia: ${msg}`), algoliaResult);
   }
 };
 
-export default initialize;
+export default program =>
+  program
+    .command('initialize [service]')
+    .description('Initialize [service] or all services')
+    .action(async service => {
+      try {
+        await initialize(service);
+      } catch (error) {
+        log.error(error);
+        process.exit();
+      }
+    });

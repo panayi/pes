@@ -4,19 +4,19 @@
   "description": "Firebase functions for Pesposa",
   "main": "index.js",
   "author": "Panagiotis Panagi",
-  "license": "no-license",
+  "license": "UNLICENSED",
   "dependencies": {
     "algoliasearch": "^3.24.4",
     "babel-runtime": "^6.26.0",
     "chalk": "^2.3.0",
+    "commander": "^2.12.2",
     "express": "^4.16.0",
     "firebase-admin": "^5.2.1",
     "firebase-functions": "^0.6.3",
     "google-cloud": "^0.57.0",
     "node-fetch": "^1.7.3",
     "ramda": "^0.25.0",
-    "uuid-v4": "^0.1.0",
-    "yargs": "^10.0.3"
+    "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-flow-strip-types": "^7.0.0-beta.4",

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { database } from '../../lib/firebaseClient';
+import { database } from '../../../lib/firebaseClient';
 import seed from './seed';
 import importData from './import';
 

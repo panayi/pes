@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import log from 'helpers/log';
 import importAd from 'legacy/importAd';
 import { ADS_ENDPOINT } from 'legacy/urls';
-import { database } from '../../lib/firebaseClient';
+import { database } from '../../../lib/firebaseClient';
 
 const sequentialImportAd = async (index, ads) => {
   const ad = ads[index];

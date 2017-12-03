@@ -1,30 +1,23 @@
 import * as R from 'ramda';
-import yargs from 'yargs';
-import chalk from 'chalk';
 import log from 'helpers/log';
-import initialize from './initialize';
+import program from 'commander';
+import commands from './commands';
 
-const COMMANDS = {
-  initialize,
-};
+R.forEach(command => command(program), R.values(commands));
 
-const args = R.propOr({}, 'argv', yargs);
-const commandKey = R.prop('c', args);
-const command = R.prop(commandKey, COMMANDS);
+program
+  .name('yarn admin')
+  .command('help', '')
+  .description('Usage information')
+  .action(() => program.help());
 
-if (R.isNil(command)) {
-  log.error(`Missing command: ${chalk.yellow(`[${commandKey}]`)}`);
+program.parse(process.argv);
+
+const commandNames = R.keys(commands);
+const command = R.compose(R.head, R.defaultTo([]))(process.argv.slice(2));
+
+if (!command || !R.contains(command, commandNames)) {
+  log.error(`Command "${command || ''}" not found.`);
+  program.outputHelp();
   process.exit();
 }
-
-const caller = async () => {
-  try {
-    await command(args);
-  } catch (error) {
-    log.error(error);
-  }
-
-  process.exit();
-};
-
-caller();
