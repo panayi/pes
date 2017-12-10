@@ -8,7 +8,7 @@ import urlParamsSelector from 'utils/urlParamsSelector';
 import Page from 'components/molecules/Page';
 import { modelConnections, connectData } from 'services/connectData';
 import Layout from 'components/organisms/Layout';
-import ViewAd from './view';
+import AdView from 'components/organisms/AdView';
 import EditAd from './edit';
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
 const AdPage = ({ ad, adId }: Props) => (
   <Layout>
     <Page fixed>
-      <ViewAd ad={ad} adId={adId} />
+      <AdView ad={ad} />
       <Route
         path="/i/:adId/edit"
         render={props => <EditAd {...props} ad={ad} adId={adId} />}

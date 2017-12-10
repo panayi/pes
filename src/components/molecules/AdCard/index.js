@@ -1,5 +1,8 @@
 /* @flow */
 import React from 'react';
+import * as R from 'ramda';
+import { withProps } from 'recompose';
+import { createStructuredSelector } from 'reselect';
 import {
   Card,
   CardMedia,
@@ -8,18 +11,19 @@ import {
   withStyles,
 } from 'material-ui';
 import { Link } from 'react-router-dom';
+import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
 import AdAddress from 'components/atoms/AdAddress';
 import AdDate from 'components/atoms/AdDate';
-import { getMediaProps } from './utils';
+import { selectors as imagesSelectors } from 'store/images';
 
 type Props = {
   ad: Ad,
   width: Number,
+  thumbnail: Object,
   classes: Object,
 };
 
-const DEFAULT_MEDIA_HEIGHT = 200;
 const HEADER_HEIGHT = 60;
 const CONTENT_HEIGHT = 40;
 
@@ -62,11 +66,8 @@ const styles = theme => ({
   },
 });
 
-const AdCard = ({ ad, width, classes }: Props) => {
-  const mediaProps = getMediaProps(ad, {
-    defaultHeight: DEFAULT_MEDIA_HEIGHT,
-  });
-  const totalHeight = mediaProps.style.height + HEADER_HEIGHT + CONTENT_HEIGHT;
+const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
+  const totalHeight = thumbnail.height + HEADER_HEIGHT + CONTENT_HEIGHT;
 
   return (
     <div
@@ -85,8 +86,9 @@ const AdCard = ({ ad, width, classes }: Props) => {
       >
         <CardMedia
           className={classes.media}
-          title={ad.title}
-          {...getMediaProps(ad, { defaultHeight: DEFAULT_MEDIA_HEIGHT })}
+          title={<AdTitle ad={ad} />}
+          image={thumbnail.url}
+          style={{ height: `${thumbnail.height}px` }}
         >
           <AdPrice
             className={classes.price}
@@ -111,4 +113,11 @@ const AdCard = ({ ad, width, classes }: Props) => {
   );
 };
 
-export default withStyles(styles)(AdCard);
+export default R.compose(
+  withProps(
+    createStructuredSelector({
+      thumbnail: imagesSelectors.adFirstImageWithDefaultSelector,
+    }),
+  ),
+  withStyles(styles),
+)(AdCard);

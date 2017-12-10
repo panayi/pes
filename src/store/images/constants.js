@@ -1,0 +1,3 @@
+const DEFAULT_IMAGE_HEIGHT = 200;
+
+export { DEFAULT_IMAGE_HEIGHT };
