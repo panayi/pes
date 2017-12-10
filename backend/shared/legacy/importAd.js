@@ -64,6 +64,7 @@ const transformAd = R.compose(
       level3,
     ]),
   ),
+  computedProp('price', price => parseInt(price, 10)),
   computedProp('body', R.prop('description')),
   computedProp('category', R.prop('categoryParent')),
   computedProp(

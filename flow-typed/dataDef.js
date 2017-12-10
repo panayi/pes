@@ -18,4 +18,5 @@ declare type Ad = {
   user: string,
   title: string,
   price: number,
+  createdAt: number,
 };
