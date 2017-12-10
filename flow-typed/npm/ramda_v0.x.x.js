@@ -1,5 +1,5 @@
-// flow-typed signature: b2c5584525357db0529e998438eda437
-// flow-typed version: 8cd387e8be/ramda_v0.x.x/flow_>=v0.49.x
+// flow-typed signature: 8bbe3ee6230acc562372680de6ed5dbc
+// flow-typed version: 58587b23bb/ramda_v0.x.x/flow_>=v0.49.x
 
 /* eslint-disable no-unused-vars, no-redeclare */
 
@@ -20,6 +20,7 @@ declare module ramda {
   declare type BinarySameTypeFn<T> = BinaryFn<T, T, T>;
   declare type NestedObject<T> = { [k: string]: T | NestedObject<T> };
   declare type UnaryPredicateFn<T> = (x: T) => boolean;
+  declare type MapUnaryPredicateFn = <V>(V) => V => boolean;
   declare type BinaryPredicateFn<T> = (x: T, y: T) => boolean;
   declare type BinaryPredicateFn2<T, S> = (x: T, y: S) => boolean;
 
@@ -331,6 +332,7 @@ declare module ramda {
     (<A, B, C, D, E>(
       ab: UnaryFn<A, B>,
       bc: UnaryFn<B, C>,
+      cd: UnaryFn<C, D>,
       de: UnaryFn<D, E>,
       ...rest: Array<void>
     ) => UnaryFn<A, E>) &
@@ -704,14 +706,13 @@ declare module ramda {
   ): ((xs: string) => string) & ((xs: T) => ?V);
   declare function nth<T: string>(i: number, xs: T): T;
 
-  declare function find<V, O: { [key: string]: * }, T: Array<V> | O>(
-    fn: UnaryPredicateFn<V>,
-    ...rest: Array<void>
-  ): (xs: T | O) => ?V | O;
-  declare function find<V, O: { [key: string]: * }, T: Array<V> | O>(
-    fn: UnaryPredicateFn<V>,
-    xs: T | O
-  ): ?V | O;
+  declare type Find = (<V, T: Array<V>>(
+    fn: UnaryPredicateFn<V>
+  ) => (xs: T) => ?V) &
+    (<V, T: Array<V>>(fn: UnaryPredicateFn<V>, xs: T) => ?V);
+
+  declare var find: Find;
+
   declare function findLast<V, O: { [key: string]: * }, T: Array<V> | O>(
     fn: UnaryPredicateFn<V>,
     ...rest: Array<void>
@@ -978,21 +979,21 @@ declare module ramda {
 
   declare function reverse<T, V: Array<T> | string>(xs: V): V;
 
-  declare function reduce<A, B>(
-    fn: (acc: A, elem: B) => A,
-    ...rest: Array<void>
-  ): ((init: A, xs: Array<B>) => A) &
-    ((init: A, ...rest: Array<void>) => (xs: Array<B>) => A);
-  declare function reduce<A, B>(
-    fn: (acc: A, elem: B) => A,
-    init: A,
-    ...rest: Array<void>
-  ): (xs: Array<B>) => A;
-  declare function reduce<A, B>(
-    fn: (acc: A, elem: B) => A,
-    init: A,
-    xs: Array<B>
-  ): A;
+  declare type Reduce = (<A, B>(
+    fn: (acc: A, elm: B) => A
+  ) => ((init: A) => (xs: Array<B> | $ReadOnlyArray<B>) => A) &
+    ((init: A, xs: Array<B> | $ReadOnlyArray<B>) => A)) &
+    (<A, B>(
+      fn: (acc: A, elm: B) => A,
+      init: A
+    ) => (xs: Array<B> | $ReadOnlyArray<B>) => A) &
+    (<A, B>(
+      fn: (acc: A, elm: B) => A,
+      init: A,
+      xs: Array<B> | $ReadOnlyArray<B>
+    ) => A);
+
+  declare var reduce: Reduce;
 
   declare function reduceBy<A, B>(
     fn: (acc: B, elem: A) => B,
@@ -1632,14 +1633,13 @@ declare module ramda {
 
   declare function valuesIn<T, O: { [k: string]: T }>(o: O): Array<T | any>;
 
-  declare function where<T>(
-    predObj: { [key: string]: UnaryPredicateFn<T> },
-    ...rest: Array<void>
-  ): (o: { [k: string]: T }) => boolean;
-  declare function where<T>(
-    predObj: { [key: string]: UnaryPredicateFn<T> },
-    o: { [k: string]: T }
+  declare function where<O>(
+    predObj: $ObjMap<O, MapUnaryPredicateFn>,
+    o: O
   ): boolean;
+  declare function where<O>(
+    predObj: $ObjMap<O, MapUnaryPredicateFn>
+  ): O => boolean;
 
   declare function whereEq<T, S, O: { [k: string]: T }, Q: { [k: string]: S }>(
     predObj: O,
