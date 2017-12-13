@@ -1,9 +1,13 @@
+import React from 'react';
 import * as R from 'ramda';
-import relativeDate from 'relative-date';
+import TimeAgo from 'react-timeago';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { withProps } from 'recompose';
 import AdProp from '../AdProp';
 
 export default withProps({
-  getProp: R.compose(R.unless(isNilOrEmpty, relativeDate), R.prop('createdAt')),
+  getProp: R.compose(
+    R.unless(isNilOrEmpty, date => <TimeAgo date={date} />),
+    R.prop('createdAt'),
+  ),
 })(AdProp);

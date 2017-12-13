@@ -12,6 +12,7 @@ type Props = {
 // Low level component - DO NOT USE directly
 // Instead define higher-level atoms like AdTitle, AdPrice, etc.
 export default R.compose(
+  requirePropToRender('ad'),
   mapProps(({ ad, getProp, ...rest }: Props) => ({
     children: getProp(ad),
     ...rest,

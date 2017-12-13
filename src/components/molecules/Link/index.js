@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import classNames from 'classnames';
-import { Button, withStyles } from 'material-ui';
+import { Button, IconButton, withStyles } from 'material-ui';
 import { NavLink } from 'react-router-dom';
 import { defaultProps, withProps } from 'recompose';
 import omitProps from 'utils/omitProps';
@@ -15,7 +15,7 @@ const styles = {
   },
 };
 
-export default R.compose(
+const makeLink = R.compose(
   defaultProps({
     activeClassName: DEFAULT_ACTIVE_CLASS_NAME,
   }),
@@ -25,4 +25,10 @@ export default R.compose(
     className: classNames(className, classes.button),
   })),
   omitProps(['classes', 'dispatch']),
-)(Button);
+);
+
+const Link = makeLink(Button);
+
+Link.icon = makeLink(IconButton);
+
+export default Link;

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { withProps } from 'recompose';
+import { withProps, setDisplayName } from 'recompose';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import renderNothingWhen from 'components/hocs/renderNothingWhen';
 import AdProp from '../AdProp';
@@ -15,4 +15,5 @@ export default R.compose(
       getPrice,
     ),
   }),
+  setDisplayName('AdPrice'),
 )(AdProp);

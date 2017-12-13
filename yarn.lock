@@ -259,6 +259,10 @@
     react-treebeard "^2.0.3"
     redux "^3.7.2"
 
+"@types/node@*":
+  version "8.5.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.0.tgz#c5be22ffc84b221466fc8dfc0d6b1f88060808ef"
+
 "@types/node@^6.0.46":
   version "6.0.89"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.89.tgz#154be0e6a823760cd6083aa8c48f952e2e63e0b0"
@@ -7813,6 +7817,12 @@ parse5@^3.0.1:
   dependencies:
     "@types/node" "^6.0.46"
 
+parse5@^3.0.2:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-3.0.3.tgz#042f792ffdd36851551cf4e9e066b3874ab45b5c"
+  dependencies:
+    "@types/node" "*"
+
 parseurl@~1.3.1, parseurl@~1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/parseurl/-/parseurl-1.3.2.tgz#fc289d4ed8993119460c156253262cdc8de65bf3"
@@ -8599,6 +8609,10 @@ re-reselect@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/re-reselect/-/re-reselect-1.0.1.tgz#6d9ebac488bc4bac07bdcd3483f2d3dc76a437c2"
 
+react-attr-converter@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-attr-converter/-/react-attr-converter-0.3.1.tgz#4a2abf6d907b7ddae4d862dfec80e489ce41ad6e"
+
 react-dev-utils@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-4.2.1.tgz#9f2763e7bafa1a1b9c52254d2a479deec280f111"
@@ -8810,6 +8824,13 @@ react-redux@^5.0.6:
     loose-envify "^1.1.0"
     prop-types "^15.5.10"
 
+react-render-html@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-render-html/-/react-render-html-0.6.0.tgz#1af51d859ed75474435a1c65c293a48e12c36627"
+  dependencies:
+    parse5 "^3.0.2"
+    react-attr-converter "^0.3.1"
+
 react-router-dom@^4.2.2:
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.2.2.tgz#c8a81df3adc58bba8a76782e946cbd4eae649b8d"
@@ -8977,6 +8998,10 @@ react-test-renderer@^16.1.1:
     fbjs "^0.8.16"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+react-timeago@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-3.4.3.tgz#eb9061eefb044e4a2b09ce8c99d34645b2dbfa25"
 
 react-transition-group@^1.1.2:
   version "1.2.1"
@@ -9333,10 +9358,6 @@ regjsparser@^0.1.4:
 relateurl@0.2.x:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
-
-relative-date@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/relative-date/-/relative-date-1.1.3.tgz#120903040588ec7a4a399c6547fd01d0e3d2dc63"
 
 remove-trailing-separator@^1.0.1:
   version "1.1.0"

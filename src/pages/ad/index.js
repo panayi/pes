@@ -19,7 +19,7 @@ type Props = {
 const AdPage = ({ ad, adId }: Props) => (
   <Layout>
     <Page fixed>
-      <AdView ad={ad} />
+      <AdView ad={ad} adId={adId} />
       <Route
         path="/i/:adId/edit"
         render={props => <EditAd {...props} ad={ad} adId={adId} />}
