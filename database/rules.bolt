@@ -32,7 +32,11 @@ type DataURI extends String {
 }
 
 type Date extends String {
-  validate() { this.test(/(?:\s|gmt\s*)(-|\+)(\d{1,4})(\s|$)/) }
+  validate() { this.test(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(.[0-9]+)?(Z)?$/) }
+}
+
+type PastEpoch extends Number {
+  validate() { this <= now }
 }
 
 type Decimal extends String {
@@ -134,8 +138,9 @@ type Ad {
   body: AdBody,
   price: Price,
   category: String,
-  images: Map<String, Image> | Null
+  images: Map<String, Image> | Null,
   user: String,
+  createdAt: PastEpoch | Null
 }
 
 type PendingAd {
@@ -191,6 +196,7 @@ userIsValid(uid) { root.users[uid] != null }
 isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook' || providerId == 'twitter' || providerId == 'github' }
 requireAuthenticatedWithSocial(value, providerId) { !isSocialProvider(providerId) || value != null }
 requireWhenAuthenticatedWithPhone(value, providerId) { providerId != 'phone' || value != null }
+createOnly(value) { prior(value) == null || value == prior(value) }
 
 // ------------------------------------
 // Paths
@@ -208,7 +214,7 @@ path /ads/{id} is Ad {
   update() { isCurrentUser(this.user) }
   delete() { isCurrentUser(this.user) }
 
-  validate() { userIsValid(this.user) && categoryIsValid(this.category) }
+  validate() { userIsValid(this.user) && categoryIsValid(this.category) && createOnly(this.createdAt) }
 }
 
 path /users/{uid} is User {
