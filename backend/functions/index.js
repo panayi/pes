@@ -1,7 +1,7 @@
-import algoliaAd from './algolia/ad';
-import syncAd from './syncAd';
+import syncAdToAlgolia from './syncAdToAlgolia';
+import syncAdFromLegacy from './syncAdFromLegacy';
 import migrateAnonymousUser from './migrateAnonymousUser';
 
-exports.algoliaAd = algoliaAd;
-exports.syncAd = syncAd;
+exports.syncAdToAlgolia = syncAdToAlgolia;
+exports.syncAdFromLegacy = syncAdFromLegacy;
 exports.migrateAnonymousUser = migrateAnonymousUser;
