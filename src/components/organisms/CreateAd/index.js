@@ -40,7 +40,7 @@ const CreateAdContent = R.compose(
 
 const CreateAdActions = connector(({ ad, createAd }) => [
   <Button key={0} onClick={() => createAd(ad)}>
-    Ad
+    Post Ad
   </Button>,
 ]);
 

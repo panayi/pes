@@ -3,7 +3,6 @@ export const AD_INITIAL_STATE = {
   price: '',
   body: '',
   category: '',
-  images: [],
 };
 export const AD_FORM_MODEL_KEY = 'ad';
 export const AD_FORM_MODEL_PATH = `forms.${AD_FORM_MODEL_KEY}`;
