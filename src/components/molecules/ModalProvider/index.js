@@ -6,15 +6,12 @@ import { selectors } from 'store/modals';
 import Modal from './Modal';
 
 const ModalProvider = R.compose(
-  R.map(([id, modalProps]) => (
-    <Modal key={id} id={id} modalProps={modalProps} />
-  )),
-  R.toPairs,
-  R.prop('modals'),
+  R.map(([id, ModalComponent = Modal]) => <ModalComponent key={id} id={id} />),
+  R.prop('modalComponents'),
 );
 
 const mapStateToProps = createStructuredSelector({
-  modals: selectors.modalsSelector,
+  modalComponents: selectors.modalComponentsSelector,
 });
 
 export default connect(mapStateToProps)(ModalProvider);

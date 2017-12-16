@@ -9,11 +9,11 @@ import { selectors, actions as modalActions } from 'store/modals';
 
 type ModalProps = {
   title: String, // eslint-disable-line react/no-unused-prop-types
-  actions: Function, // eslint-disable-line react/no-unused-prop-types
 };
 
 type Props = {
   content: React$Component<*>,
+  actions: React$Component<*>,
   modalProps: ModalProps,
   isOpen: boolean,
   hideModal: Function,
@@ -26,13 +26,15 @@ const Modal = (props: Props) => {
     modalProps,
     isOpen,
     hideModal,
+    ...rest
   } = props;
   // Pick more props as needed.
   // Dialog props: https://material-ui-next.com/api/dialog/
   const dialogProps = R.pick(['onExited'], modalProps);
-  const { title, ...rest } = modalProps;
+  const { title } = modalProps;
   const componentProps = {
     ...rest,
+    ...modalProps,
     hideModal,
   };
 
@@ -57,13 +59,10 @@ const Modal = (props: Props) => {
   );
 };
 
-Modal.defaultProps = {
-  modalProps: {},
-};
-
 const mapStateToProps = createStructuredSelector({
-  content: selectors.modalContentSelector,
-  actions: selectors.modalActionsSelector,
+  content: selectors.componentForContentSelector,
+  actions: selectors.componentForActionsSelector,
+  modalProps: selectors.modalPropsSelector,
   isOpen: selectors.isOpenSelector,
 });
 

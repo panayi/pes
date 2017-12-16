@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { withState } from 'recompose';
+import { withState, branch, renderComponent } from 'recompose';
 import { modelConnections, connectData } from 'services/connectData';
 import { actions, selectors } from 'store/ad';
 import { createStructuredSelector } from 'reselect';
@@ -11,7 +11,9 @@ import { factory as modalFactory } from 'store/modals';
 import pickProps from 'utils/pickProps';
 import withAnonymousUser from 'components/hocs/withAnonymousUser';
 import requireUserToCallAction from 'components/hocs/requireUserToCallAction';
+import Modal from 'components/molecules/ModalProvider/Modal';
 import AdForm from 'components/molecules/AdForm';
+import CreateAdSuccess from './Success';
 
 const mapDataToProps = {
   ad: modelConnections.pendingAds.one(uidSelector),
@@ -33,22 +35,36 @@ const connector = connectData(
 );
 
 const CreateAdContent = R.compose(
+  branch(R.prop('didCreateAd'), renderComponent(CreateAdSuccess)),
   withAnonymousUser,
-  withState('created', 'setCreated', false),
   connector,
   pickProps(['ad', 'filesPath', 'onChange']),
 )(AdForm);
 
-const CreateAdActions = ({ ad, createAd, hideModal }) => (
-  <Button onClick={() => createAd(ad, hideModal)}>Post Ad</Button>
-);
+const CreateAdActions = ({
+  ad,
+  createAd,
+  hideModal,
+  didCreateAd,
+  setDidCreateAd,
+}) =>
+  didCreateAd ? (
+    <Button onClick={hideModal}>Close</Button>
+  ) : (
+    <Button onClick={() => createAd(ad, () => setDidCreateAd(true))}>
+      Post Ad
+    </Button>
+  );
 
 const ConnectedCreateAdActions = R.compose(
   connector,
   requireUserToCallAction('createAd'),
 )(CreateAdActions);
 
+const CustomModal = withState('didCreateAd', 'setDidCreateAd', false)(Modal);
+
 export default modalFactory({
+  modal: CustomModal,
   content: CreateAdContent,
   actions: ConnectedCreateAdActions,
 });
