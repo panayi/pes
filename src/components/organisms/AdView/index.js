@@ -81,8 +81,7 @@ const AdView = ({ ad, adId, images, classes }: Props) => (
       </div>
       <AdPrice ad={ad} type="title" />
       <AdBody ad={ad} className={classes.description} />
-      {/* TODO: Use actual `createAt` */}
-      <AdDateChip ad={{ ...ad, createdAt: new Date() }} />
+      <AdDateChip ad={ad} />
       <div className={classes.location}>
         <PlaceIcon />
         <AdAddress ad={ad} className={classes.address} />
