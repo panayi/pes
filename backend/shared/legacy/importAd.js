@@ -22,7 +22,7 @@ const computedProp = R.curry((key, computer, obj) =>
 
 // Transform old ad attributes (MySQL DB) to new ad attributes
 const transformAd = R.compose(
-  R.assoc('isOld', true),
+  R.assoc('isLegacy', true),
   R.pick([
     'id',
     'createdAt',
@@ -64,7 +64,14 @@ const transformAd = R.compose(
       level3,
     ]),
   ),
-  computedProp('price', price => parseInt(price, 10)),
+  computedProp(
+    'price',
+    R.compose(
+      R.defaultTo(null),
+      R.unless(R.isNil, price => parseInt(price, 10)),
+      R.prop('price'),
+    ),
+  ),
   computedProp('body', R.prop('description')),
   computedProp('category', R.prop('categoryParent')),
   computedProp(
