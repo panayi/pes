@@ -68,7 +68,7 @@ const transformAd = R.compose(
     'price',
     R.compose(
       R.defaultTo(null),
-      R.unless(R.isNil, price => parseInt(price, 10)),
+      R.unless(R.isNil, parseFloat),
       R.prop('price'),
     ),
   ),
