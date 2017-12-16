@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions';
 import algolia from 'algoliaClient';
 import serializeAd from 'helpers/serializeAdToAlgolia';
+import getCurrentEpoch from 'helpers/getCurrentEpoch';
 
 const adsIndexName = process.env.REACT_APP_ALGOLIA_ADS_INDEX_NAME;
 
@@ -12,6 +13,8 @@ const addOrUpdateIndexRecord = event => {
 
   // Specify Algolia's objectID using the Firebase object key
   firebaseObject.objectID = event.params.adId;
+
+  firebaseObject.createdAt = firebaseObject.createdAt || getCurrentEpoch(event);
 
   // Add or update object
   index.saveObject(serializeAd(firebaseObject), err => {

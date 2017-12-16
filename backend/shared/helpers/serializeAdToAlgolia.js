@@ -1,9 +1,6 @@
 import * as R from 'ramda';
 
 export default R.compose(
-  R.unless(R.has('createdAt'), ad =>
-    R.assoc('createdAt', new Date().getTime(), ad),
-  ),
   R.over(
     R.lensProp('body'),
     R.compose(str => str.substring(0, 1500), R.defaultTo('')),
