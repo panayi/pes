@@ -86,7 +86,6 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
       >
         <CardMedia
           className={classes.media}
-          title={<AdTitle ad={ad} />}
           image={thumbnail.url}
           style={{ height: `${thumbnail.height}px` }}
         >
@@ -102,7 +101,7 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
           classes={{
             title: classes.headerTitle,
           }}
-          title={ad.title}
+          title={<AdTitle type="subheading" ad={ad} />}
         />
         <CardContent className={classes.content}>
           <AdAddress ad={ad} type="caption" align="center" />
