@@ -15,6 +15,8 @@ export default R.compose(
   withContext(
     {
       login: PropTypes.func.isRequired,
+      onSuccess: PropTypes.func,
+      onError: PropTypes.func,
     },
     ({ firebase, onSuccess, onError }) => ({
       login: (...args) =>
@@ -22,6 +24,8 @@ export default R.compose(
           .login(...args)
           .then(onSuccess)
           .catch(onError),
+      onSuccess,
+      onError,
     }),
   ),
 )(Login);

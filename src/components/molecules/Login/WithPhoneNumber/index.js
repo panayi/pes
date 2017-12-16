@@ -13,6 +13,7 @@ import {
   type PhoneNumberValues,
   type CodeValues,
 } from 'store/auth/withPhoneNumber/flowtypes';
+import withLogin from '../withLogin';
 
 type Props = {
   error: Object,
@@ -25,6 +26,8 @@ type Props = {
   showError: Boolean,
   showLoading: Boolean,
   showTryAgain: Boolean,
+  onSuccess: Function,
+  onError: Function,
 };
 
 export const INITIAL_STATE = {
@@ -69,14 +72,18 @@ export class LoginWithPhoneNumber extends Component<Props> {
   }
 
   renderCodeForm() {
-    if (!this.props.showCodeForm) {
+    const { showCodeForm, submitCodeForm, onSuccess, onError } = this.props;
+
+    if (!showCodeForm) {
       return null;
     }
 
     return (
       <Form
         model={MODEL_PATH}
-        onSubmit={(values: CodeValues) => this.props.submitCodeForm(values)}
+        onSubmit={(values: CodeValues) =>
+          submitCodeForm(values, onSuccess, onError)
+        }
       >
         <Control.text
           model="forms.phoneNumberLogin.code"
@@ -156,6 +163,7 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
+  withLogin,
   firebaseConnect(),
   connect(mapStateToProps, mapDispatchToProps),
 )(LoginWithPhoneNumber);

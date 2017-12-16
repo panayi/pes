@@ -10,6 +10,7 @@ import { uidSelector } from 'store/auth/selectors';
 import { factory as modalFactory } from 'store/modals';
 import pickProps from 'utils/pickProps';
 import withAnonymousUser from 'components/hocs/withAnonymousUser';
+import requireUserToCallAction from 'components/hocs/requireUserToCallAction';
 import AdForm from 'components/molecules/AdForm';
 
 const mapDataToProps = {
@@ -38,13 +39,16 @@ const CreateAdContent = R.compose(
   pickProps(['ad', 'filesPath', 'onChange']),
 )(AdForm);
 
-const CreateAdActions = connector(({ ad, createAd }) => [
-  <Button key={0} onClick={() => createAd(ad)}>
-    Post Ad
-  </Button>,
-]);
+const CreateAdActions = ({ ad, createAd, hideModal }) => (
+  <Button onClick={() => createAd(ad, hideModal)}>Post Ad</Button>
+);
+
+const ConnectedCreateAdActions = R.compose(
+  connector,
+  requireUserToCallAction('createAd'),
+)(CreateAdActions);
 
 export default modalFactory({
   content: CreateAdContent,
-  actions: CreateAdActions,
+  actions: ConnectedCreateAdActions,
 });

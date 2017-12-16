@@ -42,18 +42,17 @@ export const submitPhoneNumberForm = (
     .signInWithPhoneNumber(phoneNumber, recaptcha.verifier)
     .then(result => {
       dispatch(sendSmsSuccess(result));
-      dispatch(anonymousUserIdActions.maybeSetAnonymousUserId());
     })
     .catch(error => {
       dispatch(sendSmsFail(error));
     });
 };
 
-export const submitCodeForm = (values: CodeValues) => (
-  dispatch: Dispatch,
-  getState: Function,
-  getFirebase: Function,
-) => {
+export const submitCodeForm = (
+  values: CodeValues,
+  onSuccess: ?Function,
+  onError: ?Function,
+) => (dispatch: Dispatch, getState: Function, getFirebase: Function) => {
   const { code } = values;
   const firebase = getFirebase();
   const confirmationResult = selectors.confirmationResultSelector(getState());
@@ -78,8 +77,18 @@ export const submitCodeForm = (values: CodeValues) => (
 
       return Promise.resolve(result);
     })
-    .then(R.compose(dispatch, codeValidationSuccess))
+    .then(() => {
+      dispatch(codeValidationSuccess);
+      dispatch(anonymousUserIdActions.maybeSetAnonymousUserId()).then(() => {
+        if (R.is(Function, onSuccess)) {
+          onSuccess();
+        }
+      });
+    })
     .catch(error => {
       dispatch(codeValidationFail(error));
+      if (R.is(Function, onError)) {
+        onError(error);
+      }
     });
 };

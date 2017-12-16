@@ -8791,16 +8791,14 @@ react-portal@^4.0.0:
   dependencies:
     prop-types "^15.5.8"
 
-react-redux-firebase@2.0.0-beta.17:
-  version "2.0.0-beta.17"
-  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-2.0.0-beta.17.tgz#4fc7e80c2fa08b65cdf6b2d50e91e97fccfeb05f"
+react-redux-firebase@^2.0.0-beta.19:
+  version "2.0.0-beta.19"
+  resolved "https://registry.yarnpkg.com/react-redux-firebase/-/react-redux-firebase-2.0.0-beta.19.tgz#07eba9067a7ddc9f457afc4664999cd58c808dbd"
   dependencies:
     hoist-non-react-statics "^2.3.1"
     lodash "^4.17.4"
     prop-types "^15.5.10"
     recompose "^0.26.0"
-  optionalDependencies:
-    redux-firestore latest
 
 react-redux-form@^1.16.1:
   version "1.16.1"
@@ -9257,13 +9255,6 @@ redux-cli@^1.9.0:
     temp "^0.8.3"
     through "^2.3.8"
     walk-sync "^0.2.6"
-
-redux-firestore@latest:
-  version "0.1.0-beta.5"
-  resolved "https://registry.yarnpkg.com/redux-firestore/-/redux-firestore-0.1.0-beta.5.tgz#2c45c98b1d66117755cb7372c0c003d33d586b40"
-  dependencies:
-    lodash "^4.17.4"
-    prop-types "^15.6.0"
 
 redux-mock-store@^1.3.0:
   version "1.3.0"

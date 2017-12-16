@@ -6,5 +6,7 @@ import { getContext } from 'recompose';
 export default R.compose(
   getContext({
     login: PropTypes.func.isRequired,
+    onSuccess: PropTypes.func,
+    onError: PropTypes.func,
   }),
 );

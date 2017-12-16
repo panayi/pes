@@ -1,6 +1,7 @@
 // @flow weak
 import React from 'react';
 import * as R from 'ramda';
+import { withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Dialog, DialogTitle, DialogContent, DialogActions } from 'material-ui';
@@ -22,7 +23,6 @@ const Modal = (props: Props) => {
   const {
     content: Content,
     actions: Actions,
-    id,
     modalProps,
     isOpen,
     hideModal,
@@ -31,20 +31,26 @@ const Modal = (props: Props) => {
   // Dialog props: https://material-ui-next.com/api/dialog/
   const dialogProps = R.pick(['onExited'], modalProps);
   const { title, ...rest } = modalProps;
+  const componentProps = {
+    ...rest,
+    hideModal,
+  };
 
   return (
     <Dialog
       key="1"
       open={isOpen}
-      onRequestClose={() => hideModal(id)}
+      onRequestClose={hideModal}
       ignoreEscapeKeyUp
       {...dialogProps}
     >
       {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent>{Content && <Content {...rest} />}</DialogContent>
+      <DialogContent>
+        {Content && <Content {...componentProps} />}
+      </DialogContent>
       {Actions && (
         <DialogActions>
-          <Actions {...rest} />
+          <Actions {...componentProps} />
         </DialogActions>
       )}
     </Dialog>
@@ -65,4 +71,9 @@ const mapDispatchToProps = {
   hideModal: modalActions.hideModal,
 };
 
-export default R.compose(connect(mapStateToProps, mapDispatchToProps))(Modal);
+export default R.compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withProps(({ id, hideModal }) => ({
+    hideModal: () => hideModal(id),
+  })),
+)(Modal);
