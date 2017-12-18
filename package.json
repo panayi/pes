@@ -84,6 +84,7 @@
     "start": "run-p start:ui start:functions",
     "functions:shell": "cd backend && webpack && npm run firebase experimental:functions:shell",
     "test:unit": "cross-env NODE_PATH=src/ react-scripts test --env=jsdom",
+    "test:unit-once": "CI=true npm run test",
     "test:e2e": "nightwatch",
     "lint": "./node_modules/eslint/bin/eslint.js ./ --cache --ext .js,.es6,.jsx",
     "build:ui": "cross-env NODE_PATH=src/ react-scripts build",
@@ -108,7 +109,9 @@
   "lint-staged": {
     "{backend,src,stories,test}/**/*.{js,jsx}": [
       "prettier --write",
-      "git add"
+      "eslint --fix",
+      "git add",
+      "test-once --bail --findRelatedTests"
     ]
   },
   "pre-push": [
