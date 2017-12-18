@@ -111,7 +111,7 @@
       "prettier --write",
       "eslint --fix",
       "git add",
-      "test-once --bail --findRelatedTests"
+      "test:unit-once --bail --findRelatedTests"
     ]
   },
   "pre-push": [

@@ -77,5 +77,5 @@ export const saveAd = (adId: string, onSave: ?Function) => (ad: Ad) => (
   getFirebase: Function,
 ) =>
   getFirebase()
-    .update(`/ads/${adId}`, ad)
+    .update(`/ads/${adId}`, serializeAd(ad))
     .then(onSave);

@@ -18,7 +18,7 @@ class EditAdPage extends Component {
   }
 
   componentWillUnmount() {
-    this.props.hideModal();
+    this.hideModal();
   }
 
   hideModal = () => {
