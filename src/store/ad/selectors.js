@@ -4,6 +4,26 @@ import { createSelector } from 'reselect';
 import propsSelector from 'utils/propsSelector';
 import { PENDING_ADS } from 'services/connectData/types';
 import { uidSelector } from '../auth/selectors';
+import * as constants from './constants';
+
+export const createAdPath = ['ad', 'create'];
+
+export const createAdSelector = R.path(createAdPath);
+
+export const isCreateAdIdleSelector = createSelector(
+  createAdSelector,
+  R.equals(constants.AD_CREATE_IDLE_STATE),
+);
+
+export const isCreateAdPendingSelector = createSelector(
+  createAdSelector,
+  R.equals(constants.AD_CREATE_PENDING_STATE),
+);
+
+export const isCreateAdCompletedSelector = createSelector(
+  createAdSelector,
+  R.equals(constants.AD_CREATE_COMPLETED_STATE),
+);
 
 // adImagesPathSelector :: Props -> Object | Nil
 export const adImagesPathSelector = createSelector(

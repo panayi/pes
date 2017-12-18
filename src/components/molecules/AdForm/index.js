@@ -2,8 +2,14 @@
 import React from 'react';
 import * as R from 'ramda';
 import { isLoaded } from 'react-redux-firebase';
-import { withProps, lifecycle } from 'recompose';
-import { FormGroup, FormControl, TextField, withStyles } from 'material-ui';
+import { withProps, lifecycle, branch } from 'recompose';
+import {
+  FormGroup,
+  FormControl,
+  TextField,
+  Button,
+  withStyles,
+} from 'material-ui';
 import { Control, Form } from 'react-redux-form';
 import { actions, constants } from 'store/ad';
 import { modelConnections, connectData } from 'services/connectData';
@@ -13,11 +19,15 @@ import EditAdImages from 'components/molecules/EditAdImages';
 
 type Props = {
   onChange: ?Function,
+  onSubmit: Function,
+  submitButtonLabel: string,
   images: Array<Object>,
-  filesPath: String,
+  filesPath: string,
   categories: Array<Category>,
-  adIsLoaded: boolean,
+  adIsLoaded: Boolean,
   classes: Object,
+  renderContent: Function,
+  renderActions: Function,
 };
 
 const styles = theme => ({
@@ -35,62 +45,77 @@ const AdForm = (props: Props) => {
   const {
     filesPath,
     onChange,
+    onSubmit,
+    submitButtonLabel,
     images,
     categories,
     adIsLoaded,
     classes,
+    renderContent,
+    renderActions,
   } = props;
 
   return (
-    <div className={classes.root}>
-      {!adIsLoaded && <Spinner centered overlay />}
-      <EditAdImages images={images} adImagesDbPath={filesPath} />
-      <Form
-        className={classes.form}
-        model={constants.AD_FORM_MODEL_PATH}
-        onChange={onChange}
-      >
-        <FormGroup>
-          <Control.text
-            model=".title"
-            id="title"
-            label="What are you selling?"
-            component={TextField}
-            fullWidth
-          />
-          <Control.text
-            model=".body"
-            id="body"
-            label="Please write a short description"
-            type="textarea"
-            component={TextField}
-          />
-          <Control.text
-            model=".price"
-            id="price"
-            label="Price"
-            component={TextField}
-          />
-          <FormControl className={classes.selectWrap}>
-            <Control.select
-              model=".category"
-              component={Select}
-              SelectProps={{ native: true }}
-            >
-              <option value="">Select category</option>
-              {R.map(
-                category => (
-                  <option key={category.name} value={category.name}>
-                    {category.name}
-                  </option>
-                ),
-                R.values(categories),
-              )}
-            </Control.select>
-          </FormControl>
-        </FormGroup>
-      </Form>
-    </div>
+    <Form
+      model={constants.AD_FORM_MODEL_PATH}
+      onChange={onChange}
+      onSubmit={onSubmit}
+    >
+      {renderContent(
+        <div className={classes.root}>
+          {!adIsLoaded && <Spinner centered overlay />}
+          <EditAdImages images={images} adImagesDbPath={filesPath} />
+          <FormGroup>
+            <Control.text
+              model=".title"
+              id="title"
+              label="What are you selling?"
+              component={TextField}
+              fullWidth
+            />
+            <Control.text
+              model=".body"
+              id="body"
+              label="Please write a short description"
+              type="textarea"
+              component={TextField}
+            />
+            <Control.text
+              model=".price"
+              id="price"
+              label="Price"
+              component={TextField}
+            />
+            <FormControl className={classes.selectWrap}>
+              <Control.select
+                model=".category"
+                component={Select}
+                SelectProps={{ native: true }}
+              >
+                <option value="">Select category</option>
+                {R.map(
+                  category => (
+                    <option key={category.name} value={category.name}>
+                      {category.name}
+                    </option>
+                  ),
+                  R.values(categories),
+                )}
+              </Control.select>
+            </FormControl>
+          </FormGroup>
+        </div>,
+      )}
+      {renderActions(
+        <Control.button
+          component={Button}
+          type="submit"
+          model={constants.AD_FORM_MODEL_PATH}
+        >
+          {submitButtonLabel}
+        </Control.button>,
+      )}
+    </Form>
   );
 };
 
@@ -100,12 +125,6 @@ AdForm.defaultProps = {
 
 const mapDispatchToProps = {
   initializeForm: actions.initializeForm,
-};
-
-const maybeInitializeForm = (nextProps, props = {}) => {
-  if (!props.adIsLoaded && nextProps.adIsLoaded) {
-    nextProps.initializeForm(nextProps.ad);
-  }
 };
 
 export default R.compose(
@@ -118,15 +137,15 @@ export default R.compose(
   withProps(({ ad }) => ({
     adIsLoaded: isLoaded(ad),
   })),
-  lifecycle({
-    componentWillMount() {
-      maybeInitializeForm(this.props);
-    },
-    componentWillReceiveProps(nextProps) {
-      maybeInitializeForm(nextProps, this.props);
-    },
-  }),
+  branch(
+    R.prop('adIsLoaded'),
+    lifecycle({
+      componentWillMount() {
+        this.props.initializeForm(this.props.ad);
+      },
+    }),
+  ),
   withProps(({ ad }) => ({
-    images: R.compose(R.values, R.propOr({}, 'images'), R.defaultTo({}))(ad),
+    images: R.compose(R.values, R.propOr({}, 'images'))(ad),
   })),
 )(AdForm);

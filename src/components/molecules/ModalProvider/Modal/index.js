@@ -19,15 +19,14 @@ type Props = {
   hideModal: Function,
 };
 
+const renderContent = children => <DialogContent>{children}</DialogContent>;
+
+const renderActions = children =>
+  children ? <DialogActions>{children}</DialogActions> : null;
+
 const Modal = (props: Props) => {
-  const {
-    content: Content,
-    actions: Actions,
-    modalProps,
-    isOpen,
-    hideModal,
-    ...rest
-  } = props;
+  const { content: Content, modalProps, isOpen, hideModal, ...rest } = props;
+
   // Pick more props as needed.
   // Dialog props: https://material-ui-next.com/api/dialog/
   const dialogProps = R.pick(['onExited'], modalProps);
@@ -36,6 +35,8 @@ const Modal = (props: Props) => {
     ...rest,
     ...modalProps,
     hideModal,
+    renderContent,
+    renderActions,
   };
 
   return (
@@ -47,21 +48,13 @@ const Modal = (props: Props) => {
       {...dialogProps}
     >
       {title && <DialogTitle>{title}</DialogTitle>}
-      <DialogContent>
-        {Content && <Content {...componentProps} />}
-      </DialogContent>
-      {Actions && (
-        <DialogActions>
-          <Actions {...componentProps} />
-        </DialogActions>
-      )}
+      <Content {...componentProps} />
     </Dialog>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
   content: selectors.componentForContentSelector,
-  actions: selectors.componentForActionsSelector,
   modalProps: selectors.modalPropsSelector,
   isOpen: selectors.isOpenSelector,
 });

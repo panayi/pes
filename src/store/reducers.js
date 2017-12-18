@@ -4,15 +4,17 @@ import { routerReducer } from 'react-router-redux';
 import { firebaseStateReducer } from 'react-redux-firebase';
 import authReducer from './auth';
 import modalsReducer from './modals';
-import forms from './forms';
+import formsReducer from './forms';
+import adReducer from './ad';
 
 export const makeRootReducer = asyncReducers =>
   combineReducers({
     router: routerReducer,
     firebase: firebaseStateReducer,
-    forms: combineForms(forms, 'forms'),
+    forms: combineForms(formsReducer, 'forms'),
     auth: authReducer,
     modals: modalsReducer,
+    ad: adReducer,
     ...asyncReducers,
   });
 

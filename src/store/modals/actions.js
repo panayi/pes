@@ -20,10 +20,15 @@ export const showModal = (id, components, modalProps) => dispatch => {
 
 export const hideModal = id => (dispatch, getState) => {
   dispatch(willHideModal(id));
-  setTimeout(() => {
-    // Make sure it wasn't re-opened in the meantime
-    if (selectors.willHideModalSelector(getState(), { id })) {
-      dispatch(hideModalAction(id));
-    }
-  }, constants.HIDE_MODAL_DELAY);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // Make sure it wasn't re-opened in the meantime
+      if (selectors.willHideModalSelector(getState(), { id })) {
+        dispatch(hideModalAction(id));
+        resolve();
+      }
+
+      reject();
+    }, constants.HIDE_MODAL_DELAY);
+  });
 };

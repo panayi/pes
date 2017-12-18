@@ -11,19 +11,21 @@ import WithFacebook from 'components/molecules/Login/WithFacebook';
 type Props = {
   hideModal: Function,
   onSuccess: ?Function,
+  renderContent: Function,
 };
 
-const LoginModal = ({ hideModal, onSuccess }: Props) => (
-  <Login
-    onSuccess={() => {
-      hideModal();
-      onSuccess();
-    }}
-  >
-    <WithPhoneNumber />
-    <WithFacebook />
-  </Login>
-);
+const LoginModal = ({ hideModal, onSuccess, renderContent }: Props) =>
+  renderContent(
+    <Login
+      onSuccess={() => {
+        hideModal();
+        onSuccess();
+      }}
+    >
+      <WithPhoneNumber />
+      <WithFacebook />
+    </Login>,
+  );
 
 LoginModal.defaultProps = {
   onSuccess: noop,
