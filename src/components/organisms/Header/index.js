@@ -3,19 +3,13 @@ import * as R from 'ramda';
 import { AppBar, Toolbar } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import hideUser from 'components/hocs/hideUser';
-import hideVisitor from 'components/hocs/hideVisitor';
-import logoutHoc from 'components/hocs/logout/logout';
 import Link from 'components/atoms/Link';
-import ProfileImage from 'components/atoms/ProfileImage';
+import ProfileMenu from 'components/molecules/ProfileMenu';
 import SearchInput from 'components/molecules/SearchInput';
 import CreateAd from 'components/organisms/CreateAd';
 import LoginModal from 'components/organisms/LoginModal';
 
 const LoginModalButton = hideUser(LoginModal.showButton);
-
-const ProfileLink = hideVisitor(Link);
-
-const LogoutLink = R.compose(hideVisitor, logoutHoc)(Link);
 
 const styles = theme => ({
   header: {
@@ -55,10 +49,7 @@ const Header = ({ classes }) => (
           Sell your stuff
         </CreateAd.showButton>
         <LoginModalButton color="contrast">Login</LoginModalButton>
-        <LogoutLink color="contrast">Logout</LogoutLink>
-        <ProfileLink to="/profile" color="contrast">
-          <ProfileImage.Avatar withDefault />
-        </ProfileLink>
+        <ProfileMenu />
       </div>
     </Toolbar>
   </AppBar>
