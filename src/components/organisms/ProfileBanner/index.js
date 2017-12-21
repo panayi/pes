@@ -1,6 +1,6 @@
 import React from 'react';
-import ProfileImage from 'components/molecules/ProfileImage';
-import UserFullName from 'components/molecules/UserFullName';
+import UserFullName from 'components/atoms/UserFullName';
+import ProfileImage from 'components/atoms/ProfileImage';
 
 export const ProfileBanner = () => (
   <div>
