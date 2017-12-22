@@ -164,10 +164,10 @@ type Provider {
   uid: String,
 
   validate() {
-    requireAuthenticatedWithSocial(this.displayName, this.providerId) &&
-    requireAuthenticatedWithSocial(this.email, this.providerId) &&
+    requireWhenAuthenticatedWithSocial(this.displayName, this.providerId) &&
+    requireWhenAuthenticatedWithSocial(this.email, this.providerId) &&
     requireWhenAuthenticatedWithPhone(this.phoneNumber, this.providerId) &&
-    requireAuthenticatedWithSocial(this.photoURL, this.providerId)
+    requireWhenAuthenticatedWithSocial(this.photoURL, this.providerId)
   }
 }
 
@@ -181,6 +181,7 @@ type User {
   providerData: Map<String, Provider>,
   profile: Profile | Null,
   roles: Roles | Null,
+  ads: Map<String, Alphanumeric> | Null // TODO: is Alphanumeric the right type for IDs?
   anonymousUserId: String | Null,
 }
 
@@ -194,8 +195,8 @@ isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
 userIsValid(uid) { root.users[uid] != null }
 isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook' || providerId == 'twitter' || providerId == 'github' }
-requireAuthenticatedWithSocial(value, providerId) { !isSocialProvider(providerId) || value != null }
-requireWhenAuthenticatedWithPhone(value, providerId) { providerId != 'phone' || value != null }
+requireWhenAuthenticatedWithSocial(value, providerId) { value != null || !isSocialProvider(providerId) }
+requireWhenAuthenticatedWithPhone(value, providerId) { value != null || providerId != 'phone' }
 createOnly(value) { prior(value) == null || value == prior(value) }
 
 // ------------------------------------
@@ -219,16 +220,20 @@ path /ads/{id} is Ad {
 
 path /users/{uid} is User {
   read() { isCurrentUser(uid) }
-  create() { true }
+  create() { true } // TODO: is this right?
   update() { isCurrentUser(uid) }
 
   validate() {
     this.roles == null &&
-      requireAuthenticatedWithSocial(this.profile, auth.provider)
+      requireWhenAuthenticatedWithSocial(this.profile, auth.provider)
   }
 }
 
 path /users/{uid}/profile is Profile {
+  read() { true }
+}
+
+path /users/{uid}/ads {
   read() { true }
 }
 

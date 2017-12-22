@@ -1,14 +1,14 @@
 import React from 'react';
 import needsUser from 'components/hocs/needsUser';
+import LinkAccount from 'components/molecules/LinkAccount';
+import ProfileBanner from 'components/molecules/ProfileBanner';
 import Layout from 'components/organisms/Layout';
-import Link from 'components/smarts/Link';
-import ProfileBanner from 'components/organisms/ProfileBanner';
-import MyAds from 'components/smarts/MyAds';
+import MyAds from 'components/organisms/MyAds';
 
 export const Profile = () => (
   <Layout>
     <ProfileBanner />
-    <Link.Buttons />
+    <LinkAccount.Buttons />
     <MyAds />
   </Layout>
 );

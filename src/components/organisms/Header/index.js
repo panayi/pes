@@ -2,7 +2,9 @@ import React from 'react';
 import * as R from 'ramda';
 import { AppBar, Toolbar } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
+import MessageIcon from 'material-ui-icons/Message';
 import hideUser from 'components/hocs/hideUser';
+import hideVisitor from 'components/hocs/hideVisitor';
 import Link from 'components/atoms/Link';
 import ProfileMenu from 'components/molecules/ProfileMenu';
 import SearchInput from 'components/molecules/SearchInput';
@@ -10,6 +12,8 @@ import CreateAd from 'components/organisms/CreateAd';
 import LoginModal from 'components/organisms/LoginModal';
 
 const LoginModalButton = hideUser(LoginModal.showButton);
+
+const MessagesLink = hideVisitor(Link);
 
 const styles = theme => ({
   header: {
@@ -49,6 +53,9 @@ const Header = ({ classes }) => (
           Sell your stuff
         </CreateAd.showButton>
         <LoginModalButton color="contrast">Login</LoginModalButton>
+        <MessagesLink color="contrast" to="/messages" dense>
+          <MessageIcon />
+        </MessagesLink>
         <ProfileMenu />
       </div>
     </Toolbar>

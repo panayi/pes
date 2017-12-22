@@ -29,6 +29,19 @@ const createRecordSelector = (modelType, idSelector) =>
     R.prop,
   );
 
+const createByChildQuery = (modelType, key, valueSelector) =>
+  createSelector(valueSelector, value => ({
+    path: modelType,
+    queryParams: [`orderByChild=${key}`, `equalTo=${value}`],
+  }));
+
+const createByChildSelector = (modelType, key, valueSelector) =>
+  createSelector(
+    valueSelector,
+    R.compose(R.defaultTo([]), createModelSelector(modelType)),
+    R.useWith(R.filter, [R.propEq(key), R.identity]),
+  );
+
 // connectDataForType :: Type -> Object
 const connectDataForType = type => {
   const modelType = TYPES[type];
@@ -41,6 +54,10 @@ const connectDataForType = type => {
     one: idSelector => ({
       query: createRecordQuery(modelType, idSelector),
       selector: createRecordSelector(modelType, idSelector),
+    }),
+    byChild: (key, valueSelector) => ({
+      query: createByChildQuery(modelType, key, valueSelector),
+      selector: createByChildSelector(modelType, key, valueSelector),
     }),
   };
 };

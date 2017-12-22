@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { actions, selectors } from 'store/ad';
+import { actions, selectors } from 'store/ads';
 import { factory as modalFactory } from 'store/modals';
 import AdForm from 'components/molecules/AdForm';
 

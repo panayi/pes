@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { modelConnections, connectData } from 'services/connectData';
-import { selectors, actions } from 'store/ad';
+import { selectors, actions } from 'store/ads';
 import { uidSelector } from 'store/auth/selectors';
 import { factory as modalFactory } from 'store/modals';
 import CreateAdForm from './Form';

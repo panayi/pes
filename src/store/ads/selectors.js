@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import propsSelector from 'utils/propsSelector';
 import { PENDING_ADS } from 'services/connectData/types';
-import { uidSelector } from '../auth/selectors';
+import { uidSelector, profilePropSelector } from 'store/auth/selectors';
 import * as constants from './constants';
 
 export const createAdPath = ['ad', 'create'];
@@ -42,4 +42,9 @@ export const pendingAdImagesPathSelector = createSelector(
 export const pendingAdSelector = createSelector(
   propsSelector,
   R.prop('pendingAd'),
+);
+
+export const currentUserAdsSelector = createSelector(
+  profilePropSelector(['ads']),
+  R.keys,
 );

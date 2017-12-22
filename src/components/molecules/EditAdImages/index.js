@@ -6,7 +6,7 @@ import { GridList, GridListTile } from 'material-ui/GridList';
 import { connect } from 'react-redux';
 import Dropzone, { fileTypes } from 'components/molecules/Dropzone';
 import { actions } from 'store/storage';
-import { constants } from 'store/ad';
+import { constants } from 'store/ads';
 
 type Props = {
   images: Array<Object>,

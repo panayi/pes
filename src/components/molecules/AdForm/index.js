@@ -11,7 +11,7 @@ import {
   withStyles,
 } from 'material-ui';
 import { Control, Form } from 'react-redux-form';
-import { actions, constants } from 'store/ad';
+import { actions, constants } from 'store/ads';
 import { modelConnections, connectData } from 'services/connectData';
 import noop from 'utils/noop';
 import Spinner from 'components/atoms/Spinner';
