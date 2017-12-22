@@ -2,6 +2,7 @@
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import { actions as formActions } from 'react-redux-form';
+import debounce from 'lodash.debounce';
 import { uidSelector } from 'store/auth/selectors';
 import { PENDING_ADS } from 'services/connectData/types';
 import * as types from './types';
@@ -22,22 +23,29 @@ export const initializeForm = (ad: ?Ad) => (dispatch: Dispatch) => {
   dispatch(formActions.load(AD_FORM_MODEL_PATH, initialState));
 };
 
-export const savePendingAd = (ad: Ad | {}) => (
-  dispatch: Dispatch,
-  getState: Function,
-  getFirebase: Function,
-) => {
-  const state = getState();
-  const isIdle = isCreateAdIdleSelector(state);
+const updatePendingAd = debounce(
+  (
+    ad: Ad | {},
+    dispatch: Dispatch,
+    getState: Function,
+    getFirebase: Function,
+  ) => {
+    const state = getState();
+    const isIdle = isCreateAdIdleSelector(state);
 
-  if (!isIdle) {
-    return Promise.reject();
-  }
+    if (!isIdle) {
+      return Promise.reject();
+    }
 
-  const uid = uidSelector(getState());
+    const uid = uidSelector(getState());
 
-  return getFirebase().update(`${PENDING_ADS}/${uid}`, serializeAd(ad));
-};
+    return getFirebase().update(`${PENDING_ADS}/${uid}`, serializeAd(ad));
+  },
+  200,
+);
+
+export const savePendingAd = (ad: Ad | {}) => (...args) =>
+  updatePendingAd(ad, ...args);
 
 // Note that pendingAd is also removed by a Firebase function.
 // However there's no guarantee when it will be removed.
