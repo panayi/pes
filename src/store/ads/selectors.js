@@ -44,7 +44,7 @@ export const pendingAdSelector = createSelector(
   R.prop('pendingAd'),
 );
 
-export const currentUserAdsSelector = createSelector(
+export const currentUserAdIdsSelector = createSelector(
   profilePropSelector(['ads']),
   R.keys,
 );

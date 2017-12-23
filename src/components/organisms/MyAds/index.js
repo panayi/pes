@@ -15,7 +15,7 @@ const MyAds = ({ hits }: Props) => (
 );
 
 const mapStateToProps = createStructuredSelector({
-  hits: adsSelectors.currentUserAdsSelector,
+  hits: adsSelectors.currentUserAdIdsSelector,
 });
 
 export default R.compose(connect(mapStateToProps))(MyAds);

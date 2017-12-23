@@ -5,6 +5,7 @@ import { withProps } from 'recompose';
 import { Grid, Typography, withStyles } from 'material-ui';
 import Masonry from 'react-masonry-infinite';
 import theme from 'config/theme';
+import id from 'utils/id';
 import Spinner from 'components/atoms/Spinner';
 import AdCard from 'components/molecules/AdCard';
 import { sizesSelector } from './utils';
@@ -64,7 +65,7 @@ export class AdsList extends Component<Props> {
           }
         >
           {R.map(
-            ad => <AdCard key={ad.objectID} ad={ad} width={COLUMN_WIDTH} />,
+            ad => <AdCard key={id(ad)} ad={ad} width={COLUMN_WIDTH} />,
             hits,
           )}
         </Masonry>

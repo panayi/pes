@@ -26,7 +26,7 @@ const createRecordSelector = (modelType, idSelector) =>
   createSelector(
     idSelector,
     R.compose(R.defaultTo([]), createModelSelector(modelType)),
-    R.prop,
+    R.converge(R.merge, [R.assoc('id', R.__, {}), R.prop]),
   );
 
 const createByChildQuery = (modelType, key, valueSelector) =>
