@@ -4,9 +4,10 @@ import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Route } from 'react-router-dom';
+import { connectData } from 'lib/connectData';
 import urlParamsSelector from 'utils/urlParamsSelector';
+import { models } from 'store/data';
 import Page from 'components/molecules/Page';
-import { modelConnections, connectData } from 'services/connectData';
 import Layout from 'components/organisms/Layout';
 import AdView from 'components/organisms/AdView';
 import EditAd from './edit';
@@ -35,6 +36,6 @@ export default R.compose(
     }),
   ),
   connectData({
-    ad: modelConnections.ads.one((state, props) => props.adId),
+    ad: models.ads.one((state, props) => props.adId),
   }),
 )(AdPage);

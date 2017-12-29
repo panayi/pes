@@ -4,7 +4,7 @@ import { createAction } from 'redux-actions';
 import { actions as formActions } from 'react-redux-form';
 import debounce from 'lodash.debounce';
 import { uidSelector } from 'store/auth/selectors';
-import { PENDING_ADS } from 'services/connectData/types';
+import { modelTypes } from 'store/data';
 import * as types from './types';
 import { AD_FORM_MODEL_PATH, AD_INITIAL_STATE } from './constants';
 import { serializeAd } from './utils';
@@ -39,7 +39,10 @@ const updatePendingAd = debounce(
 
     const uid = uidSelector(getState());
 
-    return getFirebase().update(`${PENDING_ADS}/${uid}`, serializeAd(ad));
+    return getFirebase().update(
+      `${modelTypes.PENDING_ADS}/${uid}`,
+      serializeAd(ad),
+    );
   },
   200,
 );
@@ -55,7 +58,7 @@ const removePendingAd = () => (
   getFirebase: Function,
 ) => {
   const uid = uidSelector(getState());
-  return getFirebase().remove(`${PENDING_ADS}/${uid}`);
+  return getFirebase().remove(`${modelTypes.PENDING_ADS}/${uid}`);
 };
 
 export const createAd = (ad: Ad) => (

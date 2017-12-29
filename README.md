@@ -31,6 +31,13 @@ Unit testing files should be placed in a `__tests__/` folder, relative to the fi
 - `stories`: [Storybook](https://github.com/storybooks/storybook) files.
 - `test`: Contains End-to-End tests.
 
+#### Stack of dependencies
+A level X can import from level Y, if and only if X is higher than Y.
+
+```
+node_modules -> lib -> utils -> config -> services -> store -> components/hocs -> components/atoms -> components/molecules -> components/organisms -> pages
+```
+
 ## 2. Development
 
 1. Clone the repo locally: `git clone git@gitlab.com:pesposa/webapp.git`

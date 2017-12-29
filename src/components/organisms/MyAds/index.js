@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectors as adsSelectors } from 'store/ads';
+import { selectors as adsSelectors } from 'store/ad';
 import AdsList from 'components/organisms/AdsList';
 
 type Props = {

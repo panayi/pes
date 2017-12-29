@@ -1,19 +1,22 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';
-import { FIREBASE_PATH } from 'services/connectData/modelConnections';
+import { constants as firebaseConstants } from 'store/firebase';
 
 // ------------------------------------
 // Constants
 // ------------------------------------
-const FIREBASE_AUTH_PATH = [...FIREBASE_PATH, 'auth'];
+const FIREBASE_AUTH_PATH = [...firebaseConstants.FIREBASE_PATH, 'auth'];
 
 // ------------------------------------
 // Selectors
 // ------------------------------------
 
 // authErrorSelector :: State -> Object | Nil
-export const authErrorSelector = R.path([...FIREBASE_PATH, 'authError']);
+export const authErrorSelector = R.path([
+  ...firebaseConstants.FIREBASE_PATH,
+  'authError',
+]);
 
 // firebaseSelector :: State -> Object
 const firebaseAuthSelector = R.compose(
@@ -25,7 +28,10 @@ const firebaseAuthSelector = R.compose(
 const isLoadedSelector = createSelector(firebaseAuthSelector, isLoaded);
 
 // isInitializingSelector :: State -> Boolean | Nil
-const isInitializingSelector = R.path([...FIREBASE_PATH, 'isInitializing']);
+const isInitializingSelector = R.path([
+  ...firebaseConstants.FIREBASE_PATH,
+  'isInitializing',
+]);
 
 export const uidSelector = createSelector(firebaseAuthSelector, R.prop('uid'));
 
@@ -66,7 +72,10 @@ export const isNotAuthenticatedSelector = createSelector(
 );
 
 // profileSelector :: State -> Object | Nil
-export const profileSelector = R.path([...FIREBASE_PATH, 'profile']);
+export const profileSelector = R.path([
+  ...firebaseConstants.FIREBASE_PATH,
+  'profile',
+]);
 
 export const isAdminSelector = createSelector(
   profileSelector,

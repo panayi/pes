@@ -14,6 +14,7 @@ import AdAddress from 'components/atoms/AdAddress';
 import EditAdLink from 'components/atoms/EditAdLink';
 import ImageSlider from 'components/molecules/ImageSlider';
 import AdDateChip from 'components/molecules/AdDateChip';
+import SendMessage from 'components/molecules/SendMessage';
 import { selectors as imagesSelectors } from 'store/images';
 
 type Props = {
@@ -94,6 +95,7 @@ const AdView = ({ ad, adId, images, classes }: Props) => (
           alt=""
         />
       </div>
+      <SendMessage ad={ad} />
     </Grid>
   </Grid>
 );

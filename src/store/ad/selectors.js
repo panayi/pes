@@ -2,7 +2,7 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import propsSelector from 'utils/propsSelector';
-import { PENDING_ADS } from 'services/connectData/types';
+import { modelTypes } from 'store/data';
 import { uidSelector, profilePropSelector } from 'store/auth/selectors';
 import * as constants from './constants';
 
@@ -34,7 +34,7 @@ export const adImagesPathSelector = createSelector(
 // pendingAdImagesSelector :: State -> Object | Nil
 export const pendingAdImagesPathSelector = createSelector(
   uidSelector,
-  R.unless(R.isNil, uid => `${PENDING_ADS}/${uid}/images`),
+  R.unless(R.isNil, uid => `${modelTypes.PENDING_ADS}/${uid}/images`),
 );
 
 // pendingAdSelector :: Props -> Ad | Nil

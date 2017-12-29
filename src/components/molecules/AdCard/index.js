@@ -12,7 +12,8 @@ import {
   withStyles,
 } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { modelConnections, connectData } from 'services/connectData';
+import { connectData } from 'lib/connectData';
+import { models } from 'store/data';
 import id from 'utils/id';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
@@ -119,7 +120,7 @@ export default R.compose(
   branch(
     R.propSatisfies(isNotPlainObj, 'ad'),
     connectData({
-      ad: modelConnections.ads.one((state, props) => props.ad),
+      ad: models.ads.one((state, props) => props.ad),
     }),
   ),
   defaultProps({
