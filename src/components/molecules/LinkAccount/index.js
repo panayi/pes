@@ -16,7 +16,7 @@ type Props = {
   linkedAccounts: Array<String>,
 };
 
-export class Link extends Component<Props> {
+export class LinkAccount extends Component<Props> {
   componentWillMount() {
     this.props.fetchLinkedAccounts();
   }
@@ -39,14 +39,22 @@ const mapDispatchToProps = {
   fetchLinkedAccounts: actions.fetchLinkedAccounts,
 };
 
-const ConnectedLink = R.compose(
+const ConnectedLinkAccount = R.compose(
   connect(mapStateToProps, mapDispatchToProps),
   // Render only when `profile` has been fetched,
   // as the profile.email is needed for fetching linked-accounts.
   branch(R.compose(R.not, R.prop('isProfileLoaded')), renderNothing),
-)(Link);
+)(LinkAccount);
 
-ConnectedLink.Button = LinkButton;
-ConnectedLink.Buttons = LinkButtons;
+ConnectedLinkAccount.Button = props => (
+  <ConnectedLinkAccount>
+    <LinkButton {...props} />
+  </ConnectedLinkAccount>
+);
+ConnectedLinkAccount.Buttons = () => (
+  <ConnectedLinkAccount>
+    <LinkButtons />
+  </ConnectedLinkAccount>
+);
 
-export default ConnectedLink;
+export default ConnectedLinkAccount;

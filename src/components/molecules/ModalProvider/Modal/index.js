@@ -43,7 +43,7 @@ const Modal = (props: Props) => {
     <Dialog
       key="1"
       open={isOpen}
-      onRequestClose={hideModal}
+      onClose={hideModal}
       ignoreEscapeKeyUp
       {...dialogProps}
     >

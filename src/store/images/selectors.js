@@ -1,14 +1,12 @@
 import * as R from 'ramda';
 import createCachedSelector from 're-reselect';
 import propSelector from 'utils/propSelector';
+import id from 'utils/id';
 import * as utils from './utils';
 import * as constants from './constants';
 
 // adIdSelector :: Props -> String
-const adIdSelector = R.compose(
-  R.defaultTo(''),
-  propSelector(['ad', 'objectID']),
-);
+const adIdSelector = R.compose(id, propSelector('ad'));
 
 // adImagesSelector :: Props -> [Url]
 //   Url = String

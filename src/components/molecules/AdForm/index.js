@@ -11,8 +11,9 @@ import {
   withStyles,
 } from 'material-ui';
 import { Control, Form } from 'react-redux-form';
+import { connectData } from 'lib/connectData';
+import { models } from 'store/data';
 import { actions, constants } from 'store/ad';
-import { modelConnections, connectData } from 'services/connectData';
 import noop from 'utils/noop';
 import Spinner from 'components/atoms/Spinner';
 import EditAdImages from 'components/molecules/EditAdImages';
@@ -129,11 +130,7 @@ const mapDispatchToProps = {
 
 export default R.compose(
   withStyles(styles),
-  connectData(
-    { categories: modelConnections.categories.all },
-    null,
-    mapDispatchToProps,
-  ),
+  connectData({ categories: models.categories.all }, null, mapDispatchToProps),
   withProps(({ ad }) => ({
     adIsLoaded: isLoaded(ad),
   })),

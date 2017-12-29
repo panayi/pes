@@ -112,7 +112,7 @@ type PhoneNumber extends String {
 // Application Types
 type Category {
   name: String,
-  categories: Map<String, SubCategory>
+  categories: Map<String, SubCategory>,
 }
 
 type SubCategory {
@@ -140,7 +140,7 @@ type Ad {
   category: String,
   images: Map<String, Image> | Null,
   user: String,
-  createdAt: PastEpoch | Null
+  createdAt: PastEpoch | Null,
 }
 
 type PendingAd {
@@ -148,11 +148,11 @@ type PendingAd {
   body: AdBody | Null,
   price: Price | Null,
   category: String | Null,
-  images: Map<String, Image> | Null
+  images: Map<String, Image> | Null,
 }
 
 type Roles {
-  admin: Boolean
+  admin: Boolean,
 }
 
 type Provider {
@@ -164,10 +164,10 @@ type Provider {
   uid: String,
 
   validate() {
-    requireAuthenticatedWithSocial(this.displayName, this.providerId) &&
-    requireAuthenticatedWithSocial(this.email, this.providerId) &&
+    requireWhenAuthenticatedWithSocial(this.displayName, this.providerId) &&
+    requireWhenAuthenticatedWithSocial(this.email, this.providerId) &&
     requireWhenAuthenticatedWithPhone(this.phoneNumber, this.providerId) &&
-    requireAuthenticatedWithSocial(this.photoURL, this.providerId)
+    requireWhenAuthenticatedWithSocial(this.photoURL, this.providerId)
   }
 }
 
@@ -181,7 +181,21 @@ type User {
   providerData: Map<String, Provider>,
   profile: Profile | Null,
   roles: Roles | Null,
+  ads: Map<String, Boolean> | Null, // TODO: is String the right type for IDs?
   anonymousUserId: String | Null,
+}
+
+type Conversation {
+  ad: String,
+  buyer: String,
+  read: Boolean | Null,
+}
+
+type Message {
+  body: String,
+  fromBuyer: Boolean,
+  read: Boolean | Null,
+  createdAt: PastEpoch | Null,
 }
 
 // ------------------------------------
@@ -192,11 +206,13 @@ isAuthenticatedWithPhone() { auth != null && auth.provider == 'phone' }
 isAdmin() { auth != null && root.users[auth.uid].roles.admin.val() }
 isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
+adIsValid(adId) { root.ads[adId] != null }
 userIsValid(uid) { root.users[uid] != null }
 isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook' || providerId == 'twitter' || providerId == 'github' }
-requireAuthenticatedWithSocial(value, providerId) { !isSocialProvider(providerId) || value != null }
-requireWhenAuthenticatedWithPhone(value, providerId) { providerId != 'phone' || value != null }
+requireWhenAuthenticatedWithSocial(value, providerId) { value != null || !isSocialProvider(providerId) }
+requireWhenAuthenticatedWithPhone(value, providerId) { value != null || providerId != 'phone' }
 createOnly(value) { prior(value) == null || value == prior(value) }
+isSeller(adId) { isCurrentUser(root.ads[adId].user) }
 
 // ------------------------------------
 // Paths
@@ -219,16 +235,20 @@ path /ads/{id} is Ad {
 
 path /users/{uid} is User {
   read() { isCurrentUser(uid) }
-  create() { true }
+  create() { true } // TODO: is this right?
   update() { isCurrentUser(uid) }
 
   validate() {
     this.roles == null &&
-      requireAuthenticatedWithSocial(this.profile, auth.provider)
+    requireWhenAuthenticatedWithSocial(this.profile, auth.provider)
   }
 }
 
 path /users/{uid}/profile is Profile {
+  read() { true }
+}
+
+path /users/{uid}/ads {
   read() { true }
 }
 
@@ -237,4 +257,35 @@ path /pendingAds/{uid} is PendingAd {
   create() { isCurrentUser(uid) }
   update() { isCurrentUser(uid) }
   delete() { isCurrentUser(uid) }
+}
+
+path /conversations/{uid} {
+  read() { isCurrentUser(uid) }
+}
+
+path /conversations/{uid}/{conversationId} is Conversation {
+  read() { isCurrentUser(uid) }
+}
+
+path /conversations/{uid}/{conversationId}/read {
+  write() { isCurrentUser(uid) }
+}
+
+path /messages/{adId}/{buyerId}/{messageId} is Message {
+  read() { isCurrentUser(buyerId) || isSeller(adId) }
+  create() { isCurrentUser(buyerId) || isSeller(adId) }
+  update() { (this.fromBuyer && isCurrentUser(buyerId)) || (!this.fromBuyer && isSeller(adId)) }
+  delete() { (this.fromBuyer && isCurrentUser(buyerId)) || (!this.fromBuyer && isSeller(adId)) }
+
+  validate() {
+    this.body.length > 0 &&
+    userIsValid(buyerId) &&
+    adIsValid(adId) &&
+    ((this.fromBuyer && !isSeller(adId)) || (!this.fromBuyer && isSeller(adId))) &&
+    buyerId != root.ads[adId].user // seller can't send message to self
+  }
+}
+
+path /messages/{adId} {
+  read() { isSeller(adId) }
 }

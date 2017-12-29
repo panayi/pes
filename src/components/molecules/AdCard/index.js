@@ -1,7 +1,8 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { withProps } from 'recompose';
+import { isNotPlainObj } from 'ramda-adjunct';
+import { withProps, defaultProps, branch } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import {
   Card,
@@ -11,6 +12,9 @@ import {
   withStyles,
 } from 'material-ui';
 import { Link } from 'react-router-dom';
+import { connectData } from 'lib/connectData';
+import { models } from 'store/data';
+import id from 'utils/id';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
 import AdAddress from 'components/atoms/AdAddress';
@@ -82,7 +86,7 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
         style={{ width }}
         elevation={1}
         component={Link}
-        to={`/i/${ad.objectID}`}
+        to={`/i/${id(ad)}`}
       >
         <CardMedia
           className={classes.media}
@@ -113,6 +117,15 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
 };
 
 export default R.compose(
+  branch(
+    R.propSatisfies(isNotPlainObj, 'ad'),
+    connectData({
+      ad: models.ads.one((state, props) => props.ad),
+    }),
+  ),
+  defaultProps({
+    ad: {},
+  }),
   withProps(
     createStructuredSelector({
       thumbnail: imagesSelectors.adFirstImageWithDefaultSelector,

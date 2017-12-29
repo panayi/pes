@@ -1,7 +1,8 @@
 /* @flow */
 import React, { Component } from 'react';
 import { createStructuredSelector } from 'reselect';
-import { modelConnections, connectData } from 'services/connectData';
+import { connectData } from 'lib/connectData';
+import { models } from 'store/data';
 import { selectors, actions } from 'store/ad';
 import { uidSelector } from 'store/auth/selectors';
 import { factory as modalFactory } from 'store/modals';
@@ -30,7 +31,7 @@ class CreateAdContent extends Component<Props> {
 }
 
 const mapDataToProps = {
-  ad: modelConnections.pendingAds.one(uidSelector),
+  ad: models.pendingAds.one(uidSelector),
 };
 
 const mapStateToProps = createStructuredSelector({

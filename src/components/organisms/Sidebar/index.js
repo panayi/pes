@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { Drawer, List, ListItem, Button } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
-import Link from 'components/molecules/Link';
+import Link from 'components/atoms/Link';
 import pxToEm from 'config/theme/helpers/pxToEm';
 
 export type LinkType = {
