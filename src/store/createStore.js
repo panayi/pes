@@ -4,16 +4,25 @@ import createHistory from 'history/createBrowserHistory';
 import { routerMiddleware } from 'react-router-redux';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
-import { utils } from './firebase';
+import * as modelTypes from 'constants/modelTypes';
+import * as firebaseConstants from 'constants/firebase';
+import * as storageConstants from 'constants/storage';
+import { utils } from './profile';
 import makeRootReducer from './reducers';
-import firebaseConfig from './firebaseConfig';
+
+const firebaseConfig = {
+  apiKey: firebaseConstants.FIREBASE_API_KEY,
+  authDomain: firebaseConstants.FIREBASE_DOMAIN,
+  databaseURL: firebaseConstants.FIREBASE_DATABASE_URL,
+  storageBucket: storageConstants.BUCKET,
+};
 
 export default (initialState = {}) => {
   // Create a history of your choosing (we're using a browser history in this case)
   const history = createHistory();
 
   const reduxFirebaseConfig = {
-    userProfile: 'users',
+    userProfile: modelTypes.USERS,
     profileFactory: utils.profileFactory,
   };
 

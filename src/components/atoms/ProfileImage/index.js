@@ -7,14 +7,11 @@ import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { Avatar } from 'material-ui';
 import Face from 'material-ui-icons/Face';
-import {
-  isProfileLoadedSelector,
-  profilePropSelector,
-} from 'store/auth/selectors';
+import { selectors as profileSelectors } from 'store/profile';
 
 const mapStateToProps = createStructuredSelector({
-  isProfileLoaded: isProfileLoadedSelector,
-  src: profilePropSelector(['profile', 'avatarUrl']),
+  isProfileLoaded: profileSelectors.isProfileLoadedSelector,
+  src: profileSelectors.profilePropSelector(['profile', 'avatarUrl']),
 });
 
 const connectProfileImage = R.compose(

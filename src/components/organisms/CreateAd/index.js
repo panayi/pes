@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/data';
-import { selectors, actions } from 'store/ad';
+import {
+  actions as postAdActions,
+  selectors as postAdSelectors,
+} from 'store/postAd';
 import { uidSelector } from 'store/auth/selectors';
 import { factory as modalFactory } from 'store/modals';
 import CreateAdForm from './Form';
@@ -35,11 +38,11 @@ const mapDataToProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isCreateAdCompleted: selectors.isCreateAdCompletedSelector,
+  isCreateAdCompleted: postAdSelectors.isCreateAdCompletedSelector,
 });
 
 const mapDispatchToProps = {
-  createAdReset: actions.createAdReset,
+  createAdReset: postAdActions.createAdReset,
 };
 
 const ConnectedCreateAdConnect = connectData(

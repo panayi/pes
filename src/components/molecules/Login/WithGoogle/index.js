@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { Button } from 'material-ui';
-import { auth } from 'config';
+import authConfig from 'config/auth';
 import withLogin from '../withLogin';
 
 const LoginWithGoogle = R.compose(
   withLogin,
   withProps(({ login }) => ({
-    onClick: () => login({ provider: 'google', ...auth.facebook }),
+    onClick: () => login({ provider: 'google', ...authConfig.facebook }),
     name: 'google',
     children: 'Sign in with Google',
   })),

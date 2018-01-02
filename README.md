@@ -35,7 +35,7 @@ Unit testing files should be placed in a `__tests__/` folder, relative to the fi
 A level X can import from level Y, if and only if X is higher than Y.
 
 ```
-node_modules -> lib -> utils -> config -> services -> store -> components/hocs -> components/atoms -> components/molecules -> components/organisms -> pages
+node_modules -> constants -> lib -> utils -> config -> services -> store -> components/hocs -> components/atoms -> components/molecules -> components/organisms -> pages
 ```
 
 ## 2. Development

@@ -1,8 +1,8 @@
 import * as R from 'ramda';
+import * as modelTypes from 'constants/modelTypes';
 import { modelConnectionsFactory } from 'lib/connectData';
 import { selectors as authSelectors } from 'store/auth';
 import * as constants from './constants';
-import * as modelTypes from './modelTypes';
 
 const createModelConnections = modelConnectionsFactory(constants.DATA_PATH);
 

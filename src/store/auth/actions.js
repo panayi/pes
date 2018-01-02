@@ -1,7 +1,4 @@
-import { utils } from 'store/firebase';
+import api from 'services/api';
 
-export const updateProfile = user => (dispatch, getState, getFirebase) => {
-  const firebase = getFirebase();
-
-  firebase.updateProfile(utils.profileFactory(user));
-};
+export const login = credentials => dispatch =>
+  dispatch(api.auth.login(credentials));

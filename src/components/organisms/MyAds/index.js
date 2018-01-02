@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { selectors as adsSelectors } from 'store/ad';
+import { selectors as profileSelectors } from 'store/profile';
 import AdsList from 'components/organisms/AdsList';
 
 type Props = {
@@ -15,7 +15,7 @@ const MyAds = ({ hits }: Props) => (
 );
 
 const mapStateToProps = createStructuredSelector({
-  hits: adsSelectors.currentUserAdIdsSelector,
+  hits: profileSelectors.currentUserAdIdsSelector,
 });
 
 export default R.compose(connect(mapStateToProps))(MyAds);

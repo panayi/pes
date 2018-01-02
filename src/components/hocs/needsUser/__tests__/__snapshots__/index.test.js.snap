@@ -28,7 +28,7 @@ exports[`[HOC] needsUser should render wrappedComponent correctly 1`] = `
           "useAsService": [Function],
         },
         "Promise": [Function],
-        "SDK_VERSION": "4.6.1",
+        "SDK_VERSION": "4.8.1",
         "User": [Function],
         "_": Object {
           "authUid": null,

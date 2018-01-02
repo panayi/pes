@@ -28,7 +28,7 @@ exports[`Login LoginWithFacebook should render correctly 1`] = `
           "useAsService": [Function],
         },
         "Promise": [Function],
-        "SDK_VERSION": "4.6.1",
+        "SDK_VERSION": "4.8.1",
         "User": [Function],
         "_": Object {
           "authUid": null,
@@ -64,28 +64,19 @@ exports[`Login LoginWithFacebook should render correctly 1`] = `
         <getContext(withProps(withStyles(Button)))>
           <withProps(withStyles(Button))
             login={[Function]}
+            onError={undefined}
+            onSuccess={undefined}
           >
             <withStyles(Button)
               login={[Function]}
               name="facebook"
               onClick={[Function]}
+              onError={undefined}
+              onSuccess={undefined}
             >
               <Button
                 classes={
                   Object {
-                    ".MuiButton-fab-14:active": "MuiButton-fab-14:active",
-                    ".MuiButton-flatAccent-5:hover": "MuiButton-flatAccent-5:hover",
-                    ".MuiButton-flatContrast-6:hover": "MuiButton-flatContrast-6:hover",
-                    ".MuiButton-flatPrimary-4:hover": "MuiButton-flatPrimary-4:hover",
-                    ".MuiButton-raised-8.MuiButton-disabled-13": "MuiButton-raised-8.MuiButton-disabled-13",
-                    ".MuiButton-raised-8.MuiButton-keyboardFocused-9": "MuiButton-raised-8.MuiButton-keyboardFocused-9",
-                    ".MuiButton-raised-8:active": "MuiButton-raised-8:active",
-                    ".MuiButton-raised-8:hover": "MuiButton-raised-8:hover",
-                    ".MuiButton-raised-8:hover.MuiButton-disabled-13": "MuiButton-raised-8:hover.MuiButton-disabled-13",
-                    ".MuiButton-raisedAccent-11:hover": "MuiButton-raisedAccent-11:hover",
-                    ".MuiButton-raisedPrimary-10:hover": "MuiButton-raisedPrimary-10:hover",
-                    ".MuiButton-root-1:hover": "MuiButton-root-1:hover",
-                    ".MuiButton-root-1:hover.MuiButton-disabled-13": "MuiButton-root-1:hover.MuiButton-disabled-13",
                     "colorInherit": "MuiButton-colorInherit-7",
                     "dense": "MuiButton-dense-2",
                     "disabled": "MuiButton-disabled-13",
@@ -95,6 +86,7 @@ exports[`Login LoginWithFacebook should render correctly 1`] = `
                     "flatPrimary": "MuiButton-flatPrimary-4",
                     "keyboardFocused": "MuiButton-keyboardFocused-9",
                     "label": "MuiButton-label-3",
+                    "mini": "MuiButton-mini-15",
                     "raised": "MuiButton-raised-8",
                     "raisedAccent": "MuiButton-raisedAccent-11",
                     "raisedContrast": "MuiButton-raisedContrast-12",
@@ -109,8 +101,11 @@ exports[`Login LoginWithFacebook should render correctly 1`] = `
                 disabled={false}
                 fab={false}
                 login={[Function]}
+                mini={false}
                 name="facebook"
                 onClick={[Function]}
+                onError={undefined}
+                onSuccess={undefined}
                 raised={false}
                 type="button"
               >
@@ -123,6 +118,8 @@ exports[`Login LoginWithFacebook should render correctly 1`] = `
                   login={[Function]}
                   name="facebook"
                   onClick={[Function]}
+                  onError={undefined}
+                  onSuccess={undefined}
                   type="button"
                 >
                   <ButtonBase
@@ -130,9 +127,8 @@ exports[`Login LoginWithFacebook should render correctly 1`] = `
                     className="MuiButton-root-1"
                     classes={
                       Object {
-                        ".MuiButtonBase-root-15::-moz-focus-inner": "MuiButtonBase-root-15::-moz-focus-inner",
-                        "disabled": "MuiButtonBase-disabled-16",
-                        "root": "MuiButtonBase-root-15",
+                        "disabled": "MuiButtonBase-disabled-17",
+                        "root": "MuiButtonBase-root-16",
                       }
                     }
                     disableRipple={false}
@@ -142,22 +138,26 @@ exports[`Login LoginWithFacebook should render correctly 1`] = `
                     login={[Function]}
                     name="facebook"
                     onClick={[Function]}
+                    onError={undefined}
+                    onSuccess={undefined}
                     tabIndex={0}
                     type="button"
                   >
                     <button
-                      className="MuiButtonBase-root-15 MuiButton-root-1"
+                      className="MuiButtonBase-root-16 MuiButton-root-1"
                       disabled={false}
                       login={[Function]}
                       name="facebook"
                       onBlur={[Function]}
                       onClick={[Function]}
+                      onError={undefined}
                       onFocus={[Function]}
                       onKeyDown={[Function]}
                       onKeyUp={[Function]}
                       onMouseDown={[Function]}
                       onMouseLeave={[Function]}
                       onMouseUp={[Function]}
+                      onSuccess={undefined}
                       onTouchEnd={[Function]}
                       onTouchMove={[Function]}
                       onTouchStart={[Function]}
@@ -178,28 +178,25 @@ exports[`Login LoginWithFacebook should render correctly 1`] = `
                           center={false}
                           classes={
                             Object {
-                              "0%": "%",
-                              "100%": "00%",
-                              "50%": "0%",
-                              "ripple": "MuiTouchRipple-ripple-21",
-                              "rippleFast": "MuiTouchRipple-rippleFast-23",
-                              "rippleVisible": "MuiTouchRipple-rippleVisible-22",
-                              "root": "MuiTouchRipple-root-17",
-                              "wrapper": "MuiTouchRipple-wrapper-18",
-                              "wrapperLeaving": "MuiTouchRipple-wrapperLeaving-19",
-                              "wrapperPulsating": "MuiTouchRipple-wrapperPulsating-20",
+                              "ripple": "MuiTouchRipple-ripple-22",
+                              "rippleFast": "MuiTouchRipple-rippleFast-24",
+                              "rippleVisible": "MuiTouchRipple-rippleVisible-23",
+                              "root": "MuiTouchRipple-root-18",
+                              "wrapper": "MuiTouchRipple-wrapper-19",
+                              "wrapperLeaving": "MuiTouchRipple-wrapperLeaving-20",
+                              "wrapperPulsating": "MuiTouchRipple-wrapperPulsating-21",
                             }
                           }
                         >
                           <TransitionGroup
                             childFactory={[Function]}
-                            className="MuiTouchRipple-root-17"
+                            className="MuiTouchRipple-root-18"
                             component="span"
                             enter={true}
                             exit={true}
                           >
                             <span
-                              className="MuiTouchRipple-root-17"
+                              className="MuiTouchRipple-root-18"
                             />
                           </TransitionGroup>
                         </TouchRipple>

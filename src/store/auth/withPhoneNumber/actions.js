@@ -2,7 +2,8 @@
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import { actions } from 'react-redux-form';
-import { updateProfile } from 'store/auth/actions';
+import { models as formModels } from 'store/forms';
+import { actions as profileActions } from 'store/profile';
 import { actions as anonymousUserIdActions } from '../anonymousUserId';
 import * as types from './types';
 import * as selectors from './selectors';
@@ -24,7 +25,7 @@ const resetRecaptcha = recaptcha => {
 
 export const resetAll = (recaptcha: Object) => (dispatch: Dispatch) => {
   resetRecaptcha(recaptcha);
-  dispatch(actions.reset('forms.phoneNumberLogin'));
+  dispatch(actions.reset(formModels.phoneNumberLogin.path));
   dispatch(reset());
 };
 
@@ -37,6 +38,7 @@ export const submitPhoneNumberForm = (
 
   dispatch(sendSmsStart());
 
+  // TODO: refactor to services/api methods
   firebase
     .auth()
     .signInWithPhoneNumber(phoneNumber, recaptcha.verifier)
@@ -63,16 +65,18 @@ export const submitCodeForm = (
     confirmationResult.verificationId,
     code,
   );
+
+  // TODO: refactor to services/api methods
   firebase
     .auth()
     .signInWithCredential(credential)
     .then(result => {
       const user = result.toJSON();
 
-      // FIXME: for some reason updateProfile doesn't work
+      // FIXME: for some reason setProfile doesn't work
       // unless we add some delay
       setTimeout(() => {
-        dispatch(updateProfile(user));
+        dispatch(profileActions.setProfile(user));
       }, 1000);
 
       return Promise.resolve(result);

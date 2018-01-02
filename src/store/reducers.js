@@ -5,7 +5,7 @@ import { firebaseStateReducer } from 'react-redux-firebase';
 import authReducer from './auth';
 import modalsReducer from './modals';
 import formsReducer from './forms';
-import adReducer from './ad';
+import postAdReducer from './postAd';
 
 export const makeRootReducer = asyncReducers =>
   combineReducers({
@@ -14,7 +14,7 @@ export const makeRootReducer = asyncReducers =>
     forms: combineForms(formsReducer, 'forms'),
     auth: authReducer,
     modals: modalsReducer,
-    ad: adReducer,
+    postAd: postAdReducer,
     ...asyncReducers,
   });
 

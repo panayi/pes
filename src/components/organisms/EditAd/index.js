@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux';
 import { withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { actions, selectors } from 'store/ad';
+import {
+  actions as postAdActions,
+  selectors as postAdSelectors,
+} from 'store/postAd';
 import { factory as modalFactory } from 'store/modals';
 import AdForm from 'components/molecules/AdForm';
 
@@ -15,13 +18,13 @@ type Props = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  filesPath: selectors.adImagesPathSelector,
+  filesPath: postAdSelectors.adImagesPathSelector,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, props: Props) =>
   bindActionCreators(
     {
-      onSubmit: actions.saveAd(props.adId, props.onSave),
+      onSubmit: postAdActions.saveAd(props.adId, props.onSave),
     },
     dispatch,
   );
