@@ -15,11 +15,6 @@ export const isProfileLoadedSelector = createSelector(
   isLoaded,
 );
 
-export const isAdminSelector = createSelector(
-  profileSelector,
-  R.compose(R.path(['roles', 'admin']), R.defaultTo({})),
-);
-
 // profilePropSelector :: [String] -> State -> Any
 export const profilePropSelector = path =>
   createSelector(profileSelector, R.compose(R.path(path), R.defaultTo({})));

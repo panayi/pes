@@ -151,10 +151,6 @@ type PendingAd {
   images: Map<String, Image> | Null,
 }
 
-type Roles {
-  admin: Boolean,
-}
-
 type Provider {
   displayName: String | Null,
   email: Email | Null,
@@ -180,7 +176,6 @@ type User {
   email: Email | Null,
   providerData: Map<String, Provider>,
   profile: Profile | Null,
-  roles: Roles | Null,
   anonymousUserId: String | Null,
 }
 
@@ -203,7 +198,6 @@ type Message {
 // ------------------------------------
 isAuthenticated() { auth != null }
 isAuthenticatedWithPhone() { auth != null && auth.provider == 'phone' }
-isAdmin() { auth != null && root.users[auth.uid].roles.admin.val() }
 isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
 adIsValid(adId) { root.ads[adId] != null }
@@ -219,7 +213,6 @@ isSeller(adId) { isCurrentUser(root.ads[adId].user) }
 // ------------------------------------
 path /categories is Category[] {
   read() { true }
-  write() { isAdmin() }
 }
 
 path /ads/{id} is Ad {
@@ -239,7 +232,6 @@ path /users/{uid} is User {
   update() { isCurrentUser(uid) }
 
   validate() {
-    this.roles == null &&
     requireWhenAuthenticatedWithSocial(this.profile, auth.provider)
   }
 }
