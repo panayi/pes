@@ -8,7 +8,7 @@ const LogoutAction = logoutHoc('span');
 
 const ProfileMenu = () => (
   <DropdownMenu
-    anchor={<ProfileImage.Avatar withDefault />}
+    anchor={<ProfileImage me withDefault />}
     items={[
       {
         id: 'profile',

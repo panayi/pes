@@ -13,11 +13,8 @@ const setTimestamp = async (event, snapshot, ad) => {
   return snapshot.ref.child('createdAt').set(now);
 };
 
-const pushAdIdToUserAds = async (adId, userRef) => {
-  await userRef
-    .child('ads')
-    .child(adId)
-    .set(true);
+const pushAdIdToUserAds = async (adId, uid) => {
+  await database.ref(`myAds/${uid}/${adId}`).set(true);
 };
 
 // Cleanup pending ad of the actual user
@@ -47,7 +44,7 @@ const adCreated = async event => {
   const userRef = database.ref(`/users/${uid}`);
 
   await setTimestamp(event, snapshot, ad);
-  await pushAdIdToUserAds(adId, userRef);
+  await pushAdIdToUserAds(adId, uid);
   await removePendingAdOfUser(uid);
   await removePendingAdOfAnonymousUser(userRef);
 };

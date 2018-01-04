@@ -26,8 +26,3 @@ export const profilePropSelector = path =>
 
 // profileEmailSelector :: State -> String | Nil
 export const profileEmailSelector = profilePropSelector('email');
-
-export const currentUserAdIdsSelector = createSelector(
-  profilePropSelector(['ads']),
-  R.keys,
-);

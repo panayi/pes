@@ -1,53 +1,88 @@
 import * as R from 'ramda';
+import { isPlainObj } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 
 // modelConnectionsFactory :: String -> Function
 const modelConnectionsFactory = dataPath => {
-  // createModelSelector :: modelType -> Object
-  //   modelType = String
-  const createModelSelector = R.compose(R.pathOr([]), R.append(R.__, dataPath));
-
-  // createRecordQuery :: modelType, Selector -> Selector
-  //   Selector = (state, props) => Any
-  const createRecordQuery = (modelType, idSelector) =>
-    createSelector(idSelector, id => `${modelType}/${id}`);
-
-  // createRecordSelector :: modelType, Selector -> Selector
-  const createRecordSelector = (modelType, idSelector) =>
+  const createModelPathSelector = modelPathSelector =>
     createSelector(
-      idSelector,
-      R.compose(R.defaultTo([]), createModelSelector(modelType)),
-      R.converge(R.merge, [R.assoc('id', R.__, {}), R.prop]),
+      R.is(Function, modelPathSelector)
+        ? modelPathSelector
+        : R.always(modelPathSelector),
+      R.unless(R.is(Array), R.of),
     );
 
-  const createByChildQuery = (modelType, key, valueSelector) =>
-    createSelector(valueSelector, value => ({
-      path: modelType,
-      queryParams: [`orderByChild=${key}`, `equalTo=${value}`],
-    }));
+  const createModelPathStringSelector = modelPathSelector =>
+    createSelector(modelPathSelector, R.join('/'));
 
-  const createByChildSelector = (modelType, key, valueSelector) =>
+  // createModelSelector :: Selector -> Selector
+  const createModelSelector = modelPathSelector =>
+    createSelector(state => {
+      const modelPath = modelPathSelector(state);
+      return R.pathOr([], [...dataPath, ...modelPath], state);
+    }, R.compose(R.defaultTo([]), R.when(isPlainObj, R.compose(R.map(([id, record]) => R.merge({ id }, record)), R.toPairs))));
+
+  // createRecordQuery :: Selector, Selector -> Selector
+  const createRecordQuery = (idSelector, modelPathStringSelector) =>
+    createSelector(
+      modelPathStringSelector,
+      idSelector,
+      (modelPathString, id) => `${modelPathString}/${id}`,
+    );
+
+  // createRecordSelector :: Selector, Selector -> Selector
+  const createRecordSelector = (idSelector, modelSelector) =>
+    createSelector(
+      idSelector,
+      modelSelector,
+      R.useWith(R.find, [R.propEq('id'), R.identity]),
+    );
+
+  // createByChildQuery :: String, Selector, Selector -> Selector
+  const createByChildQuery = (key, valueSelector, modelPathStringSelector) =>
     createSelector(
       valueSelector,
-      R.compose(R.defaultTo([]), createModelSelector(modelType)),
+      modelPathStringSelector,
+      (value, modelPathString) => ({
+        path: modelPathString,
+        queryParams: [`orderByChild=${key}`, `equalTo=${value}`],
+      }),
+    );
+
+  // createByChildSelector :: String, Selector, Selector -> Selector
+  const createByChildSelector = (key, valueSelector, modelSelector) =>
+    createSelector(
+      valueSelector,
+      modelSelector,
       R.useWith(R.filter, [R.propEq(key), R.identity]),
     );
 
-  // createModelConnections :: (modelType, String | Nil) -> Object
-  const createModelConnections = (modelType, rootPath) => ({
-    all: {
-      query: rootPath || modelType,
-      selector: createModelSelector(modelType),
-    },
-    one: idSelector => ({
-      query: createRecordQuery(modelType, idSelector),
-      selector: createRecordSelector(modelType, idSelector),
-    }),
-    byChild: (key, valueSelector) => ({
-      query: createByChildQuery(modelType, key, valueSelector),
-      selector: createByChildSelector(modelType, key, valueSelector),
-    }),
-  });
+  // createModelConnections :: ModelPathSelector -> Object
+  //   ModelPathSelector =
+  //     (State, Props) -> String | [String] OR
+  //     String | [String]
+  const createModelConnections = modelPathSelector => {
+    const finalModelPathSelector = createModelPathSelector(modelPathSelector);
+    const modelPathStringSelector = createModelPathStringSelector(
+      finalModelPathSelector,
+    );
+    const modelSelector = createModelSelector(finalModelPathSelector);
+
+    return {
+      all: {
+        query: modelPathStringSelector,
+        selector: modelSelector,
+      },
+      one: idSelector => ({
+        query: createRecordQuery(idSelector, modelPathStringSelector),
+        selector: createRecordSelector(idSelector, modelSelector),
+      }),
+      byChild: (key, valueSelector) => ({
+        query: createByChildQuery(key, valueSelector, modelPathStringSelector),
+        selector: createByChildSelector(key, valueSelector, modelSelector),
+      }),
+    };
+  };
 
   return createModelConnections;
 };
