@@ -13,7 +13,7 @@ exports[`LoginWithPhoneNumber should render correctly when showCodeForm is true 
     onSubmit={[Function]}
   >
     <text
-      model="forms.phoneNumberLogin.code"
+      model=".code"
       placeholder="Enter SMS code"
     />
     <withStyles(Button)
@@ -53,7 +53,7 @@ exports[`LoginWithPhoneNumber should render correctly when showPhoneNumberForm i
     <text
       component={[Function]}
       defaultCountry="cy"
-      model="forms.phoneNumberLogin.phoneNumber"
+      model=".phoneNumber"
       placeholder="Enter phone number"
       validators={
         Object {

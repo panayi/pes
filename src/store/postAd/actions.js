@@ -3,10 +3,10 @@ import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import { actions as formActions } from 'react-redux-form';
 import debounce from 'lodash.debounce';
+import api from 'services/api';
 import { uidSelector } from 'store/auth/selectors';
-import { modelTypes } from 'store/data';
 import * as types from './types';
-import { AD_FORM_MODEL_PATH, AD_INITIAL_STATE } from './constants';
+import { models as formModels } from '../forms';
 import { serializeAd } from './utils';
 import { isCreateAdIdleSelector } from './selectors';
 
@@ -16,20 +16,15 @@ export const createAdReset = createAction(types.AD_CREATE_RESET);
 
 export const initializeForm = (ad: ?Ad) => (dispatch: Dispatch) => {
   const initialState = R.compose(
-    R.pick(R.keys(AD_INITIAL_STATE)),
+    R.pick(R.keys(formModels.postAd.initialState)),
     R.defaultTo({}),
   )(ad);
 
-  dispatch(formActions.load(AD_FORM_MODEL_PATH, initialState));
+  dispatch(formActions.load(formModels.postAd.key, initialState));
 };
 
 const updatePendingAd = debounce(
-  (
-    ad: Ad | {},
-    dispatch: Dispatch,
-    getState: Function,
-    getFirebase: Function,
-  ) => {
+  (ad: Ad | {}, dispatch: Dispatch, getState: Function) => {
     const state = getState();
     const isIdle = isCreateAdIdleSelector(state);
 
@@ -39,10 +34,7 @@ const updatePendingAd = debounce(
 
     const uid = uidSelector(getState());
 
-    return getFirebase().update(
-      `${modelTypes.PENDING_ADS}/${uid}`,
-      serializeAd(ad),
-    );
+    return dispatch(api.pendingAds.update(uid, serializeAd(ad)));
   },
   200,
 );
@@ -52,19 +44,14 @@ export const savePendingAd = (ad: Ad | {}) => (...args) =>
 
 // Note that pendingAd is also removed by a Firebase function.
 // However there's no guarantee when it will be removed.
-const removePendingAd = () => (
-  dispatch: Dispatch,
-  getState: Function,
-  getFirebase: Function,
-) => {
+const removePendingAd = () => (dispatch: Dispatch, getState: Function) => {
   const uid = uidSelector(getState());
-  return getFirebase().remove(`${modelTypes.PENDING_ADS}/${uid}`);
+  return dispatch(api.pendingAds.remove(uid));
 };
 
 export const createAd = (ad: Ad) => (
   dispatch: Dispatch,
   getState: Function,
-  getFirebase: Function,
 ) => {
   const userObj = {
     user: uidSelector(getState()),
@@ -73,20 +60,16 @@ export const createAd = (ad: Ad) => (
 
   dispatch(createAdPending());
 
-  return getFirebase()
-    .push('/ads', finalAd)
+  return dispatch(api.ads.create(finalAd))
     .then(() => dispatch(createAdCompleted()))
     .then(() => dispatch(removePendingAd()))
     .then(() =>
-      dispatch(formActions.load(AD_FORM_MODEL_PATH, AD_INITIAL_STATE)),
+      dispatch(
+        formActions.load(formModels.postAd.key, formModels.postAd.initialState),
+      ),
     );
 };
 
 export const saveAd = (adId: string, onSave: ?Function) => (ad: Ad) => (
   dispatch: Dispatch,
-  getState: Function,
-  getFirebase: Function,
-) =>
-  getFirebase()
-    .update(`/ads/${adId}`, serializeAd(ad))
-    .then(onSave);
+) => dispatch(api.ads.update(serializeAd(ad))).then(onSave);

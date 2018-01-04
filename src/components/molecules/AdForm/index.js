@@ -13,7 +13,8 @@ import {
 import { Control, Form } from 'react-redux-form';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/data';
-import { actions, constants } from 'store/ad';
+import { models as formModels } from 'store/forms';
+import { actions as postAdActions } from 'store/postAd';
 import noop from 'utils/noop';
 import Spinner from 'components/atoms/Spinner';
 import EditAdImages from 'components/molecules/EditAdImages';
@@ -58,7 +59,7 @@ const AdForm = (props: Props) => {
 
   return (
     <Form
-      model={constants.AD_FORM_MODEL_PATH}
+      model={formModels.postAd.path}
       onChange={onChange}
       onSubmit={onSubmit}
     >
@@ -111,7 +112,7 @@ const AdForm = (props: Props) => {
         <Control.button
           component={Button}
           type="submit"
-          model={constants.AD_FORM_MODEL_PATH}
+          model={formModels.postAd.key}
         >
           {submitButtonLabel}
         </Control.button>,
@@ -125,7 +126,7 @@ AdForm.defaultProps = {
 };
 
 const mapDispatchToProps = {
-  initializeForm: actions.initializeForm,
+  initializeForm: postAdActions.initializeForm,
 };
 
 export default R.compose(

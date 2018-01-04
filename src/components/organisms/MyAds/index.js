@@ -1,21 +1,20 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { selectors as adsSelectors } from 'store/ad';
+import { connectData } from 'lib/connectData';
+import { models } from 'store/data';
 import AdsList from 'components/organisms/AdsList';
 
 type Props = {
-  hits: Array<Object>,
+  myAds: Array<Object>,
 };
 
-const MyAds = ({ hits }: Props) => (
-  <AdsList hits={hits} hasMore={false} loadMore={() => {}} sidebarWidth={0} />
+const MyAds = ({ myAds }: Props) => (
+  <AdsList hits={myAds} hasMore={false} loadMore={() => {}} sidebarWidth={0} />
 );
 
-const mapStateToProps = createStructuredSelector({
-  hits: adsSelectors.currentUserAdIdsSelector,
-});
+const mapDataToProps = {
+  myAds: models.myAds.all,
+};
 
-export default R.compose(connect(mapStateToProps))(MyAds);
+export default R.compose(connectData(mapDataToProps))(MyAds);

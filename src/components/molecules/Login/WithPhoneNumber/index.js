@@ -7,8 +7,9 @@ import { createStructuredSelector } from 'reselect';
 import { Form, Control } from 'react-redux-form';
 import PhoneInput from 'react-telephone-input';
 import { Button } from 'material-ui';
-import Recaptcha from 'components/atoms/Recaptcha';
+import { models as formModels } from 'store/forms';
 import { actions, selectors } from 'store/auth/withPhoneNumber';
+import Recaptcha from 'components/atoms/Recaptcha';
 import {
   type PhoneNumberValues,
   type CodeValues,
@@ -30,14 +31,6 @@ type Props = {
   onError: Function,
 };
 
-export const INITIAL_STATE = {
-  phoneNumber: '',
-  code: '',
-};
-
-export const MODEL_KEY = 'phoneNumberLogin';
-export const MODEL_PATH = `forms.${MODEL_KEY}`;
-
 export class LoginWithPhoneNumber extends Component<Props> {
   componentWillMount() {
     this.props.resetAll();
@@ -52,7 +45,7 @@ export class LoginWithPhoneNumber extends Component<Props> {
 
     return (
       <Form
-        model={MODEL_PATH}
+        model={formModels.phoneNumberLogin.path}
         onSubmit={(values: PhoneNumberValues) =>
           this.props.submitPhoneNumberForm(values, this.recaptcha || {})
         }
@@ -60,7 +53,7 @@ export class LoginWithPhoneNumber extends Component<Props> {
         <Control.text
           component={PhoneInput}
           defaultCountry="cy"
-          model="forms.phoneNumberLogin.phoneNumber"
+          model=".phoneNumber"
           placeholder="Enter phone number"
           validators={{
             required: (val: String) => val && val.length,
@@ -80,15 +73,12 @@ export class LoginWithPhoneNumber extends Component<Props> {
 
     return (
       <Form
-        model={MODEL_PATH}
+        model={formModels.phoneNumberLogin.path}
         onSubmit={(values: CodeValues) =>
           submitCodeForm(values, onSuccess, onError)
         }
       >
-        <Control.text
-          model="forms.phoneNumberLogin.code"
-          placeholder="Enter SMS code"
-        />
+        <Control.text model=".code" placeholder="Enter SMS code" />
         <Button type="submit">Submit</Button>
       </Form>
     );

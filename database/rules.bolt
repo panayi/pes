@@ -181,7 +181,6 @@ type User {
   providerData: Map<String, Provider>,
   profile: Profile | Null,
   roles: Roles | Null,
-  ads: Map<String, Boolean> | Null, // TODO: is String the right type for IDs?
   anonymousUserId: String | Null,
 }
 
@@ -189,6 +188,7 @@ type Conversation {
   ad: String,
   buyer: String,
   read: Boolean | Null,
+  lastMessageCreatedAt: PastEpoch,
 }
 
 type Message {
@@ -248,8 +248,18 @@ path /users/{uid}/profile is Profile {
   read() { true }
 }
 
-path /users/{uid}/ads {
+path /myAds/{uid} {
   read() { true }
+}
+
+path /myAds/{uid}/{adId} {
+  create() { isCurrentUser(uid) && (root.ads[adId] != null) }
+  delete() { isCurrentUser(uid) && (root.ads[adId] == null) }
+
+  validate() {
+    this == true && // Allow only setting to `true`
+    uid == root.ads[adId].user
+  }
 }
 
 path /pendingAds/{uid} is PendingAd {
@@ -259,20 +269,31 @@ path /pendingAds/{uid} is PendingAd {
   delete() { isCurrentUser(uid) }
 }
 
-path /conversations/{uid} {
+path /myConversations/{uid} {
   read() { isCurrentUser(uid) }
 }
 
-path /conversations/{uid}/{conversationId} is Conversation {
+path /myConversations/{uid}/{adIdBuyerId} is Conversation {
   read() { isCurrentUser(uid) }
+
+  index() { return ['lastMessageCreatedAt'] }
 }
 
-path /conversations/{uid}/{conversationId}/read {
-  write() { isCurrentUser(uid) }
+path /myConversations/{uid}/{adIdBuyerId}/read {
+  create() { isCurrentUser(uid) }
+  update() { isCurrentUser(uid) }
+
+  validate() {
+    // Disallow setting to unread
+    this == true
+  }
+}
+
+path /messages/{adId}/{buyerId} {
+  read() { isCurrentUser(buyerId) || isSeller(adId) }
 }
 
 path /messages/{adId}/{buyerId}/{messageId} is Message {
-  read() { isCurrentUser(buyerId) || isSeller(adId) }
   create() { isCurrentUser(buyerId) || isSeller(adId) }
   update() { (this.fromBuyer && isCurrentUser(buyerId)) || (!this.fromBuyer && isSeller(adId)) }
   delete() { (this.fromBuyer && isCurrentUser(buyerId)) || (!this.fromBuyer && isSeller(adId)) }

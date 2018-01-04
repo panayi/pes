@@ -2,7 +2,8 @@ import * as R from 'ramda';
 import fetch from 'node-fetch';
 import uuid from 'uuid-v4';
 import generateId from '../../../src/utils/generateId';
-import { constants, utils } from '../../../src/store/storage';
+import * as storageConstants from '../../../src/constants/storage';
+import fileMetadataFactory from '../helpers/fileMetadataFactory';
 import storage from '../helpers/storage';
 import log from '../helpers/log';
 
@@ -85,12 +86,12 @@ const transformAd = R.compose(
 
 const getFileUrl = (path, token) =>
   `https://firebasestorage.googleapis.com/v0/b/${
-    constants.BUCKET
+    storageConstants.BUCKET
   }/o/${encodeURIComponent(path)}?alt=media&token=${token}`;
 
 const uploadImage = async (buffer, filename, contentType, dbPath, database) =>
   new Promise((resolve, reject) => {
-    const path = `${constants.IMAGES_PATH}/${generateId()}/${filename}`;
+    const path = `${storageConstants.IMAGES_PATH}/${generateId()}/${filename}`;
     const file = storage.file(path);
     const token = uuid();
     const stream = file.createWriteStream({
@@ -112,7 +113,7 @@ const uploadImage = async (buffer, filename, contentType, dbPath, database) =>
           downloadURLs: [getFileUrl(path, token)],
         },
       };
-      const fileData = utils.fileMetadataFactory(result);
+      const fileData = fileMetadataFactory(result);
       await database.ref(dbPath).push(fileData);
 
       resolve();

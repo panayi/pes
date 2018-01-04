@@ -17,11 +17,14 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2.5,
     paddingBottom: theme.spacing.unit * 2.5,
     flex: '1 1 100%',
+    minHeight: '100%',
     backgroundColor: theme.palette.background.contentFrame,
   },
   fixed: {
     flex: '1 1 100%',
     maxWidth: 900,
+    height: '100%',
+    minHeight: '100%',
     margin: '0 auto',
   },
 });

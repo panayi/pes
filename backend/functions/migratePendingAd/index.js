@@ -16,7 +16,7 @@ const migratePendingAd = async event => {
   const targetRef = database.ref(`/pendingAds/${uid}`);
   const snapshot = await sourceRef.once('value');
 
-  await userSnapshot.update({ anonymousUserId: null });
+  await userSnapshot.ref.update({ anonymousUserId: null });
   await targetRef.set(snapshot.val());
   await sourceRef.remove();
 };

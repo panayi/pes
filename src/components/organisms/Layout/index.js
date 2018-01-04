@@ -17,7 +17,8 @@ const styles = {
   root: {
     display: 'flex',
     alignItems: 'stretch',
-    minHeight: '100vh',
+    // TODO: Use constant for header height
+    minHeight: 'calc(100vh - 64px)',
     width: '100%',
   },
 };

@@ -28,7 +28,7 @@ exports[`[HOC] hideVisitor should render wrappedComponent correctly 1`] = `
           "useAsService": [Function],
         },
         "Promise": [Function],
-        "SDK_VERSION": "4.5.0",
+        "SDK_VERSION": "4.8.1",
         "User": [Function],
         "_": Object {
           "authUid": null,

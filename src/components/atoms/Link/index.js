@@ -9,6 +9,8 @@ const DEFAULT_ACTIVE_CLASS_NAME = 'link--active';
 
 const styles = {
   root: {
+    textTransform: 'none',
+
     [`&.${DEFAULT_ACTIVE_CLASS_NAME}`]: {
       // Styles for active link go here
     },

@@ -7,9 +7,9 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Button } from 'material-ui';
-import { utils } from 'store/firebase';
-import { auth as authConfig } from 'config';
-import { actions as authActions } from 'store/auth';
+import createAuthProvider from 'lib/firebase/createAuthProvider';
+import authConfig from 'config/auth';
+import { actions as profileActions } from 'store/profile';
 import * as actions from 'store/auth/linkedAccounts/actions';
 import { linkedAccountsSelector } from 'store/auth/linkedAccounts/selectors';
 
@@ -18,7 +18,7 @@ type Props = {
   providerLabel: String,
   firebase: Object,
   fetchLinkedAccounts: Function,
-  updateProfile: Function,
+  setProfile: Function,
   disabled: Boolean,
 };
 
@@ -28,9 +28,9 @@ export class LinkButton extends Component<Props> {
       firebase,
       withProvider,
       fetchLinkedAccounts,
-      updateProfile,
+      setProfile,
     } = this.props;
-    const provider = utils.createAuthProvider(
+    const provider = createAuthProvider(
       firebase,
       withProvider,
       authConfig[withProvider].scopes,
@@ -40,7 +40,7 @@ export class LinkButton extends Component<Props> {
       .auth()
       .currentUser.linkWithPopup(provider)
       .then(result => {
-        updateProfile(result.user);
+        setProfile(result.user);
         fetchLinkedAccounts();
       });
   };
@@ -67,7 +67,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   fetchLinkedAccounts: actions.fetchLinkedAccounts,
-  updateProfile: authActions.updateProfile,
+  setProfile: profileActions.setProfile,
 };
 
 const isDisabled = R.converge(R.contains, [

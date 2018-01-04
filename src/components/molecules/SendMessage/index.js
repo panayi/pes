@@ -1,13 +1,16 @@
 /* @flow */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { LocalForm, Control, actions } from 'react-redux-form';
 import { TextField, Button } from 'material-ui';
+import { connectData } from 'lib/connectData';
+import propSelector from 'utils/propSelector';
+import { models } from 'store/data';
 import { actions as chatActions } from 'store/chat';
 
 const FORM_MODEL = 'newMessage';
 
 type Props = {
+  adId: String, // eslint-disable-line react/no-unused-prop-types
   ad: Ad,
   createMessage: Function,
 };
@@ -41,8 +44,14 @@ class SendMessage extends Component<Props> {
   }
 }
 
+const mapDataToProps = {
+  ad: models.ads.one(propSelector('adId')),
+};
+
 const mapDispatchToProps = {
   createMessage: chatActions.createMessage,
 };
 
-export default connect(null, mapDispatchToProps)(SendMessage);
+export default connectData(mapDataToProps, null, mapDispatchToProps)(
+  SendMessage,
+);

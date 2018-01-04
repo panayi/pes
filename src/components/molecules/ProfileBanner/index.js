@@ -9,7 +9,7 @@ export const ProfileBanner = () => (
       backgroundImage="https://unsplash.it/1100/400"
       alt="Profile background"
     />
-    <ProfileImage.Avatar />
+    <ProfileImage me />
     <UserFullName mt={2} color="white" />
   </div>
 );

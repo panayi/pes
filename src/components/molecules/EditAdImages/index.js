@@ -5,8 +5,8 @@ import { withProps, withState } from 'recompose';
 import { GridList, GridListTile } from 'material-ui/GridList';
 import { connect } from 'react-redux';
 import Dropzone, { fileTypes } from 'components/molecules/Dropzone';
-import { actions } from 'store/storage';
-import { constants } from 'store/ad';
+import { actions } from 'store/images';
+import { constants as postAdConstants } from 'store/postAd';
 
 type Props = {
   images: Array<Object>,
@@ -32,7 +32,7 @@ export class EditAdImages extends Component<Props> {
     const { images, isLoading, canUploadImage } = this.props;
 
     return (
-      <GridList cellHeight={87} cols={constants.MAXIMUM_IMAGES_PER_AD}>
+      <GridList cellHeight={87} cols={postAdConstants.MAXIMUM_IMAGES_PER_AD}>
         {R.map(
           image => (
             <GridListTile key={image.fullPath}>
@@ -61,7 +61,7 @@ const mapDispatchToProps = {
 
 export default R.compose(
   withProps(({ images }) => ({
-    canUploadImage: R.length(images) < constants.MAXIMUM_IMAGES_PER_AD,
+    canUploadImage: R.length(images) < postAdConstants.MAXIMUM_IMAGES_PER_AD,
   })),
   withState('isLoading', 'setIsLoading', false),
   connect(null, mapDispatchToProps),

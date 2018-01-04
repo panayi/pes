@@ -1,17 +1,14 @@
 import * as R from 'ramda';
+import api from 'services/api';
 import { selectors as authSelectors } from 'store/auth';
 
-export const createMessage = (body, ad) => (
-  dispatch,
-  getState,
-  getFirebase,
-) => {
+export const createMessage = (body, ad) => (dispatch, getState) => {
   const uid = authSelectors.uidSelector(getState());
   const fromBuyer = !R.equals(uid, ad.user);
-  const data = {
+  const message = {
     body,
     fromBuyer,
   };
 
-  return getFirebase().push(`/messages/${ad.id}/${uid}/`, data);
+  return dispatch(api.messages.create(message, { ad, uid }));
 };
