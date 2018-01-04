@@ -1,3 +1,4 @@
+export const LOCALES = 'locales';
 export const CATEGORIES = 'categories';
 export const USERS = 'users';
 export const ADS = 'ads';

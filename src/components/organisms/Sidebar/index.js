@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
-import { Drawer, List, ListItem, Button } from 'material-ui';
+import { Drawer, List, ListItem, Button, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import Link from 'components/atoms/Link';
 import pxToEm from 'config/theme/helpers/pxToEm';
@@ -37,6 +37,9 @@ const styles = theme => ({
     alignItems: 'flex-start',
     justifyContent: 'center',
   },
+  filtersTitle: {
+    color: theme.palette.common.lightBlack,
+  },
   button: theme.mixins.gutters({
     borderRadius: 0,
     justifyContent: 'flex-start',
@@ -58,6 +61,9 @@ const styles = theme => ({
   navLinkButton: {
     fontSize: `${pxToEm(14)}em`,
   },
+  active: {
+    background: theme.palette.text.divider,
+  },
 });
 
 export class Sidebar extends Component<Props> {
@@ -78,6 +84,11 @@ export class Sidebar extends Component<Props> {
           }}
         >
           <List>
+            <ListItem>
+              <Typography className={classes.filtersTitle} type="subheading">
+                Categories
+              </Typography>
+            </ListItem>
             {R.map(
               ({ key, label, to }) => (
                 <ListItem
@@ -90,6 +101,7 @@ export class Sidebar extends Component<Props> {
                       classes.button,
                       classes.navLinkButton,
                     )}
+                    activeClassName={classes.active}
                     component={Link}
                     to={to}
                     variant="button"

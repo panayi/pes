@@ -44,8 +44,10 @@ const adCreated = async event => {
   const userRef = database.ref(`/users/${uid}`);
 
   await setTimestamp(event, snapshot, ad);
-  await pushAdIdToUserAds(adId, uid);
-  await removePendingAdOfUser(uid);
+  if (uid) {
+    await pushAdIdToUserAds(adId, uid);
+    await removePendingAdOfUser(uid);
+  }
   await removePendingAdOfAnonymousUser(userRef);
 };
 

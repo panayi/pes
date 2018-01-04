@@ -15,12 +15,21 @@ const modelConnectionsFactory = dataPath => {
   const createModelPathStringSelector = modelPathSelector =>
     createSelector(modelPathSelector, R.join('/'));
 
-  // createModelSelector :: Selector -> Selector
-  const createModelSelector = modelPathSelector =>
+  const createModelObjectsSelector = modelPathSelector =>
     createSelector((state, props) => {
       const modelPath = modelPathSelector(state, props);
       return R.pathOr([], [...dataPath, ...modelPath], state);
-    }, R.compose(R.defaultTo([]), R.when(isPlainObj, R.compose(R.map(([id, record]) => R.merge({ id }, record)), R.toPairs))));
+    }, R.defaultTo([]));
+
+  // createModelSelector :: Selector -> Selector
+  const createModelSelector = modelObjectSelector =>
+    createSelector(
+      modelObjectSelector,
+      R.when(
+        isPlainObj,
+        R.compose(R.map(([id, record]) => R.merge({ id }, record)), R.toPairs),
+      ),
+    );
 
   // createRecordQuery :: Selector, Selector -> Selector
   const createRecordQuery = (idSelector, modelPathStringSelector) =>
@@ -66,9 +75,16 @@ const modelConnectionsFactory = dataPath => {
     const modelPathStringSelector = createModelPathStringSelector(
       finalModelPathSelector,
     );
-    const modelSelector = createModelSelector(finalModelPathSelector);
+    const modelObjectsSelector = createModelObjectsSelector(
+      finalModelPathSelector,
+    );
+    const modelSelector = createModelSelector(modelObjectsSelector);
 
     return {
+      allObjects: {
+        query: modelPathStringSelector,
+        selector: modelObjectsSelector,
+      },
       all: {
         query: modelPathStringSelector,
         selector: modelSelector,

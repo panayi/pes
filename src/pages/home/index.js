@@ -5,8 +5,9 @@ import { Route } from 'react-router-dom';
 import { withProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { connectData } from 'lib/connectData';
-import propsSelector from 'utils/propsSelector';
+import propSelector from 'utils/propSelector';
 import { models } from 'store/data';
+import translate from 'components/hocs/translate';
 import Page from 'components/molecules/Page';
 import Sidebar, { type LinkType } from 'components/organisms/Sidebar';
 import Layout from 'components/organisms/Layout';
@@ -26,15 +27,21 @@ const Home = ({ categoryLinks }: Props) => (
 );
 
 const categoryLinksSelector = createSelector(
-  R.compose(R.values, R.propOr({}, 'categories'), propsSelector),
-  R.map(({ name }) => ({
-    label: name,
-    to: `/${name}`,
-  })),
+  propSelector('t'),
+  propSelector('categories'),
+  (t, categories) =>
+    R.map(
+      ({ key }) => ({
+        label: t(key),
+        to: `/${key}`,
+      }),
+      categories,
+    ),
 );
 
 export default R.compose(
   connectData({ categories: models.categories.all }),
+  translate('home'),
   withProps(
     createStructuredSelector({
       categoryLinks: categoryLinksSelector,

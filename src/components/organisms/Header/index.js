@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { AppBar, Toolbar } from 'material-ui';
+import { AppBar, Toolbar, Typography } from 'material-ui';
 import { withStyles } from 'material-ui/styles';
 import MessageIcon from 'material-ui-icons/Message';
 import hideUser from 'components/hocs/hideUser';
@@ -25,6 +25,10 @@ const styles = theme => ({
   logoArea: {
     flex: `0 0 ${theme.custom.sidebarWidth}px`,
   },
+  logoText: {
+    textTransform: 'uppercase',
+    color: theme.palette.common.white,
+  },
   content: {
     display: 'flex',
     flex: '1 1 auto',
@@ -41,8 +45,10 @@ const Header = ({ classes }) => (
   <AppBar className={classes.header}>
     <Toolbar className={classes.toolbar}>
       <div className={classes.logoArea}>
-        <Link to="/" exact color="contrast">
-          Pesposa
+        <Link to="/" exact>
+          <Typography className={classes.logoText} type="title">
+            Pesposa
+          </Typography>
         </Link>
       </div>
       <div className={classes.content}>
