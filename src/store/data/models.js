@@ -1,6 +1,7 @@
-import * as R from 'ramda';
+import { createSelector } from 'reselect';
 import * as modelTypes from 'constants/modelTypes';
 import { modelConnectionsFactory } from 'lib/connectData';
+import propSelector from 'utils/propSelector';
 import { selectors as authSelectors } from 'store/auth';
 import * as constants from './constants';
 
@@ -10,9 +11,19 @@ export const categories = createModelConnections(modelTypes.CATEGORIES);
 export const users = createModelConnections(modelTypes.USERS);
 export const ads = createModelConnections(modelTypes.ADS);
 export const myAds = createModelConnections(
-  R.compose(uid => [modelTypes.MY_ADS, uid], authSelectors.uidSelector),
+  createSelector(authSelectors.uidSelector, uid => [modelTypes.MY_ADS, uid]),
 );
 export const pendingAds = createModelConnections(modelTypes.PENDING_ADS);
 export const conversations = createModelConnections(
-  R.compose(uid => [modelTypes.CONVERSATIONS, uid], authSelectors.uidSelector),
+  createSelector(authSelectors.uidSelector, uid => [
+    modelTypes.CONVERSATIONS,
+    uid,
+  ]),
+);
+export const messages = createModelConnections(
+  createSelector(propSelector('ad'), propSelector('buyer'), (ad, buyer) => [
+    modelTypes.MESSAGES,
+    ad,
+    buyer,
+  ]),
 );

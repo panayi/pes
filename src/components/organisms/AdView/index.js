@@ -95,7 +95,7 @@ const AdView = ({ ad, adId, images, classes }: Props) => (
           alt=""
         />
       </div>
-      <SendMessage ad={ad} />
+      <SendMessage adId={adId} />
     </Grid>
   </Grid>
 );

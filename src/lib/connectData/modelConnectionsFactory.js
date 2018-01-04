@@ -17,8 +17,8 @@ const modelConnectionsFactory = dataPath => {
 
   // createModelSelector :: Selector -> Selector
   const createModelSelector = modelPathSelector =>
-    createSelector(state => {
-      const modelPath = modelPathSelector(state);
+    createSelector((state, props) => {
+      const modelPath = modelPathSelector(state, props);
       return R.pathOr([], [...dataPath, ...modelPath], state);
     }, R.compose(R.defaultTo([]), R.when(isPlainObj, R.compose(R.map(([id, record]) => R.merge({ id }, record)), R.toPairs))));
 

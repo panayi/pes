@@ -1,5 +1,10 @@
 import React from 'react';
-import { TextField, withStyles } from 'material-ui';
+import * as R from 'ramda';
+import { withProps } from 'recompose';
+import { withStyles } from 'material-ui';
+import { connectData } from 'lib/connectData';
+import { models } from 'store/data';
+import SendMessage from 'components/molecules/SendMessage';
 
 const styles = theme => ({
   root: {
@@ -24,14 +29,27 @@ const styles = theme => ({
   },
 });
 
-const Conversation = ({ classes }) => (
+const Conversation = ({ ad, messages, classes }) => (
   <div className={classes.root}>
     <div className={classes.header}>header goes here</div>
-    <div className={classes.messages}>messages go here</div>
+    <div className={classes.messages}>
+      {R.map(message => <div key={message.id}>{message.body}</div>, messages)}
+    </div>
     <div className={classes.sendMessage}>
-      <TextField fullWidth placeholder="Enter your message" />
+      <SendMessage adId={ad} />
     </div>
   </div>
 );
 
-export default withStyles(styles)(Conversation);
+const mapDataToProps = {
+  messages: models.messages.all,
+};
+
+export default R.compose(
+  withProps(({ match }) => ({
+    ad: match.params.ad,
+    buyer: match.params.buyer,
+  })),
+  connectData(mapDataToProps),
+  withStyles(styles),
+)(Conversation);

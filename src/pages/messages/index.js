@@ -29,7 +29,7 @@ const Messages = ({ classes }) => (
           <ConversationsList />
         </Grid>
         <Grid className={classes.conversationWrap} item xs={9}>
-          <Route path="/:ad/:buyer" component={Conversation} />
+          <Route path="/messages/:ad/:buyer" component={Conversation} />
         </Grid>
       </Grid>
     </Page>

@@ -289,8 +289,11 @@ path /myConversations/{uid}/{adIdBuyerId}/read {
   }
 }
 
-path /messages/{adId}/{buyerId}/{messageId} is Message {
+path /messages/{adId}/{buyerId} {
   read() { isCurrentUser(buyerId) || isSeller(adId) }
+}
+
+path /messages/{adId}/{buyerId}/{messageId} is Message {
   create() { isCurrentUser(buyerId) || isSeller(adId) }
   update() { (this.fromBuyer && isCurrentUser(buyerId)) || (!this.fromBuyer && isSeller(adId)) }
   delete() { (this.fromBuyer && isCurrentUser(buyerId)) || (!this.fromBuyer && isSeller(adId)) }
