@@ -7,7 +7,7 @@ import { Route } from 'react-router-dom';
 import { connectData } from 'lib/connectData';
 import urlParamsSelector from 'utils/urlParamsSelector';
 import { models } from 'store/data';
-import Page from 'components/molecules/Page';
+import Page from 'components/atoms/Page';
 import Layout from 'components/organisms/Layout';
 import AdView from 'components/organisms/AdView';
 import EditAd from './edit';
