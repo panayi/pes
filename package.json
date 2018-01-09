@@ -15,7 +15,7 @@
     "material-ui": "^1.0.0-beta.24",
     "material-ui-icons": "^1.0.0-beta.17",
     "normalize.css": "^7.0.0",
-    "prettier": "^1.8.2",
+    "prettier": "^1.9.2",
     "prop-types": "^15.6.0",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.2.0",
@@ -29,7 +29,7 @@
     "react-masonry-infinite": "^1.2.1",
     "react-portal": "^4.0.0",
     "react-redux": "^5.0.6",
-    "react-redux-firebase": "^2.0.0-rc.2",
+    "react-redux-firebase": "^2.0.0",
     "react-redux-form": "^1.16.1",
     "react-render-html": "^0.6.0",
     "react-router-dom": "^4.2.2",
@@ -67,7 +67,7 @@
     "firebase-bolt": "^0.8.2",
     "firebase-server": "^0.12.0",
     "firebase-tools": "^3.13.1",
-    "flow-bin": "^0.57.3",
+    "flow-bin": "^0.63.1",
     "jest-enzyme": "^4.0.1",
     "nightwatch": "^0.9.16",
     "npm-run-all": "^4.1.1",
@@ -83,8 +83,8 @@
     "start:functions": "npm run build:functions && npm run firebase serve -- --only functions",
     "start": "run-p start:ui start:functions",
     "functions:shell": "cd backend && firebase experimental:functions:shell",
-    "test:unit": "cross-env NODE_PATH=src/ react-scripts test --env=jsdom",
-    "test:unit-once": "CI=true npm run test",
+    "test": "cross-env NODE_PATH=src/ react-scripts test --env=jsdom",
+    "test-once": "CI=true npm run test",
     "test:e2e": "nightwatch",
     "lint": "./node_modules/eslint/bin/eslint.js ./ --cache --ext .js,.es6,.jsx",
     "build:ui": "cross-env NODE_PATH=src/ react-scripts build",
@@ -111,7 +111,7 @@
       "prettier --write",
       "eslint --fix",
       "git add",
-      "test:unit-once --bail --findRelatedTests"
+      "test-once --bail --findRelatedTests"
     ]
   }
 }
