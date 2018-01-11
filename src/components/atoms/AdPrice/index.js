@@ -12,7 +12,7 @@ export default R.compose(
   ),
   withProps({
     getProp: R.compose(
-      R.unless(isNilOrEmpty, R.prepend('€ ')),
+      R.unless(isNilOrEmpty, R.concat('€ ')),
       R.toString,
       getPrice,
     ),

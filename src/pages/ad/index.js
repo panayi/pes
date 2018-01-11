@@ -7,9 +7,9 @@ import { Route } from 'react-router-dom';
 import { connectData } from 'lib/connectData';
 import urlParamsSelector from 'utils/urlParamsSelector';
 import { models } from 'store/data';
-import Page from 'components/molecules/Page';
+import Page from 'components/atoms/Page';
 import Layout from 'components/organisms/Layout';
-import AdView from 'components/organisms/AdView';
+import ViewAd from 'components/organisms/ViewAd';
 import EditAd from './edit';
 
 type Props = {
@@ -20,7 +20,7 @@ type Props = {
 const AdPage = ({ ad, adId }: Props) => (
   <Layout>
     <Page fixed>
-      <AdView ad={ad} adId={adId} />
+      <ViewAd ad={ad} adId={adId} />
       <Route
         path="/i/:adId/edit"
         render={props => <EditAd {...props} ad={ad} adId={adId} />}

@@ -95,7 +95,7 @@ jobs:
       - *attach_workspace
       - run:
           name: Run unit tests
-          command: yarn test:unit
+          command: yarn test
 
   e2e_test:
     <<: *defaults

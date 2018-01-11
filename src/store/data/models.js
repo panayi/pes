@@ -3,10 +3,18 @@ import * as modelTypes from 'constants/modelTypes';
 import { modelConnectionsFactory } from 'lib/connectData';
 import propSelector from 'utils/propSelector';
 import { selectors as authSelectors } from 'store/auth';
+import { selectors as i18nSelectors } from 'store/i18n';
 import * as constants from './constants';
 
 const createModelConnections = modelConnectionsFactory(constants.DATA_PATH);
 
+export const locales = createModelConnections(
+  createSelector(
+    i18nSelectors.languageSelector,
+    propSelector('_translationsNamespace'),
+    (lng, ns) => [modelTypes.LOCALES, lng, ns],
+  ),
+);
 export const categories = createModelConnections(modelTypes.CATEGORIES);
 export const users = createModelConnections(modelTypes.USERS);
 export const ads = createModelConnections(modelTypes.ADS);

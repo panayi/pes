@@ -1,14 +1,13 @@
 /* @flow */
 import React from 'react';
-import * as R from 'ramda';
+import { Control, Form } from 'react-redux-form';
 import { withStyles } from 'material-ui';
 import { fade } from 'material-ui/styles/colorManipulator';
 import SearchIcon from 'material-ui-icons/Search';
-import { connectSearchBox } from 'react-instantsearch/connectors';
+import { constants as filterAdsConstants } from 'store/filterAds';
 
 type Props = {
-  value: String,
-  refine: Function,
+  classes: Object,
 };
 
 // Based on:
@@ -62,18 +61,17 @@ const styles = theme => ({
   },
 });
 
-export const SearchInput = ({ value, refine, classes }: Props) => (
-  <div className={classes.wrapper}>
+export const QueryAds = ({ classes }: Props) => (
+  <Form className={classes.wrapper} model={filterAdsConstants.QUERY_MODEL_PATH}>
     <div className={classes.searchIcon}>
       <SearchIcon />
     </div>
-    <input
+    <Control
       className={classes.input}
-      value={value}
-      onChange={e => refine(e.target.value)}
+      model=".value"
       placeholder="What are you looking for?"
     />
-  </div>
+  </Form>
 );
 
-export default R.compose(connectSearchBox, withStyles(styles))(SearchInput);
+export default withStyles(styles)(QueryAds);

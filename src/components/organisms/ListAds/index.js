@@ -1,6 +1,7 @@
 /* @flow */
 import React, { Component } from 'react';
 import * as R from 'ramda';
+import { connectInfiniteHits } from 'react-instantsearch/connectors';
 import { withProps } from 'recompose';
 import { Grid, Typography, withStyles } from 'material-ui';
 import Masonry from 'react-masonry-infinite';
@@ -12,7 +13,7 @@ import { sizesSelector } from './utils';
 
 type Props = {
   hits: Array<Ad>,
-  loadMore: Function,
+  refine: Function,
   hasMore: Boolean,
   sizes: Array<Object>,
   classes: Object,
@@ -28,7 +29,7 @@ const styles = t => ({
   },
 });
 
-export class AdsList extends Component<Props> {
+export class ListAds extends Component<Props> {
   static defaultProps = {
     hits: [],
   };
@@ -47,7 +48,7 @@ export class AdsList extends Component<Props> {
   masonry: ?Object;
 
   render() {
-    const { hits, hasMore, loadMore, sizes, classes } = this.props;
+    const { hits, hasMore, refine, sizes, classes } = this.props;
 
     return (
       <div>
@@ -56,7 +57,7 @@ export class AdsList extends Component<Props> {
             this.masonry = instance;
           }}
           hasMore={hasMore}
-          loadMore={loadMore}
+          loadMore={refine}
           sizes={sizes}
           loader={
             <Grid container justify="center" className={classes.vspacing}>
@@ -82,6 +83,7 @@ export class AdsList extends Component<Props> {
 }
 
 export default R.compose(
+  connectInfiniteHits,
   withProps({
     sizes: sizesSelector({
       columnWidth: COLUMN_WIDTH,
@@ -91,4 +93,4 @@ export default R.compose(
     }),
   }),
   withStyles(styles),
-)(AdsList);
+)(ListAds);

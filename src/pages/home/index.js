@@ -1,43 +1,21 @@
 /* @flow */
 import React from 'react';
-import * as R from 'ramda';
 import { Route } from 'react-router-dom';
-import { withProps } from 'recompose';
-import { createSelector, createStructuredSelector } from 'reselect';
-import { connectData } from 'lib/connectData';
-import propsSelector from 'utils/propsSelector';
-import { models } from 'store/data';
-import Page from 'components/molecules/Page';
-import Sidebar, { type LinkType } from 'components/organisms/Sidebar';
+import Sidebar from 'components/atoms/Sidebar';
+import Page from 'components/atoms/Page';
 import Layout from 'components/organisms/Layout';
+import SearchAds from 'components/organisms/SearchAds';
 import Ads from './ads';
 
-type Props = {
-  categoryLinks: Array<LinkType>,
-};
-
-const Home = ({ categoryLinks }: Props) => (
+const Home = () => (
   <Layout>
-    <Sidebar links={categoryLinks} />
+    <Sidebar>
+      <SearchAds.Filter />
+    </Sidebar>
     <Page>
-      <Route path="/:categoryName?" component={Ads} />
+      <Route path="/:category?" component={Ads} />
     </Page>
   </Layout>
 );
 
-const categoryLinksSelector = createSelector(
-  R.compose(R.values, R.propOr({}, 'categories'), propsSelector),
-  R.map(({ name }) => ({
-    label: name,
-    to: `/${name}`,
-  })),
-);
-
-export default R.compose(
-  connectData({ categories: models.categories.all }),
-  withProps(
-    createStructuredSelector({
-      categoryLinks: categoryLinksSelector,
-    }),
-  ),
-)(Home);
+export default Home;

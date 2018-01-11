@@ -211,6 +211,10 @@ isSeller(adId) { isCurrentUser(root.ads[adId].user) }
 // ------------------------------------
 // Paths
 // ------------------------------------
+path /locales {
+  read() { true }
+}
+
 path /categories is Category[] {
   read() { true }
 }

@@ -2,6 +2,7 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Header from 'components/organisms/Header';
+import SearchAds from 'components/organisms/SearchAds';
 
 type Props = {
   children: React$Node,
@@ -27,6 +28,7 @@ const Layout = ({ children, classes }: Props) => (
   <div className={classes.root}>
     <Header />
     {children}
+    <SearchAds.ConfigureSearchParams />
   </div>
 );
 

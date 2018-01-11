@@ -12,8 +12,8 @@ import AdPrice from 'components/atoms/AdPrice';
 import AdBody from 'components/atoms/AdBody';
 import AdAddress from 'components/atoms/AdAddress';
 import EditAdLink from 'components/atoms/EditAdLink';
+import AdDateChip from 'components/atoms/AdDateChip';
 import ImageSlider from 'components/molecules/ImageSlider';
-import AdDateChip from 'components/molecules/AdDateChip';
 import SendMessage from 'components/molecules/SendMessage';
 import { selectors as imagesSelectors } from 'store/images';
 
@@ -68,7 +68,7 @@ const styles = theme => ({
   },
 });
 
-const AdView = ({ ad, adId, images, classes }: Props) => (
+const ViewAd = ({ ad, adId, images, classes }: Props) => (
   <Grid container className={classes.root}>
     <Grid className={classes.sliderWrap}>
       <ImageSlider className={classes.slider} images={images} />
@@ -100,7 +100,7 @@ const AdView = ({ ad, adId, images, classes }: Props) => (
   </Grid>
 );
 
-AdView.defaultProps = {
+ViewAd.defaultProps = {
   ad: {},
 };
 
@@ -111,4 +111,4 @@ export default R.compose(
     }),
   ),
   withStyles(styles),
-)(AdView);
+)(ViewAd);

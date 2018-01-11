@@ -106,6 +106,7 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
             title: classes.headerTitle,
           }}
           title={<AdTitle type="subheading" ad={ad} />}
+          subheader=""
         />
         <CardContent className={classes.content}>
           <AdAddress ad={ad} type="caption" align="center" />
