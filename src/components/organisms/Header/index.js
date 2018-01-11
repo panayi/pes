@@ -7,7 +7,7 @@ import hideUser from 'components/hocs/hideUser';
 import hideVisitor from 'components/hocs/hideVisitor';
 import Link from 'components/atoms/Link';
 import ProfileMenu from 'components/molecules/ProfileMenu';
-import SearchInput from 'components/molecules/SearchInput';
+import SearchAds from 'components/organisms/SearchAds';
 import CreateAd from 'components/organisms/CreateAd';
 import LoginModal from 'components/organisms/LoginModal';
 
@@ -53,7 +53,7 @@ const Header = ({ classes }) => (
       </div>
       <div className={classes.content}>
         <div className={classes.searchInput}>
-          <SearchInput />
+          <SearchAds.Query />
         </div>
         <CreateAd.showButton color="contrast">
           Sell your stuff

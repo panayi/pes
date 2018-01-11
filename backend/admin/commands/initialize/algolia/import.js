@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import algolia from 'algoliaClient';
 import serializeAd from 'helpers/serializeAdToAlgolia';
 import { database } from '../../../lib/firebaseClient';
+import { ADS_INDEXES } from '../../../../../src/config/algolia';
 
 export const canInitialize = async () => {
   const indexes = await algolia.listIndexes();
@@ -41,7 +42,7 @@ const initialImportAds = async (dataSnapshot, index) => {
 };
 
 export default async () => {
-  const index = algolia.initIndex(process.env.REACT_APP_ALGOLIA_ADS_INDEX_NAME);
+  const index = algolia.initIndex(ADS_INDEXES.default);
 
   const dataSnapshot = await database.ref('/ads').once('value');
   const ads = await initialImportAds(dataSnapshot, index);

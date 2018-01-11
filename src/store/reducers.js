@@ -7,6 +7,7 @@ import i18nReducer from './i18n';
 import modalsReducer from './modals';
 import formsReducer from './forms';
 import postAdReducer from './postAd';
+import filterAdsReducer from './filterAds';
 
 export const makeRootReducer = asyncReducers =>
   combineReducers({
@@ -17,6 +18,7 @@ export const makeRootReducer = asyncReducers =>
     i18n: i18nReducer,
     modals: modalsReducer,
     postAd: postAdReducer,
+    filterAds: filterAdsReducer,
     ...asyncReducers,
   });
 

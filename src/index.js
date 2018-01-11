@@ -6,6 +6,7 @@ import { InstantSearch } from 'react-instantsearch/dom';
 import { MuiThemeProvider } from 'material-ui/styles';
 import 'normalize.css/normalize.css';
 import createStore from 'store/createStore';
+import { ADS_INDEXES } from 'config/algolia';
 import theme from 'config/theme';
 import ModalProvider from 'components/molecules/ModalProvider';
 import registerServiceWorker from 'lib/registerServiceWorker';
@@ -19,7 +20,7 @@ ReactDOM.render(
       <InstantSearch
         appId={process.env.REACT_APP_ALGOLIA_APP_ID}
         apiKey={process.env.REACT_APP_ALGOLIA_SEARCH_KEY}
-        indexName={process.env.REACT_APP_ALGOLIA_ADS_INDEX_NAME}
+        indexName={ADS_INDEXES.default}
       >
         <MuiThemeProvider theme={theme}>
           <div>

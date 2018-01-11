@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import algolia from 'algoliaClient';
+import algolia, { appId } from 'algoliaClient';
 import createIndex from './createIndex';
 import importData from './import';
 
@@ -11,7 +11,7 @@ export const canInitialize = async () => {
   );
 
   if (!isEmpty) {
-    throw new Error('Algolia: App already contains indexes.');
+    throw new Error(`Algolia: App with id=${appId} already contains indexes.`);
   }
 
   return true;
