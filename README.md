@@ -103,6 +103,10 @@ Firebase functions URL:
 https://us-central1-<project_id>.cloudfunctions.net/
 ```
 
+### `git submodule foreach git pull`
+
+Update git submodules
+
 ### Tools
 
 1. [Firebase Tools](https://github.com/firebase/firebase-tools): `npm install -g
