@@ -1,8 +1,6 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { createStructuredSelector } from 'reselect';
-import { withProps } from 'recompose';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import ModeEditIcon from 'material-ui-icons/ModeEdit';
@@ -15,14 +13,14 @@ import EditAdLink from 'components/atoms/EditAdLink';
 import AdDateChip from 'components/atoms/AdDateChip';
 import ImageSlider from 'components/molecules/ImageSlider';
 import SendMessage from 'components/molecules/SendMessage';
-import { selectors as imagesSelectors } from 'store/images';
 
 type Props = {
   ad: Ad,
   adId: string,
-  images: Array<Object>,
   classes: Object,
 };
+
+const SLIDER_WIDTH = 500;
 
 const styles = theme => ({
   root: {
@@ -31,7 +29,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.common.white,
   },
   sliderWrap: {
-    width: 500,
+    width: SLIDER_WIDTH,
   },
   slider: {
     borderRadius: `${theme.custom.borderRadius.xl}px 0 0 ${
@@ -68,10 +66,14 @@ const styles = theme => ({
   },
 });
 
-const ViewAd = ({ ad, adId, images, classes }: Props) => (
+const ViewAd = ({ ad, adId, classes }: Props) => (
   <Grid container className={classes.root}>
     <Grid className={classes.sliderWrap}>
-      <ImageSlider className={classes.slider} images={images} />
+      <ImageSlider
+        className={classes.slider}
+        images={R.values(ad.images)}
+        imgixOptions={{ w: SLIDER_WIDTH }}
+      />
     </Grid>
     <Grid className={classes.content}>
       <div className={classes.header}>
@@ -104,11 +106,4 @@ ViewAd.defaultProps = {
   ad: {},
 };
 
-export default R.compose(
-  withProps(
-    createStructuredSelector({
-      images: imagesSelectors.adImagesSelector,
-    }),
-  ),
-  withStyles(styles),
-)(ViewAd);
+export default R.compose(withStyles(styles))(ViewAd);

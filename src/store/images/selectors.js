@@ -1,28 +1,25 @@
 import * as R from 'ramda';
 import createCachedSelector from 're-reselect';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import propSelector from 'utils/propSelector';
 import id from 'utils/id';
+import { buildUrl } from 'services/imgix';
 import * as utils from './utils';
-import * as constants from './constants';
 
 // adIdSelector :: Props -> String
 const adIdSelector = R.compose(id, propSelector('ad'));
 
-// adImagesSelector :: Props -> [Url]
-//   Url = String
-const adImagesSelector = createCachedSelector(
+// adImagePathsSelector :: Props -> [String]
+const adImagePathsSelector = createCachedSelector(
   propSelector('ad'),
-  utils.getAdImages,
+  utils.getAdImagesPaths,
 )(adIdSelector);
 
-// adFirstImageSelector :: Props -> Url | Nil
-export const adFirstImageSelector = createCachedSelector(
-  adImagesSelector,
-  R.head,
-)(adIdSelector);
+// adFirstImageSelector :: Props -> String | Nil
+export const adFirstImagePathSelector = R.compose(R.head, adImagePathsSelector);
 
-// adDefaultImageSelector :: Props -> Image
-//   Image = { Url, Height }
+// adDefaultImageSelector :: Props -> { Url, Height }
+//   Url = String
 //   Height = Number
 const adDefaultImageSelector = createCachedSelector(
   adIdSelector,
@@ -37,24 +34,19 @@ const adDefaultImageSelector = createCachedSelector(
 
 // adFirstImageWithDefaultSelector :: Props -> Image
 const adFirstImageWithDefaultSelector = createCachedSelector(
-  adFirstImageSelector,
+  adFirstImagePathSelector,
   adDefaultImageSelector,
-  R.compose(
-    R.defaultTo(constants.DEFAULT_IMAGE_HEIGHT),
-    propSelector('defaultHeight'),
-  ),
-  (firstImage, defaultImage, defaultHeight) => {
-    const image = firstImage || defaultImage;
-
-    if (R.is(Object, image)) {
-      return image;
+  R.compose(R.defaultTo({}), propSelector('imageOptions')),
+  (firstImagePath, defaultImage, imageOptions) => {
+    if (isNilOrEmpty(firstImagePath)) {
+      return defaultImage;
     }
 
     return {
-      url: image,
-      height: defaultHeight,
+      url: buildUrl(firstImagePath, imageOptions),
+      height: imageOptions.h,
     };
   },
 )(adIdSelector);
 
-export { adImagesSelector, adFirstImageWithDefaultSelector };
+export { adFirstImageWithDefaultSelector };

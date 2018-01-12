@@ -3,7 +3,6 @@ import React from 'react';
 import * as R from 'ramda';
 import { isNotPlainObj } from 'ramda-adjunct';
 import { withProps, defaultProps, branch } from 'recompose';
-import { createStructuredSelector } from 'reselect';
 import {
   Card,
   CardMedia,
@@ -30,6 +29,7 @@ type Props = {
 
 const HEADER_HEIGHT = 60;
 const CONTENT_HEIGHT = 40;
+const DEFAULT_IMAGE_HEIGHT = 200;
 
 const styles = theme => ({
   root: {
@@ -127,10 +127,16 @@ export default R.compose(
   defaultProps({
     ad: {},
   }),
-  withProps(
-    createStructuredSelector({
-      thumbnail: imagesSelectors.adFirstImageWithDefaultSelector,
+  withProps(({ ad, width }) => ({
+    thumbnail: imagesSelectors.adFirstImageWithDefaultSelector({
+      ad,
+      imageOptions: {
+        h: DEFAULT_IMAGE_HEIGHT,
+        w: width,
+        fit: 'crop',
+        crop: 'edges',
+      },
     }),
-  ),
+  })),
   withStyles(styles),
 )(AdCard);

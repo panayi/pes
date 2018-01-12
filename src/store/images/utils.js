@@ -1,11 +1,12 @@
 import * as R from 'ramda';
+import { isPlainObject } from 'ramda-adjunct';
 import propSelector from 'utils/propSelector';
 import randomInt from 'utils/randomInt';
 
-// getAdImages :: Ad -> [String] | [Object] | Nil
-const getAdImages = R.compose(
+// getAdImages :: Ad -> [String] | Nil
+const getAdImagesPaths = R.compose(
   R.defaultTo([]),
-  R.when(R.is(Object), R.compose(R.pluck('downloadURL'), R.values)),
+  R.when(isPlainObject, R.compose(R.pluck('fullPath'), R.values)),
   propSelector('images'),
   R.defaultTo({}),
 );
@@ -16,4 +17,4 @@ const getRandomDimensions = () => ({
   height: randomInt(2, 7) * 100,
 });
 
-export { getAdImages, getRandomDimensions };
+export { getAdImagesPaths, getRandomDimensions };

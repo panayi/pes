@@ -123,6 +123,7 @@ type Image {
   downloadURL: URL,
   fullPath: String,
   name: String,
+  createdAt: PastEpoch
 }
 
 type AdTitle extends String {
@@ -223,7 +224,8 @@ path /ads/{id} is Ad {
   read() { true }
 
   // TODO: Temporarily require phone-number auth, until merging-accounts is implemented
-  create() { isAuthenticatedWithPhone() }
+  // create() { isAuthenticatedWithPhone() }
+  create() { isAuthenticated() }
   update() { isCurrentUser(this.user) }
   delete() { isCurrentUser(this.user) }
 

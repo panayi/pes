@@ -59,12 +59,23 @@ file being tested.
 * `stories`: [Storybook](https://github.com/storybooks/storybook) files.
 * `test`: Contains End-to-End tests.
 
-#### Stack of dependencies
+### Hierarchy of folders
 
-A level X can import from level Y, if and only if X is higher than Y.
+A folder X can import from folder Y, if and only if Y is lower than X, in the following hierarchy:
 
 ```
-node_modules -> constants -> lib -> utils -> config -> services -> store -> components/hocs -> components/atoms -> components/molecules -> components/organisms -> pages
+pages
+components/organisms
+components/molecules
+components/atoms
+components/hocs
+store
+services
+config
+utils
+lib
+constants
+node_modules
 ```
 
 ## 2. Development
@@ -164,7 +175,10 @@ Find variables inherited by create-react-app
 | Staging     |  `staging`   | Runs the "next" version of the application, i.e., the release candidate. It is an exact mirror of the production environment, and shares the same resources (database, algolia, etc.) as the production environment. This environment is used for stress testing and comprehensive QA. Access is restricted to development team. |
 | Production  | `production` |                                                                                                                                     Runs the currently released version of the application.                                                                                                                                      |
 
-## 5. Edit old Code
+## 5. Custom yarn script
+We have a custom yarn script at `./yarn` for allowing operations on multiple deployments. Don't edit `.env` or `serviceAccountKey.json` files directly; instead edit them in `secrets` repo and update the submodule. Next time `DEPLOYMENT=development ./yarn <command>` runs will update these files.
+
+## 6. Edit old Code
 
 ```
 ssh deploy@178.79.164.250 -p 16888 -R 52698:localhost:52698

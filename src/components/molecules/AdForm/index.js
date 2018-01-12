@@ -132,8 +132,13 @@ const mapDispatchToProps = {
 export default R.compose(
   withStyles(styles),
   connectData({ categories: models.categories.all }, null, mapDispatchToProps),
-  withProps(({ ad }) => ({
+  withProps(({ ad, onSubmit }) => ({
     adIsLoaded: isLoaded(ad),
+    onSubmit: values =>
+      onSubmit({
+        ...values,
+        images: ad.images,
+      }),
   })),
   branch(
     R.prop('adIsLoaded'),

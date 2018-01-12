@@ -9,7 +9,7 @@ export default R.compose(
     R.lensProp('images'),
     R.compose(
       R.filter(R.identity),
-      R.pluck('downloadURL'),
+      R.pluck('fullPath'),
       R.defaultTo([]),
       R.values,
       R.defaultTo({}),

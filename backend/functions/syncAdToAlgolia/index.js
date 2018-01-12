@@ -2,9 +2,9 @@ import * as functions from 'firebase-functions';
 import algolia from 'algoliaClient';
 import serializeAd from 'helpers/serializeAdToAlgolia';
 import getCurrentEpoch from 'helpers/getCurrentEpoch';
-import algoliaConfig from '../../../src/config/algolia';
+import { ADS_INDEXES } from '../../../src/config/algolia';
 
-const adsIndexName = algoliaConfig.ADS_INDEXES.default;
+const adsIndexName = ADS_INDEXES.default;
 
 const addOrUpdateIndexRecord = event => {
   const index = algolia.initIndex(adsIndexName);
