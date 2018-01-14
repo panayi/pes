@@ -97,11 +97,11 @@ const AdForm = (props: Props) => {
                 <option value="">Select category</option>
                 {R.map(
                   category => (
-                    <option key={category.name} value={category.name}>
-                      {category.name}
+                    <option key={category.key} value={category.key}>
+                      {category.key}
                     </option>
                   ),
-                  R.values(categories),
+                  categories,
                 )}
               </Control.select>
             </FormControl>
@@ -132,8 +132,13 @@ const mapDispatchToProps = {
 export default R.compose(
   withStyles(styles),
   connectData({ categories: models.categories.all }, null, mapDispatchToProps),
-  withProps(({ ad }) => ({
+  withProps(({ ad, onSubmit }) => ({
     adIsLoaded: isLoaded(ad),
+    onSubmit: values =>
+      onSubmit({
+        ...values,
+        images: ad.images,
+      }),
   })),
   branch(
     R.prop('adIsLoaded'),

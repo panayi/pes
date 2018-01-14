@@ -6,10 +6,12 @@ import Slider from 'react-slick';
 import { withStyles } from 'material-ui';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Imgix from 'components/atoms/Imgix';
 import ArrowButton from './ArrowButton';
 
 type Props = {
-  images: Array<string>,
+  images: Array<Image>,
+  imgixOptions: Object,
   className: ?string,
   classes: Object,
 };
@@ -29,12 +31,18 @@ const styles = theme => ({
   },
 });
 
-const ImageSlider = ({ images, className, classes, ...rest }: Props) => (
+const ImageSlider = ({
+  images,
+  imgixOptions,
+  className,
+  classes,
+  ...rest
+}: Props) => (
   <Slider {...rest} className={classNames(classes.root, className)}>
     {R.map(
-      src => (
-        <div key={src} className={classes.imgContainer}>
-          <img className={classes.img} src={src} alt="" />
+      image => (
+        <div key={image.fullPath} className={classes.imgContainer}>
+          <Imgix image={image} {...imgixOptions} />
         </div>
       ),
       images,

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import algolia, { appId } from 'algoliaClient';
+import algolia, { appId } from 'lib/algoliaClient';
 import createIndex from './createIndex';
 import importData from './import';
 

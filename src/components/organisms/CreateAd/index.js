@@ -7,7 +7,6 @@ import {
   actions as postAdActions,
   selectors as postAdSelectors,
 } from 'store/postAd';
-import { uidSelector } from 'store/auth/selectors';
 import { factory as modalFactory } from 'store/modals';
 import CreateAdForm from './Form';
 import CreateAdSuccess from './Success';
@@ -34,7 +33,7 @@ class CreateAdContent extends Component<Props> {
 }
 
 const mapDataToProps = {
-  ad: models.pendingAds.one(uidSelector),
+  ad: models.draftAd,
 };
 
 const mapStateToProps = createStructuredSelector({

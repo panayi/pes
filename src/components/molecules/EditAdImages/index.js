@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Dropzone, { fileTypes } from 'components/molecules/Dropzone';
 import { actions } from 'store/images';
 import { constants as postAdConstants } from 'store/postAd';
+import Imgix from 'components/atoms/Imgix';
 
 type Props = {
   images: Array<Object>,
@@ -36,7 +37,7 @@ export class EditAdImages extends Component<Props> {
         {R.map(
           image => (
             <GridListTile key={image.fullPath}>
-              <img src={image.downloadURL} alt={image.fullPath} />
+              <Imgix image={image} h={87} w={87} fit="fill" bg="000" />
             </GridListTile>
           ),
           images,

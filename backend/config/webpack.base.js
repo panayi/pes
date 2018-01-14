@@ -21,7 +21,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js'],
-    modules: ['node_modules', 'shared'],
+    modules: ['node_modules', constants.paths.backend],
+    alias: {
+      frontend: constants.paths.frontend,
+    },
   },
   externals: [nodeExternals()],
   plugins: [

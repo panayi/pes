@@ -1,9 +1,8 @@
 import * as R from 'ramda';
 import fetch from 'node-fetch';
-import log from 'helpers/log';
-import importAd from 'legacy/importAd';
-import { ADS_ENDPOINT } from 'legacy/urls';
-import { database } from '../../../lib/firebaseClient';
+import log from 'utils/log';
+import { database } from 'lib/firebaseClient';
+import { importAd, ADS_ENDPOINT } from 'services/legacy';
 
 const sequentialImportAd = async (index, ads) => {
   const ad = ads[index];

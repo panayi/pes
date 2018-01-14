@@ -1,28 +1,26 @@
 import * as R from 'ramda';
 import createCachedSelector from 're-reselect';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import propSelector from 'utils/propSelector';
+import propOrSelector from 'utils/propOrSelector';
 import id from 'utils/id';
+import { buildUrl } from 'services/imgix';
 import * as utils from './utils';
-import * as constants from './constants';
 
 // adIdSelector :: Props -> String
 const adIdSelector = R.compose(id, propSelector('ad'));
 
-// adImagesSelector :: Props -> [Url]
-//   Url = String
+// adImagesSelector :: Props -> [String]
 const adImagesSelector = createCachedSelector(
   propSelector('ad'),
   utils.getAdImages,
 )(adIdSelector);
 
-// adFirstImageSelector :: Props -> Url | Nil
-export const adFirstImageSelector = createCachedSelector(
-  adImagesSelector,
-  R.head,
-)(adIdSelector);
+// adFirstImageSelector :: Props -> String | Nil
+export const adFirstImageSelector = R.compose(R.head, adImagesSelector);
 
-// adDefaultImageSelector :: Props -> Image
-//   Image = { Url, Height }
+// adDefaultImageSelector :: Props -> { Url, Height }
+//   Url = String
 //   Height = Number
 const adDefaultImageSelector = createCachedSelector(
   adIdSelector,
@@ -35,26 +33,32 @@ const adDefaultImageSelector = createCachedSelector(
   ),
 )(adIdSelector);
 
-// adFirstImageWithDefaultSelector :: Props -> Image
-const adFirstImageWithDefaultSelector = createCachedSelector(
+// adThumbnailWithDefaultSelector :: Props -> Image
+const adThumbnailWithDefaultSelector = createCachedSelector(
   adFirstImageSelector,
   adDefaultImageSelector,
-  R.compose(
-    R.defaultTo(constants.DEFAULT_IMAGE_HEIGHT),
-    propSelector('defaultHeight'),
-  ),
-  (firstImage, defaultImage, defaultHeight) => {
-    const image = firstImage || defaultImage;
+  propOrSelector({}, 'imgixParams'),
+  (firstImage, defaultImage, imgixParams) => {
+    if (isNilOrEmpty(firstImage)) {
+      return defaultImage;
+    }
 
-    if (R.is(Object, image)) {
-      return image;
+    const { fullPath, dimensions } = firstImage;
+    let height;
+
+    if (!isNilOrEmpty(imgixParams.h)) {
+      height = imgixParams.h;
+    } else if (!isNilOrEmpty(imgixParams.w)) {
+      height = imgixParams.w / dimensions.width * dimensions.height;
+    } else {
+      height = dimensions.height;
     }
 
     return {
-      url: image,
-      height: defaultHeight,
+      url: buildUrl(fullPath, imgixParams),
+      height,
     };
   },
 )(adIdSelector);
 
-export { adImagesSelector, adFirstImageWithDefaultSelector };
+export { adThumbnailWithDefaultSelector };

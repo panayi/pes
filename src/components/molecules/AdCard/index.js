@@ -3,7 +3,6 @@ import React from 'react';
 import * as R from 'ramda';
 import { isNotPlainObj } from 'ramda-adjunct';
 import { withProps, defaultProps, branch } from 'recompose';
-import { createStructuredSelector } from 'reselect';
 import {
   Card,
   CardMedia,
@@ -12,9 +11,9 @@ import {
   withStyles,
 } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { connectData } from 'lib/connectData';
-import { models } from 'store/data';
 import id from 'utils/id';
+import propSelector from 'utils/propSelector';
+import hydrateAd from 'components/hocs/hydrateAd';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
 import AdAddress from 'components/atoms/AdAddress';
@@ -118,19 +117,17 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
 };
 
 export default R.compose(
-  branch(
-    R.propSatisfies(isNotPlainObj, 'ad'),
-    connectData({
-      ad: models.ads.one((state, props) => props.ad),
-    }),
-  ),
+  branch(R.propSatisfies(isNotPlainObj, 'ad'), hydrateAd(propSelector('ad'))),
   defaultProps({
     ad: {},
   }),
-  withProps(
-    createStructuredSelector({
-      thumbnail: imagesSelectors.adFirstImageWithDefaultSelector,
+  withProps(({ ad, width }) => ({
+    thumbnail: imagesSelectors.adThumbnailWithDefaultSelector({
+      ad,
+      imgixParams: {
+        w: width,
+      },
     }),
-  ),
+  })),
   withStyles(styles),
 )(AdCard);

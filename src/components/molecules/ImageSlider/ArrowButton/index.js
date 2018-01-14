@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { Button, withStyles } from 'material-ui';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
+import renderNothingWhen from 'components/hocs/renderNothingWhen';
 
 const styles = theme => ({
   root: {
@@ -25,6 +26,7 @@ const styles = theme => ({
 
 const createArrowButton = (Icon, extraClass) =>
   R.compose(
+    renderNothingWhen(R.propEq('slideCount', 1)),
     withStyles(styles),
     setDisplayName('ArrowButton'),
     mapProps(props => ({
@@ -33,7 +35,9 @@ const createArrowButton = (Icon, extraClass) =>
       color: 'primary',
       disableRipple: true,
       children: <Icon />,
-      className: classNames(props.classes.root, props.classes[extraClass]),
+      classes: {
+        root: classNames(props.classes.root, props.classes[extraClass]),
+      },
     })),
   )(Button);
 

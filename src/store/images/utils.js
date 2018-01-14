@@ -2,10 +2,10 @@ import * as R from 'ramda';
 import propSelector from 'utils/propSelector';
 import randomInt from 'utils/randomInt';
 
-// getAdImages :: Ad -> [String] | [Object] | Nil
+// getAdImages :: Ad -> [String] | Nil
 const getAdImages = R.compose(
   R.defaultTo([]),
-  R.when(R.is(Object), R.compose(R.pluck('downloadURL'), R.values)),
+  R.values,
   propSelector('images'),
   R.defaultTo({}),
 );
