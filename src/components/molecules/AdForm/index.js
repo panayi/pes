@@ -97,11 +97,11 @@ const AdForm = (props: Props) => {
                 <option value="">Select category</option>
                 {R.map(
                   category => (
-                    <option key={category.name} value={category.name}>
-                      {category.name}
+                    <option key={category.key} value={category.key}>
+                      {category.key}
                     </option>
                   ),
-                  R.values(categories),
+                  categories,
                 )}
               </Control.select>
             </FormControl>

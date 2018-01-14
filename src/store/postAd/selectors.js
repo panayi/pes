@@ -1,7 +1,7 @@
 /* @flow */
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
-import * as modelTypes from 'constants/modelTypes';
+import * as modelPaths from 'constants/modelPaths';
 import propSelector from 'utils/propSelector';
 import { selectors as authSelectors } from 'store/auth';
 import * as constants from './constants';
@@ -28,11 +28,11 @@ export const isCreateAdCompletedSelector = createSelector(
 // adImagesPathSelector :: Props -> Object | Nil
 export const adImagesPathSelector = createSelector(
   propSelector('adId'),
-  adId => `ads/${adId}/images`,
+  adId => `adImages/${adId}`,
 );
 
-// pendingAdImagesSelector :: State -> Object | Nil
-export const pendingAdImagesPathSelector = createSelector(
+// draftAdImagesPathSelector :: State -> Object | Nil
+export const draftAdImagesPathSelector = createSelector(
   authSelectors.uidSelector,
-  R.unless(R.isNil, uid => `${modelTypes.PENDING_ADS}/${uid}/images`),
+  R.unless(R.isNil, uid => `${modelPaths.DRAFT_AD(uid).string}/images`),
 );

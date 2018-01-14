@@ -11,11 +11,13 @@
     "chalk": "^2.3.0",
     "commander": "^2.12.2",
     "express": "^4.16.0",
-    "firebase-admin": "^5.2.1",
-    "firebase-functions": "^0.6.3",
+    "firebase-admin": "^5.8.0",
+    "firebase-functions": "^0.8.0",
     "google-cloud": "^0.57.0",
+    "image-size": "^0.6.2",
     "node-fetch": "^1.7.3",
     "ramda": "^0.25.0",
+    "ramda-adjunct": "^2.2.0",
     "uuid-v4": "^0.1.0"
   },
   "devDependencies": {

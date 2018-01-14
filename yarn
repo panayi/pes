@@ -21,8 +21,8 @@ BACKUP_ENV_PATH="$BASE_PATH/.env.backup"
 
 SERVICE_ACCOUNT_KEY_FILE="$DEPLOYMENT.json"
 SOURCE_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/secrets/serviceAccountKeys/$SERVICE_ACCOUNT_KEY_FILE"
-TARGET_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/backend/shared/serviceAccountKey.json"
-BACKUP_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/backend/shared/serviceAccountKey.json.backup"
+TARGET_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/backend/lib/serviceAccountKey.json"
+BACKUP_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/backend/lib/serviceAccountKey.json.backup"
 
 # Backup existing env file
 if [ -f "$TARGET_ENV_PATH" ]

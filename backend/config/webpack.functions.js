@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
+const webpack = require('webpack');
 const baseConfig = require('./webpack.base.js');
 const merge = require('webpack-merge');
 const constants = require('./constants');
@@ -13,4 +14,9 @@ module.exports = merge.smart(baseConfig, {
     filename: constants.files.functionsOutput,
     libraryTarget: 'this',
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.IS_FIREBASE_FUNCTIONS': true,
+    }),
+  ],
 });

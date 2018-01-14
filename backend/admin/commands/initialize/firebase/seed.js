@@ -1,7 +1,7 @@
 import * as R from 'ramda';
-import categories from 'seeds/categories.json';
-import locales from 'seeds/locales.json';
-import { database } from '../../../lib/firebaseClient';
+import { database } from 'lib/firebaseClient';
+import categories from 'database/seeds/categories.json';
+import locales from 'database/seeds/locales.json';
 
 const formatCategories = R.reduce(
   (acc, category) =>

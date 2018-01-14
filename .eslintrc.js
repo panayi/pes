@@ -40,13 +40,11 @@ module.exports = {
       },
     },
     {
-      "files": ["backend/functions/**/*.js", "backend/admin/**/*.js"],
+      "files": ["backend/**/*.js"],
       "settings": {
         "import/resolver": {
-          "node": {
-            "paths": [
-              path.join(__dirname, 'backend', 'shared'),
-            ],
+          "webpack": {
+            "config": path.join(__dirname, 'backend', 'config', 'webpack.base.js')
           },
         },
       },

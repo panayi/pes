@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import * as modelTypes from 'constants/modelTypes';
+import * as modelPaths from 'constants/modelPaths';
 import { modelConnectionsFactory } from 'lib/connectData';
 import propSelector from 'utils/propSelector';
 import { selectors as authSelectors } from 'store/auth';
@@ -12,26 +12,28 @@ export const locales = createModelConnections(
   createSelector(
     i18nSelectors.languageSelector,
     propSelector('_translationsNamespace'),
-    (lng, ns) => [modelTypes.LOCALES, lng, ns],
+    modelPaths.LOCALES,
   ),
 );
-export const categories = createModelConnections(modelTypes.CATEGORIES);
-export const users = createModelConnections(modelTypes.USERS);
-export const ads = createModelConnections(modelTypes.ADS);
-export const myAds = createModelConnections(
-  createSelector(authSelectors.uidSelector, uid => [modelTypes.MY_ADS, uid]),
+export const categories = createModelConnections(modelPaths.CATEGORIES);
+export const users = createModelConnections(modelPaths.USERS);
+export const ads = createModelConnections(modelPaths.ADS);
+export const adImages = adIdSelector =>
+  createModelConnections(createSelector(adIdSelector, modelPaths.AD_IMAGES));
+export const draftAd = createModelConnections(
+  createSelector(authSelectors.uidSelector, modelPaths.DRAFT_AD),
+  { singleton: true },
 );
-export const pendingAds = createModelConnections(modelTypes.PENDING_ADS);
+export const adsByUser = createModelConnections(
+  createSelector(authSelectors.uidSelector, modelPaths.ADS_BY_USER),
+);
 export const conversations = createModelConnections(
-  createSelector(authSelectors.uidSelector, uid => [
-    modelTypes.CONVERSATIONS,
-    uid,
-  ]),
+  createSelector(authSelectors.uidSelector, modelPaths.CONVERSATIONS),
 );
 export const messages = createModelConnections(
-  createSelector(propSelector('ad'), propSelector('buyer'), (ad, buyer) => [
-    modelTypes.MESSAGES,
-    ad,
-    buyer,
-  ]),
+  createSelector(
+    propSelector('ad'),
+    propSelector('buyer'),
+    modelPaths.MESSAGES,
+  ),
 );

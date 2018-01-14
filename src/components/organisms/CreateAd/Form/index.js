@@ -12,11 +12,11 @@ import requireUserToCallAction from 'components/hocs/requireUserToCallAction';
 import AdForm from 'components/molecules/AdForm';
 
 const mapStateToProps = createStructuredSelector({
-  filesPath: postAdSelectors.pendingAdImagesPathSelector,
+  filesPath: postAdSelectors.draftAdImagesPathSelector,
 });
 
 const mapDispatchToProps = {
-  onChange: postAdActions.savePendingAd,
+  onChange: postAdActions.saveDraft,
   onSubmit: postAdActions.createAd,
 };
 

@@ -1,7 +1,7 @@
-import * as modelTypes from 'constants/modelTypes';
+import * as modelPaths from 'constants/modelPaths';
 
 export const create = ad => (dispatch, getState, getFirebase) =>
-  getFirebase().push(`/${modelTypes.ADS}`, ad);
+  getFirebase().push(modelPaths.ADS.string, ad);
 
 export const update = (id, data) => (dispatch, getState, getFirebase) =>
-  getFirebase().update(`/${modelTypes.ADS}/${id}`, data);
+  getFirebase().update(`/${modelPaths.ADS.string}/${id}`, data);

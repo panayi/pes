@@ -20,13 +20,11 @@ export default {
   indexes: [
     {
       name: ADS_INDEXES.default,
-      options: { forwardToReplicas: true },
       searchableAttributes: ['title', 'body'],
       attributesForFaceting: ['category'],
       replicas: [
         {
           name: ADS_INDEXES.byDateDesc,
-
           ranking: ['desc(createdAt)', ...secondaryRankingAttributes],
         },
         {

@@ -11,9 +11,9 @@ import {
   withStyles,
 } from 'material-ui';
 import { Link } from 'react-router-dom';
-import { connectData } from 'lib/connectData';
-import { models } from 'store/data';
 import id from 'utils/id';
+import propSelector from 'utils/propSelector';
+import hydrateAd from 'components/hocs/hydrateAd';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
 import AdAddress from 'components/atoms/AdAddress';
@@ -29,7 +29,6 @@ type Props = {
 
 const HEADER_HEIGHT = 60;
 const CONTENT_HEIGHT = 40;
-const DEFAULT_IMAGE_HEIGHT = 200;
 
 const styles = theme => ({
   root: {
@@ -118,23 +117,15 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
 };
 
 export default R.compose(
-  branch(
-    R.propSatisfies(isNotPlainObj, 'ad'),
-    connectData({
-      ad: models.ads.one((state, props) => props.ad),
-    }),
-  ),
+  branch(R.propSatisfies(isNotPlainObj, 'ad'), hydrateAd(propSelector('ad'))),
   defaultProps({
     ad: {},
   }),
   withProps(({ ad, width }) => ({
-    thumbnail: imagesSelectors.adFirstImageWithDefaultSelector({
+    thumbnail: imagesSelectors.adThumbnailWithDefaultSelector({
       ad,
-      imageOptions: {
-        h: DEFAULT_IMAGE_HEIGHT,
+      imgixParams: {
         w: width,
-        fit: 'crop',
-        crop: 'edges',
       },
     }),
   })),

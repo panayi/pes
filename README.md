@@ -72,9 +72,9 @@ components/hocs
 store
 services
 config
+constants
 utils
 lib
-constants
 node_modules
 ```
 

@@ -14,7 +14,7 @@ const MyAds = ({ myAds }: Props) => (
 );
 
 const mapDataToProps = {
-  myAds: models.myAds.all,
+  myAds: models.adsByUser.all,
 };
 
 export default R.compose(connectData(mapDataToProps))(MyAds);

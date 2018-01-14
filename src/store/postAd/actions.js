@@ -20,10 +20,10 @@ export const initializeForm = (ad: ?Ad) => (dispatch: Dispatch) => {
     R.defaultTo({}),
   )(ad);
 
-  dispatch(formActions.load(formModels.postAd.key, initialState));
+  dispatch(formActions.load(formModels.postAd.path, initialState));
 };
 
-const updatePendingAd = debounce(
+const updateDraft = debounce(
   (ad: Ad | {}, dispatch: Dispatch, getState: Function) => {
     const state = getState();
     const isIdle = isCreateAdIdleSelector(state);
@@ -34,19 +34,18 @@ const updatePendingAd = debounce(
 
     const uid = uidSelector(getState());
 
-    return dispatch(api.pendingAds.update(uid, serializeAd(ad)));
+    return dispatch(api.draftAd.update(uid, serializeAd(ad)));
   },
   200,
 );
 
-export const savePendingAd = (ad: Ad | {}) => (...args) =>
-  updatePendingAd(ad, ...args);
+export const saveDraft = (ad: Ad | {}) => (...args) => updateDraft(ad, ...args);
 
-// Note that pendingAd is also removed by a Firebase function.
+// Note that draftAd is also removed by a Firebase function.
 // However there's no guarantee when it will be removed.
-const removePendingAd = () => (dispatch: Dispatch, getState: Function) => {
+const removeDraft = () => (dispatch: Dispatch, getState: Function) => {
   const uid = uidSelector(getState());
-  return dispatch(api.pendingAds.remove(uid));
+  return dispatch(api.draftAd.remove(uid));
 };
 
 export const createAd = (ad: Ad) => (
@@ -60,9 +59,9 @@ export const createAd = (ad: Ad) => (
 
   dispatch(createAdPending());
 
-  return dispatch(api.ads.create(finalAd))
+  return dispatch(api.pendingReviewAds.create(finalAd))
     .then(() => dispatch(createAdCompleted()))
-    .then(() => dispatch(removePendingAd()))
+    .then(() => dispatch(removeDraft()))
     .then(() =>
       dispatch(
         formActions.load(formModels.postAd.key, formModels.postAd.initialState),

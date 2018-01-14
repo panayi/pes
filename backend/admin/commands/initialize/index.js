@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import log from 'helpers/log';
+import log from 'utils/log';
 import initializeFirebase, {
   canInitialize as canInitializeFirebase,
 } from './firebase';

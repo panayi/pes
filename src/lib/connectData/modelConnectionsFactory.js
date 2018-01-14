@@ -15,11 +15,15 @@ const modelConnectionsFactory = dataPath => {
   const createModelPathStringSelector = modelPathSelector =>
     createSelector(modelPathSelector, R.join('/'));
 
-  const createModelObjectsSelector = modelPathSelector =>
-    createSelector((state, props) => {
-      const modelPath = modelPathSelector(state, props);
-      return R.pathOr([], [...dataPath, ...modelPath], state);
-    }, R.defaultTo([]));
+  const createSingletonSelector = modelPathSelector => (state, props) => {
+    const modelPath = modelPathSelector(state, props);
+    return R.path([...dataPath, ...modelPath], state);
+  };
+
+  const createModelObjectsSelector = modelPathSelector => (state, props) => {
+    const modelPath = modelPathSelector(state, props);
+    return R.pathOr([], [...dataPath, ...modelPath], state);
+  };
 
   // createModelSelector :: Selector -> Selector
   const createModelSelector = modelObjectSelector =>
@@ -70,11 +74,21 @@ const modelConnectionsFactory = dataPath => {
   //   ModelPathSelector =
   //     (State, Props) -> String | [String] OR
   //     String | [String]
-  const createModelConnections = modelPathSelector => {
+  const createModelConnections = (modelPathSelector, options = {}) => {
+    const { singleton = false } = options;
     const finalModelPathSelector = createModelPathSelector(modelPathSelector);
     const modelPathStringSelector = createModelPathStringSelector(
       finalModelPathSelector,
     );
+
+    if (singleton) {
+      const singletonSelector = createSingletonSelector(finalModelPathSelector);
+      return {
+        query: modelPathStringSelector,
+        selector: singletonSelector,
+      };
+    }
+
     const modelObjectsSelector = createModelObjectsSelector(
       finalModelPathSelector,
     );

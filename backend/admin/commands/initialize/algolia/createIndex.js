@@ -1,13 +1,13 @@
 import * as R from 'ramda';
-import algolia from 'algoliaClient';
-import algoliaConfig from '../../../../../src/config/algolia';
+import algolia from 'lib/algoliaClient';
+import algoliaConfig from 'frontend/config/algolia';
 
 export default async () => {
   const { indexes } = algoliaConfig;
 
   await Promise.all(
     R.map(index => {
-      const { name, options = {}, replicas = [] } = index;
+      const { name, replicas = [] } = index;
       const replicaNames = R.pluck('name', replicas);
 
       // Create root and replica indexes
@@ -20,14 +20,16 @@ export default async () => {
       // Set settings
       const rootIndexSettings = R.compose(
         R.assoc('replicas', replicaNames),
-        R.omit(['name', 'options']),
+        R.omit(['name']),
       )(index);
-      const rootPromise = rootIndex.setSettings(rootIndexSettings, options);
-      const replicaPromises = R.addIndex(R.map)(
-        (replicaIndex, i) =>
-          replicaIndex.setSettings(R.omit(['name'], replicas[i])),
-        replicaIndexes,
-      );
+      const rootPromise = rootIndex.setSettings(rootIndexSettings);
+      const replicaPromises = R.addIndex(R.map)((replicaIndex, i) => {
+        const replicaIndexSettings = R.useWith(R.merge, [
+          R.omit(['replicas']),
+          R.omit(['name']),
+        ])(rootIndexSettings, replicas[i]);
+        return replicaIndex.setSettings(replicaIndexSettings);
+      }, replicaIndexes);
 
       return Promise.all([...replicaPromises, rootPromise]);
     }, indexes),

@@ -10,7 +10,7 @@
 /build
 /backend/build
 /backend/index.js
-/database/rules.json
+/backend/database/rules.json
 
 # OS X
 .DS_Store
