@@ -8,7 +8,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import { Avatar } from 'material-ui';
 import Face from 'material-ui-icons/Face';
 import { connectData } from 'lib/connectData';
-import { selectors as profileSelectors } from 'store/profile';
+import { selectors as userSelectors } from 'store/user';
 
 const ProfileImage = ({ src, size, withDefault, component: RootComponent }) => (
   <RootComponent src={src} size={size}>
@@ -17,8 +17,8 @@ const ProfileImage = ({ src, size, withDefault, component: RootComponent }) => (
 );
 
 const mapStateToProps = createStructuredSelector({
-  isProfileLoaded: profileSelectors.isProfileLoadedSelector,
-  src: profileSelectors.profilePropSelector(['profile', 'avatarUrl']),
+  isProfileLoaded: userSelectors.isProfileLoadedSelector,
+  src: userSelectors.profilePropSelector(['profile', 'avatarUrl']),
 });
 
 const connectMe = R.compose(

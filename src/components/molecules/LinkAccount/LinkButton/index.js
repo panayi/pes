@@ -9,7 +9,7 @@ import { createStructuredSelector } from 'reselect';
 import { Button } from 'material-ui';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import authConfig from 'config/auth';
-import { actions as profileActions } from 'store/profile';
+import { actions as userActions } from 'store/user';
 import * as actions from 'store/auth/linkedAccounts/actions';
 import { linkedAccountsSelector } from 'store/auth/linkedAccounts/selectors';
 
@@ -67,7 +67,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   fetchLinkedAccounts: actions.fetchLinkedAccounts,
-  setProfile: profileActions.setProfile,
+  setProfile: userActions.setProfile,
 };
 
 const isDisabled = R.converge(R.contains, [

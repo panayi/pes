@@ -1,7 +1,7 @@
-import * as modelTypes from 'constants/modelPaths';
+import * as modelPaths from 'constants/modelPaths';
 
 export const update = (uid, data) => (dispatch, getState, getFirebase) =>
-  getFirebase().update(modelTypes.DRAFT_AD(uid).string, data);
+  getFirebase().update(modelPaths.DRAFT_AD(uid).string, data);
 
 export const remove = uid => (dispatch, getState, getFirebase) =>
-  getFirebase().remove(modelTypes.DRAFT_AD(uid).string);
+  getFirebase().remove(modelPaths.DRAFT_AD(uid).string);

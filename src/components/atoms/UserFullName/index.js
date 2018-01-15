@@ -4,11 +4,11 @@ import { mapProps, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 import { Typography } from 'material-ui';
-import { selectors as profileSelectors } from 'store/profile';
+import { selectors as userSelectors } from 'store/user';
 
 const mapStateToProps = createStructuredSelector({
-  isProfileLoaded: profileSelectors.isProfileLoadedSelector,
-  children: profileSelectors.profilePropSelector(['profile', 'displayName']),
+  isProfileLoaded: userSelectors.isProfileLoadedSelector,
+  children: userSelectors.profilePropSelector(['profile', 'displayName']),
 });
 
 export default R.compose(

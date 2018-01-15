@@ -1,13 +1,13 @@
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import api from 'services/api';
-import { selectors as profileSelectors } from 'store/profile';
+import { selectors as userSelectors } from 'store/user';
 import * as types from './types';
 
 const receiveLinkedAccounts = createAction(types.RECEIVE_LINKED_ACCOUNTS);
 
 export const fetchLinkedAccounts = () => (dispatch, getState) => {
-  const email = profileSelectors.profileEmailSelector(getState());
+  const email = userSelectors.profileEmailSelector(getState());
 
   if (R.isNil(email)) {
     return dispatch(receiveLinkedAccounts([]));

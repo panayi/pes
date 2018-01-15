@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { branch, renderNothing } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { selectors as profileSelectors } from 'store/profile';
+import { selectors as userSelectors } from 'store/user';
 import * as actions from 'store/auth/linkedAccounts/actions';
 import { linkedAccountsSelector } from 'store/auth/linkedAccounts/selectors';
 import LinkButton from './LinkButton';
@@ -31,7 +31,7 @@ export class LinkAccount extends Component<Props> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  isProfileLoaded: profileSelectors.isProfileLoadedSelector,
+  isProfileLoaded: userSelectors.isProfileLoadedSelector,
   linkedAccounts: linkedAccountsSelector,
 });
 

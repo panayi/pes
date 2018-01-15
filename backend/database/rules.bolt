@@ -115,6 +115,11 @@ type PositiveNumber extends Number {
   }
 }
 
+type Location {
+  latitude: Number,
+  longitude: Number,
+}
+
 // Application Types
 type Category {
   name: String,
@@ -195,7 +200,9 @@ type Profile {
 
 type User {
   email: Email | Null,
-  providerData: Map<String, Provider>,
+  providerData: Map<String, Provider> | Null,
+  location: Location | Null,
+  ip: IPv4 | Null,
   profile: Profile | Null,
   anonymousUserId: String | Null,
 }

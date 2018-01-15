@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import { actions } from 'react-redux-form';
 import { models as formModels } from 'store/forms';
-import { actions as profileActions } from 'store/profile';
+import { actions as userActions } from 'store/user';
 import { actions as anonymousUserIdActions } from '../anonymousUserId';
 import * as types from './types';
 import * as selectors from './selectors';
@@ -76,7 +76,7 @@ export const submitCodeForm = (
       // FIXME: for some reason setProfile doesn't work
       // unless we add some delay
       setTimeout(() => {
-        dispatch(profileActions.setProfile(user));
+        dispatch(userActions.setProfile(user));
       }, 1000);
 
       return Promise.resolve(result);

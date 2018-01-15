@@ -7,7 +7,8 @@ import * as firebase from 'firebase';
 import * as modelPaths from 'constants/modelPaths';
 import * as firebaseConstants from 'constants/firebase';
 import * as storageConstants from 'constants/storage';
-import { utils } from './profile';
+import { actions as authActions } from './auth';
+import { utils as userUtils } from './user';
 import makeRootReducer from './reducers';
 
 const firebaseConfig = {
@@ -23,7 +24,8 @@ export default (initialState = {}) => {
 
   const reduxFirebaseConfig = {
     userProfile: modelPaths.USERS.string,
-    profileFactory: utils.profileFactory,
+    profileFactory: userUtils.profileFactory,
+    onAuthStateChanged: authActions.handleAuthStateChanged,
   };
 
   // initialize firebase instance
