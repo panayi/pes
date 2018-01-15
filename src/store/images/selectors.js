@@ -19,28 +19,13 @@ const adImagesSelector = createCachedSelector(
 // adFirstImageSelector :: Props -> String | Nil
 export const adFirstImageSelector = R.compose(R.head, adImagesSelector);
 
-// adDefaultImageSelector :: Props -> { Url, Height }
-//   Url = String
-//   Height = Number
-const adDefaultImageSelector = createCachedSelector(
-  adIdSelector,
-  R.compose(
-    ({ width, height }) => ({
-      url: `https://unsplash.it/${width}/${height}/?random`,
-      height,
-    }),
-    utils.getRandomDimensions,
-  ),
-)(adIdSelector);
-
-// adThumbnailWithDefaultSelector :: Props -> Image
-const adThumbnailWithDefaultSelector = createCachedSelector(
+// adThumbnailSelector :: Props -> Image
+const adThumbnailSelector = createCachedSelector(
   adFirstImageSelector,
-  adDefaultImageSelector,
   propOrSelector({}, 'imgixParams'),
-  (firstImage, defaultImage, imgixParams) => {
+  (firstImage, imgixParams) => {
     if (isNilOrEmpty(firstImage)) {
-      return defaultImage;
+      return null;
     }
 
     const { fullPath, dimensions } = firstImage;
@@ -61,4 +46,4 @@ const adThumbnailWithDefaultSelector = createCachedSelector(
   },
 )(adIdSelector);
 
-export { adThumbnailWithDefaultSelector };
+export { adThumbnailSelector };

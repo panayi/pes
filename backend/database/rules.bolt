@@ -161,7 +161,7 @@ type PendingReviewAd {
   price: Price,
   category: String,
   user: String,
-  images: Map<String, Image> | Null,
+  images: Map<String, Image>,
 }
 
 type DraftAd {

@@ -1,11 +1,16 @@
 import * as R from 'ramda';
 import fetch from 'node-fetch';
 import uuid from 'uuid-v4';
+import random from 'lodash.random';
+import ImagesScraper from 'images-scraper';
 import generateId from 'frontend/utils/generateId';
 import * as storageConstants from 'frontend/constants/storage';
 import fileMetadataFactory from 'utils/fileMetadataFactory';
 import storage from 'utils/storage';
 import log from 'utils/log';
+import renameFile from 'utils/renameFile';
+
+const GoogleImagesScraper = new ImagesScraper.Google();
 
 // ------------------------------------
 // Constants
@@ -98,9 +103,37 @@ const getFileUrl = (path, token) =>
     storageConstants.BUCKET
   }/o/${encodeURIComponent(path)}?alt=media&token=${token}`;
 
+const findImageWithGoogle = async ad => {
+  const { title } = ad;
+
+  try {
+    const results = await GoogleImagesScraper.list({
+      keyword: title,
+      num: 10,
+    });
+    const result = results[random(0, results.length - 1)];
+    const url = result && result.url;
+
+    if (!url) {
+      log.warn(`No Google Image results for query: ${title}`);
+    }
+    return result && result.url;
+  } catch (error) {
+    if (R.equals(error.message, FETCH_FAILED)) {
+      log.warn(`Failed to search for image on Google`);
+    } else {
+      throw error;
+    }
+
+    return null;
+  }
+};
+
 const uploadImage = async (buffer, filename, contentType, dbPath, database) =>
   new Promise((resolve, reject) => {
-    const path = `${storageConstants.IMAGES_PATH}/${generateId()}/${filename}`;
+    const newFilename = renameFile(generateId(), filename);
+    const path = `${storageConstants.IMAGES_PATH}/${newFilename}`;
+
     const file = storage.file(path);
     const token = uuid();
     const stream = file.createWriteStream({
@@ -130,8 +163,15 @@ const uploadImage = async (buffer, filename, contentType, dbPath, database) =>
     stream.end(buffer);
   });
 
-const sequentialImportImage = async (index, images, adPath, database) => {
+const sequentialImportImage = async (
+  index,
+  images,
+  adId,
+  database,
+  didUploadImages,
+) => {
   const image = images[index];
+  let didUploadAnImage = didUploadImages;
 
   try {
     const response = await fetch(image);
@@ -140,43 +180,87 @@ const sequentialImportImage = async (index, images, adPath, database) => {
     }
 
     const contentType = response.headers.get('content-type');
+
+    if (!R.contains(contentType, ['image/jpeg', 'image/png', 'image/gif'])) {
+      throw new Error(
+        `Content type is ${contentType} and not an image as expected`,
+      );
+    }
+
     const buffer = await response.buffer();
-    const filename = image.split('/').pop();
+    const filename = image
+      .split('/')
+      .pop()
+      .split('?')
+      .shift();
 
     await uploadImage(
       buffer,
       filename,
       contentType,
-      `${adPath}/images`,
+      `ads/images/${adId}`,
       database,
     );
+    didUploadAnImage = true;
+    log.info(`Added image to ad with id=${adId} - ${image}`);
   } catch (error) {
-    if (R.equals(error.message, FETCH_FAILED)) {
-      log.warn(`Failed to fetch ${image}`);
-    } else {
-      throw error;
+    if (!R.equals(error.message, FETCH_FAILED)) {
+      log.warn(error.message);
     }
   }
 
   if (R.isNil(images[index + 1])) {
-    return Promise.resolve();
+    return Promise.resolve(didUploadAnImage);
   }
 
-  return sequentialImportImage(index + 1, images, adPath, database);
+  return sequentialImportImage(
+    index + 1,
+    images,
+    adId,
+    database,
+    didUploadAnImage,
+  );
 };
 
+const findImageFromWeb = async (finalAd, database) => {
+  const imageFromWeb = await findImageWithGoogle(finalAd);
+  if (imageFromWeb) {
+    return sequentialImportImage(
+      0,
+      [imageFromWeb],
+      finalAd.id,
+      database,
+      false,
+    );
+  }
+
+  return true;
+};
+
+// ------------------------------------
+// Actions
+// ------------------------------------
 export const importAd = async (ad, database) => {
   const transformedAd = transformAd(ad);
   const adPath = getAdPath(transformedAd);
   const finalAd = R.omit(['images'], transformedAd);
   const images = R.prop('images', transformedAd);
 
-  return Promise.all([
-    await database.ref(adPath).update(finalAd),
-    R.isNil(images[0])
-      ? Promise.resolve()
-      : await sequentialImportImage(0, images, adPath, database),
-  ]);
+  await database.ref(adPath).update(finalAd);
+
+  const didUploadAnImage = R.isNil(images[0])
+    ? await Promise.resolve(false)
+    : await sequentialImportImage(0, images, finalAd.id, database, false);
+
+  if (!didUploadAnImage) {
+    let retries = 0;
+    let didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database);
+
+    while (!didUploadAnImageFromWeb && retries < 4) {
+      didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database); // eslint-disable-line no-await-in-loop
+      retries += 1;
+    }
+  }
 };
 
 export const fetchAd = async (id, category) => {

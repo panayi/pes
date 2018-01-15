@@ -32,15 +32,25 @@ export const update = (props, adId) => {
   const finalProps = R.assoc('objectID', adId, props);
 
   return new Promise((resolve, reject) => {
-    index.partialUpdateObject(serializeAd(finalProps), err => {
-      if (err) {
-        reject(err);
+    // Ensure the object exists
+    index.getObject(adId, fetchError => {
+      if (fetchError) {
+        reject(
+          `Failed to update a non-existent object (id=${adId}) on Algolia`,
+        );
+        return;
       }
 
-      resolve();
-      console.log(
-        `Firebase object with id=${finalProps.objectID} updated in Algolia`,
-      );
+      index.partialUpdateObject(serializeAd(finalProps), err => {
+        if (err) {
+          reject(err);
+        }
+
+        resolve();
+        console.log(
+          `Firebase object with id=${finalProps.objectID} updated in Algolia`,
+        );
+      });
     });
   });
 };

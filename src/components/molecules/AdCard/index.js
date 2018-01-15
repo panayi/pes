@@ -29,6 +29,7 @@ type Props = {
 
 const HEADER_HEIGHT = 60;
 const CONTENT_HEIGHT = 40;
+const DEFAULT_THUMBNAIL_HEIGHT = 40;
 
 const styles = theme => ({
   root: {
@@ -70,7 +71,10 @@ const styles = theme => ({
 });
 
 const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
-  const totalHeight = thumbnail.height + HEADER_HEIGHT + CONTENT_HEIGHT;
+  const thumbnailHeight = thumbnail
+    ? thumbnail.height
+    : DEFAULT_THUMBNAIL_HEIGHT;
+  const totalHeight = thumbnailHeight + HEADER_HEIGHT + CONTENT_HEIGHT;
 
   return (
     <div
@@ -89,8 +93,8 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
       >
         <CardMedia
           className={classes.media}
-          image={thumbnail.url}
-          style={{ height: `${thumbnail.height}px` }}
+          image={thumbnail && thumbnail.url}
+          style={{ height: `${thumbnailHeight}px` }}
         >
           <AdPrice
             className={classes.price}
@@ -122,7 +126,7 @@ export default R.compose(
     ad: {},
   }),
   withProps(({ ad, width }) => ({
-    thumbnail: imagesSelectors.adThumbnailWithDefaultSelector({
+    thumbnail: imagesSelectors.adThumbnailSelector({
       ad,
       imgixParams: {
         w: width,
