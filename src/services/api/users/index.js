@@ -1,4 +1,12 @@
 import * as modelPaths from 'constants/modelPaths';
 
-export const update = (id, data) => (dispatch, getState, getFirebase) =>
-  getFirebase().update(`/${modelPaths.USERS.string}/${id}`, data);
+export const update = (id, isAnonymous, data) => (
+  dispatch,
+  getState,
+  getFirebase,
+) => {
+  const path = isAnonymous
+    ? `/${modelPaths.ANONYMOUS_USERS.string}/${id}`
+    : `/${modelPaths.USERS.string}/${id}`;
+  return getFirebase().update(path, data);
+};

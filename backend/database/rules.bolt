@@ -198,6 +198,11 @@ type Profile {
   avatarUrl: URL | Null,
 }
 
+type AnonymousUser {
+  location: Location | Null,
+  ip: IPv4 | Null,
+}
+
 type User {
   email: Email | Null,
   providerData: Map<String, Provider> | Null,
@@ -230,6 +235,7 @@ isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
 adIsValid(adId) { root.ads[adId] != null }
 userIsValid(uid) { root.users[uid] != null }
+anonymousUserIsValid(uid) { root.anonymousUsers[uid] != null }
 isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook' || providerId == 'twitter' || providerId == 'github' }
 requireWhenAuthenticatedWithSocial(value, providerId) { value != null || !isSocialProvider(providerId) }
 requireWhenAuthenticatedWithPhone(value, providerId) { value != null || providerId != 'phone' }
@@ -305,13 +311,26 @@ path /ads/images/{adId}/{imageId} is Image {
   }
 }
 
+path /anonymousUsers/{uid} is AnonymousUser {
+  read() { isCurrentUser(uid) }
+  create() { true }
+  update() { isCurrentUser(uid) }
+
+  validate() {
+    auth.provider == 'anonymous'
+  }
+}
+
 path /users/{uid} is User {
   read() { isCurrentUser(uid) }
   create() { true } // TODO: is this right?
-  update() { isCurrentUser(uid) && this.ip == null }
+  update() { isCurrentUser(uid) }
 
   validate() {
+    auth.provider != 'anonymous' &&
+    (this.anonymousUserId == null || anonymousUserIsValid(this.anonymousUserId)) &&
     requireWhenAuthenticatedWithSocial(this.profile, auth.provider)
+    // (this.anonymousUserId == null || auth.provider == 'anonymous')
   }
 }
 

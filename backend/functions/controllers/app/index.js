@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 import express from 'express';
 import createCors from 'cors';
 import authenticate from './authenticate';
-import saveUserIp from './saveUserIp';
+import saveCurrentUserIp from './saveCurrentUserIp';
 import syncLegacyAd from './syncLegacyAd';
 
 const app = express();
@@ -18,6 +18,6 @@ app.get('/:category/:id', syncLegacyAd);
 app.use(cors);
 app.use(authenticate);
 
-app.post('/users/:userId/ip', saveUserIp);
+app.post('/users/ip', saveCurrentUserIp);
 
 export default functions.https.onRequest(app);

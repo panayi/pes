@@ -7,19 +7,20 @@ export const setProfile = user => dispatch =>
   dispatch(api.profile.update(utils.profileFactory(user)));
 
 export const setCurrentUserLocation = location => (dispatch, getState) => {
-  const uid = authSelectors.uidSelector(getState());
+  const state = getState();
+  const uid = authSelectors.uidSelector(state);
+  const isAnonymous = authSelectors.isAnonymousSelector(state);
 
   if (isNilOrEmpty(uid)) {
     return null;
   }
 
-  return dispatch(api.users.update(uid, { location }));
+  return dispatch(api.users.update(uid, isAnonymous, { location }));
 };
 
 export const setCurrentUserIp = () => (dispatch, getState) => {
   const state = getState();
-  const uid = authSelectors.uidSelector(state);
   const token = authSelectors.tokenSelector(state);
 
-  return dispatch(api.app.setUserIp(uid, { token }));
+  return dispatch(api.app.setCurrentUserIp({ token }));
 };

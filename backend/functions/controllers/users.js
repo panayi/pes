@@ -1,22 +1,14 @@
 import * as functions from 'firebase-functions';
 import * as userModel from '../models/user';
-import * as draftAdModel from '../models/draftAd';
 
-const handleUserCreated = async event => {
-  const { uid } = event.params;
-  await draftAdModel.move(event.data, uid);
-  return userModel.unsetAnonymousUser(uid);
-};
-
-const handleUserUpdated = async event => {
-  const { uid } = event.params;
-  await draftAdModel.move(event.data, uid);
-  return userModel.unsetAnonymousUser(uid);
+const handleUserCreatedOrUpdated = async event => {
+  const userSnapshot = event.data;
+  return userModel.migrateAnonymousUser(userSnapshot);
 };
 
 export const userCreated = functions.database
   .ref('/users/{uid}')
-  .onWrite(handleUserCreated);
+  .onCreate(handleUserCreatedOrUpdated);
 export const userUpdated = functions.database
   .ref('/users/{uid}')
-  .onWrite(handleUserUpdated);
+  .onUpdate(handleUserCreatedOrUpdated);

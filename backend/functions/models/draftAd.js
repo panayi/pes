@@ -1,7 +1,6 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from 'lib/firebaseClient';
-import * as userModel from './user';
 
 export const get = async userId =>
   database.ref(`/ads/draft/${userId}`).once('value');
@@ -12,28 +11,8 @@ export const set = async (draftAd, userId) =>
 export const remove = async userId =>
   database.ref(`/ads/draft/${userId}`).remove();
 
-export const getFromAnonymousUser = async userPointer => {
-  const anonymousUserId = await userModel.getAnonymousUserId(userPointer);
-
-  if (R.isNil(anonymousUserId)) {
-    return null;
-  }
-
-  return get(anonymousUserId);
-};
-
-export const removeFromAnonymousUser = async userPointer => {
-  const anonymousUserId = await userModel.getAnonymousUserId(userPointer);
-
-  if (!anonymousUserId) {
-    return null;
-  }
-
-  return remove(anonymousUserId);
-};
-
-export const move = async (userSnapshot, userId) => {
-  const sourceSnapshot = await getFromAnonymousUser(userSnapshot);
+export const move = async (sourceUserId, targetUserId) => {
+  const sourceSnapshot = await get(sourceUserId);
 
   if (R.isNil(sourceSnapshot)) {
     return null;
@@ -48,6 +27,6 @@ export const move = async (userSnapshot, userId) => {
     return null;
   }
 
-  await set(sourceDraftAd, userId);
-  return removeFromAnonymousUser(userSnapshot);
+  await set(sourceDraftAd, targetUserId);
+  return remove(sourceUserId);
 };

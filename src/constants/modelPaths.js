@@ -9,6 +9,7 @@ export const LOCALES = (language, namespace) =>
   createModelPath(['locales', language, namespace]);
 export const CATEGORIES = createModelPath(['categories']);
 export const USERS = createModelPath(['users']);
+export const ANONYMOUS_USERS = createModelPath(['anonymousUsers']);
 export const ADS = createModelPath(['ads', 'published']);
 export const DRAFT_AD = userId => createModelPath(['ads', 'draft', userId]);
 export const PENDING_REVIEW_ADS = createModelPath(['ads', 'pendingReview']);

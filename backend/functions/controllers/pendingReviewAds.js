@@ -1,5 +1,4 @@
 import * as functions from 'firebase-functions';
-import { database } from 'lib/firebaseClient';
 import * as pendingReviewAdModel from '../models/pendingReviewAd';
 import * as adModel from '../models/ad';
 import * as draftAdModel from '../models/draftAd';
@@ -10,16 +9,23 @@ const handlePendingReviewAdCreated = async event => {
   const { pendingReviewAdId } = event.params;
   const pendingReviewAd = snapshot.val();
   const userId = pendingReviewAd.user;
-  const userRef = database.ref(`/users/${userId}`);
 
+  // Publish ad
   const adId = await adModel.push(pendingReviewAd);
 
   if (userId) {
+    // Associate ad to user
     await userModel.pushAd(adId, userId);
+
+    // Delete draft ad for user
     await draftAdModel.remove(userId);
   }
 
-  await draftAdModel.removeFromAnonymousUser(userRef);
+  // Delete draft ad for user.anonymousUserId
+  const anonymousUserId = userModel.getAnonymousUserId(userId);
+  if (anonymousUserId) {
+    await draftAdModel.remove(anonymousUserId);
+  }
 
   return pendingReviewAdModel.remove(pendingReviewAdId);
 };

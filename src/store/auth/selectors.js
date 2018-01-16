@@ -35,7 +35,7 @@ export const hasUidSelector = createSelector(
 );
 
 // isAnonymousSelector :: State -> Boolean | Nil
-const isAnonymousSelector = createSelector(
+export const isAnonymousSelector = createSelector(
   firebaseAuthSelector,
   R.prop('isAnonymous'),
 );
