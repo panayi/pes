@@ -229,31 +229,39 @@ const findImageFromWeb = async (finalAd, database) => {
 // Actions
 // ------------------------------------
 export const importAd = async (ad, database) => {
-  const transformedAd = transformAd(ad);
-  const adPath = getAdPath(transformedAd);
-  const images = R.prop('images', transformedAd);
+  try {
+    const transformedAd = transformAd(ad);
+    const adPath = getAdPath(transformedAd);
+    const images = R.prop('images', transformedAd);
 
-  const { lat, lng } = ad;
-  const geoposition = { latitude: parseFloat(lat), longitude: parseFloat(lng) };
-  const address = await gmapsService.reverseGeocode(geoposition);
-  const location = R.merge(address, { geoposition });
-  const finalAd = R.compose(R.assoc('location', location), R.omit(['images']))(
-    transformedAd,
-  );
-  await database.ref(adPath).update(finalAd);
+    const { lat, lng } = ad;
+    const geoposition = {
+      latitude: parseFloat(lat),
+      longitude: parseFloat(lng),
+    };
+    const address = await gmapsService.reverseGeocode(geoposition);
+    const location = R.merge(address, { geoposition });
+    const finalAd = R.compose(
+      R.assoc('location', location),
+      R.omit(['images']),
+    )(transformedAd);
+    await database.ref(adPath).update(finalAd);
 
-  const didUploadAnImage = R.isNil(images[0])
-    ? await Promise.resolve(false)
-    : await sequentialImportImage(0, images, finalAd.id, database, false);
+    const didUploadAnImage = R.isNil(images[0])
+      ? await Promise.resolve(false)
+      : await sequentialImportImage(0, images, finalAd.id, database, false);
 
-  if (!didUploadAnImage) {
-    let retries = 0;
-    let didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database);
+    if (!didUploadAnImage) {
+      let retries = 0;
+      let didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database);
 
-    while (!didUploadAnImageFromWeb && retries < 4) {
-      didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database); // eslint-disable-line no-await-in-loop
-      retries += 1;
+      while (!didUploadAnImageFromWeb && retries < 4) {
+        didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database); // eslint-disable-line no-await-in-loop
+        retries += 1;
+      }
     }
+  } catch (error) {
+    log.warn(error.message);
   }
 };
 

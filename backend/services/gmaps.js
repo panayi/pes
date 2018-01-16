@@ -18,7 +18,8 @@ const findComponentByType = (types, results) =>
   )(results);
 
 const extractAddress = result => {
-  const components = R.path(
+  const components = R.pathOr(
+    [],
     ['json', 'results', 0, 'address_components'],
     result,
   );
