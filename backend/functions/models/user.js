@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { database } from 'lib/firebaseClient';
-import getLocationFromIp from 'utils/getLocationFromIp';
+import getGeopositionFromIp from 'utils/getGeopositionFromIp';
 import * as draftAdModel from './draftAd';
 
 const basepathForUser = anonymous => (anonymous ? '/anonymousUsers' : '/users');
@@ -14,15 +14,15 @@ export const update = async (user, userId, { anonymous } = {}) =>
 export const remove = async (userId, { anonymous } = {}) =>
   database.ref(`${basepathForUser(anonymous)}/${userId}`).remove();
 
-export const setIpAndLocationFromIp = async (
+export const setIpAndGeopositionFromIp = async (
   ip,
   userId,
   { anonymous } = {},
 ) => {
-  const locationFromIp = getLocationFromIp(ip);
+  const geopositionFromIp = getGeopositionFromIp(ip);
   return database
     .ref(`/${basepathForUser(anonymous)}/${userId}`)
-    .update({ ip, locationFromIp });
+    .update({ ip, geopositionFromIp });
 };
 
 export const getAnonymousUserId = async userId => {
@@ -46,13 +46,13 @@ export const migrateAnonymousUser = async userSnapshot => {
     `Logged in user is referenced with anonymous user with id=${anonymousUserId}`,
   );
 
-  // Move {`ip`, `location`, `locationFromIp`} from anonymousUser to user
+  // Move {`ip`, `geoposition`, `geopositionFromIp`} from anonymousUser to user
   const anonymousUserSnapshot = await get(anonymousUserId, { anonymous: true });
   if (R.isNil(anonymousUserSnapshot)) {
     return null;
   }
   const migrateProps = R.pick(
-    ['ip', 'location', 'locationFromIp'],
+    ['ip', 'geoposition', 'geopositionFromIp'],
     anonymousUserSnapshot.val(),
   );
   await update(migrateProps, userId);

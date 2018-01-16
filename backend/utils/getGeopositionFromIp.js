@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import geoip from 'geoip-lite';
 
-const getLocationFromIp = ip => {
+const getGeopositionFromIp = ip => {
   if (isNilOrEmpty(ip)) {
     return null;
   }
@@ -22,4 +22,4 @@ const getLocationFromIp = ip => {
   };
 };
 
-export default getLocationFromIp;
+export default getGeopositionFromIp;

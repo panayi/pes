@@ -115,7 +115,7 @@ type PositiveNumber extends Number {
   }
 }
 
-type Location {
+type Geoposition {
   latitude: Number,
   longitude: Number,
 }
@@ -200,15 +200,15 @@ type Profile {
 
 type AnonymousUser {
   ip: IPv4 | Null,
-  location: Location | Null,
-  locationFromIp: Location | Null,
+  geoposition: Geoposition | Null,
+  geopositionFromIp: Geoposition | Null,
 }
 
 type User {
   email: Email | Null,
   providerData: Map<String, Provider> | Null,
-  location: Location | Null,
-  locationFromIp: Location | Null,
+  geoposition: GeoPosition | Null,
+  geopositionFromIp: GeoPosition | Null,
   ip: IPv4 | Null,
   profile: Profile | Null,
   anonymousUserId: String | Null,

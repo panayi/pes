@@ -11,42 +11,42 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  setCurrentUserLocation: userActions.setCurrentUserLocation,
+  setCurrentUserGeoposition: userActions.setCurrentUserGeoposition,
 };
 
-const maybeSetCurrentUserLocation = async props => {
-  const { hasUid, setCurrentUserLocation } = props;
+const maybeSetCurrentUserGeoposition = async props => {
+  const { hasUid, setCurrentUserGeoposition } = props;
 
   if (!hasUid) {
     return null;
   }
 
-  let location = null;
+  let geoposition = null;
   try {
-    location = await geolocationService.getCurrentPosition();
+    geoposition = await geolocationService.getCurrentPosition();
   } catch (error) {
     console.warn(error); // eslint-disable-line no-console
   }
 
-  // Set the location even when it fails,
-  // because we can't trust the accuracy of any existing user.location,
-  // and we'll rely on locationFromIp
-  return setCurrentUserLocation(location);
+  // Set the geoposition even when it fails,
+  // because we can't trust the accuracy of any existing user.geoposition,
+  // and we'll rely on geopositionFromIp
+  return setCurrentUserGeoposition(geoposition);
 };
 
-const setCurrentUserLocation = R.compose(
+const setCurrentUserGeoposition = R.compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentWillMount() {
-      maybeSetCurrentUserLocation(this.props);
+      maybeSetCurrentUserGeoposition(this.props);
     },
     componentDidUpdate(prevProps) {
       const previouslyHadUid = prevProps.hasUid;
       if (!previouslyHadUid) {
-        maybeSetCurrentUserLocation(this.props);
+        maybeSetCurrentUserGeoposition(this.props);
       }
     },
   }),
 );
 
-export default setCurrentUserLocation;
+export default setCurrentUserGeoposition;
