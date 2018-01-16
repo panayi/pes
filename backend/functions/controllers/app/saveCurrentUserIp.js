@@ -17,7 +17,7 @@ const saveCurrentUserIp = async (req, res, next) => {
   )(req);
 
   try {
-    await userModel.setIp(ip, userId, { anonymous });
+    await userModel.setIpAndLocationFromIp(ip, userId, { anonymous });
     res.send('OK');
     next();
   } catch (error) {

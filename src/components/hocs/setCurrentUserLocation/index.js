@@ -21,7 +21,16 @@ const maybeSetCurrentUserLocation = async props => {
     return null;
   }
 
-  const location = await geolocationService.getCurrentPosition();
+  let location = null;
+  try {
+    location = await geolocationService.getCurrentPosition();
+  } catch (error) {
+    console.warn(error); // eslint-disable-line no-console
+  }
+
+  // Set the location even when it fails,
+  // because we can't trust the accuracy of any existing user.location,
+  // and we'll rely on locationFromIp
   return setCurrentUserLocation(location);
 };
 

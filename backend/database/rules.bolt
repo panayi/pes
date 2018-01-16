@@ -199,14 +199,16 @@ type Profile {
 }
 
 type AnonymousUser {
-  location: Location | Null,
   ip: IPv4 | Null,
+  location: Location | Null,
+  locationFromIp: Location | Null,
 }
 
 type User {
   email: Email | Null,
   providerData: Map<String, Provider> | Null,
   location: Location | Null,
+  locationFromIp: Location | Null,
   ip: IPv4 | Null,
   profile: Profile | Null,
   anonymousUserId: String | Null,
