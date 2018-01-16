@@ -1,4 +1,6 @@
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
+import computedProp from 'utils/computedProp';
 
 export default R.compose(
   R.evolve({
@@ -27,10 +29,19 @@ export default R.compose(
     'title',
     'body',
     'category',
-    'categoryChild',
     'price',
     'images',
-    'address',
     'createdAt',
+    '_geoloc',
   ]),
+  R.unless(
+    R.propSatisfies(isNilOrEmpty, 'location'),
+    computedProp(
+      '_geoloc',
+      R.converge(R.compose(R.zipObj(['lat', 'lng']), R.unapply(R.identity)), [
+        R.path(['location', 'geoposition', 'latitude']),
+        R.path(['location', 'geoposition', 'longitude']),
+      ]),
+    ),
+  ),
 );

@@ -6,6 +6,7 @@ import ImagesScraper from 'images-scraper';
 import generateId from 'frontend/utils/generateId';
 import * as storageConstants from 'frontend/constants/storage';
 import fileMetadataFactory from 'utils/fileMetadataFactory';
+import computedProp from 'utils/computedProp';
 import storage from 'utils/storage';
 import log from 'utils/log';
 import renameFile from 'utils/renameFile';
@@ -31,10 +32,6 @@ const getAdUrl = (id, category) =>
   }/${category}/${id}`;
 
 const getAdPath = ad => `/ads/published/${ad.id}`;
-
-const computedProp = R.curry((key, computer, obj) =>
-  R.converge(R.assoc(key), [computer, R.identity])(obj),
-);
 
 // Transform old ad attributes (MySQL DB) to new ad attributes
 const transformAd = R.compose(
@@ -237,7 +234,7 @@ export const importAd = async (ad, database) => {
   const images = R.prop('images', transformedAd);
 
   const { lat, lng } = ad;
-  const geoposition = { latitude: lat, longitude: lng };
+  const geoposition = { latitude: parseFloat(lat), longitude: parseFloat(lng) };
   const address = await gmapsService.reverseGeocode(geoposition);
   const location = R.merge(address, { geoposition });
   const finalAd = R.compose(R.assoc('location', location), R.omit(['images']))(

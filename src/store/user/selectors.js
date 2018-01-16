@@ -21,3 +21,9 @@ export const profilePropSelector = path =>
 
 // profileEmailSelector :: State -> String | Nil
 export const profileEmailSelector = profilePropSelector('email');
+
+export const geopositionSelector = createSelector(
+  profilePropSelector(['geoposition']),
+  profilePropSelector(['geopositionFromIp']),
+  R.or,
+);

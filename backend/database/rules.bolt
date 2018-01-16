@@ -343,7 +343,6 @@ path /users/{uid} is User {
     auth.provider != 'anonymous' &&
     (this.anonymousUserId == null || anonymousUserIsValid(this.anonymousUserId)) &&
     requireWhenAuthenticatedWithSocial(this.profile, auth.provider)
-    // (this.anonymousUserId == null || auth.provider == 'anonymous')
   }
 }
 
