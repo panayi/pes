@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import { Route } from 'react-router-dom';
-import setUserLocation from 'components/hocs/setUserLocation';
+import setCurrentUserLocation from 'components/hocs/setCurrentUserLocation';
 import Sidebar from 'components/atoms/Sidebar';
 import Page from 'components/atoms/Page';
 import Layout from 'components/organisms/Layout';
@@ -19,4 +19,4 @@ const Home = () => (
   </Layout>
 );
 
-export default setUserLocation(Home);
+export default setCurrentUserLocation(Home);

@@ -8,11 +8,19 @@ import 'normalize.css/normalize.css';
 import createStore from 'store/createStore';
 import { ADS_INDEXES } from 'config/algolia';
 import theme from 'config/theme';
+import setCurrentUserIp from 'components/hocs/setCurrentUserIp';
 import ModalProvider from 'components/molecules/ModalProvider';
 import registerServiceWorker from 'lib/registerServiceWorker';
-import App from './pages';
+import Pages from './pages';
 
 const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-underscore-dangle
+
+const App = setCurrentUserIp(() => (
+  <div>
+    <Pages />
+    <ModalProvider />
+  </div>
+));
 
 ReactDOM.render(
   <Provider store={store}>
@@ -23,10 +31,7 @@ ReactDOM.render(
         indexName={ADS_INDEXES.default}
       >
         <MuiThemeProvider theme={theme}>
-          <div>
-            <App />
-            <ModalProvider />
-          </div>
+          <App />
         </MuiThemeProvider>
       </InstantSearch>
     </ConnectedRouter>

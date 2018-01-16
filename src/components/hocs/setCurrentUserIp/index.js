@@ -2,7 +2,6 @@ import * as R from 'ramda';
 import { lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import * as geolocationService from 'services/geolocation';
 import { selectors as authSelectors } from 'store/auth';
 import { actions as userActions } from 'store/user';
 
@@ -11,33 +10,32 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  setUserLocation: userActions.setUserLocation,
+  setCurrentUserIp: userActions.setCurrentUserIp,
 };
 
-const maybeSetUserLocation = async props => {
-  const { hasUid, setUserLocation } = props;
+const maybeSetCurrentUserIp = async props => {
+  const { hasUid, setCurrentUserIp } = props;
 
   if (!hasUid) {
     return null;
   }
 
-  const location = await geolocationService.getCurrentPosition();
-  return setUserLocation(location);
+  return setCurrentUserIp();
 };
 
-const setUserLocation = R.compose(
+const setCurrentUserIp = R.compose(
   connect(mapStateToProps, mapDispatchToProps),
   lifecycle({
     componentWillMount() {
-      maybeSetUserLocation(this.props);
+      maybeSetCurrentUserIp(this.props);
     },
-    componentWillReceiveProps(nextProps) {
-      const previouslyHadUid = this.props.hasUid;
+    componentDidUpdate(prevProps) {
+      const previouslyHadUid = prevProps.hasUid;
       if (!previouslyHadUid) {
-        maybeSetUserLocation(nextProps);
+        maybeSetCurrentUserIp(this.props);
       }
     },
   }),
 );
 
-export default setUserLocation;
+export default setCurrentUserIp;

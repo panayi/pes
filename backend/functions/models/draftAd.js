@@ -13,7 +13,7 @@ export const remove = async userId =>
   database.ref(`/ads/draft/${userId}`).remove();
 
 export const getFromAnonymousUser = async userPointer => {
-  const anonymousUserId = await userModel.getAnonymousUser(userPointer);
+  const anonymousUserId = await userModel.getAnonymousUserId(userPointer);
 
   if (R.isNil(anonymousUserId)) {
     return null;
@@ -23,7 +23,7 @@ export const getFromAnonymousUser = async userPointer => {
 };
 
 export const removeFromAnonymousUser = async userPointer => {
-  const anonymousUserId = await userModel.getAnonymousUser(userPointer);
+  const anonymousUserId = await userModel.getAnonymousUserId(userPointer);
 
   if (!anonymousUserId) {
     return null;

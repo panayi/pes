@@ -5,7 +5,7 @@ import Profile from './profile';
 import Ad from './ad';
 import Messages from './messages';
 
-export default () => (
+const Pages = () => (
   <Switch>
     <Route path="/profile" component={Profile} />
     <Route path="/i/:adId" component={Ad} />
@@ -13,3 +13,5 @@ export default () => (
     <Route path="/" component={Home} />
   </Switch>
 );
+
+export default Pages;

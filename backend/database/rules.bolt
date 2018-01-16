@@ -308,7 +308,7 @@ path /ads/images/{adId}/{imageId} is Image {
 path /users/{uid} is User {
   read() { isCurrentUser(uid) }
   create() { true } // TODO: is this right?
-  update() { isCurrentUser(uid) }
+  update() { isCurrentUser(uid) && this.ip == null }
 
   validate() {
     requireWhenAuthenticatedWithSocial(this.profile, auth.provider)
