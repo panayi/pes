@@ -1,7 +1,4 @@
-import admin from 'firebase-admin';
 import app from './controllers/app';
-
-admin.database.enableLogging(true);
 
 export { app };
 export * from './controllers/adImages';

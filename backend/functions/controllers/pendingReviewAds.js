@@ -5,14 +5,14 @@ import * as draftAdModel from '../models/draftAd';
 import * as userModel from '../models/user';
 
 const handlePendingReviewAdCreated = async event => {
-  const snapshot = event.data;
   const { pendingReviewAdId } = event.params;
-  const pendingReviewAd = snapshot.val();
-  const userId = pendingReviewAd.user;
+  const pendingReviewSnapshot = event.data;
+  const pendingReviewAd = pendingReviewSnapshot.val();
 
   // Publish ad
-  const adId = await adModel.push(pendingReviewAd);
+  const adId = await adModel.create(pendingReviewAd);
 
+  const userId = pendingReviewAd.user;
   if (userId) {
     // Associate ad to user
     await userModel.pushAd(adId, userId);
@@ -22,7 +22,7 @@ const handlePendingReviewAdCreated = async event => {
   }
 
   // Delete draft ad for user.anonymousUserId
-  const anonymousUserId = userModel.getAnonymousUserId(userId);
+  const anonymousUserId = await userModel.getAnonymousUserId(userId);
   if (anonymousUserId) {
     await draftAdModel.remove(anonymousUserId);
   }

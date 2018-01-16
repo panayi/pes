@@ -137,7 +137,7 @@ export default R.compose(
     onSubmit: values =>
       onSubmit({
         ...values,
-        images: ad.images,
+        images: ad.images || null,
       }),
   })),
   branch(

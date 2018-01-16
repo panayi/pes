@@ -14,6 +14,12 @@ export const update = async (user, userId, { anonymous } = {}) =>
 export const remove = async (userId, { anonymous } = {}) =>
   database.ref(`${basepathForUser(anonymous)}/${userId}`).remove();
 
+export const getGeoposition = async (userId, { anonymous } = {}) => {
+  const userSnapshot = await get(userId, { anonymous });
+  const user = userSnapshot.val();
+  return R.either(R.prop('geoposition'), R.prop('geopositionFromIp'))(user);
+};
+
 export const setIpAndGeopositionFromIp = async (
   ip,
   userId,

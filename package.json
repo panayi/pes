@@ -84,7 +84,7 @@
     "start:ui": "cross-env NODE_PATH=src/ react-scripts start",
     "start:functions": "npm run build:functions && npm run firebase serve -- --only functions",
     "start": "run-p start:ui start:functions",
-    "functions:shell": "cd backend && firebase experimental:functions:shell",
+    "functions:shell": "npm run build:functions && firebase experimental:functions:shell --port=5009",
     "test": "cross-env NODE_PATH=src/ react-scripts test --env=jsdom",
     "test-once": "CI=true npm run test",
     "test:e2e": "nightwatch",

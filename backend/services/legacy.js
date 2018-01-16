@@ -9,6 +9,7 @@ import fileMetadataFactory from 'utils/fileMetadataFactory';
 import storage from 'utils/storage';
 import log from 'utils/log';
 import renameFile from 'utils/renameFile';
+import * as gmapsService from 'services/gmaps';
 
 const GoogleImagesScraper = new ImagesScraper.Google();
 
@@ -41,13 +42,10 @@ const transformAd = R.compose(
   R.pick([
     'id',
     'createdAt',
-    'address',
     'body',
-    'categoryChild',
     'category',
     'email',
     'images',
-    'permalink',
     'phone',
     'oldPosterId',
     'title',
@@ -71,13 +69,6 @@ const transformAd = R.compose(
   computedProp(
     'oldPosterId',
     R.compose(R.head, R.split(' '), R.trim, R.defaultTo(''), R.prop('user')),
-  ),
-  computedProp(
-    'address',
-    R.compose(R.join(' '), R.filter(R.identity), ({ level4, level3 }) => [
-      level4,
-      level3,
-    ]),
   ),
   computedProp(
     'price',
@@ -243,9 +234,15 @@ const findImageFromWeb = async (finalAd, database) => {
 export const importAd = async (ad, database) => {
   const transformedAd = transformAd(ad);
   const adPath = getAdPath(transformedAd);
-  const finalAd = R.omit(['images'], transformedAd);
   const images = R.prop('images', transformedAd);
 
+  const { lat, lng } = ad;
+  const geoposition = { latitude: lat, longitude: lng };
+  const address = await gmapsService.reverseGeocode(geoposition);
+  const location = R.merge(address, { geoposition });
+  const finalAd = R.compose(R.assoc('location', location), R.omit(['images']))(
+    transformedAd,
+  );
   await database.ref(adPath).update(finalAd);
 
   const didUploadAnImage = R.isNil(images[0])

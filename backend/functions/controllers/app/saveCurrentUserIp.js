@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import requestIp from 'request-ip';
 import * as userModel from '../../models/user';
 
 const saveCurrentUserIp = async (req, res, next) => {
@@ -10,13 +11,14 @@ const saveCurrentUserIp = async (req, res, next) => {
     return;
   }
 
-  const anonymous = R.pathEq(['user', 'provider_id'], 'anonymous', req);
-  const ip = R.either(
-    R.path(['headers', 'x-forwarded-for']),
-    R.path(['connection', 'remoteAddress']),
-  )(req);
-
   try {
+    const anonymous = R.pathEq(['user', 'provider_id'], 'anonymous', req);
+    const ip = requestIp.getClientIp(req);
+
+    if (isNilOrEmpty(ip)) {
+      throw new Error('Failed to retrieve IP');
+    }
+
     await userModel.setIpAndGeopositionFromIp(ip, userId, { anonymous });
     res.send('OK');
     next();
