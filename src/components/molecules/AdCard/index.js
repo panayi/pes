@@ -14,10 +14,12 @@ import { Link } from 'react-router-dom';
 import id from 'utils/id';
 import propSelector from 'utils/propSelector';
 import hydrateAd from 'components/hocs/hydrateAd';
+import LineClamp from 'components/atoms/LineClamp';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
 import AdAddress from 'components/atoms/AdAddress';
 import AdDate from 'components/atoms/AdDate';
+import AdDistance from 'components/atoms/AdDistance';
 import { selectors as imagesSelectors } from 'store/images';
 
 type Props = {
@@ -108,12 +110,22 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
           classes={{
             title: classes.headerTitle,
           }}
-          title={<AdTitle type="subheading" ad={ad} />}
+          title={
+            <AdTitle
+              component={LineClamp}
+              type="subheading"
+              ad={ad}
+              lines={2}
+              height={48}
+              tagName="h3"
+            />
+          }
           subheader=""
         />
         <CardContent className={classes.content}>
           <AdAddress ad={ad} type="caption" align="center" />
           <AdDate ad={ad} type="caption" align="center" />
+          <AdDistance ad={ad} type="caption" align="center" />
         </CardContent>
       </Card>
     </div>

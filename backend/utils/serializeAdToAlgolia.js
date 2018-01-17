@@ -32,16 +32,20 @@ export default R.compose(
     'price',
     'images',
     'createdAt',
+    'location',
     '_geoloc',
   ]),
   R.unless(
     R.propSatisfies(isNilOrEmpty, 'location'),
-    computedProp(
-      '_geoloc',
-      R.converge(R.compose(R.zipObj(['lat', 'lng']), R.unapply(R.identity)), [
-        R.path(['location', 'geoposition', 'latitude']),
-        R.path(['location', 'geoposition', 'longitude']),
-      ]),
+    R.compose(
+      computedProp('location', R.omit(['geoposition'])),
+      computedProp(
+        '_geoloc',
+        R.converge(R.compose(R.zipObj(['lat', 'lng']), R.unapply(R.identity)), [
+          R.path(['location', 'geoposition', 'latitude']),
+          R.path(['location', 'geoposition', 'longitude']),
+        ]),
+      ),
     ),
   ),
 );
