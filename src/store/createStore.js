@@ -8,7 +8,7 @@ import * as modelPaths from 'constants/modelPaths';
 import * as firebaseConstants from 'constants/firebase';
 import * as storageConstants from 'constants/storage';
 import { actions as authActions } from './auth';
-import { utils as userUtils } from './user';
+import { utils as userUtils } from './profile';
 import makeRootReducer from './reducers';
 
 const firebaseConfig = {
@@ -18,14 +18,11 @@ const firebaseConfig = {
   storageBucket: storageConstants.BUCKET,
 };
 
-const isProduction = process.env.NODE_ENV === 'production';
-
 export default (initialState = {}) => {
   // Create a history of your choosing (we're using a browser history in this case)
   const history = createHistory();
 
   const reduxFirebaseConfig = {
-    enableLogging: !isProduction,
     userProfile: modelPaths.USERS.string,
     profileFactory: userUtils.profileFactory,
     onAuthStateChanged: authActions.handleAuthStateChanged,

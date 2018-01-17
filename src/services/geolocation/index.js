@@ -1,8 +1,10 @@
 import * as R from 'ramda';
+import * as geolocationConfig from 'config/geolocation';
 
 const DEFAULT_OPTIONS = {
   enableHighAccuracy: true,
-  timeout: 15000, // 15 sec
+  timeout: geolocationConfig.TIMEOUT,
+  maximumAge: geolocationConfig.MAXIMUM_AGE, // cache position for `maximumAge`
 };
 
 export const getCurrentPosition = options => {

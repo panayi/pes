@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import * as geolocationService from 'services/geolocation';
 import { selectors as authSelectors } from 'store/auth';
-import { actions as userActions } from 'store/user';
+import { actions as profileActions } from 'store/profile';
 
 const mapStateToProps = createStructuredSelector({
   hasUid: authSelectors.hasUidSelector,
 });
 
 const mapDispatchToProps = {
-  setCurrentUserGeoposition: userActions.setCurrentUserGeoposition,
+  setCurrentUserGeoposition: profileActions.setCurrentUserGeoposition,
 };
 
 const maybeSetCurrentUserGeoposition = async props => {

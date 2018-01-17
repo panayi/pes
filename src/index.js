@@ -15,26 +15,26 @@ import Pages from './pages';
 
 const store = createStore(window.__INITIAL_STATE__); // eslint-disable-line no-underscore-dangle
 
-const App = setCurrentUserIp(() => (
-  <div>
-    <Pages />
-    <ModalProvider />
-  </div>
-));
+const App = ({ children }) => React.Children.only(children);
+
+const ConnectedApp = setCurrentUserIp(App);
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={store.history}>
-      <InstantSearch
-        appId={process.env.REACT_APP_ALGOLIA_APP_ID}
-        apiKey={process.env.REACT_APP_ALGOLIA_SEARCH_KEY}
-        indexName={ADS_INDEXES.default}
-      >
-        <MuiThemeProvider theme={theme}>
-          <App />
-        </MuiThemeProvider>
-      </InstantSearch>
-    </ConnectedRouter>
+    <ConnectedApp>
+      <ConnectedRouter history={store.history}>
+        <InstantSearch
+          appId={process.env.REACT_APP_ALGOLIA_APP_ID}
+          apiKey={process.env.REACT_APP_ALGOLIA_SEARCH_KEY}
+          indexName={ADS_INDEXES.default}
+        >
+          <MuiThemeProvider theme={theme}>
+            <Pages />
+            <ModalProvider />
+          </MuiThemeProvider>
+        </InstantSearch>
+      </ConnectedRouter>
+    </ConnectedApp>
   </Provider>,
   document.getElementById('root'),
 );

@@ -15,16 +15,10 @@ const handlePendingReviewAdCreated = async event => {
   const userId = pendingReviewAd.user;
   if (userId) {
     // Associate ad to user
-    await userModel.pushAd(adId, userId);
+    await userModel.associateAd(adId, userId);
 
     // Delete draft ad for user
     await draftAdModel.remove(userId);
-  }
-
-  // Delete draft ad for user.anonymousUserId
-  const anonymousUserId = await userModel.getAnonymousUserId(userId);
-  if (anonymousUserId) {
-    await draftAdModel.remove(anonymousUserId);
   }
 
   return pendingReviewAdModel.remove(pendingReviewAdId);

@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import linkedAccountsReducer from './linkedAccounts';
-import anonymousUserIdReducer from './anonymousUserId';
+import anonymousUserTokenReducer, {
+  constants as anonymousUserConstants,
+} from './anonymousUserToken';
 import withPhoneNumberReducer from './withPhoneNumber';
 
 export default combineReducers({
-  anonymousUserId: anonymousUserIdReducer,
+  [anonymousUserConstants.ANONYMOUS_USER_TOKEN_KEY]: anonymousUserTokenReducer,
   linkedAccounts: linkedAccountsReducer,
   withPhoneNumber: withPhoneNumberReducer,
 });

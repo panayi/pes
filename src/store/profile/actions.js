@@ -12,13 +12,12 @@ export const setCurrentUserGeoposition = geoposition => (
 ) => {
   const state = getState();
   const uid = authSelectors.uidSelector(state);
-  const isAnonymous = authSelectors.isAnonymousSelector(state);
 
   if (isNilOrEmpty(uid)) {
     return null;
   }
 
-  return dispatch(api.users.update(uid, isAnonymous, { geoposition }));
+  return dispatch(api.profile.update({ geoposition }));
 };
 
 export const setCurrentUserIp = () => (dispatch, getState) => {

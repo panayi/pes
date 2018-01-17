@@ -7,9 +7,10 @@ const initialState = null;
 
 export default handleActions(
   {
-    [actionTypes.LOGIN]: (state, { auth }) => {
+    [actionTypes.LOGIN]: (state, payload) => {
+      const auth = payload.auth.toJSON();
       if (auth.isAnonymous) {
-        return auth.uid;
+        return R.path(['stsTokenManager', 'accessToken'], auth);
       }
 
       return state;

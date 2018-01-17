@@ -1,10 +1,10 @@
 import { isNilOrEmpty } from 'ramda-adjunct';
 import api from 'services/api';
-import { maybeSetAnonymousUserId } from './anonymousUserId/actions';
+import { migrateAnonymousUser } from './anonymousUserToken/actions';
 
 export const login = credentials => async dispatch => {
   await dispatch(api.auth.login(credentials));
-  dispatch(maybeSetAnonymousUserId());
+  dispatch(migrateAnonymousUser());
 };
 
 export const handleAuthStateChanged = (authData, firebase) => {

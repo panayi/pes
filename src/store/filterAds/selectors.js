@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { selectors as userSelectors } from '../user';
+import { selectors as profileSelectors } from '../profile';
 import * as constants from './constants';
 
 const selectedCategorySelector = R.path(constants.SELECTED_CATEGORY_PATH);
@@ -60,7 +60,7 @@ export const searchParamsSelector = createSelector(
   facetFiltersSelector,
   filtersSelector,
   indexSelector,
-  userSelectors.geopositionSelector,
+  profileSelectors.geopositionSelector,
   (queryValue, facetFilters, filters, index, geoposition) =>
     R.filter(R.compose(R.not, isNilOrEmpty), {
       index,
@@ -70,5 +70,6 @@ export const searchParamsSelector = createSelector(
       hitsPerPage: constants.HITS_PER_PAGE,
       aroundLatLng:
         geoposition && `${geoposition.latitude}, ${geoposition.longitude}`,
+      getRankingInfo: true,
     }),
 );

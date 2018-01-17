@@ -1,12 +1,14 @@
+import * as R from 'ramda';
 import { auth } from 'lib/firebaseClient';
 
 // Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header
 // like this:
-// `Authorization: Bearer <Firebase ID Token>`.
+// `[headerKey]: Bearer <Firebase ID Token>`.
 // when decoded successfully, the ID Token content will be added as `req.user`.
-const authenticate = (req, res, next) => {
-  const { authorization } = req.headers;
+export const isAuthenticated = (options = {}) => (req, res, next) => {
+  const { headerKey = 'authorization', propKey = 'user' } = options;
+  const authorization = req.headers[headerKey];
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
     console.error(
@@ -24,7 +26,7 @@ const authenticate = (req, res, next) => {
     .verifyIdToken(idToken)
     .then(decodedIdToken => {
       console.log(`Authenticated with id=${decodedIdToken.user_id}`);
-      req.user = decodedIdToken;
+      req[propKey] = decodedIdToken;
       next();
     })
     .catch(error => {
@@ -33,4 +35,8 @@ const authenticate = (req, res, next) => {
     });
 };
 
-export default authenticate;
+// getUserId :: Request -> String | Null
+export const getUserId = R.path(['user', 'user_id']);
+
+// getAnonymousUserId :: Request -> String | Null
+export const getAnonymousUserId = R.path(['anonymousUser', 'user_id']);

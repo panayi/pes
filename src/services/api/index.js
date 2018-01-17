@@ -6,7 +6,6 @@ import * as files from './files';
 import * as messages from './messages';
 import * as pendingReviewAds from './pendingReviewAds';
 import * as profile from './profile';
-import * as users from './users';
 
 export default {
   ads,
@@ -17,5 +16,4 @@ export default {
   messages,
   pendingReviewAds,
   profile,
-  users,
 };
