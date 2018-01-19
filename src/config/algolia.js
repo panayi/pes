@@ -1,3 +1,5 @@
+import * as R from 'ramda';
+
 const secondaryRankingAttributes = [
   'typo',
   'geo',
@@ -14,6 +16,7 @@ export const ADS_INDEXES = {
   byDateDesc: 'ads_date_desc',
   byPriceAsc: 'ads_price_asc',
   byPriceDesc: 'ads_price_desc',
+  byDistance: 'ads_distance_asc',
 };
 
 export default {
@@ -34,6 +37,10 @@ export default {
         {
           name: ADS_INDEXES.byPriceDesc,
           ranking: ['desc(price)', ...secondaryRankingAttributes],
+        },
+        {
+          name: ADS_INDEXES.byDistance,
+          ranking: ['geo', ...R.without(['geo'], secondaryRankingAttributes)],
         },
       ],
     },

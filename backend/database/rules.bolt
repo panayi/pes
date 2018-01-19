@@ -105,7 +105,7 @@ type Price extends Number {
 
 type PhoneNumber extends String {
   validate() {
-    this.test(/^\+357\d{8}$/i) // Cyprus
+    this.test(/^\+357\d{8}$/i) // Cyprus only
   }
 }
 
@@ -113,6 +113,19 @@ type PositiveNumber extends Number {
   validate() {
     this > 0
   }
+}
+
+type Geoposition {
+  latitude: Number,
+  longitude: Number,
+}
+
+type Location {
+  geoposition: Geoposition | Null,
+  street: String | Null,
+  city: String | Null
+  postalCode: String | Null,
+  countryCode: String | Null,
 }
 
 // Application Types
@@ -151,6 +164,7 @@ type Ad {
   body: AdBody,
   price: Price,
   category: String,
+  location: Location,
   user: String,
   createdAt: PastEpoch,
 }
@@ -161,7 +175,7 @@ type PendingReviewAd {
   price: Price,
   category: String,
   user: String,
-  images: Map<String, Image> | Null,
+  images: Map<String, Image>,
 }
 
 type DraftAd {
@@ -195,9 +209,11 @@ type Profile {
 
 type User {
   email: Email | Null,
-  providerData: Map<String, Provider>,
+  providerData: Map<String, Provider> | Null,
+  geoposition: Geoposition | Null,
+  geopositionFromIp: Geoposition | Null,
+  ip: IPv4 | Null,
   profile: Profile | Null,
-  anonymousUserId: String | Null,
 }
 
 type Conversation {
@@ -229,6 +245,7 @@ requireWhenAuthenticatedWithPhone(value, providerId) { value != null || provider
 createOnly(value) { prior(value) == null || value == prior(value) }
 isSeller(adId) { isCurrentUser(root.ads[adId].user) }
 valueIsNow(value) { value == now }
+requireUserHasIp(userId) { root.users[userId].ip != null }
 
 // ------------------------------------
 // Paths
@@ -259,7 +276,8 @@ path /ads/pendingReview/{id} is PendingReviewAd {
   create() { isCurrentUser(this.user) }
 
   validate() {
-    categoryIsValid(this.category)
+    categoryIsValid(this.category) &&
+    requireUserHasIp(this.user)
   }
 }
 

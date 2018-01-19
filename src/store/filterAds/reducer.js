@@ -7,6 +7,7 @@ import * as constants from './constants';
 const initialState = {
   selectedCategory: null,
   sortBy: null,
+  location: null,
   query: {
     value: '',
   },
@@ -28,9 +29,16 @@ const sortByReducer = handleAction(
   initialState.sortBy,
 );
 
+const locationReducer = handleAction(
+  types.SET_LOCATION,
+  (state, { payload }) => payload,
+  initialState.location,
+);
+
 export default combineReducers({
   [constants.SELECTED_CATEGORY_KEY]: selectedCategoryReducer,
   [constants.SORT_BY_KEY]: sortByReducer,
+  [constants.LOCATION_KEY]: locationReducer,
   ...createForms(
     {
       [constants.QUERY_KEY]: initialState.query,

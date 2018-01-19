@@ -7,7 +7,6 @@ import {
   actions as postAdActions,
   selectors as postAdSelectors,
 } from 'store/postAd';
-import withAnonymousUser from 'components/hocs/withAnonymousUser';
 import requireUserToCallAction from 'components/hocs/requireUserToCallAction';
 import AdForm from 'components/molecules/AdForm';
 
@@ -21,7 +20,6 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  withAnonymousUser,
   connect(mapStateToProps, mapDispatchToProps),
   withProps({
     submitButtonLabel: 'Post Ad',

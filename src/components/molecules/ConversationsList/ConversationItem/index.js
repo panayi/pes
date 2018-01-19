@@ -105,7 +105,7 @@ export default R.compose(
         R.path(['ad', 'user']),
         R.path(['conversation', 'buyer']),
       ),
-      adThumbnail: imagesSelectors.adThumbnailWithDefaultSelector,
+      adThumbnail: imagesSelectors.adThumbnailSelector,
     }),
   ),
   withStyles(styles),

@@ -1,12 +1,19 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from 'lib/firebaseClient';
+import * as gmapsService from 'services/gmaps';
 import * as timestamp from 'utils/timestamp';
+import * as userModel from './user';
 
-export const push = async ad => {
-  const { images } = ad;
+export const create = async ad => {
+  const { images, user } = ad;
+  const geoposition = await userModel.getGeoposition(user);
+  const address = await gmapsService.reverseGeocode(geoposition);
+  const location = R.merge(address, { geoposition });
+
   const finalAd = R.compose(
     R.omit(['images']),
+    R.assoc('location', location),
     R.assoc('createdAt', timestamp.get()),
   )(ad);
 

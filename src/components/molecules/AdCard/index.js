@@ -14,10 +14,12 @@ import { Link } from 'react-router-dom';
 import id from 'utils/id';
 import propSelector from 'utils/propSelector';
 import hydrateAd from 'components/hocs/hydrateAd';
+import LineClamp from 'components/atoms/LineClamp';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
 import AdAddress from 'components/atoms/AdAddress';
 import AdDate from 'components/atoms/AdDate';
+import AdDistance from 'components/atoms/AdDistance';
 import { selectors as imagesSelectors } from 'store/images';
 
 type Props = {
@@ -29,6 +31,7 @@ type Props = {
 
 const HEADER_HEIGHT = 60;
 const CONTENT_HEIGHT = 40;
+const DEFAULT_THUMBNAIL_HEIGHT = 40;
 
 const styles = theme => ({
   root: {
@@ -70,7 +73,10 @@ const styles = theme => ({
 });
 
 const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
-  const totalHeight = thumbnail.height + HEADER_HEIGHT + CONTENT_HEIGHT;
+  const thumbnailHeight = thumbnail
+    ? thumbnail.height
+    : DEFAULT_THUMBNAIL_HEIGHT;
+  const totalHeight = thumbnailHeight + HEADER_HEIGHT + CONTENT_HEIGHT;
 
   return (
     <div
@@ -89,8 +95,8 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
       >
         <CardMedia
           className={classes.media}
-          image={thumbnail.url}
-          style={{ height: `${thumbnail.height}px` }}
+          image={thumbnail && thumbnail.url}
+          style={{ height: `${thumbnailHeight}px` }}
         >
           <AdPrice
             className={classes.price}
@@ -104,12 +110,22 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
           classes={{
             title: classes.headerTitle,
           }}
-          title={<AdTitle type="subheading" ad={ad} />}
+          title={
+            <AdTitle
+              component={LineClamp}
+              type="subheading"
+              ad={ad}
+              lines={2}
+              height={48}
+              tagName="h3"
+            />
+          }
           subheader=""
         />
         <CardContent className={classes.content}>
           <AdAddress ad={ad} type="caption" align="center" />
           <AdDate ad={ad} type="caption" align="center" />
+          <AdDistance ad={ad} type="caption" align="center" />
         </CardContent>
       </Card>
     </div>
@@ -122,7 +138,7 @@ export default R.compose(
     ad: {},
   }),
   withProps(({ ad, width }) => ({
-    thumbnail: imagesSelectors.adThumbnailWithDefaultSelector({
+    thumbnail: imagesSelectors.adThumbnailSelector({
       ad,
       imgixParams: {
         w: width,

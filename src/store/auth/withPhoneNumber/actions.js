@@ -4,7 +4,6 @@ import { createAction } from 'redux-actions';
 import { actions } from 'react-redux-form';
 import { models as formModels } from 'store/forms';
 import { actions as profileActions } from 'store/profile';
-import { actions as anonymousUserIdActions } from '../anonymousUserId';
 import * as types from './types';
 import * as selectors from './selectors';
 import { type PhoneNumberValues, type CodeValues } from './flowtypes';
@@ -83,11 +82,9 @@ export const submitCodeForm = (
     })
     .then(() => {
       dispatch(codeValidationSuccess);
-      dispatch(anonymousUserIdActions.maybeSetAnonymousUserId()).then(() => {
-        if (R.is(Function, onSuccess)) {
-          onSuccess();
-        }
-      });
+      if (R.is(Function, onSuccess)) {
+        onSuccess();
+      }
     })
     .catch(error => {
       dispatch(codeValidationFail(error));

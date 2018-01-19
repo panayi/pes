@@ -29,10 +29,13 @@ const isInitializingSelector = R.path([
 export const uidSelector = createSelector(firebaseAuthSelector, R.prop('uid'));
 
 // hasUidSelector :: State -> String | Nil
-const hasUidSelector = createSelector(uidSelector, R.compose(R.not, R.isNil));
+export const hasUidSelector = createSelector(
+  uidSelector,
+  R.compose(R.not, R.isNil),
+);
 
 // isAnonymousSelector :: State -> Boolean | Nil
-const isAnonymousSelector = createSelector(
+export const isAnonymousSelector = createSelector(
   firebaseAuthSelector,
   R.prop('isAnonymous'),
 );

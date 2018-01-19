@@ -20,6 +20,7 @@ const getPhotoUrl = R.compose(
 export const profileFactory = user => ({
   email: user.email,
   providerData: user.providerData,
+  geoposition: user.geoposition,
   profile: {
     displayName: getDisplayName(user),
     avatarUrl: getPhotoUrl(user),
