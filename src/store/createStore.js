@@ -26,6 +26,7 @@ export default (initialState = {}) => {
     userProfile: modelPaths.USERS.string,
     profileFactory: userUtils.profileFactory,
     onAuthStateChanged: authActions.handleAuthStateChanged,
+    preserveOnLogout: ['categories', 'locales'],
   };
 
   // initialize firebase instance

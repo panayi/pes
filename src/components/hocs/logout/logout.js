@@ -12,10 +12,6 @@ export const logout = R.compose(
     onClick: () => {
       firebase.logout();
       onLogout();
-
-      // FIXME: react-redux-firebase clears data on logout
-      // This is a workaround to get the data back
-      window.location.reload();
     },
   })),
   omitProps(['onLogout']),

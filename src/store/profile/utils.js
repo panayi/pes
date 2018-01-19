@@ -17,12 +17,19 @@ const getPhotoUrl = R.compose(
 );
 
 // profileFactory :: User -> Object
-export const profileFactory = user => ({
-  email: user.email,
-  providerData: user.providerData,
-  geoposition: user.geoposition,
-  profile: {
-    displayName: getDisplayName(user),
-    avatarUrl: getPhotoUrl(user),
-  },
-});
+export const profileFactory = user => {
+  const profile = {
+    email: user.email,
+    providerData: user.providerData,
+    profile: {
+      displayName: getDisplayName(user),
+      avatarUrl: getPhotoUrl(user),
+    },
+  };
+
+  if (user.geoposition) {
+    profile.geoposition = user.geoposition;
+  }
+
+  return profile;
+};
