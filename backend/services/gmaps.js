@@ -3,7 +3,7 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import gmaps from '@google/maps';
 
 const client = gmaps.createClient({
-  key: 'AIzaSyAF6fX6MKV4VLKpRyI4ojIsD-JV4N3UZ7k',
+  key: process.env.GOOGLE_APIS_SERVER_KEY,
 });
 
 // Find all gMaps types here:

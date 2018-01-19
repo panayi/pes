@@ -8,6 +8,18 @@ const selectedCategorySelector = R.path(constants.SELECTED_CATEGORY_PATH);
 
 export const sortBySelector = R.path(constants.SORT_BY_PATH);
 
+const locationSelector = R.path(constants.LOCATION_PATH);
+
+export const addressSelector = R.compose(
+  R.prop(constants.ADDRESS_KEY),
+  locationSelector,
+);
+
+const selectedGeopositionSelector = R.compose(
+  R.prop(constants.GEOPOSITION_KEY),
+  locationSelector,
+);
+
 const queryValueSelector = R.path([...constants.QUERY_PATH, 'value']);
 
 const priceSelector = R.path(constants.PRICE_PATH);
@@ -55,12 +67,18 @@ const indexSelector = createSelector(
   },
 );
 
+const geopositionSelector = createSelector(
+  selectedGeopositionSelector,
+  profileSelectors.geopositionSelector,
+  R.or,
+);
+
 export const searchParamsSelector = createSelector(
   queryValueSelector,
   facetFiltersSelector,
   filtersSelector,
   indexSelector,
-  profileSelectors.geopositionSelector,
+  geopositionSelector,
   (queryValue, facetFilters, filters, index, geoposition) =>
     R.filter(R.compose(R.not, isNilOrEmpty), {
       index,
