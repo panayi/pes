@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { withProps } from 'recompose';
-import { withStyles } from 'material-ui';
+import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/data';
 import SendMessage from 'components/molecules/SendMessage';

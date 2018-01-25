@@ -6,23 +6,14 @@ import * as utils from './utils';
 export const setProfile = user => dispatch =>
   dispatch(api.profile.update(utils.profileFactory(user)));
 
-export const setCurrentUserGeoposition = geoposition => (
-  dispatch,
-  getState,
-) => {
+export const setCurrentUserLocation = geoposition => (dispatch, getState) => {
   const state = getState();
   const uid = authSelectors.uidSelector(state);
+  const token = authSelectors.tokenSelector(state);
 
-  if (isNilOrEmpty(uid)) {
+  if (isNilOrEmpty(uid) || isNilOrEmpty(token)) {
     return null;
   }
 
-  return dispatch(api.profile.update({ geoposition }));
-};
-
-export const setCurrentUserIp = () => (dispatch, getState) => {
-  const state = getState();
-  const token = authSelectors.tokenSelector(state);
-
-  return dispatch(api.app.setCurrentUserIp({ token }));
+  return dispatch(api.app.setCurrentUserLocation({ geoposition }, { token }));
 };

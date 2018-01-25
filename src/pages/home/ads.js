@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { Grid } from 'material-ui';
+import Grid from 'material-ui/Grid';
 import { connect } from 'react-redux';
 import { withProps, lifecycle } from 'recompose';
 import { actions as filterAdsActions } from 'store/filterAds';

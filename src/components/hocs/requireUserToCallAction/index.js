@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { mapProps } from 'recompose';
 import { selectors as authSelectors } from 'store/auth';
-import LoginModal from 'components/organisms/LoginModal';
+import Login from 'components/organisms/Login';
 
 const mapStateToProps = createStructuredSelector({
   isAuthenticated: authSelectors.isAuthenticatedSelector,
 });
 
 const mapDispatchToProps = {
-  showLoginModal: LoginModal.showAction,
+  showLoginModal: Login.showAction,
 };
 
 export default actionKey =>

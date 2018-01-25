@@ -1,8 +1,10 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from 'lib/firebaseClient';
-import getGeopositionFromIp from 'utils/getGeopositionFromIp';
+import getLocationFromIp from 'utils/getLocationFromIp';
+import * as gmapsService from 'services/gmaps';
 import * as draftAdModel from './draftAd';
+import * as countryModel from './country';
 
 export const get = async userId =>
   database.ref(`/users/${userId}`).once('value');
@@ -12,15 +14,33 @@ export const update = async (props, userId) =>
 
 export const remove = async userId => database.ref(`/users/${userId}`).remove();
 
-export const getGeoposition = async userId => {
-  const userSnapshot = await get(userId);
-  const user = userSnapshot.val();
-  return R.either(R.prop('geoposition'), R.prop('geopositionFromIp'))(user);
-};
+export const setLocation = async ({ ip, geoposition }, userId) => {
+  let location;
 
-export const setIpAndGeopositionFromIp = async (ip, userId) => {
-  const geopositionFromIp = getGeopositionFromIp(ip);
-  return database.ref(`/users/${userId}`).update({ ip, geopositionFromIp });
+  if (isNilOrEmpty(geoposition)) {
+    location = R.merge(getLocationFromIp(ip), { from: 'IP' });
+  } else {
+    const address = await gmapsService.reverseGeocode(geoposition);
+    location = { address, geoposition, from: 'navigator.geolocation' };
+  }
+
+  const countryCode = R.path(['address', 'country'], location);
+  const countrySnapshot = await countryModel.get(countryCode);
+  const country = countrySnapshot.val();
+
+  // Location is outside of the supported countries
+  if (isNilOrEmpty(country)) {
+    const defaultCountry = await countryModel.getDefault();
+    location = {
+      address: {
+        country: defaultCountry.code,
+      },
+      geoposition: defaultCountry.geoposition,
+      from: 'default',
+    };
+  }
+
+  await update({ ip, location }, userId);
 };
 
 export const migrateAnonymousUser = async (anonymousUserId, userId) => {
@@ -35,9 +55,9 @@ export const migrateAnonymousUser = async (anonymousUserId, userId) => {
     throw new Error(`User with id=${userId} does not exist`);
   }
 
-  // Move {`ip`, `geoposition`, `geopositionFromIp`} from anonymousUser to user
+  // Move {`ip`, `location`, `locationFromIp`} from anonymousUser to user
   const migrateProps = R.pick(
-    ['ip', 'geoposition', 'geopositionFromIp'],
+    ['ip', 'location', 'locationFromIp'],
     anonymousUserSnapshot.val(),
   );
   await update(migrateProps, userId);

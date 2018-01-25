@@ -6,7 +6,7 @@ import {
   isAuthenticatedSelector,
   isAuthenticatingSelector,
 } from 'store/auth/selectors';
-import LoginModal from 'components/organisms/LoginModal';
+import Login from 'components/organisms/Login';
 
 export class DisplayLoginModal extends Component {
   componentWillMount() {
@@ -19,7 +19,7 @@ export class DisplayLoginModal extends Component {
 }
 
 const mapDispatchToProps = {
-  showLoginModal: LoginModal.showAction,
+  showLoginModal: Login.showAction,
 };
 
 const ConnectedDisplayLoginModal = connect(null, mapDispatchToProps)(

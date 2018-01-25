@@ -1,7 +1,6 @@
 /* @flow */
 import React from 'react';
 import { Route } from 'react-router-dom';
-import setCurrentUserGeoposition from 'components/hocs/setCurrentUserGeoposition';
 import Sidebar from 'components/atoms/Sidebar';
 import Page from 'components/atoms/Page';
 import Layout from 'components/organisms/Layout';
@@ -19,4 +18,4 @@ const Home = () => (
   </Layout>
 );
 
-export default setCurrentUserGeoposition(Home);
+export default Home;

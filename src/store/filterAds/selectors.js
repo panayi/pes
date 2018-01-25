@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { selectors as profileSelectors } from '../profile';
+import { selectors as locationSelectors } from '../currentLocation';
 import * as constants from './constants';
 
 const selectedCategorySelector = R.path(constants.SELECTED_CATEGORY_PATH);
@@ -10,14 +10,26 @@ export const sortBySelector = R.path(constants.SORT_BY_PATH);
 
 const locationSelector = R.path(constants.LOCATION_PATH);
 
-export const addressSelector = R.compose(
+const selectedGeopositionSelector = R.compose(
+  R.prop(constants.GEOPOSITION_KEY),
+  locationSelector,
+);
+
+const geopositionSelector = createSelector(
+  selectedGeopositionSelector,
+  locationSelectors.geopositionSelector,
+  R.or,
+);
+
+export const selectedAddressSelector = R.compose(
   R.prop(constants.ADDRESS_KEY),
   locationSelector,
 );
 
-const selectedGeopositionSelector = R.compose(
-  R.prop(constants.GEOPOSITION_KEY),
-  locationSelector,
+export const addressSelector = createSelector(
+  selectedAddressSelector,
+  locationSelectors.addressStringSelector,
+  R.or,
 );
 
 const queryValueSelector = R.path([...constants.QUERY_PATH, 'value']);
@@ -65,12 +77,6 @@ const indexSelector = createSelector(
 
     return constants.SORT_BY_OPTIONS.byDateDesc;
   },
-);
-
-const geopositionSelector = createSelector(
-  selectedGeopositionSelector,
-  profileSelectors.geopositionSelector,
-  R.or,
 );
 
 export const searchParamsSelector = createSelector(

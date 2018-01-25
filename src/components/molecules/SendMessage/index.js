@@ -1,7 +1,8 @@
 /* @flow */
 import React, { Component } from 'react';
 import { LocalForm, Control, actions } from 'react-redux-form';
-import { TextField, Button } from 'material-ui';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
 import { connectData } from 'lib/connectData';
 import propSelector from 'utils/propSelector';
 import { models } from 'store/data';

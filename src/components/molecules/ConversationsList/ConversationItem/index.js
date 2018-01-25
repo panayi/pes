@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { withStyles } from 'material-ui';
+import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
 import propSelector from 'utils/propSelector';
 import { models } from 'store/data';

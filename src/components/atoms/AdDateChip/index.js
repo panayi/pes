@@ -1,5 +1,6 @@
 import React from 'react';
-import { Chip, withStyles } from 'material-ui';
+import Chip from 'material-ui/Chip';
+import { withStyles } from 'material-ui/styles';
 import ScheduleIcon from 'material-ui-icons/Schedule';
 import AdDate from 'components/atoms/AdDate';
 

@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { defaultProps, branch, renderNothing } from 'recompose';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
-import { Avatar } from 'material-ui';
+import Avatar from 'material-ui/Avatar';
 import Face from 'material-ui-icons/Face';
 import { connectData } from 'lib/connectData';
 import { selectors as profileSelectors } from 'store/profile';

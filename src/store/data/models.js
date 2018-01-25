@@ -15,6 +15,7 @@ export const locales = createModelConnections(
     modelPaths.LOCALES,
   ),
 );
+export const countries = createModelConnections(modelPaths.COUNTRIES);
 export const categories = createModelConnections(modelPaths.CATEGORIES);
 export const users = createModelConnections(modelPaths.USERS);
 export const ads = createModelConnections(modelPaths.ADS);

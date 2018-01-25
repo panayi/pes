@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { withProps, withState } from 'recompose';
-import { GridList, GridListTile } from 'material-ui/GridList';
+import GridList, { GridListTile } from 'material-ui/GridList';
 import { connect } from 'react-redux';
 import Dropzone, { fileTypes } from 'components/molecules/Dropzone';
 import { actions } from 'store/images';

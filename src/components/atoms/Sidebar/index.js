@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import { Drawer } from 'material-ui';
+import Drawer from 'material-ui/Drawer';
 import { withStyles } from 'material-ui/styles';
 
 type Props = {

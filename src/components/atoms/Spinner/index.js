@@ -3,7 +3,8 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import MaterialSpinner from 'react-spinner-material';
 import { withProps, branch, renderComponent } from 'recompose';
-import { withStyles, Grid } from 'material-ui';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
 import theme from 'config/theme';
 
 const BaseSpinner = withProps({

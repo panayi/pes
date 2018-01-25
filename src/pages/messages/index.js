@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { Grid, withStyles } from 'material-ui';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
 import Page from 'components/atoms/Page';
 import ConversationsList from 'components/molecules/ConversationsList';
 import Layout from 'components/organisms/Layout';
