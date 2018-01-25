@@ -1,7 +1,8 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { Typography, withStyles } from 'material-ui';
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/data';
 import ConversationItem from './ConversationItem';

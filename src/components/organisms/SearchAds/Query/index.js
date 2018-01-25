@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import { Control, Form } from 'react-redux-form';
-import { withStyles } from 'material-ui';
+import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import SearchIcon from 'material-ui-icons/Search';
 import { constants as filterAdsConstants } from 'store/filterAds';

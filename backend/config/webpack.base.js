@@ -17,6 +17,14 @@ module.exports = {
         test: /\.json$/,
         loader: 'json-loader',
       },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        loader: 'buffer-loader',
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader',
+      },
     ],
   },
   resolve: {

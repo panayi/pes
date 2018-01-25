@@ -8,15 +8,21 @@ type Props = {
   image: Image, // eslint-disable-line react/no-unused-prop-types
   alt: string,
   url: string,
+  width: ?number,
+  className: ?string,
 };
 
-const Imgix = ({ url, alt }: Props) => <img src={url} alt={alt} />;
+const Imgix = ({ url, width, alt, className }: Props) => (
+  <img src={url} width={width} alt={alt} className={className} />
+);
 
 Imgix.defaultProps = {
   alt: '',
   auto: ['compress'],
+  className: null,
 };
 
-export default withProps(({ image, ...rest }) => ({
+export default withProps(({ image, w, ...rest }) => ({
   url: buildUrl(image.fullPath, R.omit(['alt'], rest)),
+  width: w,
 }))(Imgix);

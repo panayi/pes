@@ -2,7 +2,8 @@ import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Select, Input } from 'material-ui';
+import Select from 'material-ui/Select';
+import Input from 'material-ui/Input';
 import {
   selectors as filterAdsSelectors,
   actions as filterAdsActions,

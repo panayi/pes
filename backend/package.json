@@ -9,6 +9,7 @@
     "@google/maps": "^0.4.5",
     "algoliasearch": "^3.24.4",
     "babel-runtime": "^6.26.0",
+    "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
     "commander": "^2.12.2",
     "cors": "^2.8.4",
@@ -24,6 +25,7 @@
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.2.0",
     "request-ip": "^2.0.2",
+    "svg-country-flags": "^1.2.1",
     "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
@@ -35,8 +37,10 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-latest": "^6.24.1",
+    "buffer-loader": "^0.0.1",
     "dotenv-webpack": "^1.5.4",
     "json-loader": "^0.5.7",
+    "svg-inline-loader": "^0.8.0",
     "webpack": "^3.8.1",
     "webpack-merge": "^4.1.1",
     "webpack-node-externals": "^1.6.0"

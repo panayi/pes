@@ -3,13 +3,8 @@ import React from 'react';
 import * as R from 'ramda';
 import { isNotPlainObj } from 'ramda-adjunct';
 import { withProps, defaultProps, branch } from 'recompose';
-import {
-  Card,
-  CardMedia,
-  CardHeader,
-  CardContent,
-  withStyles,
-} from 'material-ui';
+import Card, { CardMedia, CardContent, CardHeader } from 'material-ui/Card';
+import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
 import id from 'utils/id';
 import propSelector from 'utils/propSelector';

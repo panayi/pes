@@ -40,7 +40,7 @@ const extractAddress = result => {
       ],
       components,
     ),
-    countryCode: findComponentByType(['country'], components),
+    country: findComponentByType(['country'], components),
     postalCode: findComponentByType(['postal_code'], components),
   };
 

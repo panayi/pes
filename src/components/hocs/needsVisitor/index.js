@@ -2,7 +2,7 @@ import React from 'react';
 import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper';
 import { routerActions } from 'react-router-redux';
-import { Grid } from 'material-ui';
+import Grid from 'material-ui/Grid';
 import {
   isNotAuthenticatedSelector,
   isAuthenticatingSelector,

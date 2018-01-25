@@ -27,8 +27,8 @@ export const profileFactory = user => {
     },
   };
 
-  if (user.geoposition) {
-    profile.geoposition = user.geoposition;
+  if (user.location) {
+    profile.location = user.location;
   }
 
   return profile;

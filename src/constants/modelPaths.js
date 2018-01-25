@@ -7,6 +7,7 @@ const createModelPath = path => {
 
 export const LOCALES = (language, namespace) =>
   createModelPath(['locales', language, namespace]);
+export const COUNTRIES = createModelPath(['countries']);
 export const CATEGORIES = createModelPath(['categories']);
 export const USERS = createModelPath(['users']);
 export const ADS = createModelPath(['ads', 'published']);

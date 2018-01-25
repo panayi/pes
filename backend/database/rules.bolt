@@ -120,15 +120,27 @@ type Geoposition {
   longitude: Number,
 }
 
-type Location {
-  geoposition: Geoposition | Null,
+type Address {
   street: String | Null,
   city: String | Null
   postalCode: String | Null,
-  countryCode: String | Null,
+  country: String,
+}
+
+type Location {
+  geoposition: Geoposition,
+  address: Address,
+  from: String
 }
 
 // Application Types
+type Country {
+  code: String,
+  name: String,
+  geoposition: Geoposition,
+  default: Boolean | Null,
+}
+
 type Category {
   name: String,
   categories: Map<String, SubCategory>,
@@ -210,8 +222,7 @@ type Profile {
 type User {
   email: Email | Null,
   providerData: Map<String, Provider> | Null,
-  geoposition: Geoposition | Null,
-  geopositionFromIp: Geoposition | Null,
+  location: Location | Null,
   ip: IPv4 | Null,
   profile: Profile | Null,
 }
@@ -252,6 +263,11 @@ requireUserHasIp(userId) { root.users[userId].ip != null }
 // ------------------------------------
 path /locales {
   read() { true }
+}
+
+path /countries is Country[] {
+  read() { true }
+  index() { ['default'] }
 }
 
 path /categories is Category[] {

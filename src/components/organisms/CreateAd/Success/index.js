@@ -1,5 +1,8 @@
 import React from 'react';
-import { Grid, Typography, Button, withStyles } from 'material-ui';
+import Grid from 'material-ui/Grid';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
 import DoneIcon from 'material-ui-icons/CheckCircle';
 
 const styles = theme => ({

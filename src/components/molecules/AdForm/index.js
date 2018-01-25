@@ -3,20 +3,17 @@ import React from 'react';
 import * as R from 'ramda';
 import { isLoaded } from 'react-redux-firebase';
 import { withProps, lifecycle, branch } from 'recompose';
-import {
-  FormGroup,
-  FormControl,
-  TextField,
-  Button,
-  withStyles,
-} from 'material-ui';
+import { FormGroup, FormControl } from 'material-ui/Form';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import { withStyles } from 'material-ui/styles';
 import { Control, Form } from 'react-redux-form';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/data';
 import { models as formModels } from 'store/forms';
 import { actions as postAdActions } from 'store/postAd';
 import noop from 'utils/noop';
-import Spinner from 'components/atoms/Spinner';
+import withSpinnerWhen from 'components/hocs/withSpinnerWhen';
 import EditAdImages from 'components/molecules/EditAdImages';
 
 type Props = {
@@ -26,7 +23,7 @@ type Props = {
   images: Array<Object>,
   filesPath: string,
   categories: Array<Category>,
-  adIsLoaded: Boolean,
+  spinner: ?React$Element<*>,
   classes: Object,
   renderContent: Function,
   renderActions: Function,
@@ -51,10 +48,10 @@ const AdForm = (props: Props) => {
     submitButtonLabel,
     images,
     categories,
-    adIsLoaded,
     classes,
     renderContent,
     renderActions,
+    spinner,
   } = props;
 
   return (
@@ -65,7 +62,7 @@ const AdForm = (props: Props) => {
     >
       {renderContent(
         <div className={classes.root}>
-          {!adIsLoaded && <Spinner centered overlay />}
+          {spinner}
           <EditAdImages images={images} adImagesDbPath={filesPath} />
           <FormGroup>
             <Control.text
@@ -132,6 +129,15 @@ const mapDispatchToProps = {
 export default R.compose(
   withStyles(styles),
   connectData({ categories: models.categories.all }, null, mapDispatchToProps),
+  withSpinnerWhen(
+    R.where({
+      ad: R.compose(R.not, isLoaded),
+    }),
+    {
+      centered: true,
+      overlay: true,
+    },
+  ),
   withProps(({ ad, onSubmit }) => ({
     adIsLoaded: isLoaded(ad),
     onSubmit: values =>

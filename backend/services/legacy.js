@@ -1,13 +1,11 @@
 import * as R from 'ramda';
 import fetch from 'node-fetch';
-import uuid from 'uuid-v4';
 import random from 'lodash.random';
 import ImagesScraper from 'images-scraper';
 import generateId from 'frontend/utils/generateId';
 import * as storageConstants from 'frontend/constants/storage';
-import fileMetadataFactory from 'utils/fileMetadataFactory';
 import computedProp from 'utils/computedProp';
-import storage from 'utils/storage';
+import * as storageService from 'services/storage';
 import log from 'utils/log';
 import renameFile from 'utils/renameFile';
 import * as gmapsService from 'services/gmaps';
@@ -86,11 +84,6 @@ const transformAd = R.compose(
   ),
 );
 
-const getFileUrl = (path, token) =>
-  `https://firebasestorage.googleapis.com/v0/b/${
-    storageConstants.BUCKET
-  }/o/${encodeURIComponent(path)}?alt=media&token=${token}`;
-
 const findImageWithGoogle = async ad => {
   const { title } = ad;
 
@@ -117,39 +110,18 @@ const findImageWithGoogle = async ad => {
   }
 };
 
-const uploadImage = async (buffer, filename, contentType, dbPath, database) =>
-  new Promise((resolve, reject) => {
-    const newFilename = renameFile(generateId(), filename);
-    const path = `${storageConstants.IMAGES_PATH}/${newFilename}`;
+const uploadImage = async (buffer, filename, contentType, dbPath, database) => {
+  const newFilename = renameFile(generateId(), filename);
+  const path = `${storageConstants.IMAGES_PATH}/${newFilename}`;
 
-    const file = storage.file(path);
-    const token = uuid();
-    const stream = file.createWriteStream({
-      uploadType: 'media',
-      metadata: {
-        contentType,
-        metadata: {
-          firebaseStorageDownloadTokens: token,
-        },
-      },
-    });
-
-    stream.on('error', error => reject(error));
-    stream.on('finish', async () => {
-      const result = {
-        metadata: {
-          name: filename,
-          fullPath: path,
-          downloadURLs: [getFileUrl(path, token)],
-        },
-      };
-      const fileData = fileMetadataFactory(result);
-      await database.ref(dbPath).push(fileData);
-
-      resolve();
-    });
-    stream.end(buffer);
-  });
+  return storageService.uploadImage(
+    buffer,
+    contentType,
+    path,
+    newFilename,
+    metadata => database.ref(dbPath).push(metadata),
+  );
+};
 
 const sequentialImportImage = async (
   index,
@@ -184,8 +156,8 @@ const sequentialImportImage = async (
 
     await uploadImage(
       buffer,
-      filename,
       contentType,
+      filename,
       `ads/images/${adId}`,
       database,
     );
@@ -240,7 +212,7 @@ export const importAd = async (ad, database) => {
       longitude: parseFloat(lng),
     };
     const address = await gmapsService.reverseGeocode(geoposition);
-    const location = R.merge(address, { geoposition });
+    const location = { address, geoposition };
     const finalAd = R.compose(
       R.assoc('location', location),
       R.omit(['images']),

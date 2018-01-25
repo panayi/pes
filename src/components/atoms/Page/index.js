@@ -1,7 +1,7 @@
 /* @flow weak */
 import React from 'react';
 import classNames from 'classnames';
-import { Paper } from 'material-ui';
+import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 
 type Props = {

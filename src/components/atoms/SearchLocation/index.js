@@ -1,12 +1,16 @@
 /* @flow */
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { withStateHandlers } from 'recompose';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { withStateHandlers, lifecycle } from 'recompose';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { TextField, withStyles } from 'material-ui';
+import TextField from 'material-ui/TextField';
+import { withStyles } from 'material-ui/styles';
 import ScriptLoader from 'react-script-loader-hoc';
-import { DEFAULT_COUNTRY_CODE } from 'config/geolocation';
 import noop from 'utils/noop';
+import propsChanged from 'utils/propsChanged';
+import { selectors as locationSelectors } from 'store/currentLocation';
 
 const GOOGLE_APIS_KEY = process.env.REACT_APP_GOOGLE_APIS_KEY;
 const GOOGLE_MAPS_SCRIPT_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_APIS_KEY}&v=3.exp&libraries=places`;
@@ -14,9 +18,11 @@ const PAC_CONTAINER_CLASS = '.pac-container';
 
 type Props = {
   onChange: Function,
-  countryCode: string,
+  countryCode: ?string,
   address: string, // eslint-disable-line react/no-unused-prop-types
   scriptsLoadedSuccessfully: boolean,
+  value: string,
+  selectAddress: string,
   setValue: Function,
   resetValue: Function,
   selectAddress: Function,
@@ -39,7 +45,6 @@ const styles = {
 class SearchLocation extends Component<Props, State> {
   static defaultProps = {
     onChange: noop,
-    countryCode: DEFAULT_COUNTRY_CODE,
   };
 
   componentDidMount() {
@@ -55,20 +60,29 @@ class SearchLocation extends Component<Props, State> {
     ) {
       this.loadAutocomplete();
     }
+
+    if (propsChanged(['countryCode'], this.props, prevProps)) {
+      this.setCountryRestriction();
+    }
   }
 
   componentWillUnmount() {
     this.autocomplete.unbindAll();
   }
 
-  loadAutocomplete() {
+  setCountryRestriction() {
     const { countryCode } = this.props;
+
+    if (countryCode && this.autocomplete) {
+      this.autocomplete.setComponentRestrictions({ country: countryCode });
+    }
+  }
+
+  loadAutocomplete() {
     const { searchBox } = this.elements;
-
     this.autocomplete = new window.google.maps.places.Autocomplete(searchBox);
-    this.autocomplete.setComponentRestrictions({ country: countryCode });
     this.autocomplete.addListener('place_changed', this.handlePlacesChanged);
-
+    this.setCountryRestriction();
     this.moveAutocompleteEl();
   }
 
@@ -142,7 +156,12 @@ class SearchLocation extends Component<Props, State> {
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  countryCode: locationSelectors.countryCodeSelector,
+});
+
 export default R.compose(
+  connect(mapStateToProps),
   ScriptLoader(GOOGLE_MAPS_SCRIPT_URL),
   withStateHandlers(
     ({ address }) => ({
@@ -162,5 +181,12 @@ export default R.compose(
       }),
     },
   ),
+  lifecycle({
+    componentDidUpdate(prevProps) {
+      if (propsChanged(['address'], this.props, prevProps)) {
+        this.props.selectAddress(this.props.address);
+      }
+    },
+  }),
   withStyles(styles),
 )(SearchLocation);

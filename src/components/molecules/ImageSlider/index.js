@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
 import Slider from 'react-slick';
-import { withStyles } from 'material-ui';
+import { withStyles } from 'material-ui/styles';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Imgix from 'components/atoms/Imgix';
