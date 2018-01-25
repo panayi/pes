@@ -1,8 +1,8 @@
 /* @flow */
 import * as R from 'ramda';
+import { noop } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { defaultProps, withProps } from 'recompose';
-import noop from 'utils/noop';
 import { actions as authActions } from 'store/auth';
 
 const mapDispatchToProps = {

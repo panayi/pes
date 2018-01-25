@@ -1,8 +1,8 @@
 import * as R from 'ramda';
+import { noop } from 'ramda-adjunct';
 import { firebaseConnect } from 'react-redux-firebase';
 import { defaultProps, withProps } from 'recompose';
 import omitProps from 'utils/omitProps';
-import noop from 'utils/noop';
 
 export const logout = R.compose(
   defaultProps({

@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
+import { noop } from 'ramda-adjunct';
 import { isLoaded } from 'react-redux-firebase';
 import { withProps, lifecycle, branch } from 'recompose';
 import { FormGroup, FormControl } from 'material-ui/Form';
@@ -12,7 +13,6 @@ import { connectData } from 'lib/connectData';
 import { models } from 'store/data';
 import { models as formModels } from 'store/forms';
 import { actions as postAdActions } from 'store/postAd';
-import noop from 'utils/noop';
 import withSpinnerWhen from 'components/hocs/withSpinnerWhen';
 import EditAdImages from 'components/molecules/EditAdImages';
 

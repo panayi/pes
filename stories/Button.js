@@ -1,5 +1,5 @@
 import React from 'react';
-import noop from 'utils/noop';
+import { noop } from 'ramda-adjunct';
 
 const buttonStyles = {
   border: '1px solid #eee',

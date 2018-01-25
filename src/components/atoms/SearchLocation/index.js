@@ -1,14 +1,13 @@
 /* @flow */
 import React, { Component } from 'react';
 import * as R from 'ramda';
+import { isNilOrEmpty, noop } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withStateHandlers, lifecycle } from 'recompose';
-import { isNilOrEmpty } from 'ramda-adjunct';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 import ScriptLoader from 'react-script-loader-hoc';
-import noop from 'utils/noop';
 import propsChanged from 'utils/propsChanged';
 import { selectors as locationSelectors } from 'store/currentLocation';
 
