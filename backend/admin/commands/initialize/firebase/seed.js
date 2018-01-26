@@ -3,6 +3,7 @@ import { database } from 'lib/firebaseClient';
 import * as storageService from 'services/storage';
 import categories from 'database/seeds/categories.json';
 import locales from 'database/seeds/locales.json';
+import translations from 'database/seeds/translations.json';
 import countries from 'database/seeds/countries.json';
 
 const formatCategories = R.reduce(
@@ -26,6 +27,10 @@ const seedCategories = async () => {
 
 const seedLocales = async () => {
   await database.ref('locales').set(locales);
+};
+
+const seedTranslations = async () => {
+  await database.ref('translations').set(translations);
 };
 
 const seedCountries = async () => {
@@ -58,6 +63,7 @@ const seedCountries = async () => {
 export default async () => {
   await seedCategories();
   await seedLocales();
+  await seedTranslations();
   await seedCountries();
   return 'Seeded categories, locales, countries';
 };

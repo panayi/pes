@@ -7,7 +7,7 @@ const DEFAULT_OPTIONS = {
   maximumAge: geolocationConfig.MAXIMUM_AGE, // cache position for `maximumAge`
 };
 
-export const getCurrentPosition = options => {
+const getCurrentPosition = options => {
   const finalOptions = R.merge(DEFAULT_OPTIONS, options);
 
   return new Promise((resolve, reject) => {
@@ -29,3 +29,5 @@ export const getCurrentPosition = options => {
     );
   });
 };
+
+export default getCurrentPosition;

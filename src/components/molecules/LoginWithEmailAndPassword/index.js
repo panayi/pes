@@ -6,7 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import Input from 'material-ui/Input';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import { selectors as authSelectors } from 'store/auth';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import { authErrorPropType } from 'utils/propTypes';
 import withLoginAction from 'components/hocs/withLoginAction';
 

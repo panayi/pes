@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import api from 'services/api';
-import { selectors as authSelectors } from 'store/auth';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import * as types from './types';
 import { anonymousUserTokenSelector } from './selectors';
 

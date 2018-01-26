@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import { connectData } from 'lib/connectData';
 import propSelector from 'utils/propSelector';
-import { models } from 'store/data';
+import { models } from 'store/firebase/data';
 import { actions as chatActions } from 'store/chat';
 
 const FORM_MODEL = 'newMessage';

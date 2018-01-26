@@ -1,10 +1,9 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from 'lib/firebaseClient';
-import getLocationFromIp from 'utils/getLocationFromIp';
-import * as gmapsService from 'services/gmaps';
 import * as draftAdModel from './draftAd';
-import * as countryModel from './country';
+import * as locationModel from './location';
+import * as localeModel from './locale';
 
 export const get = async userId =>
   database.ref(`/users/${userId}`).once('value');
@@ -14,33 +13,17 @@ export const update = async (props, userId) =>
 
 export const remove = async userId => database.ref(`/users/${userId}`).remove();
 
-export const setLocation = async ({ ip, geoposition }, userId) => {
-  let location;
+export const setInfo = async ({ geoposition, ip, locales }, userId) => {
+  const location = await locationModel.get(geoposition, ip);
 
-  if (isNilOrEmpty(geoposition)) {
-    location = R.merge(getLocationFromIp(ip), { from: 'IP' });
-  } else {
-    const address = await gmapsService.reverseGeocode(geoposition);
-    location = { address, geoposition, from: 'navigator.geolocation' };
-  }
+  // TODO: In the future we should not need
+  // to store the detected locale on the database
+  // Once we add SSR, the locale will be calculated on the server
+  // and be used to generate content, as well as include it in the HTML response.
+  const locale = await localeModel.find(locales);
+  const data = { location, ip, locale };
 
-  const countryCode = R.path(['address', 'country'], location);
-  const countrySnapshot = await countryModel.get(countryCode);
-  const country = countrySnapshot.val();
-
-  // Location is outside of the supported countries
-  if (isNilOrEmpty(country)) {
-    const defaultCountry = await countryModel.getDefault();
-    location = {
-      address: {
-        country: defaultCountry.code,
-      },
-      geoposition: defaultCountry.geoposition,
-      from: 'default',
-    };
-  }
-
-  await update({ ip, location }, userId);
+  await update(data, userId);
 };
 
 export const migrateAnonymousUser = async (anonymousUserId, userId) => {

@@ -4,7 +4,7 @@ import createCachedSelector from 're-reselect';
 import { withProps } from 'recompose';
 import { connectData } from 'lib/connectData';
 import propSelector from 'utils/propSelector';
-import { models } from 'store/data';
+import { models } from 'store/firebase/data';
 
 const AD_KEY = '__ad___';
 const AD_ID_KEY = '__adId___';

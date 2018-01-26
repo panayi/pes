@@ -7,7 +7,7 @@ import { setDisplayName, withState } from 'recompose';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import { factory as modalFactory } from 'store/modals';
-import { selectors as profileSelectors } from 'store/profile';
+import { selectors as profileSelectors } from 'store/firebase/profile';
 import withSpinnerWhen from 'components/hocs/withSpinnerWhen';
 import LoginWithPhone from 'components/molecules/LoginWithPhone';
 import LoginButtons from './LoginButtons';

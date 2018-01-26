@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { withFirebase } from 'react-redux-firebase';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
-import { selectors as profileSelectors } from 'store/profile';
+import { selectors as profileSelectors } from 'store/firebase/profile';
 import Recaptcha from 'components/atoms/Recaptcha';
 import PhoneNumberForm from 'components/molecules/PhoneNumberForm';
 

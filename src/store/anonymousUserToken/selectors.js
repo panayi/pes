@@ -1,9 +1,7 @@
 import * as R from 'ramda';
-import * as authConstants from '../constants';
 import * as constants from './constants';
 
 // anonymousUserTokenSelector :: State -> Object | Nil
-export const anonymousUserTokenSelector = R.path([
-  authConstants.AUTH_KEY,
+export const anonymousUserTokenSelector = R.prop(
   constants.ANONYMOUS_USER_TOKEN_KEY,
-]);
+);

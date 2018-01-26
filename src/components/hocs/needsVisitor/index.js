@@ -3,10 +3,7 @@ import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper';
 import { routerActions } from 'react-router-redux';
 import Grid from 'material-ui/Grid';
-import {
-  isNotAuthenticatedSelector,
-  isAuthenticatingSelector,
-} from 'store/auth/selectors';
+import { selectors as authSelectors } from 'store/firebase/auth/selectors';
 import Spinner from 'components/atoms/Spinner';
 
 const locationHelper = locationHelperBuilder({});
@@ -25,8 +22,8 @@ export default (options = {}) =>
       locationHelper.getRedirectQueryParam(ownProps) || '/',
     // This prevents us from adding the query parameter when we send the user away from the login page
     allowRedirectBack: false,
-    authenticatedSelector: isNotAuthenticatedSelector,
-    authenticatingSelector: isAuthenticatingSelector,
+    authenticatedSelector: authSelectors.isNotAuthenticatedSelector,
+    authenticatingSelector: authSelectors.isAuthenticatingSelector,
     AuthenticatingComponent: Loader,
     redirectAction: routerActions.replace,
     ...options,

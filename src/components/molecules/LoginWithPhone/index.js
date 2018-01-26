@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { withStateHandlers, withProps } from 'recompose';
-import { actions as authActions } from 'store/auth';
+import { actions as authActions } from 'store/firebase/auth';
 import PhoneNumber from './PhoneNumber';
 import SmsCodeValidation from './SmsCodeValidation';
 

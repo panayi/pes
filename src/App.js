@@ -5,7 +5,6 @@ import { MuiThemeProvider } from 'material-ui/styles';
 import 'normalize.css/normalize.css';
 import { ADS_INDEXES } from 'config/algolia';
 import theme from 'config/theme';
-import setCurrentUserLocation from 'components/hocs/setCurrentUserLocation';
 import ModalProvider from 'components/molecules/ModalProvider';
 import Pages from './pages';
 
@@ -24,4 +23,4 @@ const App = ({ store }) => (
   </ConnectedRouter>
 );
 
-export default setCurrentUserLocation(App);
+export default App;

@@ -3,7 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import createCors from 'cors';
 import { isAuthenticated } from './utils';
-import setCurrentUserLocation from './setCurrentUserLocation';
+import setCurrentUserInfo from './setCurrentUserInfo';
 import syncLegacyAd from './syncLegacyAd';
 import migrateAnonymousUser from './migrateAnonymousUser';
 
@@ -20,10 +20,10 @@ app.get('/:category/:id', syncLegacyAd);
 // Protected routes
 app.use(cors);
 app.post(
-  '/users/location',
+  '/users/current/info',
   isAuthenticated(),
   jsonParser,
-  setCurrentUserLocation,
+  setCurrentUserInfo,
 );
 app.post(
   '/users/migrate',

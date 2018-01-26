@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { selectors as locationSelectors } from '../currentLocation';
+import { selectors as locationSelectors } from '../firebase/profile/location';
 import * as constants from './constants';
 
 const selectedCategorySelector = R.path(constants.SELECTED_CATEGORY_PATH);

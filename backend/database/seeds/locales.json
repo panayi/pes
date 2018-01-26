@@ -1,26 +1,12 @@
 {
-  "en": {
-    "home": {
-      "classes": "Classes",
-      "community": "Community",
-      "for_sale": "For Sale",
-      "jobs": "Jobs",
-      "personals": "Personals",
-      "pets": "Pets",
-      "real_estate": "Real Estate",
-      "vehicles": "Vehicles"
-    }
+  "en-US": {
+    "id": "en-US",
+    "language": "en",
+    "region": "US",
+    "default": true
   },
   "el": {
-    "home": {
-      "classes": "Μαθήματα",
-      "community": "Κοινότητα",
-      "for_sale": "Πωλούνται",
-      "jobs": "Εργασία",
-      "personals": "Προσωπικά",
-      "pets": "Κατοικίδια",
-      "real_estate": "Ακίνητα",
-      "vehicles": "Αυτοκίνητα"
-    }
+    "id": "el",
+    "language": "el"
   }
 }

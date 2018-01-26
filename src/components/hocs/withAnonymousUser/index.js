@@ -3,10 +3,7 @@ import { lifecycle } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
-import {
-  isAuthenticatingSelector,
-  isAuthenticatedSelector,
-} from 'store/auth/selectors';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import maybeSignInAnonymously from './utils/maybeSignInAnonymously';
 
 export const withAnonymousUser = lifecycle({
@@ -19,8 +16,8 @@ export const withAnonymousUser = lifecycle({
 });
 
 const mapStateToProps = createStructuredSelector({
-  isAuthenticating: isAuthenticatingSelector,
-  isAuthenticated: isAuthenticatedSelector,
+  isAuthenticating: authSelectors.isAuthenticatingSelector,
+  isAuthenticated: authSelectors.isAuthenticatedSelector,
 });
 
 export default R.compose(

@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
-import { models } from 'store/data';
+import { models } from 'store/firebase/data';
 import ConversationItem from './ConversationItem';
 
 type Props = {

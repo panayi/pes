@@ -1,7 +1,7 @@
 import { API_APP_BASE_URL } from 'constants/firebase';
 
-export const setCurrentUserLocation = (data, { token }) => () => {
-  const url = `${API_APP_BASE_URL}/users/location`;
+export const setCurrentUserInfo = (data, { token }) => () => {
+  const url = `${API_APP_BASE_URL}/users/current/info`;
 
   return fetch(url, {
     method: 'POST',

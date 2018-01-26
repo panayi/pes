@@ -10,7 +10,7 @@ import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import { Control, Form } from 'react-redux-form';
 import { connectData } from 'lib/connectData';
-import { models } from 'store/data';
+import { models } from 'store/firebase/data';
 import { models as formModels } from 'store/forms';
 import { actions as postAdActions } from 'store/postAd';
 import withSpinnerWhen from 'components/hocs/withSpinnerWhen';

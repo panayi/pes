@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { connectData } from 'lib/connectData';
-import { models } from 'store/data';
+import { models } from 'store/firebase/data';
 import {
   actions as postAdActions,
   selectors as postAdSelectors,

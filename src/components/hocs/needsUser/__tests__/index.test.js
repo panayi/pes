@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as authSelectors from 'store/auth/selectors';
+import * as authSelectors from 'store/firebase/auth/selectors';
 import needsUser from '../index';
 
 describe('[HOC] needsUser', () => {
