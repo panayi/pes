@@ -4,7 +4,7 @@ import { createAction } from 'redux-actions';
 import { actions as formActions } from 'react-redux-form';
 import debounce from 'lodash.debounce';
 import api from 'services/api';
-import { uidSelector } from 'store/auth/selectors';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import * as types from './types';
 import { models as formModels } from '../forms';
 import { serializeAd } from './utils';
@@ -32,7 +32,7 @@ const updateDraft = debounce(
       return Promise.reject();
     }
 
-    const uid = uidSelector(getState());
+    const uid = authSelectors.uidSelector(getState());
 
     return dispatch(api.draftAd.update(uid, serializeAd(ad)));
   },
@@ -44,7 +44,7 @@ export const saveDraft = (ad: Ad | {}) => (...args) => updateDraft(ad, ...args);
 // Note that draftAd is also removed by a Firebase function.
 // However there's no guarantee when it will be removed.
 const removeDraft = () => (dispatch: Dispatch, getState: Function) => {
-  const uid = uidSelector(getState());
+  const uid = authSelectors.uidSelector(getState());
   return dispatch(api.draftAd.remove(uid));
 };
 
@@ -53,7 +53,7 @@ export const createAd = (ad: Ad) => (
   getState: Function,
 ) => {
   const userObj = {
-    user: uidSelector(getState()),
+    user: authSelectors.uidSelector(getState()),
   };
   const finalAd = R.compose(serializeAd, R.merge(ad))(userObj);
 

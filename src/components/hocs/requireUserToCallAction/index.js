@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { mapProps } from 'recompose';
-import { selectors as authSelectors } from 'store/auth';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import Login from 'components/organisms/Login';
 
 const mapStateToProps = createStructuredSelector({

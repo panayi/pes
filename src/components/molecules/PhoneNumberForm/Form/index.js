@@ -4,7 +4,6 @@ import * as R from 'ramda';
 import { lifecycle } from 'recompose';
 import { FormGroup, FormControl, FormHelperText } from 'material-ui/Form';
 import { withStyles } from 'material-ui/styles';
-import { PHONE_MASK_BY_COUNTRY_CODE } from 'constants/phoneNumbers';
 import propsChanged from 'utils/propsChanged';
 import CountrySelect from 'components/atoms/CountrySelect';
 import MaskedInput from 'components/atoms/MaskedInput';
@@ -16,6 +15,7 @@ type Props = {
   values: Object,
   errors: Object,
   children: React$Node,
+  mask: Array<RegExp | String>,
   classes: Object,
 };
 
@@ -34,14 +34,14 @@ const Form = (props: Props) => {
     values,
     errors,
     children,
+    mask,
     classes,
   } = props;
-  const mask = R.propOr([], values.countryCode, PHONE_MASK_BY_COUNTRY_CODE);
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormGroup row error={R.has('countryCode', errors)}>
-        <FormControl>
+      <FormGroup row>
+        <FormControl error={R.has('countryCode', errors)}>
           <CountrySelect
             name="countryCode"
             onChange={handleChange}
@@ -61,6 +61,7 @@ const Form = (props: Props) => {
             value={values.number}
             mask={mask}
             placeholder="Your phone number"
+            autoComplete="tel"
           />
           {errors.number && <FormHelperText>{errors.number}</FormHelperText>}
         </FormControl>

@@ -5,8 +5,8 @@ const createModelPath = path => {
   return path;
 };
 
-export const LOCALES = (language, namespace) =>
-  createModelPath(['locales', language, namespace]);
+export const TRANSLATIONS = (language, namespace) =>
+  createModelPath(['translations', language, namespace]);
 export const COUNTRIES = createModelPath(['countries']);
 export const CATEGORIES = createModelPath(['categories']);
 export const USERS = createModelPath(['users']);

@@ -1,17 +1,25 @@
 import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { connectData } from 'lib/connectData';
-import { models } from 'store/data';
+import omitProps from 'utils/omitProps';
+import { models } from 'store/firebase/data';
+import { selectors as profileSelectors } from 'store/firebase/profile';
 
 export default namespace =>
   R.compose(
-    withProps({
-      _translationsNamespace: namespace,
-    }),
     connectData({
-      __translations__: models.locales.allObjects,
+      localeTranslations: models.translations(
+        R.compose(R.prop('id'), profileSelectors.profileLocaleSelector),
+        R.always(namespace),
+      ).allObjects,
+      languageTranslations: models.translations(
+        R.compose(R.prop('language'), profileSelectors.profileLocaleSelector),
+        R.always(namespace),
+      ).allObjects,
     }),
-    withProps(({ __translations__ }) => ({
-      t: key => __translations__[key],
+    withProps(({ localeTranslations, languageTranslations }) => ({
+      t: key =>
+        R.prop(key, localeTranslations) || R.prop(key, languageTranslations),
     })),
+    omitProps(['localeTranslations', 'languageTranslations']),
   );

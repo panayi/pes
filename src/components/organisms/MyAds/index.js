@@ -2,7 +2,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { connectData } from 'lib/connectData';
-import { models } from 'store/data';
+import { models } from 'store/firebase/data';
 import ListAds from 'components/organisms/ListAds';
 
 type Props = {

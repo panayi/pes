@@ -6,8 +6,8 @@ import { createStructuredSelector } from 'reselect';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
 import propSelector from 'utils/propSelector';
-import { models } from 'store/data';
-import { uidSelector } from 'store/auth/selectors';
+import { models } from 'store/firebase/data';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as imagesSelectors } from 'store/images';
 import Link from 'components/atoms/Link';
 import AdTitle from 'components/atoms/AdTitle';
@@ -90,7 +90,7 @@ const mapDataToProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  uid: uidSelector,
+  uid: authSelectors.uidSelector,
 });
 
 export default R.compose(

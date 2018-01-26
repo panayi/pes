@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import api from 'services/api';
-import { selectors as profileSelectors } from 'store/profile';
+import { selectors as profileSelectors } from 'store/firebase/profile';
 import * as types from './types';
 
 const receiveLinkedAccounts = createAction(types.RECEIVE_LINKED_ACCOUNTS);

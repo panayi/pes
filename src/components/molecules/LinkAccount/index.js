@@ -4,9 +4,11 @@ import * as R from 'ramda';
 import { branch, renderNothing } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { selectors as profileSelectors } from 'store/profile';
-import * as actions from 'store/auth/linkedAccounts/actions';
-import { linkedAccountsSelector } from 'store/auth/linkedAccounts/selectors';
+import { selectors as profileSelectors } from 'store/firebase/profile';
+import {
+  actions as linkedAccountsActions,
+  selectors as linkedAccountsSelectors,
+} from 'store/linkedAccounts';
 import LinkButton from './LinkButton';
 import LinkButtons from './LinkButtons';
 
@@ -32,11 +34,11 @@ export class LinkAccount extends Component<Props> {
 
 const mapStateToProps = createStructuredSelector({
   isProfileLoaded: profileSelectors.isProfileLoadedSelector,
-  linkedAccounts: linkedAccountsSelector,
+  linkedAccounts: linkedAccountsSelectors.linkedAccountsSelector,
 });
 
 const mapDispatchToProps = {
-  fetchLinkedAccounts: actions.fetchLinkedAccounts,
+  fetchLinkedAccounts: linkedAccountsActions.fetchLinkedAccounts,
 };
 
 const ConnectedLinkAccount = R.compose(

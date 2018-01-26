@@ -134,6 +134,12 @@ type Location {
 }
 
 // Application Types
+type Locale {
+  id: String,
+  language: String,
+  region: String,
+}
+
 type Country {
   code: String,
   name: String,
@@ -222,6 +228,7 @@ type Profile {
 type User {
   email: Email | Null,
   providerData: Map<String, Provider> | Null,
+  locale: String | Null,
   location: Location | Null,
   ip: IPv4 | Null,
   profile: Profile | Null,
@@ -250,6 +257,7 @@ isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
 adIsValid(adId) { root.ads[adId] != null }
 userIsValid(uid) { root.users[uid] != null }
+localeIsValid(localeId) { root.locales[localeId] != null }
 isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook.com' || providerId == 'twitter' || providerId == 'github' }
 requireWhenAuthenticatedWithSocial(value, providerId) { value != null || !isSocialProvider(providerId) }
 requireWhenAuthenticatedWithPhone(value, providerId) { value != null || providerId != 'phone' }
@@ -261,7 +269,12 @@ requireUserHasIp(userId) { root.users[userId].ip != null }
 // ------------------------------------
 // Paths
 // ------------------------------------
-path /locales {
+path /locales is Locale[] {
+  read() { true }
+  index() { ['default'] }
+}
+
+path /translations {
   read() { true }
 }
 
@@ -338,7 +351,8 @@ path /users/{uid} is User {
   update() { isCurrentUser(uid) }
 
   validate() {
-    requireWhenAuthenticatedWithSocial(this.profile, auth.provider)
+    requireWhenAuthenticatedWithSocial(this.profile, auth.provider) &&
+    (this.locale == null || localeIsValid(this.locale))
   }
 }
 

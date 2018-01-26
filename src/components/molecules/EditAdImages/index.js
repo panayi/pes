@@ -5,7 +5,7 @@ import { withProps, withState } from 'recompose';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import { connect } from 'react-redux';
 import Dropzone, { fileTypes } from 'components/molecules/Dropzone';
-import { actions } from 'store/images';
+import { actions as storageActions } from 'store/firebase/storage';
 import { constants as postAdConstants } from 'store/postAd';
 import Imgix from 'components/atoms/Imgix';
 
@@ -57,7 +57,7 @@ export class EditAdImages extends Component<Props> {
 }
 
 const mapDispatchToProps = {
-  uploadImages: actions.uploadImages,
+  uploadImages: storageActions.uploadImages,
 };
 
 export default R.compose(

@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import api from 'services/api';
-import { selectors as authSelectors } from 'store/auth';
+import { selectors as authSelectors } from 'store/firebase/auth';
 
 export const createMessage = (body, ad) => (dispatch, getState) => {
   const uid = authSelectors.uidSelector(getState());

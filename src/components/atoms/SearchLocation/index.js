@@ -9,7 +9,7 @@ import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 import ScriptLoader from 'react-script-loader-hoc';
 import propsChanged from 'utils/propsChanged';
-import { selectors as locationSelectors } from 'store/currentLocation';
+import { selectors as locationSelectors } from 'store/firebase/profile/location';
 
 const GOOGLE_APIS_KEY = process.env.REACT_APP_GOOGLE_APIS_KEY;
 const GOOGLE_MAPS_SCRIPT_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_APIS_KEY}&v=3.exp&libraries=places`;

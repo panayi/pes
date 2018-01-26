@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
-import { selectors as profileSelectors } from 'store/profile';
+import { selectors as profileSelectors } from 'store/firebase/profile';
 
 const locationSelector = profileSelectors.profilePropSelector(['location'], {
   populated: true,

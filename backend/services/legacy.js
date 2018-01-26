@@ -156,8 +156,8 @@ const sequentialImportImage = async (
 
     await uploadImage(
       buffer,
-      contentType,
       filename,
+      contentType,
       `ads/images/${adId}`,
       database,
     );

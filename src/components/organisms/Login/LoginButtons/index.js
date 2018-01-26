@@ -12,6 +12,9 @@ type Props = {
 };
 
 const styles = theme => ({
+  first: {
+    marginTop: 3 * theme.spacing.unit,
+  },
   divider: {
     marginTop: 5 * theme.spacing.unit,
     marginBottom: 2 * theme.spacing.unit,
@@ -19,17 +22,17 @@ const styles = theme => ({
 });
 
 const LoginButtons = ({ onSuccess, classes }: Props) => [
-    <Grid key="0" item xs={12}>
-      <LoginWithFacebook fullWidth onSuccess={onSuccess} />
-    </Grid>,
-    <Grid key="1" item xs={12}>
-      <LoginWithGoogle fullWidth onSuccess={onSuccess} />
-    </Grid>,
-    <Grid key="2" item xs={12} className={classes.divider}>
-      <TextDivider type="subheading" color="secondary">
-        or login with your phone
-      </TextDivider>
-    </Grid>,
-  ];
+  <Grid key="0" item xs={12} className={classes.first}>
+    <LoginWithFacebook fullWidth onSuccess={onSuccess} />
+  </Grid>,
+  <Grid key="1" item xs={12}>
+    <LoginWithGoogle fullWidth onSuccess={onSuccess} />
+  </Grid>,
+  <Grid key="2" item xs={12} className={classes.divider}>
+    <TextDivider type="subheading" color="secondary">
+      or login with your phone
+    </TextDivider>
+  </Grid>,
+];
 
 export default withStyles(styles)(LoginButtons);

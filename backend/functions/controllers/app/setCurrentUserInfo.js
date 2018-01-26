@@ -2,13 +2,14 @@ import requestIp from 'request-ip';
 import * as userModel from '../../models/user';
 import { getUserId } from './utils';
 
-const setCurrentUserLocation = async (req, res, next) => {
+const setCurrentUserInfo = async (req, res, next) => {
   try {
     const { geoposition } = req.body;
+    const locales = req.acceptsLanguages();
     const userId = getUserId(req);
     const ip = requestIp.getClientIp(req);
 
-    await userModel.setLocation({ geoposition, ip }, userId);
+    await userModel.setInfo({ geoposition, ip, locales }, userId);
     res.send('OK');
     next();
   } catch (error) {
@@ -17,4 +18,4 @@ const setCurrentUserLocation = async (req, res, next) => {
   }
 };
 
-export default setCurrentUserLocation;
+export default setCurrentUserInfo;

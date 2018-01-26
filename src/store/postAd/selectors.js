@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import * as modelPaths from 'constants/modelPaths';
 import propSelector from 'utils/propSelector';
-import { selectors as authSelectors } from 'store/auth';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import * as constants from './constants';
 
 export const createAdPath = ['postAd', 'create'];

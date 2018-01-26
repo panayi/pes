@@ -1,5 +1,5 @@
 import React from 'react';
-import * as authSelectors from 'store/auth/selectors';
+import * as authSelectors from 'store/firebase/auth/selectors';
 import hideVisitor from '../index';
 
 describe('[HOC] hideVisitor', () => {

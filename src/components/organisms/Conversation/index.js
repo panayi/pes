@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
-import { models } from 'store/data';
+import { models } from 'store/firebase/data';
 import SendMessage from 'components/molecules/SendMessage';
 
 const styles = theme => ({

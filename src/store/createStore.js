@@ -7,11 +7,11 @@ import * as firebase from 'firebase';
 import * as modelPaths from 'constants/modelPaths';
 import * as firebaseConstants from 'constants/firebase';
 import * as storageConstants from 'constants/storage';
-import { actions as authActions } from './auth';
+import { actions as authActions } from './firebase/auth';
 import {
   utils as profileUtils,
   constants as profileConstants,
-} from './profile';
+} from './firebase/profile';
 import makeRootReducer from './reducers';
 
 const firebaseConfig = {
@@ -43,7 +43,7 @@ export default (initialState = {}) => {
   ];
 
   // Store Enhancers
-  const enhancers = [];
+  const enhancers = [reactReduxFirebase(firebase, reduxFirebaseConfig)];
   let composeEnhancers = compose;
 
   // FIXME: this should only be on DEV environment
@@ -57,11 +57,7 @@ export default (initialState = {}) => {
   const store = createStore(
     makeRootReducer(),
     initialState,
-    composeEnhancers(
-      applyMiddleware(...middleware),
-      reactReduxFirebase(firebase, reduxFirebaseConfig),
-      ...enhancers,
-    ),
+    composeEnhancers(...enhancers, applyMiddleware(...middleware)),
   );
 
   store.asyncReducers = {};

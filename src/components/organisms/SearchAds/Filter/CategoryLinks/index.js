@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
 import propSelector from 'utils/propSelector';
-import { models } from 'store/data';
+import { models } from 'store/firebase/data';
 import translate from 'components/hocs/translate';
 import Link from 'components/atoms/Link';
 

@@ -9,9 +9,11 @@ import { createStructuredSelector } from 'reselect';
 import Button from 'material-ui/Button';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import authConfig from 'config/auth';
-import { actions as profileActions } from 'store/profile';
-import * as actions from 'store/auth/linkedAccounts/actions';
-import { linkedAccountsSelector } from 'store/auth/linkedAccounts/selectors';
+import { actions as profileActions } from 'store/firebase/profile';
+import {
+  actions as linkedAccountsActions,
+  selectors as linkedAccountsSelectors,
+} from 'store/linkedAccounts';
 
 type Props = {
   withProvider: String,
@@ -62,11 +64,11 @@ const mapToLinkedAccount = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  linkedAccounts: linkedAccountsSelector,
+  linkedAccounts: linkedAccountsSelectors.linkedAccountsSelector,
 });
 
 const mapDispatchToProps = {
-  fetchLinkedAccounts: actions.fetchLinkedAccounts,
+  fetchLinkedAccounts: linkedAccountsActions.fetchLinkedAccounts,
   setProfile: profileActions.setProfile,
 };
 

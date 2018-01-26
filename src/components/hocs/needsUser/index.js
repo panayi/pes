@@ -2,10 +2,7 @@ import { Component } from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import connectedAuthWrapper from 'redux-auth-wrapper/connectedAuthWrapper';
-import {
-  isAuthenticatedSelector,
-  isAuthenticatingSelector,
-} from 'store/auth/selectors';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import Login from 'components/organisms/Login';
 
 export class DisplayLoginModal extends Component {
@@ -28,8 +25,8 @@ const ConnectedDisplayLoginModal = connect(null, mapDispatchToProps)(
 
 export default options =>
   connectedAuthWrapper({
-    authenticatedSelector: isAuthenticatedSelector,
-    authenticatingSelector: isAuthenticatingSelector,
+    authenticatedSelector: authSelectors.isAuthenticatedSelector,
+    authenticatingSelector: authSelectors.isAuthenticatingSelector,
     FailureComponent: ConnectedDisplayLoginModal,
     ...R.defaultTo({}, options),
   });

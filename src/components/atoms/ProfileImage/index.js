@@ -8,7 +8,7 @@ import { firebaseConnect } from 'react-redux-firebase';
 import Avatar from 'material-ui/Avatar';
 import Face from 'material-ui-icons/Face';
 import { connectData } from 'lib/connectData';
-import { selectors as profileSelectors } from 'store/profile';
+import { selectors as profileSelectors } from 'store/firebase/profile';
 
 const ProfileImage = ({ src, size, withDefault, component: RootComponent }) => (
   <RootComponent src={src} size={size}>

@@ -2,19 +2,19 @@ import { createSelector } from 'reselect';
 import * as modelPaths from 'constants/modelPaths';
 import { modelConnectionsFactory } from 'lib/connectData';
 import propSelector from 'utils/propSelector';
-import { selectors as authSelectors } from 'store/auth';
-import { selectors as i18nSelectors } from 'store/i18n';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import * as constants from './constants';
 
 const createModelConnections = modelConnectionsFactory(constants.DATA_PATH);
 
-export const locales = createModelConnections(
-  createSelector(
-    i18nSelectors.languageSelector,
-    propSelector('_translationsNamespace'),
-    modelPaths.LOCALES,
-  ),
-);
+export const translations = (languageSelector, namespaceSelector) =>
+  createModelConnections(
+    createSelector(
+      languageSelector,
+      namespaceSelector,
+      modelPaths.TRANSLATIONS,
+    ),
+  );
 export const countries = createModelConnections(modelPaths.COUNTRIES);
 export const categories = createModelConnections(modelPaths.CATEGORIES);
 export const users = createModelConnections(modelPaths.USERS);

@@ -27,7 +27,7 @@ const Form = (props: Props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormControl error={R.has('name', errors)} fullWidth>
+      <FormControl error={R.has('code', errors)} fullWidth>
         <MaskedInput
           name="code"
           onChange={handleChange}
@@ -37,6 +37,7 @@ const Form = (props: Props) => {
           placeholderChar="#"
           fullWidth
           placeholder="Enter SMS code"
+          autoComplete="off"
         />
         {errors.code && <FormHelperText>{errors.code}</FormHelperText>}
       </FormControl>
