@@ -2,7 +2,10 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { withState, withProps } from 'recompose';
 import { Formik } from 'formik';
+import yup from 'yup';
+import * as phoneNumbersConstants from 'constants/phoneNumbers';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import Form from './Form';
@@ -14,6 +17,12 @@ type Props = {
   onChange: ?Function,
   countries: ?Object,
   children: React$Node | Function,
+  phoneNumberFormat: {
+    mask: Array<RegExp | string>,
+    regex: RegExp,
+  } | null,
+  selectedCountryCode: string,
+  setSelectedCountryCode: Function,
 };
 
 class PhoneNumberForm extends Component<Props> {
@@ -21,6 +30,18 @@ class PhoneNumberForm extends Component<Props> {
     countryCode: '',
     number: '',
     countries: {},
+  };
+
+  getValidationSchema = () => {
+    const numberRegex = R.path(['phoneNumberFormat', 'regex'], this.props);
+
+    return yup.object().shape({
+      countryCode: yup.string().required('Select a country'),
+      number: yup
+        .string()
+        .ensure()
+        .matches(numberRegex, { message: 'Enter a valid number' }),
+    });
   };
 
   mapValues = values => {
@@ -51,6 +72,7 @@ class PhoneNumberForm extends Component<Props> {
   };
 
   handleChange = values => {
+    this.props.setSelectedCountryCode(values.countryCode);
     this.handleCallback(this.props.onChange, values);
   };
 
@@ -62,8 +84,9 @@ class PhoneNumberForm extends Component<Props> {
   };
 
   render() {
-    const { countryCode, number, children } = this.props;
+    const { countryCode, number, children, phoneNumberFormat } = this.props;
     const initialValues = { countryCode, number };
+    const mask = R.propOr([], 'mask', phoneNumberFormat);
 
     return (
       <div>
@@ -71,9 +94,12 @@ class PhoneNumberForm extends Component<Props> {
           initialValues={initialValues}
           enableReinitialize
           onSubmit={this.handleSubmit}
+          validationSchema={this.getValidationSchema}
+          validateOnChange={false}
+          validateOnBlur={false}
         >
           {formikProps => (
-            <Form {...formikProps} onChange={this.handleChange}>
+            <Form {...formikProps} mask={mask} onChange={this.handleChange}>
               {R.is(Function, children) ? children(formikProps) : children}
             </Form>
           )}
@@ -87,4 +113,14 @@ const mapDataToProps = {
   countries: models.countries.allObjects,
 };
 
-export default connectData(mapDataToProps)(PhoneNumberForm);
+export default R.compose(
+  connectData(mapDataToProps),
+  withState('selectedCountryCode', 'setSelectedCountryCode', null),
+  withProps(({ selectedCountryCode, countryCode }) => ({
+    phoneNumberFormat: R.propOr(
+      [],
+      selectedCountryCode || countryCode,
+      phoneNumbersConstants.FORMAT_BY_COUNTRY_CODE,
+    ),
+  })),
+)(PhoneNumberForm);

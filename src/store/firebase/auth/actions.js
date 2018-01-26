@@ -38,5 +38,5 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
 export const login = credentials => dispatch =>
   dispatch(api.auth.login(credentials));
 
-export const validateSmsCode = (code, confirmationResult) => () =>
+export const validateSmsCode = (code, confirmationResult) => async () =>
   confirmationResult.confirm(code);

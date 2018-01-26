@@ -15,7 +15,6 @@ import { Close } from 'material-ui-icons';
 import { selectors, actions as modalActions } from 'store/modals';
 
 type ModalProps = {
-  title: String,
   closeButton: boolean,
 };
 
@@ -32,15 +31,15 @@ const padding = theme => `${5 * theme.spacing.unit}px`;
 
 const styles = theme => ({
   title: {
-    padding: padding(theme),
+    padding: `${padding(theme)} ${padding(theme)} 0 ${padding(theme)}`,
   },
   content: {
-    padding: `0 ${padding(theme)} ${padding(theme)} ${padding(theme)}`,
+    padding: padding(theme),
   },
   closeButton: {
-    float: 'right',
-    marginTop: -5 * theme.spacing.unit,
-    marginRight: -5 * theme.spacing.unit,
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
 });
 
@@ -53,6 +52,20 @@ const StyledDialogContent = R.compose(
     },
   })),
 )(DialogContent);
+
+const StyledDialogTitle = R.compose(
+  setDisplayName('DialogTitle'),
+  withStyles(styles),
+  withProps(({ classes }) => ({
+    classes: {
+      root: classes.title,
+    },
+  })),
+)(DialogTitle);
+
+const renderTitle = children => (
+  <StyledDialogTitle>{children}</StyledDialogTitle>
+);
 
 const renderContent = children => (
   <StyledDialogContent>{children}</StyledDialogContent>
@@ -74,11 +87,12 @@ const Modal = (props: Props) => {
   // Pick more props as needed.
   // Dialog props: https://material-ui-next.com/api/dialog/
   const dialogProps = R.pick(['onExited'], modalProps);
-  const { title, closeButton } = modalProps;
+  const { closeButton } = modalProps;
   const componentProps = {
     ...rest,
     ...modalProps,
     hideModal,
+    renderTitle,
     renderContent,
     renderActions,
   };
@@ -91,18 +105,10 @@ const Modal = (props: Props) => {
       disableEscapeKeyDown
       {...dialogProps}
     >
-      {(title || closeButton) && (
-        <DialogTitle classes={{ root: classes.title }}>
-          {title}
-          {closeButton && (
-            <IconButton
-              className={classes.closeButton}
-              onClick={() => hideModal()}
-            >
-              <Close />
-            </IconButton>
-          )}
-        </DialogTitle>
+      {closeButton && (
+        <IconButton className={classes.closeButton} onClick={() => hideModal()}>
+          <Close />
+        </IconButton>
       )}
       <Content {...componentProps} />
     </Dialog>
