@@ -3,10 +3,10 @@ import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { defaultProps, withProps } from 'recompose';
-import { actions as authActions } from 'store/firebase/auth';
+import { actions as loginActions } from 'store/login';
 
 const mapDispatchToProps = {
-  login: authActions.login,
+  login: loginActions.login,
 };
 
 export default R.compose(

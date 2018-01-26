@@ -30,7 +30,7 @@ export default (initialState = {}) => {
     profileParamsToPopulate: profileConstants.PROFILE_POPULATES,
     profileFactory: profileUtils.profileFactory,
     onAuthStateChanged: authActions.handleAuthStateChanged,
-    preserveOnLogout: ['categories', 'locales'],
+    preserveOnLogout: ['categories', 'locales', 'translations', 'countries'],
   };
 
   // initialize firebase instance

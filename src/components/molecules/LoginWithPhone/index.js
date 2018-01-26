@@ -5,6 +5,7 @@ import { noop } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { withStateHandlers, withProps } from 'recompose';
 import { actions as authActions } from 'store/firebase/auth';
+import { actions as loginActions } from 'store/login';
 import PhoneNumber from './PhoneNumber';
 import SmsCodeValidation from './SmsCodeValidation';
 
@@ -75,7 +76,7 @@ const initialState = {
 };
 
 const mapDispatchToProps = {
-  login: authActions.login,
+  login: loginActions.login,
   validateSmsCode: authActions.validateSmsCode,
 };
 

@@ -6,6 +6,7 @@ import linkedAccountsReducer from './linkedAccounts';
 import anonymousUserTokenReducer, {
   constants as anonymousUserConstants,
 } from './anonymousUserToken';
+import loginReducer, { constants as loginConstants } from './login';
 import modalsReducer from './modals';
 import formsReducer from './forms';
 import postAdReducer from './postAd';
@@ -18,6 +19,7 @@ export const makeRootReducer = asyncReducers =>
     forms: combineForms(formsReducer, 'forms'),
     [anonymousUserConstants.ANONYMOUS_USER_TOKEN_KEY]: anonymousUserTokenReducer,
     linkedAccounts: linkedAccountsReducer,
+    [loginConstants.ROOT_KEY]: loginReducer,
     modals: modalsReducer,
     postAd: postAdReducer,
     filterAds: filterAdsReducer,

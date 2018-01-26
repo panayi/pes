@@ -9,7 +9,8 @@ import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import ArrowBack from 'material-ui-icons/ArrowBack';
 import { factory as modalFactory } from 'store/modals';
-import { selectors as profileSelectors } from 'store/firebase/profile';
+import { selectors as loginSelectors } from 'store/login';
+import renderNothingWhen from 'components/hocs/renderNothingWhen';
 import withSpinnerWhen from 'components/hocs/withSpinnerWhen';
 import LoginWithPhone from 'components/molecules/LoginWithPhone';
 import LoginButtons from './LoginButtons';
@@ -79,13 +80,15 @@ const Login = ({
 };
 
 const mapStateToProps = createStructuredSelector({
-  isProfileLoaded: profileSelectors.isProfileLoadedSelector,
+  isLoginPending: loginSelectors.pendingSelector,
+  loginSucceeded: loginSelectors.succeededSelector,
 });
 
 const ConnectedLogin = R.compose(
   setDisplayName('Login'),
   connect(mapStateToProps),
-  withSpinnerWhen(R.propSatisfies(R.not, 'isProfileLoaded'), {
+  renderNothingWhen(R.prop('loginSucceeded')),
+  withSpinnerWhen(R.prop('isLoginPending'), {
     centered: true,
     overlay: true,
   }),
