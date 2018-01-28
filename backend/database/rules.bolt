@@ -220,9 +220,16 @@ type Provider {
   }
 }
 
+type ProfileImage {
+  downloadURL: URL, // URL returned from firebase
+  providerId: String,
+  fullPath: String | Null, // Storage path to large-size image downloaded from `providerId`
+}
+
 type Profile {
   displayName: String | Null,
-  avatarUrl: URL | Null,
+  image: ProfileImage | Null
+  providerIds: Map<String, Any> | Null
 }
 
 type User {

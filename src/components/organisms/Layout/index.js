@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react';
+import { Configure } from 'react-instantsearch/dom';
 import { withStyles } from 'material-ui/styles';
 import Header from 'components/organisms/Header';
 import SearchAds from 'components/organisms/SearchAds';
@@ -7,6 +8,7 @@ import SearchAds from 'components/organisms/SearchAds';
 type Props = {
   children: React$Node,
   classes: Object,
+  configureSearch: React$Element<Configure> | null,
 };
 
 const styles = {
@@ -24,11 +26,11 @@ const styles = {
   },
 };
 
-const Layout = ({ children, classes }: Props) => (
+const Layout = ({ configureSearch, children, classes }: Props) => (
   <div className={classes.root}>
     <Header />
     {children}
-    <SearchAds.ConfigureSearchParams />
+    {configureSearch || <SearchAds.ConfigureSearchParams />}
   </div>
 );
 

@@ -13,6 +13,12 @@ export const update = async (props, userId) =>
 
 export const remove = async userId => database.ref(`/users/${userId}`).remove();
 
+export const getProviderById = async (providerId, userId) => {
+  const user = (await get(userId)).val();
+  const providerData = R.propOr([], 'providerData', user);
+  return R.find(R.propEq('providerId', providerId), providerData);
+};
+
 export const setInfo = async ({ geoposition, ip, locales }, userId) => {
   const location = await locationModel.get(geoposition, ip);
 

@@ -1,7 +1,14 @@
+import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import authConfig from 'config/auth';
+import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { actions as locationActions } from 'store/firebase/profile/location';
+import {
+  actions as profileActions,
+  selectors as profileSelectors,
+} from 'store/firebase/profile';
 import * as selectors from './selectors';
 
 export const setCurrentUserInfo = () => async (dispatch, getState) => {
@@ -35,8 +42,37 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
   await dispatch(setCurrentUserInfo());
 };
 
-export const login = credentials => dispatch =>
-  dispatch(api.auth.login(credentials));
+export const login = credentials => async dispatch => {
+  await dispatch(api.auth.login(credentials));
+  return dispatch(setCurrentUserInfo());
+};
 
 export const validateSmsCode = (code, confirmationResult) => async () =>
   confirmationResult.confirm(code);
+
+export const fetchLinkedProviders = () => (dispatch, getState) => {
+  const email = profileSelectors.profileEmailSelector(getState());
+
+  if (R.isNil(email)) {
+    return null;
+  }
+
+  return dispatch(api.auth.getProviders(email));
+};
+
+export const linkProvider = providerId => async (
+  dispatch,
+  getState,
+  getFirebase,
+) => {
+  const firebase = getFirebase();
+  const provider = createAuthProvider(
+    firebase,
+    providerId,
+    authConfig[providerId].scopes,
+  );
+
+  const result = await firebase.auth().currentUser.linkWithPopup(provider);
+  const providerData = R.path(['user', 'providerData'], result);
+  dispatch(profileActions.updateProfile({ providerData }));
+};

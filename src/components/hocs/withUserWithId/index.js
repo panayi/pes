@@ -2,10 +2,12 @@ import * as R from 'ramda';
 import connectedAuthWrapper from 'redux-auth-wrapper/connectedAuthWrapper';
 import { selectors as authSelectors } from 'store/firebase/auth';
 
-export default userSelector =>
+const withUserWithId = userIdSelector =>
   connectedAuthWrapper({
     authenticatedSelector: R.both(
       authSelectors.isAuthenticatedSelector,
-      authSelectors.isUserSelector(userSelector),
+      authSelectors.isCurrentUserSelector(userIdSelector),
     ),
   });
+
+export default withUserWithId;

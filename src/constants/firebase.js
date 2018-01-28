@@ -7,3 +7,11 @@ export const FIREBASE_CONSOLE_BASE_URL =
 export const API_APP_BASE_URL =
   process.env.REACT_APP_FIREBASE_FUNCTIONS_BASE_URL;
 export const FIREBASE_PATH = ['firebase'];
+
+export const PROVIDER_IDS = {
+  facebook: 'facebook.com',
+  google: 'google',
+  phone: 'phone',
+  twitter: 'twitter',
+  github: 'github',
+};

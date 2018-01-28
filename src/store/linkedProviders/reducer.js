@@ -1,10 +1,10 @@
 import { handleAction } from 'redux-actions';
-import * as types from './types';
+import * as constants from './constants';
 
 const initialState = null;
 
 export default handleAction(
-  [types.RECEIVE_LINKED_ACCOUNTS],
+  [constants.RECEIVE_LINKED_PROVIDERS],
   (state, { payload }) => payload,
   initialState,
 );

@@ -30,6 +30,7 @@ export default R.compose(
     'body',
     'category',
     'price',
+    'user',
     'images',
     'createdAt',
     'location',
@@ -38,7 +39,10 @@ export default R.compose(
   R.unless(
     R.propSatisfies(isNilOrEmpty, 'location'),
     R.compose(
-      computedProp('location', R.omit(['geoposition'])),
+      computedProp(
+        'location',
+        R.compose(R.omit(['geoposition']), R.prop('location')),
+      ),
       computedProp(
         '_geoloc',
         R.converge(R.compose(R.zipObj(['lat', 'lng']), R.unapply(R.identity)), [
