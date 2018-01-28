@@ -1,50 +1,32 @@
 import React from 'react';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { createStructuredSelector } from 'reselect';
-import { defaultProps, branch, renderNothing } from 'recompose';
-import { connect } from 'react-redux';
-import { firebaseConnect } from 'react-redux-firebase';
+import { defaultProps } from 'recompose';
 import Avatar from 'material-ui/Avatar';
 import Face from 'material-ui-icons/Face';
-import { connectData } from 'lib/connectData';
-import { selectors as profileSelectors } from 'store/firebase/profile';
+import propSelector from 'utils/propSelector';
+import withProfileData from 'components/hocs/withProfileData';
 
-const ProfileImage = ({ src, size, withDefault, component: RootComponent }) => (
-  <RootComponent src={src} size={size}>
+const ProfileImage = ({
+  src,
+  alt,
+  className,
+  withDefault,
+  component: RootComponent,
+}) => (
+  <RootComponent src={src} alt={alt} className={className}>
     {withDefault && isNilOrEmpty(src) ? <Face /> : null}
   </RootComponent>
 );
-
-const mapStateToProps = createStructuredSelector({
-  isProfileLoaded: profileSelectors.isProfileLoadedSelector,
-  src: profileSelectors.profilePropSelector(['profile', 'avatarUrl']),
-});
-
-const connectMe = R.compose(
-  connect(mapStateToProps),
-  branch(R.compose(R.not, R.prop('isProfileLoaded')), renderNothing),
-);
-
-const mapDataToProps = {
-  // TODO: should use models,
-  // but `modelConnectionsFactory` does not support /users/{uid}/profile
-  src: {
-    query: (state, props) => `users/${props.userId}/profile`,
-    selector: (state, props) =>
-      R.path(
-        ['firebase', 'data', 'users', props.userId, 'profile', 'avatarUrl'],
-        state,
-      ),
-  },
-};
-
-const connectOtherUser = R.compose(connectData(mapDataToProps));
 
 export default R.compose(
   defaultProps({
     component: Avatar,
   }),
-  firebaseConnect(),
-  branch(R.prop('me'), connectMe, connectOtherUser),
+  withProfileData(
+    {
+      src: ['image', 'downloadURL'],
+    },
+    propSelector('userId'),
+  ),
 )(ProfileImage);

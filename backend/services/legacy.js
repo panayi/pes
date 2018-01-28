@@ -1,10 +1,12 @@
 import * as R from 'ramda';
 import fetch from 'node-fetch';
 import random from 'lodash.random';
+import striptags from 'striptags';
 import ImagesScraper from 'images-scraper';
 import generateId from 'frontend/utils/generateId';
 import * as storageConstants from 'frontend/constants/storage';
 import computedProp from 'utils/computedProp';
+import * as fetchService from 'services/fetch';
 import * as storageService from 'services/storage';
 import log from 'utils/log';
 import renameFile from 'utils/renameFile';
@@ -73,7 +75,7 @@ const transformAd = R.compose(
       R.prop('price'),
     ),
   ),
-  computedProp('body', R.prop('description')),
+  computedProp('body', R.compose(striptags, R.prop('description'))),
   computedProp('category', R.prop('categoryParent')),
   computedProp(
     'createdAt',
@@ -134,20 +136,8 @@ const sequentialImportImage = async (
   let didUploadAnImage = didUploadImages;
 
   try {
-    const response = await fetch(image);
-    if (!R.equals(response.status, 200)) {
-      throw new Error(FETCH_FAILED);
-    }
+    const { buffer, contentType } = await fetchService.getImage(image);
 
-    const contentType = response.headers.get('content-type');
-
-    if (!R.contains(contentType, ['image/jpeg', 'image/png', 'image/gif'])) {
-      throw new Error(
-        `Content type is ${contentType} and not an image as expected`,
-      );
-    }
-
-    const buffer = await response.buffer();
     const filename = image
       .split('/')
       .pop()
@@ -164,9 +154,7 @@ const sequentialImportImage = async (
     didUploadAnImage = true;
     log.info(`Added image to ad with id=${adId} - ${image}`);
   } catch (error) {
-    if (!R.equals(error.message, FETCH_FAILED)) {
-      log.warn(error.message);
-    }
+    log.warn(error.message);
   }
 
   if (R.isNil(images[index + 1])) {

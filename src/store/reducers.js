@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import { combineForms } from 'react-redux-form';
-import { routerReducer } from 'react-router-redux';
 import { firebaseStateReducer } from 'react-redux-firebase';
-import linkedAccountsReducer from './linkedAccounts';
+import routerReducer, { constants as routerConstants } from './router';
+import linkedProvidersReducer, {
+  constants as linkedProvidersConstants,
+} from './linkedProviders';
 import anonymousUserTokenReducer, {
   constants as anonymousUserConstants,
 } from './anonymousUserToken';
@@ -14,11 +16,11 @@ import filterAdsReducer from './filterAds';
 
 export const makeRootReducer = asyncReducers =>
   combineReducers({
-    router: routerReducer,
+    [routerConstants.ROOT_KEY]: routerReducer,
     firebase: firebaseStateReducer,
     forms: combineForms(formsReducer, 'forms'),
     [anonymousUserConstants.ANONYMOUS_USER_TOKEN_KEY]: anonymousUserTokenReducer,
-    linkedAccounts: linkedAccountsReducer,
+    [linkedProvidersConstants.ROOT_KEY]: linkedProvidersReducer,
     [loginConstants.ROOT_KEY]: loginReducer,
     modals: modalsReducer,
     postAd: postAdReducer,

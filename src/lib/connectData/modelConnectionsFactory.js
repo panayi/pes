@@ -12,6 +12,9 @@ const modelConnectionsFactory = dataPath => {
       R.unless(R.is(Array), R.of),
     );
 
+  const createModelChildPathSelector = (modelPathSelector, childPathSelector) =>
+    createSelector(modelPathSelector, childPathSelector, R.concat);
+
   const createModelPathStringSelector = modelPathSelector =>
     createSelector(modelPathSelector, R.join('/'));
 
@@ -83,10 +86,34 @@ const modelConnectionsFactory = dataPath => {
 
     if (singleton) {
       const singletonSelector = createSingletonSelector(finalModelPathSelector);
-      return {
+
+      const one = {
         query: modelPathStringSelector,
         selector: singletonSelector,
       };
+
+      one.child = childPathSelector => {
+        const finalChildPathSelector = createModelPathSelector(
+          childPathSelector,
+        );
+        const modelChildPathSelector = createModelChildPathSelector(
+          finalModelPathSelector,
+          finalChildPathSelector,
+        );
+        const childPathStringSelector = createModelPathStringSelector(
+          modelChildPathSelector,
+        );
+        const childSingletonSelector = createSingletonSelector(
+          modelChildPathSelector,
+        );
+
+        return {
+          query: childPathStringSelector,
+          selector: childSingletonSelector,
+        };
+      };
+
+      return one;
     }
 
     const modelObjectsSelector = createModelObjectsSelector(

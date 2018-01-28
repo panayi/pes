@@ -8,6 +8,7 @@ import Messages from './messages';
 const Pages = () => (
   <Switch>
     <Route path="/profile" component={Profile} />
+    <Route path="/user/:userId" component={Profile} />
     <Route path="/i/:adId" component={Ad} />
     <Route path="/messages" component={Messages} />
     <Route path="/" component={Home} />

@@ -1,7 +1,7 @@
 import * as R from 'ramda';
-import { createSelector } from 'reselect';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { selectors as locationSelectors } from '../firebase/profile/location';
+import { createSelector } from 'reselect';
+import { selectors as locationSelectors } from 'store/firebase/profile/location';
 import * as constants from './constants';
 
 const selectedCategorySelector = R.path(constants.SELECTED_CATEGORY_PATH);
@@ -43,7 +43,7 @@ const maxPriceSelector = R.compose(R.prop('max'), priceSelector);
 const facetFiltersSelector = createSelector(
   selectedCategorySelector,
   selectedCategory =>
-    isNilOrEmpty(selectedCategory) ? [] : [`category:${selectedCategory}`],
+    isNilOrEmpty(selectedCategory) ? null : `category:${selectedCategory}`,
 );
 
 const filtersSelector = createSelector(

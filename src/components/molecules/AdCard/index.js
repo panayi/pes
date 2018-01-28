@@ -1,14 +1,11 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { isNotPlainObj } from 'ramda-adjunct';
-import { withProps, defaultProps, branch } from 'recompose';
+import { withProps, defaultProps } from 'recompose';
 import Card, { CardMedia, CardContent, CardHeader } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
 import id from 'utils/id';
-import propSelector from 'utils/propSelector';
-import hydrateAd from 'components/hocs/hydrateAd';
 import LineClamp from 'components/atoms/LineClamp';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
@@ -128,7 +125,6 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
 };
 
 export default R.compose(
-  branch(R.propSatisfies(isNotPlainObj, 'ad'), hydrateAd(propSelector('ad'))),
   defaultProps({
     ad: {},
   }),

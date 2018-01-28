@@ -30,16 +30,16 @@ const initialize = async service => {
   log.info('Starting initialization script');
   await canInitialize(service);
 
-  if (shouldInitializeAlgolia(service)) {
-    const algoliaResult = await initializeAlgolia();
-    log.success('Algolia: Initialized');
-    R.forEach(msg => log.info(`Algolia: ${msg}`), algoliaResult);
-  }
-
   if (shouldInitializeFirebase(service)) {
     const firebaseResult = await initializeFirebase();
     log.success('Firebase: Initialized');
     R.forEach(msg => log.info(`Firebase: ${msg}`), firebaseResult);
+  }
+
+  if (shouldInitializeAlgolia(service)) {
+    const algoliaResult = await initializeAlgolia();
+    log.success('Algolia: Initialized');
+    R.forEach(msg => log.info(`Algolia: ${msg}`), algoliaResult);
   }
 };
 

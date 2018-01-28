@@ -18,6 +18,10 @@ export const translations = (languageSelector, namespaceSelector) =>
 export const countries = createModelConnections(modelPaths.COUNTRIES);
 export const categories = createModelConnections(modelPaths.CATEGORIES);
 export const users = createModelConnections(modelPaths.USERS);
+export const profiles = userIdSelector =>
+  createModelConnections(createSelector(userIdSelector, modelPaths.PROFILES), {
+    singleton: true,
+  });
 export const ads = createModelConnections(modelPaths.ADS);
 export const adImages = adIdSelector =>
   createModelConnections(createSelector(adIdSelector, modelPaths.AD_IMAGES));
@@ -25,9 +29,10 @@ export const draftAd = createModelConnections(
   createSelector(authSelectors.uidSelector, modelPaths.DRAFT_AD),
   { singleton: true },
 );
-export const adsByUser = createModelConnections(
-  createSelector(authSelectors.uidSelector, modelPaths.ADS_BY_USER),
-);
+export const adsByUser = userIdSelector =>
+  createModelConnections(
+    createSelector(userIdSelector, modelPaths.ADS_BY_USER),
+  );
 export const conversations = createModelConnections(
   createSelector(authSelectors.uidSelector, modelPaths.CONVERSATIONS),
 );

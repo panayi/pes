@@ -72,11 +72,11 @@ export const tokenSelector = createSelector(
   R.path(['stsTokenManager', 'accessToken']),
 );
 
-export const isUserSelector = userSelector =>
+export const isCurrentUserSelector = userIdSelector =>
   createSelector(
     isAuthenticatedSelector,
     uidSelector,
-    userSelector,
+    userIdSelector,
     (isAuthenticated, currentUserId, userId) =>
       isAuthenticated && R.equals(currentUserId, userId),
   );

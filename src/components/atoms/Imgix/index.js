@@ -22,7 +22,7 @@ Imgix.defaultProps = {
   className: null,
 };
 
-export default withProps(({ image, w, ...rest }) => ({
+export default withProps(({ image, ...rest }) => ({
   url: buildUrl(image.fullPath, R.omit(['alt'], rest)),
-  width: w,
+  width: rest.w,
 }))(Imgix);

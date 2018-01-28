@@ -24,7 +24,9 @@ export default actionKey =>
         }
 
         return showLoginModal({
-          onSuccess: () => props[actionKey](...args),
+          onSuccess: () => {
+            props[actionKey](...args);
+          },
         });
       },
     })),

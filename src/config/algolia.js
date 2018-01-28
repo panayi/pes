@@ -24,7 +24,7 @@ export default {
     {
       name: ADS_INDEXES.default,
       searchableAttributes: ['title', 'body'],
-      attributesForFaceting: ['category'],
+      attributesForFaceting: ['category', 'user'],
       replicas: [
         {
           name: ADS_INDEXES.byDateDesc,

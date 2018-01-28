@@ -1,9 +1,10 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
+import { noop } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { setDisplayName, withState } from 'recompose';
+import { setDisplayName, withProps, withState } from 'recompose';
 import Grid from 'material-ui/Grid';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
@@ -16,7 +17,7 @@ import LoginWithPhone from 'components/molecules/LoginWithPhone';
 import LoginButtons from './LoginButtons';
 
 type Props = {
-  hideModal: Function,
+  onSuccess: Function,
   renderTitle: Function,
   renderContent: Function,
   loginWithPhoneStep: string,
@@ -37,7 +38,7 @@ const styles = () => ({
 });
 
 const Login = ({
-  hideModal,
+  onSuccess,
   renderTitle,
   renderContent,
   spinner,
@@ -63,11 +64,11 @@ const Login = ({
           {spinner}
           <Grid container alignContent="center">
             {!showingSmsCodeValidation && (
-              <LoginButtons onSuccess={hideModal} />
+              <LoginButtons onSuccess={onSuccess} />
             )}
             <Grid item xs={12}>
               <LoginWithPhone
-                onSuccess={hideModal}
+                onSuccess={onSuccess}
                 step={loginWithPhoneStep}
                 onStepChange={setLoginWithPhoneStep}
               />
@@ -93,6 +94,12 @@ const ConnectedLogin = R.compose(
     overlay: true,
   }),
   withState('loginWithPhoneStep', 'setLoginWithPhoneStep', 'phoneNumber'),
+  withProps(({ onSuccess = noop, hideModal }) => ({
+    onSuccess: () => {
+      hideModal();
+      onSuccess();
+    },
+  })),
   withStyles(styles),
 )(Login);
 

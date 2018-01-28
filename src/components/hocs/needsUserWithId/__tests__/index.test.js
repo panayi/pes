@@ -6,8 +6,8 @@ import needsUserWithId from '../index';
 describe('[HOC] needsUserWithId', () => {
   authSelectors.isAuthenticatedSelector = jest.fn();
   authSelectors.isAuthenticatingSelector = jest.fn();
-  authSelectors.isUserSelector = jest.fn();
-  authSelectors.isUserSelector.mockImplementation(R.identity);
+  authSelectors.isCurrentUserSelector = jest.fn();
+  authSelectors.isCurrentUserSelector.mockImplementation(R.identity);
 
   const location = {
     pathname: '/some-user-specific-protected-url',
@@ -32,7 +32,7 @@ describe('[HOC] needsUserWithId', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render wrappedComponent when isAuthenticatedSelector = true and isUserSelector = true', () => {
+  it('should render wrappedComponent when isAuthenticatedSelector = true and isCurrentUserSelector = true', () => {
     authSelectors.isAuthenticatedSelector.mockReturnValueOnce(true);
     authSelectors.isAuthenticatingSelector.mockReturnValueOnce(false);
     const { component } = createComponent(R.T);
@@ -49,7 +49,7 @@ describe('[HOC] needsUserWithId', () => {
     expect(store.getActions()).toMatchSnapshot();
   });
 
-  it('should not render wrappedComponent and redirect, when isUserSelector = false', () => {
+  it('should not render wrappedComponent and redirect, when isCurrentUserSelector = false', () => {
     authSelectors.isAuthenticatedSelector.mockReturnValueOnce(true);
     authSelectors.isAuthenticatingSelector.mockReturnValueOnce(false);
     const { component, store } = createComponent(R.F);

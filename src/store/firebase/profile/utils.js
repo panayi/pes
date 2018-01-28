@@ -1,35 +1,37 @@
 import * as R from 'ramda';
+import { renameKeys } from 'ramda-adjunct';
 
-// getPropInProviderData :: String -> Any
-const getPropInProviderData = propKey =>
-  R.compose(R.find(R.identity), R.pluck(propKey), R.propOr([], 'providerData'));
+// getPropInProviderData :: String -> Object | Null
+const findProviderWithProp = propKey =>
+  R.compose(R.find(R.prop(propKey)), R.propOr([], 'providerData'));
 
-// getDisplayName :: User -> String | Nil
+// getDisplayName :: User -> String | Null
 const getDisplayName = R.converge(R.or, [
-  getPropInProviderData('displayName'),
+  R.compose(R.prop('displayName'), findProviderWithProp('displayName')),
   R.propOr(null, 'email'),
 ]);
 
-// getPhotoUrl :: User -> String | Nil
-const getPhotoUrl = R.compose(
-  R.defaultTo(null),
-  getPropInProviderData('photoURL'),
+// getPhoto :: User -> { downloadURL, providerId }
+const getPhoto = R.compose(
+  renameKeys({ photoURL: 'downloadURL' }),
+  R.pick(['photoURL', 'providerId']),
+  R.defaultTo({}),
+  findProviderWithProp('photoURL'),
+);
+
+const getProviderIds = R.compose(
+  R.uniq,
+  R.pluck('providerId'),
+  R.propOr([], 'providerData'),
 );
 
 // profileFactory :: User -> Object
-export const profileFactory = user => {
-  const profile = {
-    email: user.email,
-    providerData: user.providerData,
-    profile: {
-      displayName: getDisplayName(user),
-      avatarUrl: getPhotoUrl(user),
-    },
-  };
-
-  if (user.location) {
-    profile.location = user.location;
-  }
-
-  return profile;
-};
+export const profileFactory = user => ({
+  email: user.email,
+  providerData: user.providerData,
+  profile: {
+    displayName: getDisplayName(user),
+    image: getPhoto(user),
+    providerIds: getProviderIds(user),
+  },
+});

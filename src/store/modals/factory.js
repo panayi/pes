@@ -17,7 +17,6 @@ const buttonFactory = action =>
 // getModalId :: ModalProps -> String
 const getModalId = R.path(['content', 'displayName']);
 
-/* eslint-disable no-param-reassign */
 const modalFactory = modalProps => {
   const components = R.pick(componentsPropKeys, modalProps);
   const otherProps = R.omit(componentsPropKeys, modalProps);
@@ -39,6 +38,5 @@ const modalFactory = modalProps => {
     hideButton,
   };
 };
-/* eslint-enable no-param-reassign */
 
 export default modalFactory;

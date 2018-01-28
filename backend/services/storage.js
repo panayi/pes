@@ -1,10 +1,13 @@
 import gcloud from 'google-cloud';
 import uuid from 'uuid-v4';
 import * as storageConstants from 'frontend/constants/storage';
+import serviceAccountKey from '../lib/serviceAccountKey.json';
+
+console.log(__dirname);
 
 const storageClient = gcloud.storage({
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  keyFilename: 'backend/lib/serviceAccountKey.json',
+  credentials: serviceAccountKey,
 });
 
 const storage = storageClient.bucket(storageConstants.BUCKET);
@@ -20,7 +23,8 @@ export const uploadImage = (
   path,
   filename,
   saveMetadata,
-) => new Promise((resolve, reject) => {
+) =>
+  new Promise((resolve, reject) => {
     const finalPath = `${path}/${filename}`;
     const file = storage.file(finalPath);
     const token = uuid();
@@ -45,7 +49,7 @@ export const uploadImage = (
         await saveMetadata(metadata);
       }
 
-      resolve();
+      resolve(finalPath);
     });
     stream.end(buffer);
   });
