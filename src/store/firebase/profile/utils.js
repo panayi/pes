@@ -26,12 +26,13 @@ const getProviderIds = R.compose(
 );
 
 // profileFactory :: User -> Object
-export const profileFactory = user => ({
-  email: user.email,
-  providerData: user.providerData,
+export const profileFactory = (userData, profile) => ({
+  email: userData.email,
+  providerData: userData.providerData,
   profile: {
-    displayName: getDisplayName(user),
-    image: getPhoto(user),
-    providerIds: getProviderIds(user),
+    ...R.propOr({}, 'profile', profile),
+    displayName: getDisplayName(userData),
+    image: getPhoto(userData),
+    providerIds: getProviderIds(userData),
   },
 });

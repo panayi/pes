@@ -105,13 +105,13 @@ const mapStateToProps = createStructuredSelector({
 });
 
 export default R.compose(
-  connect(mapStateToProps),
   withProfileData(
     {
       profileImagePath: ['image', 'fullPath'],
     },
     propSelector('userId'),
   ),
+  connect(mapStateToProps),
   withProps(({ isCurrentUser }) => ({
     providersComponent: isCurrentUser ? LinkProviders : ListUserProviders,
   })),
