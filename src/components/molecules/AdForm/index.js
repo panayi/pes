@@ -131,7 +131,7 @@ export default R.compose(
   connectData({ categories: models.categories.all }, null, mapDispatchToProps),
   withSpinnerWhen(
     R.where({
-      ad: R.compose(R.not, isLoaded),
+      ad: R.complement(isLoaded),
     }),
     {
       centered: true,

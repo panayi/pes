@@ -18,6 +18,7 @@ export default class Recaptcha extends Component<Props> {
   }
 
   RECAPTCHA_ID = generateClassName();
+  verifier = null;
 
   createRecaptcha() {
     const { RecaptchaVerifier } = this.props.firebase.auth;

@@ -67,6 +67,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-import-resolver-webpack": "^0.8.4",
     "eslint-plugin-flowtype": "^2.42.0",
+    "eslint-plugin-ramda": "^2.4.0",
     "firebase-bolt": "^0.8.2",
     "firebase-server": "^0.12.0",
     "firebase-tools": "^3.16.0",

@@ -8,7 +8,7 @@ const getPrice = R.prop('price');
 
 export default R.compose(
   renderNothingWhen(
-    R.compose(R.compose(R.not, isPositive), getPrice, R.prop('ad')),
+    R.compose(R.complement(isPositive), getPrice, R.prop('ad')),
   ),
   withProps({
     getProp: R.compose(

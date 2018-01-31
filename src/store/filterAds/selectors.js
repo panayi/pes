@@ -86,7 +86,7 @@ export const searchParamsSelector = createSelector(
   indexSelector,
   geopositionSelector,
   (queryValue, facetFilters, filters, index, geoposition) =>
-    R.filter(R.compose(R.not, isNilOrEmpty), {
+    R.reject(isNilOrEmpty, {
       index,
       query: queryValue,
       facetFilters,

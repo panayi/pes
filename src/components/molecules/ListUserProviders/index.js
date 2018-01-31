@@ -38,7 +38,7 @@ export default R.compose(
     providers: R.map(
       providerId => ({
         providerId,
-        disabled: R.compose(R.not, R.contains(providerId))(providerIds),
+        disabled: R.complement(R.contains(providerId), providerIds),
       }),
       authConfig.providers,
     ),

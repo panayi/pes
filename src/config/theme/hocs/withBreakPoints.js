@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { createSelector, createStructuredSelector } from 'reselect';
-import withSizes from 'react-sizes';
+import withSizes from 'react-sizes/lib/withSizes'; // FIXME: `import withSizes from 'react-sizes'` isn't working
 import theme from '../index';
 import emToPx from '../helpers/emToPx';
 
@@ -30,7 +30,7 @@ const nextBreakpointSelector = createSelector(
 
 const intervalSelector = createSelector(
   currentBreakPointIndexSelector,
-  R.cond([[R.isNil, R.always(0)], [R.T, R.inc]]),
+  R.ifElse(R.isNil, R.always(0), R.inc),
 );
 
 const mapWidthToProps = createStructuredSelector({

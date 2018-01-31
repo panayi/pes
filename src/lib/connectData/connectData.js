@@ -7,7 +7,7 @@ const QUERIES_PROP = '__queries__';
 export default (dataConnections, mapStateToProps, mapDispatchToProps) => {
   const finalMapStateToProps = (state, props) => {
     const queries = R.compose(
-      R.map(R.ifElse(R.is(Function), query => query(state, props), R.identity)),
+      R.map(R.when(R.is(Function), query => query(state, props))),
       R.pluck('query'),
     )(dataConnections);
 

@@ -44,7 +44,7 @@ const extractAddress = result => {
     postalCode: findComponentByType(['postal_code'], components),
   };
 
-  return R.filter(R.compose(R.not, isNilOrEmpty), address);
+  return R.reject(isNilOrEmpty, address);
 };
 
 export const reverseGeocode = (geoposition = {}) => {

@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { isNotNil } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';
 import * as firebaseConstants from 'constants/firebase';
@@ -29,10 +30,7 @@ const isInitializingSelector = R.path([
 export const uidSelector = createSelector(firebaseAuthSelector, R.prop('uid'));
 
 // hasUidSelector :: State -> String | Nil
-export const hasUidSelector = createSelector(
-  uidSelector,
-  R.compose(R.not, R.isNil),
-);
+export const hasUidSelector = createSelector(uidSelector, isNotNil);
 
 // isAnonymousSelector :: State -> Boolean | Nil
 export const isAnonymousSelector = createSelector(

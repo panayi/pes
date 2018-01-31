@@ -6,19 +6,48 @@ module.exports = {
     "airbnb",
     "prettier",
     "prettier/flowtype",
-    "prettier/react",
+    "prettier/react"
   ],
   "parser": "babel-eslint",
   "plugins": [
     "flowtype",
+    "ramda",
   ],
   "rules": {
+    "no-underscore-dangle": "off",
+
     "react/jsx-filename-extension": "off",
+    "react/prop-types": "off",
+
     "import/no-named-as-default": "off",
     "import/prefer-default-export": "off",
-    "react/prop-types": "off",
-    "no-underscore-dangle": "off",
-    "import/no-named-as-default-member": "off"
+    "import/no-named-as-default-member": "off",
+
+    "ramda/always-simplification": "error",
+    "ramda/any-pass-simplification": "error",
+    "ramda/both-simplification": "error",
+    "ramda/complement-simplification": "error",
+    "ramda/compose-pipe-style": "off",
+    "ramda/compose-simplification": "error",
+    "ramda/cond-simplification": "error",
+    "ramda/either-simplification": "error",
+    "ramda/eq-by-simplification": "error",
+    "ramda/filter-simplification": "error",
+    "ramda/if-else-simplification": "error",
+    "ramda/map-simplification": "error",
+    "ramda/merge-simplification": "error",
+    "ramda/no-redundant-and": "error",
+    "ramda/no-redundant-not": "error",
+    "ramda/no-redundant-or": "error",
+    "ramda/pipe-simplification": "error",
+    "ramda/prefer-complement": "error",
+    "ramda/prefer-ramda-boolean": "off",
+    "ramda/prop-satisfies-simplification": "error",
+    "ramda/reduce-simplification": "error",
+    "ramda/reject-simplification": "error",
+    "ramda/set-simplification": "error",
+    "ramda/unless-simplification": "error",
+    "ramda/when-simplification": "error",
   },
   "env": {
     "browser": true,
@@ -38,9 +67,6 @@ module.exports = {
       "rules": {
         "no-console": "off",
       },
-    },
-    {
-      "files": ["backend/**/*.js"],
       "settings": {
         "import/resolver": {
           "webpack": {

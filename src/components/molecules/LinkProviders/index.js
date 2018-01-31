@@ -30,7 +30,7 @@ class LinkProviders extends React.Component<Props> {
       await linkProvider(providerId);
       fetchLinkedProviders();
     } catch (error) {
-      alert(error);
+      alert(error); // eslint-disable-line no-alert
     }
   };
 
