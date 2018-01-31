@@ -3,7 +3,8 @@ import * as fetchService from 'services/fetch';
 import * as storageService from 'services/storage';
 import * as userModel from './user';
 
-const getFacebookImageUrl = uid => `https://graph.facebook.com/${uid}/picture?height=1000`;
+const getFacebookImageUrl = uid =>
+  `https://graph.facebook.com/${uid}/picture?height=1000`;
 
 export const downloadImage = async (profileImageSnapshot, userId) => {
   const { downloadURL, providerId } = profileImageSnapshot.val();

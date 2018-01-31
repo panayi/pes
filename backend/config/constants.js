@@ -8,15 +8,18 @@ const FUNCTIONS_OUTPUT = 'index.js';
 const ADMIN_OUTPUT = 'index.js';
 
 // Folders
+const SRC = 'src';
+const FRONTEND_SRC = 'src';
 const ADMIN = 'admin';
 const FUNCTIONS = 'functions';
 const SHARED = 'shared';
 const BUILD = 'build';
 
 // Paths
-const BACKEND = path.join(__dirname, '..');
-const ROOT = path.join(BACKEND, '..');
-const FRONTEND = path.join(ROOT, 'src');
+const BACKEND_ROOT = path.join(__dirname, '..');
+const BACKEND = path.join(BACKEND_ROOT, SRC);
+const ROOT = path.join(BACKEND, '..', '..');
+const FRONTEND = path.join(ROOT, FRONTEND_SRC);
 
 module.exports = {
   files: {
@@ -34,10 +37,11 @@ module.exports = {
   },
   paths: {
     root: ROOT,
+    backendRoot: BACKEND_ROOT,
     backend: BACKEND,
     frontend: FRONTEND,
     admin: path.join(BACKEND, ADMIN),
     functions: path.join(BACKEND, FUNCTIONS),
-    build: path.join(BACKEND, BUILD),
+    build: path.join(BACKEND_ROOT, BUILD),
   },
 };

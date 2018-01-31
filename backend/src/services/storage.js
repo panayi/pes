@@ -1,7 +1,7 @@
 import gcloud from 'google-cloud';
 import uuid from 'uuid-v4';
 import * as storageConstants from 'frontend/constants/storage';
-import serviceAccountKey from '../lib/serviceAccountKey.json';
+import serviceAccountKey from 'lib/serviceAccountKey.json';
 
 console.log(__dirname);
 

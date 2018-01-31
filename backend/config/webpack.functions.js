@@ -10,7 +10,7 @@ module.exports = merge.smart(baseConfig, {
   output: {
     // To deploy functions, package.json and node_modules
     // needs to be at the same directory level.
-    path: constants.paths.backend,
+    path: constants.paths.backendRoot,
     filename: constants.files.functionsOutput,
     libraryTarget: 'this',
   },

@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { auth } from 'lib/firebaseClient';
-import * as respond from '../../../utils/respond';
+import * as respond from 'utils/respond';
 
 // Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header

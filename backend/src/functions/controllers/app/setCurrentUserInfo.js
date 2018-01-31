@@ -1,6 +1,6 @@
 import requestIp from 'request-ip';
-import * as respond from '../../../utils/respond';
-import * as userModel from '../../models/user';
+import * as respond from 'utils/respond';
+import * as userModel from 'functions/models/user';
 import { getUserId } from './utils';
 
 const setCurrentUserInfo = async (req, res, next) => {

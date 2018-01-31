@@ -67,7 +67,7 @@ module.exports = {
   },
   "overrides": [
     {
-      "files": ["backend/**/*.js"],
+      "files": ["backend/src/**/*.js"],
       "rules": {
         "no-console": "off",
       },

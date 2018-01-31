@@ -17,6 +17,6 @@
     "source": "backend"
   },
   "database": {
-    "rules": "backend/database/rules.json"
+    "rules": "backend/src/database/rules.json"
   }
 }

@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions';
-import * as profileImageModel from '../models/profileImage';
+import * as profileImageModel from 'functions/models/profileImage';
 
 const handleCreatedOrUpdated = async event => {
   const snapshot = event.data;

@@ -1,5 +1,5 @@
-import * as respond from '../../../utils/respond';
-import * as userModel from '../../models/user';
+import * as respond from 'utils/respond';
+import * as userModel from 'functions/models/user';
 import { getUserId, getAnonymousUserId } from './utils';
 
 const migrateAnonymousUser = async (req, res, next) => {

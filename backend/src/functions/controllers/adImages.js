@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as algoliaService from 'services/algolia';
-import * as adImageModel from '../models/adImage';
+import * as adImageModel from 'functions/models/adImage';
 
 const syncAngolia = async adId => {
   const adImagesSnapshot = await adImageModel.getAll(adId);
