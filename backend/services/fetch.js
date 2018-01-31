@@ -1,11 +1,12 @@
 import * as R from 'ramda';
 import fetch from 'node-fetch';
+import HttpStatus from 'http-status-codes';
 
 const IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'];
 
 export const getImage = async url => {
   const response = await fetch(url);
-  if (!R.equals(response.status, 200)) {
+  if (!R.equals(response.status, HttpStatus.OK)) {
     throw new Error(`Image fetch failed with status ${response.status}`);
   }
 

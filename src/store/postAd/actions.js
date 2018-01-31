@@ -23,6 +23,8 @@ export const initializeForm = (ad: ?Ad) => (dispatch: Dispatch) => {
   dispatch(formActions.load(formModels.postAd.path, initialState));
 };
 
+const DEBOUNCE_TIMEOUT = 200; // ms
+
 const updateDraft = debounce(
   (ad: Ad | {}, dispatch: Dispatch, getState: Function) => {
     const state = getState();
@@ -36,7 +38,7 @@ const updateDraft = debounce(
 
     return dispatch(api.draftAd.update(uid, serializeAd(ad)));
   },
-  200,
+  DEBOUNCE_TIMEOUT,
 );
 
 export const saveDraft = (ad: Ad | {}) => (...args) => updateDraft(ad, ...args);

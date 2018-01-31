@@ -14,6 +14,7 @@ import { selectors as locationSelectors } from 'store/firebase/profile/location'
 const GOOGLE_APIS_KEY = process.env.REACT_APP_GOOGLE_APIS_KEY;
 const GOOGLE_MAPS_SCRIPT_URL = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_APIS_KEY}&v=3.exp&libraries=places`;
 const PAC_CONTAINER_CLASS = '.pac-container';
+const POSITION_TIMEOUT = 200; // ms
 
 type Props = {
   onChange: Function,
@@ -93,7 +94,7 @@ class SearchLocation extends Component<Props, State> {
     const autocompleteEl = document.querySelector(PAC_CONTAINER_CLASS);
 
     if (R.isNil(autocompleteEl)) {
-      setTimeout(() => this.moveAutocompleteEl(), 200);
+      setTimeout(() => this.moveAutocompleteEl(), POSITION_TIMEOUT);
     } else {
       this.elements.autocompleteWrapper.appendChild(autocompleteEl);
     }

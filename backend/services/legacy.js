@@ -22,6 +22,7 @@ export const ADS_ENDPOINT = `${
 }/posts/json/${process.env.LEGACY_PESPOSA_TOKEN}`;
 
 const FETCH_FAILED = 'fetchFailed';
+const MAX_IMAGE_WEB_FETCH_RETRIES = 4;
 
 // ------------------------------------
 // Helpers
@@ -215,7 +216,10 @@ export const importAd = async (ad, database) => {
       let retries = 0;
       let didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database);
 
-      while (!didUploadAnImageFromWeb && retries < 4) {
+      while (
+        !didUploadAnImageFromWeb &&
+        retries < MAX_IMAGE_WEB_FETCH_RETRIES
+      ) {
         didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database); // eslint-disable-line no-await-in-loop
         retries += 1;
       }

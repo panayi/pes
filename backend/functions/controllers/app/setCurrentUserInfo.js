@@ -1,4 +1,5 @@
 import requestIp from 'request-ip';
+import * as respond from '../../../utils/respond';
 import * as userModel from '../../models/user';
 import { getUserId } from './utils';
 
@@ -14,7 +15,7 @@ const setCurrentUserInfo = async (req, res, next) => {
     next();
   } catch (error) {
     console.error('Failed to set IP of user', error);
-    res.status(500).send('Internal Server Error');
+    respond.internalServerError(res);
   }
 };
 

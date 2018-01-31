@@ -3,6 +3,8 @@ import log from 'utils/log';
 import program from 'commander';
 import commands from './commands';
 
+const COMMAND_ARGS_LENGTH = 2;
+
 R.forEach(command => command(program), R.values(commands));
 
 program
@@ -14,7 +16,9 @@ program
 program.parse(process.argv);
 
 const commandNames = R.keys(commands);
-const command = R.compose(R.head, R.defaultTo([]))(process.argv.slice(2));
+const command = R.compose(R.head, R.defaultTo([]))(
+  process.argv.slice(COMMAND_ARGS_LENGTH),
+);
 
 if (!command || !R.contains(command, commandNames)) {
   log.error(`Command "${command || ''}" not found.`);

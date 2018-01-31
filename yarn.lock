@@ -6912,6 +6912,10 @@ lodash.rest@^4.0.0:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/lodash.rest/-/lodash.rest-4.0.5.tgz#954ef75049262038c96d1fc98b28fdaf9f0772aa"
 
+lodash.round@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/lodash.round/-/lodash.round-4.0.4.tgz#101b6ba5c6cecc998f2abbe80b6029affd25d262"
+
 lodash.set@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"

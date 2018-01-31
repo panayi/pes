@@ -15,6 +15,10 @@ module.exports = {
   ],
   "rules": {
     "no-underscore-dangle": "off",
+    "no-magic-numbers": ["warn", { // TODO: change to "error"
+      "ignoreArrayIndexes": true,
+      "ignore": [-1, 0, 1]
+    }],
 
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",

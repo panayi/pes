@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import { auth } from 'lib/firebaseClient';
+import * as respond from '../../../utils/respond';
 
 // Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header
@@ -16,7 +17,7 @@ export const isAuthenticated = (options = {}) => (req, res, next) => {
       'Make sure you authorize your request by providing the following HTTP header:',
       'Authorization: Bearer <Firebase ID Token>',
     );
-    res.status(403).send('Unauthorized');
+    respond.unauthorized(res);
     return;
   }
 
@@ -31,7 +32,7 @@ export const isAuthenticated = (options = {}) => (req, res, next) => {
     })
     .catch(error => {
       console.error('Error while verifying Firebase ID token:', error);
-      res.status(403).send('Unauthorized');
+      respond.unauthorized(res);
     });
 };
 

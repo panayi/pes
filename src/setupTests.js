@@ -72,12 +72,14 @@ global.R = R;
 
 global.noop = () => {};
 
-global.startFirebaseTestServer = async () => {
-  const port = await detectPort(5000);
+const PORT = 5000;
 
-  if (port === 5000) {
+global.startFirebaseTestServer = async () => {
+  const port = await detectPort(PORT);
+
+  if (port === PORT) {
     /* eslint-disable no-new */
-    new FirebaseServer(5000, 'localhost.firebaseio.test', {
+    new FirebaseServer(PORT, 'localhost.firebaseio.test', {
       users: {
         Iq5b0qK2NtgggT6U3bU6iZRGyma2: {
           displayName: 'Tester',

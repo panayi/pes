@@ -1,7 +1,17 @@
 /* @flow */
 import * as R from 'ramda';
 import { withProps } from 'recompose';
+import roundToClosestMultiple from 'utils/roundToClosestMultiple';
 import AdProp from '../AdProp';
+
+const METERS_PER_KM = 1000;
+
+const VERY_CLOSE = 750;
+const CLOSE = 5000;
+
+const VERY_CLOSE_FIDELITY = 250;
+const CLOSE_FIDELITY = 500;
+const FAR_FIDELITY = 1000;
 
 const getDistance = ad => {
   const distance = R.path(['_rankingInfo', 'geoDistance'], ad);
@@ -10,18 +20,18 @@ const getDistance = ad => {
     return null;
   }
 
-  if (distance < 750) {
-    const rounded = 250 * Math.ceil(distance / 250);
+  if (distance < VERY_CLOSE) {
+    const rounded = roundToClosestMultiple(distance, VERY_CLOSE_FIDELITY);
     return `< ${rounded}m`;
   }
 
-  if (distance < 5000) {
-    const rounded = 500 * Math.ceil(distance / 500);
-    return `< ${rounded / 1000}km`;
+  if (distance < CLOSE) {
+    const rounded = roundToClosestMultiple(distance, CLOSE_FIDELITY);
+    return `< ${rounded / METERS_PER_KM}km`;
   }
 
-  const rounded = 1000 * Math.ceil(distance / 1000);
-  return `${rounded / 1000}km`;
+  const rounded = roundToClosestMultiple(distance, FAR_FIDELITY);
+  return `${rounded / METERS_PER_KM}km`;
 };
 
 export default withProps({ getProp: getDistance })(AdProp);
