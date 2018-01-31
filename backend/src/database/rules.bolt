@@ -181,8 +181,8 @@ type Ad {
   title: AdTitle,
   body: AdBody,
   price: Price,
-  category: String,
   location: Location,
+  category: String,
   user: String,
   createdAt: PastEpoch,
 }
