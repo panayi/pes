@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from 'lib/firebaseClient';
 import seed from './seed';
 import importData from './import';
@@ -12,7 +13,7 @@ export const canInitialize = async () => {
   }
 
   const value = snapshot.val();
-  const noData = R.either(R.isNil, R.isEmpty)(value);
+  const noData = isNilOrEmpty(value);
 
   if (!noData) {
     throw new Error('Firebase: Database is not empty.');

@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import { database } from 'lib/firebaseClient';
+import log from 'utils/log';
 import * as storageService from 'services/storage';
 import categories from 'database/seeds/categories.json';
 import locales from 'database/seeds/locales.json';
@@ -61,9 +62,14 @@ const seedCountries = async () => {
 };
 
 export default async () => {
-  await seedCategories();
-  await seedLocales();
-  await seedTranslations();
-  await seedCountries();
-  return 'Seeded categories, locales, countries';
+  try {
+    await seedCategories();
+    await seedLocales();
+    await seedTranslations();
+    await seedCountries();
+    return 'Seeded categories, locales, countries';
+  } catch (error) {
+    log.error('Firebase: Failed to seed data');
+    throw error;
+  }
 };

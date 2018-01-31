@@ -1,5 +1,3 @@
 import initialize from './initialize';
 
-export default {
-  initialize,
-};
+export { initialize };

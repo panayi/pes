@@ -1,22 +1,8 @@
-import * as R from 'ramda';
 import algolia from 'lib/algoliaClient';
+import log from 'utils/log';
 import { ADS_INDEXES } from 'frontend/config/algolia';
 import { database } from 'lib/firebaseClient';
 import serializeAd from 'utils/serializeAdToAlgolia';
-
-export const canInitialize = async () => {
-  const indexes = await algolia.listIndexes();
-
-  const isEmpty = R.compose(R.isEmpty, R.prop('items'), R.defaultTo({}))(
-    indexes,
-  );
-
-  if (!isEmpty) {
-    throw new Error('Algolia: App already contains indexes.');
-  }
-
-  return true;
-};
 
 const initialImportAds = async (dataSnapshot, index) => {
   // Array of data to index
@@ -42,10 +28,13 @@ const initialImportAds = async (dataSnapshot, index) => {
 };
 
 export default async () => {
-  const index = algolia.initIndex(ADS_INDEXES.default);
-
-  const dataSnapshot = await database.ref('/ads').once('value');
-  const ads = await initialImportAds(dataSnapshot, index);
-
-  return [`Imported ${ads.length} ads`];
+  try {
+    const index = algolia.initIndex(ADS_INDEXES.default);
+    const dataSnapshot = await database.ref('/ads').once('value');
+    const ads = await initialImportAds(dataSnapshot, index);
+    return [`Imported ${ads.length} ads`];
+  } catch (error) {
+    log.error('Algolia: initial ads import failed');
+    throw error;
+  }
 };

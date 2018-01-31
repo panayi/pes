@@ -8,9 +8,8 @@ import { withStyles } from 'material-ui/styles';
 import ReactDropzone from 'react-dropzone';
 import AddIcon from 'material-ui-icons/Add';
 import BlockIcon from 'material-ui-icons/Block';
+import * as filetypesUtils from 'utils/filetypes';
 import Spinner from 'components/atoms/Spinner';
-import * as utils from './utils';
-import * as fileTypes from './constants/fileTypes';
 
 type Props = {
   acceptedFileTypes: Array<string>,
@@ -91,9 +90,7 @@ export class Dropzone extends Component<Props> {
 
 export default R.compose(
   withProps(({ acceptedFileTypes }) => ({
-    accept: utils.getAccept(acceptedFileTypes),
+    accept: filetypesUtils.mimeFor(acceptedFileTypes),
   })),
   withStyles(styles),
 )(Dropzone);
-
-export { fileTypes };

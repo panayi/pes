@@ -23,26 +23,36 @@ export default {
   indexes: [
     {
       name: ADS_INDEXES.default,
-      searchableAttributes: ['title', 'body'],
-      attributesForFaceting: ['category', 'user'],
       replicas: [
         {
           name: ADS_INDEXES.byDateDesc,
-          ranking: ['desc(createdAt)', ...secondaryRankingAttributes],
+          settings: {
+            ranking: ['desc(createdAt)', ...secondaryRankingAttributes],
+          },
         },
         {
           name: ADS_INDEXES.byPriceAsc,
-          ranking: ['asc(price)', ...secondaryRankingAttributes],
+          settings: {
+            ranking: ['asc(price)', ...secondaryRankingAttributes],
+          },
         },
         {
           name: ADS_INDEXES.byPriceDesc,
-          ranking: ['desc(price)', ...secondaryRankingAttributes],
+          settings: {
+            ranking: ['desc(price)', ...secondaryRankingAttributes],
+          },
         },
         {
           name: ADS_INDEXES.byDistance,
-          ranking: ['geo', ...R.without(['geo'], secondaryRankingAttributes)],
+          settings: {
+            ranking: ['geo', ...R.without(['geo'], secondaryRankingAttributes)],
+          },
         },
       ],
+      settings: {
+        searchableAttributes: ['title', 'body'],
+        attributesForFaceting: ['category', 'user'],
+      },
     },
   ],
 };

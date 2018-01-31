@@ -25,6 +25,11 @@ const importAds = async () => {
 };
 
 export default async () => {
-  const numberOfAds = await importAds();
-  return `Synced ${numberOfAds} ads`;
+  try {
+    const numberOfAds = await importAds();
+    return `Synced ${numberOfAds} ads`;
+  } catch (error) {
+    log.error('Firebase: Failed to import legacy ads');
+    throw error;
+  }
 };

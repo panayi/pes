@@ -1,15 +1,17 @@
 import * as R from 'ramda';
-import { ADS_INDEXES } from 'frontend/config/algolia';
+import * as algoliaConstants from 'frontend/constants/algolia';
+import * as algoliaConfig from 'frontend/config/algolia';
 import algolia from 'lib/algoliaClient';
+import log from 'utils/log';
 import serializeAd from 'utils/serializeAdToAlgolia';
 
-const adsIndexName = ADS_INDEXES.default;
+const adsIndexName = algoliaConfig.ADS_INDEXES.default;
 
 // Add or update ad
 export const add = (ad, adId) => {
   const index = algolia.initIndex(adsIndexName);
 
-  const finalAd = R.assoc('objectID', adId, ad);
+  const finalAd = R.assoc(algoliaConstants.ID, adId, ad);
 
   return new Promise((resolve, reject) => {
     const serialized = serializeAd(finalAd);
@@ -19,9 +21,9 @@ export const add = (ad, adId) => {
       }
 
       resolve();
-      console.log(
+      log.info(
         `Firebase object with id=${
-          finalAd.objectID
+          finalAd[algoliaConstants.ID]
         } created or updated in Algolia`,
         serialized,
       );
@@ -31,7 +33,7 @@ export const add = (ad, adId) => {
 
 export const update = (props, adId) => {
   const index = algolia.initIndex(adsIndexName);
-  const finalProps = R.assoc('objectID', adId, props);
+  const finalProps = R.assoc(algoliaConstants.ID, adId, props);
 
   return new Promise((resolve, reject) => {
     // Ensure the object exists
@@ -50,8 +52,10 @@ export const update = (props, adId) => {
         }
 
         resolve();
-        console.log(
-          `Firebase object with id=${finalProps.objectID} updated in Algolia`,
+        log.info(
+          `Firebase object with id=${
+            finalProps[algoliaConstants.ID]
+          } updated in Algolia`,
           serialized,
         );
       });
@@ -69,7 +73,7 @@ export const remove = adId => {
       }
 
       resolve();
-      console.log(`Firebase object with id=${adId} deleted in Algolia`);
+      log.info(`Firebase object with id=${adId} deleted in Algolia`);
     });
   });
 };

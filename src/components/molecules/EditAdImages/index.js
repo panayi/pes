@@ -4,7 +4,8 @@ import * as R from 'ramda';
 import { withProps, withState } from 'recompose';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import { connect } from 'react-redux';
-import Dropzone, { fileTypes } from 'components/molecules/Dropzone';
+import * as imagesConfig from 'config/images';
+import Dropzone from 'components/molecules/Dropzone';
 import { actions as storageActions } from 'store/firebase/storage';
 import { constants as postAdConstants } from 'store/postAd';
 import Imgix from 'components/atoms/Imgix';
@@ -45,7 +46,7 @@ export class EditAdImages extends Component<Props> {
         {canUploadImage && (
           <GridListTile
             component={Dropzone}
-            acceptedFileTypes={fileTypes.IMAGE}
+            acceptedFileTypes={imagesConfig.ACCEPTED_TYPES}
             onDrop={this.handleDrop}
             isLoading={isLoading}
             multiple

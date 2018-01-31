@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import log from 'utils/log';
 import program from 'commander';
-import commands from './commands';
+import * as commands from './commands';
 
 const COMMAND_ARGS_LENGTH = 2;
 

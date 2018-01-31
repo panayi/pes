@@ -1,17 +1,14 @@
 import * as R from 'ramda';
-import algolia, { appId } from 'lib/algoliaClient';
+import algolia, { APP_ID } from 'lib/algoliaClient';
 import createIndex from './createIndex';
 import importData from './import';
 
 export const canInitialize = async () => {
   const indexes = await algolia.listIndexes();
-
-  const isEmpty = R.compose(R.isEmpty, R.prop('items'), R.defaultTo({}))(
-    indexes,
-  );
+  const isEmpty = R.propSatisfies(R.isEmpty, 'items', indexes);
 
   if (!isEmpty) {
-    throw new Error(`Algolia: App with id=${appId} already contains indexes.`);
+    throw new Error(`Algolia: App with id=${APP_ID} already contains indexes.`);
   }
 
   return true;
