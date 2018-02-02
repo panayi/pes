@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "license": "UNLICENSED",
   "private": true,
+  "dependencies": {
+    "flow-bin": "^0.64.0"
+  },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "eslint-config-airbnb": "^15.1.0",
@@ -26,6 +29,8 @@
     "start": "run-p start:frontend start:backend",
     "lint": "./node_modules/eslint/bin/eslint.js ./ --cache --ext .js,.es6,.jsx",
     "test-once": "cd packages/frontend && yarn test-once -- --bail",
+    "flow": "flow",
+    "flow-typed:install": "flow-typed install --libdefDir ./types",
     "build:frontend": "cd packages/frontend && yarn build",
     "build:backend": "cd packages/backend && yarn build",
     "build": "run-p build:frontend build:backend",
