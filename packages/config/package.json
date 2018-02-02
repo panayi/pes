@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "pesposa-core": "^0.1.0",
+    "pesposa-utils": "^0.1.0",
     "ramda": "^0.25.0"
   }
 }

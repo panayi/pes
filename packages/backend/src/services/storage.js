@@ -1,6 +1,6 @@
 import gcloud from 'google-cloud';
 import uuid from 'uuid-v4';
-import { storage as storageConstants } from 'pesposa-core/constants';
+import { storage as storageConfig } from 'pesposa-config';
 import serviceAccountKey from 'lib/serviceAccountKey.json';
 
 console.log(__dirname);
@@ -10,11 +10,11 @@ const storageClient = gcloud.storage({
   credentials: serviceAccountKey,
 });
 
-const storage = storageClient.bucket(storageConstants.BUCKET);
+const storage = storageClient.bucket(storageConfig.BUCKET);
 
 const getFileUrl = (path, token) =>
   `https://firebasestorage.googleapis.com/v0/b/${
-    storageConstants.BUCKET
+    storageConfig.BUCKET
   }/o/${encodeURIComponent(path)}?alt=media&token=${token}`;
 
 export const uploadImage = (

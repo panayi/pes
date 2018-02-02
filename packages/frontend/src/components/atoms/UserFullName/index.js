@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import Typography from 'material-ui/Typography';
-import { propSelector } from 'pesposa-core/utils';
+import { propSelector } from 'pesposa-utils';
 import omitProps from 'utils/omitProps';
 import withProfileData from 'components/hocs/withProfileData';
 

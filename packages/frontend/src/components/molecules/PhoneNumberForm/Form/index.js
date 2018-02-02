@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { lifecycle } from 'recompose';
 import { FormGroup, FormControl, FormHelperText } from 'material-ui/Form';
 import { withStyles } from 'material-ui/styles';
-import { propsChanged } from 'pesposa-core/utils';
+import { propsChanged } from 'pesposa-utils';
 import CountrySelect from 'components/atoms/CountrySelect';
 import MaskedInput from 'components/atoms/MaskedInput';
 

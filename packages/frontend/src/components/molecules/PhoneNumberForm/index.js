@@ -5,7 +5,7 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import { withState, withProps } from 'recompose';
 import { Formik } from 'formik';
 import yup from 'yup';
-import { phoneNumbers as phoneNumbersConstants } from 'pesposa-core/constants';
+import { phoneNumbers as phoneNumbersConfig } from 'pesposa-config';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import Form from './Form';
@@ -120,7 +120,7 @@ export default R.compose(
     phoneNumberFormat: R.propOr(
       [],
       selectedCountryCode || countryCode,
-      phoneNumbersConstants.FORMAT_BY_COUNTRY_CODE,
+      phoneNumbersConfig.FORMAT_BY_COUNTRY_CODE,
     ),
   })),
 )(PhoneNumberForm);

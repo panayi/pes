@@ -2,12 +2,12 @@
 **/node_modules/**
 
 # testing
-packages/*/coverage/**
-packages/frontend/test/reports/**
+packages/**/coverage/**
+packages/**/test/reports/**
 
 # production
-packages/*/build/**
-packages/backend/index.js
+packages/**/build/**
+packages/database/rules.json
 
 # other
 .circleci/**

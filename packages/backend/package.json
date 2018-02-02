@@ -25,11 +25,11 @@
     "lodash.random": "^3.2.0",
     "node-fetch": "^1.7.3",
     "pesposa-config": "^0.1.0",
-    "pesposa-core": "^0.1.0",
+    "pesposa-database": "^0.1.0",
+    "pesposa-utils": "^0.1.0",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.4.1",
     "request-ip": "^2.0.2",
-    "shortid": "^2.2.8",
     "striptags": "^3.1.1",
     "svg-country-flags": "^1.2.1",
     "uuid-v4": "^0.1.0"
@@ -45,7 +45,6 @@
     "buffer-loader": "^0.0.1",
     "copy-webpack-plugin": "^4.3.1",
     "dotenv-webpack": "^1.5.4",
-    "firebase-bolt": "^0.8.2",
     "firebase-tools": "^3.17.4",
     "json-loader": "^0.5.7",
     "svg-inline-loader": "^0.8.0",
@@ -58,14 +57,9 @@
     "start": "yarn build:functions && yarn firebase serve -- --only functions",
     "functions:shell": "yarn build:functions && firebase experimental:functions:shell --port=5009",
     "build:functions": "webpack --config ./config/webpack.functions.js",
-    "build:database": "yarn firebase-bolt src/database/rules.bolt -- --output ./build/rules.json",
     "build:admin": "webpack --config ./config/webpack.admin.js",
-    "build": "yarn build:functions && yarn build:database",
     "deploy:functions": "yarn build:functions && yarn firebase deploy -- --only functions",
-    "deploy:database": "yarn build:database && yarn firebase deploy -- --only database",
-    "deploy": "yarn build && yarn firebase deploy -- --only functions,database",
     "admin": "yarn build:admin && node ./build/admin/index.js",
-    "firebase": "../../node_modules/.bin/firebase",
-    "firebase-bolt": "../../node_modules/.bin/firebase-bolt"
+    "firebase": "../../node_modules/.bin/firebase"
   }
 }

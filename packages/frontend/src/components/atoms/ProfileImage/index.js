@@ -4,7 +4,7 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import { defaultProps } from 'recompose';
 import Avatar from 'material-ui/Avatar';
 import Face from 'material-ui-icons/Face';
-import { propSelector } from 'pesposa-core/utils';
+import { propSelector } from 'pesposa-utils';
 import withProfileData from 'components/hocs/withProfileData';
 
 const ProfileImage = ({

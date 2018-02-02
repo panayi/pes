@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { firebase as firebaseConstants } from 'pesposa-core/constants';
-import { auth as authConfig } from 'pesposa-config';
+import { firebase as firebaseConfig, auth as authConfig } from 'pesposa-config';
 import withLoginAction from 'components/hocs/withLoginAction';
 import GoogleButton from 'components/atoms/GoogleButton';
 
-const providerId = firebaseConstants.PROVIDER_IDS.google;
+const providerId = firebaseConfig.PROVIDER_IDS.google;
 
 const LoginWithGoogle = ({ login, ...rest }) => (
   <GoogleButton

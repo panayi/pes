@@ -18,7 +18,7 @@
     "mdi-react": "^2.1.19",
     "normalize.css": "^7.0.0",
     "pesposa-config": "^0.1.0",
-    "pesposa-core": "^0.1.0",
+    "pesposa-utils": "^0.1.0",
     "prop-types": "^15.6.0",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.4.1",

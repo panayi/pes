@@ -8,8 +8,8 @@ import Avatar from 'material-ui/Avatar';
 import green from 'material-ui/colors/green';
 import { withStyles } from 'material-ui/styles';
 import CheckIcon from 'material-ui-icons/Check';
-import { firebase as firebaseConstants } from 'pesposa-core/constants';
-import { propSelector } from 'pesposa-core/utils';
+import { firebase as firebaseConfig } from 'pesposa-config';
+import { propSelector } from 'pesposa-utils';
 import FacebookAvatar from 'components/atoms/FacebookAvatar';
 import GoogleAvatar from 'components/atoms/GoogleAvatar';
 import PhoneAvatar from 'components/atoms/PhoneAvatar';
@@ -93,14 +93,14 @@ const providerPropsSelector = createCachedSelector(
   propSelector('disabled'),
   propSelector('classes'),
   (providerId, disabled, classes) => {
-    if (providerId === firebaseConstants.PROVIDER_IDS.facebook) {
+    if (providerId === firebaseConfig.PROVIDER_IDS.facebook) {
       return {
         icon: FacebookAvatar,
         title: disabled ? null : 'Verified with Facebook',
       };
     }
 
-    if (providerId === firebaseConstants.PROVIDER_IDS.google) {
+    if (providerId === firebaseConfig.PROVIDER_IDS.google) {
       return {
         icon: GoogleAvatar,
         iconProps: {
@@ -111,7 +111,7 @@ const providerPropsSelector = createCachedSelector(
       };
     }
 
-    if (providerId === firebaseConstants.PROVIDER_IDS.phone) {
+    if (providerId === firebaseConfig.PROVIDER_IDS.phone) {
       return {
         icon: PhoneAvatar,
         iconProps: {

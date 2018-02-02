@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import SettingsIcon from 'material-ui-icons/Settings';
 import { buildUrl } from 'services/imgix';
-import { propSelector } from 'pesposa-core/utils';
+import { propSelector } from 'pesposa-utils';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import withProfileData from 'components/hocs/withProfileData';
 import UserFullName from 'components/atoms/UserFullName';

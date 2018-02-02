@@ -2,12 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import FacebookBoxIcon from 'mdi-react/FacebookIcon';
 import { withStyles } from 'material-ui/styles';
-import { colors as colorConstants } from 'pesposa-core/constants';
+import { colors } from 'pesposa-config';
 import Avatar from 'material-ui/Avatar';
 
 const styles = {
   root: {
-    background: colorConstants.FACEBOOK,
+    background: colors.FACEBOOK,
   },
 };
 

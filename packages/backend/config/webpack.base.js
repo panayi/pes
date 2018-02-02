@@ -5,16 +5,6 @@ const nodeExternals = require('webpack-node-externals');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const constants = require('./constants');
 
-// FIXME: In addition to `pesposa-*` modules,
-// we whitelist anyhting required by those `pesposa-*` modules
-// This is because firebase deploy, is using package.json to install dependencies,
-// and it fails as dependencies of `pesposa-*` modules are not available.
-// This should be improved and be robust to other `pesposa-*` deps changes.
-const whiteListNodeExternals = [
-  /^pesposa/,
-  'shortid',
-];
-
 module.exports = {
   target: 'node',
   module: {
@@ -43,8 +33,7 @@ module.exports = {
     modules: ['node_modules', constants.paths.backend],
   },
   externals: [
-    nodeExternals({ whitelist: whiteListNodeExternals }),
-    nodeExternals({ whitelist: whiteListNodeExternals, modulesDir: path.join(constants.paths.root, 'node_modules') })
+    nodeExternals({ whitelist: [/^pesposa/], modulesFromFile: true }),
   ],
   plugins: [
     new Dotenv({

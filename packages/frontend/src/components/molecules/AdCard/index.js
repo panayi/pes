@@ -5,7 +5,7 @@ import { withProps, defaultProps } from 'recompose';
 import Card, { CardMedia, CardContent, CardHeader } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
-import { id } from 'pesposa-core/utils';
+import id from 'utils/id';
 import LineClamp from 'components/atoms/LineClamp';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';

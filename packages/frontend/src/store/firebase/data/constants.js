@@ -1,3 +1,3 @@
-import { firebase as firebaseConstants } from 'pesposa-core/constants';
+import { firebase as firebaseConfig } from 'pesposa-config';
 
-export const DATA_PATH = [...firebaseConstants.FIREBASE_PATH, 'data'];
+export const DATA_PATH = [...firebaseConfig.FIREBASE_PATH, 'data'];

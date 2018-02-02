@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Route } from 'react-router-dom';
-import { urlParamsSelector, propSelector } from 'pesposa-core/utils';
+import { urlParamsSelector, propSelector } from 'pesposa-utils';
 import hydrateAd from 'components/hocs/hydrateAd';
 import Page from 'components/atoms/Page';
 import Layout from 'components/organisms/Layout';

@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
-import { propsSelector } from 'pesposa-core/utils';
+import { propsSelector } from 'pesposa-utils';
 import registry from './registry';
 
 const modalsPath = ['modals'];

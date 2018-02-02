@@ -1,7 +1,8 @@
 import * as R from 'ramda';
 import createCachedSelector from 're-reselect';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { propSelector, propOrSelector, id } from 'pesposa-core/utils';
+import { propSelector, propOrSelector } from 'pesposa-utils';
+import id from 'utils/id';
 import { buildUrl } from 'services/imgix';
 import * as utils from './utils';
 

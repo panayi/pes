@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { defaultProps, withProps } from 'recompose';
 import { auth as authConfig } from 'pesposa-config';
-import { propSelector } from 'pesposa-core/utils';
+import { propSelector } from 'pesposa-utils';
 import withProfileData from 'components/hocs/withProfileData';
 import ProviderIcon from 'components/atoms/ProviderIcon';
 

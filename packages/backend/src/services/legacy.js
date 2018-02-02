@@ -3,8 +3,8 @@ import fetch from 'node-fetch';
 import random from 'lodash.random';
 import striptags from 'striptags';
 import ImagesScraper from 'images-scraper';
-import { generateId } from 'pesposa-core/utils';
-import { storage as storageConstants } from 'pesposa-core/constants';
+import { generateId } from 'pesposa-utils';
+import { storage as storageConfig } from 'pesposa-config';
 import computedProp from 'utils/computedProp';
 import * as fetchService from 'services/fetch';
 import * as storageService from 'services/storage';
@@ -115,7 +115,7 @@ const findImageWithGoogle = async ad => {
 
 const uploadImage = async (buffer, filename, contentType, dbPath, database) => {
   const newFilename = renameFile(generateId(), filename);
-  const path = `${storageConstants.IMAGES_PATH}/${newFilename}`;
+  const path = `${storageConfig.IMAGES_PATH}/${newFilename}`;
 
   return storageService.uploadImage(
     buffer,

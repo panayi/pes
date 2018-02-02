@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 
-const secondaryRankingAttributes = [
+const SECONDARY_RANKING_ATTRIBUTES = [
   'typo',
   'geo',
   'words',
@@ -10,6 +10,8 @@ const secondaryRankingAttributes = [
   'exact',
   'custom',
 ];
+
+export const ID = 'objectID';
 
 export const ADS_INDEXES = {
   default: 'ads',
@@ -27,25 +29,28 @@ export default {
         {
           name: ADS_INDEXES.byDateDesc,
           settings: {
-            ranking: ['desc(createdAt)', ...secondaryRankingAttributes],
+            ranking: ['desc(createdAt)', ...SECONDARY_RANKING_ATTRIBUTES],
           },
         },
         {
           name: ADS_INDEXES.byPriceAsc,
           settings: {
-            ranking: ['asc(price)', ...secondaryRankingAttributes],
+            ranking: ['asc(price)', ...SECONDARY_RANKING_ATTRIBUTES],
           },
         },
         {
           name: ADS_INDEXES.byPriceDesc,
           settings: {
-            ranking: ['desc(price)', ...secondaryRankingAttributes],
+            ranking: ['desc(price)', ...SECONDARY_RANKING_ATTRIBUTES],
           },
         },
         {
           name: ADS_INDEXES.byDistance,
           settings: {
-            ranking: ['geo', ...R.without(['geo'], secondaryRankingAttributes)],
+            ranking: [
+              'geo',
+              ...R.without(['geo'], SECONDARY_RANKING_ATTRIBUTES),
+            ],
           },
         },
       ],

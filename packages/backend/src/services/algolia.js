@@ -1,5 +1,4 @@
 import * as R from 'ramda';
-import { algolia as algoliaConstants } from 'pesposa-core/constants';
 import { algolia as algoliaConfig } from 'pesposa-config';
 import algolia from 'lib/algoliaClient';
 import log from 'utils/log';
@@ -11,7 +10,7 @@ const adsIndexName = algoliaConfig.ADS_INDEXES.default;
 export const add = (ad, adId) => {
   const index = algolia.initIndex(adsIndexName);
 
-  const finalAd = R.assoc(algoliaConstants.ID, adId, ad);
+  const finalAd = R.assoc(algoliaConfig.ID, adId, ad);
 
   return new Promise((resolve, reject) => {
     const serialized = serializeAd(finalAd);
@@ -23,7 +22,7 @@ export const add = (ad, adId) => {
       resolve();
       log.info(
         `Firebase object with id=${
-          finalAd[algoliaConstants.ID]
+          finalAd[algoliaConfig.ID]
         } created or updated in Algolia`,
         serialized,
       );
@@ -33,7 +32,7 @@ export const add = (ad, adId) => {
 
 export const update = (props, adId) => {
   const index = algolia.initIndex(adsIndexName);
-  const finalProps = R.assoc(algoliaConstants.ID, adId, props);
+  const finalProps = R.assoc(algoliaConfig.ID, adId, props);
 
   return new Promise((resolve, reject) => {
     // Ensure the object exists
@@ -54,7 +53,7 @@ export const update = (props, adId) => {
         resolve();
         log.info(
           `Firebase object with id=${
-            finalProps[algoliaConstants.ID]
+            finalProps[algoliaConfig.ID]
           } updated in Algolia`,
           serialized,
         );

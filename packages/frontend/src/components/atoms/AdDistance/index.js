@@ -1,7 +1,7 @@
 /* @flow */
 import * as R from 'ramda';
 import { withProps } from 'recompose';
-import { roundToClosestMultiple } from 'pesposa-core/utils';
+import { roundToClosestMultiple } from 'pesposa-utils';
 import AdProp from '../AdProp';
 
 const METERS_PER_KM = 1000;

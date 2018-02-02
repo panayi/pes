@@ -30,8 +30,9 @@
     "build:backend": "cd packages/backend && yarn build",
     "build": "run-p build:frontend build:backend",
     "deploy:frontend": "cd packages/frontend && yarn deploy",
-    "deploy:backend": "cd packages/backend && yarn deploy",
-    "deploy": "run-p deploy:frontend deploy:backend"
+    "deploy:functions": "cd packages/backend && yarn deploy:functions",
+    "deploy:database": "cd packages/database && yarn deploy",
+    "deploy": "run-p deploy:frontend deploy:functions && yarn deploy:database"
   },
   "lint-staged": {
     "{packages/backend/src,packages/frontend/src,packages/frontend/stories,packages/frontend/test,packages/core,packages/config/src}/**/*.{js,jsx}": [

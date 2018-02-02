@@ -1,19 +1,21 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { populate, isLoaded } from 'react-redux-firebase';
-import { firebase as firebaseConstants } from 'pesposa-core/constants';
-import { locale as localeConfig } from 'pesposa-config';
+import {
+  firebase as firebaseConfig,
+  locale as localeConfig,
+} from 'pesposa-config';
 import * as constants from './constants';
 
 // profileSelector :: State -> Object | Nil
 export const profileSelector = R.path([
-  ...firebaseConstants.FIREBASE_PATH,
+  ...firebaseConfig.FIREBASE_PATH,
   'profile',
 ]);
 
 export const populatedProfileSelector = R.compose(
   firebase => populate(firebase, 'profile', constants.PROFILE_POPULATES),
-  R.prop(firebaseConstants.FIREBASE_PATH),
+  R.prop(firebaseConfig.FIREBASE_PATH),
 );
 
 // isProfileLoadedSelector :: State -> Boolean

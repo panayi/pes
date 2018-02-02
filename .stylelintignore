@@ -1,5 +1,5 @@
-/node_modules
-/packages/*/node_modules/
-packages/*/coverage/
-packages/frontend/e2e/reports/
-/packages/*/build/
+node_modules
+packages/**/node_modules/
+packages/**/coverage/
+packages/**/test/reports/
+packages/**/build/

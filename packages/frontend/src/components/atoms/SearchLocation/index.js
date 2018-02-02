@@ -8,7 +8,7 @@ import { withStateHandlers, lifecycle } from 'recompose';
 import scriptLoader from 'react-async-script-loader';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
-import { propsChanged } from 'pesposa-core/utils';
+import { propsChanged } from 'pesposa-utils';
 import { selectors as locationSelectors } from 'store/firebase/profile/location';
 
 const GOOGLE_APIS_KEY = process.env.REACT_APP_GOOGLE_APIS_KEY;

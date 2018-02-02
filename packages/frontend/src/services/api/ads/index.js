@@ -1,4 +1,4 @@
-import { modelPaths } from 'pesposa-core/constants';
+import { modelPaths } from 'pesposa-config';
 
 export const create = ad => (dispatch, getState, getFirebase) =>
   getFirebase().push(modelPaths.ADS.string, ad);

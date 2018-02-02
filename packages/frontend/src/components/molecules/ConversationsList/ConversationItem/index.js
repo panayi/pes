@@ -5,7 +5,7 @@ import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
-import { propSelector } from 'pesposa-core/utils';
+import { propSelector } from 'pesposa-utils';
 import { models } from 'store/firebase/data';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as imagesSelectors } from 'store/images';

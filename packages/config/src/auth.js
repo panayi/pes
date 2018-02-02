@@ -1,6 +1,6 @@
-import { firebase as firebaseConstants } from 'pesposa-core/constants';
+import * as firebaseConfig from './firebase';
 
-const { PROVIDER_IDS } = firebaseConstants;
+const { PROVIDER_IDS } = firebaseConfig;
 
 export default {
   providers: [PROVIDER_IDS.facebook, PROVIDER_IDS.google, PROVIDER_IDS.phone],

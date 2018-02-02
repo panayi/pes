@@ -6,7 +6,7 @@ import { withProps } from 'recompose';
 import List, { ListItem } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import { propSelector } from 'pesposa-core/utils';
+import { propSelector } from 'pesposa-utils';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import translate from 'components/hocs/translate';

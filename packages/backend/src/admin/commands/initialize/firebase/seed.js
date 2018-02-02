@@ -2,10 +2,10 @@ import * as R from 'ramda';
 import { database } from 'lib/firebaseClient';
 import log from 'utils/log';
 import * as storageService from 'services/storage';
-import categories from 'database/seeds/categories.json';
-import locales from 'database/seeds/locales.json';
-import translations from 'database/seeds/translations.json';
-import countries from 'database/seeds/countries.json';
+import categories from 'pesposa-database/seeds/categories.json';
+import locales from 'pesposa-database/seeds/locales.json';
+import translations from 'pesposa-database/seeds/translations.json';
+import countries from 'pesposa-database/seeds/countries.json';
 
 const formatCategories = R.reduce(
   (acc, category) =>

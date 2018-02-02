@@ -1,5 +1,5 @@
 import React from 'react';
-import * as generate from 'pesposa-core/utils/generateClassName';
+import * as generate from 'pesposa-utils/src/generateClassName';
 import Recaptcha from '../index';
 
 describe('[Component] Recaptcha', () => {

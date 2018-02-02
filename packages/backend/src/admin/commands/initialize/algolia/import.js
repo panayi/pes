@@ -14,8 +14,7 @@ const initialImportAds = async (dataSnapshot, index) => {
     const childKey = childSnapshot.key;
     const childData = childSnapshot.val();
 
-    // Specify Algolia's objectID using the Firebase object key
-    childData.objectID = childKey;
+    childData[algoliaConfig.ID] = childKey;
 
     // Add object for indexing
     objectsToIndex.push(serializeAd(childData));

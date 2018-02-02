@@ -1,7 +1,7 @@
-import { firebase as firebaseConstants } from 'pesposa-core/constants';
+import { firebase as firebaseConfig } from 'pesposa-config';
 
 export const setCurrentUserInfo = (data, { token }) => () => {
-  const url = `${firebaseConstants.API_APP_BASE_URL}/users/current/info`;
+  const url = `${firebaseConfig.API_APP_BASE_URL}/users/current/info`;
 
   return fetch(url, {
     method: 'POST',
@@ -14,7 +14,7 @@ export const setCurrentUserInfo = (data, { token }) => () => {
 };
 
 export const migrateAnonymousUser = ({ token, anonymousUserToken }) => () => {
-  const url = `${firebaseConstants.API_APP_BASE_URL}/users/migrate`;
+  const url = `${firebaseConfig.API_APP_BASE_URL}/users/migrate`;
 
   return fetch(url, {
     method: 'POST',

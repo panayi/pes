@@ -2,14 +2,14 @@ import React from 'react';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import FacebookBoxIcon from 'mdi-react/FacebookBoxIcon';
-import { colors as colorConstants } from 'pesposa-core/constants';
+import { colors } from 'pesposa-config';
 
 const styles = theme => ({
   root: {
     color: theme.palette.common.white,
-    background: colorConstants.FACEBOOK,
+    background: colors.FACEBOOK,
     '&:hover': {
-      background: colorConstants.FACEBOOK,
+      background: colors.FACEBOOK,
     },
   },
   text: {

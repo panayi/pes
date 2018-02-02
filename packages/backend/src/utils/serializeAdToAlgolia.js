@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { algolia as algoliaConfig } from 'pesposa-config';
 import computedProp from 'utils/computedProp';
 
 // FIXME: This is only needed for legacy ads
@@ -29,7 +30,7 @@ export default R.compose(
     ),
   }),
   R.pick([
-    'objectID',
+    algoliaConfig.ID,
     'title',
     'body',
     'category',

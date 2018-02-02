@@ -6,9 +6,9 @@ import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
 import {
   modelPaths,
-  firebase as firebaseConstants,
-  storage as storageConstants,
-} from 'pesposa-core/constants';
+  firebase as firebasConfig,
+  storage as storageConfig,
+} from 'pesposa-config';
 import { actions as authActions } from './firebase/auth';
 import {
   utils as profileUtils,
@@ -16,11 +16,11 @@ import {
 } from './firebase/profile';
 import makeRootReducer from './reducers';
 
-const firebaseConfig = {
-  apiKey: firebaseConstants.FIREBASE_API_KEY,
-  authDomain: firebaseConstants.FIREBASE_DOMAIN,
-  databaseURL: firebaseConstants.FIREBASE_DATABASE_URL,
-  storageBucket: storageConstants.BUCKET,
+const firebaseAppConfig = {
+  apiKey: firebasConfig.FIREBASE_API_KEY,
+  authDomain: firebasConfig.FIREBASE_DOMAIN,
+  databaseURL: firebasConfig.FIREBASE_DATABASE_URL,
+  storageBucket: storageConfig.BUCKET,
 };
 
 export default (initialState = {}) => {
@@ -36,7 +36,7 @@ export default (initialState = {}) => {
   };
 
   // initialize firebase instance
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseAppConfig);
 
   // Middleware Configuration
   const middleware = [

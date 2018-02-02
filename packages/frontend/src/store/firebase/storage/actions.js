@@ -1,7 +1,7 @@
 /* @flow */
 import * as R from 'ramda';
-import { storage as storageConstants } from 'pesposa-core/constants';
-import { generateId } from 'pesposa-core/utils';
+import { storage as storageConfig } from 'pesposa-config';
+import { generateId } from 'pesposa-utils';
 import api from 'services/api';
 
 export const uploadImage = (file: File, dbPath: string) => (
@@ -9,7 +9,7 @@ export const uploadImage = (file: File, dbPath: string) => (
 ) =>
   dispatch(
     api.files.create(
-      `${storageConstants.IMAGES_PATH}/${generateId()}`,
+      `${storageConfig.IMAGES_PATH}/${generateId()}`,
       file,
       dbPath,
     ),

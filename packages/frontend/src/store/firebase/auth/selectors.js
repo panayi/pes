@@ -2,13 +2,13 @@ import * as R from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';
-import { firebase as firebaseConstants } from 'pesposa-core/constants';
+import { firebase as firebaseConfig } from 'pesposa-config';
 
-const FIREBASE_AUTH_PATH = [...firebaseConstants.FIREBASE_PATH, 'auth'];
+const FIREBASE_AUTH_PATH = [...firebaseConfig.FIREBASE_PATH, 'auth'];
 
 // authErrorSelector :: State -> Object | Nil
 export const authErrorSelector = R.path([
-  ...firebaseConstants.FIREBASE_PATH,
+  ...firebaseConfig.FIREBASE_PATH,
   'authError',
 ]);
 
@@ -23,7 +23,7 @@ const isLoadedSelector = createSelector(firebaseAuthSelector, isLoaded);
 
 // isInitializingSelector :: State -> Boolean | Nil
 const isInitializingSelector = R.path([
-  ...firebaseConstants.FIREBASE_PATH,
+  ...firebaseConfig.FIREBASE_PATH,
   'isInitializing',
 ]);
 
