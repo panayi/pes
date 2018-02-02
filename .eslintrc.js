@@ -12,6 +12,7 @@ module.exports = {
   "plugins": [
     "flowtype",
     "ramda",
+    "monorepo"
   ],
   "rules": {
     "no-underscore-dangle": "off",
@@ -26,6 +27,8 @@ module.exports = {
     "import/no-named-as-default": "off",
     "import/prefer-default-export": "off",
     "import/no-named-as-default-member": "off",
+
+    "monorepo/no-relative-import": "error",
 
     "ramda/always-simplification": "error",
     "ramda/any-pass-simplification": "error",
@@ -61,20 +64,20 @@ module.exports = {
   "settings": {
     "import/resolver": {
       "node": {
-        "paths": [path.join(__dirname, 'src')],
+        "paths": [path.join(__dirname, 'packages', 'frontend', 'src')],
       },
     },
   },
   "overrides": [
     {
-      "files": ["backend/src/**/*.js"],
+      "files": ["packages/backend/src/**/*.js"],
       "rules": {
         "no-console": "off",
       },
       "settings": {
         "import/resolver": {
           "webpack": {
-            "config": path.join(__dirname, 'backend', 'config', 'webpack.base.js')
+            "config": path.join(__dirname, 'packages', 'backend', 'config', 'webpack.base.js')
           },
         },
       },

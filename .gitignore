@@ -1,16 +1,14 @@
 # dependencies
 /node_modules
-/backend/node_modules
+/packages/*/node_modules/
 
 # testing
-/coverage
-/test/reports
+packages/*/coverage/
+packages/frontend/test/reports/
 
 # production
-/build
-/backend/build
-/backend/index.js
-/backend/src/database/rules.json
+/packages/*/build/
+/packages/backend/index.js
 
 # OS X
 .DS_Store

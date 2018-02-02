@@ -1,15 +1,16 @@
 # dependencies
-/node_modules
-backend/node_modules
+**/node_modules/**
 
 # testing
-/coverage
-/e2e/reports
+packages/*/coverage/**
+packages/frontend/test/reports/**
 
 # production
-/build
-/backend/build
-/backend/index.js
+packages/*/build/**
+packages/backend/index.js
 
 # other
-flow-typed/
+.circleci/**
+flow-typed/**
+resources/**
+secrets/**

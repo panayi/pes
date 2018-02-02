@@ -1,0 +1,13 @@
+{
+  "name": "pesposa-config",
+  "version": "0.1.0",
+  "description": "Configuration for Pesposa",
+  "main": "index.js",
+  "author": "Panagiotis Panagi",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "pesposa-core": "^0.1.0",
+    "ramda": "^0.25.0"
+  }
+}
