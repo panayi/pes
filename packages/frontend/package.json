@@ -28,7 +28,6 @@
     "react-dom": "^16.2.0",
     "react-dropzone": "^4.2.7",
     "react-helmet": "^5.2.0",
-    "react-icons": "^2.2.5",
     "react-imgix": "^7.1.1",
     "react-instantsearch": "^4.4.2",
     "react-masonry-infinite": "^1.2.2",
@@ -61,7 +60,6 @@
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.2",
     "firebase-server": "^0.12.0",
-    "flow-bin": "^0.63.1",
     "jest-enzyme": "^4.0.1",
     "nightwatch": "^0.9.16",
     "react-test-renderer": "^16.1.1",
@@ -82,7 +80,6 @@
     "setup:e2e": "selenium-standalone install",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "flow": "flow",
     "generate": "./node_modules/redux-cli/bin/redux.js generate"
   },
   "browserslist": {

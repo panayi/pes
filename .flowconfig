@@ -4,6 +4,9 @@
 [ignore]
 .*/__tests__/.*
 
+[libs]
+./types
+
 [options]
 module.system.node.resolve_dirname=node_modules
 module.system.node.resolve_dirname=./packages/frontend/src
