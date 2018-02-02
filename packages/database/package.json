@@ -1,0 +1,16 @@
+{
+  "name": "pesposa-database",
+  "version": "0.1.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "build": "yarn firebase-bolt ./rules.bolt -- --output ./rules.json",
+    "deploy": "yarn build && yarn firebase deploy -- --only database",
+    "firebase": "../../node_modules/.bin/firebase",
+    "firebase-bolt": "../../node_modules/.bin/firebase-bolt"
+  },
+  "devDependencies": {
+    "firebase-bolt": "^0.8.2",
+    "firebase-tools": "^3.17.4"
+  }
+}

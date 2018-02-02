@@ -1,0 +1,11 @@
+{
+  "name": "pesposa-utils",
+  "version": "0.1.0",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "ramda": "^0.25.0",
+    "ramda-adjunct": "^2.4.1",
+    "shortid": "^2.2.8"
+  }
+}

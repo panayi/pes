@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "build",
+    "public": "packages/frontend/build",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -14,9 +14,9 @@
     ]
   },
   "functions": {
-    "source": "backend"
+    "source": "packages/backend/build/functions"
   },
   "database": {
-    "rules": "backend/database/rules.json"
+    "rules": "packages/database/rules.json"
   }
 }

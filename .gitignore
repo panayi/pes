@@ -1,16 +1,14 @@
 # dependencies
-/node_modules
-/backend/node_modules
+node_modules
+packages/**/node_modules/
 
 # testing
-/coverage
-/test/reports
+packages/**/coverage/
+packages/**/test/reports/
 
 # production
-/build
-/backend/build
-/backend/index.js
-/backend/database/rules.json
+packages/**/build/
+packages/database/rules.json
 
 # OS X
 .DS_Store
@@ -29,5 +27,5 @@ firebase-debug.log
 .eslintcache
 
 # other
-/resources/stock_images
-/.vscode
+resources/stock_images
+.vscode
