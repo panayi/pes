@@ -22,9 +22,11 @@ export const canInitialize = async () => {
   return true;
 };
 
-export default async () => {
+const initializeFirebase = async () => {
   const seedResult = await seed();
   const importResult = await importData();
 
   return [seedResult, importResult];
 };
+
+export default initializeFirebase;

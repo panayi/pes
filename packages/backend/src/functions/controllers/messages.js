@@ -1,9 +1,20 @@
+/* @flow */
 import * as functions from 'firebase-functions';
 import { database } from 'lib/firebaseClient';
 import * as timestamp from 'utils/timestamp';
 
+type Event = {
+  params: {
+    adId: ID,
+    buyerId: ID,
+  },
+  // TODO: How to specify **what type of snapshot** should expect?
+  // In other words, how to specify what val() returns?
+  data: $npm$firebase$database$DataSnapshot,
+};
+
 const updateUserConversation = async (adId, buyerId, userId, isSender) => {
-  const conversation = {
+  const conversation: Conversation = {
     ad: adId,
     buyer: buyerId,
     lastMessageCreatedAt: timestamp.get(),
@@ -18,21 +29,21 @@ const updateUserConversation = async (adId, buyerId, userId, isSender) => {
     .update(conversation);
 };
 
-const updateUsersConversation = async (adId, buyerId, fromBuyer, now) => {
+const updateUsersConversation = async (adId, buyerId, fromBuyer) => {
   const adRef = database.ref(`/ads/published/${adId}`);
   const adSnapshot = await adRef.once('value');
   const sellerId = adSnapshot.val().user;
 
   await Promise.all([
-    updateUserConversation(adId, buyerId, buyerId, fromBuyer, now),
-    updateUserConversation(adId, buyerId, sellerId, !fromBuyer, now),
+    updateUserConversation(adId, buyerId, buyerId, fromBuyer),
+    updateUserConversation(adId, buyerId, sellerId, !fromBuyer),
   ]);
 };
 
-const handleCreate = async event => {
+const handleCreate = async (event: Event) => {
   const snapshot = event.data;
-  const message = snapshot.val();
-  const { fromBuyer } = message;
+  const message: Message = snapshot.val();
+  const { fromBuyer }: { fromBuyer: boolean } = message;
   const { adId, buyerId } = event.params;
 
   await timestamp.set('createdAt', snapshot.ref);

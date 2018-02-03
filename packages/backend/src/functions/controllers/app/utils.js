@@ -1,15 +1,25 @@
+/* @flow */
 import * as R from 'ramda';
 import { auth } from 'lib/firebaseClient';
 import * as respond from 'utils/respond';
+
+type Options = {
+  headerKey?: string,
+  propKey?: string,
+};
 
 // Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header
 // like this:
 // `[headerKey]: Bearer <Firebase ID Token>`.
 // when decoded successfully, the ID Token content will be added as `req.user`.
-export const isAuthenticated = (options = {}) => (req, res, next) => {
+export const isAuthenticated = (options: Options = {}) => (
+  req: express$Request,
+  res: express$Response,
+  next: express$NextFunction,
+) => {
   const { headerKey = 'authorization', propKey = 'user' } = options;
-  const authorization = req.headers[headerKey];
+  const authorization: string | void = req.headers[headerKey];
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
     console.error(
@@ -21,7 +31,7 @@ export const isAuthenticated = (options = {}) => (req, res, next) => {
     return;
   }
 
-  const idToken = authorization.split('Bearer ')[1];
+  const idToken: string = authorization.split('Bearer ')[1];
 
   auth
     .verifyIdToken(idToken)
@@ -36,8 +46,12 @@ export const isAuthenticated = (options = {}) => (req, res, next) => {
     });
 };
 
-// getUserId :: Request -> String | Null
-export const getUserId = R.path(['user', 'user_id']);
+export const getUserId: (req: express$Request) => string = R.path([
+  'user',
+  'user_id',
+]);
 
-// getAnonymousUserId :: Request -> String | Null
-export const getAnonymousUserId = R.path(['anonymousUser', 'user_id']);
+export const getAnonymousUserId: (req: express$Request) => string = R.path([
+  'anonymousUser',
+  'user_id',
+]);

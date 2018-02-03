@@ -27,6 +27,9 @@ module.exports = {
     "import/no-named-as-default": "off",
     "import/prefer-default-export": "off",
     "import/no-named-as-default-member": "off",
+    "import/named": "error",
+    "import/newline-after-import": "error",
+    "import/no-anonymous-default-export": "error",
 
     "monorepo/no-relative-import": "error",
 

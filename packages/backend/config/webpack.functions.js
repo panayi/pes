@@ -33,7 +33,7 @@ module.exports = merge.smart(baseConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.IS_FIREBASE_FUNCTIONS': true,
+      'process.env.IS_FIREBASE_FUNCTIONS_ENV': true,
     }),
     new CopyWebpackPlugin([
       {

@@ -1,3 +1,4 @@
+/* @flow */
 import app from './controllers/app';
 
 export { app };

@@ -142,7 +142,7 @@ declare type User = {|
 declare type Conversation = {|
   ad: ID,
   buyer: ID,
-  read: ?boolean,
+  read?: boolean,
   lastMessageCreatedAt: PastEpoch,
 |}
 

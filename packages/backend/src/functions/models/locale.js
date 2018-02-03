@@ -1,3 +1,4 @@
+/* @flow */
 import * as R from 'ramda';
 import { database } from 'lib/firebaseClient';
 
@@ -12,7 +13,7 @@ export const getDefault = async () =>
     .equalTo(true)
     .once('value');
 
-export const find = async (userLocales = []) => {
+export const find = async (userLocales: Array<string> = []) => {
   const localeObjects = (await getAll()).val();
   const localeIds = R.compose(R.pluck('id'), R.values)(localeObjects);
 

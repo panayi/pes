@@ -1,17 +1,18 @@
+/* @flow */
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from 'lib/firebaseClient';
 
-export const get = async userId =>
+export const get = async (userId: ID) =>
   database.ref(`/ads/draft/${userId}`).once('value');
 
-export const set = async (draftAd, userId) =>
+export const set = async (draftAd: DraftAd, userId: ID) =>
   database.ref(`/ads/draft/${userId}`).set(draftAd);
 
-export const remove = async userId =>
+export const remove = async (userId: ID) =>
   database.ref(`/ads/draft/${userId}`).remove();
 
-export const move = async (sourceUserId, targetUserId) => {
+export const move = async (sourceUserId: ID, targetUserId: ID) => {
   const sourceSnapshot = await get(sourceUserId);
 
   if (R.isNil(sourceSnapshot)) {

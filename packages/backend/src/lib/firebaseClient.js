@@ -1,7 +1,11 @@
+/* @flow */
 import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import admin from 'firebase-admin';
+import { env } from 'pesposa-config';
 import serviceAccountKey from './serviceAccountKey.json';
+
+const isFirebaseFunctionsEnv = process.env.IS_FIREBASE_FUNCTIONS_ENV;
 
 const createFirebaseClient = baseConfig => {
   const config = R.merge(baseConfig, {
@@ -13,12 +17,10 @@ const createFirebaseClient = baseConfig => {
   return admin;
 };
 
-const firebaseConfig = process.env.IS_FIREBASE_FUNCTIONS
+const firebaseConfig = isFirebaseFunctionsEnv
   ? functions.config().firebase
   : {
-      databaseURL: `https://${
-        process.env.REACT_APP_FIREBASE_PROJECT_ID
-      }.firebaseio.com`,
+      databaseURL: `https://${env.firebaseProjectId}.firebaseio.com`,
     };
 
 const firebaseClient = createFirebaseClient(firebaseConfig);

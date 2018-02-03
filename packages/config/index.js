@@ -1,6 +1,8 @@
+/* @flow */
 import * as algolia from './src/algolia';
 import * as auth from './src/auth';
 import * as colors from './src/colors';
+import env from './src/env';
 import * as firebase from './src/firebase';
 import * as geolocation from './src/geolocation';
 import * as images from './src/images';
@@ -13,6 +15,7 @@ export {
   algolia,
   auth,
   colors,
+  env,
   firebase,
   geolocation,
   images,

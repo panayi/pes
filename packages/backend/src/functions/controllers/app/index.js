@@ -1,3 +1,4 @@
+/* @flow */
 import * as functions from 'firebase-functions';
 import express from 'express';
 import bodyParser from 'body-parser';

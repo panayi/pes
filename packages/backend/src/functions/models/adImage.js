@@ -1,11 +1,12 @@
+/* @flow */
 import * as R from 'ramda';
 import { database } from 'lib/firebaseClient';
 import getImageDimensions from 'utils/getImageDimensions';
 
-export const getAll = async adId =>
+export const getAll = async (adId: ID) =>
   database.ref(`/ads/images/${adId}`).once('value');
 
-export const setAdImages = async (images, adId) => {
+export const setAdImages = async (images: { [id: ID]: Image }, adId: ID) => {
   const dimensions = await Promise.all(
     R.map(
       async image => getImageDimensions(image.downloadURL),
@@ -21,7 +22,7 @@ export const setAdImages = async (images, adId) => {
   return imagesWithDimensions;
 };
 
-export const setDimensions = async imageSnapshot => {
+export const setDimensions = async (imageSnapshot): Promise<boolean> => {
   // Only set dimensions when downloadURL has changed
   if (!imageSnapshot.child('downloadURL').changed()) {
     return false;

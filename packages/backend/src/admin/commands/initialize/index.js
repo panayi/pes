@@ -43,16 +43,20 @@ const initialize = async service => {
   }
 };
 
-export default program =>
+const action = async service => {
+  try {
+    await initialize(service);
+    process.exit();
+  } catch (error) {
+    log.error(error.message);
+    process.exit();
+  }
+};
+
+const command = program =>
   program
     .command('initialize [service]')
     .description('Initialize [service] or all services')
-    .action(async service => {
-      try {
-        await initialize(service);
-        process.exit();
-      } catch (error) {
-        log.error(error.message);
-        process.exit();
-      }
-    });
+    .action(action);
+
+export default command;

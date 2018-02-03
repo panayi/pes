@@ -1,3 +1,4 @@
+/* @flow */
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from 'lib/firebaseClient';
@@ -6,10 +7,10 @@ import * as timestamp from 'utils/timestamp';
 import * as userModel from './user';
 import * as adImageModel from './adImage';
 
-export const get = async adId =>
+export const get = async (adId: ID) =>
   database.ref(`/ads/published/${adId}`).once('value');
 
-export const create = async ad => {
+export const create = async (ad: PendingReviewAd) => {
   const { images, user } = ad;
   const userSnapshot = await userModel.get(user);
   const { location } = userSnapshot.val();
@@ -21,7 +22,9 @@ export const create = async ad => {
   )(ad);
 
   // Publish ad
-  const { key: adId } = await database.ref(`ads/published`).push(finalAd);
+  const { key: adId }: { key: ID } = await database
+    .ref(`ads/published`)
+    .push(finalAd);
 
   // Save images
   const hasImages = !isNilOrEmpty(images);
@@ -30,7 +33,7 @@ export const create = async ad => {
     : null;
 
   // Finally, index ad on algolia
-  const savedAd = (await get(adId)).val();
+  const savedAd: Ad = (await get(adId)).val();
   const algoliaAd = R.merge(savedAd, { images: savedImages });
   await algoliaService.add(algoliaAd, adId);
 

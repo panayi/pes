@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import chalk from 'chalk';
 
-const isFirebaseFunctionsEnv = process.env.IS_FIREBASE_FUNCTIONS;
+const isFirebaseFunctionsEnv = process.env.IS_FIREBASE_FUNCTIONS_ENV;
 
 const typeToColor = {
   info: 'cyan',
@@ -10,7 +10,7 @@ const typeToColor = {
   warn: 'yellow',
 };
 
-const log = R.curry((type, message) => {
+const logger = R.curry((type, message) => {
   if (isFirebaseFunctionsEnv) {
     // There's no console.success
     const finalType = type === 'success' ? 'info' : type;
@@ -21,14 +21,16 @@ const log = R.curry((type, message) => {
   return console.log(`${chalk[color](type)}: ${message}`);
 });
 
-const info = log('info');
-const success = log('success');
-const error = log('error');
-const warn = log('warn');
+const info = logger('info');
+const success = logger('success');
+const error = logger('error');
+const warn = logger('warn');
 
-export default {
+const log = {
   info,
   success,
   error,
   warn,
 };
+
+export default log;
