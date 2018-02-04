@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
-import List, { ListItem } from 'material-ui/List';
+import List from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { propSelector } from 'pesposa-utils';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import translate from 'components/hocs/translate';
+import FilterOption from 'components/atoms/FilterOption';
 import Link from 'components/atoms/Link';
 
 type LinkType = {
@@ -22,32 +23,12 @@ type Props = {
   classes: Object,
 };
 
-const styles = theme => ({
+const styles = {
   list: {
     flex: 0,
     padding: 0,
   },
-  item: {
-    padding: 0,
-    '& + &': {
-      paddingTop: theme.spacing.unit / 2,
-    },
-  },
-  link: {
-    justifyContent: 'flex-start',
-    width: '100%',
-    minHeight: 'auto',
-    padding: 0,
-    fontWeight: theme.typography.fontWeightRegular,
-    '&:hover': {
-      fontWeight: theme.typography.fontWeightMedium,
-      backgroundColor: 'transparent',
-    },
-  },
-  active: {
-    background: theme.palette.divider,
-  },
-});
+};
 
 class FilterByCategory extends Component<Props> {
   static defaultProps = {
@@ -61,20 +42,17 @@ class FilterByCategory extends Component<Props> {
       <List classes={{ root: classes.list }}>
         {R.map(
           ({ key, label, to }) => (
-            <ListItem
+            <FilterOption
               key={key}
-              classes={{ root: classes.item }}
-              disableRipple
-              dense
+              buttonComponent={Link}
+              buttonProps={{
+                to,
+                exact: true,
+                activeClassName: classes.active,
+              }}
             >
-              <Link
-                to={to}
-                className={classes.link}
-                activeClassName={classes.active}
-              >
-                {label}
-              </Link>
-            </ListItem>
+              {label}
+            </FilterOption>
           ),
           categoryLinks,
         )}
@@ -87,14 +65,18 @@ const categoryLinksSelector = createSelector(
   propSelector('t'),
   propSelector('categories'),
   (t, categories) =>
-    R.map(
-      ({ key }) => ({
+    R.compose(
+      R.prepend({
+        key: 'home',
+        label: 'All',
+        to: '/',
+      }),
+      R.map(({ key }) => ({
         key,
         label: t(key),
         to: `/${key}`,
-      }),
-      categories,
-    ),
+      })),
+    )(categories),
 );
 
 export default R.compose(

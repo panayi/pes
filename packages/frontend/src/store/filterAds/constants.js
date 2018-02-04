@@ -23,3 +23,7 @@ export const HITS_PER_PAGE = 20;
 
 export const SORT_BY_OPTIONS = algoliaConfig.ADS_INDEXES;
 export const SORT_BY_OPTIONS_KEYS = R.keys(algoliaConfig.ADS_INDEXES);
+export const SORT_BY_OPTIONS_WITHOUT_DEFAULT_KEYS = R.reject(
+  R.equals('default'),
+  SORT_BY_OPTIONS_KEYS,
+);

@@ -1,6 +1,6 @@
 {
   "en": {
-    "home": {
+    "categories": {
       "classes": "Classes",
       "community": "Community",
       "for_sale": "For Sale",
@@ -9,10 +9,16 @@
       "pets": "Pets",
       "real_estate": "Real Estate",
       "vehicles": "Vehicles"
+    },
+    "sortByOptions": {
+      "byDateDesc": "Date (most recent)",
+      "byPriceAsc": "Price: high to low",
+      "byPriceDesc": "Price: low to high",
+      "byDistance": "Closest"
     }
   },
   "el": {
-    "home": {
+    "categories": {
       "classes": "Μαθήματα",
       "community": "Κοινότητα",
       "for_sale": "Πωλούνται",

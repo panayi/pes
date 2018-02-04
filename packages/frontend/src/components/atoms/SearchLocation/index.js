@@ -159,6 +159,7 @@ class SearchLocation extends Component<Props, State> {
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
+          fullWidth
         />
         <div
           ref={ref => {

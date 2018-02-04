@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { makeArray } from 'pesposa-utils';
 
 const createModelPath = path => {
   path.string = R.join('/', path); // eslint-disable-line no-param-reassign
@@ -6,7 +7,7 @@ const createModelPath = path => {
 };
 
 export const TRANSLATIONS = (language, namespace) =>
-  createModelPath(['translations', language, namespace]);
+  createModelPath(['translations', language, ...makeArray(namespace)]);
 export const COUNTRIES = createModelPath(['countries']);
 export const CATEGORIES = createModelPath(['categories']);
 export const USERS = createModelPath(['users']);
