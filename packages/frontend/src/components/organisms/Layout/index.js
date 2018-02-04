@@ -23,6 +23,7 @@ const styles = theme => ({
     // TODO: Use constant for header height
     minHeight: `calc(100vh - ${theme.layout.headerHeight}px)`,
     width: '100%',
+    backgroundColor: theme.palette.grey[200],
   },
 });
 

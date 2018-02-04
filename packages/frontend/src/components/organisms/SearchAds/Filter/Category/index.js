@@ -4,7 +4,6 @@ import * as R from 'ramda';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
 import List, { ListItem } from 'material-ui/List';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { propSelector } from 'pesposa-utils';
 import { connectData } from 'lib/connectData';
@@ -24,22 +23,33 @@ type Props = {
 };
 
 const styles = theme => ({
-  title: {
-    color: theme.palette.common.lightBlack,
+  list: {
+    flex: 0,
+    padding: 0,
   },
   item: {
-    paddingTop: 0,
-    paddingBottom: 0,
+    padding: 0,
+    '& + &': {
+      paddingTop: theme.spacing.unit / 2,
+    },
   },
-  button: {
+  link: {
+    justifyContent: 'flex-start',
+    width: '100%',
+    minHeight: 'auto',
+    padding: 0,
     fontWeight: theme.typography.fontWeightRegular,
+    '&:hover': {
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: 'transparent',
+    },
   },
   active: {
     background: theme.palette.divider,
   },
 });
 
-class CategoryLinks extends Component<Props> {
+class FilterByCategory extends Component<Props> {
   static defaultProps = {
     categories: [],
   };
@@ -48,26 +58,22 @@ class CategoryLinks extends Component<Props> {
     const { categoryLinks, classes } = this.props;
 
     return (
-      <List>
-        <ListItem>
-          <Typography className={classes.title} type="subheading">
-            Categories
-          </Typography>
-        </ListItem>
+      <List classes={{ root: classes.list }}>
         {R.map(
           ({ key, label, to }) => (
             <ListItem
               key={key}
-              classes={{
-                root: classes.item,
-                button: classes.button,
-              }}
-              component={Link}
-              activeClassName={classes.active}
-              to={to}
+              classes={{ root: classes.item }}
               disableRipple
+              dense
             >
-              {label}
+              <Link
+                to={to}
+                className={classes.link}
+                activeClassName={classes.active}
+              >
+                {label}
+              </Link>
             </ListItem>
           ),
           categoryLinks,
@@ -100,4 +106,4 @@ export default R.compose(
     }),
   ),
   withStyles(styles),
-)(CategoryLinks);
+)(FilterByCategory);

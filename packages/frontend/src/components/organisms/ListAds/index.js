@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { connectInfiniteHits } from 'react-instantsearch/connectors';
 import { withProps } from 'recompose';
-import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import Masonry from 'react-masonry-infinite';
@@ -25,9 +24,10 @@ const COLUMN_WIDTH = 230;
 const GUTTER = 10;
 
 const styles = t => ({
-  vspacing: {
-    marginTop: t.spacing.unit * 3,
-    marginBottom: t.spacing.unit * 1,
+  info: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: [t.spacing.unit * 3, 0, t.spacing.unit * 1, 0],
   },
 });
 
@@ -62,9 +62,9 @@ export class ListAds extends Component<Props> {
           loadMore={refine}
           sizes={sizes}
           loader={
-            <Grid container justify="center" className={classes.vspacing}>
+            <div className={classes.info}>
               <Spinner spinnerColor={theme.palette.primary.A200} />
-            </Grid>
+            </div>
           }
         >
           {R.map(
@@ -74,11 +74,11 @@ export class ListAds extends Component<Props> {
         </Masonry>
         {!hasMore &&
           hits.length > 0 && (
-            <Grid container justify="center" className={classes.vspacing}>
+            <div className={classes.info}>
               <Typography type="subheading" color="textSecondary">
                 End of results
               </Typography>
-            </Grid>
+            </div>
           )}
       </div>
     );

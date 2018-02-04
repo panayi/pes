@@ -15,7 +15,7 @@ import Login from 'components/organisms/Login';
 
 const ShowLoginButton = hideUser(Login.showButton);
 
-const MessagesLink = hideVisitor(Link);
+const MessagesLink = hideVisitor(Link.icon);
 
 const styles = theme => ({
   header: {

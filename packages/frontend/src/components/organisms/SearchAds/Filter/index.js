@@ -1,30 +1,13 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import {
-  selectors as filterAdsSelectors,
-  actions as filterAdsActions,
-} from 'store/filterAds';
-import SearchLocation from 'components/atoms/SearchLocation';
-import CategoryLinks from './CategoryLinks';
-import PriceFilter from './PriceFilter';
+import ByCategory from './Category';
+import ByLocation from './Location';
+import ByPrice from './Price';
 import SortBy from './SortBy';
 
-const FilterAds = ({ address, setLocation }) => (
-  <div>
-    <SearchLocation address={address} onChange={setLocation} />
-    <CategoryLinks />
-    <PriceFilter />
-    <SortBy />
-  </div>
-);
-
-const mapStateToProps = createStructuredSelector({
-  address: filterAdsSelectors.addressSelector,
-});
-
-const mapDispatchToProps = {
-  setLocation: filterAdsActions.setLocation,
+const Filter = {
+  ByCategory,
+  ByLocation,
+  ByPrice,
+  SortBy,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilterAds);
+export default Filter;
