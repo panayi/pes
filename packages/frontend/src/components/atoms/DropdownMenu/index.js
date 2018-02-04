@@ -55,7 +55,7 @@ class DropdownMenu extends Component {
 
     return (
       <div>
-        <Button key="anchor" onClick={this.handleAnchorClick} dense>
+        <Button key="anchor" onClick={this.handleAnchorClick} size="small">
           {anchor}
         </Button>
         <Menu

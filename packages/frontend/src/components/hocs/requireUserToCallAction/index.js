@@ -13,7 +13,7 @@ const mapDispatchToProps = {
   showLoginModal: Login.showAction,
 };
 
-export default actionKey =>
+const requiresUserToCallAction = actionKey =>
   R.compose(
     connect(mapStateToProps, mapDispatchToProps),
     mapProps(({ isAuthenticated, showLoginModal, ...props }) => ({
@@ -31,3 +31,5 @@ export default actionKey =>
       },
     })),
   );
+
+export default requiresUserToCallAction;

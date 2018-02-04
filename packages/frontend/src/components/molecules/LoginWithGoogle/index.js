@@ -6,9 +6,9 @@ import GoogleButton from 'components/atoms/GoogleButton';
 
 const providerId = firebaseConfig.PROVIDER_IDS.google;
 
-const LoginWithGoogle = ({ login, ...rest }) => (
+const LoginWithGoogle = ({ login, fullWidth }) => (
   <GoogleButton
-    {...rest}
+    fullWidth={fullWidth}
     onClick={() => login({ provider: 'google', ...authConfig[providerId] })}
   >
     Login with Google
@@ -17,6 +17,11 @@ const LoginWithGoogle = ({ login, ...rest }) => (
 
 LoginWithGoogle.propTypes = {
   login: PropTypes.func.isRequired,
+  fullWidth: PropTypes.bool,
+};
+
+LoginWithGoogle.defaultProps = {
+  fullWidth: false,
 };
 
 export default withLoginAction(LoginWithGoogle);

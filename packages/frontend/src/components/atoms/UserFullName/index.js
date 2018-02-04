@@ -1,10 +1,12 @@
 import * as R from 'ramda';
+import { setDisplayName } from 'recompose';
 import Typography from 'material-ui/Typography';
 import { propSelector } from 'pesposa-utils';
 import omitProps from 'utils/omitProps';
 import withProfileData from 'components/hocs/withProfileData';
 
-export default R.compose(
+const UserFullName = R.compose(
+  setDisplayName('UserFullName'),
   withProfileData(
     {
       children: ['displayName'],
@@ -13,3 +15,5 @@ export default R.compose(
   ),
   omitProps(['userId']),
 )(Typography);
+
+export default UserFullName;

@@ -8,7 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import ReactDropzone from 'react-dropzone';
 import AddIcon from 'material-ui-icons/Add';
 import BlockIcon from 'material-ui-icons/Block';
-import { filetypes } from 'pesposa-utils';
+import { files } from 'pesposa-utils';
 import Spinner from 'components/atoms/Spinner';
 
 type Props = {
@@ -90,7 +90,7 @@ export class Dropzone extends Component<Props> {
 
 export default R.compose(
   withProps(({ acceptedFileTypes }) => ({
-    accept: filetypes.mimeFor(acceptedFileTypes),
+    accept: files.acceptFor(acceptedFileTypes),
   })),
   withStyles(styles),
 )(Dropzone);

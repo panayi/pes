@@ -2,5 +2,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import renderNothingWhen from '../renderNothingWhen';
 
-export default propKey =>
+const requirePropToRender = propKey =>
   renderNothingWhen(R.compose(isNilOrEmpty, R.prop(propKey)));
+
+export default requirePropToRender;

@@ -3,7 +3,7 @@ import { algolia as algoliaConfig } from 'pesposa-config';
 import algolia from 'lib/algoliaClient';
 import log from 'utils/log';
 
-export default async () => {
+const createIndex = async () => {
   const { indexes } = algoliaConfig;
 
   try {
@@ -49,3 +49,5 @@ export default async () => {
     throw error;
   }
 };
+
+export default createIndex;

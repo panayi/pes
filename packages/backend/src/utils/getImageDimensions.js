@@ -2,7 +2,7 @@ import imageSize from 'image-size';
 import https from 'https';
 import url from 'url';
 
-export default imageUrl => {
+const getImageDimensions = imageUrl => {
   const options = url.parse(imageUrl);
 
   return new Promise(resolve => {
@@ -20,3 +20,5 @@ export default imageUrl => {
     });
   });
 };
+
+export default getImageDimensions;

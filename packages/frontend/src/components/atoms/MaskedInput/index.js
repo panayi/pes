@@ -11,7 +11,6 @@ const MaskedInput = ({ mask, ...rest }: Props) => (
   <Input
     inputComponent={ReactMaskedInput}
     inputProps={{
-      // eslint-disable-line react/jsx-no-duplicate-props
       mask,
       'data-lpignore': true, // Disable LastPass grey box
     }}

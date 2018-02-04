@@ -23,7 +23,7 @@ const firebaseAppConfig = {
   storageBucket: storageConfig.BUCKET,
 };
 
-export default (initialState = {}) => {
+const configureStore = (initialState = {}) => {
   // Create a history of your choosing (we're using a browser history in this case)
   const history = createHistory();
 
@@ -75,3 +75,5 @@ export default (initialState = {}) => {
 
   return store;
 };
+
+export default configureStore;

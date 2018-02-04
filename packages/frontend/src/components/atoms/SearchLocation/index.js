@@ -162,7 +162,7 @@ export default R.compose(
   scriptLoader(GOOGLE_MAPS_SCRIPT_URL),
   withStateHandlers(
     ({ address }) => ({
-      value: address,
+      value: address || '',
       selectedAddress: address,
     }),
     {

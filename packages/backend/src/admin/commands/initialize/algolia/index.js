@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { env } from 'pesposa-config';
 import algolia from 'lib/algoliaClient';
 import createIndex from './createIndex';
-import importData from './import';
+import initialImport from './import';
 
 export const canInitialize = async () => {
   const indexes = await algolia.listIndexes();
@@ -21,7 +21,7 @@ export const canInitialize = async () => {
 
 const initializeAlgolia = async () => {
   const createIndexResult = await createIndex();
-  const importResult = await importData();
+  const importResult = await initialImport();
 
   return [createIndexResult, importResult];
 };

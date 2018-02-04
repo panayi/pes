@@ -1,3 +1,5 @@
 import { branch, renderNothing } from 'recompose';
 
-export default predicate => branch(predicate, renderNothing);
+const renderNothingWhen = predicate => branch(predicate, renderNothing);
+
+export default renderNothingWhen;

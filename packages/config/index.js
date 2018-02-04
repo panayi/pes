@@ -1,6 +1,6 @@
 /* @flow */
 import * as algolia from './src/algolia';
-import * as auth from './src/auth';
+import auth from './src/auth';
 import * as colors from './src/colors';
 import env from './src/env';
 import * as firebase from './src/firebase';

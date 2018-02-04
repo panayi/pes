@@ -17,7 +17,7 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     textAlign: 'center',
-    borderBottom: `1px solid ${theme.palette.text.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
 });
 

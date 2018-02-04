@@ -2,9 +2,9 @@ import * as R from 'ramda';
 import fetch from 'node-fetch';
 import HttpStatus from 'http-status-codes';
 import { images as imagesConfig } from 'pesposa-config';
-import { filetypes } from 'pesposa-utils';
+import { files } from 'pesposa-utils';
 
-const acceptedImageMimeTypes = filetypes.mimeFor(imagesConfig.ACCEPTED_TYPES);
+const acceptedImageMimeTypes = files.mimeFor(imagesConfig.ACCEPTED_TYPES);
 
 export const getImage = async url => {
   const response = await fetch(url);

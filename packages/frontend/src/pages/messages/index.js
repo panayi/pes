@@ -11,11 +11,11 @@ const styles = theme => ({
   root: {
     height: '100%',
     backgroundColor: theme.palette.common.white,
-    border: `1px solid ${theme.palette.text.divider}`,
+    border: `1px solid ${theme.palette.divider}`,
     borderRadius: theme.custom.borderRadius.md,
   },
   list: {
-    borderRight: `1px solid ${theme.palette.text.divider}`,
+    borderRight: `1px solid ${theme.palette.divider}`,
   },
   conversationWrap: {
     display: 'flex',

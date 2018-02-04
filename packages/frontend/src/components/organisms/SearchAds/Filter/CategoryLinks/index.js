@@ -35,7 +35,7 @@ const styles = theme => ({
     fontWeight: theme.typography.fontWeightRegular,
   },
   active: {
-    background: theme.palette.text.divider,
+    background: theme.palette.divider,
   },
 });
 

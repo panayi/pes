@@ -2,10 +2,10 @@ import * as R from 'ramda';
 import { database } from 'lib/firebaseClient';
 import log from 'utils/log';
 import * as storageService from 'services/storage';
-import categories from 'pesposa-database/seeds/categories.json';
-import locales from 'pesposa-database/seeds/locales.json';
-import translations from 'pesposa-database/seeds/translations.json';
-import countries from 'pesposa-database/seeds/countries.json';
+import categories from 'pesposa-database/src/seeds/categories.json';
+import locales from 'pesposa-database/src/seeds/locales.json';
+import translations from 'pesposa-database/src/seeds/translations.json';
+import countries from 'pesposa-database/src/seeds/countries.json';
 
 const formatCategories = R.reduce(
   (acc, category) =>
@@ -61,7 +61,7 @@ const seedCountries = async () => {
   );
 };
 
-export default async () => {
+const seed = async () => {
   try {
     await seedCategories();
     await seedLocales();
@@ -73,3 +73,5 @@ export default async () => {
     throw error;
   }
 };
+
+export default seed;

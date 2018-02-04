@@ -6,9 +6,9 @@ import FacebookButton from 'components/atoms/FacebookButton';
 
 const providerId = firebaseConfig.PROVIDER_IDS.facebook;
 
-const LoginWithFacebook = ({ login, ...rest }) => (
+const LoginWithFacebook = ({ login, fullWidth }) => (
   <FacebookButton
-    {...rest}
+    fullWidth={fullWidth}
     raised
     onClick={() => login({ provider: 'facebook', ...authConfig[providerId] })}
   >
@@ -18,6 +18,11 @@ const LoginWithFacebook = ({ login, ...rest }) => (
 
 LoginWithFacebook.propTypes = {
   login: PropTypes.func.isRequired,
+  fullWidth: PropTypes.bool,
+};
+
+LoginWithFacebook.defaultProps = {
+  fullWidth: false,
 };
 
 export default withLoginAction(LoginWithFacebook);

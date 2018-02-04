@@ -24,7 +24,7 @@ const importAds = async () => {
   return R.compose(R.length, R.values)(ads);
 };
 
-export default async () => {
+const importLegacyAds = async () => {
   try {
     const numberOfAds = await importAds();
     return `Synced ${numberOfAds} ads`;
@@ -33,3 +33,5 @@ export default async () => {
     throw error;
   }
 };
+
+export default importLegacyAds;

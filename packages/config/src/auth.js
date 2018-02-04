@@ -2,7 +2,7 @@ import * as firebaseConfig from './firebase';
 
 const { PROVIDER_IDS } = firebaseConfig;
 
-export default {
+const auth = {
   providers: [PROVIDER_IDS.facebook, PROVIDER_IDS.google, PROVIDER_IDS.phone],
   [PROVIDER_IDS.facebook]: {
     type: 'popup',
@@ -17,3 +17,5 @@ export default {
     scopes: [],
   },
 };
+
+export default auth;

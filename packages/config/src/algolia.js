@@ -21,7 +21,7 @@ export const ADS_INDEXES = {
   byDistance: 'ads_distance_asc',
 };
 
-export default {
+const algolia = {
   indexes: [
     {
       name: ADS_INDEXES.default,
@@ -61,3 +61,5 @@ export default {
     },
   ],
 };
+
+export default algolia;

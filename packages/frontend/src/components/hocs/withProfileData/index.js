@@ -18,7 +18,7 @@ const withMyProfileData = mapPropsToPaths => {
     ),
   );
 
-  return connect(mapStateToProps);
+  return connect(mapStateToProps, {});
 };
 
 const withUserProfileData = (mapPropsToPaths, userIdSelector) => {
@@ -27,7 +27,7 @@ const withUserProfileData = (mapPropsToPaths, userIdSelector) => {
     mapPropsToPaths,
   );
 
-  return connectData(mapDataToProps);
+  return connectData(mapDataToProps, null, {});
 };
 
 const withProfileData = (mapPropsToPaths, userIdSelector) => {
@@ -40,7 +40,7 @@ const withProfileData = (mapPropsToPaths, userIdSelector) => {
   });
 
   return R.compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, {}),
     branch(
       R.prop(IS_CURRENT_USER),
       withMyProfileData(mapPropsToPaths),

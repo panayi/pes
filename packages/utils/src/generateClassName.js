@@ -1,1 +1,3 @@
-export default () => btoa(Math.random());
+const generateClassName = () => btoa(Math.random());
+
+export default generateClassName;

@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from 'lib/firebaseClient';
 import seed from './seed';
-import importData from './import';
+import importLegacyAds from './importLegacyAds';
 
 export const canInitialize = async () => {
   const ref = database.ref();
@@ -24,7 +24,7 @@ export const canInitialize = async () => {
 
 const initializeFirebase = async () => {
   const seedResult = await seed();
-  const importResult = await importData();
+  const importResult = await importLegacyAds();
 
   return [seedResult, importResult];
 };

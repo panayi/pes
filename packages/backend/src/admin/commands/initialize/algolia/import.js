@@ -26,7 +26,7 @@ const initialImportAds = async (dataSnapshot, index) => {
   return objectsToIndex;
 };
 
-export default async () => {
+const initialImport = async () => {
   try {
     const index = algolia.initIndex(algoliaConfig.ADS_INDEXES.default);
     const dataSnapshot = await database.ref('/ads').once('value');
@@ -37,3 +37,5 @@ export default async () => {
     throw error;
   }
 };
+
+export default initialImport;

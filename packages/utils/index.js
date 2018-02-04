@@ -1,4 +1,4 @@
-import filetypes from './src/filetypes';
+import files from './src/files';
 import generateClassName from './src/generateClassName';
 import generateId from './src/generateId';
 import isActionOfType from './src/isActionOfType';
@@ -13,7 +13,7 @@ import urlParamsSelector from './src/urlParamsSelector';
 import zipArgs from './src/zipArgs';
 
 export {
-  filetypes,
+  files,
   generateClassName,
   generateId,
   isActionOfType,

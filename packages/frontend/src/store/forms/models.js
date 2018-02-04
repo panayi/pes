@@ -2,7 +2,7 @@ export const postAd = {
   key: 'postAd',
   initialState: {
     title: '',
-    price: null,
+    price: '',
     body: '',
     category: '',
   },

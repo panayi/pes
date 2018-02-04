@@ -7,7 +7,7 @@ import * as messages from './messages';
 import * as pendingReviewAds from './pendingReviewAds';
 import * as profile from './profile';
 
-export default {
+const api = {
   ads,
   app,
   auth,
@@ -17,3 +17,5 @@ export default {
   pendingReviewAds,
   profile,
 };
+
+export default api;

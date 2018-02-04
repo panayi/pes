@@ -2,8 +2,10 @@ import ConfigureSearchParams from './ConfigureSearchParams';
 import Filter from './Filter';
 import Query from './Query';
 
-export default {
+const SearchAds = {
   ConfigureSearchParams,
   Filter,
   Query,
 };
+
+export default SearchAds;
