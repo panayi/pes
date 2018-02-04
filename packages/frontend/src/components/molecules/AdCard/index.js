@@ -33,15 +33,13 @@ const styles = theme => ({
     textDecoration: 'none',
   },
   adPaperRoot: {
-    borderRadius: theme.custom.borderRadius.xl,
+    borderRadius: theme.borderRadius.xl,
   },
   media: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    borderRadius: `${theme.custom.borderRadius.xl}px ${
-      theme.custom.borderRadius.xl
-    }px 0 0`,
+    borderRadius: `${theme.borderRadius.xl}px ${theme.borderRadius.xl}px 0 0`,
   },
   price: {
     padding: theme.spacing.unit,

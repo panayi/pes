@@ -25,16 +25,14 @@ const SLIDER_WIDTH = 500;
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 2,
-    borderRadius: theme.custom.borderRadius.xl,
+    borderRadius: theme.borderRadius.xl,
     backgroundColor: theme.palette.common.white,
   },
   sliderWrap: {
     width: SLIDER_WIDTH,
   },
   slider: {
-    borderRadius: `${theme.custom.borderRadius.xl}px 0 0 ${
-      theme.custom.borderRadius.xl
-    }px`,
+    borderRadius: `${theme.borderRadius.xl}px 0 0 ${theme.borderRadius.xl}px`,
   },
   content: {
     flex: 1,

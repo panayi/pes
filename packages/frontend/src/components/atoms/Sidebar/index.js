@@ -11,17 +11,23 @@ type Props = {
 // Based on:
 // https://github.com/callemall/material-ui/blob/v1-beta/docs/src/modules/components/AppDrawerNavItem.js
 
-const styles = theme => ({
-  sidebar: {
-    flex: `0 0 ${theme.custom.sidebarWidth}px`,
-  },
-  drawerPaper: {
-    width: theme.custom.sidebarWidth,
-  },
-  drawerAnchor: {
-    top: 64,
-  },
-});
+const styles = theme => {
+  const spacing = 2 * theme.spacing.unit;
+  const width = theme.layout.sidebarWidth - 2 * spacing;
+
+  return {
+    sidebar: {
+      flex: [0, 0, `${theme.layout.sidebarWidth}px`],
+    },
+    drawerPaper: {
+      width,
+    },
+    drawerAnchor: {
+      top: theme.layout.headerHeight,
+      padding: spacing,
+    },
+  };
+};
 
 const Sidebar = ({ children, classes }: Props) => (
   <div className={classes.sidebar}>

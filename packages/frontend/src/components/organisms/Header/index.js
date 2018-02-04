@@ -25,7 +25,7 @@ const styles = theme => ({
     padding: 0,
   },
   logoArea: {
-    flex: `0 0 ${theme.custom.sidebarWidth}px`,
+    flex: `0 0 ${theme.layout.sidebarWidth}px`,
   },
   logoText: {
     textTransform: 'uppercase',

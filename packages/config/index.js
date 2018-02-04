@@ -6,6 +6,7 @@ import env from './src/env';
 import * as firebase from './src/firebase';
 import * as geolocation from './src/geolocation';
 import * as images from './src/images';
+import * as layout from './src/layout';
 import * as locale from './src/locale';
 import * as modelPaths from './src/modelPaths';
 import * as phoneNumbers from './src/phoneNumbers';
@@ -20,6 +21,7 @@ export {
   geolocation,
   images,
   modelPaths,
+  layout,
   locale,
   phoneNumbers,
   storage

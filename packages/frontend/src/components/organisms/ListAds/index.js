@@ -21,7 +21,7 @@ type Props = {
   classes: Object,
 };
 
-const COLUMN_WIDTH = 290;
+const COLUMN_WIDTH = 230;
 const GUTTER = 10;
 
 const styles = t => ({
@@ -72,13 +72,14 @@ export class ListAds extends Component<Props> {
             hits,
           )}
         </Masonry>
-        {!hasMore && (
-          <Grid container justify="center" className={classes.vspacing}>
-            <Typography type="subheading" color="textSecondary">
-              End of results
-            </Typography>
-          </Grid>
-        )}
+        {!hasMore &&
+          hits.length > 0 && (
+            <Grid container justify="center" className={classes.vspacing}>
+              <Typography type="subheading" color="textSecondary">
+                End of results
+              </Typography>
+            </Grid>
+          )}
       </div>
     );
   }
@@ -91,7 +92,7 @@ export default R.compose(
       columnWidth: COLUMN_WIDTH,
       gutter: GUTTER,
       maxScreenWidth: 5000,
-      wastedWidth: theme.custom.sidebarWidth + 2 * GUTTER,
+      wastedWidth: theme.layout.sidebarWidth + 2 * GUTTER,
     }),
   }),
   withStyles(styles),

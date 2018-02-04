@@ -12,7 +12,7 @@ const styles = theme => ({
     height: '100%',
     backgroundColor: theme.palette.common.white,
     border: `1px solid ${theme.palette.divider}`,
-    borderRadius: theme.custom.borderRadius.md,
+    borderRadius: theme.borderRadius.md,
   },
   list: {
     borderRight: `1px solid ${theme.palette.divider}`,

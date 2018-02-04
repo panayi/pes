@@ -7536,7 +7536,7 @@ jss-vendor-prefixer@^7.0.0:
   dependencies:
     css-vendor "^0.3.8"
 
-jss@^9.3.2, jss@^9.3.3:
+jss@^9.3.2, jss@^9.3.3, jss@^9.6.0:
   version "9.6.0"
   resolved "https://registry.yarnpkg.com/jss/-/jss-9.6.0.tgz#a4f256263608b39a37f2d3c10b9ab08d9ab841f3"
   dependencies:
@@ -10378,7 +10378,7 @@ react-instantsearch@^4.4.2:
     lodash "^4.17.4"
     prop-types "^15.5.10"
 
-react-jss@^8.1.0:
+react-jss@^8.1.0, react-jss@^8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-8.2.1.tgz#b2905063ba8b950f095a139a75232d851c79e15e"
   dependencies:

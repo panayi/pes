@@ -11,20 +11,20 @@ type Props = {
   configureSearch: React$Element<Configure> | null,
 };
 
-const styles = {
+const styles = theme => ({
   '@global': {
     body: {
-      marginTop: '64px',
+      marginTop: theme.layout.headerHeight,
     },
   },
   root: {
     display: 'flex',
     alignItems: 'stretch',
     // TODO: Use constant for header height
-    minHeight: 'calc(100vh - 64px)',
+    minHeight: `calc(100vh - ${theme.layout.headerHeight}px)`,
     width: '100%',
   },
-};
+});
 
 const Layout = ({ configureSearch, children, classes }: Props) => (
   <div className={classes.root}>
