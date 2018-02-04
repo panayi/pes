@@ -46,7 +46,7 @@ const styles = theme => ({
     display: 'flex',
     marginBottom: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 3,
-    borderBottom: `1px solid ${theme.palette.text.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
   title: {
     flex: 1,
@@ -78,7 +78,7 @@ const ViewAd = ({ ad, adId, classes }: Props) => (
     <Grid className={classes.content}>
       <div className={classes.header}>
         <AdTitle className={classes.title} ad={ad} type="display1" />
-        <EditAdLink ad={ad} adId={adId} color="primary" dense>
+        <EditAdLink ad={ad} adId={adId} color="primary">
           <ModeEditIcon />
         </EditAdLink>
       </div>

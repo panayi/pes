@@ -1,1 +1,3 @@
-export default cb => setTimeout(cb, 0);
+const requestAnimationFramePolyfill = cb => setTimeout(cb, 0);
+
+export default requestAnimationFramePolyfill;

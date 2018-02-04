@@ -40,7 +40,7 @@
     "deploy": "run-p deploy:frontend deploy:functions && yarn deploy:database"
   },
   "lint-staged": {
-    "{packages/backend/src,packages/frontend/src,packages/frontend/stories,packages/frontend/test,packages/core,packages/config/src}/**/*.{js,jsx}": [
+    "{packages/*/src,packages/frontend/stories,packages/frontend/test}/**/*.{js,jsx}": [
       "prettier --write",
       "eslint --fix",
       "git add",

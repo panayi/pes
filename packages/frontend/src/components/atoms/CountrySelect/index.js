@@ -26,4 +26,4 @@ const mapDataToProps = {
   countries: models.countries.all,
 };
 
-export default R.compose(connectData(mapDataToProps))(CountrySelect);
+export default R.compose(connectData(mapDataToProps, null, {}))(CountrySelect);

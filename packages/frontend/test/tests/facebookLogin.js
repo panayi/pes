@@ -1,4 +1,4 @@
-export default {
+const facebookLogin = {
   'Facebook button exists on login page': client => {
     const loginPage = client.page.loginPage();
 
@@ -34,3 +34,5 @@ export default {
 
   'Given that I have removed the app from Facebook, when I try to login with Facebook, I should see my existing account': () => {},
 };
+
+export default facebookLogin;

@@ -29,7 +29,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     padding: theme.spacing.unit,
-    borderBottom: `1px solid ${theme.palette.text.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
   active: {
     background: '#f5f0f0',

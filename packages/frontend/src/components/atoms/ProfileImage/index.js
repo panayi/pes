@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { defaultProps } from 'recompose';
+import { defaultProps, setDisplayName } from 'recompose';
 import Avatar from 'material-ui/Avatar';
 import Face from 'material-ui-icons/Face';
 import { propSelector } from 'pesposa-utils';
@@ -20,6 +20,7 @@ const ProfileImage = ({
 );
 
 export default R.compose(
+  setDisplayName('ProfileImage'),
   defaultProps({
     component: Avatar,
   }),

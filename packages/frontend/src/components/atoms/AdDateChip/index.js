@@ -1,5 +1,6 @@
 import React from 'react';
 import Chip from 'material-ui/Chip';
+import Avatar from 'material-ui/Avatar';
 import { withStyles } from 'material-ui/styles';
 import ScheduleIcon from 'material-ui-icons/Schedule';
 import AdDate from 'components/atoms/AdDate';
@@ -17,7 +18,11 @@ const styles = {
 const AdDateChip = ({ classes, ...rest }) => (
   <Chip
     classes={{ root: classes.root }}
-    avatar={<ScheduleIcon className={classes.icon} />}
+    avatar={
+      <Avatar className={classes.icon}>
+        <ScheduleIcon />
+      </Avatar>
+    }
     label={<AdDate {...rest} />}
   />
 );

@@ -22,7 +22,7 @@ type Props = {
   validateSmsCode: Function,
 };
 
-class LoginWithPhone extends Component<Props> {
+export class LoginWithPhone extends Component<Props> {
   static defaultProps = {
     onStepChange: noop,
   };

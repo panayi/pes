@@ -1,11 +1,16 @@
 import * as R from 'ramda';
-import { isArray } from 'ramda-adjunct';
 
-export const JPEG = 'jpeg';
-export const PNG = 'png';
-export const GIF = 'gif';
+const JPEG = 'jpeg';
+const PNG = 'png';
+const GIF = 'gif';
 
-export const FILETYPES = {
+const typeKeys = {
+  jpeg: JPEG,
+  png: PNG,
+  gif: GIF,
+};
+
+const types = {
   [JPEG]: {
     mimeType: 'image/jpeg',
     prettyPrint: '.jpg',
@@ -14,27 +19,30 @@ export const FILETYPES = {
     mimeType: 'image/png',
     prettyPrint: '.png',
   },
-  [PNG]: {
+  [GIF]: {
     mimeType: 'image/gif',
     prettyPrint: '.gif',
   },
 };
 
 const createMap = getter =>
-  R.ifElse(
-    isArray,
-    R.pipe(R.pick(R.__, FILETYPES), R.map(getter)),
-    R.pipe(R.prop(R.__, FILETYPES), getter),
-  );
+  R.compose(R.values, R.map(getter), R.pick(R.__, types));
 
-const mimeFor = createMap(R.prop('mime'));
+const mimeFor = createMap(R.prop('mimeType'));
+
+const acceptFor = R.compose(R.join(','), mimeFor);
 
 const extensionFor = createMap(R.prop('extension'));
 
 const prettyPrintFor = createMap(R.pipe(R.prop('extension'), R.concat('.')));
 
-export default {
+const files = {
+  typeKeys,
+  types,
+  acceptFor,
   mimeFor,
   extensionFor,
   prettyPrintFor,
 };
+
+export default files;

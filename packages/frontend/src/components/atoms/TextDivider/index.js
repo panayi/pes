@@ -19,7 +19,7 @@ const styles = theme => ({
       top: '50%',
       width: '9999px',
       height: '1px',
-      background: theme.palette.text.divider,
+      background: theme.palette.divider,
     },
 
     '&:before': {

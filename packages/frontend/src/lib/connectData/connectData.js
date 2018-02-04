@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const QUERIES_PROP = '__queries__';
 
-export default (dataConnections, mapStateToProps, mapDispatchToProps) => {
+const connectData = (dataConnections, mapStateToProps, mapDispatchToProps) => {
   const finalMapStateToProps = (state, props) => {
     const queries = R.compose(
       R.map(R.when(R.is(Function), query => query(state, props))),
@@ -32,3 +32,5 @@ export default (dataConnections, mapStateToProps, mapDispatchToProps) => {
     firebaseConnect(R.propOr([], QUERIES_PROP)),
   );
 };
+
+export default connectData;

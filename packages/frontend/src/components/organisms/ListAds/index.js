@@ -74,7 +74,7 @@ export class ListAds extends Component<Props> {
         </Masonry>
         {!hasMore && (
           <Grid container justify="center" className={classes.vspacing}>
-            <Typography type="subheading" color="secondary">
+            <Typography type="subheading" color="textSecondary">
               End of results
             </Typography>
           </Grid>

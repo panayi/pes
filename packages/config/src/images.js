@@ -1,3 +1,7 @@
-import { filetypes } from 'pesposa-utils';
+import { files } from 'pesposa-utils';
 
-export const ACCEPTED_TYPES = [filetypes.JPEG, filetypes.PNG, filetypes.GIF];
+export const ACCEPTED_TYPES = [
+  files.typeKeys.jpeg,
+  files.typeKeys.png,
+  files.typeKeys.gif,
+];

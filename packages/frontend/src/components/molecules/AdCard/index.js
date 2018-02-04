@@ -92,7 +92,7 @@ const AdCard = ({ ad, width, thumbnail, classes }: Props) => {
         >
           <AdPrice
             className={classes.price}
-            color="accent"
+            color="secondary"
             type="title"
             ad={ad}
           />

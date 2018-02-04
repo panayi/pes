@@ -1,3 +1,5 @@
 import shortid from 'shortid';
 
-export default () => shortid.generate();
+const generateId = () => shortid.generate();
+
+export default generateId;

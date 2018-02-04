@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { lifecycle } from 'recompose';
 
-export default (fn, predicate) => {
+const onceWhen = (fn, predicate) => {
   const maybeRun = (props, callback) => {
     if (predicate(props)) {
       callback(props);
@@ -19,3 +19,5 @@ export default (fn, predicate) => {
     },
   });
 };
+
+export default onceWhen;

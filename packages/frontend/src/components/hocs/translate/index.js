@@ -5,7 +5,7 @@ import omitProps from 'utils/omitProps';
 import { models } from 'store/firebase/data';
 import { selectors as profileSelectors } from 'store/firebase/profile';
 
-export default namespace =>
+const translate = namespace =>
   R.compose(
     connectData({
       localeTranslations: models.translations(
@@ -23,3 +23,5 @@ export default namespace =>
     })),
     omitProps(['localeTranslations', 'languageTranslations']),
   );
+
+export default translate;

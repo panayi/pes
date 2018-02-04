@@ -18,7 +18,7 @@ const styles = theme => ({
 });
 
 const FacebookButton = ({ children, classes, ...rest }) => (
-  <Button {...rest} classes={classes}>
+  <Button {...rest} classes={{ root: classes.root }}>
     <FacebookBoxIcon style={{ fill: 'white' }} />
     <span className={classes.text}>{children}</span>
   </Button>

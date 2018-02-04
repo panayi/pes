@@ -18,14 +18,14 @@ const styles = theme => ({
     alignItems: 'center',
     paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
-    borderBottom: `1px solid ${theme.palette.text.divider}`,
+    borderBottom: `1px solid ${theme.palette.divider}`,
   },
   messages: {
     flex: '1 1 auto',
     overflowY: 'auto',
   },
   sendMessage: {
-    borderTop: `1px solid ${theme.palette.text.divider}`,
+    borderTop: `1px solid ${theme.palette.divider}`,
   },
 });
 

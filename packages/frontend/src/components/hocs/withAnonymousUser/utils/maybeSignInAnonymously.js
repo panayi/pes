@@ -1,4 +1,4 @@
-export default props => {
+const maybeSignInAnonymously = props => {
   const { isAuthenticating, isAuthenticated, firebase } = props;
   if (isAuthenticating || isAuthenticated) {
     return;
@@ -6,3 +6,5 @@ export default props => {
 
   firebase.auth().signInAnonymously();
 };
+
+export default maybeSignInAnonymously;

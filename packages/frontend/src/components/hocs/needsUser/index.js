@@ -23,10 +23,12 @@ const ConnectedDisplayLoginModal = connect(null, mapDispatchToProps)(
   DisplayLoginModal,
 );
 
-export default options =>
+const needsUser = options =>
   connectedAuthWrapper({
     authenticatedSelector: authSelectors.isAuthenticatedSelector,
     authenticatingSelector: authSelectors.isAuthenticatingSelector,
     FailureComponent: ConnectedDisplayLoginModal,
     ...R.defaultTo({}, options),
   });
+
+export default needsUser;

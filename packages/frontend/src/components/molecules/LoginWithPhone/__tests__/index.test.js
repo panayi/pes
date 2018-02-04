@@ -1,6 +1,6 @@
 import React from 'react';
 import Recaptcha from 'components/atoms/Recaptcha';
-import { LoginWithPhoneNumber } from '../index';
+import { LoginWithPhone } from '../index';
 
 jest.mock('react-redux-form', () => ({
   Field: props => <div {...props} />,
@@ -17,20 +17,18 @@ describe('LoginWithPhoneNumber', () => {
   };
 
   beforeAll(() => {
-    LoginWithPhoneNumber.BUTTON_ID = 'mockButtonId';
+    LoginWithPhone.BUTTON_ID = 'mockButtonId';
   });
 
   it('should render correctly when showPhoneNumberForm is true', () => {
     const wrapper = shallow(
-      <LoginWithPhoneNumber {...defaultProps} showPhoneNumberForm />,
+      <LoginWithPhone {...defaultProps} showPhoneNumberForm />,
     );
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should render correctly when showCodeForm is true', () => {
-    const wrapper = shallow(
-      <LoginWithPhoneNumber {...defaultProps} showCodeForm />,
-    );
+    const wrapper = shallow(<LoginWithPhone {...defaultProps} showCodeForm />);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -39,27 +37,23 @@ describe('LoginWithPhoneNumber', () => {
       message: 'something went wrong',
     };
     const wrapper = shallow(
-      <LoginWithPhoneNumber {...defaultProps} showError error={error} />,
+      <LoginWithPhone {...defaultProps} showError error={error} />,
     );
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should render correctly when showLoading is true', () => {
-    const wrapper = shallow(
-      <LoginWithPhoneNumber {...defaultProps} showLoading />,
-    );
+    const wrapper = shallow(<LoginWithPhone {...defaultProps} showLoading />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should render correctly when showTryAgain is true', () => {
-    const wrapper = shallow(
-      <LoginWithPhoneNumber {...defaultProps} showTryAgain />,
-    );
+    const wrapper = shallow(<LoginWithPhone {...defaultProps} showTryAgain />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should always render recaptcha', () => {
-    const wrapper = shallow(<LoginWithPhoneNumber {...defaultProps} />);
+    const wrapper = shallow(<LoginWithPhone {...defaultProps} />);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -70,7 +64,7 @@ describe('LoginWithPhoneNumber', () => {
       },
     };
     const wrapper = mount(
-      <LoginWithPhoneNumber {...defaultProps} firebase={mockFirebase} />,
+      <LoginWithPhone {...defaultProps} firebase={mockFirebase} />,
     );
     expect(wrapper.instance().recaptcha instanceof Recaptcha).toBe(true);
   });
@@ -78,7 +72,7 @@ describe('LoginWithPhoneNumber', () => {
   it('should resetAll on mount', () => {
     const mockResetAll = jest.fn();
     expect(mockResetAll.mock.calls.length).toBe(0);
-    shallow(<LoginWithPhoneNumber {...defaultProps} resetAll={mockResetAll} />);
+    shallow(<LoginWithPhone {...defaultProps} resetAll={mockResetAll} />);
     expect(mockResetAll.mock.calls.length).toBe(1);
   });
 
@@ -93,7 +87,7 @@ describe('LoginWithPhoneNumber', () => {
         },
       };
       const wrapper = mount(
-        <LoginWithPhoneNumber
+        <LoginWithPhone
           {...defaultProps}
           firebase={mockFirebase}
           showPhoneNumberForm
@@ -115,7 +109,7 @@ describe('LoginWithPhoneNumber', () => {
         },
       };
       const wrapper = mount(
-        <LoginWithPhoneNumber
+        <LoginWithPhone
           {...defaultProps}
           firebase={mockFirebase}
           showCodeForm

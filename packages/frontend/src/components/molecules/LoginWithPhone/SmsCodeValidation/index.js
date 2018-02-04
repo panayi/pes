@@ -23,7 +23,7 @@ const styles = theme => ({
   },
   flag: {
     marginRight: theme.spacing.unit,
-    border: `1px solid ${theme.palette.text.divider}`,
+    border: `1px solid ${theme.palette.divider}`,
   },
   helpText: {
     marginTop: 2 * theme.spacing.unit,

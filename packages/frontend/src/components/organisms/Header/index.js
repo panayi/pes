@@ -57,11 +57,11 @@ const Header = ({ classes }) => (
         <div className={classes.searchInput}>
           <SearchAds.Query />
         </div>
-        <CreateAd.showButton color="contrast">
+        <CreateAd.showButton color="inherit">
           Sell your stuff
         </CreateAd.showButton>
-        <ShowLoginButton color="contrast">Login</ShowLoginButton>
-        <MessagesLink color="contrast" to="/messages" dense>
+        <ShowLoginButton color="inherit">Login</ShowLoginButton>
+        <MessagesLink color="inherit" to="/messages" size="small">
           <MessageIcon />
         </MessagesLink>
         <ProfileMenu />

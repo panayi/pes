@@ -1,3 +1,5 @@
 import { BODY_FONT_SIZE } from '../constants/styles';
 
-export default px => px / BODY_FONT_SIZE;
+const pxToEm = px => px / BODY_FONT_SIZE;
+
+export default pxToEm;

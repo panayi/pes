@@ -18,7 +18,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2.5,
     flex: '1 1 100%',
     minHeight: '100%',
-    backgroundColor: theme.palette.background.contentFrame,
+    backgroundColor: theme.palette.grey[200],
   },
   fixed: {
     flex: '1 1 100%',

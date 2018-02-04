@@ -16,7 +16,7 @@ const styles = theme => ({
 });
 
 const GoogleButton = ({ children, classes, ...rest }) => (
-  <Button {...rest} raised classes={classes}>
+  <Button {...rest} raised classes={{ root: classes.root }}>
     <GoogleIcon />
     <span className={classes.text}>{children}</span>
   </Button>

@@ -1,4 +1,4 @@
-export default {
+const rememberMe = {
   'User is remembered on page refresh': client => {
     const loginPage = client.page.loginPage();
     const loggedInPage = client.page.loggedInPage();
@@ -43,3 +43,5 @@ export default {
     client.end();
   },
 };
+
+export default rememberMe;
