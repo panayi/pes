@@ -1,6 +1,7 @@
 /* @flow */
 import * as respond from 'utils/respond';
 import * as userModel from 'functions/models/user';
+import log from 'utils/log';
 import { getUserId, getAnonymousUserId } from './utils';
 
 const migrateAnonymousUser = async (
@@ -17,7 +18,7 @@ const migrateAnonymousUser = async (
     res.send('OK');
     next();
   } catch (error) {
-    console.error('Failed to migrate anonymous user', error);
+    log.error('Failed to migrate anonymous user', error);
     respond.internalServerError(res);
   }
 };

@@ -1,39 +1,34 @@
-import algolia from 'lib/algoliaClient';
+import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import log from 'utils/log';
-import { algolia as algoliaConfig } from 'pesposa-config';
 import { database } from 'lib/firebaseClient';
-import serializeAd from 'utils/serializeAdToAlgolia';
+import * as algoliaService from 'services/algolia';
 
-const initialImportAds = async (dataSnapshot, index) => {
-  // Array of data to index
-  const objectsToIndex = [];
+const initialImportAds = async () => {
+  const ads = (await database.ref('/ads/published').once('value')).val();
+  const images = (await database.ref('/ads/images').once('value')).val();
 
-  // Process each child Firebase object
-  dataSnapshot.forEach(childSnapshot => {
-    // Get the key and data from the snapshot
-    const childKey = childSnapshot.key;
-    const childData = childSnapshot.val();
+  const finalAds = R.compose(
+    R.values,
+    R.mapObjIndexed((ad, adId) => {
+      const imagesForAd = images[adId];
+      return R.compose(
+        R.reject(isNilOrEmpty),
+        R.assoc('id', adId),
+        R.assoc('images', imagesForAd),
+      )(ad);
+    }),
+  )(ads);
 
-    childData[algoliaConfig.ID] = childKey;
-
-    // Add object for indexing
-    objectsToIndex.push(serializeAd(childData));
-  });
-
-  // Add or update new objects
-  await index.saveObjects(objectsToIndex);
-
-  return objectsToIndex;
+  return algoliaService.addMany(finalAds);
 };
 
 const initialImport = async () => {
   try {
-    const index = algolia.initIndex(algoliaConfig.ADS_INDEXES.default);
-    const dataSnapshot = await database.ref('/ads').once('value');
-    const ads = await initialImportAds(dataSnapshot, index);
+    const ads = await initialImportAds();
     return [`Imported ${ads.length} ads`];
   } catch (error) {
-    log.error('Algolia: initial ads import failed');
+    log.error('Algolia: Failed to import ads');
     throw error;
   }
 };

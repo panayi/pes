@@ -81,7 +81,7 @@ const categoryLinksSelector = createSelector(
 
 export default R.compose(
   connectData({ categories: models.categories.all }),
-  translate('home'),
+  translate('categories'),
   withProps(
     createStructuredSelector({
       categoryLinks: categoryLinksSelector,

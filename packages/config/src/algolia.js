@@ -21,45 +21,38 @@ export const ADS_INDEXES = {
   byDistance: 'ads_distance_asc',
 };
 
-const algolia = {
-  indexes: [
-    {
-      name: ADS_INDEXES.default,
-      replicas: [
-        {
-          name: ADS_INDEXES.byDateDesc,
-          settings: {
-            ranking: ['desc(createdAt)', ...SECONDARY_RANKING_ATTRIBUTES],
-          },
+export const INDEXES = [
+  {
+    name: ADS_INDEXES.default,
+    replicas: [
+      {
+        name: ADS_INDEXES.byDateDesc,
+        settings: {
+          ranking: ['desc(createdAt)', ...SECONDARY_RANKING_ATTRIBUTES],
         },
-        {
-          name: ADS_INDEXES.byPriceAsc,
-          settings: {
-            ranking: ['asc(price)', ...SECONDARY_RANKING_ATTRIBUTES],
-          },
-        },
-        {
-          name: ADS_INDEXES.byPriceDesc,
-          settings: {
-            ranking: ['desc(price)', ...SECONDARY_RANKING_ATTRIBUTES],
-          },
-        },
-        {
-          name: ADS_INDEXES.byDistance,
-          settings: {
-            ranking: [
-              'geo',
-              ...R.without(['geo'], SECONDARY_RANKING_ATTRIBUTES),
-            ],
-          },
-        },
-      ],
-      settings: {
-        searchableAttributes: ['title', 'body'],
-        attributesForFaceting: ['category', 'user'],
       },
+      {
+        name: ADS_INDEXES.byPriceAsc,
+        settings: {
+          ranking: ['asc(price)', ...SECONDARY_RANKING_ATTRIBUTES],
+        },
+      },
+      {
+        name: ADS_INDEXES.byPriceDesc,
+        settings: {
+          ranking: ['desc(price)', ...SECONDARY_RANKING_ATTRIBUTES],
+        },
+      },
+      {
+        name: ADS_INDEXES.byDistance,
+        settings: {
+          ranking: ['geo', ...R.without(['geo'], SECONDARY_RANKING_ATTRIBUTES)],
+        },
+      },
+    ],
+    settings: {
+      searchableAttributes: ['title', 'body'],
+      attributesForFaceting: ['category', 'user'],
     },
-  ],
-};
-
-export default algolia;
+  },
+];

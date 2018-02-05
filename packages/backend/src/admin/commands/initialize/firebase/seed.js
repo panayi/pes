@@ -41,7 +41,7 @@ const seedCountries = async () => {
     R.compose(
       R.map(countryCode => {
         // eslint-disable-next-line
-        const file = require('svg-country-flags/png1000px/' +
+        const file = require('pesposa-database/src/seeds/images/countries/' +
           R.toLower(countryCode) +
           '.png');
         return storageService.uploadImage(

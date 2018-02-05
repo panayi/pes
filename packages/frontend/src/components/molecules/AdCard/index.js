@@ -131,6 +131,7 @@ export default R.compose(
       ad,
       imgixParams: {
         w: width,
+        auto: ['compress'],
       },
     }),
   })),

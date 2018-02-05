@@ -14,11 +14,11 @@ const logger = R.curry((type, message) => {
   if (isFirebaseFunctionsEnv) {
     // There's no console.success
     const finalType = type === 'success' ? 'info' : type;
-    return console[finalType](message);
+    return console[finalType](message); // eslint-disable-line no-console
   }
 
   const color = typeToColor[type];
-  return console.log(`${chalk[color](type)}: ${message}`);
+  return console.log(`${chalk[color](type)}: ${message}`); // eslint-disable-line no-console
 });
 
 const info = logger('info');

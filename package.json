@@ -34,8 +34,9 @@
     "build:frontend": "cd packages/frontend && yarn build",
     "build:backend": "cd packages/backend && yarn build",
     "build": "run-p build:frontend build:backend",
+    "admin": "cd packages/backend && yarn admin",
     "deploy:frontend": "cd packages/frontend && yarn deploy",
-    "deploy:functions": "cd packages/backend && yarn deploy:functions",
+    "deploy:functions": "cd packages/backend && yarn deploy",
     "deploy:database": "cd packages/database && yarn deploy",
     "deploy": "run-p deploy:frontend deploy:functions && yarn deploy:database"
   },

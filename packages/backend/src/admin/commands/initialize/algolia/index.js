@@ -10,9 +10,7 @@ export const canInitialize = async () => {
 
   if (!isEmpty) {
     throw new Error(
-      `Algolia: App with id=${
-        env.REACT_APP_ALGOLIA_APP_ID
-      } already contains indexes.`,
+      `Algolia: App with id=${env.algoliaAppId} already contains indexes.`,
     );
   }
 
