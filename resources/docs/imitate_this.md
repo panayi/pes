@@ -1,1 +1,1 @@
-1. [https://www.thehunt.com/](https://www.thehunt.com/)
+1. [thehunt.com](https://www.thehunt.com/)

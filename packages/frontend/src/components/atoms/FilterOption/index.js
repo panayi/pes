@@ -62,8 +62,8 @@ const FilterOption = ({
         });
 
   return (
-    <ListItem classes={{ root: classes.item }} disableRipple dense>
-      <ButtonComponent {...finalButtonProps}>
+    <ListItem classes={{ root: classes.item }} dense>
+      <ButtonComponent disableRipple {...finalButtonProps}>
         <span className={classes.label}>{children}</span>
         <span>
           <CheckIcon className={classes.icon} />
