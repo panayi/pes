@@ -14,11 +14,11 @@ type Props = {
 const styles = theme => ({
   page: {
     ...theme.mixins.gutters({}),
-    paddingTop: theme.spacing.unit * 2.5,
-    paddingBottom: theme.spacing.unit * 2.5,
+    paddingTop: theme.spacing.unit * 1.5,
+    paddingBottom: theme.spacing.unit * 1.5,
     flex: '1 1 100%',
     minHeight: '100%',
-    backgroundColor: theme.palette.grey[200],
+    backgroundColor: 'transparent',
   },
   fixed: {
     flex: '1 1 100%',

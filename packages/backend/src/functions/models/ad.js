@@ -10,6 +10,13 @@ import * as adImageModel from './adImage';
 export const get = async (adId: ID) =>
   database.ref(`/ads/published/${adId}`).once('value');
 
+export const getWithImages = async (adId: ID) => {
+  const ad: Ad = (await get(adId)).val();
+  const images = (await adImageModel.getAll(adId)).val();
+
+  return R.merge(ad, { images });
+};
+
 export const create = async (ad: PendingReviewAd) => {
   const { images, user } = ad;
   const userSnapshot = await userModel.get(user);
@@ -28,14 +35,13 @@ export const create = async (ad: PendingReviewAd) => {
 
   // Save images
   const hasImages = !isNilOrEmpty(images);
-  const savedImages = hasImages
-    ? await adImageModel.setAdImages(images, adId)
-    : null;
+  if (hasImages) {
+    await adImageModel.setAdImages(images, adId);
+  }
 
   // Finally, index ad on algolia
-  const savedAd: Ad = (await get(adId)).val();
-  const algoliaAd = R.merge(savedAd, { images: savedImages });
-  await algoliaService.add(algoliaAd, adId);
+  const adToIndex: Ad = (await getWithImages(adId)).val();
+  await algoliaService.add(adToIndex, adId);
 
   return adId;
 };

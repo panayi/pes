@@ -7,7 +7,9 @@ import { createStructuredSelector } from 'reselect';
 import { withStateHandlers, lifecycle } from 'recompose';
 import scriptLoader from 'react-async-script-loader';
 import TextField from 'material-ui/TextField';
+import { InputAdornment } from 'material-ui/Input';
 import { withStyles } from 'material-ui/styles';
+import LocationIcon from 'material-ui-icons/LocationOn';
 import { propsChanged } from 'pesposa-utils';
 import { selectors as locationSelectors } from 'store/firebase/profile/location';
 
@@ -26,6 +28,7 @@ type Props = {
   setValue: Function,
   resetValue: Function,
   selectAddress: Function,
+  classes: Object,
 };
 
 type State = {
@@ -33,14 +36,18 @@ type State = {
   selectedAddress: string,
 };
 
-const styles = {
+const styles = theme => ({
   '@global': {
     [PAC_CONTAINER_CLASS]: {
       zIndex: 10000,
       position: ['static', '!important'],
     },
   },
-};
+  locationIcon: {
+    alignSelf: 'center',
+    color: theme.palette.primary[200],
+  },
+});
 
 class SearchLocation extends Component<Props, State> {
   static defaultProps = {
@@ -128,7 +135,7 @@ class SearchLocation extends Component<Props, State> {
   };
 
   render() {
-    const { value, isScriptLoadSucceed } = this.props;
+    const { value, isScriptLoadSucceed, classes } = this.props;
 
     return (
       <div style={{ position: 'relative' }}>
@@ -136,12 +143,23 @@ class SearchLocation extends Component<Props, State> {
           inputRef={ref => {
             this.elements.searchBox = ref;
           }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment
+                position="start"
+                classes={{ root: classes.locationIcon }}
+              >
+                <LocationIcon />
+              </InputAdornment>
+            ),
+          }}
           placeholder="Change your location"
           disabled={!isScriptLoadSucceed}
           value={value}
           onChange={this.handleChange}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
+          fullWidth
         />
         <div
           ref={ref => {

@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { createMuiTheme } from 'material-ui/styles';
 import { green, purple } from 'material-ui/colors';
+import { layout } from 'pesposa-config';
 
 const shadows = [
   'none',
@@ -39,14 +40,15 @@ export default R.compose(R.assoc('shadows', shadows), createMuiTheme)({
     fontFamily: '"Roboto", "Helvetica", sans-serif',
     fontSize: 13,
   },
-  custom: {
-    borderRadius: {
-      xs: 2,
-      sm: 4,
-      md: 8,
-      lg: 10,
-      xl: 12,
-    },
-    sidebarWidth: 240,
+  layout: {
+    headerHeight: layout.HEADER_HEIGHT,
+    sidebarWidth: layout.SIDEBAR_WIDTH,
+  },
+  borderRadius: {
+    xs: 2,
+    sm: 4,
+    md: 8,
+    lg: 10,
+    xl: 12,
   },
 });

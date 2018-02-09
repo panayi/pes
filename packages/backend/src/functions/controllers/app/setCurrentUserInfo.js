@@ -1,6 +1,7 @@
 /* @flow */
 import requestIp from 'request-ip';
 import * as respond from 'utils/respond';
+import log from 'utils/log';
 import * as userModel from 'functions/models/user';
 import { getUserId } from './utils';
 
@@ -19,7 +20,7 @@ const setCurrentUserInfo = async (
     res.send('OK');
     next();
   } catch (error) {
-    console.error('Failed to set IP of user', error);
+    log.error('Failed to set IP of user', error);
     respond.internalServerError(res);
   }
 };

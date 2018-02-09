@@ -34,7 +34,7 @@ const styles = theme => ({
     height: 300,
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: theme.custom.borderRadius.sm,
+    borderRadius: theme.borderRadius.sm,
     backgroundColor: '#20031C',
   },
   content: {

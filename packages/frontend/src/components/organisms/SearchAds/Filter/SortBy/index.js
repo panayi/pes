@@ -2,31 +2,40 @@ import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import Select from 'material-ui/Select';
-import Input from 'material-ui/Input';
+import List from 'material-ui/List';
+import { withStyles } from 'material-ui/styles';
 import {
   selectors as filterAdsSelectors,
   actions as filterAdsActions,
   constants as filterAdsConstants,
 } from 'store/filterAds';
+import translate from 'components/hocs/translate';
+import FilterOption from 'components/atoms/FilterOption';
 
-const SortBy = ({ sortBy, setSortBy }) => (
-  <Select
-    native
-    value={sortBy || ''}
-    onChange={event => setSortBy(event.target.value)}
-    input={<Input id="sort-by" />}
-  >
-    <option value="">Sort by</option>
+const styles = {
+  list: {
+    flex: 0,
+    padding: 0,
+  },
+};
+
+const SortBy = ({ sortBy, setSortBy, t, classes }) => (
+  <List classes={{ root: classes.list }}>
     {R.map(
       sortByOption => (
-        <option key={sortByOption} value={sortByOption}>
-          {sortByOption}
-        </option>
+        <FilterOption
+          key={sortByOption}
+          active={sortByOption === sortBy}
+          buttonProps={{
+            onClick: () => setSortBy(sortByOption),
+          }}
+        >
+          {t(sortByOption)}
+        </FilterOption>
       ),
-      filterAdsConstants.SORT_BY_OPTIONS_KEYS,
+      filterAdsConstants.SORT_BY_OPTIONS_WITHOUT_DEFAULT_KEYS,
     )}
-  </Select>
+  </List>
 );
 
 const mapStateToProps = createStructuredSelector({
@@ -37,4 +46,8 @@ const mapDispatchToProps = {
   setSortBy: filterAdsActions.setSortBy,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SortBy);
+export default R.compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  translate('sortByOptions'),
+  withStyles(styles),
+)(SortBy);

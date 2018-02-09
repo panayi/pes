@@ -15,7 +15,7 @@ import Login from 'components/organisms/Login';
 
 const ShowLoginButton = hideUser(Login.showButton);
 
-const MessagesLink = hideVisitor(Link);
+const MessagesLink = hideVisitor(Link.icon);
 
 const styles = theme => ({
   header: {
@@ -25,7 +25,7 @@ const styles = theme => ({
     padding: 0,
   },
   logoArea: {
-    flex: `0 0 ${theme.custom.sidebarWidth}px`,
+    flex: `0 0 ${theme.layout.sidebarWidth}px`,
   },
   logoText: {
     textTransform: 'uppercase',

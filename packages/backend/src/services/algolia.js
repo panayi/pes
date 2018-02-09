@@ -1,78 +1,127 @@
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { algolia as algoliaConfig } from 'pesposa-config';
 import algolia from 'lib/algoliaClient';
+import computedProp from 'utils/computedProp';
 import log from 'utils/log';
-import serializeAd from 'utils/serializeAdToAlgolia';
 
 const adsIndexName = algoliaConfig.ADS_INDEXES.default;
 
-// Add or update ad
-export const add = (ad, adId) => {
-  const index = algolia.initIndex(adsIndexName);
+// FIXME: This is only needed for legacy ads
+// Should remove/refactor later
+const MAX_BODY_LENGTH = 1500;
 
-  const finalAd = R.assoc(algoliaConfig.ID, adId, ad);
+const serializeAd = (ad, id) =>
+  R.compose(
+    R.evolve({
+      body: str => str.substring(0, MAX_BODY_LENGTH),
+      images: R.compose(
+        R.filter(
+          R.both(
+            R.propSatisfies(R.is(String), 'fullPath'),
+            R.propSatisfies(R.is(Object), 'dimensions'),
+          ),
+        ),
+        R.map(
+          R.compose(
+            R.evolve({
+              dimensions: R.pick(['width', 'height']),
+            }),
+            R.pick(['fullPath', 'dimensions']),
+          ),
+        ),
+        R.defaultTo([]),
+        R.values,
+      ),
+    }),
+    R.pick([
+      algoliaConfig.ID,
+      'title',
+      'body',
+      'category',
+      'price',
+      'user',
+      'images',
+      'createdAt',
+      'location',
+      '_geoloc',
+    ]),
+    R.unless(
+      R.propSatisfies(isNilOrEmpty, 'location'),
+      R.compose(
+        computedProp(
+          'location',
+          R.compose(R.omit(['geoposition']), R.prop('location')),
+        ),
+        computedProp(
+          '_geoloc',
+          R.converge(
+            R.compose(R.zipObj(['lat', 'lng']), R.unapply(R.identity)),
+            [
+              R.path(['location', 'geoposition', 'latitude']),
+              R.path(['location', 'geoposition', 'longitude']),
+            ],
+          ),
+        ),
+      ),
+    ),
+    computedProp(algoliaConfig.ID, R.always(id)),
+  )(ad);
 
-  return new Promise((resolve, reject) => {
-    const serialized = serializeAd(finalAd);
-    index.saveObject(serialized, err => {
-      if (err) {
-        reject(err);
-      }
+const getIndex = () => algolia.initIndex(adsIndexName);
 
-      resolve();
-      log.info(
-        `Firebase object with id=${
-          finalAd[algoliaConfig.ID]
-        } created or updated in Algolia`,
-        serialized,
-      );
-    });
-  });
+export const addMany = async ads => {
+  try {
+    const index = getIndex();
+    const serializeAds = R.map(ad => serializeAd(ad, ad.id), ads);
+    await index.saveObjects(serializeAds);
+    log.info('Multiple ads created/updated in Algolia');
+    return serializeAds;
+  } catch (error) {
+    log.error('Failed to create/update multiple ads in Algolia, with error:');
+    log.error(error);
+    throw error;
+  }
 };
 
-export const update = (props, adId) => {
-  const index = algolia.initIndex(adsIndexName);
-  const finalProps = R.assoc(algoliaConfig.ID, adId, props);
+export const add = async (ad, id) => {
+  try {
+    const index = getIndex();
+    const serializedAd = serializeAd(ad, id);
+    await index.saveObject(serializedAd);
+    log.info(`Ad with id=${id} created or updated in Algolia`);
+    return serializedAd;
+  } catch (error) {
+    log.error(
+      `Failed to create/update ad with id=${id} in Algolia, with error:`,
+    );
+    log.error(error);
+    throw error;
+  }
+};
 
-  return new Promise((resolve, reject) => {
+export const update = async (props, id) => {
+  try {
+    const index = getIndex();
     // Ensure the object exists
-    index.getObject(adId, fetchError => {
-      if (fetchError) {
-        reject(
-          `Failed to update a non-existent object (id=${adId}) on Algolia`,
-        );
-        return;
-      }
-
-      const serialized = serializeAd(finalProps);
-      index.partialUpdateObject(serializeAd(serialized), err => {
-        if (err) {
-          reject(err);
-        }
-
-        resolve();
-        log.info(
-          `Firebase object with id=${
-            finalProps[algoliaConfig.ID]
-          } updated in Algolia`,
-          serialized,
-        );
-      });
-    });
-  });
+    await index.getObject(id);
+    const serializedProps = serializeAd(props, id);
+    await index.partialUpdateObject(serializedProps);
+    return serializedProps;
+  } catch (error) {
+    log.error(`Failed to update ad with id=${id} in Algolia, with error:`);
+    log.error(error);
+    throw error;
+  }
 };
 
-export const remove = adId => {
-  const index = algolia.initIndex(adsIndexName);
-
-  return new Promise((resolve, reject) => {
-    index.deleteObject(adId, err => {
-      if (err) {
-        reject(err);
-      }
-
-      resolve();
-      log.info(`Firebase object with id=${adId} deleted in Algolia`);
-    });
-  });
+export const remove = async id => {
+  try {
+    const index = getIndex();
+    await index.deleteObject(id);
+  } catch (error) {
+    log.error(`Failed to delete ad with id=${id} in Algolia, with error:`);
+    log.error(error);
+    throw error;
+  }
 };

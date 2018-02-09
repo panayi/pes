@@ -41,6 +41,7 @@ const adThumbnailSelector = createCachedSelector(
     return {
       url: buildUrl(fullPath, imgixParams),
       height,
+      dimensions,
     };
   },
 )(adIdSelector);

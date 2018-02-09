@@ -4,7 +4,7 @@ import algolia from 'lib/algoliaClient';
 import log from 'utils/log';
 
 const createIndex = async () => {
-  const { indexes } = algoliaConfig;
+  const { INDEXES } = algoliaConfig;
 
   try {
     await Promise.all(
@@ -37,13 +37,13 @@ const createIndex = async () => {
         }, replicaIndexes);
 
         return Promise.all([...replicaPromises, rootPromise]);
-      }, indexes),
+      }, INDEXES),
     );
 
     return R.map(({ name, replicas }) => {
       const replicasList = R.compose(R.join(', '), R.pluck('name'))(replicas);
       return `Created "${name}" index with replicas [${replicasList}]`;
-    }, indexes);
+    }, INDEXES);
   } catch (error) {
     log.error('Algolia: Create indexes failed');
     throw error;
