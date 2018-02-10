@@ -2,11 +2,11 @@
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { withProps, lifecycle } from 'recompose';
-import { actions as filterAdsActions } from 'store/filterAds';
+import { actions as categoryActions } from 'store/search/category';
 import ListAds from 'components/organisms/ListAds';
 
 const mapDispatchToProps = {
-  setSelectedCategory: filterAdsActions.setSelectedCategory,
+  setSelectedCategory: categoryActions.setCategory,
 };
 
 export default R.compose(

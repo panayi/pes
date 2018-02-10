@@ -12,7 +12,7 @@ import { WindowScroller, AutoSizer } from 'react-virtualized';
 import { withStyles } from 'material-ui/styles';
 import { propsChanged } from 'pesposa-utils';
 import omitProps from 'utils/omitProps';
-import { selectors as filterAdsSelectors } from 'store/filterAds';
+import { selectors as searchSelectors } from 'store/search';
 import FetchAdsProgress from 'components/molecules/FetchAdsProgress';
 import * as constants from './constants';
 import Masonry from './Masonry';
@@ -56,7 +56,7 @@ export class ListAds extends Component {
   }
 
   reset() {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     this.loadNextPage = R.memoize(this.props.refine);
   }
 
@@ -125,7 +125,7 @@ export class ListAds extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  searchParams: filterAdsSelectors.searchParamsSelector,
+  searchParams: searchSelectors.searchParamsSelector,
 });
 
 export default R.compose(

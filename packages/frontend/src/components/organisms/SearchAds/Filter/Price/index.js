@@ -2,7 +2,7 @@ import React from 'react';
 import { Control, Form } from 'react-redux-form';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
-import { constants as filterAdsConstants } from 'store/filterAds';
+import { constants as priceConstants } from 'store/search/price';
 
 const styles = theme => ({
   form: {
@@ -21,7 +21,7 @@ const styles = theme => ({
 });
 
 const FilterByPrice = ({ classes }) => (
-  <Form className={classes.form} model={filterAdsConstants.PRICE_MODEL_PATH}>
+  <Form className={classes.form} model={priceConstants.MODEL_PATH}>
     <Control.text
       model=".min"
       id="min"

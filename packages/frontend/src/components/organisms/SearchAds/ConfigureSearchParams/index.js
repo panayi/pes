@@ -7,9 +7,9 @@ import { lifecycle, withProps } from 'recompose';
 import { Configure } from 'react-instantsearch/dom';
 import { connectHitsPerPage } from 'react-instantsearch/connectors';
 import {
-  selectors as filterAdsSelectors,
-  constants as filterAdsConstants,
-} from 'store/filterAds';
+  selectors as searchSelectors,
+  constants as searchConstants,
+} from 'store/search';
 
 type Props = {
   searchParams: Object,
@@ -20,13 +20,13 @@ export const ConfigureSearchParams = ({ searchParams }: Props) => (
 );
 
 const mapStateToProps = createStructuredSelector({
-  searchParams: filterAdsSelectors.searchParamsSelector,
+  searchParams: searchSelectors.searchParamsSelector,
 });
 
 export default R.compose(
   connect(mapStateToProps),
   withProps({
-    defaultRefinement: filterAdsConstants.HITS_PER_PAGE,
+    defaultRefinement: searchConstants.HITS_PER_PAGE,
     items: [],
   }),
   connectHitsPerPage,
@@ -39,7 +39,7 @@ export default R.compose(
       );
       if (searchParamsChanged) {
         // FIXME: Trick to get the page to reset
-        nextProps.refine({ hitsPerPage: filterAdsConstants.HITS_PER_PAGE });
+        nextProps.refine({ hitsPerPage: searchConstants.HITS_PER_PAGE });
       }
     },
   }),

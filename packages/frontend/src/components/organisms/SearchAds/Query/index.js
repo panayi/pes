@@ -4,7 +4,7 @@ import { Control, Form } from 'react-redux-form';
 import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import SearchIcon from 'material-ui-icons/Search';
-import { constants as filterAdsConstants } from 'store/filterAds';
+import { constants as queryConstants } from 'store/search/query';
 
 type Props = {
   classes: Object,
@@ -62,7 +62,7 @@ const styles = theme => ({
 });
 
 export const QueryAds = ({ classes }: Props) => (
-  <Form className={classes.wrapper} model={filterAdsConstants.QUERY_MODEL_PATH}>
+  <Form className={classes.wrapper} model={queryConstants.MODEL_PATH}>
     <div className={classes.searchIcon}>
       <SearchIcon />
     </div>
