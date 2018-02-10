@@ -3,10 +3,13 @@ import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { lifecycle } from 'recompose';
+import { lifecycle, withProps } from 'recompose';
 import { Configure } from 'react-instantsearch/dom';
-import { connectPagination } from 'react-instantsearch/connectors';
-import { selectors as filterAdsSelectors } from 'store/filterAds';
+import { connectHitsPerPage } from 'react-instantsearch/connectors';
+import {
+  selectors as filterAdsSelectors,
+  constants as filterAdsConstants,
+} from 'store/filterAds';
 
 type Props = {
   searchParams: Object,
@@ -22,7 +25,11 @@ const mapStateToProps = createStructuredSelector({
 
 export default R.compose(
   connect(mapStateToProps),
-  connectPagination,
+  withProps({
+    defaultRefinement: filterAdsConstants.HITS_PER_PAGE,
+    items: [],
+  }),
+  connectHitsPerPage,
   lifecycle({
     componentWillReceiveProps(nextProps) {
       // Reset page when search parameters change
@@ -31,7 +38,8 @@ export default R.compose(
         this.props.searchParams,
       );
       if (searchParamsChanged) {
-        nextProps.refine(1);
+        // FIXME: Trick to get the page to reset
+        nextProps.refine({ hitsPerPage: filterAdsConstants.HITS_PER_PAGE });
       }
     },
   }),

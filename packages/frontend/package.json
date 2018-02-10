@@ -31,7 +31,7 @@
     "react-dropzone": "^4.2.7",
     "react-helmet": "^5.2.0",
     "react-imgix": "^7.1.1",
-    "react-instantsearch": "^4.4.2",
+    "react-instantsearch": "^4.5.1",
     "react-jss": "^8.2.1",
     "react-masonry-infinite": "^1.2.2",
     "react-redux": "^5.0.6",

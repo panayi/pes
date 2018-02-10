@@ -93,7 +93,11 @@ export const searchParamsSelector = createSelector(
       filters,
       hitsPerPage: constants.HITS_PER_PAGE,
       aroundLatLng:
-        geoposition && `${geoposition.latitude}, ${geoposition.longitude}`,
+        index === constants.SORT_BY_OPTIONS.byDateDesc
+          ? undefined
+          : geoposition && `${geoposition.latitude}, ${geoposition.longitude}`,
+      aroundLatLngViaIP:
+        index === constants.SORT_BY_OPTIONS.byDateDesc ? true : undefined,
       getRankingInfo: true,
     }),
 );

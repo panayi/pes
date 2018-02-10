@@ -36,7 +36,7 @@ export class ListAds extends Component {
   };
 
   componentWillMount() {
-    this.setLoadNextPage();
+    this.reset();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,7 +45,7 @@ export class ListAds extends Component {
         nextProps.currentPage === 0) ||
       propsChanged(['searchParams'], this.props, nextProps)
     ) {
-      this.setLoadNextPage();
+      this.reset();
     }
 
     if (propsChanged(['hits'], this.props, nextProps)) {
@@ -55,7 +55,8 @@ export class ListAds extends Component {
     }
   }
 
-  setLoadNextPage() {
+  reset() {
+    window.scrollTo(0, 0);
     this.loadNextPage = R.memoize(this.props.refine);
   }
 
