@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Formik } from 'formik';
 import {
   selectors as priceSelectors,
   actions as priceActions,
 } from 'store/search/price';
+import connectSearch from 'components/hocs/connectSearch';
 import Form from './Form';
 
 class FilterByPrice extends Component {
@@ -35,4 +35,6 @@ const mapDispatchToProps = {
   setPrice: priceActions.setPrice,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FilterByPrice);
+export default connectSearch(mapStateToProps, mapDispatchToProps)(
+  FilterByPrice,
+);

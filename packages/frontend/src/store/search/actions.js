@@ -8,6 +8,7 @@ import * as totalHitsSelectors from './totalHits/selectors';
 import * as pageActions from './page/actions';
 import * as selectors from './selectors';
 import * as types from './types';
+import { getWrappedState } from './utils';
 
 export const loadMore = createAction(types.LOAD_MORE);
 
@@ -15,7 +16,12 @@ export const requestStarted = createAction(types.SEARCH_REQUEST_STARTED);
 export const requestSucceeded = createAction(types.SEARCH_REQUEST_SUCCEEDED);
 export const requestFailed = createAction(types.SEARCH_REQUEST_FAILED);
 
-const search = (options = {}) => async (dispatch, getState) => {
+const search = (options = {}) => async (
+  dispatch,
+  getState,
+  globalDispatch,
+  searchId,
+) => {
   const { firstPage } = options;
 
   dispatch(requestStarted());
@@ -24,7 +30,7 @@ const search = (options = {}) => async (dispatch, getState) => {
     dispatch(pageActions.resetPage());
   }
 
-  const state = getState();
+  const state = getWrappedState(getState, searchId);
   const indexName = selectors.indexNameSelector(state);
   const params = selectors.searchParamsSelector(state);
   const currentPage = pageSelectors.pageSelector(state);
@@ -43,8 +49,13 @@ const search = (options = {}) => async (dispatch, getState) => {
 
 export const loadFirstPage = () => search({ firstPage: true });
 
-export const loadPage = page => (dispatch, getState) => {
-  const state = getState();
+export const loadPage = page => (
+  dispatch,
+  getState,
+  globalDispatch,
+  searchId,
+) => {
+  const state = getWrappedState(getState, searchId);
   const isRequestPending = requestSelectors.isRequestPendingSelector(state);
 
   if (isRequestPending) {

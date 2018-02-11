@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Proptypes from 'prop-types';
 import * as R from 'ramda';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { WindowScroller, AutoSizer } from 'react-virtualized';
 import { withStyles } from 'material-ui/styles';
@@ -12,6 +11,7 @@ import {
 } from 'store/search';
 import { selectors as hitsSelectors } from 'store/search/hits';
 import { selectors as pageSelectors } from 'store/search/page';
+import connectSearch from 'components/hocs/connectSearch';
 import * as constants from './constants';
 import Masonry from './Masonry';
 import FetchAdsProgress from './FetchAdsProgress';
@@ -115,22 +115,6 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  // connectInfiniteHits,
-  // connectStateResults,
-  // Available props here:
-  // withProps(({ searchState }) => ({
-  //   currentPage: searchState.page,
-  // })),
-  // omitProps([
-  //   'searchState',
-  //   'searchResults',
-  //   'searching',
-  //   'allSearchResults',
-  //   'isSearchStalled',
-  //   'error',
-  //   'searchingForFacetValues',
-  //   'props',
-  // ]),
-  connect(mapStateToProps, mapDispatchToProps),
+  connectSearch(mapStateToProps, mapDispatchToProps),
   withStyles(styles),
 )(ListAds);

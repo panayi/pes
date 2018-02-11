@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
 import MoodBadIcon from 'material-ui-icons/MoodBad';
@@ -8,6 +7,7 @@ import { withStyles } from 'material-ui/styles';
 import { selectors as requestSelectors } from 'store/search/request';
 import { selectors as totalHitsSelector } from 'store/search/totalHits';
 import { selectors as searchSelectors } from 'store/search';
+import connectSearch from 'components/hocs/connectSearch';
 import Spinner from 'components/atoms/Spinner';
 
 const styles = theme => ({
@@ -35,6 +35,16 @@ const styles = theme => ({
 });
 
 class FetchAdsProgress extends Component {
+  static renderNoResultsProfile() {
+    return (
+      <React.Fragment>
+        <Typography type="headline" color="textSecondary">
+          {"You haven't posted anything yet!"}
+        </Typography>
+      </React.Fragment>
+    );
+  }
+
   renderSpinner() {
     const { isLoading, classes, theme } = this.props;
 
@@ -45,18 +55,28 @@ class FetchAdsProgress extends Component {
     ) : null;
   }
 
-  renderNoResults() {
-    const { noResults, classes } = this.props;
-
-    return noResults ? (
-      <div className={classes.noResults}>
-        <MoodBadIcon className={classes.noResultsIcon} />
+  renderNoResultsDefault() {
+    return (
+      <React.Fragment>
+        <MoodBadIcon className={this.props.classes.noResultsIcon} />
         <Typography type="display3" component="h2" paragraph>
           Oh snap!
         </Typography>
         <Typography type="headline" color="textSecondary">
           No results found, try looking for something different.
         </Typography>
+      </React.Fragment>
+    );
+  }
+
+  renderNoResults() {
+    const { noResults, isProfileSearch, classes } = this.props;
+
+    return noResults ? (
+      <div className={classes.noResults}>
+        {isProfileSearch
+          ? FetchAdsProgress.renderNoResultsProfile()
+          : this.renderNoResultsDefault()}
       </div>
     ) : null;
   }
@@ -88,9 +108,10 @@ const mapStateToProps = createStructuredSelector({
   isLoading: requestSelectors.isRequestPendingSelector,
   noResults: totalHitsSelector.noResultsSelector,
   noMoreResults: searchSelectors.noMoreResultsSelector,
+  isProfileSearch: searchSelectors.isProfileSearchSelector,
 });
 
 export default R.compose(
-  connect(mapStateToProps),
+  connectSearch(mapStateToProps),
   withStyles(styles, { withTheme: true }),
 )(FetchAdsProgress);

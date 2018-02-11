@@ -14,3 +14,6 @@ const searchParamsActionTypes = R.compose(R.values, R.mergeAll)([
 ]);
 
 export const isSearchParamsAction = R.contains(R.__, searchParamsActionTypes);
+
+export const getWrappedState = (getState, searchId) =>
+  R.prop(searchId, getState());

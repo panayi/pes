@@ -1,23 +1,34 @@
 /* @flow */
 import * as R from 'ramda';
-import { connect } from 'react-redux';
 import { withProps, lifecycle } from 'recompose';
-import { actions as categoryActions } from 'store/search/category';
+import { createStructuredSelector } from 'reselect';
+import {
+  selectors as categorySelectors,
+  actions as categoryActions,
+} from 'store/search/category';
+import connectSearch from 'components/hocs/connectSearch';
 import ListAds from 'components/organisms/ListAds';
+
+const mapStateToProps = createStructuredSelector({
+  category: categorySelectors.categorySelector,
+});
 
 const mapDispatchToProps = {
   setSelectedCategory: categoryActions.setCategory,
 };
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connectSearch(mapStateToProps, mapDispatchToProps),
   withProps(props => ({
-    currentCategory: R.path(['match', 'params', 'category'], props),
+    currentCategory: R.pathOr(null, ['match', 'params', 'category'], props),
   })),
   lifecycle({
     componentWillMount() {
-      const { currentCategory, setSelectedCategory } = this.props;
-      setSelectedCategory(currentCategory);
+      const { category, currentCategory, setSelectedCategory } = this.props;
+
+      if (currentCategory !== category) {
+        setSelectedCategory(currentCategory);
+      }
     },
     componentWillReceiveProps(nextProps) {
       if (nextProps.currentCategory !== this.props.currentCategory) {

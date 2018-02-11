@@ -12,7 +12,7 @@ import loginReducer, { constants as loginConstants } from './login';
 import modalsReducer from './modals';
 import formsReducer from './forms';
 import postAdReducer from './postAd';
-import searchReducer, { constants as searchConstants } from './search';
+import searchReducers from './search';
 
 export const makeRootReducer = asyncReducers =>
   combineReducers({
@@ -24,7 +24,7 @@ export const makeRootReducer = asyncReducers =>
     [loginConstants.ROOT_KEY]: loginReducer,
     modals: modalsReducer,
     postAd: postAdReducer,
-    [searchConstants.ROOT_KEY]: searchReducer,
+    ...searchReducers,
     ...asyncReducers,
   });
 

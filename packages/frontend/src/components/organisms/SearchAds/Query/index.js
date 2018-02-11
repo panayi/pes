@@ -1,12 +1,12 @@
 /* @flow */
 import React, { Component } from 'react';
 import { createStructuredSelector } from 'reselect';
-import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import {
   selectors as querySelectors,
   actions as queryActions,
 } from 'store/search/query';
+import connectSearch from 'components/hocs/connectSearch';
 import Form from './Form';
 
 type Props = {
@@ -39,4 +39,4 @@ const mapDispatchToProps = {
   setQuery: queryActions.setQuery,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(QueryAds);
+export default connectSearch(mapStateToProps, mapDispatchToProps)(QueryAds);

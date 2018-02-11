@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
+import { propSelector } from 'pesposa-utils';
 import * as categorySelectors from './category/selectors';
 import * as locationSelectors from './location/selectors';
 import * as priceSelectors from './price/selectors';
@@ -8,13 +9,17 @@ import * as querySelectors from './query/selectors';
 import * as pageSelectors from './page/selectors';
 import * as sortBySelectors from './sortBy/selectors';
 import * as totalHitsSelectors from './totalHits/selectors';
+import * as userSelectors from './user/selectors';
 import * as sortByConstants from './sortBy/constants';
 import * as constants from './constants';
 
 const facetFiltersSelector = createSelector(
   categorySelectors.categorySelector,
-  selectedCategory =>
-    isNilOrEmpty(selectedCategory) ? null : `category:${selectedCategory}`,
+  userSelectors.userSelector,
+  R.useWith(R.concat, [
+    category => (isNilOrEmpty(category) ? [] : [`category:${category}`]),
+    user => (isNilOrEmpty(user) ? [] : [`user:${user}`]),
+  ]),
 );
 
 const filtersSelector = createSelector(
@@ -77,7 +82,12 @@ export const searchParamsSelector = createSelector(
 export const noMoreResultsSelector = createSelector(
   pageSelectors.pageSelector,
   totalHitsSelectors.pagesCountSelector,
-  (currentPage, availablePages) => {
+  totalHitsSelectors.noResultsSelector,
+  (currentPage, availablePages, noResults) => {
+    if (noResults) {
+      return false;
+    }
+
     if (R.isNil(currentPage) || R.isNil(availablePages)) {
       return false;
     }
@@ -86,4 +96,14 @@ export const noMoreResultsSelector = createSelector(
     // Hence, to get total fetched pages, add 1.
     return currentPage + 1 >= availablePages;
   },
+);
+
+export const isHomeSearchSelector = R.compose(
+  R.equals(constants.HOME_SEARCH_ID),
+  propSelector(constants.CONTEXT_SEARCH_ID_KEY),
+);
+
+export const isProfileSearchSelector = R.compose(
+  R.equals(constants.PROFILE_SEARCH_ID),
+  propSelector(constants.CONTEXT_SEARCH_ID_KEY),
 );
