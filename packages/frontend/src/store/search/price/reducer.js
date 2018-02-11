@@ -1,12 +1,15 @@
-import * as constants from './constants';
+import { handleAction } from 'redux-actions';
+import * as types from './types';
 
 const initialState = {
   min: '',
   max: '',
 };
 
-const priceForm = {
-  [constants.ROOT_KEY]: initialState,
-};
+const priceReducer = handleAction(
+  types.SET_PRICE,
+  (state, { payload }) => payload,
+  initialState,
+);
 
-export default priceForm;
+export default priceReducer;

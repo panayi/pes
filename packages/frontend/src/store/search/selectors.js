@@ -5,7 +5,9 @@ import * as categorySelectors from './category/selectors';
 import * as locationSelectors from './location/selectors';
 import * as priceSelectors from './price/selectors';
 import * as querySelectors from './query/selectors';
+import * as pageSelectors from './page/selectors';
 import * as sortBySelectors from './sortBy/selectors';
+import * as totalHitsSelectors from './totalHits/selectors';
 import * as sortByConstants from './sortBy/constants';
 import * as constants from './constants';
 
@@ -32,7 +34,7 @@ const filtersSelector = createSelector(
   },
 );
 
-const indexSelector = createSelector(
+export const indexNameSelector = createSelector(
   sortBySelectors.sortBySelector,
   querySelectors.querySelector,
   (sortBy, queryValue) => {
@@ -52,21 +54,36 @@ export const searchParamsSelector = createSelector(
   querySelectors.querySelector,
   facetFiltersSelector,
   filtersSelector,
-  indexSelector,
+  indexNameSelector,
   locationSelectors.geopositionSelector,
-  (queryValue, facetFilters, filters, index, geoposition) =>
+  (queryValue, facetFilters, filters, indexName, geoposition) =>
     R.reject(isNilOrEmpty, {
-      index,
       query: queryValue,
       facetFilters,
       filters,
       hitsPerPage: constants.HITS_PER_PAGE,
       aroundLatLng:
-        index === sortByConstants.SORT_BY_OPTIONS.byDateDesc
+        indexName === sortByConstants.SORT_BY_OPTIONS.byDateDesc
           ? undefined
           : geoposition && `${geoposition.latitude}, ${geoposition.longitude}`,
       aroundLatLngViaIP:
-        index === sortByConstants.SORT_BY_OPTIONS.byDateDesc ? true : undefined,
+        indexName === sortByConstants.SORT_BY_OPTIONS.byDateDesc
+          ? true
+          : undefined,
       getRankingInfo: true,
     }),
+);
+
+export const noMoreResultsSelector = createSelector(
+  pageSelectors.pageSelector,
+  totalHitsSelectors.pagesCountSelector,
+  (currentPage, availablePages) => {
+    if (R.isNil(currentPage) || R.isNil(availablePages)) {
+      return false;
+    }
+
+    // `page` starts from 0.
+    // Hence, to get total fetched pages, add 1.
+    return currentPage + 1 >= availablePages;
+  },
 );

@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { mapProps } from 'recompose';
-import { connectStateResults } from 'react-instantsearch/connectors';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
 import MoodBadIcon from 'material-ui-icons/MoodBad';
 import { withStyles } from 'material-ui/styles';
+import { selectors as requestSelectors } from 'store/search/request';
+import { selectors as totalHitsSelector } from 'store/search/totalHits';
+import { selectors as searchSelectors } from 'store/search';
 import Spinner from 'components/atoms/Spinner';
 
 const styles = theme => ({
@@ -33,9 +36,9 @@ const styles = theme => ({
 
 class FetchAdsProgress extends Component {
   renderSpinner() {
-    const { searching, classes, theme } = this.props;
+    const { isLoading, classes, theme } = this.props;
 
-    return searching ? (
+    return isLoading ? (
       <div className={classes.spinner}>
         <Spinner spinnerColor={theme.palette.primary.A200} />
       </div>
@@ -81,22 +84,13 @@ class FetchAdsProgress extends Component {
   }
 }
 
-export default R.compose(
-  connectStateResults,
-  mapProps(props => {
-    const searching = props.searching;
-    const noResults = R.pathSatisfies(
-      totalHits => totalHits < 1,
-      ['searchResults', 'nbHits'],
-      props,
-    );
-    const noMoreResults = !props.hasMore && !props.searching && !noResults;
+const mapStateToProps = createStructuredSelector({
+  isLoading: requestSelectors.isRequestPendingSelector,
+  noResults: totalHitsSelector.noResultsSelector,
+  noMoreResults: searchSelectors.noMoreResultsSelector,
+});
 
-    return {
-      searching,
-      noResults,
-      noMoreResults,
-    };
-  }),
+export default R.compose(
+  connect(mapStateToProps),
   withStyles(styles, { withTheme: true }),
 )(FetchAdsProgress);

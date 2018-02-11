@@ -1,6 +1,5 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Configure } from 'react-instantsearch/dom';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { branch } from 'recompose';
@@ -14,7 +13,7 @@ import ProfileBanner from 'components/molecules/ProfileBanner';
 import Layout from 'components/organisms/Layout';
 import ListAds from 'components/organisms/ListAds';
 
-const HITS_PER_PAGE = 12;
+// const HITS_PER_PAGE = 12;
 
 const styles = theme => ({
   userAds: {
@@ -24,12 +23,12 @@ const styles = theme => ({
 
 export const Profile = ({ userId, currentUserId, classes }) => (
   <Layout
-    configureSearch={
-      <Configure
-        facetFilters={`user:${userId || currentUserId}`}
-        hitsPerPage={HITS_PER_PAGE}
-      />
-    }
+  // configureSearch={
+  //   <Configure
+  //     facetFilters={`user:${userId || currentUserId}`}
+  //     hitsPerPage={HITS_PER_PAGE}
+  //   />
+  // }
   >
     <Page fixed>
       <ProfileBanner userId={userId || currentUserId} />

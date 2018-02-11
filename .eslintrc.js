@@ -12,7 +12,6 @@ module.exports = {
   "plugins": [
     "flowtype",
     "ramda",
-    "monorepo"
   ],
   "rules": {
     "no-underscore-dangle": "off",
@@ -26,8 +25,6 @@ module.exports = {
     "import/named": "error",
     "import/newline-after-import": "error",
     "import/no-anonymous-default-export": "error",
-
-    "monorepo/no-relative-import": "error",
 
     "ramda/always-simplification": "error",
     "ramda/any-pass-simplification": "error",

@@ -1,11 +1,12 @@
-import * as constants from './constants';
+import { handleAction } from 'redux-actions';
+import * as types from './types';
 
-const initialState = {
-  value: '',
-};
+const initialState = '';
 
-const queryForm = {
-  [constants.ROOT_KEY]: initialState,
-};
+const queryReducer = handleAction(
+  types.SET_QUERY,
+  (state, { payload }) => payload,
+  initialState,
+);
 
-export default queryForm;
+export default queryReducer;

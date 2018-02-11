@@ -1,14 +1,11 @@
 /* @flow */
 import React from 'react';
-import { Configure } from 'react-instantsearch/dom';
 import { withStyles } from 'material-ui/styles';
 import Header from 'components/organisms/Header';
-import SearchAds from 'components/organisms/SearchAds';
 
 type Props = {
   children: React$Node,
   classes: Object,
-  configureSearch: React$Element<Configure> | null,
 };
 
 const styles = theme => ({
@@ -27,11 +24,10 @@ const styles = theme => ({
   },
 });
 
-const Layout = ({ configureSearch, children, classes }: Props) => (
+const Layout = ({ children, classes }: Props) => (
   <div className={classes.root}>
     <Header />
     {children}
-    {configureSearch || <SearchAds.ConfigureSearchParams />}
   </div>
 );
 

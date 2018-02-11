@@ -14,6 +14,7 @@ import {
   utils as profileUtils,
   constants as profileConstants,
 } from './firebase/profile';
+import { middleware as searchMiddleware } from './search';
 import makeRootReducer from './reducers';
 
 const firebaseAppConfig = {
@@ -42,6 +43,7 @@ const configureStore = (initialState = {}) => {
   const middleware = [
     routerMiddleware(history),
     thunk.withExtraArgument(getFirebase),
+    searchMiddleware,
   ];
 
   // Store Enhancers
