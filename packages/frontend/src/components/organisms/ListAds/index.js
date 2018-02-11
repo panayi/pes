@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
 import { WindowScroller, AutoSizer } from 'react-virtualized';
@@ -11,6 +11,10 @@ import {
 } from 'store/search';
 import { selectors as hitsSelectors } from 'store/search/hits';
 import { selectors as pageSelectors } from 'store/search/page';
+import {
+  selectors as scrollPositionSelectors,
+  actions as scrollPositionActions,
+} from 'store/search/scrollPosition';
 import connectSearch from 'components/hocs/connectSearch';
 import * as constants from './constants';
 import Masonry from './Masonry';
@@ -24,8 +28,10 @@ const styles = {
 
 export class ListAds extends Component {
   static propTypes = {
-    hits: Proptypes.arrayOf(Proptypes.shape({})),
-    classes: Proptypes.shape({}).isRequired,
+    hits: PropTypes.arrayOf(PropTypes.shape({})),
+    scrollPosition: PropTypes.number.isRequired,
+    setScrollPosition: PropTypes.func.isRequired,
+    classes: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
@@ -36,12 +42,20 @@ export class ListAds extends Component {
     this.props.loadPage(0);
   }
 
+  componentDidMount() {
+    window.scrollTo(0, this.props.scrollPosition);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (propsChanged(['hits'], this.props, nextProps)) {
       // FIXME: Find a way to avoid forced update
       // list doesn't update otherwise
       this.autoSizerRef.forceUpdate();
     }
+  }
+
+  componentWillUnmount() {
+    this.props.setScrollPosition(window.scrollY);
   }
 
   handleScroll = ({ scrollTop }) => {
@@ -108,10 +122,12 @@ const mapStateToProps = createStructuredSelector({
   hits: hitsSelectors.hitsSelector,
   page: pageSelectors.pageSelector,
   searchParams: searchSelectors.searchParamsSelector,
+  scrollPosition: scrollPositionSelectors.scrollPositionSelector,
 });
 
 const mapDispatchToProps = {
   loadPage: searchActions.loadPage,
+  setScrollPosition: scrollPositionActions.setScrollPosition,
 };
 
 export default R.compose(
