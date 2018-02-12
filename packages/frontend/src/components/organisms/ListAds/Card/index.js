@@ -8,6 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
 import id from 'utils/id';
 import LineClamp from 'components/atoms/LineClamp';
+import Imgix from 'components/atoms/Imgix';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
 import AdAddress from 'components/atoms/AdAddress';
@@ -57,50 +58,54 @@ const styles = theme => ({
 
 const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
   <div className={classes.root} style={style}>
-    <Card
-      className={classes.ad}
-      classes={{
-        root: classes.adPaperRoot,
-      }}
-      elevation={1}
-      component={Link}
-      to={`/i/${id(hit)}`}
-    >
-      <CardMedia
-        className={classes.media}
-        image={thumbnail && thumbnail.url}
-        style={{ height: `${thumbnailHeight}px` }}
-      >
-        <AdPrice
-          className={classes.price}
-          color="secondary"
-          type="title"
-          ad={hit}
-        />
-      </CardMedia>
-      <CardHeader
-        className={classes.header}
-        classes={{
-          title: classes.headerTitle,
-        }}
-        title={
-          <AdTitle
-            component={LineClamp}
-            type="subheading"
-            ad={hit}
-            lines={2}
-            height={48}
-            tagName="h3"
+    <Imgix params={constants.IMGIX_PARAMS} image={thumbnail}>
+      {({ src }) => (
+        <Card
+          className={classes.ad}
+          classes={{
+            root: classes.adPaperRoot,
+          }}
+          elevation={1}
+          component={Link}
+          to={`/i/${id(hit)}`}
+        >
+          <CardMedia
+            className={classes.media}
+            image={src}
+            style={{ height: `${thumbnailHeight}px` }}
+          >
+            <AdPrice
+              className={classes.price}
+              color="secondary"
+              type="title"
+              ad={hit}
+            />
+          </CardMedia>
+          <CardHeader
+            className={classes.header}
+            classes={{
+              title: classes.headerTitle,
+            }}
+            title={
+              <AdTitle
+                component={LineClamp}
+                type="subheading"
+                ad={hit}
+                lines={2}
+                height={48}
+                tagName="h3"
+              />
+            }
+            subheader=""
           />
-        }
-        subheader=""
-      />
-      <CardContent className={classes.content}>
-        <AdAddress ad={hit} type="caption" align="center" />
-        <AdDate ad={hit} type="caption" align="center" />
-        <AdDistance ad={hit} type="caption" align="center" />
-      </CardContent>
-    </Card>
+          <CardContent className={classes.content}>
+            <AdAddress ad={hit} type="caption" align="center" />
+            <AdDate ad={hit} type="caption" align="center" />
+            <AdDistance ad={hit} type="caption" align="center" />
+          </CardContent>
+        </Card>
+      )}
+    </Imgix>
   </div>
 );
 

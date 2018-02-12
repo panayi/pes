@@ -1,14 +1,14 @@
 import React from 'react';
 import * as R from 'ramda';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import List from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import {
-  selectors as filterAdsSelectors,
-  actions as filterAdsActions,
-  constants as filterAdsConstants,
-} from 'store/filterAds';
+  selectors as sortBySelectors,
+  actions as sortByActions,
+  constants as sortByConstants,
+} from 'store/search/sortBy';
+import connectSearch from 'components/hocs/connectSearch';
 import translate from 'components/hocs/translate';
 import FilterOption from 'components/atoms/FilterOption';
 
@@ -33,21 +33,21 @@ const SortBy = ({ sortBy, setSortBy, t, classes }) => (
           {t(sortByOption)}
         </FilterOption>
       ),
-      filterAdsConstants.SORT_BY_OPTIONS_WITHOUT_DEFAULT_KEYS,
+      sortByConstants.SORT_BY_OPTIONS_WITHOUT_DEFAULT_KEYS,
     )}
   </List>
 );
 
 const mapStateToProps = createStructuredSelector({
-  sortBy: filterAdsSelectors.sortBySelector,
+  sortBy: sortBySelectors.sortBySelector,
 });
 
 const mapDispatchToProps = {
-  setSortBy: filterAdsActions.setSortBy,
+  setSortBy: sortByActions.setSortBy,
 };
 
 export default R.compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connectSearch(mapStateToProps, mapDispatchToProps),
   translate('sortByOptions'),
   withStyles(styles),
 )(SortBy);

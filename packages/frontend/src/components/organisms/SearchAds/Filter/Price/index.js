@@ -1,44 +1,40 @@
-import React from 'react';
-import { Control, Form } from 'react-redux-form';
-import TextField from 'material-ui/TextField';
-import { withStyles } from 'material-ui/styles';
-import { constants as filterAdsConstants } from 'store/filterAds';
+import React, { Component } from 'react';
+import { createStructuredSelector } from 'reselect';
+import { Formik } from 'formik';
+import {
+  selectors as priceSelectors,
+  actions as priceActions,
+} from 'store/search/price';
+import connectSearch from 'components/hocs/connectSearch';
+import Form from './Form';
 
-const styles = theme => ({
-  form: {
-    display: 'flex',
-  },
-  label: {
-    width: 30,
-    marginRight: 2 * theme.spacing.unit,
-    alignSelf: 'flex-end',
-  },
-  input: {
-    '& + &': {
-      marginLeft: theme.spacing.unit,
-    },
-  },
+class FilterByPrice extends Component {
+  handleSubmit = values => {
+    this.props.setPrice(values);
+  };
+
+  render() {
+    const { price } = this.props;
+
+    return (
+      <Formik
+        initialValues={{ min: price.min, max: price.max }}
+        onSubmit={this.handleSubmit}
+      >
+        {formikProps => <Form {...formikProps} />}
+      </Formik>
+    );
+  }
+}
+
+const mapStateToProps = createStructuredSelector({
+  price: priceSelectors.priceSelector,
 });
 
-const FilterByPrice = ({ classes }) => (
-  <Form className={classes.form} model={filterAdsConstants.PRICE_MODEL_PATH}>
-    <Control.text
-      model=".min"
-      id="min"
-      placeholder="€ min"
-      component={TextField}
-      className={classes.input}
-      margin="none"
-    />
-    <Control.text
-      model=".max"
-      id="max"
-      placeholder="€ max"
-      component={TextField}
-      className={classes.input}
-      margin="none"
-    />
-  </Form>
-);
+const mapDispatchToProps = {
+  setPrice: priceActions.setPrice,
+};
 
-export default withStyles(styles)(FilterByPrice);
+export default connectSearch(mapStateToProps, mapDispatchToProps)(
+  FilterByPrice,
+);

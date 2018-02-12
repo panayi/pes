@@ -1,43 +1,26 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Configure } from 'react-instantsearch/dom';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { branch, withProps } from 'recompose';
 import { connect } from 'react-redux';
-import { branch } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { withStyles } from 'material-ui/styles';
 import { selectors as authSelectors } from 'store/firebase/auth';
+import { constants as searchConstants } from 'store/search';
 import { selectors as routerSelectors } from 'store/router';
 import needsUser from 'components/hocs/needsUser';
 import Page from 'components/atoms/Page';
-import ProfileBanner from 'components/molecules/ProfileBanner';
+import SearchProvider from 'components/organisms/Search/Provider';
 import Layout from 'components/organisms/Layout';
-import ListAds from 'components/organisms/ListAds';
+import Profile from 'components/organisms/Profile';
 
-const HITS_PER_PAGE = 12;
-
-const styles = theme => ({
-  userAds: {
-    marginTop: 3 * theme.spacing.unit,
-  },
-});
-
-export const Profile = ({ userId, currentUserId, classes }) => (
-  <Layout
-    configureSearch={
-      <Configure
-        facetFilters={`user:${userId || currentUserId}`}
-        hitsPerPage={HITS_PER_PAGE}
-      />
-    }
-  >
-    <Page fixed>
-      <ProfileBanner userId={userId || currentUserId} />
-      <div className={classes.userAds}>
-        <ListAds sidebarWidth={0} />
-      </div>
-    </Page>
-  </Layout>
+const ProfilePage = ({ userId }) => (
+  <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
+    <Layout>
+      <Page fixed>
+        <Profile userId={userId} />
+      </Page>
+    </Layout>
+  </SearchProvider>
 );
 
 const userIdSelector = routerSelectors.routeParamSelector('userId');
@@ -50,5 +33,7 @@ const mapStateToProps = createStructuredSelector({
 export default R.compose(
   connect(mapStateToProps),
   branch(R.compose(isNilOrEmpty, R.prop('userId')), needsUser()),
-  withStyles(styles),
-)(Profile);
+  withProps(({ userId, currentUserId }) => ({
+    userId: userId || currentUserId,
+  })),
+)(ProfilePage);

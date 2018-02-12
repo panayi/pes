@@ -40,7 +40,7 @@ const styles = theme => ({
   '@global': {
     [PAC_CONTAINER_CLASS]: {
       zIndex: 10000,
-      position: ['static', '!important'],
+      position: 'static !important',
     },
   },
   locationIcon: {

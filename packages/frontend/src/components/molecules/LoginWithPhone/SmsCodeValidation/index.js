@@ -46,7 +46,11 @@ export const CodeForm = (props: Props) => {
     <div>
       <div className={classes.header}>
         {country && (
-          <Imgix className={classes.flag} image={country.flag} w={24} />
+          <Imgix
+            className={classes.flag}
+            image={country.flag}
+            params={{ w: 24 }}
+          />
         )}
         <Typography className={classes.grow} type="body2">
           {phoneNumber}

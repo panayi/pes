@@ -1,15 +1,15 @@
 import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import { createSelector, createStructuredSelector } from 'reselect';
+import { createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import SettingsIcon from 'material-ui-icons/Settings';
-import { buildUrl } from 'services/imgix';
 import { propSelector } from 'pesposa-utils';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import withProfileData from 'components/hocs/withProfileData';
+import Imgix from 'components/atoms/Imgix';
 import UserFullName from 'components/atoms/UserFullName';
 import ProfileImage from 'components/atoms/ProfileImage';
 import ListUserProviders from 'components/molecules/ListUserProviders';
@@ -77,37 +77,42 @@ const styles = theme => ({
 
 export const ProfileBanner = ({
   userId,
-  src,
+  profileImage,
   providersComponent: Providers,
   classes,
 }) => (
-  <div className={classes.root} style={{ backgroundImage: `url(${src})` }}>
-    <div className={classes.content}>
-      <ProfileImage className={classes.avatar} userId={userId} size={128} />
-      <UserFullName className={classes.fullname} userId={userId} type="title" />
-      <Typography className={classes.verifiedTitle} type="button">
-        Verified Accounts
-      </Typography>
-      <Providers className={classes.providers} userId={userId} />
-      <SettingsIcon className={classes.settingsIcon} />
-    </div>
-  </div>
-);
-
-const srcSelector = createSelector(
-  propSelector('profileImagePath'),
-  path => (path ? buildUrl(path, IMGIX_PARAMS) : null),
+  <Imgix params={IMGIX_PARAMS} image={profileImage}>
+    {({ src }) => (
+      <div
+        className={classes.root}
+        style={src && { backgroundImage: `url(${src})` }}
+      >
+        <div className={classes.content}>
+          <ProfileImage className={classes.avatar} userId={userId} size={128} />
+          <UserFullName
+            className={classes.fullname}
+            userId={userId}
+            type="title"
+          />
+          <Typography className={classes.verifiedTitle} type="button">
+            Verified Accounts
+          </Typography>
+          <Providers className={classes.providers} userId={userId} />
+          <SettingsIcon className={classes.settingsIcon} />
+        </div>
+      </div>
+    )}
+  </Imgix>
 );
 
 const mapStateToProps = createStructuredSelector({
   isCurrentUser: authSelectors.isCurrentUserSelector(propSelector('userId')),
-  src: srcSelector,
 });
 
 export default R.compose(
   withProfileData(
     {
-      profileImagePath: ['image', 'fullPath'],
+      profileImage: ['image'],
     },
     propSelector('userId'),
   ),

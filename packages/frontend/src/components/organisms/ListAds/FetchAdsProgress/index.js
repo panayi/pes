@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { mapProps } from 'recompose';
-import { connectStateResults } from 'react-instantsearch/connectors';
+import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
 import MoodBadIcon from 'material-ui-icons/MoodBad';
 import { withStyles } from 'material-ui/styles';
+import { selectors as requestSelectors } from 'store/search/request';
+import { selectors as totalHitsSelector } from 'store/search/totalHits';
+import { selectors as searchSelectors } from 'store/search';
+import connectSearch from 'components/hocs/connectSearch';
 import Spinner from 'components/atoms/Spinner';
 
 const styles = theme => ({
@@ -32,28 +35,48 @@ const styles = theme => ({
 });
 
 class FetchAdsProgress extends Component {
-  renderSpinner() {
-    const { searching, classes, theme } = this.props;
+  static renderNoResultsProfile() {
+    return (
+      <React.Fragment>
+        <Typography type="headline" color="textSecondary">
+          {"You haven't posted anything yet!"}
+        </Typography>
+      </React.Fragment>
+    );
+  }
 
-    return searching ? (
+  renderSpinner() {
+    const { isLoading, classes, theme } = this.props;
+
+    return isLoading ? (
       <div className={classes.spinner}>
         <Spinner spinnerColor={theme.palette.primary.A200} />
       </div>
     ) : null;
   }
 
-  renderNoResults() {
-    const { noResults, classes } = this.props;
-
-    return noResults ? (
-      <div className={classes.noResults}>
-        <MoodBadIcon className={classes.noResultsIcon} />
+  renderNoResultsDefault() {
+    return (
+      <React.Fragment>
+        <MoodBadIcon className={this.props.classes.noResultsIcon} />
         <Typography type="display3" component="h2" paragraph>
           Oh snap!
         </Typography>
         <Typography type="headline" color="textSecondary">
           No results found, try looking for something different.
         </Typography>
+      </React.Fragment>
+    );
+  }
+
+  renderNoResults() {
+    const { noResults, isProfileSearch, classes } = this.props;
+
+    return noResults ? (
+      <div className={classes.noResults}>
+        {isProfileSearch
+          ? FetchAdsProgress.renderNoResultsProfile()
+          : this.renderNoResultsDefault()}
       </div>
     ) : null;
   }
@@ -81,22 +104,14 @@ class FetchAdsProgress extends Component {
   }
 }
 
-export default R.compose(
-  connectStateResults,
-  mapProps(props => {
-    const searching = props.searching;
-    const noResults = R.pathSatisfies(
-      totalHits => totalHits < 1,
-      ['searchResults', 'nbHits'],
-      props,
-    );
-    const noMoreResults = !props.hasMore && !props.searching && !noResults;
+const mapStateToProps = createStructuredSelector({
+  isLoading: requestSelectors.isRequestPendingSelector,
+  noResults: totalHitsSelector.noResultsSelector,
+  noMoreResults: searchSelectors.noMoreResultsSelector,
+  isProfileSearch: searchSelectors.isProfileSearchSelector,
+});
 
-    return {
-      searching,
-      noResults,
-      noMoreResults,
-    };
-  }),
+export default R.compose(
+  connectSearch(mapStateToProps),
   withStyles(styles, { withTheme: true }),
 )(FetchAdsProgress);

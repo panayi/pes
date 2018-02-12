@@ -1,0 +1,1 @@
+export const SET_SCROLL_POSITION = 'search/SET_SCROLL_POSITION';

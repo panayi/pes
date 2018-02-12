@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import { withProps } from 'recompose';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import {
-  connectInfiniteHits,
-  connectStateResults,
-} from 'react-instantsearch/connectors';
 import { WindowScroller, AutoSizer } from 'react-virtualized';
 import { withStyles } from 'material-ui/styles';
 import { propsChanged } from 'pesposa-utils';
-import omitProps from 'utils/omitProps';
-import { selectors as filterAdsSelectors } from 'store/filterAds';
-import FetchAdsProgress from 'components/molecules/FetchAdsProgress';
+import {
+  selectors as searchSelectors,
+  actions as searchActions,
+} from 'store/search';
+import { selectors as hitsSelectors } from 'store/search/hits';
+import { selectors as pageSelectors } from 'store/search/page';
+import {
+  selectors as scrollPositionSelectors,
+  actions as scrollPositionActions,
+} from 'store/search/scrollPosition';
+import connectSearch from 'components/hocs/connectSearch';
 import * as constants from './constants';
 import Masonry from './Masonry';
+import FetchAdsProgress from './FetchAdsProgress';
 
 const styles = {
   root: {
@@ -25,10 +28,10 @@ const styles = {
 
 export class ListAds extends Component {
   static propTypes = {
-    hits: Proptypes.arrayOf(Proptypes.shape({})),
-    refine: Proptypes.func.isRequired,
-    hasMore: Proptypes.bool.isRequired,
-    classes: Proptypes.shape({}).isRequired,
+    hits: PropTypes.arrayOf(PropTypes.shape({})),
+    scrollPosition: PropTypes.number.isRequired,
+    setScrollPosition: PropTypes.func.isRequired,
+    classes: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
@@ -36,18 +39,14 @@ export class ListAds extends Component {
   };
 
   componentWillMount() {
-    this.reset();
+    this.props.loadPage(0);
+  }
+
+  componentDidMount() {
+    window.scrollTo(0, this.props.scrollPosition);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      (propsChanged(['currentPage'], this.props, nextProps) &&
-        nextProps.currentPage === 0) ||
-      propsChanged(['searchParams'], this.props, nextProps)
-    ) {
-      this.reset();
-    }
-
     if (propsChanged(['hits'], this.props, nextProps)) {
       // FIXME: Find a way to avoid forced update
       // list doesn't update otherwise
@@ -55,23 +54,18 @@ export class ListAds extends Component {
     }
   }
 
-  reset() {
-    window.scrollTo(0, 0);
-    this.loadNextPage = R.memoize(this.props.refine);
+  componentWillUnmount() {
+    this.props.setScrollPosition(window.scrollY);
   }
 
   handleScroll = ({ scrollTop }) => {
-    if (!this.props.hasMore) {
-      return;
-    }
-
     const listHeight = this.collectionRef.getTotalSize().height;
 
     if (
       scrollTop >=
       listHeight - this.containerHeight - constants.SCROLL_OFFSET_FETCH_TRIGGER
     ) {
-      this.loadNextPage(this.props.hits.length);
+      this.props.loadPage(this.props.page + 1);
     }
   };
 
@@ -111,41 +105,32 @@ export class ListAds extends Component {
   };
 
   render() {
-    const { hasMore, classes } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.root}>
         <WindowScroller onScroll={this.handleScroll}>
           {this.renderAutoSizer}
         </WindowScroller>
-        <FetchAdsProgress hasMore={hasMore} />
+        <FetchAdsProgress />
       </div>
     );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
-  searchParams: filterAdsSelectors.searchParamsSelector,
+  hits: hitsSelectors.hitsSelector,
+  page: pageSelectors.pageSelector,
+  searchParams: searchSelectors.searchParamsSelector,
+  scrollPosition: scrollPositionSelectors.scrollPositionSelector,
 });
 
+const mapDispatchToProps = {
+  loadPage: searchActions.loadPage,
+  setScrollPosition: scrollPositionActions.setScrollPosition,
+};
+
 export default R.compose(
-  connectInfiniteHits,
-  connectStateResults,
-  // Available props here:
-  // https://community.algolia.com/react-instantsearch/connectors/connectStateResults.html
-  withProps(({ searchState }) => ({
-    currentPage: searchState.page,
-  })),
-  omitProps([
-    'searchState',
-    'searchResults',
-    'searching',
-    'allSearchResults',
-    'isSearchStalled',
-    'error',
-    'searchingForFacetValues',
-    'props',
-  ]),
-  connect(mapStateToProps),
+  connectSearch(mapStateToProps, mapDispatchToProps),
   withStyles(styles),
 )(ListAds);
