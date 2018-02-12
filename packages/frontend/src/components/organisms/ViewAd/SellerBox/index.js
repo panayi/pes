@@ -1,0 +1,71 @@
+import React from 'react';
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
+import ProfileImage from 'components/atoms/ProfileImage';
+import UserFullName from 'components/atoms/UserFullName';
+import RevealPhoneButton from 'components/atoms/RevealPhoneButton';
+
+const SIZE = 64;
+
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  avatar: {
+    width: SIZE,
+    height: SIZE,
+    '& > svg': {
+      width: 45,
+      height: 45,
+    },
+  },
+  details: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    height: SIZE,
+    boxSizing: 'border-box',
+    marginLeft: theme.spacing.unit * 2,
+    padding: [theme.spacing.unit, 0],
+    color: theme.palette.common.white,
+    textShadow: '0 1px 3px rgba(0,0,0,.8)',
+  },
+  name: {
+    marginBottom: theme.spacing.unit / 2,
+    letterSpacing: 0.6,
+    fontSize: '18px',
+    fontWeight: 700,
+  },
+  verified: {
+    color: theme.palette.common.white,
+  },
+});
+
+const SellerBox = ({ ad, classes }) => (
+    <div className={classes.root}>
+      <ProfileImage className={classes.avatar} userId={ad.user} withDefault />
+      <div className={classes.details}>
+        {ad.user && (
+          <React.Fragment>
+            <UserFullName
+              userId={ad.user}
+              className={classes.name}
+              color="inherit"
+              variant="subheading"
+            />
+            <div className={classes.verified}>
+              <Typography color="inherit">Verified with</Typography>
+            </div>
+          </React.Fragment>
+        )}
+      </div>
+      {!ad.user && (
+        <div className={classes.contactButton}>
+          <RevealPhoneButton ad={ad}>Contact seller</RevealPhoneButton>
+        </div>
+      )}
+    </div>
+  );
+
+export default withStyles(styles)(SellerBox);

@@ -14,6 +14,7 @@ import AdDateChip from 'components/atoms/AdDateChip';
 import StaticMap from 'components/atoms/StaticMap';
 import ImageSlider from 'components/molecules/ImageSlider';
 import SendMessage from 'components/molecules/SendMessage';
+import SellerBox from './SellerBox';
 
 type Props = {
   ad: Ad,
@@ -91,11 +92,14 @@ const styles = theme => ({
   map: {
     maxWidth: '100%',
   },
-  sendMessage: {
+  seller: {
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
     left: theme.spacing.unit * 2,
     width: SLIDER_WIDTH - theme.spacing.unit * 4,
+  },
+  sendMessageWrap: {
+    marginTop: theme.spacing.unit * 2,
   },
 });
 
@@ -139,8 +143,13 @@ const ViewAd = ({ ad, adId, classes }: Props) => (
             height={190}
           />
         </div>
-        <div className={classes.sendMessage}>
-          <SendMessage adId={adId} />
+        <div className={classes.seller}>
+          <SellerBox ad={ad} />
+          {ad.user && (
+            <div className={classes.sendMessageWrap}>
+              <SendMessage adId={adId} />
+            </div>
+          )}
         </div>
       </div>
     </div>
