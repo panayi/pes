@@ -1,12 +1,15 @@
 /* @flow */
+import { isNilOrEmpty } from 'ramda-adjunct';
 import createCachedSelector from 're-reselect';
 import client from './client';
 
-// buildUrl :: Image, Object -> String
+// buildUrl :: ImagePath, Params -> String
+//  ImagePath = String
+//  Params = Object
 const buildUrl = createCachedSelector(
   path => path,
-  (path, options) => options,
-  (path, options) => client.buildURL(path, options),
+  (path, params) => params,
+  (path, params) => (isNilOrEmpty(path) ? null : client.buildURL(path, params)),
 )(path => path);
 
 export default buildUrl;

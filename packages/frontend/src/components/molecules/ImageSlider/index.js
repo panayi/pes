@@ -11,7 +11,7 @@ import ArrowButton from './ArrowButton';
 
 type Props = {
   images: Array<Image>,
-  imgixOptions: Object,
+  imgixParams: Object,
   className: ?string,
   classes: Object,
 };
@@ -33,7 +33,7 @@ const styles = theme => ({
 
 const ImageSlider = ({
   images,
-  imgixOptions,
+  imgixParams,
   className,
   classes,
   ...rest
@@ -42,7 +42,7 @@ const ImageSlider = ({
     {R.map(
       image => (
         <div key={image.fullPath} className={classes.imgContainer}>
-          <Imgix image={image} {...imgixOptions} />
+          <Imgix image={image} params={imgixParams} />
         </div>
       ),
       images,

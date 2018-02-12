@@ -53,6 +53,7 @@
     "redux-actions": "^2.2.1",
     "redux-auth-wrapper": "^2.0.2",
     "redux-thunk": "^2.2.0",
+    "reimgix": "^0.1.0",
     "reselect": "^3.0.1",
     "slick-carousel": "^1.8.1",
     "yup": "^0.24.1"

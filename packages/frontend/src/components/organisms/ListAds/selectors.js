@@ -37,13 +37,7 @@ export const columnWidthSelector = createSelector(
 // thumbnailSelector :: { hit } -> Thumbnail
 //  Thumbnail = { url, height, dimensions }
 export const thumbnailSelector = createCachedSelector(hitSelector, hit =>
-  imagesSelectors.adThumbnailSelector({
-    ad: hit,
-    imgixParams: {
-      ...constants.DEFAULT_IMGIX_PARAMS,
-      w: constants.THUMBNAIL_WIDTH,
-    },
-  }),
+  imagesSelectors.adFirstImageSelector({ ad: hit }),
 )(hitIdSelector);
 
 export const thumbnailHeightSelector = createCachedSelector(

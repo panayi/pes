@@ -70,7 +70,7 @@ const ViewAd = ({ ad, adId, classes }: Props) => (
       <ImageSlider
         className={classes.slider}
         images={R.values(ad.images)}
-        imgixOptions={{ w: SLIDER_WIDTH }}
+        imgixParams={{ w: SLIDER_WIDTH }}
       />
     </Grid>
     <Grid className={classes.content}>

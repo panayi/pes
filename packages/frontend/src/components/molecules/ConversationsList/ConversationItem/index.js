@@ -10,6 +10,7 @@ import { models } from 'store/firebase/data';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as imagesSelectors } from 'store/images';
 import Link from 'components/atoms/Link';
+import Imgix from 'components/atoms/Imgix';
 import AdTitle from 'components/atoms/AdTitle';
 import AdBody from 'components/atoms/AdBody';
 import AdDate from 'components/atoms/AdDate';
@@ -67,9 +68,9 @@ const ConversationItem = ({
   >
     <div className={classes.adThumbnailWrap}>
       {adThumbnail && (
-        <img
+        <Imgix
+          image={adThumbnail}
           className={classes.adThumbnail}
-          src={adThumbnail.url}
           alt={ad.title}
         />
       )}
@@ -105,7 +106,7 @@ export default R.compose(
         R.path(['ad', 'user']),
         R.path(['conversation', 'buyer']),
       ),
-      adThumbnail: imagesSelectors.adThumbnailSelector,
+      adThumbnail: imagesSelectors.adFirstImageSelector,
     }),
   ),
   withStyles(styles),

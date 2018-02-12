@@ -38,7 +38,10 @@ export class EditAdImages extends Component<Props> {
         {R.map(
           image => (
             <GridListTile key={image.fullPath}>
-              <Imgix image={image} h={87} w={87} fit="fill" bg="000" />
+              <Imgix
+                image={image}
+                params={{ h: 87, w: 87, fit: 'fill', bg: '000' }}
+              />
             </GridListTile>
           ),
           images,
