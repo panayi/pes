@@ -262,14 +262,14 @@ isAuthenticated() { auth != null }
 isAuthenticatedWithPhone() { auth != null && auth.provider == 'phone' }
 isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
-adIsValid(adId) { root.ads[adId] != null }
+adIsValid(adId) { root.ads.published[adId] != null }
 userIsValid(uid) { root.users[uid] != null }
 localeIsValid(localeId) { root.locales[localeId] != null }
 isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook.com' || providerId == 'twitter' || providerId == 'github' }
 requireWhenAuthenticatedWithSocial(value, providerId) { value != null || !isSocialProvider(providerId) }
 requireWhenAuthenticatedWithPhone(value, providerId) { value != null || providerId != 'phone' }
 createOnly(value) { prior(value) == null || value == prior(value) }
-isSeller(adId) { isCurrentUser(root.ads[adId].user) }
+isSeller(adId) { isCurrentUser(root.ads.published[adId].user) }
 valueIsNow(value) { value == now }
 requireUserHasIp(userId) { root.users[userId].ip != null }
 
@@ -329,8 +329,8 @@ path /ads/byUser/{uid} {
 }
 
 path /ads/byUser/{uid}/{adId} {
-  create() { isCurrentUser(uid) && (root.ads[adId] != null) }
-  delete() { isCurrentUser(uid) && (root.ads[adId] == null) }
+  create() { isCurrentUser(uid) && (root.ads.published[adId] != null) }
+  delete() { isCurrentUser(uid) && (root.ads.published[adId] == null) }
 
   validate() {
     this == true && // Allow only setting to `true`
@@ -343,8 +343,8 @@ path /ads/images/{adId} {
 }
 
 path /ads/images/{adId}/{imageId} is Image {
-  create() { isCurrentUser(root.ads[adId].user) }
-  delete() { isCurrentUser(root.ads[adId].user) }
+  create() { isCurrentUser(root.ads.published[adId].user) }
+  delete() { isCurrentUser(root.ads.published[adId].user) }
 
   validate() {
     adIsValid(adId) &&

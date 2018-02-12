@@ -1,14 +1,11 @@
 /* @flow */
 import React, { Component } from 'react';
-import { LocalForm, Control, actions } from 'react-redux-form';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import { Formik } from 'formik';
 import { connectData } from 'lib/connectData';
 import { propSelector } from 'pesposa-utils';
 import { models } from 'store/firebase/data';
 import { actions as chatActions } from 'store/chat';
-
-const FORM_MODEL = 'newMessage';
+import Form from './Form';
 
 type Props = {
   adId: String, // eslint-disable-line react/no-unused-prop-types
@@ -19,28 +16,16 @@ type Props = {
 class SendMessage extends Component<Props> {
   formDispatch: null;
 
-  handleSubmit = ({ body }) => {
+  handleSubmit = ({ body }, { resetForm }) => {
     const { ad, createMessage } = this.props;
-    createMessage(body, ad).then(() =>
-      this.formDispatch(actions.reset(FORM_MODEL)),
-    );
+    createMessage(body, ad).then(() => resetForm());
   };
 
   render() {
     return (
-      <LocalForm
-        model={FORM_MODEL}
-        getDispatch={dispatch => {
-          this.formDispatch = dispatch;
-        }}
-        onSubmit={this.handleSubmit}
-        initialState={{ body: '' }}
-      >
-        <Control.text component={TextField} model=".body" />
-        <Control.button type="submit" component={Button} model="newMessage">
-          Send
-        </Control.button>
-      </LocalForm>
+      <Formik initialValues={{ body: '' }} onSubmit={this.handleSubmit}>
+        {formikProps => <Form {...formikProps} />}
+      </Formik>
     );
   }
 }

@@ -25,14 +25,24 @@ const SLIDER_WIDTH = 500;
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    width: '100%',
     padding: theme.spacing.unit * 2,
     borderRadius: theme.borderRadius.xl,
     backgroundColor: theme.palette.common.white,
   },
+  inner: {
+    display: 'flex',
+    width: '100%',
+    height: '72vh',
+    minHeight: 592,
+    position: 'relative',
+    overflow: 'hidden',
+  },
   images: {
     width: SLIDER_WIDTH,
+    display: 'flex',
+    alignItems: 'center',
+    borderRadius: [theme.borderRadius.xl, 0, 0, theme.borderRadius.xl],
+    backgroundColor: theme.palette.grey[900],
   },
   content: {
     flex: 1,
@@ -41,7 +51,7 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 4,
   },
   slider: {
-    borderRadius: [theme.borderRadius.xl, 0, 0, theme.borderRadius.xl],
+    flex: 1,
   },
   header: {
     display: 'flex',
@@ -53,9 +63,15 @@ const styles = theme => ({
     flex: 1,
     wordBreak: 'break-word',
   },
+  price: {
+    marginBottom: theme.spacing.unit * 2,
+  },
   description: {
-    padding: [theme.spacing.unit * 2, 0],
+    maxHeight: 180,
+    paddingTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 4,
     wordBreak: 'break-word',
+    overflowY: 'auto',
   },
   date: {
     marginBottom: theme.spacing.unit * 2,
@@ -75,44 +91,58 @@ const styles = theme => ({
   map: {
     maxWidth: '100%',
   },
+  sendMessage: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    left: theme.spacing.unit * 2,
+    width: SLIDER_WIDTH - theme.spacing.unit * 4,
+  },
 });
 
 const ViewAd = ({ ad, adId, classes }: Props) => (
   <div className={classes.root}>
-    <div className={classes.images}>
-      <ImageSlider
-        className={classes.slider}
-        images={R.values(ad.images)}
-        imgixParams={{ w: SLIDER_WIDTH }}
-      />
-    </div>
-    <div className={classes.content}>
-      <div className={classes.header}>
-        <AdTitle className={classes.title} ad={ad} type="display1" />
-        <EditAdLink ad={ad} adId={adId} color="primary">
-          <ModeEditIcon />
-        </EditAdLink>
-      </div>
-      <AdPrice ad={ad} type="title" />
-      <AdBody ad={ad} className={classes.description} />
-      <div className={classes.date}>
-        <AdDateChip ad={ad} />
-      </div>
-      <Typography className={classes.location} color="textSecondary">
-        <PlaceIcon className={classes.locationIcon} />
-        <AdAddress ad={ad} className={classes.address} />
-      </Typography>
-      {/* TODO: Use a real map */}
-      <div className={classes.mapWrap}>
-        <StaticMap
-          id={adId}
-          className={classes.map}
-          center={R.path(['location', 'geoposition'], ad)}
-          width={400}
-          height={190}
+    <div className={classes.inner}>
+      <div className={classes.images}>
+        <ImageSlider
+          className={classes.slider}
+          images={R.values(ad.images)}
+          imgixParams={{ w: SLIDER_WIDTH }}
         />
       </div>
-      <SendMessage adId={adId} />
+      <div className={classes.content}>
+        <div className={classes.header}>
+          <AdTitle
+            className={classes.title}
+            ad={ad}
+            variant="title"
+            color="textSecondary"
+          />
+          <EditAdLink ad={ad} adId={adId} color="primary">
+            <ModeEditIcon />
+          </EditAdLink>
+        </div>
+        <AdPrice ad={ad} className={classes.price} variant="title" />
+        <AdBody ad={ad} className={classes.description} />
+        <div className={classes.date}>
+          <AdDateChip ad={ad} />
+        </div>
+        <Typography className={classes.location} color="textSecondary">
+          <PlaceIcon className={classes.locationIcon} />
+          <AdAddress ad={ad} className={classes.address} />
+        </Typography>
+        <div className={classes.mapWrap}>
+          <StaticMap
+            id={adId}
+            className={classes.map}
+            center={R.path(['location', 'geoposition'], ad)}
+            width={400}
+            height={190}
+          />
+        </div>
+        <div className={classes.sendMessage}>
+          <SendMessage adId={adId} />
+        </div>
+      </div>
     </div>
   </div>
 );
