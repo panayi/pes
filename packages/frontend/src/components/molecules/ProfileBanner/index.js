@@ -5,6 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
+import { darken } from 'material-ui/styles/colorManipulator';
 import SettingsIcon from 'material-ui-icons/Settings';
 import { propSelector } from 'pesposa-utils';
 import { selectors as authSelectors } from 'store/firebase/auth';
@@ -34,8 +35,8 @@ const styles = theme => ({
     height: 300,
     display: 'flex',
     flexDirection: 'column',
-    borderRadius: theme.borderRadius.sm,
-    backgroundColor: '#20031C',
+    borderRadius: [theme.borderRadius.xl, theme.borderRadius.xl, 0, 0],
+    backgroundColor: darken(theme.palette.primary[400], 0.5),
   },
   content: {
     position: 'relative',
@@ -94,7 +95,7 @@ export const ProfileBanner = ({
             userId={userId}
             variant="title"
           />
-          <Typography className={classes.verifiedTitle} type="button">
+          <Typography className={classes.verifiedTitle} variant="button">
             Verified Accounts
           </Typography>
           <Providers className={classes.providers} userId={userId} />

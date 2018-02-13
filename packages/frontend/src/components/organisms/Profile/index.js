@@ -7,8 +7,16 @@ import ProfileBanner from 'components/molecules/ProfileBanner';
 import ListAds from 'components/organisms/ListAds';
 
 const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
   userAds: {
-    marginTop: 3 * theme.spacing.unit,
+    flex: 1,
+    padding: [3 * theme.spacing.unit, 3 * theme.spacing.unit, 0],
+    marginBottom: -1.5 * theme.spacing.unit,
+    boxShadow: theme.shadows[1],
+    background: theme.palette.grey[100],
   },
 });
 

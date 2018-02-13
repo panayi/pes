@@ -9,6 +9,7 @@ type Props = {
   classes: Object,
   className: ?String,
   fixed: ?boolean,
+  flex: ?boolean,
 };
 
 const styles = theme => ({
@@ -27,6 +28,11 @@ const styles = theme => ({
     minHeight: '100%',
     margin: '0 auto',
   },
+  flex: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
 });
 
 const Page = ({
@@ -34,15 +40,29 @@ const Page = ({
   classes,
   className,
   fixed,
+  flex,
   ...otherProps
-}: Props) => (
-  <Paper
-    className={classNames(classes.page, className)}
-    elevation={0}
-    {...otherProps}
-  >
-    {fixed ? <div className={classes.fixed}>{children}</div> : children}
-  </Paper>
-);
+}: Props) => {
+  const childrenWithFlex = flex ? (
+    <div className={classes.flex}>{children}</div>
+  ) : (
+    children
+  );
+  const childrenWithFixed = fixed ? (
+    <div className={classes.fixed}>{childrenWithFlex}</div>
+  ) : (
+    childrenWithFlex
+  );
+
+  return (
+    <Paper
+      className={classNames(classes.page, className)}
+      elevation={0}
+      {...otherProps}
+    >
+      {childrenWithFixed}
+    </Paper>
+  );
+};
 
 export default withStyles(styles)(Page);

@@ -39,7 +39,7 @@ class FetchAdsProgress extends Component {
     return (
       <React.Fragment>
         <Typography variant="headline" color="textSecondary">
-          {"You haven't posted anything yet!"}
+          {'No listings yet!'}
         </Typography>
       </React.Fragment>
     );
@@ -82,9 +82,9 @@ class FetchAdsProgress extends Component {
   }
 
   renderNoMoreResults() {
-    const { noMoreResults } = this.props;
+    const { noMoreResults, isProfileSearch } = this.props;
 
-    return noMoreResults ? (
+    return noMoreResults && !isProfileSearch ? (
       <Typography variant="subheading" color="textSecondary">
         End of results
       </Typography>

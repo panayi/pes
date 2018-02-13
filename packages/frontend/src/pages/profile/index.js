@@ -16,7 +16,7 @@ import Profile from 'components/organisms/Profile';
 const ProfilePage = ({ userId }) => (
   <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
     <Layout>
-      <Page fixed>
+      <Page fixed flex>
         <Profile userId={userId} />
       </Page>
     </Layout>

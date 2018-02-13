@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
+import Link from 'components/atoms/Link';
 import ProfileImage from 'components/atoms/ProfileImage';
 import UserFullName from 'components/atoms/UserFullName';
 import RevealPhoneButton from 'components/atoms/RevealPhoneButton';
@@ -12,6 +13,10 @@ const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'center',
+  },
+  avatarLink: {
+    padding: 0,
+    minWidth: 'auto',
   },
   avatar: {
     width: SIZE,
@@ -56,7 +61,9 @@ const styles = theme => ({
 
 const SellerBox = ({ ad, classes }) => (
   <div className={classes.root}>
-    <ProfileImage className={classes.avatar} userId={ad.user} withDefault />
+    <Link className={classes.avatarLink} to={`/user/${ad.user}`}>
+      <ProfileImage className={classes.avatar} userId={ad.user} withDefault />
+    </Link>
     <div className={classes.details}>
       {ad.user && (
         <React.Fragment>
