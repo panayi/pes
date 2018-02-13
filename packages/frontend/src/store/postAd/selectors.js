@@ -28,7 +28,7 @@ export const isCreateAdCompletedSelector = createSelector(
 // adImagesPathSelector :: Props -> Object | Nil
 export const adImagesPathSelector = createSelector(
   propSelector('adId'),
-  adId => `adImages/${adId}`,
+  adId => modelPaths.AD_IMAGES(adId).string,
 );
 
 // draftAdImagesPathSelector :: State -> Object | Nil

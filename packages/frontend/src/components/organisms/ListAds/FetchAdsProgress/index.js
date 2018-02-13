@@ -38,7 +38,7 @@ class FetchAdsProgress extends Component {
   static renderNoResultsProfile() {
     return (
       <React.Fragment>
-        <Typography type="headline" color="textSecondary">
+        <Typography variant="headline" color="textSecondary">
           {"You haven't posted anything yet!"}
         </Typography>
       </React.Fragment>
@@ -59,10 +59,10 @@ class FetchAdsProgress extends Component {
     return (
       <React.Fragment>
         <MoodBadIcon className={this.props.classes.noResultsIcon} />
-        <Typography type="display3" component="h2" paragraph>
+        <Typography variant="display3" component="h2" paragraph>
           Oh snap!
         </Typography>
-        <Typography type="headline" color="textSecondary">
+        <Typography variant="headline" color="textSecondary">
           No results found, try looking for something different.
         </Typography>
       </React.Fragment>
@@ -85,7 +85,7 @@ class FetchAdsProgress extends Component {
     const { noMoreResults } = this.props;
 
     return noMoreResults ? (
-      <Typography type="subheading" color="textSecondary">
+      <Typography variant="subheading" color="textSecondary">
         End of results
       </Typography>
     ) : null;

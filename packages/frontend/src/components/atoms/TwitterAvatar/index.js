@@ -1,24 +1,24 @@
 import React from 'react';
 import classNames from 'classnames';
-import FacebookBoxIcon from 'mdi-react/FacebookIcon';
+import TwitterIcon from 'mdi-react/TwitterIcon';
 import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import { colors } from 'pesposa-config';
 
 const styles = {
   root: {
-    background: colors.FACEBOOK,
+    background: colors.TWITTER,
   },
 };
 
-const FacebookAvatar = ({ classes, className, iconProps, ...rest }) => (
+const TwitterAvatar = ({ classes, className, iconProps, ...rest }) => (
   <Avatar className={classNames(classes.root, className)} {...rest}>
-    <FacebookBoxIcon style={{ fill: 'white' }} {...iconProps} />
+    <TwitterIcon style={{ fill: 'white' }} {...iconProps} />
   </Avatar>
 );
 
-FacebookAvatar.defaultProps = {
+TwitterAvatar.defaultProps = {
   iconProps: {},
 };
 
-export default withStyles(styles)(FacebookAvatar);
+export default withStyles(styles)(TwitterAvatar);

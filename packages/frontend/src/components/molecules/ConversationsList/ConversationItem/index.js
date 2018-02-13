@@ -77,8 +77,8 @@ const ConversationItem = ({
     </div>
     <div className={classes.info}>
       <AdTitle ad={ad} />
-      <AdBody type="caption" ad={ad} />
-      <AdDate type="caption" ad={ad} />
+      <AdBody variant="caption" ad={ad} />
+      <AdDate variant="caption" ad={ad} />
     </div>
     <div className={classes.profileImageWrap}>
       {otherUserId && <ProfileImage userId={otherUserId} />}

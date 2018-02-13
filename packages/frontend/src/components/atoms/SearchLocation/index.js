@@ -99,7 +99,7 @@ class SearchLocation extends Component<Props, State> {
 
     if (R.isNil(autocompleteEl)) {
       setTimeout(() => this.moveAutocompleteEl(), POSITION_TIMEOUT);
-    } else {
+    } else if (this.elements.autocompleteWrapper) {
       this.elements.autocompleteWrapper.appendChild(autocompleteEl);
     }
   };

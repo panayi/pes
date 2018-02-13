@@ -4,6 +4,7 @@ import { mapProps, setDisplayName } from 'recompose';
 import classNames from 'classnames';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
+import { fade } from 'material-ui/styles/colorManipulator';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import renderNothingWhen from 'components/hocs/renderNothingWhen';
@@ -16,6 +17,11 @@ const styles = theme => ({
     zIndex: 1,
     margin: 'auto',
     transform: 'none',
+    backgroundColor: fade(theme.palette.primary[400], 0.57),
+    transition: theme.transitions.create('backgroundColor'),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.primary[400], 0.8),
+    },
   },
   prev: {
     left: theme.spacing.unit * 2,
@@ -32,7 +38,7 @@ const createArrowButton = (Icon, extraClass) =>
     setDisplayName('ArrowButton'),
     mapProps(props => ({
       onClick: props.onClick,
-      fab: true,
+      variant: 'fab',
       color: 'primary',
       disableRipple: true,
       children: <Icon />,

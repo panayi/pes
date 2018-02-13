@@ -33,28 +33,34 @@ export class EditAdImages extends Component<Props> {
   render() {
     const { images, isLoading, canUploadImage } = this.props;
 
-    return (
-      <GridList cellHeight={87} cols={postAdConstants.MAXIMUM_IMAGES_PER_AD}>
-        {R.map(
-          image => (
-            <GridListTile key={image.fullPath}>
-              <Imgix
-                image={image}
-                params={{ h: 87, w: 87, fit: 'fill', bg: '000' }}
-              />
-            </GridListTile>
-          ),
-          images,
-        )}
-        {canUploadImage && (
+    const list = R.map(
+      image => (
+        <GridListTile key={image.fullPath}>
+          <Imgix
+            image={image}
+            params={{ h: 87, w: 87, fit: 'fill', bg: '000' }}
+          />
+        </GridListTile>
+      ),
+      images,
+    );
+    const finalList = canUploadImage
+      ? R.append(
           <GridListTile
+            key="add"
             component={Dropzone}
             acceptedFileTypes={imagesConfig.ACCEPTED_TYPES}
             onDrop={this.handleDrop}
             isLoading={isLoading}
             multiple
-          />
-        )}
+          />,
+          list,
+        )
+      : list;
+
+    return (
+      <GridList cellHeight={87} cols={postAdConstants.MAXIMUM_IMAGES_PER_AD}>
+        {finalList}
       </GridList>
     );
   }

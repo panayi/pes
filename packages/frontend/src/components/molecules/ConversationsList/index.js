@@ -24,7 +24,7 @@ const styles = theme => ({
 const ConversationsList = ({ conversations, classes }: Props) => (
   <div>
     <div className={classes.header}>
-      <Typography type="subheading">Conversations</Typography>
+      <Typography variant="subheading">Conversations</Typography>
     </div>
     {R.map(
       conversation => (

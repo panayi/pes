@@ -73,4 +73,4 @@ export const createAd = (ad: Ad) => (
 
 export const saveAd = (adId: string, onSave: ?Function) => (ad: Ad) => (
   dispatch: Dispatch,
-) => dispatch(api.ads.update(serializeAd(ad))).then(onSave);
+) => dispatch(api.ads.update(adId, serializeAd(ad))).then(onSave);

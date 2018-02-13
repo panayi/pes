@@ -4,14 +4,16 @@ import { algolia as algoliaConfig } from 'pesposa-config';
 import * as pageTypes from '../page/types';
 import * as searchTypes from '../types';
 
-const initialState = {};
+const initialState = [];
 
 const hitsReducer = handleActions(
   {
     [searchTypes.SEARCH_REQUEST_SUCCEEDED]: (state, { payload }) =>
       R.compose(
-        R.merge(state),
-        R.converge(R.zipObj, [R.pluck(algoliaConfig.ID), R.identity]),
+        R.reverse,
+        R.uniqBy(R.prop(algoliaConfig.ID)),
+        R.reverse,
+        R.concat(state),
         R.propOr([], 'hits'),
       )(payload),
 

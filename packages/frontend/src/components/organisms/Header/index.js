@@ -48,7 +48,7 @@ const Header = ({ classes }) => (
     <Toolbar className={classes.toolbar}>
       <div className={classes.logoArea}>
         <Link to="/" exact>
-          <Typography className={classes.logoText} type="title">
+          <Typography className={classes.logoText} variant="title">
             Pesposa
           </Typography>
         </Link>

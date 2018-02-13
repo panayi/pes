@@ -40,7 +40,7 @@ const styles = theme => {
 const Sidebar = ({ children, classes }: Props) => (
   <div className={classes.sidebar}>
     <Drawer
-      type="permanent"
+      variant="permanent"
       classes={{
         paper: classes.drawerPaper,
         paperAnchorDockedLeft: classes.drawerAnchor,
