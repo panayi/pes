@@ -19,7 +19,10 @@ const UserProviders = ({
   providers,
 }: Props) => (
   <div className={className}>
-    {R.map(provider => <Provider {...provider} />, providers)}
+    {R.map(
+      provider => <Provider key={provider.providerId} {...provider} />,
+      providers,
+    )}
   </div>
 );
 
@@ -34,13 +37,13 @@ export default R.compose(
     providerComponent: ProviderIcon,
     providerIds: [],
   }),
-  withProps(({ providerIds }) => ({
-    providers: R.map(
-      providerId => ({
+  withProps(({ providerIds, hideDisabled }) => ({
+    providers: R.compose(
+      R.when(R.always(hideDisabled), R.reject(R.prop('disabled'))),
+      R.map(providerId => ({
         providerId,
-        disabled: R.complement(R.contains(providerId), providerIds),
-      }),
-      authConfig.providers,
-    ),
+        disabled: R.complement(R.contains(providerId))(providerIds),
+      })),
+    )(authConfig.providers),
   })),
 )(UserProviders);

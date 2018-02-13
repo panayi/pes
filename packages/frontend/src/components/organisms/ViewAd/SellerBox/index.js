@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import ProfileImage from 'components/atoms/ProfileImage';
 import UserFullName from 'components/atoms/UserFullName';
 import RevealPhoneButton from 'components/atoms/RevealPhoneButton';
+import ListUserProviders from 'components/molecules/ListUserProviders';
 
 const SIZE = 64;
 
@@ -39,7 +40,17 @@ const styles = theme => ({
     fontWeight: 700,
   },
   verified: {
+    display: 'flex',
+    alignItems: 'center',
     color: theme.palette.common.white,
+  },
+  userProviders: {
+    display: 'flex',
+    marginLeft: theme.spacing.unit,
+    zoom: 0.7, // TODO: refactor
+    '& > div + div': {
+      marginLeft: theme.spacing.unit,
+    },
   },
 });
 
@@ -56,7 +67,12 @@ const SellerBox = ({ ad, classes }) => (
             variant="subheading"
           />
           <div className={classes.verified}>
-            <Typography color="inherit">Verified with</Typography>
+            <Typography color="inherit">Verified with&nbsp;</Typography>
+            <ListUserProviders
+              className={classes.userProviders}
+              userId={ad.user}
+              hideDisabled
+            />
           </div>
         </React.Fragment>
       )}
