@@ -28,9 +28,9 @@ export const setDimensions = async (imageSnapshot): Promise<boolean> => {
     return false;
   }
 
-  const { downloadURL } = imageSnapshot.val();
-  const dimensions = await getImageDimensions(downloadURL);
-  await imageSnapshot.ref.child('dimensions').set(dimensions);
+  const image = imageSnapshot.val();
+  const dimensions = await getImageDimensions(image.downloadURL);
+  await imageSnapshot.ref.set(R.merge(image, { dimensions }));
 
   return true;
 };

@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { isPlainObj } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
 import { propSelector } from 'pesposa-utils';
@@ -43,8 +44,13 @@ export const thumbnailSelector = createCachedSelector(hitSelector, hit =>
 export const thumbnailHeightSelector = createCachedSelector(
   thumbnailSelector,
   propSelector('columnWidth'),
-  (thumbnail, columnWidth) =>
-    columnWidth / thumbnail.dimensions.width * thumbnail.dimensions.height,
+  (thumbnail, columnWidth) => {
+    const { dimensions } = thumbnail;
+
+    return isPlainObj(dimensions)
+      ? columnWidth / dimensions.width * dimensions.height
+      : 0;
+  },
 )(hitIdSelector);
 
 // hitHeightSelector :: { hit, columnWidth } => Number

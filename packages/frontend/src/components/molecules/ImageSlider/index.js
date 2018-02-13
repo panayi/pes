@@ -73,6 +73,7 @@ const ImageSlider = ({
           <div key={image.fullPath} className={classes.imgContainerInner}>
             <Imgix
               className={
+                image.dimensions &&
                 image.dimensions.height > image.dimensions.width
                   ? classes.portrait
                   : classes.landscape

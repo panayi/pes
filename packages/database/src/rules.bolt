@@ -115,6 +115,10 @@ type PositiveNumber extends Number {
   }
 }
 
+type InitialTimestamp extends PastEpoch {
+  validate() { initial(this, now) }
+}
+
 type Geoposition {
   latitude: Number,
   longitude: Number,
@@ -159,13 +163,14 @@ type SubCategory {
 type Dimension {
   width: PositiveNumber,
   height: PositiveNumber,
+  type: String,
 }
 
 type Image {
   downloadURL: URL,
   fullPath: String,
   name: String,
-  createdAt: PastEpoch,
+  createdAt: InitialTimestamp,
   dimensions: Dimension | Null,
 }
 
@@ -269,7 +274,8 @@ isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook
 requireWhenAuthenticatedWithSocial(value, providerId) { value != null || !isSocialProvider(providerId) }
 requireWhenAuthenticatedWithPhone(value, providerId) { value != null || providerId != 'phone' }
 createOnly(value) { prior(value) == null || value == prior(value) }
-isSeller(adId) { isCurrentUser(root.ads.published[adId].user) }
+initial(value, init) { value == (prior(value) == null ? init : prior(value)) }
+isSeller(adId) { auth != null && root.ads.byUser[auth.uid][adId] != null }
 valueIsNow(value) { value == now }
 requireUserHasIp(userId) { root.users[userId].ip != null }
 
@@ -294,11 +300,13 @@ path /categories is Category[] {
   read() { true }
 }
 
-path /ads/published/{id} is Ad {
+// TODO: This doesn't work when updating the ad:
+// path /ads/published/{id} is Ad {
+path /ads/published/{id} {
   read() { true }
+  update() { isSeller(id) }
 
   validate() {
-    valueIsNow(this.createdAt) &&
     categoryIsValid(this.category) &&
     createOnly(this.createdAt)
   }
@@ -343,12 +351,10 @@ path /ads/images/{adId} {
 }
 
 path /ads/images/{adId}/{imageId} is Image {
-  create() { isCurrentUser(root.ads.published[adId].user) }
-  delete() { isCurrentUser(root.ads.published[adId].user) }
+  write() { isSeller(adId) }
 
   validate() {
-    adIsValid(adId) &&
-    valueIsNow(this.createdAt)
+    adIsValid(adId)
   }
 }
 
