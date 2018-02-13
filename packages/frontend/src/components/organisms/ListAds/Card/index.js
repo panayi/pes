@@ -12,7 +12,6 @@ import Imgix from 'components/atoms/Imgix';
 import AdTitle from 'components/atoms/AdTitle';
 import AdPrice from 'components/atoms/AdPrice';
 import AdAddress from 'components/atoms/AdAddress';
-import AdDate from 'components/atoms/AdDate';
 import AdDistance from 'components/atoms/AdDistance';
 import * as constants from '../constants';
 import * as selectors from '../selectors';
@@ -77,7 +76,7 @@ const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
             <AdPrice
               className={classes.price}
               color="secondary"
-              type="title"
+              variant="title"
               ad={hit}
             />
           </CardMedia>
@@ -89,7 +88,7 @@ const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
             title={
               <AdTitle
                 component={LineClamp}
-                type="subheading"
+                variant="subheading"
                 ad={hit}
                 lines={2}
                 height={48}
@@ -99,9 +98,8 @@ const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
             subheader=""
           />
           <CardContent className={classes.content}>
-            <AdAddress ad={hit} type="caption" align="center" />
-            <AdDate ad={hit} type="caption" align="center" />
-            <AdDistance ad={hit} type="caption" align="center" />
+            <AdAddress ad={hit} variant="caption" align="center" />
+            <AdDistance ad={hit} variant="caption" align="center" />
           </CardContent>
         </Card>
       )}

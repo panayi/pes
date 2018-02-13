@@ -18,15 +18,43 @@ type Props = {
 
 const styles = theme => ({
   root: {
+    height: '100%',
     overflow: 'hidden',
     backgroundColor: theme.palette.common.black,
+    '& .slick-list': {
+      height: '100%',
+    },
     '& .slick-track': {
+      height: '100%',
       display: 'flex',
       alignItems: 'center',
     },
+    '& .slick-slide': {
+      minHeight: 'auto',
+    },
   },
-  img: {
-    maxWidth: '100%',
+  imgContainer: {
+    width: 500,
+    height: '100%',
+    display: 'flex !important',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  imgContainerInner: {
+    width: '100%',
+    height: '100%',
+    display: 'flex !important',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  portrait: {
+    width: 'auto',
+    height: '100%',
+    flex: 0,
+  },
+  landscape: {
+    width: '100%',
     height: 'auto',
   },
 });
@@ -42,7 +70,17 @@ const ImageSlider = ({
     {R.map(
       image => (
         <div key={image.fullPath} className={classes.imgContainer}>
-          <Imgix image={image} params={imgixParams} />
+          <div key={image.fullPath} className={classes.imgContainerInner}>
+            <Imgix
+              className={
+                image.dimensions.height > image.dimensions.width
+                  ? classes.portrait
+                  : classes.landscape
+              }
+              image={image}
+              params={imgixParams}
+            />
+          </div>
         </div>
       ),
       images,

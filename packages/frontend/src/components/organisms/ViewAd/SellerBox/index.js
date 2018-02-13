@@ -15,6 +15,7 @@ const styles = theme => ({
   avatar: {
     width: SIZE,
     height: SIZE,
+    border: [4, 'solid', theme.palette.common.white],
     '& > svg': {
       width: 45,
       height: 45,
@@ -43,29 +44,29 @@ const styles = theme => ({
 });
 
 const SellerBox = ({ ad, classes }) => (
-    <div className={classes.root}>
-      <ProfileImage className={classes.avatar} userId={ad.user} withDefault />
-      <div className={classes.details}>
-        {ad.user && (
-          <React.Fragment>
-            <UserFullName
-              userId={ad.user}
-              className={classes.name}
-              color="inherit"
-              variant="subheading"
-            />
-            <div className={classes.verified}>
-              <Typography color="inherit">Verified with</Typography>
-            </div>
-          </React.Fragment>
-        )}
-      </div>
-      {!ad.user && (
-        <div className={classes.contactButton}>
-          <RevealPhoneButton ad={ad}>Contact seller</RevealPhoneButton>
-        </div>
+  <div className={classes.root}>
+    <ProfileImage className={classes.avatar} userId={ad.user} withDefault />
+    <div className={classes.details}>
+      {ad.user && (
+        <React.Fragment>
+          <UserFullName
+            userId={ad.user}
+            className={classes.name}
+            color="inherit"
+            variant="subheading"
+          />
+          <div className={classes.verified}>
+            <Typography color="inherit">Verified with</Typography>
+          </div>
+        </React.Fragment>
       )}
     </div>
-  );
+    {!ad.user && (
+      <div className={classes.contactButton}>
+        <RevealPhoneButton ad={ad}>Contact seller</RevealPhoneButton>
+      </div>
+    )}
+  </div>
+);
 
 export default withStyles(styles)(SellerBox);

@@ -29,7 +29,7 @@ const LoginButtons = ({ onSuccess, classes }: Props) => [
     <LoginWithGoogle fullWidth onSuccess={onSuccess} />
   </Grid>,
   <Grid key="2" item xs={12} className={classes.divider}>
-    <TextDivider type="subheading" color="textSecondary">
+    <TextDivider variant="subheading" color="textSecondary">
       or login with your phone
     </TextDivider>
   </Grid>,

@@ -92,7 +92,7 @@ export const ProfileBanner = ({
           <UserFullName
             className={classes.fullname}
             userId={userId}
-            type="title"
+            variant="title"
           />
           <Typography className={classes.verifiedTitle} type="button">
             Verified Accounts
