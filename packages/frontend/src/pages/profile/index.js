@@ -7,18 +7,15 @@ import { createStructuredSelector } from 'reselect';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { constants as searchConstants } from 'store/search';
 import { selectors as routerSelectors } from 'store/router';
-import needsUser from 'components/hocs/needsUser';
-import Page from 'components/atoms/Page';
-import SearchProvider from 'components/organisms/Search/Provider';
-import Layout from 'components/organisms/Layout';
-import Profile from 'components/organisms/Profile';
+import needsUser from 'hocs/needsUser';
+import SearchProvider from 'modules/Search/Provider/Provider';
+import Layout from 'layouts/Layout/Layout';
+import Profile from 'modules/Profile/Profile';
 
 const ProfilePage = ({ userId }) => (
   <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
-    <Layout>
-      <Page fixed flex>
-        <Profile userId={userId} />
-      </Page>
+    <Layout fixed flex>
+      <Profile userId={userId} />
     </Layout>
   </SearchProvider>
 );

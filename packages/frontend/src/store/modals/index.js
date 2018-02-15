@@ -1,8 +1,9 @@
 import reducer from './reducer';
 import * as actions from './actions';
+import * as constants from './constants';
 import * as selectors from './selectors';
-import factory from './factory';
+import modals from './modals';
 
 export default reducer;
 
-export { actions, selectors, factory };
+export { actions, constants, selectors, modals };

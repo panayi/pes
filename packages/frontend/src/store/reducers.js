@@ -9,7 +9,7 @@ import anonymousUserTokenReducer, {
   constants as anonymousUserConstants,
 } from './anonymousUserToken';
 import loginReducer, { constants as loginConstants } from './login';
-import modalsReducer from './modals';
+import modalsReducer, { constants as modalConstants } from './modals';
 import formsReducer from './forms';
 import postAdReducer from './postAd';
 import searchReducers from './search';
@@ -22,7 +22,7 @@ export const makeRootReducer = asyncReducers =>
     [anonymousUserConstants.ANONYMOUS_USER_TOKEN_KEY]: anonymousUserTokenReducer,
     [linkedProvidersConstants.ROOT_KEY]: linkedProvidersReducer,
     [loginConstants.ROOT_KEY]: loginReducer,
-    modals: modalsReducer,
+    [modalConstants.ROOT_KEY]: modalsReducer,
     postAd: postAdReducer,
     ...searchReducers,
     ...asyncReducers,

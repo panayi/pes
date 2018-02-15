@@ -11,8 +11,7 @@ import {
 import 'normalize.css/normalize.css';
 import theme from 'config/theme';
 import { constants as searchConstants } from 'store/search';
-import ModalProvider from 'components/molecules/ModalProvider';
-import SearchProvider from 'components/organisms/Search/Provider';
+import SearchProvider from 'modules/Search/Provider/Provider';
 import Pages from './pages';
 
 const jss = create({ plugins: [...jssPreset().plugins, jssExpand()] });
@@ -24,7 +23,6 @@ const App = ({ store }) => (
       <JssProvider jss={jss} generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme}>
           <Pages />
-          <ModalProvider />
         </MuiThemeProvider>
       </JssProvider>
     </SearchProvider>

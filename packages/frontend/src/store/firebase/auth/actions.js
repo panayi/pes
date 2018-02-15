@@ -20,7 +20,12 @@ export const setCurrentUserInfo = () => async (dispatch, getState) => {
     return null;
   }
 
-  const geoposition = await dispatch(locationActions.getCurrentPosition());
+  let geoposition = null;
+  try {
+    geoposition = await dispatch(locationActions.getCurrentPosition());
+  } catch (error) {
+    console.warn(error);
+  }
 
   return dispatch(api.app.setCurrentUserInfo({ geoposition }, { token }));
 };

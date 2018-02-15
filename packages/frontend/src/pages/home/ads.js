@@ -6,8 +6,8 @@ import {
   selectors as categorySelectors,
   actions as categoryActions,
 } from 'store/search/category';
-import connectSearch from 'components/hocs/connectSearch';
-import ListAds from 'components/organisms/ListAds';
+import connectSearch from 'hocs/connectSearch';
+import ListAds from 'modules/Search/ListAds/ListAds';
 
 const mapStateToProps = createStructuredSelector({
   category: categorySelectors.categorySelector,

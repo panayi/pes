@@ -3,8 +3,8 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { replace as _replace } from 'react-router-redux';
 import { propsSelector } from 'pesposa-utils';
-import needsUserWithId from 'components/hocs/needsUserWithId';
-import EditAd from 'components/organisms/EditAd';
+import { modals } from 'store/modals';
+import needsUserWithId from 'hocs/needsUserWithId';
 
 class EditAdPage extends Component {
   componentWillMount() {
@@ -31,8 +31,8 @@ class EditAdPage extends Component {
 }
 
 const mapDispatchToProps = {
-  showModal: EditAd.showAction,
-  hideModal: EditAd.hideAction,
+  showModal: modals.editAd.showAction,
+  hideModal: modals.editAd.hideAction,
   replace: _replace,
 };
 
