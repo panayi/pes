@@ -5,10 +5,7 @@ import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { actions as locationActions } from 'store/firebase/profile/location';
-import {
-  actions as profileActions,
-  selectors as profileSelectors,
-} from 'store/firebase/profile';
+import { actions as profileActions } from 'store/firebase/profile';
 import * as selectors from './selectors';
 
 export const setCurrentUserInfo = () => async (dispatch, getState) => {
@@ -54,16 +51,6 @@ export const login = credentials => async dispatch => {
 
 export const validateSmsCode = (code, confirmationResult) => async () =>
   confirmationResult.confirm(code);
-
-export const fetchLinkedProviders = () => (dispatch, getState) => {
-  const email = profileSelectors.profileEmailSelector(getState());
-
-  if (R.isNil(email)) {
-    return null;
-  }
-
-  return dispatch(api.auth.getProviders(email));
-};
 
 export const linkProvider = providerId => async (
   dispatch,

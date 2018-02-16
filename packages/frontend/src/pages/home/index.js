@@ -12,13 +12,6 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
   },
-  section: {
-    marginBottom: theme.spacing.unit,
-  },
-  title: {
-    marginBottom: theme.spacing.unit,
-    fontWeight: theme.typography.fontWeightMedium,
-  },
 });
 
 const Home = ({ classes }) => (

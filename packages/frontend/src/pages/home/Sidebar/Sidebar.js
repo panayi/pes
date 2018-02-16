@@ -6,10 +6,6 @@ import { withStyles } from 'material-ui/styles';
 import SearchFilter from 'modules/Search/Filter';
 
 const styles = theme => ({
-  page: {
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-  },
   section: {
     marginBottom: theme.spacing.unit,
   },
