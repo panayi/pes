@@ -7,7 +7,7 @@ import log from 'utils/log';
 
 const adsIndexName = algoliaConfig.ADS_INDEXES.default;
 
-// FIXME: This is only needed for legacy ads
+// FIXME[legacy]: This is only needed for legacy ads
 // Should remove/refactor later
 const MAX_BODY_LENGTH = 1500;
 

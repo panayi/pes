@@ -4,7 +4,7 @@ import { withProps } from 'recompose';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
-import SendMessage from './SendMessage/SendMessage';
+import SendMessage from 'components/SendMessage/SendMessage';
 
 const styles = theme => ({
   root: {

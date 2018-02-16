@@ -3,9 +3,9 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Layout from 'layouts/Layout/Layout';
+import Search from 'modules/Search/Search';
 import Header from 'pages/components/Header/Header';
 import Sidebar from './Sidebar/Sidebar';
-import Ads from './ads';
 
 const styles = theme => ({
   page: {
@@ -23,7 +23,7 @@ const styles = theme => ({
 
 const Home = ({ classes }) => (
   <Layout header={Header} sidebar={Sidebar} pageClassName={classes.page} flex>
-    <Route path="/:category?" component={Ads} />
+    <Route path="/:category?" component={Search} />
   </Layout>
 );
 

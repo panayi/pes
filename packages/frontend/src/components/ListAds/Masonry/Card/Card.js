@@ -13,8 +13,8 @@ import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdAddress from 'components/AdAddress/AdAddress';
 import AdDistance from 'components/AdDistance/AdDistance';
-import * as constants from '../constants';
-import * as selectors from '../selectors';
+import * as constants from '../../constants';
+import * as selectors from '../../selectors';
 
 const styles = theme => ({
   root: {

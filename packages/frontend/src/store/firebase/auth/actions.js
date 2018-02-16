@@ -24,7 +24,7 @@ export const setCurrentUserInfo = () => async (dispatch, getState) => {
   try {
     geoposition = await dispatch(locationActions.getCurrentPosition());
   } catch (error) {
-    console.warn(error);
+    console.warn(error); // eslint-disable-line no-console
   }
 
   return dispatch(api.app.setCurrentUserInfo({ geoposition }, { token }));

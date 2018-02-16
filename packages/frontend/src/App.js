@@ -11,7 +11,7 @@ import {
 import 'normalize.css/normalize.css';
 import theme from 'config/theme';
 import { constants as searchConstants } from 'store/search';
-import SearchProvider from 'modules/Search/Provider/Provider';
+import SearchProvider from 'components/SearchProvider/SearchProvider';
 import Pages from './pages';
 
 const jss = create({ plugins: [...jssPreset().plugins, jssExpand()] });

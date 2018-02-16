@@ -15,11 +15,11 @@ import AdPrice from 'components/AdPrice/AdPrice';
 import AdBody from 'components/AdBody/AdBody';
 import AdAddress from 'components/AdAddress/AdAddress';
 import AdDateChip from 'components/AdDateChip/AdDateChip';
+import SendMessage from 'components/SendMessage/SendMessage';
 import FacebookShareButton from './FacebookShareButton/FacebookShareButton';
 import TwitterShareButton from './TwitterShareButton/TwitterShareButton';
 import EmailShareButton from './EmailShareButton/EmailShareButton';
 import ImageSlider from './ImageSlider/ImageSlider';
-import SendMessage from '../Messenger/Conversation/SendMessage/SendMessage'; // [FIXME-reorganization]: shouln't import other modules
 import StaticMap from './StaticMap/StaticMap';
 import EditAdLink from './EditAdLink/EditAdLink';
 import BrowseAds from './BrowseAds/BrowseAds';

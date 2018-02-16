@@ -3,7 +3,7 @@ import React from 'react';
 import Typography from 'material-ui/Typography';
 import Card, { CardContent } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
-import SearchAds from 'modules/Search/SearchAds';
+import SearchFilter from 'modules/Search/Filter';
 
 const styles = theme => ({
   page: {
@@ -24,25 +24,25 @@ const HomeSidebar = ({ classes }) => (
     <Card className={classes.section} elevation={0}>
       <CardContent>
         <Typography className={classes.title}>Location</Typography>
-        <SearchAds.Filter.ByLocation />
+        <SearchFilter.ByLocation />
       </CardContent>
     </Card>
     <Card className={classes.section} elevation={0}>
       <CardContent>
         <Typography className={classes.title}>Categories</Typography>
-        <SearchAds.Filter.ByCategory />
+        <SearchFilter.ByCategory />
       </CardContent>
     </Card>
     <Card className={classes.section} elevation={0}>
       <CardContent>
         <Typography className={classes.title}>Price</Typography>
-        <SearchAds.Filter.ByPrice />
+        <SearchFilter.ByPrice />
       </CardContent>
     </Card>
     <Card className={classes.section} elevation={0}>
       <CardContent>
         <Typography className={classes.title}>Sort by</Typography>
-        <SearchAds.Filter.SortBy />
+        <SearchFilter.SortBy />
       </CardContent>
     </Card>
   </React.Fragment>

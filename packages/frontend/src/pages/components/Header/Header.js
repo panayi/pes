@@ -9,7 +9,7 @@ import { modals } from 'store/modals';
 import hideUser from 'hocs/hideUser';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
-import SearchAds from 'modules/Search/SearchAds';
+import SearchQuery from 'modules/Search/Query/Query';
 import ProfileMenu from './ProfileMenu';
 
 const ShowLoginButton = hideUser(modals.login.showButton);
@@ -56,7 +56,7 @@ const Header = ({ classes }) => (
       </div>
       <div className={classes.content}>
         <div className={classes.searchInput}>
-          <SearchAds.Query />
+          <SearchQuery />
         </div>
         <ShowCreateAdButton color="inherit">Sell your stuff</ShowCreateAdButton>
         <ShowLoginButton color="inherit">Login</ShowLoginButton>

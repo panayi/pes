@@ -1,10 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
+import { branch, withProps } from 'recompose';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { withStyles } from 'material-ui/styles';
-import { actions as searchUserActions } from 'store/search/user';
-import connectSearch from 'hocs/connectSearch';
+import { selectors as authSelectors } from 'store/firebase/auth';
+import { constants as searchConstants } from 'store/search';
+import needsUser from 'hocs/needsUser';
+import SearchProvider from 'components/SearchProvider/SearchProvider';
+import ListAds from 'components/ListAds/ListAds';
 import ProfileBanner from './ProfileBanner/ProfileBanner';
-import ListAds from '../Search/ListAds/ListAds'; // [FIXME-reorganize]: shouldn't import from other modules
 
 const styles = theme => ({
   root: {
@@ -20,31 +26,24 @@ const styles = theme => ({
   },
 });
 
-class Profile extends Component {
-  componentWillMount() {
-    const { setUser, userId } = this.props;
-    setUser(userId);
-  }
+const ProfilePage = ({ userId, classes }) => (
+  <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
+    <ProfileBanner userId={userId} />
+    <div className={classes.userAds}>
+      <ListAds userId={userId} sidebarWidth={0} />
+    </div>
+  </SearchProvider>
+);
 
-  render() {
-    const { userId, classes } = this.props;
-
-    return (
-      <React.Fragment>
-        <ProfileBanner userId={userId} />
-        <div className={classes.userAds}>
-          <ListAds sidebarWidth={0} />
-        </div>
-      </React.Fragment>
-    );
-  }
-}
-
-const mapDispatchToProps = {
-  setUser: searchUserActions.setUser,
-};
+const mapStateToProps = createStructuredSelector({
+  currentUserId: authSelectors.uidSelector,
+});
 
 export default R.compose(
-  connectSearch(null, mapDispatchToProps),
+  branch(R.compose(isNilOrEmpty, R.prop('userId')), needsUser()),
+  connect(mapStateToProps),
+  withProps(({ userId, currentUserId }) => ({
+    userId: userId || currentUserId,
+  })),
   withStyles(styles),
-)(Profile);
+)(ProfilePage);

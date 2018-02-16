@@ -14,7 +14,7 @@ import Imgix from 'components/Imgix/Imgix';
 import UserFullName from 'components/UserFullName/UserFullName';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import ListUserProviders from 'components/ListUserProviders/ListUserProviders';
-import LinkProviders from '../LinkProviders/LinkProviders';
+import LinkProviders from 'modules/LinkProviders/LinkProviders';
 
 const IMGIX_PARAMS = {
   w: 900,

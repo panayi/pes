@@ -11,6 +11,7 @@ import {
 } from 'store/search';
 import { selectors as hitsSelectors } from 'store/search/hits';
 import { selectors as pageSelectors } from 'store/search/page';
+import { actions as searchUserActions } from 'store/search/user';
 import {
   selectors as scrollPositionSelectors,
   actions as scrollPositionActions,
@@ -18,7 +19,7 @@ import {
 import connectSearch from 'hocs/connectSearch';
 import * as constants from './constants';
 import Masonry from './Masonry/Masonry';
-import FetchAdsProgress from '../FetchAdsProgress/FetchAdsProgress';
+import FetchAdsProgress from './FetchAdsProgress/FetchAdsProgress';
 
 const styles = {
   root: {
@@ -28,18 +29,25 @@ const styles = {
 
 export class ListAds extends Component {
   static propTypes = {
+    userId: PropTypes.string,
     hits: PropTypes.arrayOf(PropTypes.shape({})),
+    setUser: PropTypes.func.isRequired,
     scrollPosition: PropTypes.number.isRequired,
     setScrollPosition: PropTypes.func.isRequired,
     classes: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
+    userId: null,
     hits: [],
   };
 
   componentWillMount() {
-    this.props.loadPage(0);
+    const { setUser, userId, loadPage } = this.props;
+    if (userId) {
+      setUser(userId);
+    }
+    loadPage(0);
   }
 
   componentDidMount() {
@@ -127,6 +135,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   loadPage: searchActions.loadPage,
+  setUser: searchUserActions.setUser,
   setScrollPosition: scrollPositionActions.setScrollPosition,
 };
 
