@@ -30,6 +30,7 @@
     "test-once": "cd packages/frontend && yarn test-once -- --bail",
     "flow": "flow",
     "flow-typed:install": "flow-typed install --libdefDir ./types",
+    "codeclimate": "codeclimate analyze ./packages/**/src -f html > codeclimate-output.html",
     "build:frontend": "cd packages/frontend && yarn build",
     "build:backend": "cd packages/backend && yarn build",
     "build": "run-p build:frontend build:backend",

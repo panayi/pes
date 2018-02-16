@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
 import * as actions from './actions';
 
-const componentsPropKeys = ['content', 'actions', 'modal'];
-
 const buttonFactory = action =>
   R.compose(
     connect(null, { onClick: action }),
@@ -14,18 +12,9 @@ const buttonFactory = action =>
     })),
   )(Button);
 
-// getModalId :: ModalProps -> String
-const getModalId = R.path(['content', 'displayName']);
-
-const modalFactory = modalProps => {
-  const components = R.pick(componentsPropKeys, modalProps);
-  const otherProps = R.omit(componentsPropKeys, modalProps);
-  const id = getModalId(modalProps);
-
-  const showAction = props => dispatch => {
-    const finalProps = R.merge(otherProps, props);
-    return dispatch(actions.showModal(id, components, finalProps));
-  };
+const modalFactory = id => {
+  const showAction = props => dispatch =>
+    dispatch(actions.showModal(id, props));
   const hideAction = () => dispatch => dispatch(actions.hideModal(id));
 
   const showButton = buttonFactory(showAction);

@@ -1,0 +1,20 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.js"
+exclude_paths:
+- .circleci/
+- .vscode/
+- resources/
+- secrets/
+- types/
+- "**/build/"
+- "**/node_modules/"
