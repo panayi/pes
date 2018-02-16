@@ -8,6 +8,7 @@ import { selectors as requestSelectors } from 'store/search/request';
 import { selectors as totalHitsSelector } from 'store/search/totalHits';
 import { selectors as searchSelectors } from 'store/search';
 import connectSearch from 'hocs/connectSearch';
+import EmptyHero from 'components/EmptyHero/EmptyHero';
 import Spinner from 'components/Spinner/Spinner';
 
 const styles = theme => ({
@@ -25,8 +26,6 @@ const styles = theme => ({
   noResults: {
     marginTop: theme.spacing.unit,
     maxWidth: 400,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
   },
   noResultsIcon: {
     width: 200,
@@ -35,16 +34,6 @@ const styles = theme => ({
 });
 
 class FetchAdsProgress extends Component {
-  static renderNoResultsProfile() {
-    return (
-      <React.Fragment>
-        <Typography variant="headline" color="textSecondary">
-          {'No listings yet!'}
-        </Typography>
-      </React.Fragment>
-    );
-  }
-
   renderSpinner() {
     const { isLoading, classes, theme } = this.props;
 
@@ -55,28 +44,20 @@ class FetchAdsProgress extends Component {
     ) : null;
   }
 
-  renderNoResultsDefault() {
-    return (
-      <React.Fragment>
-        <MoodBadIcon className={this.props.classes.noResultsIcon} />
-        <Typography variant="display3" component="h2" paragraph>
-          Oh snap!
-        </Typography>
-        <Typography variant="headline" color="textSecondary">
-          No results found, try looking for something different.
-        </Typography>
-      </React.Fragment>
-    );
-  }
-
   renderNoResults() {
     const { noResults, isProfileSearch, classes } = this.props;
 
     return noResults ? (
       <div className={classes.noResults}>
-        {isProfileSearch
-          ? FetchAdsProgress.renderNoResultsProfile()
-          : this.renderNoResultsDefault()}
+        {isProfileSearch ? (
+          <EmptyHero tagline="No listings yet!" />
+        ) : (
+          <EmptyHero
+            icon={MoodBadIcon}
+            title="Oh snap!"
+            tagline="No results found, try looking for something different."
+          />
+        )}
       </div>
     ) : null;
   }
