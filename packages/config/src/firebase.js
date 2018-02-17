@@ -10,7 +10,7 @@ export const FIREBASE_PATH = ['firebase'];
 
 export const PROVIDER_IDS = {
   facebook: 'facebook.com',
-  google: 'google',
+  google: 'google.com',
   phone: 'phone',
   twitter: 'twitter',
   github: 'github',

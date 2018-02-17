@@ -215,15 +215,16 @@ const ViewAd = ({ ad, adId, location, uid, classes }: Props) => {
           </div>
           <div className={classes.seller}>
             <SellerBox ad={ad} />
-            {ad.user && (
-              <div className={classes.sendMessageWrap}>
-                <SendMessage
-                  placeholder="Ask a question"
-                  adId={adId}
-                  buyerId={uid}
-                />
-              </div>
-            )}
+            {ad.user &&
+              ad.user !== uid && (
+                <div className={classes.sendMessageWrap}>
+                  <SendMessage
+                    placeholder="Ask a question"
+                    adId={adId}
+                    buyerId={uid}
+                  />
+                </div>
+              )}
           </div>
         </div>
       </div>
