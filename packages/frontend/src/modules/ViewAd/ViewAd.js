@@ -2,6 +2,8 @@
 import React from 'react';
 import * as R from 'ramda';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import ModeEditIcon from 'material-ui-icons/ModeEdit';
@@ -9,6 +11,7 @@ import PlaceIcon from 'material-ui-icons/Place';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import urlForPath from 'utils/urlForPath';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import Link from 'components/Link/Link';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
@@ -29,6 +32,7 @@ type Props = {
   ad: Ad,
   adId: string,
   location: Object,
+  uid: string,
   classes: Object,
 };
 
@@ -157,7 +161,7 @@ const styles = theme => ({
   },
 });
 
-const ViewAd = ({ ad, adId, location, classes }: Props) => {
+const ViewAd = ({ ad, adId, location, uid, classes }: Props) => {
   const currentUrl = urlForPath(location.pathname);
 
   return (
@@ -213,7 +217,11 @@ const ViewAd = ({ ad, adId, location, classes }: Props) => {
             <SellerBox ad={ad} />
             {ad.user && (
               <div className={classes.sendMessageWrap}>
-                <SendMessage adId={adId} />
+                <SendMessage
+                  placeholder="Ask a question"
+                  adId={adId}
+                  buyerId={uid}
+                />
               </div>
             )}
           </div>
@@ -264,4 +272,12 @@ ViewAd.defaultProps = {
   ad: {},
 };
 
-export default R.compose(withRouter, withStyles(styles))(ViewAd);
+const mapStateToProps = createStructuredSelector({
+  uid: authSelectors.uidSelector,
+});
+
+export default R.compose(
+  connect(mapStateToProps),
+  withRouter,
+  withStyles(styles),
+)(ViewAd);

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect, isLoaded } from 'react-redux-firebase';
 import { connect } from 'react-redux';
 
 const QUERIES_PROP = '__queries__';
@@ -23,6 +23,7 @@ const connectData = (dataConnections, mapStateToProps, mapDispatchToProps) => {
     return {
       ...resolveProps,
       ...data,
+      isLoaded: R.map(isLoaded, data),
       [QUERIES_PROP]: queries,
     };
   };

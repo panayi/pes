@@ -1,7 +1,7 @@
 import { modelPaths } from 'pesposa-config';
 
-export const create = (message, { ad, uid }) => (
+export const create = (data, adId, buyerId) => (
   dispatch,
   getState,
   getFirebase,
-) => getFirebase().push(modelPaths.MESSAGES(ad.id, uid).string, message);
+) => getFirebase().push(modelPaths.MESSAGES(adId, buyerId).string, data);

@@ -3,9 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import { connectData } from 'lib/connectData';
-import { models } from 'store/firebase/data';
-import ConversationItem from './ConversationItem/ConversationItem';
+import ConversationItem from './Item/Item';
 
 type Props = {
   conversations: Array<Object>,
@@ -14,9 +12,11 @@ type Props = {
 
 const styles = theme => ({
   header: {
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    height: 69,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderBottom: `1px solid ${theme.palette.divider}`,
   },
 });
@@ -35,10 +35,4 @@ const ConversationsList = ({ conversations, classes }: Props) => (
   </div>
 );
 
-const mapDataToProps = {
-  conversations: models.conversations.all,
-};
-
-export default R.compose(connectData(mapDataToProps), withStyles(styles))(
-  ConversationsList,
-);
+export default R.compose(withStyles(styles))(ConversationsList);
