@@ -13,13 +13,14 @@ type Props = {
   classes: Object,
 };
 
-const AD_THUMBNAIL_WIDTH = 50;
-const AD_THUMBNAIL_HEIGHT = 50;
+const AD_THUMBNAIL_WIDTH = 40;
+const AD_THUMBNAIL_HEIGHT = 40;
 
 const styles = theme => ({
   root: {
     display: 'flex',
     flex: [0, 0, `${AD_THUMBNAIL_WIDTH}px`],
+    width: AD_THUMBNAIL_WIDTH,
     height: AD_THUMBNAIL_HEIGHT,
     overflow: 'hidden',
     borderRadius: theme.borderRadius.md,
@@ -31,7 +32,6 @@ const AdThumbnail = ({ ad, adThumbnail, classes }: Props) => (
     {adThumbnail && (
       <Imgix
         image={adThumbnail}
-        lqip={false}
         params={{ w: AD_THUMBNAIL_WIDTH, h: AD_THUMBNAIL_HEIGHT, fit: 'edges' }}
         alt={ad.title}
       />

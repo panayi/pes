@@ -1,6 +1,7 @@
 import * as ads from './ads';
 import * as app from './app';
 import * as auth from './auth';
+import * as conversations from './conversations';
 import * as draftAd from './draftAd';
 import * as files from './files';
 import * as messages from './messages';
@@ -11,6 +12,7 @@ const api = {
   ads,
   app,
   auth,
+  conversations,
   draftAd,
   files,
   messages,

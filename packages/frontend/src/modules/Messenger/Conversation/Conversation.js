@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import { createStructuredSelector } from 'reselect';
 import { withStyles } from 'material-ui/styles';
 import { propSelector } from 'pesposa-utils';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
+import { actions as chatActions } from 'store/chat';
+import hydrateAd from 'hocs/hydrateAd';
 import SendMessage from 'components/SendMessage/SendMessage';
-import withConversationData from '../withConversationData/withConversationData';
+import * as utils from '../utils';
 import ConversationHeader from './Header/Header';
 import Message from './Message/Message';
 
@@ -47,11 +50,36 @@ class Conversation extends Component {
 
   componentDidMount() {
     this.scrollToBottom();
+    this.setActiveConversation(this.props.conversation);
+    this.maybeMarkAsReady(this.props.conversation);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const nextId = R.pathOr(null, ['conversation', 'id'], nextProps);
+    const id = R.pathOr(null, ['conversation', 'id'], this.props);
+    if (nextId !== id) {
+      this.setActiveConversation(nextProps.conversation);
+    }
+    this.maybeMarkAsReady(nextProps.conversation);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.messages.length > prevProps.messages.length) {
       this.scrollToBottom();
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.resetActiveConversation();
+  }
+
+  setActiveConversation(conversation) {
+    this.props.setActiveConversation(conversation.id);
+  }
+
+  maybeMarkAsReady(conversation) {
+    if (!conversation.read) {
+      this.props.markAsRead(conversation.id);
     }
   }
 
@@ -101,21 +129,34 @@ class Conversation extends Component {
   }
 }
 
-const adSelector = propSelector('adId');
-const buyerSelector = propSelector('buyerId');
+const buyerIdSelector = propSelector(['conversation', 'buyer']);
+const adIdSelector = propSelector(['conversation', 'ad']);
 
 const mapDataToProps = {
   messages: models.messages({
-    adSelector,
-    buyerSelector,
+    adSelector: adIdSelector,
+    buyerSelector: buyerIdSelector,
   }).all,
 };
 
+const mapStateToProps = createStructuredSelector({
+  adId: adIdSelector,
+  buyerId: buyerIdSelector,
+  isBuyer: utils.createIsBuyerSelector(buyerIdSelector),
+  otherUserId: utils.createOtherUserIdSelector(
+    buyerIdSelector,
+    propSelector(['conversation', 'ad', 'user']),
+  ),
+});
+
+const mapDispatchToProps = {
+  setActiveConversation: chatActions.setActiveConversation,
+  resetActiveConversation: chatActions.resetActiveConversation,
+  markAsRead: chatActions.markAsRead,
+};
+
 export default R.compose(
-  connectData(mapDataToProps),
-  withConversationData({
-    adSelector,
-    buyerSelector,
-  }),
+  connectData(mapDataToProps, mapStateToProps, mapDispatchToProps),
+  hydrateAd(adIdSelector),
   withStyles(styles),
 )(Conversation);

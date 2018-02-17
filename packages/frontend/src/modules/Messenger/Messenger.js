@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { withProps } from 'recompose';
+import { createStructuredSelector } from 'reselect';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
-import { connectData } from 'lib/connectData';
-import { models } from 'store/firebase/data';
 import Spinner from 'components/Spinner/Spinner';
+import withConversations from './withConversations/withConversations';
 import Conversations from './Conversations/Conversations';
 import Conversation from './Conversation/Conversation';
 import NoConversations from './NoConversations/NoConversations';
@@ -30,7 +31,7 @@ const styles = theme => ({
 
 class Messenger extends Component {
   renderConversations() {
-    const { ad, buyer, conversations, classes } = this.props;
+    const { selectedConversation, conversations, classes } = this.props;
 
     if (isNilOrEmpty(conversations)) {
       return null;
@@ -42,14 +43,9 @@ class Messenger extends Component {
           <Conversations conversations={conversations} />
         </Grid>
         <Grid className={classes.conversationWrap} item xs={9}>
-          {ad &&
-            buyer && (
-              <Conversation
-                adId={ad}
-                buyerId={buyer}
-                conversations={conversations}
-              />
-            )}
+          {selectedConversation && (
+            <Conversation conversation={selectedConversation} />
+          )}
         </Grid>
       </React.Fragment>
     );
@@ -82,21 +78,26 @@ class Messenger extends Component {
 }
 
 Messenger.propTypes = {
-  ad: PropTypes.string,
-  buyer: PropTypes.string,
+  conversationId: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
+  selectedConversation: PropTypes.shape({}),
   conversations: PropTypes.arrayOf(PropTypes.shape({})),
 };
 
 Messenger.defaultProps = {
-  ad: null,
-  buyer: null,
+  conversationId: null,
+  selectedConversation: null,
   conversations: null,
 };
 
-const mapDataToProps = {
-  conversations: models.conversations.all,
-};
-
-export default R.compose(connectData(mapDataToProps), withStyles(styles))(
-  Messenger,
-);
+export default R.compose(
+  withConversations,
+  withProps(
+    createStructuredSelector({
+      selectedConversation: R.converge(R.find, [
+        R.compose(R.propEq('id'), R.prop('conversationId')),
+        R.compose(R.defaultTo([]), R.prop('conversations')),
+      ]),
+    }),
+  ),
+  withStyles(styles),
+)(Messenger);

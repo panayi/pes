@@ -9,9 +9,9 @@ const Messages = () => (
     <Switch>
       <Route exact path="/messages" component={Messenger} />
       <Route
-        path="/messages/:ad/:buyer"
+        path="/messages/:conversationId"
         render={({ match }) => (
-          <Messenger ad={match.params.ad} buyer={match.params.buyer} />
+          <Messenger conversationId={match.params.conversationId} />
         )}
       />
     </Switch>

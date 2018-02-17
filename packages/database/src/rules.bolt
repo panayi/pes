@@ -388,6 +388,10 @@ path /myConversations/{uid}/{adIdBuyerId} is Conversation {
   index() { return ['lastMessageCreatedAt'] }
 }
 
+path /myConversations/{uid}/{adIdBuyerId}/read is Boolean {
+  update() { isCurrentUser(uid) }
+}
+
 path /myConversations/{uid}/{adIdBuyerId}/read {
   create() { isCurrentUser(uid) }
   update() { isCurrentUser(uid) }
