@@ -1,5 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
+import { connect } from 'react-redux';
+import { push as _push } from 'react-router-redux';
 import { withStyles } from 'material-ui/styles';
 import LineClamp from 'components/LineClamp/LineClamp';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -18,10 +20,12 @@ const styles = theme => ({
   ad: {
     display: 'flex',
     alignItems: 'center',
+    cursor: 'pointer',
   },
   user: {
     display: 'flex',
     alignItems: 'center',
+    cursor: 'pointer',
   },
   userName: {
     marginLeft: theme.spacing.unit,
@@ -37,30 +41,46 @@ const styles = theme => ({
   },
 });
 
-const ConversationHeader = ({ ad, otherUserId, classes }) => (
-    <div className={classes.root}>
-      <div className={classes.user}>
-        <ProfileImage userId={otherUserId} />
-        <UserFullName
-          className={classes.userName}
-          userId={otherUserId}
-          variant="body2"
-        />
-      </div>
-      <div className={classes.ad}>
-        <div className={classes.details}>
-          <AdTitle
-            className={classes.title}
-            ad={ad}
-            variant="subheading"
-            component={LineClamp}
-            lines={1}
-          />
-          <AdBody ad={ad} component={LineClamp} variant="caption" lines={1} />
-        </div>
-        <AdThumbnail ad={ad} />
-      </div>
+const ConversationHeader = ({ ad, otherUserId, push, classes }) => (
+  <div className={classes.root}>
+    <div
+      className={classes.user}
+      role="button"
+      tabIndex="-1"
+      onClick={() => push(`/user/${otherUserId}`)}
+    >
+      <ProfileImage userId={otherUserId} />
+      <UserFullName
+        className={classes.userName}
+        userId={otherUserId}
+        variant="body2"
+      />
     </div>
-  );
+    <div
+      className={classes.ad}
+      role="button"
+      tabIndex="-1"
+      onClick={() => push(`/i/${ad.id}`)}
+    >
+      <div className={classes.details}>
+        <AdTitle
+          className={classes.title}
+          ad={ad}
+          variant="subheading"
+          component={LineClamp}
+          lines={1}
+        />
+        <AdBody ad={ad} component={LineClamp} variant="caption" lines={1} />
+      </div>
+      <AdThumbnail ad={ad} />
+    </div>
+  </div>
+);
 
-export default R.compose(withStyles(styles))(ConversationHeader);
+const mapDispatchToProps = {
+  push: _push,
+};
+
+export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
+  ConversationHeader,
+);

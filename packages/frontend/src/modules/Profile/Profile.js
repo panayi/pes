@@ -23,14 +23,17 @@ const styles = theme => ({
     marginBottom: -1.5 * theme.spacing.unit,
     boxShadow: theme.shadows[1],
     background: theme.palette.grey[100],
+    borderRadius: [0, 0, theme.borderRadius.xl, theme.borderRadius.xl],
   },
 });
 
 const ProfilePage = ({ userId, classes }) => (
   <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
-    <ProfileBanner userId={userId} />
-    <div className={classes.userAds}>
-      <ListAds userId={userId} sidebarWidth={0} />
+    <div>
+      <ProfileBanner userId={userId} />
+      <div className={classes.userAds}>
+        <ListAds userId={userId} sidebarWidth={0} />
+      </div>
     </div>
   </SearchProvider>
 );
