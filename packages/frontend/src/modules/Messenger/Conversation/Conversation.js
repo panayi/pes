@@ -18,10 +18,11 @@ const styles = theme => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
+    backgroundColor: theme.palette.common.white,
   },
   header: {
     display: 'flex',
-    flex: '0 0 69px',
+    flex: '0 0 54px',
     alignItems: 'center',
     padding: [0, theme.spacing.unit * 1.5],
     borderBottom: `1px solid ${theme.palette.divider}`,

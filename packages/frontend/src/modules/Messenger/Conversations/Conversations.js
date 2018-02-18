@@ -14,7 +14,7 @@ const styles = theme => ({
   header: {
     display: 'flex',
     flexDirection: 'column',
-    height: 69,
+    height: 54,
     justifyContent: 'center',
     alignItems: 'center',
     borderBottom: `1px solid ${theme.palette.divider}`,

@@ -11,6 +11,7 @@ import withConversations from './withConversations/withConversations';
 import Conversations from './Conversations/Conversations';
 import Conversation from './Conversation/Conversation';
 import NoConversations from './NoConversations/NoConversations';
+import NoConversationSelected from './NoConversationSelected/NoConversationSelected';
 
 const styles = theme => ({
   root: {
@@ -18,12 +19,13 @@ const styles = theme => ({
     // TODO: make dynamic
     height: 'calc(100vh - 88px)',
     overflow: 'hidden',
-    backgroundColor: theme.palette.common.white,
+    backgroundColor: '#F7F9FA',
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: theme.borderRadius.md,
   },
   list: {
     borderRight: `1px solid ${theme.palette.divider}`,
+    backgroundColor: theme.palette.common.white,
   },
   conversationWrap: {
     display: 'flex',
@@ -44,8 +46,10 @@ class Messenger extends Component {
           <Conversations conversations={conversations} />
         </Grid>
         <Grid className={classes.conversationWrap} item xs={9}>
-          {selectedConversation && (
+          {selectedConversation ? (
             <Conversation conversation={selectedConversation} />
+          ) : (
+            <NoConversationSelected />
           )}
         </Grid>
       </React.Fragment>
