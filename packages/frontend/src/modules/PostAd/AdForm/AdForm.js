@@ -33,6 +33,9 @@ const styles = theme => ({
   root: {
     width: 450,
   },
+  editImages: {
+    marginBottom: theme.spacing.unit,
+  },
   selectWrap: {
     marginTop: theme.spacing.unit * 2,
   },
@@ -63,7 +66,9 @@ const AdForm = (props: Props) => {
       {renderContent(
         <div className={classes.root}>
           {spinner}
-          <EditAdImages images={images} adImagesDbPath={filesPath} />
+          <div className={classes.editImages}>
+            <EditAdImages images={images} adImagesDbPath={filesPath} />
+          </div>
           <FormGroup>
             <Control.text
               model=".title"
@@ -119,6 +124,7 @@ const AdForm = (props: Props) => {
 };
 
 AdForm.defaultProps = {
+  categories: [],
   onChange: noop,
 };
 

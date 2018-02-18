@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import ReactDropzone from 'react-dropzone';
-import AddIcon from 'material-ui-icons/Add';
+import AddIcon from 'material-ui-icons/AddAPhoto';
 import BlockIcon from 'material-ui-icons/Block';
 import { files } from 'pesposa-utils';
 import Spinner from 'components/Spinner/Spinner';
@@ -37,6 +37,9 @@ const styles = theme => ({
     color: theme.palette.error['300'],
     cursor: 'no-drop',
   },
+  icon: {
+    color: theme.palette.text.secondary,
+  },
 });
 
 export class Dropzone extends Component<Props> {
@@ -47,7 +50,7 @@ export class Dropzone extends Component<Props> {
 
   renderIcon(dropzoneProps) {
     const { isDragReject } = dropzoneProps;
-    const { isLoading } = this.props;
+    const { isLoading, classes } = this.props;
 
     if (isLoading) {
       return <Spinner size={30} spinnerWidth={3} />;
@@ -57,7 +60,7 @@ export class Dropzone extends Component<Props> {
       return <BlockIcon />;
     }
 
-    return <AddIcon />;
+    return <AddIcon className={classes.icon} />;
   }
 
   render() {

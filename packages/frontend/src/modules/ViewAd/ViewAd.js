@@ -19,7 +19,7 @@ import AdBody from 'components/AdBody/AdBody';
 import AdAddress from 'components/AdAddress/AdAddress';
 import AdDateChip from 'components/AdDateChip/AdDateChip';
 import SendMessage from 'components/SendMessage/SendMessage';
-import FacebookShareButton from './FacebookShareButton/FacebookShareButton';
+import FacebookShareButton from 'components/FacebookShareButton/FacebookShareButton';
 import TwitterShareButton from './TwitterShareButton/TwitterShareButton';
 import EmailShareButton from './EmailShareButton/EmailShareButton';
 import ImageSlider from './ImageSlider/ImageSlider';

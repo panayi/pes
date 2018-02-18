@@ -24,7 +24,10 @@ class CreateAdContent extends Component<Props> {
     const { isCreateAdCompleted, ...rest } = this.props;
 
     return isCreateAdCompleted ? (
-      <CreateAdSuccess {...rest} />
+      <CreateAdSuccess
+        {...rest}
+        onPostAnotherClick={this.props.createAdReset}
+      />
     ) : (
       <CreateAdForm {...rest} />
     );

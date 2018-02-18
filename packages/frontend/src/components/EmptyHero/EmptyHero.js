@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import elementType from 'prop-types-extra/lib/elementType';
+import classNames from 'classnames';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
@@ -19,14 +20,31 @@ const styles = theme => ({
     width: 200,
     height: 200,
   },
+  smallIcon: {
+    width: 100,
+    height: 100,
+  },
 });
 
-const EmptyHero = ({ icon: Icon, title, tagline, children, classes }) => (
+const EmptyHero = ({
+  icon: Icon,
+  title,
+  tagline,
+  small,
+  children,
+  classes,
+}) => (
   <div className={classes.root}>
-    <Icon className={classes.icon} />
+    <Icon
+      className={classNames(classes.icon, { [classes.smallIcon]: small })}
+    />
     {title && (
-      <Typography variant="display3" component="h2" paragraph>
-        Oh snap!
+      <Typography
+        variant={small ? 'display1' : 'display3'}
+        component="h2"
+        paragraph
+      >
+        {title}
       </Typography>
     )}
     <Typography variant="headline" color="textSecondary">
@@ -40,11 +58,13 @@ EmptyHero.propTypes = {
   icon: elementType.isRequired,
   title: PropTypes.string,
   tagline: PropTypes.string.isRequired,
+  small: PropTypes.bool,
   children: PropTypes.node,
 };
 
 EmptyHero.defaultProps = {
   title: null,
+  small: false,
   children: null,
 };
 
