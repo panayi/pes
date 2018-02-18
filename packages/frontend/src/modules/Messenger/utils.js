@@ -5,10 +5,13 @@ import { selectors as authSelectors } from 'store/firebase/auth';
 export const createIsBuyerSelector = buyerSelector =>
   createSelector(buyerSelector, authSelectors.uidSelector, R.equals);
 
-export const createOtherUserIdSelector = (buyerSelector, sellerSelector) =>
+export const createOtherUserIdSelector = ({
+  buyerIdSelector,
+  sellerIdSelector,
+}) =>
   createSelector(
-    createIsBuyerSelector(buyerSelector),
-    sellerSelector,
-    buyerSelector,
-    (isBuyer, seller, buyer) => (isBuyer ? seller : buyer),
+    createIsBuyerSelector(buyerIdSelector),
+    sellerIdSelector,
+    buyerIdSelector,
+    (isBuyer, sellerId, buyerId) => (isBuyer ? sellerId : buyerId),
   );

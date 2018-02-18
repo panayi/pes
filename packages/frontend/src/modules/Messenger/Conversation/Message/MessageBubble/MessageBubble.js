@@ -66,10 +66,10 @@ const styles = theme => ({
   },
 });
 
-const MessageBubble = ({ fromOther, children, classes }) => (
-    <div className={fromOther ? classes.fromOther : classes.fromMe}>
-      <Typography color="inherit">{children}</Typography>
-    </div>
-  );
+const MessageBubble = ({ fromOther, children, classes, ...rest }) => (
+  <div {...rest} className={fromOther ? classes.fromOther : classes.fromMe}>
+    <Typography color="inherit">{children}</Typography>
+  </div>
+);
 
 export default withStyles(styles)(MessageBubble);

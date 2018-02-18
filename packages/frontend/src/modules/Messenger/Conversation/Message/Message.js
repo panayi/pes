@@ -6,9 +6,9 @@ import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
 import TimeAgo from 'react-timeago';
-import Tooltip from 'material-ui/Tooltip';
 import { withStyles } from 'material-ui/styles';
 import { propSelector } from 'pesposa-utils';
+import Tooltip from 'components/Tooltip/Tooltip';
 import MessageBubble from './MessageBubble/MessageBubble';
 
 const styles = theme => ({
@@ -28,24 +28,25 @@ const styles = theme => ({
 });
 
 const Message = ({ message, isFromOtherUser, classes }) => (
-    <div
-      className={classNames(classes.root, {
-        [classes.fromOther]: isFromOtherUser,
-      })}
-    >
-      <div className={classes.bubbleWrap}>
-        <Tooltip
-          id={message.id}
-          title={<TimeAgo date={message.createdAt} />}
-          placement={isFromOtherUser ? 'right' : 'left'}
-        >
-          <MessageBubble fromOther={isFromOtherUser}>
-            {message.body}
-          </MessageBubble>
-        </Tooltip>
-      </div>
+  <div
+    className={classNames(classes.root, {
+      [classes.fromOther]: isFromOtherUser,
+    })}
+  >
+    <div className={classes.bubbleWrap}>
+      <MessageBubble
+        fromOther={isFromOtherUser}
+        data-tip="tip"
+        data-for={message.id}
+      >
+        {message.body}
+      </MessageBubble>
+      <Tooltip id={message.id}>
+        <TimeAgo date={message.createdAt} />
+      </Tooltip>
     </div>
-  );
+  </div>
+);
 
 Message.propTypes = {
   message: PropTypes.shape({}).isRequired,

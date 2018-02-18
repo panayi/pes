@@ -102,10 +102,10 @@ const ConversationItem = ({
 );
 
 const mapStateToProps = createStructuredSelector({
-  otherUserId: utils.createOtherUserIdSelector(
-    propSelector(['conversation', 'buyer']),
-    propSelector(['ad', 'user']),
-  ),
+  otherUserId: utils.createOtherUserIdSelector({
+    buyerIdSelector: propSelector(['conversation', 'buyer']),
+    sellerIdSelector: propSelector(['ad', 'user']),
+  }),
 });
 
 export default R.compose(

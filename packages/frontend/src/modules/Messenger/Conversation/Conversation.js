@@ -143,10 +143,10 @@ const mapStateToProps = createStructuredSelector({
   adId: adIdSelector,
   buyerId: buyerIdSelector,
   isBuyer: utils.createIsBuyerSelector(buyerIdSelector),
-  otherUserId: utils.createOtherUserIdSelector(
+  otherUserId: utils.createOtherUserIdSelector({
     buyerIdSelector,
-    propSelector(['conversation', 'ad', 'user']),
-  ),
+    sellerIdSelector: propSelector(['ad', 'user']),
+  }),
 });
 
 const mapDispatchToProps = {
@@ -156,7 +156,7 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connectData(mapDataToProps, mapStateToProps, mapDispatchToProps),
   hydrateAd(adIdSelector),
+  connectData(mapDataToProps, mapStateToProps, mapDispatchToProps),
   withStyles(styles),
 )(Conversation);

@@ -16,7 +16,9 @@ class SendMessage extends Component<Props> {
 
   handleSubmit = ({ body }, { resetForm }) => {
     const { adId, buyerId, createMessage } = this.props;
-    createMessage(body, adId, buyerId).then(() => resetForm());
+    createMessage(body, adId, buyerId);
+    // Don't wait for createMessage complete
+    resetForm();
   };
 
   render() {
