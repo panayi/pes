@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 import { modelPaths } from 'pesposa-config';
-import { propSelector } from 'pesposa-utils';
 import { modelConnectionsFactory } from 'lib/connectData';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import * as constants from './constants';
@@ -36,10 +35,7 @@ export const adsByUser = userIdSelector =>
 export const conversations = createModelConnections(
   createSelector(authSelectors.uidSelector, modelPaths.CONVERSATIONS),
 );
-export const messages = createModelConnections(
-  createSelector(
-    propSelector('ad'),
-    propSelector('buyer'),
-    modelPaths.MESSAGES,
-  ),
-);
+export const messages = ({ adSelector, buyerSelector }) =>
+  createModelConnections(
+    createSelector(adSelector, buyerSelector, modelPaths.MESSAGES),
+  );

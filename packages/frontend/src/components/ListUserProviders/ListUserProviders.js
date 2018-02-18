@@ -42,7 +42,7 @@ export default R.compose(
       R.when(R.always(hideDisabled), R.reject(R.prop('disabled'))),
       R.map(providerId => ({
         providerId,
-        disabled: R.complement(R.contains(providerId))(providerIds),
+        disabled: R.complement(R.contains(providerId))(providerIds || []),
       })),
     )(authConfig.providers),
   })),

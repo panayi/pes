@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Input from 'material-ui/Input';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
@@ -26,7 +27,15 @@ const styles = theme => ({
       theme.spacing.unit * 1.5,
     ],
     background: theme.palette.grey[100],
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
+  },
+  chat: {
+    '& $input': {
+      borderRadius: 0,
+      border: 0,
+      background: 'none',
+      paddingRight: theme.spacing.unit * 1.5,
+    },
   },
   button: {
     position: 'absolute',
@@ -42,30 +51,44 @@ const styles = theme => ({
 });
 
 const Form = props => {
-  const { values, handleSubmit, handleChange, handleBlur, classes } = props;
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    placeholder,
+    variant,
+    classes,
+  } = props;
+  const isChatVariant = variant === 'chat';
 
   return (
-    <form onSubmit={handleSubmit} className={classes.root}>
+    <form
+      onSubmit={handleSubmit}
+      className={classNames(classes.root, classes[variant])}
+    >
       <Input
         name="body"
         value={values.body}
         onChange={handleChange}
         onBlur={handleBlur}
         className={classes.input}
-        placeholder="Ask a question"
+        placeholder={placeholder}
         disableUnderline
         autoComplete="off"
       />
-      <Button
-        type="submit"
-        className={classes.button}
-        color="primary"
-        variant="raised"
-        disableRipple
-        disableFocusRipple
-      >
-        Send
-      </Button>
+      {!isChatVariant && (
+        <Button
+          type="submit"
+          className={classes.button}
+          color="primary"
+          variant="raised"
+          disableRipple
+          disableFocusRipple
+        >
+          Send
+        </Button>
+      )}
     </form>
   );
 };
@@ -77,7 +100,12 @@ Form.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
+  variant: PropTypes.oneOf(['default', 'chat']),
   classes: PropTypes.shape().isRequired,
+};
+
+Form.defaultProps = {
+  variant: 'default',
 };
 
 export default withStyles(styles)(Form);

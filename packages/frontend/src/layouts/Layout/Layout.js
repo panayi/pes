@@ -1,34 +1,26 @@
-/* @flow */
 import React from 'react';
+import PropTypes from 'prop-types';
+import elementType from 'prop-types-extra/lib/elementType';
+import * as R from 'ramda';
+import classNames from 'classnames';
+import { isNotNil } from 'ramda-adjunct';
+import { withProps } from 'recompose';
 import { withStyles } from 'material-ui/styles';
 import Sidebar from './Sidebar/Sidebar';
 import Page from './Page/Page';
 
-type Props = {
-  header: Class<React$Component<*>>,
-  sidebar: Class<React$Component<*>>,
-  children: React$Node,
-  classes: Object,
-  // Page props
-  pageClassName: ?string,
-  fixed: ?boolean,
-  flex: ?boolean,
-  wide: ?boolean,
-};
-
 const styles = theme => ({
-  '@global': {
-    body: {
-      marginTop: theme.layout.headerHeight,
-    },
-  },
   root: {
     display: 'flex',
     alignItems: 'stretch',
-    // TODO: Use constant for header height
-    minHeight: `calc(100vh - ${theme.layout.headerHeight}px)`,
+    minHeight: 'calc(100vh)',
     width: '100%',
     backgroundColor: theme.palette.grey[200],
+  },
+  hasHeader: {
+    marginTop: theme.layout.headerHeight,
+    // TODO: Use constant for header height
+    minHeight: `calc(100vh - ${theme.layout.headerHeight}px)`,
   },
 });
 
@@ -36,23 +28,52 @@ const Layout = ({
   header: Header,
   sidebar: SidebarContent,
   children,
-  classes,
   pageClassName,
   fixed,
   flex,
   wide,
-}: Props) => (
-  <div className={classes.root}>
-    <Header />
-    {SidebarContent ? (
+  hasHeader,
+  hasSidebar,
+  classes,
+}) => (
+  <div className={classNames(classes.root, { [classes.hasHeader]: hasHeader })}>
+    {hasHeader && <Header />}
+    {hasSidebar && (
       <Sidebar>
         <SidebarContent />
       </Sidebar>
-    ) : null}
+    )}
     <Page className={pageClassName} fixed={fixed} flex={flex} wide={wide}>
       {children}
     </Page>
   </div>
 );
 
-export default withStyles(styles)(Layout);
+Layout.propTypes = {
+  header: elementType,
+  sidebar: elementType,
+  children: PropTypes.node,
+  pageClassName: PropTypes.string,
+  fixed: PropTypes.bool,
+  flex: PropTypes.bool,
+  wide: PropTypes.bool,
+  classes: PropTypes.shape({}).isRequired,
+};
+
+Layout.defaultProps = {
+  header: null,
+  sidebar: null,
+  children: null,
+  pageClassName: null,
+  fixed: false,
+  flex: false,
+  wide: false,
+};
+
+export default R.compose(
+  withProps(({ header, sidebar }) => ({
+    hasHeader: isNotNil(header),
+    hasSidebar: isNotNil(sidebar),
+  })),
+  withStyles(styles),
+)(Layout);

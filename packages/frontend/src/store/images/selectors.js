@@ -14,4 +14,8 @@ const adImagesSelector = createCachedSelector(
 )(adIdSelector);
 
 // adFirstImageSelector :: Props -> String | Nil
-export const adFirstImageSelector = R.compose(R.head, adImagesSelector);
+export const adFirstImageSelector = R.compose(
+  R.head,
+  R.defaultTo([]),
+  adImagesSelector,
+);

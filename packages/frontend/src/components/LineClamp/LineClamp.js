@@ -1,5 +1,6 @@
-/* @flow */
 import React from 'react';
+import PropTypes from 'prop-types';
+import elementType from 'prop-types-extra/lib/elementType';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 
@@ -9,7 +10,7 @@ const styles = {
     fallbacks: [{ display: 'block' }],
     '-webkit-box-orient': 'vertical',
     overflow: 'hidden',
-    'text-overflow': 'ellipsis',
+    textOverflow: 'ellipsis',
   },
 };
 
@@ -28,5 +29,20 @@ const LineClamp = ({
     {children}
   </Tag>
 );
+
+LineClamp.propTypes = {
+  lines: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  children: PropTypes.node,
+  tagName: elementType,
+  className: PropTypes.string,
+  classes: PropTypes.shape({}).isRequired,
+};
+
+LineClamp.defaultProps = {
+  children: null,
+  tagName: 'div',
+  className: null,
+};
 
 export default withStyles(styles)(LineClamp);

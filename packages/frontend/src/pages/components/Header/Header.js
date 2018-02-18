@@ -10,6 +10,7 @@ import hideUser from 'hocs/hideUser';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
 import SearchQuery from 'modules/Search/Query/Query';
+import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
 import ProfileMenu from './ProfileMenu';
 
 const ShowLoginButton = hideUser(modals.login.showButton);
@@ -42,6 +43,15 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     marginLeft: theme.spacing.unit,
   },
+  unreadBadge: {
+    top: 0,
+    right: 0,
+    width: 18,
+    height: 18,
+    fontSize: '0.65rem',
+    background: theme.palette.secondary.A400,
+    color: theme.palette.getContrastText(theme.palette.secondary.A400),
+  },
 });
 
 const Header = ({ classes }) => (
@@ -60,9 +70,14 @@ const Header = ({ classes }) => (
         </div>
         <ShowCreateAdButton color="inherit">Sell your stuff</ShowCreateAdButton>
         <ShowLoginButton color="inherit">Login</ShowLoginButton>
-        <MessagesLink color="inherit" to="/messages" size="small">
-          <MessageIcon />
-        </MessagesLink>
+        <UnreadConversationsBadge
+          color="secondary"
+          classes={{ badge: classes.unreadBadge }}
+        >
+          <MessagesLink color="inherit" to="/messages" size="small">
+            <MessageIcon />
+          </MessagesLink>
+        </UnreadConversationsBadge>
         <ProfileMenu />
       </div>
     </Toolbar>

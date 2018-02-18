@@ -1,8 +1,8 @@
 /* @flow */
-import React, { Component } from 'react';
+import React from 'react';
 import * as R from 'ramda';
 import { createSelector, createStructuredSelector } from 'reselect';
-import { withProps } from 'recompose';
+import { withProps, defaultProps } from 'recompose';
 import List from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { propSelector } from 'pesposa-utils';
@@ -30,36 +30,26 @@ const styles = {
   },
 };
 
-class FilterByCategory extends Component<Props> {
-  static defaultProps = {
-    categories: [],
-  };
-
-  render() {
-    const { categoryLinks, classes } = this.props;
-
-    return (
-      <List classes={{ root: classes.list }}>
-        {R.map(
-          ({ key, label, to }) => (
-            <FilterOption
-              key={key}
-              buttonComponent={Link}
-              buttonProps={{
-                to,
-                exact: true,
-                activeClassName: classes.active,
-              }}
-            >
-              {label}
-            </FilterOption>
-          ),
-          categoryLinks,
-        )}
-      </List>
-    );
-  }
-}
+const FilterByCategory = ({ categoryLinks, classes }: Props) => (
+  <List classes={{ root: classes.list }}>
+    {R.map(
+      ({ key, label, to }) => (
+        <FilterOption
+          key={key}
+          buttonComponent={Link}
+          buttonProps={{
+            to,
+            exact: true,
+            activeClassName: classes.active,
+          }}
+        >
+          {label}
+        </FilterOption>
+      ),
+      categoryLinks,
+    )}
+  </List>
+);
 
 const categoryLinksSelector = createSelector(
   propSelector('t'),
@@ -81,6 +71,9 @@ const categoryLinksSelector = createSelector(
 
 export default R.compose(
   connectData({ categories: models.categories.all }),
+  defaultProps({
+    categories: [],
+  }),
   translate('categories'),
   withProps(
     createStructuredSelector({

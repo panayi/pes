@@ -170,7 +170,12 @@ type Image {
   downloadURL: URL,
   fullPath: String,
   name: String,
-  createdAt: InitialTimestamp,
+  // createdAt: InitialTimestamp,
+  // FIXME: this should be InitialTimestamp, but because Images are copied from
+  // drafts to pendingReview, validation will fail. Instead, we should store draft - images
+  // in a different collection (e.g. draftImages), and move them in a firebase-function
+  // on pendingReviewAd create.
+  createdAt: PastEpoch,
   dimensions: Dimension | Null,
 }
 
@@ -381,6 +386,10 @@ path /myConversations/{uid}/{adIdBuyerId} is Conversation {
   read() { isCurrentUser(uid) }
 
   index() { return ['lastMessageCreatedAt'] }
+}
+
+path /myConversations/{uid}/{adIdBuyerId}/read is Boolean {
+  update() { isCurrentUser(uid) }
 }
 
 path /myConversations/{uid}/{adIdBuyerId}/read {
