@@ -1,32 +1,80 @@
 /* @flow */
-import React from 'react';
+import React, { Component } from 'react';
 import * as R from 'ramda';
+import classNames from 'classnames';
+import { connect } from 'react-redux';
 import { defaultProps, withProps } from 'recompose';
+import { withStyles } from 'material-ui/styles';
 import { auth as authConfig } from 'pesposa-config';
 import { propSelector } from 'pesposa-utils';
+import { actions as authActions } from 'store/firebase/auth';
 import withProfileData from 'hocs/withProfileData';
 import ProviderIcon from 'components/ProviderIcon/ProviderIcon';
 
 type Props = {
+  link: ?boolean,
   providerComponent: React$Node,
-  className: String | null,
+  className: string | null,
   providers: Array<Object>,
+  linkProvider: Function,
+  classes: Object,
 };
 
-const UserProviders = ({
-  providerComponent: Provider,
-  className,
-  providers,
-}: Props) => (
-  <div className={className}>
-    {R.map(
-      provider => <Provider key={provider.providerId} {...provider} />,
+const styles = {
+  clickable: {
+    cursor: 'pointer',
+  },
+};
+
+class UserProviders extends Component<Props> {
+  handleProviderClick = async provider => {
+    const { link, linkProvider } = this.props;
+
+    if (!link) {
+      return;
+    }
+
+    const { providerId } = provider;
+
+    try {
+      await linkProvider(providerId);
+    } catch (error) {
+      alert(error); // eslint-disable-line no-alert
+    }
+  };
+
+  render() {
+    const {
+      providerComponent: Provider,
+      className,
       providers,
-    )}
-  </div>
-);
+      link,
+      classes,
+    } = this.props;
+
+    return (
+      <div className={classNames({ [classes.clickable]: link }, className)}>
+        {R.map(
+          provider => (
+            <Provider
+              key={provider.providerId}
+              onClick={() => this.handleProviderClick(provider)}
+              {...provider}
+            />
+          ),
+          providers,
+        )}
+      </div>
+    );
+  }
+}
+
+const mapDispatchToProps = {
+  linkProvider: authActions.linkProvider,
+};
 
 export default R.compose(
+  connect(null, mapDispatchToProps),
   withProfileData(
     {
       providerIds: ['providerIds'],
@@ -46,4 +94,5 @@ export default R.compose(
       })),
     )(authConfig.providers),
   })),
+  withStyles(styles),
 )(UserProviders);

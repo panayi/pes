@@ -5,7 +5,10 @@ import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { actions as locationActions } from 'store/firebase/profile/location';
-import { actions as profileActions } from 'store/firebase/profile';
+import {
+  actions as profileActions,
+  utils as profileUtils,
+} from 'store/firebase/profile';
 import { modals } from 'store/modals';
 import * as selectors from './selectors';
 
@@ -74,6 +77,7 @@ export const linkProvider = providerId => async (
   );
 
   const result = await firebase.auth().currentUser.linkWithPopup(provider);
-  const providerData = R.path(['user', 'providerData'], result);
-  dispatch(profileActions.updateProfile({ providerData }));
+  const user = R.prop('user', result);
+  const newUser = profileUtils.profileFactory(user, user);
+  dispatch(profileActions.updateProfile(newUser));
 };

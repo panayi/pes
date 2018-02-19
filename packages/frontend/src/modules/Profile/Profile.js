@@ -19,6 +19,7 @@ const styles = theme => ({
   },
   userAds: {
     flex: 1,
+    minHeight: 300,
     padding: [3 * theme.spacing.unit, 3 * theme.spacing.unit, 0],
     marginBottom: -1.5 * theme.spacing.unit,
     boxShadow: theme.shadows[1],

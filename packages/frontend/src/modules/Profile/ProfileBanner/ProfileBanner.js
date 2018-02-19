@@ -2,7 +2,6 @@ import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { withProps } from 'recompose';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { darken } from 'material-ui/styles/colorManipulator';
@@ -14,7 +13,6 @@ import Imgix from 'components/Imgix/Imgix';
 import UserFullName from 'components/UserFullName/UserFullName';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import ListUserProviders from 'components/ListUserProviders/ListUserProviders';
-import LinkProviders from 'modules/LinkProviders/LinkProviders';
 
 const IMGIX_PARAMS = {
   w: 900,
@@ -79,7 +77,7 @@ const styles = theme => ({
 export const ProfileBanner = ({
   userId,
   profileImage,
-  providersComponent: Providers,
+  isCurrentUser,
   classes,
 }) => (
   <Imgix params={IMGIX_PARAMS} image={profileImage}>
@@ -89,7 +87,12 @@ export const ProfileBanner = ({
         style={src && { backgroundImage: `url(${src})` }}
       >
         <div className={classes.content}>
-          <ProfileImage className={classes.avatar} userId={userId} size={128} />
+          <ProfileImage
+            className={classes.avatar}
+            userId={userId}
+            size={128}
+            withDefault
+          />
           <UserFullName
             className={classes.fullname}
             userId={userId}
@@ -98,7 +101,11 @@ export const ProfileBanner = ({
           <Typography className={classes.verifiedTitle} variant="button">
             Verified Accounts
           </Typography>
-          <Providers className={classes.providers} userId={userId} />
+          <ListUserProviders
+            className={classes.providers}
+            userId={userId}
+            link={isCurrentUser}
+          />
           <SettingsIcon className={classes.settingsIcon} />
         </div>
       </div>
@@ -118,8 +125,5 @@ export default R.compose(
     propSelector('userId'),
   ),
   connect(mapStateToProps),
-  withProps(({ isCurrentUser }) => ({
-    providersComponent: isCurrentUser ? LinkProviders : ListUserProviders,
-  })),
   withStyles(styles),
 )(ProfileBanner);
