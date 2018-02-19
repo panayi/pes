@@ -10,13 +10,13 @@ import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import ArrowBack from 'material-ui-icons/ArrowBack';
 import { selectors as loginSelectors } from 'store/login';
-import renderNothingWhen from 'hocs/renderNothingWhen';
 import withSpinnerWhen from 'hocs/withSpinnerWhen';
 import LoginWithPhone from './WithPhone/WithPhone';
 import LoginButtons from './Buttons/Buttons';
 
 type Props = {
   onSuccess: Function,
+  phoneOnly: ?boolean,
   renderTitle: Function,
   renderContent: Function,
   loginWithPhoneStep: string,
@@ -38,6 +38,7 @@ const styles = () => ({
 
 const Login = ({
   onSuccess,
+  phoneOnly,
   renderTitle,
   renderContent,
   spinner,
@@ -62,9 +63,8 @@ const Login = ({
         <div className={classes.root}>
           {spinner}
           <Grid container alignContent="center">
-            {!showingSmsCodeValidation && (
-              <LoginButtons onSuccess={onSuccess} />
-            )}
+            {!showingSmsCodeValidation &&
+              !phoneOnly && <LoginButtons onSuccess={onSuccess} />}
             <Grid item xs={12}>
               <LoginWithPhone
                 onSuccess={onSuccess}
@@ -87,7 +87,6 @@ const mapStateToProps = createStructuredSelector({
 const ConnectedLogin = R.compose(
   setDisplayName('Login'),
   connect(mapStateToProps),
-  renderNothingWhen(R.prop('loginSucceeded')),
   withSpinnerWhen(R.prop('isLoginPending'), {
     centered: true,
     overlay: true,

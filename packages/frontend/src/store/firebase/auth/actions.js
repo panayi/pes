@@ -53,11 +53,48 @@ export const login = credentials => async dispatch => {
   return dispatch(setCurrentUserInfo());
 };
 
-export const loginWithPhoneNumber = credentials => async dispatch =>
-  dispatch(api.auth.login(credentials));
+export const loginWithPhoneNumber = (
+  phoneNumber,
+  applicationVerifier,
+) => async (dispatch, getState, getFirebase) => {
+  const isAuthenticated = selectors.isAuthenticatedSelector(getState());
 
-export const validateSmsCode = (code, confirmationResult) => async () =>
-  confirmationResult.confirm(code);
+  if (isAuthenticated) {
+    return getFirebase()
+      .auth()
+      .signInWithPhoneNumber(phoneNumber, applicationVerifier);
+  }
+
+  return dispatch(
+    api.auth.login({
+      phoneNumber,
+      applicationVerifier,
+    }),
+  );
+};
+
+export const validateSmsCode = (code, confirmationResult) => async (
+  dispatch,
+  getState,
+  getFirebase,
+) => {
+  const isAuthenticated = selectors.isAuthenticatedSelector(getState());
+
+  if (isAuthenticated) {
+    const credential = getFirebase().auth.PhoneAuthProvider.credential(
+      confirmationResult.verificationId,
+      code,
+    );
+    const result = await getFirebase()
+      .auth()
+      .currentUser.linkWithCredential(credential);
+    const user = R.prop('user', result);
+    const newUser = profileUtils.profileFactory(user, user);
+    dispatch(profileActions.updateProfile(newUser));
+  }
+
+  return confirmationResult.confirm(code);
+};
 
 export const linkProvider = providerId => async (
   dispatch,
@@ -65,7 +102,7 @@ export const linkProvider = providerId => async (
   getFirebase,
 ) => {
   if (providerId === firebaseConfig.PROVIDER_IDS.phone) {
-    dispatch(modals.login.showAction());
+    dispatch(modals.login.showAction({ phoneOnly: true }));
     return;
   }
 

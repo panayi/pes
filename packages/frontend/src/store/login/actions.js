@@ -37,7 +37,10 @@ export const loginWithPhoneNumber = (...args) => async dispatch => {
       }
     };
 
-    return { confirm };
+    return {
+      ...confirmationResult,
+      confirm,
+    };
   } catch (error) {
     dispatch(loginFailed());
     throw error;
