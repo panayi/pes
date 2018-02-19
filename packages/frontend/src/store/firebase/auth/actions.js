@@ -1,11 +1,12 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { auth as authConfig } from 'pesposa-config';
+import { auth as authConfig, firebase as firebaseConfig } from 'pesposa-config';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { actions as locationActions } from 'store/firebase/profile/location';
 import { actions as profileActions } from 'store/firebase/profile';
+import { modals } from 'store/modals';
 import * as selectors from './selectors';
 
 export const setCurrentUserInfo = () => async (dispatch, getState) => {
@@ -49,6 +50,9 @@ export const login = credentials => async dispatch => {
   return dispatch(setCurrentUserInfo());
 };
 
+export const loginWithPhoneNumber = credentials => async dispatch =>
+  dispatch(api.auth.login(credentials));
+
 export const validateSmsCode = (code, confirmationResult) => async () =>
   confirmationResult.confirm(code);
 
@@ -57,6 +61,11 @@ export const linkProvider = providerId => async (
   getState,
   getFirebase,
 ) => {
+  if (providerId === firebaseConfig.PROVIDER_IDS.phone) {
+    dispatch(modals.login.showAction());
+    return;
+  }
+
   const firebase = getFirebase();
   const provider = createAuthProvider(
     firebase,

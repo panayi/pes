@@ -36,6 +36,7 @@ export class LoginWithPhone extends Component<Props> {
       applicationVerifier: recaptcha.verifier,
     };
     this.confirmationResult = await login(credentials);
+
     setValues(values);
     onStepChange('smsCodeValidation');
   };
@@ -76,7 +77,7 @@ const initialState = {
 };
 
 const mapDispatchToProps = {
-  login: loginActions.login,
+  login: loginActions.loginWithPhoneNumber,
   validateSmsCode: authActions.validateSmsCode,
 };
 

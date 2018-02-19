@@ -1,11 +1,11 @@
 import * as R from 'ramda';
-import capitalize from 'lodash.capitalize';
+import { firebase as firebaseConfig } from 'pesposa-config';
 
 // Based on https://github.com/prescottprue/react-redux-firebase/blob/master/src/utils/auth.js
 // as it is not exposed by react-redux-firebase
 const createAuthProvider = (firebase, providerName, scopes) => {
   const provider = new firebase.auth[
-    `${capitalize(providerName)}AuthProvider`
+    firebaseConfig.FIREBASE_AUTH_PROVIDER_CLASS[providerName]
   ]();
 
   // Handle providers without scopes
