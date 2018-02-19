@@ -19,6 +19,7 @@ const CountrySelect = ({ getLabel, countries, ...rest }) => (
 );
 
 CountrySelect.defaultProps = {
+  countries: [],
   getLabel: R.prop('name'),
 };
 

@@ -1,11 +1,15 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { auth as authConfig } from 'pesposa-config';
+import { auth as authConfig, firebase as firebaseConfig } from 'pesposa-config';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { actions as locationActions } from 'store/firebase/profile/location';
-import { actions as profileActions } from 'store/firebase/profile';
+import {
+  actions as profileActions,
+  utils as profileUtils,
+} from 'store/firebase/profile';
+import { modals } from 'store/modals';
 import * as selectors from './selectors';
 
 export const setCurrentUserInfo = () => async (dispatch, getState) => {
@@ -49,14 +53,59 @@ export const login = credentials => async dispatch => {
   return dispatch(setCurrentUserInfo());
 };
 
-export const validateSmsCode = (code, confirmationResult) => async () =>
-  confirmationResult.confirm(code);
+export const loginWithPhoneNumber = (
+  phoneNumber,
+  applicationVerifier,
+) => async (dispatch, getState, getFirebase) => {
+  const isAuthenticated = selectors.isAuthenticatedSelector(getState());
+
+  if (isAuthenticated) {
+    return getFirebase()
+      .auth()
+      .signInWithPhoneNumber(phoneNumber, applicationVerifier);
+  }
+
+  return dispatch(
+    api.auth.login({
+      phoneNumber,
+      applicationVerifier,
+    }),
+  );
+};
+
+export const validateSmsCode = (code, confirmationResult) => async (
+  dispatch,
+  getState,
+  getFirebase,
+) => {
+  const isAuthenticated = selectors.isAuthenticatedSelector(getState());
+
+  if (isAuthenticated) {
+    const credential = getFirebase().auth.PhoneAuthProvider.credential(
+      confirmationResult.verificationId,
+      code,
+    );
+    const result = await getFirebase()
+      .auth()
+      .currentUser.linkWithCredential(credential);
+    const user = R.prop('user', result);
+    const newUser = profileUtils.profileFactory(user, user);
+    dispatch(profileActions.updateProfile(newUser));
+  }
+
+  return confirmationResult.confirm(code);
+};
 
 export const linkProvider = providerId => async (
   dispatch,
   getState,
   getFirebase,
 ) => {
+  if (providerId === firebaseConfig.PROVIDER_IDS.phone) {
+    dispatch(modals.login.showAction({ phoneOnly: true }));
+    return;
+  }
+
   const firebase = getFirebase();
   const provider = createAuthProvider(
     firebase,
@@ -65,6 +114,7 @@ export const linkProvider = providerId => async (
   );
 
   const result = await firebase.auth().currentUser.linkWithPopup(provider);
-  const providerData = R.path(['user', 'providerData'], result);
-  dispatch(profileActions.updateProfile({ providerData }));
+  const user = R.prop('user', result);
+  const newUser = profileUtils.profileFactory(user, user);
+  dispatch(profileActions.updateProfile(newUser));
 };

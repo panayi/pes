@@ -35,9 +35,7 @@ const EmptyHero = ({
   classes,
 }) => (
   <div className={classes.root}>
-    <Icon
-      className={classNames(classes.icon, { [classes.smallIcon]: small })}
-    />
+    {Icon && <Icon className={classNames(classes.icon, { [classes.smallIcon]: small })} />}
     {title && (
       <Typography
         variant={small ? 'display1' : 'display3'}
@@ -55,7 +53,7 @@ const EmptyHero = ({
 );
 
 EmptyHero.propTypes = {
-  icon: elementType.isRequired,
+  icon: elementType,
   title: PropTypes.string,
   tagline: PropTypes.string.isRequired,
   small: PropTypes.bool,
@@ -63,6 +61,7 @@ EmptyHero.propTypes = {
 };
 
 EmptyHero.defaultProps = {
+  icon: null,
   title: null,
   small: false,
   children: null,

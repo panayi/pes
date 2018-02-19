@@ -31,11 +31,11 @@ export class LoginWithPhone extends Component<Props> {
 
   handleSubmitPhoneNumber = async (values, recaptcha) => {
     const { login, setValues, onStepChange } = this.props;
-    const credentials = {
-      phoneNumber: values.phoneNumber,
-      applicationVerifier: recaptcha.verifier,
-    };
-    this.confirmationResult = await login(credentials);
+    this.confirmationResult = await login(
+      values.phoneNumber,
+      recaptcha.verifier,
+    );
+
     setValues(values);
     onStepChange('smsCodeValidation');
   };
@@ -76,7 +76,7 @@ const initialState = {
 };
 
 const mapDispatchToProps = {
-  login: loginActions.login,
+  login: loginActions.loginWithPhoneNumber,
   validateSmsCode: authActions.validateSmsCode,
 };
 

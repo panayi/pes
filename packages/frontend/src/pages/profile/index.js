@@ -4,9 +4,10 @@ import { createStructuredSelector } from 'reselect';
 import { selectors as routerSelectors } from 'store/router';
 import Layout from 'layouts/Layout/Layout';
 import Profile from 'modules/Profile/Profile';
+import Header from 'pages/components/Header/Header';
 
 const ProfilePage = ({ userId }) => (
-  <Layout fixed flex>
+  <Layout header={Header} fixed flex>
     <Profile userId={userId} />
   </Layout>
 );

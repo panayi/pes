@@ -19,6 +19,8 @@ const getPhoto = R.compose(
   findProviderWithProp('photoURL'),
 );
 
+const getProviderData = R.prop('providerData');
+
 const getProviderIds = R.compose(
   R.uniq,
   R.pluck('providerId'),
@@ -28,7 +30,7 @@ const getProviderIds = R.compose(
 // profileFactory :: User -> Object
 export const profileFactory = (userData, profile) => ({
   email: userData.email,
-  providerData: userData.providerData,
+  providerData: getProviderData(userData),
   profile: {
     ...R.propOr({}, 'profile', profile),
     displayName: getDisplayName(userData),
