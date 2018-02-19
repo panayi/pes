@@ -1,6 +1,7 @@
 /* @flow */
 import * as functions from 'firebase-functions';
 import * as algoliaService from 'services/algolia';
+import * as adModel from 'functions/models/ad';
 
 type Event = {
   params: {
@@ -11,10 +12,20 @@ type Event = {
   data: $npm$firebase$database$DataSnapshot,
 };
 
+const handleAdUpdated = async (event: Event) => {
+  const { adId } = event.params;
+  const ad = (await adModel.get(adId)).val();
+  return algoliaService.update(ad, adId);
+};
+
 const handleAdDeleted = async (event: Event) => {
   const { adId } = event.params;
   return algoliaService.remove(adId);
 };
+
+export const adUpdated = functions.database
+  .ref('/ads/published/{adId}')
+  .onUpdate(handleAdUpdated);
 
 export const adDeleted = functions.database
   .ref('/ads/published/{adId}')

@@ -194,6 +194,7 @@ type Ad {
   location: Location,
   category: String,
   user: String,
+  sold: Boolean | Null,
   createdAt: PastEpoch,
 }
 
@@ -313,7 +314,8 @@ path /ads/published/{id} {
 
   validate() {
     categoryIsValid(this.category) &&
-    createOnly(this.createdAt)
+    createOnly(this.createdAt) &&
+    (this.sold == null || this.sold == true)
   }
 }
 

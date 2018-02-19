@@ -9,7 +9,7 @@ import queryReducer, { constants as queryConstants } from './query';
 import requestReducer, { constants as requestConstants } from './request';
 import sortByReducer, { constants as sortByConstants } from './sortBy';
 import totalHitsReducer, { constants as totalHitsConstants } from './totalHits';
-import userReducer, { constants as userConstants } from './user';
+import rawParamsReducer, { constants as rawParamsConstants } from './rawParams';
 import scrollPositionReducer, {
   constants as scrollPositionConstants,
 } from './scrollPosition';
@@ -25,7 +25,7 @@ const searchReducer = combineReducers({
   [totalHitsConstants.ROOT_KEY]: totalHitsReducer,
   [queryConstants.ROOT_KEY]: queryReducer,
   [priceConstants.ROOT_KEY]: priceReducer,
-  [userConstants.ROOT_KEY]: userReducer,
+  [rawParamsConstants.ROOT_KEY]: rawParamsReducer,
   [scrollPositionConstants.ROOT_KEY]: scrollPositionReducer,
 });
 

@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import * as rawParamsTypes from './rawParams/types';
 import * as categoryTypes from './category/types';
 import * as locationTypes from './location/types';
 import * as priceTypes from './price/types';
@@ -6,6 +7,7 @@ import * as queryTypes from './query/types';
 import * as sortByTypes from './sortBy/types';
 
 const searchParamsActionTypes = R.compose(R.values, R.mergeAll)([
+  rawParamsTypes,
   categoryTypes,
   locationTypes,
   priceTypes,

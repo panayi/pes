@@ -1,17 +1,21 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
+import { red } from 'material-ui/colors';
 import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import PlaceIcon from 'material-ui-icons/Place';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import urlForPath from 'utils/urlForPath';
 import { selectors as authSelectors } from 'store/firebase/auth';
+import { actions as dataActions } from 'store/firebase/data';
 import Link from 'components/Link/Link';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
@@ -33,6 +37,7 @@ type Props = {
   adId: string,
   location: Object,
   uid: string,
+  markAdAsSold: Function,
   classes: Object,
 };
 
@@ -63,6 +68,7 @@ const styles = theme => ({
     overflow: 'hidden',
   },
   images: {
+    position: 'relative',
     width: SLIDER_WIDTH,
     display: 'flex',
     alignItems: 'center',
@@ -129,7 +135,7 @@ const styles = theme => ({
     left: theme.spacing.unit * 2,
     width: SLIDER_WIDTH - theme.spacing.unit * 4,
   },
-  sendMessageWrap: {
+  interactionBox: {
     marginTop: theme.spacing.unit * 2,
   },
   shareButtons: {
@@ -159,15 +165,29 @@ const styles = theme => ({
     boxShadow: 'none',
     borderRadius: '0 50% 50% 0',
   },
+  ribbon: {
+    width: 200,
+    background: red.A400,
+    position: 'absolute',
+    top: 25,
+    left: -50,
+    zIndex: 1,
+    textAlign: 'center',
+    lineHeight: '50px',
+    letterSpacing: 1,
+    color: theme.palette.getContrastText(red.A200),
+    transform: 'rotate(-45deg)',
+  }
 });
 
-const ViewAd = ({ ad, adId, location, uid, classes }: Props) => {
+const ViewAd = ({ ad, adId, location, uid, markAdAsSold, classes }: Props) => {
   const currentUrl = urlForPath(location.pathname);
 
   return (
     <div className={classes.root}>
       <div className={classes.inner}>
         <div className={classes.images}>
+          {ad.sold && <Typography className={classes.ribbon}>Sold</Typography>}
           <ImageSlider
             className={classes.slider}
             images={R.values(ad.images)}
@@ -215,16 +235,21 @@ const ViewAd = ({ ad, adId, location, uid, classes }: Props) => {
           </div>
           <div className={classes.seller}>
             <SellerBox ad={ad} />
-            {ad.user &&
-              ad.user !== uid && (
-                <div className={classes.sendMessageWrap}>
+            {ad.user && !ad.sold && (
+              <div className={classes.interactionBox}>
+                {ad.user !== uid ? (
                   <SendMessage
                     placeholder="Ask a question"
                     adId={adId}
                     buyerId={uid}
                   />
-                </div>
-              )}
+                ) : (
+                  <Button variant="raised" color="primary" fullWidth onClick={() => markAdAsSold()}>
+                    Mark as sold
+                  </Button>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -277,8 +302,12 @@ const mapStateToProps = createStructuredSelector({
   uid: authSelectors.uidSelector,
 });
 
+const mapDispatchToProps = (dispatch, { adId }) => bindActionCreators({
+  markAdAsSold: () => dataActions.markAdAsSold(adId)
+}, dispatch)
+
 export default R.compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withRouter,
   withStyles(styles),
 )(ViewAd);

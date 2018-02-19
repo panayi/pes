@@ -41,6 +41,7 @@ const serializeAd = (ad, id) =>
       'category',
       'price',
       'user',
+      'sold',
       'images',
       'createdAt',
       'location',
@@ -65,6 +66,7 @@ const serializeAd = (ad, id) =>
         ),
       ),
     ),
+    computedProp('sold', R.propOr(false, 'sold')),
     computedProp(algoliaConfig.ID, R.always(id)),
   )(ad);
 

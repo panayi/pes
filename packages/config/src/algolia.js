@@ -52,7 +52,7 @@ export const INDEXES = [
     ],
     settings: {
       searchableAttributes: ['title', 'body'],
-      attributesForFaceting: ['category', 'user'],
+      attributesForFaceting: ['category', 'user', 'sold'],
     },
   },
 ];

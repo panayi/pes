@@ -21,6 +21,7 @@ export default R.compose(
   connectSearch(mapStateToProps, mapDispatchToProps),
   withProps(props => ({
     currentCategory: R.pathOr(null, ['match', 'params', 'category'], props),
+    params: { facetFilters: ['sold:false'] },
   })),
   lifecycle({
     componentWillMount() {
