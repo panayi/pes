@@ -84,6 +84,7 @@ const SellerBox = ({ ad, classes }) => (
         </React.Fragment>
       )}
     </div>
+    {/* Only for legacy ads */}
     {!ad.user && (
       <div className={classes.contactButton}>
         <RevealPhoneButton ad={ad}>Contact seller</RevealPhoneButton>

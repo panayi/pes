@@ -11,7 +11,7 @@ import {
 } from 'store/search';
 import { selectors as hitsSelectors } from 'store/search/hits';
 import { selectors as pageSelectors } from 'store/search/page';
-import { actions as searchUserActions } from 'store/search/user';
+import { actions as rawParamsActions } from 'store/search/rawParams';
 import {
   selectors as scrollPositionSelectors,
   actions as scrollPositionActions,
@@ -29,23 +29,23 @@ const styles = {
 
 export class ListAds extends Component {
   static propTypes = {
-    userId: PropTypes.string,
+    params: PropTypes.shape({}),
     hits: PropTypes.arrayOf(PropTypes.shape({})),
-    setUser: PropTypes.func.isRequired,
+    setRawParams: PropTypes.func.isRequired,
     scrollPosition: PropTypes.number.isRequired,
     setScrollPosition: PropTypes.func.isRequired,
     classes: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
-    userId: null,
+    params: null,
     hits: [],
   };
 
   componentWillMount() {
-    const { setUser, userId, loadPage } = this.props;
-    if (userId) {
-      setUser(userId);
+    const { setRawParams, params, loadPage } = this.props;
+    if (params) {
+      setRawParams(params);
     }
     loadPage(0);
   }
@@ -59,6 +59,10 @@ export class ListAds extends Component {
       // FIXME: Find a way to avoid forced update
       // list doesn't update otherwise
       this.autoSizerRef.forceUpdate();
+    }
+
+    if (propsChanged(['params'], this.props, nextProps)) {
+      this.props.setRawParams(nextProps.params);
     }
   }
 
@@ -135,7 +139,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   loadPage: searchActions.loadPage,
-  setUser: searchUserActions.setUser,
+  setRawParams: rawParamsActions.setRawParams,
   setScrollPosition: scrollPositionActions.setScrollPosition,
 };
 
