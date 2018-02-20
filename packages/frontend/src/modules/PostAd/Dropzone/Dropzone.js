@@ -26,9 +26,12 @@ const styles = theme => ({
   root: {
     position: 'relative',
     height: '100%',
-    border: `2px dashed ${theme.palette.grey['200']}`,
+    border: `2px dashed ${theme.palette.grey[200]}`,
     cursor: 'pointer',
-    transition: 'border-color 0.1s',
+    transition: theme.transitions.create('border-color'),
+    '&:hover': {
+      borderColor: theme.palette.grey[300],
+    },
   },
   accepted: {
     borderColor: theme.palette.grey['500'],
@@ -70,6 +73,7 @@ export class Dropzone extends Component<Props> {
     return (
       <ReactDropzone
         onDropAccepted={onDrop}
+        style={{ height: '100%' }}
         {...R.pick(dropzonePropKeys, otherProps)}
       >
         {dropzoneProps => (

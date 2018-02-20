@@ -59,15 +59,15 @@ export class EditAdImages extends Component<Props> {
     );
     const finalList = canUploadImage
       ? R.append(
-          <GridListTile
-            key="add"
-            className={error && classes.errorBox}
-            component={Dropzone}
-            acceptedFileTypes={imagesConfig.ACCEPTED_TYPES}
-            onDrop={this.handleDrop}
-            isLoading={isLoading}
-            multiple
-          />,
+          <GridListTile key="add">
+            <Dropzone
+              acceptedFileTypes={imagesConfig.ACCEPTED_TYPES}
+              className={error && classes.errorBox}
+              onDrop={this.handleDrop}
+              isLoading={isLoading}
+              multiple
+            />
+          </GridListTile>,
           list,
         )
       : list;
