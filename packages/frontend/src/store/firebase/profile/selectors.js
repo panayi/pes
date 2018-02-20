@@ -35,6 +35,16 @@ export const profilePropSelector = (path, options = {}) =>
 // profileEmailSelector :: State -> String | Nil
 export const profileEmailSelector = profilePropSelector(['email']);
 
+export const profilePhoneNumberSelector = createSelector(
+  profileSelector,
+  R.compose(
+    R.prop('phoneNumber'),
+    R.defaultTo({}),
+    R.find(R.propEq('providerId', firebaseConfig.PROVIDER_IDS.phone)),
+    R.propOr([], 'providerData'),
+  ),
+);
+
 export const profileCountryCodeSelector = profilePropSelector([
   'location',
   'address',

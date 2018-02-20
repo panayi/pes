@@ -11,7 +11,7 @@ import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
 import SearchQuery from 'modules/Search/Query/Query';
 import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
-import ProfileMenu from './ProfileMenu';
+import ProfileMenu from './ProfileMenu/ProfileMenu';
 
 const ShowLoginButton = hideUser(modals.login.showButton);
 
