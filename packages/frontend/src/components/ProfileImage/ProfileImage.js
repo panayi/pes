@@ -1,41 +1,56 @@
 import React from 'react';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { defaultProps, withProps, setDisplayName } from 'recompose';
+import { setDisplayName } from 'recompose';
 import Avatar from 'material-ui/Avatar';
+import { withStyles } from 'material-ui/styles';
 import Face from 'material-ui-icons/Face';
 import { propSelector } from 'pesposa-utils';
 import withProfileData from 'hocs/withProfileData';
 
+const styles = {
+  withBorder: {
+    border: '1px solid rgba(255, 255, 255, 0.15)',
+  },
+};
+
 const ProfileImage = ({
   src,
+  isLoaded,
   alt,
-  style,
+  size,
   className,
-  withDefault,
   component: RootComponent,
-}) => (
-  <RootComponent src={src} alt={alt} style={style} className={className}>
-    {withDefault && isNilOrEmpty(src) ? <Face /> : null}
-  </RootComponent>
-);
+  classes,
+}) => {
+  const withDefault = isNilOrEmpty(src) && isLoaded.src;
+  const componentClasses = isLoaded.src ? {} : { root: classes.withBorder };
+
+  return (
+    <RootComponent
+      className={className}
+      classes={componentClasses}
+      src={src}
+      alt={alt}
+      style={{ width: `${size}px`, height: `${size}px` }}
+    >
+      {withDefault ? <Face /> : null}
+    </RootComponent>
+  );
+};
+
+ProfileImage.defaultProps = {
+  component: Avatar,
+  size: 40,
+};
 
 export default R.compose(
   setDisplayName('ProfileImage'),
-  defaultProps({
-    component: Avatar,
-    size: 40,
-  }),
-  withProps(({ size }) => ({
-    style: {
-      width: `${size}px`,
-      height: `${size}px`,
-    },
-  })),
   withProfileData(
     {
       src: ['image', 'downloadURL'],
     },
     propSelector('userId'),
   ),
+  withStyles(styles),
 )(ProfileImage);

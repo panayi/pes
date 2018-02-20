@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import { connect } from 'react-redux';
+import { isLoaded } from 'react-redux-firebase';
 import { createStructuredSelector } from 'reselect';
 import { branch } from 'recompose';
 import { connectData } from 'lib/connectData';
@@ -11,12 +12,21 @@ import { selectors as profileSelectors } from 'store/firebase/profile';
 const IS_CURRENT_USER = '____is_current_user';
 
 const withMyProfileData = mapPropsToPaths => {
-  const mapStateToProps = createStructuredSelector(
+  const dataSelector = createStructuredSelector(
     R.map(
       R.compose(profileSelectors.profilePropSelector, R.prepend('profile')),
       mapPropsToPaths,
     ),
   );
+
+  const mapStateToProps = (state, props) => {
+    const data = dataSelector(state, props);
+
+    return {
+      ...data,
+      isLoaded: R.map(isLoaded, data),
+    };
+  };
 
   return connect(mapStateToProps, {});
 };

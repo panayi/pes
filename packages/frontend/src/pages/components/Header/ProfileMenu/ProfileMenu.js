@@ -90,7 +90,7 @@ class ProfileMenu extends Component {
 
     return [
       <Button key="anchor" size="small" onClick={this.handleClickAnchor}>
-        <ProfileImage userId={currentUserId} withDefault />
+        <ProfileImage userId={currentUserId} />
       </Button>,
       <Popover
         key="content"
@@ -110,11 +110,7 @@ class ProfileMenu extends Component {
         <div className={classes.root}>
           <div className={classes.content}>
             <div className={classes.imageWrap}>
-              <ProfileImage
-                size={PROFILE_IMAGE_SIZE}
-                userId={currentUserId}
-                withDefault
-              />
+              <ProfileImage size={PROFILE_IMAGE_SIZE} userId={currentUserId} />
             </div>
             <div>
               <UserFullName

@@ -87,12 +87,7 @@ export const ProfileBanner = ({
         style={src && { backgroundImage: `url(${src})` }}
       >
         <div className={classes.content}>
-          <ProfileImage
-            className={classes.avatar}
-            userId={userId}
-            size={128}
-            withDefault
-          />
+          <ProfileImage className={classes.avatar} userId={userId} size={128} />
           <UserFullName
             className={classes.fullname}
             userId={userId}

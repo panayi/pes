@@ -62,7 +62,7 @@ const styles = theme => ({
 const SellerBox = ({ ad, classes }) => (
   <div className={classes.root}>
     <Link className={classes.avatarLink} to={`/user/${ad.user}`}>
-      <ProfileImage className={classes.avatar} userId={ad.user} withDefault />
+      <ProfileImage className={classes.avatar} userId={ad.user} />
     </Link>
     <div className={classes.details}>
       {ad.user && (
