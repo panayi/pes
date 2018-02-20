@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
+import { push as _push } from 'react-router-redux';
+import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import SearchIcon from 'material-ui-icons/Search';
@@ -16,13 +19,6 @@ const styles = theme => ({
     background: fade(theme.palette.common.white, 0.15),
     '&:hover': {
       background: fade(theme.palette.common.white, 0.25),
-    },
-    '& $input': {
-      transition: theme.transitions.create('width'),
-      width: 200,
-      '&:focus': {
-        width: 250,
-      },
     },
   },
   searchIcon: {
@@ -47,6 +43,7 @@ const styles = theme => ({
     margin: 0, // Reset for Safari
     color: 'inherit',
     width: '100%',
+    boxSizing: 'border-box',
     '&:focus': {
       outline: 0,
     },
@@ -63,17 +60,21 @@ class Form extends Component<Props> {
     }
   }
 
+  handleFormSubmit = (...args) => {
+    const { inHome, push, handleSubmit } = this.props;
+
+    if (!inHome) {
+      push('/');
+    }
+
+    handleSubmit(...args);
+  };
+
   render() {
-    const {
-      values,
-      handleSubmit,
-      handleChange,
-      handleBlur,
-      classes,
-    } = this.props;
+    const { values, handleChange, handleBlur, classes } = this.props;
 
     return (
-      <form className={classes.root} onSubmit={handleSubmit}>
+      <form className={classes.root} onSubmit={this.handleFormSubmit}>
         <div className={classes.searchIcon}>
           <SearchIcon />
         </div>
@@ -90,4 +91,10 @@ class Form extends Component<Props> {
   }
 }
 
-export default withStyles(styles)(Form);
+const mapDispatchToProps = {
+  push: _push,
+};
+
+export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
+  Form,
+);

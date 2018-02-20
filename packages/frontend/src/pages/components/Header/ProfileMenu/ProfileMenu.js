@@ -17,43 +17,42 @@ import LogoutButton from './LogoutButton/LogoutButton';
 
 const PROFILE_IMAGE_SIZE = 96;
 
-const styles = theme =>
-  !console.log(theme) && {
-    root: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    content: {
-      display: 'flex',
-      flex: 1,
-      margin: theme.spacing.unit * 2,
-    },
-    footer: {
-      flexBasis: 32,
-      padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
-      borderTop: `1px solid ${theme.palette.divider}`,
-      background: theme.palette.background.default,
-    },
-    imageWrap: {
-      flexBasis: PROFILE_IMAGE_SIZE,
-      alignSelf: 'flex-end',
-      marginRight: theme.spacing.unit * 2,
-    },
-    displayName: {
-      fontWeight: 600,
-    },
-    logoutButton: {
-      float: 'right',
-      border: `1px solid ${theme.palette.grey[400]}`,
-    },
-    small: {
-      fontSize: '0.8125rem',
-      color: theme.palette.text.secondary,
-    },
-    profileLink: {
-      marginTop: theme.spacing.unit,
-    },
-  };
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  content: {
+    display: 'flex',
+    flex: 1,
+    margin: theme.spacing.unit * 2,
+  },
+  footer: {
+    flexBasis: 32,
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
+    borderTop: `1px solid ${theme.palette.divider}`,
+    background: theme.palette.background.default,
+  },
+  imageWrap: {
+    flexBasis: PROFILE_IMAGE_SIZE,
+    alignSelf: 'flex-end',
+    marginRight: theme.spacing.unit * 2,
+  },
+  displayName: {
+    fontWeight: 600,
+  },
+  logoutButton: {
+    float: 'right',
+    border: `1px solid ${theme.palette.grey[400]}`,
+  },
+  small: {
+    fontSize: '0.8125rem',
+    color: theme.palette.text.secondary,
+  },
+  profileLink: {
+    marginTop: theme.spacing.unit,
+  },
+});
 
 class ProfileMenu extends Component {
   static propTypes = {

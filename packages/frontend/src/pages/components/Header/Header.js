@@ -54,7 +54,7 @@ const styles = theme => ({
   },
 });
 
-const Header = ({ classes }) => (
+const Header = ({ inHome, classes }) => (
   <AppBar className={classes.header}>
     <Toolbar className={classes.toolbar}>
       <div className={classes.logoArea}>
@@ -66,7 +66,7 @@ const Header = ({ classes }) => (
       </div>
       <div className={classes.content}>
         <div className={classes.searchInput}>
-          <SearchQuery />
+          <SearchQuery inHome={inHome} />
         </div>
         <ShowCreateAdButton color="inherit">Sell your stuff</ShowCreateAdButton>
         <ShowLoginButton color="inherit">Login</ShowLoginButton>
