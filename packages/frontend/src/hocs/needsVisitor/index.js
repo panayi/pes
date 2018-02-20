@@ -1,20 +1,18 @@
-import React from 'react';
+import * as R from 'ramda';
+import { withProps } from 'recompose';
 import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper';
 import { routerActions } from 'react-router-redux';
-import Grid from 'material-ui/Grid';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import Spinner from 'components/Spinner/Spinner';
 
 const locationHelper = locationHelperBuilder({});
 
-const Loader = () => (
-  <Grid align="center" justify="center" style={{ height: '100vh' }}>
-    <Spinner />
-  </Grid>
-);
+const CenteredSpinner = withProps({
+  centered: true,
+})(Spinner);
 
-const needsVisitor = (options = {}) =>
+const needsVisitor = options =>
   connectedReduxRedirect({
     // This sends the user either to the query param route if we have one,
     // or to the landing page if none is specified and the user is already logged in.
@@ -24,9 +22,9 @@ const needsVisitor = (options = {}) =>
     allowRedirectBack: false,
     authenticatedSelector: authSelectors.isNotAuthenticatedSelector,
     authenticatingSelector: authSelectors.isAuthenticatingSelector,
-    AuthenticatingComponent: Loader,
+    AuthenticatingComponent: CenteredSpinner,
     redirectAction: routerActions.replace,
-    ...options,
+    ...R.defaultTo({}, options),
   });
 
 export default needsVisitor;

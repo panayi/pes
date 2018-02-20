@@ -1,33 +1,22 @@
-import { Component } from 'react';
 import * as R from 'ramda';
-import { connect } from 'react-redux';
-import connectedAuthWrapper from 'redux-auth-wrapper/connectedAuthWrapper';
+import { withProps } from 'recompose';
+import { routerActions } from 'react-router-redux';
+import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import { modals } from 'store/modals';
+import Spinner from 'components/Spinner/Spinner';
 
-export class DisplayLoginModal extends Component {
-  componentWillMount() {
-    this.props.showLoginModal();
-  }
-
-  render() {
-    return null;
-  }
-}
-
-const mapDispatchToProps = {
-  showLoginModal: modals.login.showAction,
-};
-
-const ConnectedDisplayLoginModal = connect(null, mapDispatchToProps)(
-  DisplayLoginModal,
-);
+const CenteredSpinner = withProps({
+  centered: true,
+})(Spinner);
 
 const needsUser = options =>
-  connectedAuthWrapper({
+  connectedReduxRedirect({
+    redirectPath: '/',
+    allowRedirectBack: false,
     authenticatedSelector: authSelectors.isAuthenticatedSelector,
     authenticatingSelector: authSelectors.isAuthenticatingSelector,
-    FailureComponent: ConnectedDisplayLoginModal,
+    AuthenticatingComponent: CenteredSpinner,
+    redirectAction: routerActions.replace,
     ...R.defaultTo({}, options),
   });
 
