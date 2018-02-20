@@ -45,6 +45,7 @@ const serializeAd = (ad, id) =>
       'images',
       'createdAt',
       'location',
+      'legacy',
       '_geoloc',
     ]),
     R.unless(
@@ -66,6 +67,7 @@ const serializeAd = (ad, id) =>
         ),
       ),
     ),
+    computedProp('legacy', R.propOr(false, 'legacy')),
     computedProp('sold', R.propOr(false, 'sold')),
     computedProp(algoliaConfig.ID, R.always(id)),
   )(ad);

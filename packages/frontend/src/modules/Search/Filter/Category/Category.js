@@ -66,6 +66,7 @@ const categoryLinksSelector = createSelector(
         label: t(key),
         to: `/${key}`,
       })),
+      R.defaultTo([]),
     )(categories),
 );
 

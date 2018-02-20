@@ -12,6 +12,7 @@ const Pages = () => (
       <Route path="/profile" component={Profile} />
       <Route path="/user/:userId" component={Profile} />
       <Route path="/i/:adId" component={Ad} />
+      <Route path="/il/:adId" render={props => <Ad {...props} legacy />} />
       <Route path="/messages" component={Messages} />
       <Route path="/" component={Home} />
     </Switch>

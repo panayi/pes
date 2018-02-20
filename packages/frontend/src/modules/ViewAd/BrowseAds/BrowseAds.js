@@ -33,23 +33,20 @@ class BrowseAds extends Component {
   }
 
   render() {
-    const { previousAdId, nextAdId } = this.props;
-    return this.props.children({
-      previousLocation: previousAdId ? `/i/${previousAdId}` : null,
-      nextLocation: nextAdId ? `/i/${nextAdId}` : null,
-    });
+    const { previousAd, nextAd } = this.props;
+    return this.props.children({ previousAd, nextAd });
   }
 }
 
 BrowseAds.propTypes = {
   adId: PropTypes.string.isRequired, // eslint-disable-line react/no-unused-prop-types
-  previousAdId: PropTypes.string,
-  nextAdId: PropTypes.string,
+  previousAd: PropTypes.shape({}),
+  nextAd: PropTypes.shape({}),
 };
 
 BrowseAds.defaultProps = {
-  previousAdId: null,
-  nextAdId: null,
+  previousAd: null,
+  nextAd: null,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -59,10 +56,10 @@ const mapStateToProps = createStructuredSelector({
   fetchedHitsCount: hitsSelectors.hitsCountSelector,
   noMoreResults: searchSelectors.noMoreResultsSelector,
   page: pageSelectors.pageSelector,
-  previousAdId: (state, { adId }) =>
-    hitsSelectors.previousHitIdSelector(state, { id: adId }),
-  nextAdId: (state, { adId }) =>
-    hitsSelectors.nextHitIdSelector(state, { id: adId }),
+  previousAd: (state, { adId }) =>
+    hitsSelectors.previousHitSelector(state, { id: adId }),
+  nextAd: (state, { adId }) =>
+    hitsSelectors.nextHitSelector(state, { id: adId }),
 });
 
 const mapDispatchToProps = {
