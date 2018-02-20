@@ -4,12 +4,13 @@ import { auth as authConfig, firebase as firebaseConfig } from 'pesposa-config';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
+import { modals } from 'store/modals';
+import { actions as loginActions } from 'store/login';
 import { actions as locationActions } from 'store/firebase/profile/location';
 import {
   actions as profileActions,
   utils as profileUtils,
 } from 'store/firebase/profile';
-import { modals } from 'store/modals';
 import * as selectors from './selectors';
 
 export const setCurrentUserInfo = () => async (dispatch, getState) => {
@@ -49,8 +50,16 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
 };
 
 export const login = credentials => async dispatch => {
-  await dispatch(api.auth.login(credentials));
-  return dispatch(setCurrentUserInfo());
+  dispatch(loginActions.loginStarted());
+
+  try {
+    await dispatch(api.auth.login(credentials));
+    dispatch(loginActions.loginSucceeded());
+    dispatch(setCurrentUserInfo());
+  } catch (error) {
+    dispatch(loginActions.loginFailed());
+    throw error;
+  }
 };
 
 export const loginWithPhoneNumber = (
@@ -58,19 +67,25 @@ export const loginWithPhoneNumber = (
   applicationVerifier,
 ) => async (dispatch, getState, getFirebase) => {
   const isAuthenticated = selectors.isAuthenticatedSelector(getState());
+  dispatch(loginActions.loginStarted());
 
-  if (isAuthenticated) {
-    return getFirebase()
-      .auth()
-      .signInWithPhoneNumber(phoneNumber, applicationVerifier);
+  try {
+    const confirmationResult = isAuthenticated
+      ? await getFirebase()
+          .auth()
+          .signInWithPhoneNumber(phoneNumber, applicationVerifier)
+      : await dispatch(
+          api.auth.login({
+            phoneNumber,
+            applicationVerifier,
+          }),
+        );
+    dispatch(loginActions.loginReset());
+    return confirmationResult;
+  } catch (error) {
+    dispatch(loginActions.loginFailed());
+    throw error;
   }
-
-  return dispatch(
-    api.auth.login({
-      phoneNumber,
-      applicationVerifier,
-    }),
-  );
 };
 
 export const validateSmsCode = (code, confirmationResult) => async (
@@ -80,20 +95,27 @@ export const validateSmsCode = (code, confirmationResult) => async (
 ) => {
   const isAuthenticated = selectors.isAuthenticatedSelector(getState());
 
-  if (isAuthenticated) {
-    const credential = getFirebase().auth.PhoneAuthProvider.credential(
-      confirmationResult.verificationId,
-      code,
-    );
-    const result = await getFirebase()
-      .auth()
-      .currentUser.linkWithCredential(credential);
-    const user = R.prop('user', result);
-    const newUser = profileUtils.profileFactory(user, user);
-    dispatch(profileActions.updateProfile(newUser));
-  }
+  dispatch(loginActions.loginStarted());
 
-  return confirmationResult.confirm(code);
+  try {
+    if (isAuthenticated) {
+      const credential = getFirebase().auth.PhoneAuthProvider.credential(
+        confirmationResult.verificationId,
+        code,
+      );
+      const user = await getFirebase()
+        .auth()
+        .currentUser.linkWithCredential(credential);
+      const newUser = profileUtils.profileFactory(user, user);
+      await dispatch(profileActions.updateProfile(newUser));
+    } else {
+      await confirmationResult.confirm(code);
+    }
+    dispatch(loginActions.loginSucceeded());
+  } catch (error) {
+    dispatch(loginActions.loginFailed());
+    throw error;
+  }
 };
 
 export const linkProvider = providerId => async (

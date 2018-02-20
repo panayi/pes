@@ -39,7 +39,7 @@ class UserProviders extends Component<Props> {
     try {
       await linkProvider(providerId);
     } catch (error) {
-      alert(error); // eslint-disable-line no-alert
+      alert('Something went wrong. Please try again.'); // eslint-disable-line no-alert
     }
   };
 
