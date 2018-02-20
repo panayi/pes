@@ -44,10 +44,6 @@ const styles = theme => ({
     alignItems: 'center',
     padding: 4 * theme.spacing.unit,
   },
-  avatar: {
-    width: 94,
-    height: 94,
-  },
   fullname: {
     marginTop: 2 * theme.spacing.unit,
     color: theme.palette.common.white,
@@ -87,7 +83,7 @@ export const ProfileBanner = ({
         style={src && { backgroundImage: `url(${src})` }}
       >
         <div className={classes.content}>
-          <ProfileImage className={classes.avatar} userId={userId} size={128} />
+          <ProfileImage userId={userId} size={94} />
           <UserFullName
             className={classes.fullname}
             userId={userId}

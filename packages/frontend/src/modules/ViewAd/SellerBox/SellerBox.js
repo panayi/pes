@@ -19,12 +19,10 @@ const styles = theme => ({
     minWidth: 'auto',
   },
   avatar: {
-    width: SIZE,
-    height: SIZE,
     border: [4, 'solid', theme.palette.common.white],
     '& > svg': {
-      width: 45,
-      height: 45,
+      width: 52,
+      height: 52,
     },
   },
   details: {
@@ -62,7 +60,7 @@ const styles = theme => ({
 const SellerBox = ({ ad, classes }) => (
   <div className={classes.root}>
     <Link className={classes.avatarLink} to={`/user/${ad.user}`}>
-      <ProfileImage className={classes.avatar} userId={ad.user} />
+      <ProfileImage className={classes.avatar} size={SIZE} userId={ad.user} />
     </Link>
     <div className={classes.details}>
       {ad.user && (

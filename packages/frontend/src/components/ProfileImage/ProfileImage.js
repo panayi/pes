@@ -22,10 +22,12 @@ const ProfileImage = ({
   className,
   component: RootComponent,
   classes,
+  userId,
 }) => {
-  const withDefault = isNilOrEmpty(src) && isLoaded.src;
-  const componentClasses = isLoaded.src ? {} : { root: classes.withBorder };
-
+  const noUserId = R.isNil(userId);
+  const loaded = isLoaded.src || noUserId;
+  const withDefault = loaded && isNilOrEmpty(src);
+  const componentClasses = loaded ? {} : { root: classes.withBorder };
   return (
     <RootComponent
       className={className}
