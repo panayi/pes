@@ -208,8 +208,8 @@ type PendingReviewAd {
 }
 
 type DraftAd {
-  title: String,
-  body: String,
+  title: String | Null,
+  body: String | Null,
   price: Price | Null,
   category: String | Null,
   images: Map<String, Image> | Null,
@@ -327,6 +327,7 @@ path /ads/pendingReview/{id} is PendingReviewAd {
   create() { isCurrentUser(this.user) }
 
   validate() {
+    this.images != null &&
     categoryIsValid(this.category) &&
     requireUserHasIp(this.user)
   }

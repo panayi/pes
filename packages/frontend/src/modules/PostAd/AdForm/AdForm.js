@@ -5,7 +5,7 @@ import { noop } from 'ramda-adjunct';
 import { isLoaded } from 'react-redux-firebase';
 import { Formik } from 'formik';
 import yup from 'yup';
-import { withProps } from 'recompose';
+import { withProps, withState } from 'recompose';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
@@ -41,6 +41,8 @@ type Props = {
   classes: Object,
   renderContent: Function,
   renderActions: Function,
+  submitted: boolean,
+  setSubmitted: Function,
 };
 
 const styles = theme => ({
@@ -71,6 +73,11 @@ class AdForm extends Component<Props> {
       category: yup.string().required('Category is required'),
     });
 
+  handleSubmit = (formikProps, ...rest) => {
+    this.props.setSubmitted(true);
+    formikProps.handleSubmit(...rest);
+  };
+
   render() {
     const {
       adIsLoaded,
@@ -83,6 +90,7 @@ class AdForm extends Component<Props> {
       classes,
       renderContent,
       renderActions,
+      submitted,
     } = this.props;
 
     if (!adIsLoaded) {
@@ -92,6 +100,9 @@ class AdForm extends Component<Props> {
         </div>
       );
     }
+
+    const isImagesError =
+      submitted && R.isEmpty(images) && 'At least 1 image is required';
 
     return (
       <div className={classes.root}>
@@ -103,11 +114,17 @@ class AdForm extends Component<Props> {
           validateOnBlur={false}
         >
           {formikProps => (
-            <form onSubmit={formikProps.handleSubmit}>
+            <form
+              onSubmit={(...args) => this.handleSubmit(formikProps, ...args)}
+            >
               {renderContent(
                 <div>
                   <div className={classes.editImages}>
-                    <EditAdImages images={images} adImagesDbPath={filesPath} />
+                    <EditAdImages
+                      images={images}
+                      error={isImagesError}
+                      adImagesDbPath={filesPath}
+                    />
                   </div>
                   <Form
                     {...formikProps}
@@ -129,6 +146,7 @@ class AdForm extends Component<Props> {
 
 export default R.compose(
   connectData({ categories: models.categories.all }),
+  withState('submitted', 'setSubmitted', false),
   withProps(({ ad, onSubmit }) => ({
     adIsLoaded: isLoaded(ad),
     images: R.compose(R.values, R.propOr({}, 'images'))(ad),

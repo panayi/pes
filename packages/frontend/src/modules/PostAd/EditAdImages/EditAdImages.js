@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { withProps, withState } from 'recompose';
 import GridList, { GridListTile } from 'material-ui/GridList';
+import { FormHelperText } from 'material-ui/Form';
+import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
 import { images as imagesConfig } from 'pesposa-config';
 import { actions as storageActions } from 'store/firebase/storage';
@@ -17,7 +19,18 @@ type Props = {
   canUploadImage: Boolean,
   isLoading: Boolean,
   setIsLoading: Function,
+  error: ?string,
+  classes: Object,
 };
+
+const styles = theme => ({
+  errorBox: {
+    borderColor: theme.palette.error.main,
+  },
+  errorText: {
+    color: theme.palette.error.main,
+  },
+});
 
 export class EditAdImages extends Component<Props> {
   static defaultProps = {
@@ -31,7 +44,7 @@ export class EditAdImages extends Component<Props> {
   };
 
   render() {
-    const { images, isLoading, canUploadImage } = this.props;
+    const { images, isLoading, canUploadImage, error, classes } = this.props;
 
     const list = R.map(
       image => (
@@ -48,6 +61,7 @@ export class EditAdImages extends Component<Props> {
       ? R.append(
           <GridListTile
             key="add"
+            className={error && classes.errorBox}
             component={Dropzone}
             acceptedFileTypes={imagesConfig.ACCEPTED_TYPES}
             onDrop={this.handleDrop}
@@ -59,9 +73,14 @@ export class EditAdImages extends Component<Props> {
       : list;
 
     return (
-      <GridList cellHeight={87} cols={postAdConstants.MAXIMUM_IMAGES_PER_AD}>
-        {finalList}
-      </GridList>
+      <div>
+        <GridList cellHeight={87} cols={postAdConstants.MAXIMUM_IMAGES_PER_AD}>
+          {finalList}
+        </GridList>
+        {error && (
+          <FormHelperText className={classes.errorText}>{error}</FormHelperText>
+        )}
+      </div>
     );
   }
 }
@@ -76,4 +95,5 @@ export default R.compose(
   })),
   withState('isLoading', 'setIsLoading', false),
   connect(null, mapDispatchToProps),
+  withStyles(styles),
 )(EditAdImages);

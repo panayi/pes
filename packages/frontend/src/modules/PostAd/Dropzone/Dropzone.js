@@ -16,6 +16,7 @@ type Props = {
   onDrop: Function,
   isLoading: Boolean,
   accept: string,
+  className: ?string,
   classes: Object,
 };
 
@@ -64,7 +65,7 @@ export class Dropzone extends Component<Props> {
   }
 
   render() {
-    const { onDrop, classes, ...otherProps } = this.props;
+    const { onDrop, classes, className, ...otherProps } = this.props;
 
     return (
       <ReactDropzone
@@ -73,7 +74,7 @@ export class Dropzone extends Component<Props> {
       >
         {dropzoneProps => (
           <Grid
-            className={classNames(classes.root, {
+            className={classNames(classes.root, className, {
               [classes.accepted]: dropzoneProps.isDragAccept,
               [classes.rejected]: dropzoneProps.isDragReject,
             })}
