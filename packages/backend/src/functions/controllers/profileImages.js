@@ -23,4 +23,4 @@ export const profileImageCreated = functions.database
   .onCreate(handleCreatedOrUpdated);
 export const profileImageUpdated = functions.database
   .ref('/users/{userId}/profile/image')
-  .onCreate(handleCreatedOrUpdated);
+  .onUpdate(handleCreatedOrUpdated);

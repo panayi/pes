@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import fetch from 'node-fetch';
 import random from 'lodash.random';
 import striptags from 'striptags';
@@ -32,11 +33,10 @@ const getAdUrl = (id, category) =>
     process.env.LEGACY_PESPOSA_TOKEN
   }/${category}/${id}`;
 
-const getAdPath = ad => `/ads/published/${ad.id}`;
+const getAdPath = ad => `/ads/legacy/${ad.id}`;
 
 // Transform old ad attributes (MySQL DB) to new ad attributes
 const transformAd = R.compose(
-  R.assoc('isLegacy', true),
   R.pick([
     'id',
     'createdAt',
@@ -45,7 +45,6 @@ const transformAd = R.compose(
     'email',
     'images',
     'phone',
-    'oldPosterId',
     'title',
     'price',
   ]),
@@ -64,10 +63,6 @@ const transformAd = R.compose(
     ),
   ),
   computedProp('id', ({ id, categoryParent }) => `${categoryParent}-${id}`),
-  computedProp(
-    'oldPosterId',
-    R.compose(R.head, R.split(' '), R.trim, R.defaultTo(''), R.prop('user')),
-  ),
   computedProp(
     'price',
     R.compose(
@@ -192,6 +187,16 @@ const findImageFromWeb = async (finalAd, database) => {
 export const importAd = async (ad, database) => {
   try {
     const transformedAd = transformAd(ad);
+
+    if (
+      isNilOrEmpty(transformedAd.email) &&
+      isNilOrEmpty(transformedAd.phone)
+    ) {
+      throw new Error(
+        `Legacy ad with id=${ad.id} has neither an email nor a phone`,
+      );
+    }
+
     const adPath = getAdPath(transformedAd);
     const images = R.prop('images', transformedAd);
 

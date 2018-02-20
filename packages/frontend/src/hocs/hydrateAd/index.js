@@ -17,11 +17,11 @@ const hydrateAdSelector = createCachedSelector(
   (ad, id, images) => R.merge(ad, { id, images }),
 )(propSelector(AD_ID_KEY));
 
-const hydrateAd = adIdSelector =>
+const hydrateAd = (adIdSelector, legacySelector = R.F) =>
   R.compose(
     connectData(
       {
-        [AD_KEY]: models.ads.one(adIdSelector),
+        [AD_KEY]: models.ads(legacySelector).one(adIdSelector),
         [AD_IMAGES_KEY]: models.adImages(adIdSelector).all,
       },
       createStructuredSelector({

@@ -16,12 +16,12 @@ export const hitIndexSelector = R.useWith(R.flip(R.findIndex), [
   R.compose(R.equals, propSelector('id')),
 ]);
 
-export const previousHitIdSelector = R.converge(
-  (index, hitIds) => (index < 0 ? null : R.nth(index, hitIds)),
-  [R.compose(R.dec, hitIndexSelector), hitIdsSelectors],
+export const previousHitSelector = R.converge(
+  (index, hits) => (index < 0 ? null : R.nth(index, hits)),
+  [R.compose(R.dec, hitIndexSelector), hitsSelector],
 );
 
-export const nextHitIdSelector = R.converge(R.nth, [
+export const nextHitSelector = R.converge(R.nth, [
   R.compose(R.inc, hitIndexSelector),
-  hitIdsSelectors,
+  hitsSelector,
 ]);

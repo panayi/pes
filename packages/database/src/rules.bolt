@@ -187,6 +187,17 @@ type AdBody extends String {
   validate() { this.length <= 2000 }
 }
 
+type LegacyAd {
+  title: AdTitle,
+  body: AdBody,
+  price: Price,
+  location: Location,
+  category: String,
+  email: Email | Null,
+  phone: String | Null,
+  createdAt: PastEpoch,
+}
+
 type Ad {
   title: AdTitle,
   body: AdBody,
@@ -304,6 +315,16 @@ path /countries is Country[] {
 
 path /categories is Category[] {
   read() { true }
+}
+
+path /ads/legacy/{id} {
+  read() { true }
+
+  validate() {
+    categoryIsValid(this.category) &&
+    createOnly(this.createdAt) &&
+    (this.email != null || this.phone != null)
+  }
 }
 
 // TODO: This doesn't work when updating the ad:

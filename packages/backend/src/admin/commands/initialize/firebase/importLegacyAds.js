@@ -19,9 +19,10 @@ const sequentialImportAd = async (index, ads) => {
 const importAds = async () => {
   const response = await fetch(ADS_ENDPOINT);
   const ads = await response.json();
-  await sequentialImportAd(0, ads);
+  const some = R.take(4, ads);
+  await sequentialImportAd(0, some);
 
-  return R.compose(R.length, R.values)(ads);
+  return R.compose(R.length, R.values)(some);
 };
 
 const importLegacyAds = async () => {

@@ -21,7 +21,8 @@ export const profiles = userIdSelector =>
   createModelConnections(createSelector(userIdSelector, modelPaths.PROFILES), {
     singleton: true,
   });
-export const ads = createModelConnections(modelPaths.ADS);
+export const ads = legacySelector =>
+  createModelConnections(createSelector(legacySelector, modelPaths.ADS));
 export const adImages = adIdSelector =>
   createModelConnections(createSelector(adIdSelector, modelPaths.AD_IMAGES));
 export const draftAd = createModelConnections(

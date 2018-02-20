@@ -16,7 +16,7 @@ import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import urlForPath from 'utils/urlForPath';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { actions as dataActions } from 'store/firebase/data';
-import Link from 'components/Link/Link';
+import LinkToViewAd from 'components/LinkToViewAd/LinkToViewAd';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdBody from 'components/AdBody/AdBody';
@@ -177,7 +177,7 @@ const styles = theme => ({
     letterSpacing: 1,
     color: theme.palette.getContrastText(red.A200),
     transform: 'rotate(-45deg)',
-  }
+  },
 });
 
 const ViewAd = ({ ad, adId, location, uid, markAdAsSold, classes }: Props) => {
@@ -235,21 +235,27 @@ const ViewAd = ({ ad, adId, location, uid, markAdAsSold, classes }: Props) => {
           </div>
           <div className={classes.seller}>
             <SellerBox ad={ad} />
-            {ad.user && !ad.sold && (
-              <div className={classes.interactionBox}>
-                {ad.user !== uid ? (
-                  <SendMessage
-                    placeholder="Ask a question"
-                    adId={adId}
-                    buyerId={uid}
-                  />
-                ) : (
-                  <Button variant="raised" color="primary" fullWidth onClick={() => markAdAsSold()}>
-                    Mark as sold
-                  </Button>
-                )}
-              </div>
-            )}
+            {ad.user &&
+              !ad.sold && (
+                <div className={classes.interactionBox}>
+                  {ad.user !== uid ? (
+                    <SendMessage
+                      placeholder="Ask a question"
+                      adId={adId}
+                      buyerId={uid}
+                    />
+                  ) : (
+                    <Button
+                      variant="raised"
+                      color="primary"
+                      fullWidth
+                      onClick={() => markAdAsSold()}
+                    >
+                      Mark as sold
+                    </Button>
+                  )}
+                </div>
+              )}
           </div>
         </div>
       </div>
@@ -265,27 +271,27 @@ const ViewAd = ({ ad, adId, location, uid, markAdAsSold, classes }: Props) => {
         </div>
       </div>
       <BrowseAds adId={adId}>
-        {({ previousLocation, nextLocation }) => (
+        {({ previousAd, nextAd }) => (
           <React.Fragment>
             <div className={classes.previousLinkWrap}>
-              <Link
+              <LinkToViewAd
+                ad={previousAd}
                 className={classes.previousLink}
-                disabled={R.isNil(previousLocation)}
-                to={previousLocation}
+                disabled={R.isNil(previousAd)}
                 variant="fab"
               >
                 <KeyboardArrowLeft />
-              </Link>
+              </LinkToViewAd>
             </div>
             <div className={classes.nextLinkWrap}>
-              <Link
+              <LinkToViewAd
+                ad={nextAd}
                 className={classes.nextLink}
-                disabled={R.isNil(nextLocation)}
-                to={nextLocation}
+                disabled={R.isNil(nextAd)}
                 variant="fab"
               >
                 <KeyboardArrowRight />
-              </Link>
+              </LinkToViewAd>
             </div>
           </React.Fragment>
         )}
@@ -302,9 +308,13 @@ const mapStateToProps = createStructuredSelector({
   uid: authSelectors.uidSelector,
 });
 
-const mapDispatchToProps = (dispatch, { adId }) => bindActionCreators({
-  markAdAsSold: () => dataActions.markAdAsSold(adId)
-}, dispatch)
+const mapDispatchToProps = (dispatch, { adId }) =>
+  bindActionCreators(
+    {
+      markAdAsSold: () => dataActions.markAdAsSold(adId),
+    },
+    dispatch,
+  );
 
 export default R.compose(
   connect(mapStateToProps, mapDispatchToProps),

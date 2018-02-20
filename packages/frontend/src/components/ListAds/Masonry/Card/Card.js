@@ -6,13 +6,13 @@ import { createStructuredSelector } from 'reselect';
 import Card, { CardMedia, CardContent, CardHeader } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
-import id from 'utils/id';
 import LineClamp from 'components/LineClamp/LineClamp';
 import Imgix from 'components/Imgix/Imgix';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdAddress from 'components/AdAddress/AdAddress';
 import AdDistance from 'components/AdDistance/AdDistance';
+import LinkToViewAd from 'components/LinkToViewAd/LinkToViewAd';
 import * as constants from '../../constants';
 import * as selectors from '../../selectors';
 
@@ -55,6 +55,8 @@ const styles = theme => ({
   },
 });
 
+const AdLink = withProps({ component: Link })(LinkToViewAd);
+
 const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
   <div className={classes.root} style={style}>
     <Imgix params={constants.IMGIX_PARAMS} image={thumbnail}>
@@ -65,8 +67,8 @@ const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
             root: classes.adPaperRoot,
           }}
           elevation={1}
-          component={Link}
-          to={`/i/${id(hit)}`}
+          component={AdLink}
+          ad={hit}
         >
           <CardMedia
             className={classes.media}
