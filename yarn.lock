@@ -6510,10 +6510,6 @@ i@0.3.x:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/i/-/i-0.3.6.tgz#d96c92732076f072711b6b10fd7d4f65ad8ee23d"
 
-icepick@^1.1.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/icepick/-/icepick-1.3.0.tgz#e4942842ed8f9ee778d7dd78f7e36627f49fdaef"
-
 iconv-lite@0.4.15:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
@@ -6708,7 +6704,7 @@ interpret@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
 
-invariant@2.2.2, invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2, invariant@~2.2.1:
+invariant@2.2.2, invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   dependencies:
@@ -8103,7 +8099,7 @@ lodash.get@^3.7.0:
     lodash._baseget "^3.0.0"
     lodash._topath "^3.0.0"
 
-lodash.get@^4.3.0, lodash.get@~4.4.2:
+lodash.get@^4.3.0:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
 
@@ -8261,7 +8257,7 @@ lodash.throttle@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
 
-lodash.topath@4.5.2, lodash.topath@~4.5.2:
+lodash.topath@4.5.2:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.topath/-/lodash.topath-4.5.2.tgz#3616351f3bba61994a0931989660bd03254fd009"
 
@@ -10566,12 +10562,6 @@ react-modal@^3.1.10:
     prop-types "^15.5.10"
     warning "^3.0.0"
 
-react-native-segmented-control-tab@^3.2.1:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-segmented-control-tab/-/react-native-segmented-control-tab-3.2.2.tgz#251ce94acdc655e04063b9813bb1ef595bf11f2d"
-  dependencies:
-    prop-types "^15.5.10"
-
 react-popper@^0.7.4:
   version "0.7.5"
   resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-0.7.5.tgz#71c25946f291db381231281f6b95729e8b801596"
@@ -10595,18 +10585,6 @@ react-redux-firebase@^2.0.4:
     hoist-non-react-statics "^2.3.1"
     lodash "^4.17.4"
     prop-types "^15.6.0"
-
-react-redux-form@^1.16.1:
-  version "1.16.5"
-  resolved "https://registry.yarnpkg.com/react-redux-form/-/react-redux-form-1.16.5.tgz#f3f267acba013e90c4889f7622d1c0d6996ebf9d"
-  dependencies:
-    icepick "^1.1.0"
-    invariant "~2.2.1"
-    lodash.get "~4.4.2"
-    lodash.topath "~4.5.2"
-    prop-types "^15.5.6"
-    react-native-segmented-control-tab "^3.2.1"
-    shallow-compare "^1.2.1"
 
 react-redux@^5.0.6:
   version "5.0.6"
@@ -11709,10 +11687,6 @@ sha1@^1.1.1:
   dependencies:
     charenc ">= 0.0.1"
     crypt ">= 0.0.1"
-
-shallow-compare@^1.2.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/shallow-compare/-/shallow-compare-1.2.2.tgz#fa4794627bf455a47c4f56881d8a6132d581ffdb"
 
 shallowequal@^0.2.2:
   version "0.2.2"

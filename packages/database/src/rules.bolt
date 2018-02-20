@@ -208,8 +208,8 @@ type PendingReviewAd {
 }
 
 type DraftAd {
-  title: AdTitle | Null,
-  body: AdBody | Null,
+  title: String,
+  body: String,
   price: Price | Null,
   category: String | Null,
   images: Map<String, Image> | Null,

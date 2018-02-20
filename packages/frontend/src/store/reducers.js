@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { combineForms } from 'react-redux-form';
 import { firebaseStateReducer } from 'react-redux-firebase';
 import routerReducer, { constants as routerConstants } from './router';
 import linkedProvidersReducer, {
@@ -11,7 +10,6 @@ import anonymousUserTokenReducer, {
 import chatReducer, { constants as chatConstants } from './chat';
 import loginReducer, { constants as loginConstants } from './login';
 import modalsReducer, { constants as modalConstants } from './modals';
-import formsReducer from './forms';
 import postAdReducer from './postAd';
 import searchReducers from './search';
 
@@ -19,7 +17,6 @@ export const makeRootReducer = asyncReducers =>
   combineReducers({
     [routerConstants.ROOT_KEY]: routerReducer,
     firebase: firebaseStateReducer,
-    forms: combineForms(formsReducer, 'forms'),
     [anonymousUserConstants.ANONYMOUS_USER_TOKEN_KEY]: anonymousUserTokenReducer,
     [linkedProvidersConstants.ROOT_KEY]: linkedProvidersReducer,
     [chatConstants.ROOT_KEY]: chatReducer,

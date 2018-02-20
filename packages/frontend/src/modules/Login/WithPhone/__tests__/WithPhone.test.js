@@ -2,15 +2,6 @@ import React from 'react';
 import Recaptcha from '../PhoneNumber/Recaptcha/Recaptcha';
 import { LoginWithPhone } from '../WithPhone';
 
-jest.mock('react-redux-form', () => ({
-  Field: props => <div {...props} />,
-  Form: props => <form {...props} />,
-  Errors: () => null,
-  Control: {
-    text: props => <input {...props} />,
-  },
-}));
-
 describe('LoginWithPhoneNumber', () => {
   const defaultProps = {
     resetAll: noop,

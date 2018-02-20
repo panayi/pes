@@ -45,7 +45,7 @@ export const thumbnailHeightSelector = createCachedSelector(
   thumbnailSelector,
   propSelector('columnWidth'),
   (thumbnail, columnWidth) => {
-    const { dimensions } = thumbnail;
+    const dimensions = R.prop('dimensions', thumbnail);
 
     return isPlainObj(dimensions)
       ? columnWidth / dimensions.width * dimensions.height

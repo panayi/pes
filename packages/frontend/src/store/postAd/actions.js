@@ -1,27 +1,16 @@
 /* @flow */
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
-import { actions as formActions } from 'react-redux-form';
 import debounce from 'lodash.debounce';
 import api from 'services/api';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import * as types from './types';
-import { models as formModels } from '../forms';
 import { serializeAd } from './utils';
 import { isCreateAdIdleSelector } from './selectors';
 
 export const createAdPending = createAction(types.AD_CREATE_PENDING);
 export const createAdCompleted = createAction(types.AD_CREATE_COMPLETED);
 export const createAdReset = createAction(types.AD_CREATE_RESET);
-
-export const initializeForm = (ad: ?Ad) => (dispatch: Dispatch) => {
-  const initialState = R.compose(
-    R.pick(R.keys(formModels.postAd.initialState)),
-    R.defaultTo({}),
-  )(ad);
-
-  dispatch(formActions.load(formModels.postAd.path, initialState));
-};
 
 const DEBOUNCE_TIMEOUT = 200; // ms
 
@@ -63,12 +52,7 @@ export const createAd = (ad: Ad) => (
 
   return dispatch(api.pendingReviewAds.create(finalAd))
     .then(() => dispatch(createAdCompleted()))
-    .then(() => dispatch(removeDraft()))
-    .then(() =>
-      dispatch(
-        formActions.load(formModels.postAd.key, formModels.postAd.initialState),
-      ),
-    );
+    .then(() => dispatch(removeDraft()));
 };
 
 export const saveAd = (adId: string, onSave: ?Function) => (ad: Ad) => (
