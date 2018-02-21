@@ -1,13 +1,15 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { createSelector, createStructuredSelector } from 'reselect';
-import { withProps, defaultProps } from 'recompose';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { defaultProps } from 'recompose';
+import { withRouter } from 'react-router-dom';
 import List from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
-import { propSelector } from 'pesposa-utils';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
+import { selectors as routerSelectors } from 'store/router';
 import translate from 'hocs/translate';
 import FilterOption from 'components/FilterOption/FilterOption';
 import Link from 'components/Link/Link';
@@ -51,35 +53,33 @@ const FilterByCategory = ({ categoryLinks, classes }: Props) => (
   </List>
 );
 
-const categoryLinksSelector = createSelector(
-  propSelector('t'),
-  propSelector('categories'),
-  (t, categories) =>
-    R.compose(
-      R.prepend({
-        key: 'home',
-        label: 'All',
-        to: '/',
-      }),
-      R.map(({ key }) => ({
-        key,
-        label: t(key),
-        to: `/${key}`,
-      })),
-      R.defaultTo([]),
-    )(categories),
-);
+const categoryLinksSelector = (state, props) => {
+  const { categories, t, match } = props;
+  return R.compose(
+    R.prepend({
+      key: 'home',
+      label: 'All',
+      to: routerSelectors.searchPathSelector({ category: null, match }),
+    }),
+    R.map(({ key }) => ({
+      key,
+      label: t(key),
+      to: routerSelectors.searchPathSelector({ category: key, match }),
+    })),
+  )(categories);
+};
+
+const mapStateToProps = createStructuredSelector({
+  categoryLinks: categoryLinksSelector,
+});
 
 export default R.compose(
   connectData({ categories: models.categories.all }),
+  withRouter,
+  translate('categories'),
   defaultProps({
     categories: [],
   }),
-  translate('categories'),
-  withProps(
-    createStructuredSelector({
-      categoryLinks: categoryLinksSelector,
-    }),
-  ),
+  connect(mapStateToProps),
   withStyles(styles),
 )(FilterByCategory);

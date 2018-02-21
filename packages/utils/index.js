@@ -9,7 +9,6 @@ import propSelector from './src/propSelector';
 import propsSelector from './src/propsSelector';
 import randomInt from './src/randomInt';
 import roundToClosestMultiple from './src/roundToClosestMultiple';
-import urlParamsSelector from './src/urlParamsSelector';
 import zipArgs from './src/zipArgs';
 
 export {
@@ -24,6 +23,5 @@ export {
   propsSelector,
   randomInt,
   roundToClosestMultiple,
-  urlParamsSelector,
   zipArgs,
 };

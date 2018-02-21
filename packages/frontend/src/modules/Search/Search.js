@@ -10,7 +10,7 @@ import connectSearch from 'hocs/connectSearch';
 import ListAds from 'components/ListAds/ListAds';
 
 const mapStateToProps = createStructuredSelector({
-  category: categorySelectors.categorySelector,
+  selectedCategory: categorySelectors.categorySelector,
 });
 
 const mapDispatchToProps = {
@@ -19,21 +19,20 @@ const mapDispatchToProps = {
 
 export default R.compose(
   connectSearch(mapStateToProps, mapDispatchToProps),
-  withProps(props => ({
-    currentCategory: R.pathOr(null, ['match', 'params', 'category'], props),
+  withProps(() => ({
     params: { facetFilters: ['sold:false'] },
   })),
   lifecycle({
     componentWillMount() {
-      const { category, currentCategory, setSelectedCategory } = this.props;
+      const { selectedCategory, category, setSelectedCategory } = this.props;
 
-      if (currentCategory !== category) {
-        setSelectedCategory(currentCategory);
+      if (category !== selectedCategory) {
+        setSelectedCategory(category);
       }
     },
     componentWillReceiveProps(nextProps) {
-      if (nextProps.currentCategory !== this.props.currentCategory) {
-        this.props.setSelectedCategory(nextProps.currentCategory);
+      if (nextProps.category !== this.props.category) {
+        this.props.setSelectedCategory(nextProps.category);
       }
     },
   }),

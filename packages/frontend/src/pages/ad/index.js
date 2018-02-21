@@ -4,7 +4,9 @@ import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Route } from 'react-router-dom';
-import { urlParamsSelector, propSelector } from 'pesposa-utils';
+import { Helmet } from 'react-helmet';
+import { propSelector } from 'pesposa-utils';
+import { selectors as routerSelectors } from 'store/router';
 import hydrateAd from 'hocs/hydrateAd';
 import Layout from 'layouts/Layout/Layout';
 import ViewAd from 'modules/ViewAd/ViewAd';
@@ -19,6 +21,12 @@ type Props = {
 
 const AdPage = ({ ad, adId, legacy }: Props) => (
   <Layout header={Header} fixed>
+    <Helmet>
+      <title>{`${ad.title} in ${R.path(
+        ['location', 'address', 'city'],
+        ad,
+      )} - Pesposa`}</title>
+    </Helmet>
     <ViewAd ad={ad} adId={adId} legacy={legacy} />
     {!legacy && (
       <Route
@@ -32,7 +40,7 @@ const AdPage = ({ ad, adId, legacy }: Props) => (
 export default R.compose(
   withProps(
     createStructuredSelector({
-      adId: R.compose(R.prop('adId'), urlParamsSelector),
+      adId: routerSelectors.routeParamSelector('adId'),
     }),
   ),
   hydrateAd(propSelector('adId'), propSelector('legacy')),

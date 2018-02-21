@@ -1,31 +1,15 @@
 /* @flow */
 import React from 'react';
-import { Route } from 'react-router-dom';
-import { withProps } from 'recompose';
-import { withStyles } from 'material-ui/styles';
-import Layout from 'layouts/Layout/Layout';
-import Search from 'modules/Search/Search';
-import Header from 'pages/components/Header/Header';
-import Sidebar from './Sidebar/Sidebar';
+import { Route, Switch } from 'react-router-dom';
+import Search from './search';
 
-const styles = theme => ({
-  page: {
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-  },
-});
-
-const HomeHeader = withProps({ inHome: true })(Header);
-
-const Home = ({ classes }) => (
-  <Layout
-    header={HomeHeader}
-    sidebar={Sidebar}
-    pageClassName={classes.page}
-    flex
-  >
-    <Route path="/:category?" component={Search} />
-  </Layout>
+const Home = () => (
+  <Switch>
+    <Route exact path="/" component={Search} />
+    <Route exact path="/c/:category" component={Search} />
+    <Route exact path="/:place" component={Search} />
+    <Route exact path="/:place/:category" component={Search} />
+  </Switch>
 );
 
-export default withStyles(styles)(Home);
+export default Home;
