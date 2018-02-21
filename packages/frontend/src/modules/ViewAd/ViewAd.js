@@ -31,6 +31,7 @@ import StaticMap from './StaticMap/StaticMap';
 import EditAdLink from './EditAdLink/EditAdLink';
 import BrowseAds from './BrowseAds/BrowseAds';
 import SellerBox from './SellerBox/SellerBox';
+import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
 
 type Props = {
   ad: Ad,
@@ -45,7 +46,10 @@ const SLIDER_WIDTH = 500;
 const BASE_HEIGHT = 592;
 
 const styles = theme => ({
-  root: {
+  breadcrumb: {
+    marginBottom: theme.spacing.unit,
+  },
+  ad: {
     position: 'relative',
     padding: theme.spacing.unit * 2,
     borderRadius: theme.borderRadius.xl,
@@ -184,118 +188,125 @@ const ViewAd = ({ ad, adId, location, uid, markAdAsSold, classes }: Props) => {
   const currentUrl = urlForPath(location.pathname);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.inner}>
-        <div className={classes.images}>
-          {ad.sold && <Typography className={classes.ribbon}>Sold</Typography>}
-          <ImageSlider
-            className={classes.slider}
-            images={R.values(ad.images)}
-            imgixParams={{ w: 900, auto: 'compress,format' }}
-          />
-        </div>
-        <div className={classes.content}>
-          <div className={classes.header}>
-            <AdTitle
-              className={classes.title}
-              ad={ad}
-              variant="title"
+    <div>
+      <div className={classes.breadcrumb}>
+        <Breadcrumbs ad={ad} />
+      </div>
+      <div className={classes.ad}>
+        <div className={classes.inner}>
+          <div className={classes.images}>
+            {ad.sold && (
+              <Typography className={classes.ribbon}>Sold</Typography>
+            )}
+            <ImageSlider
+              className={classes.slider}
+              images={R.values(ad.images)}
+              imgixParams={{ w: 900, auto: 'compress,format' }}
+            />
+          </div>
+          <div className={classes.content}>
+            <div className={classes.header}>
+              <AdTitle
+                className={classes.title}
+                ad={ad}
+                variant="title"
+                color="textSecondary"
+              />
+              <EditAdLink
+                className={classes.editAdLink}
+                ad={ad}
+                adId={adId}
+                color="primary"
+              >
+                <ModeEditIcon />
+              </EditAdLink>
+            </div>
+            <AdPrice ad={ad} className={classes.price} variant="title" />
+            <AdBody ad={ad} className={classes.description} />
+            <div className={classes.date}>
+              <AdDateChip ad={ad} />
+            </div>
+            <Typography
+              className={classes.location}
               color="textSecondary"
-            />
-            <EditAdLink
-              className={classes.editAdLink}
-              ad={ad}
-              adId={adId}
-              color="primary"
+              component="div"
             >
-              <ModeEditIcon />
-            </EditAdLink>
+              <PlaceIcon className={classes.locationIcon} />
+              <AdAddress ad={ad} className={classes.address} />
+            </Typography>
+            <div className={classes.mapWrap}>
+              <StaticMap
+                id={adId}
+                className={classes.map}
+                center={R.path(['location', 'geoposition'], ad)}
+                width={400}
+                height={190}
+              />
+            </div>
+            <div className={classes.seller}>
+              <SellerBox ad={ad} />
+              {ad.user &&
+                !ad.sold && (
+                  <div className={classes.interactionBox}>
+                    {ad.user !== uid ? (
+                      <SendMessage
+                        placeholder="Ask a question"
+                        adId={adId}
+                        buyerId={uid}
+                      />
+                    ) : (
+                      <Button
+                        variant="raised"
+                        color="primary"
+                        fullWidth
+                        onClick={() => markAdAsSold()}
+                      >
+                        Mark as sold
+                      </Button>
+                    )}
+                  </div>
+                )}
+            </div>
           </div>
-          <AdPrice ad={ad} className={classes.price} variant="title" />
-          <AdBody ad={ad} className={classes.description} />
-          <div className={classes.date}>
-            <AdDateChip ad={ad} />
-          </div>
-          <Typography
-            className={classes.location}
-            color="textSecondary"
-            component="div"
-          >
-            <PlaceIcon className={classes.locationIcon} />
-            <AdAddress ad={ad} className={classes.address} />
-          </Typography>
-          <div className={classes.mapWrap}>
-            <StaticMap
-              id={adId}
-              className={classes.map}
-              center={R.path(['location', 'geoposition'], ad)}
-              width={400}
-              height={190}
+        </div>
+        <div className={classes.offset}>
+          <div className={classes.shareButtons}>
+            <FacebookShareButton url={currentUrl} />
+            <TwitterShareButton url={currentUrl} />
+            <EmailShareButton
+              url={currentUrl}
+              subject="Check this out!"
+              body={currentUrl}
             />
           </div>
-          <div className={classes.seller}>
-            <SellerBox ad={ad} />
-            {ad.user &&
-              !ad.sold && (
-                <div className={classes.interactionBox}>
-                  {ad.user !== uid ? (
-                    <SendMessage
-                      placeholder="Ask a question"
-                      adId={adId}
-                      buyerId={uid}
-                    />
-                  ) : (
-                    <Button
-                      variant="raised"
-                      color="primary"
-                      fullWidth
-                      onClick={() => markAdAsSold()}
-                    >
-                      Mark as sold
-                    </Button>
-                  )}
-                </div>
-              )}
-          </div>
         </div>
+        <BrowseAds adId={adId}>
+          {({ previousAd, nextAd }) => (
+            <React.Fragment>
+              <div className={classes.previousLinkWrap}>
+                <LinkToViewAd
+                  ad={previousAd}
+                  className={classes.previousLink}
+                  disabled={R.isNil(previousAd)}
+                  variant="fab"
+                >
+                  <KeyboardArrowLeft />
+                </LinkToViewAd>
+              </div>
+              <div className={classes.nextLinkWrap}>
+                <LinkToViewAd
+                  ad={nextAd}
+                  className={classes.nextLink}
+                  disabled={R.isNil(nextAd)}
+                  variant="fab"
+                >
+                  <KeyboardArrowRight />
+                </LinkToViewAd>
+              </div>
+            </React.Fragment>
+          )}
+        </BrowseAds>
       </div>
-      <div className={classes.offset}>
-        <div className={classes.shareButtons}>
-          <FacebookShareButton url={currentUrl} />
-          <TwitterShareButton url={currentUrl} />
-          <EmailShareButton
-            url={currentUrl}
-            subject="Check this out!"
-            body={currentUrl}
-          />
-        </div>
-      </div>
-      <BrowseAds adId={adId}>
-        {({ previousAd, nextAd }) => (
-          <React.Fragment>
-            <div className={classes.previousLinkWrap}>
-              <LinkToViewAd
-                ad={previousAd}
-                className={classes.previousLink}
-                disabled={R.isNil(previousAd)}
-                variant="fab"
-              >
-                <KeyboardArrowLeft />
-              </LinkToViewAd>
-            </div>
-            <div className={classes.nextLinkWrap}>
-              <LinkToViewAd
-                ad={nextAd}
-                className={classes.nextLink}
-                disabled={R.isNil(nextAd)}
-                variant="fab"
-              >
-                <KeyboardArrowRight />
-              </LinkToViewAd>
-            </div>
-          </React.Fragment>
-        )}
-      </BrowseAds>
     </div>
   );
 };
