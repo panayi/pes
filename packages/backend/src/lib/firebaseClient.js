@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import admin from 'firebase-admin';
 import { env } from 'pesposa-config';
-import serviceAccountKey from './serviceAccountKey.json';
+import serviceAccountKey from 'pesposa-config/src/serviceAccountKey.json';
 
 const isFirebaseFunctionsEnv = process.env.IS_FIREBASE_FUNCTIONS_ENV;
 

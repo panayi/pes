@@ -1,7 +1,7 @@
 import gcloud from 'google-cloud';
 import uuid from 'uuid-v4';
 import { storage as storageConfig } from 'pesposa-config';
-import serviceAccountKey from 'lib/serviceAccountKey.json';
+import serviceAccountKey from 'pesposa-config/src/serviceAccountKey.json';
 
 const storageClient = gcloud.storage({
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,

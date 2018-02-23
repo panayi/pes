@@ -57,14 +57,17 @@ module.exports = {
     "es6": true,
     "mocha": true
   },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "paths": [path.join(__dirname, 'packages', 'frontend', 'src')],
+  "overrides": [
+    {
+      "files": ["packages/web/src/**/*.js"],
+      "settings": {
+        "import/resolver": {
+          "node": {
+            "paths": [path.join(__dirname, 'packages', 'web', 'src')],
+          },
+        },
       },
     },
-  },
-  "overrides": [
     {
       "files": ["packages/backend/src/**/*.js"],
       "settings": {

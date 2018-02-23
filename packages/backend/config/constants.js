@@ -18,7 +18,7 @@ const BUILD = 'build';
 const BACKEND_ROOT = path.join(__dirname, '..');
 const BACKEND = path.join(BACKEND_ROOT, SRC);
 const ROOT = path.join(BACKEND, '..', '..', '..');
-const FRONTEND = path.join(BACKEND_ROOT, '..', 'frontend');
+const WEB = path.join(BACKEND_ROOT, '..', 'web');
 
 module.exports = {
   files: {
@@ -36,7 +36,7 @@ module.exports = {
   },
   paths: {
     root: ROOT,
-    frontend: FRONTEND,
+    web: WEB,
     backendRoot: BACKEND_ROOT,
     backend: BACKEND,
     admin: path.join(BACKEND, ADMIN),
