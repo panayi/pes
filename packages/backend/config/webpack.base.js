@@ -37,7 +37,7 @@ module.exports = {
   ],
   plugins: [
     new Dotenv({
-      path: path.join(constants.paths.frontend, constants.files.env),
+      path: path.join(constants.paths.web, constants.files.env),
     }),
     new UglifyJSPlugin({
       uglifyOptions: {

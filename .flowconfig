@@ -9,5 +9,5 @@
 
 [options]
 module.system.node.resolve_dirname=node_modules
-module.system.node.resolve_dirname=./packages/frontend/src
+module.system.node.resolve_dirname=./packages/web/src
 module.system.node.resolve_dirname=./packages/backend/src

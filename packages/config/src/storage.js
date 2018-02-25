@@ -1,4 +1,4 @@
-import { FIREBASE_PROJECT_ID } from './firebase';
+import env from './env';
 
-export const BUCKET = `${FIREBASE_PROJECT_ID}.appspot.com`;
+export const BUCKET = `${env.firebaseProjectId}.appspot.com`;
 export const IMAGES_PATH = 'images';
