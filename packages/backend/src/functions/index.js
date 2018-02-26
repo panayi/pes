@@ -1,7 +1,7 @@
 /* @flow */
-import app from './controllers/app';
+import api from './controllers/api';
 
-export { app };
+export { api };
 export * from './controllers/adImages';
 export * from './controllers/ads';
 export * from './controllers/legacyAds';

@@ -48,7 +48,7 @@ const FilterByCategory = ({ categoryLinks, classes }: Props) => (
           {label}
         </FilterOption>
       ),
-      categoryLinks,
+      R.values(categoryLinks),
     )}
   </List>
 );

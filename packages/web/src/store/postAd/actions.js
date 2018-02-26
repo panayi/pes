@@ -2,7 +2,7 @@
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import debounce from 'lodash.debounce';
-import api from 'services/api';
+import firebaseApi from 'services/firebase';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import * as types from './types';
 import { serializeAd } from './utils';
@@ -25,7 +25,7 @@ const updateDraft = debounce(
 
     const uid = authSelectors.uidSelector(getState());
 
-    return dispatch(api.draftAd.update(uid, serializeAd(ad)));
+    return dispatch(firebaseApi.draftAd.update(uid, serializeAd(ad)));
   },
   DEBOUNCE_TIMEOUT,
 );
@@ -36,7 +36,7 @@ export const saveDraft = (ad: Ad | {}) => (...args) => updateDraft(ad, ...args);
 // However there's no guarantee when it will be removed.
 const removeDraft = () => (dispatch: Dispatch, getState: Function) => {
   const uid = authSelectors.uidSelector(getState());
-  return dispatch(api.draftAd.remove(uid));
+  return dispatch(firebaseApi.draftAd.remove(uid));
 };
 
 export const createAd = (ad: Ad) => (
@@ -50,11 +50,11 @@ export const createAd = (ad: Ad) => (
 
   dispatch(createAdPending());
 
-  return dispatch(api.pendingReviewAds.create(finalAd))
+  return dispatch(firebaseApi.pendingReviewAds.create(finalAd))
     .then(() => dispatch(createAdCompleted()))
     .then(() => dispatch(removeDraft()));
 };
 
 export const saveAd = (adId: string, onSave: ?Function) => (ad: Ad) => (
   dispatch: Dispatch,
-) => dispatch(api.ads.update(adId, serializeAd(ad))).then(onSave);
+) => dispatch(firebaseApi.ads.update(adId, serializeAd(ad))).then(onSave);

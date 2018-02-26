@@ -11,6 +11,7 @@ codeclimate-output.html
 
 # production
 packages/**/build/
+packages/web/server/build/
 packages/database/rules.json
 
 # OS X

@@ -37,7 +37,7 @@
     "build": "run-p build:web build:backend",
     "admin": "cd packages/backend && yarn admin",
     "deploy:web": "cd packages/web && yarn deploy",
-    "deploy:functions": "cd packages/backend && yarn deploy",
+    "deploy:functions": "yarn build:web && cd packages/backend && yarn deploy",
     "deploy:database": "cd packages/database && yarn deploy",
     "deploy": "run-p deploy:web deploy:functions && yarn deploy:database"
   },

@@ -81,7 +81,7 @@ class Form extends Component {
                 {category.key}
               </option>
             ),
-            categories,
+            R.values(categories),
           )}
         </TextField>
       </FormGroup>

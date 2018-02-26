@@ -1,4 +1,4 @@
-import api from 'services/api';
+import firebaseApi from 'services/firebase';
 
 export const updateProfile = props => dispatch =>
-  dispatch(api.profile.update(props));
+  dispatch(firebaseApi.profile.update(props));

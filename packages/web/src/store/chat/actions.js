@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
-import api from 'services/api';
+import firebaseApi from 'services/firebase';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import * as types from './types';
 
@@ -20,10 +20,12 @@ export const createMessage = (body, adId, buyerId) => (dispatch, getState) => {
     fromBuyer,
   };
 
-  return dispatch(api.messages.create(data, adId, buyerId));
+  return dispatch(firebaseApi.messages.create(data, adId, buyerId));
 };
 
 export const markAsRead = conversationId => (dispatch, getState) => {
   const uid = authSelectors.uidSelector(getState());
-  return dispatch(api.conversations.updateRead(uid, conversationId, true));
+  return dispatch(
+    firebaseApi.conversations.updateRead(uid, conversationId, true),
+  );
 };

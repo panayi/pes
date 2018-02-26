@@ -1,23 +1,62 @@
-import * as ads from './ads';
-import * as app from './app';
-import * as auth from './auth';
-import * as conversations from './conversations';
-import * as draftAd from './draftAd';
-import * as files from './files';
-import * as messages from './messages';
-import * as pendingReviewAds from './pendingReviewAds';
-import * as profile from './profile';
+import { env } from 'pesposa-config';
+
+require('es6-promise').polyfill();
+require('isomorphic-fetch');
+
+const setCurrentUserInfo = (data, { token }) => () => {
+  const url = `${env.firebaseFunctionsBaseUrl}/users/current/info`;
+
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+const migrateAnonymousUser = ({ token, anonymousUserToken }) => () => {
+  const url = `${env.firebaseFunctionsBaseUrl}/users/migrate`;
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Anonymous-Authorization': `Bearer ${anonymousUserToken}`,
+    },
+  });
+};
+
+const createSession = token => () => {
+  const url = '/_token';
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+    body: JSON.stringify({ token }),
+  });
+};
+
+const deleteSession = () => () => {
+  const url = '/_token';
+  return fetch(url, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'same-origin',
+  });
+};
 
 const api = {
-  ads,
-  app,
-  auth,
-  conversations,
-  draftAd,
-  files,
-  messages,
-  pendingReviewAds,
-  profile,
+  setCurrentUserInfo,
+  migrateAnonymousUser,
+  createSession,
+  deleteSession,
 };
 
 export default api;

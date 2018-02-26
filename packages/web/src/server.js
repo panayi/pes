@@ -38,7 +38,7 @@ server
       cookie: { maxAge: 604800000 }, // week
     }),
   )
-  .post('/api/token', jsonParser, async (req, res) => {
+  .post('/_token', jsonParser, async (req, res) => {
     const { token } = req.body;
     firebase
       .auth()
@@ -50,7 +50,7 @@ server
       .then(decodedToken => res.json({ status: true, decodedToken }))
       .catch(error => res.json({ error }));
   })
-  .delete('/api/token', async (req, res) => {
+  .delete('/_token', async (req, res) => {
     req.session.decodedToken = null;
     res.json({ status: true });
   })

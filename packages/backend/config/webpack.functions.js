@@ -1,24 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
-const R = require('ramda');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackPreBuildPlugin = require('pre-build-webpack');
 const baseConfig = require('./webpack.base.js');
 const constants = require('./constants');
-
-const outputPackageJson = (content) => {
-  const obj = R.compose(
-    JSON.stringify,
-    R.evolve({
-      dependencies: R.pickBy((val, key) => !R.test(/^pesposa/, key))
-    }),
-    R.omit(['devDependencies']),
-    JSON.parse
-  )(content.toString());
-
-  return obj;
-}
+const build = require('./scripts/build.functions.js');
 
 const outputPath = path.join(constants.paths.build, constants.folders.functions);
 
@@ -28,18 +16,22 @@ module.exports = merge.smart(baseConfig, {
     // To deploy functions, package.json and node_modules
     // needs to be at the same directory level.
     path: outputPath,
-    filename: constants.files.functionsOutput,
+    filename: 'functions.js',
     libraryTarget: 'this',
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.IS_FIREBASE_FUNCTIONS_ENV': true,
     }),
+    new WebpackPreBuildPlugin(build),
     new CopyWebpackPlugin([
       {
-        from: path.join(constants.paths.backendRoot, 'package.json'),
-        to: path.join(outputPath, 'package.json'),
-        transform: outputPackageJson
+        from: path.join(__dirname, 'functions.index.js.template'),
+        to: path.join(outputPath, 'index.js'),
+      },
+      {
+        from: path.join(constants.paths.web, 'server', 'build', 'server.bundle.js'),
+        to: path.join(outputPath, 'server.bundle.js'),
       }
     ])
   ],

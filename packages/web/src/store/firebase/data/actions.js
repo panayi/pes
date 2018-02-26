@@ -1,8 +1,8 @@
-import api from 'services/api';
+import firebaseApi from 'services/firebase';
 
 export const markAdAsSold = adId => dispatch =>
   dispatch(
-    api.ads.update(adId, {
+    firebaseApi.ads.update(adId, {
       sold: true,
     }),
   );

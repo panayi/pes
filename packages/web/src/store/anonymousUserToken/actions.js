@@ -17,7 +17,7 @@ export const migrateAnonymousUser = () => (dispatch, getState) => {
   }
 
   const token = authSelectors.tokenSelector(state);
-  return dispatch(
-    api.app.migrateAnonymousUser({ token, anonymousUserToken }),
-  ).then(() => dispatch(reset()));
+  return dispatch(api.migrateAnonymousUser({ token, anonymousUserToken })).then(
+    () => dispatch(reset()),
+  );
 };

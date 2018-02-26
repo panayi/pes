@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
-import api from 'services/api';
+import firebaseApi from 'services/firebase';
 import { selectors as profileSelectors } from 'store/firebase/profile';
 import * as constants from './constants';
 
@@ -14,7 +14,7 @@ export const fetchLinkedProviders = () => async (dispatch, getState) => {
     return;
   }
 
-  const linkedProviders = await dispatch(api.auth.getProviders(email));
+  const linkedProviders = await dispatch(firebaseApi.auth.getProviders(email));
   dispatch(receiveLinkedProviders(linkedProviders));
 };
 

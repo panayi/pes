@@ -3,6 +3,7 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import { auth as authConfig, firebase as firebaseConfig } from 'pesposa-config';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
+import firebaseApi from 'services/firebase';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { modals } from 'store/modals';
 import { actions as loginActions } from 'store/login';
@@ -33,7 +34,7 @@ export const setCurrentUserInfo = () => async (dispatch, getState) => {
     console.warn(error); // eslint-disable-line no-console
   }
 
-  return dispatch(api.app.setCurrentUserInfo({ geoposition }, { token }));
+  return dispatch(api.setCurrentUserInfo({ geoposition }, { token }));
 };
 
 export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
@@ -43,13 +44,13 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
 
   // If user is not logged in => login anonymously
   if (isNilOrEmpty(authData)) {
-    return dispatch(api.auth.loginAnonymously());
+    return dispatch(firebaseApi.auth.loginAnonymously());
   }
   // Otherwise, user was just logged in
 
   // Save session to make it available on SSR
   authData.getIdToken().then(token => {
-    dispatch(api.app.createSession(token));
+    dispatch(api.createSession(token));
   });
 
   if (!authData.isAnonymous) {
@@ -64,7 +65,7 @@ export const login = credentials => async dispatch => {
   dispatch(loginActions.loginStarted());
 
   try {
-    await dispatch(api.auth.login(credentials));
+    await dispatch(firebaseApi.auth.login(credentials));
     dispatch(loginActions.loginSucceeded());
     dispatch(setCurrentUserInfo());
   } catch (error) {
@@ -86,7 +87,7 @@ export const loginWithPhoneNumber = (
           .auth()
           .signInWithPhoneNumber(phoneNumber, applicationVerifier)
       : await dispatch(
-          api.auth.login({
+          firebaseApi.auth.login({
             phoneNumber,
             applicationVerifier,
           }),
