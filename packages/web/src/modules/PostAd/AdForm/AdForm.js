@@ -80,6 +80,7 @@ class AdForm extends Component<Props> {
 
   render() {
     const {
+      adId,
       adIsLoaded,
       filesPath,
       onChange,
@@ -124,6 +125,7 @@ class AdForm extends Component<Props> {
                       images={images}
                       error={isImagesError}
                       adImagesDbPath={filesPath}
+                      published={!!adId}
                     />
                   </div>
                   <Form
@@ -149,7 +151,7 @@ export default R.compose(
   withState('submitted', 'setSubmitted', false),
   withProps(({ ad, onSubmit }) => ({
     adIsLoaded: isLoaded(ad),
-    images: R.compose(R.values, R.propOr({}, 'images'))(ad),
+    images: R.propOr({}, 'images')(ad),
     onSubmit: values =>
       onSubmit({
         ...values,

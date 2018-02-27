@@ -55,6 +55,5 @@ export const createAd = (ad: Ad) => (
     .then(() => dispatch(removeDraft()));
 };
 
-export const saveAd = (adId: string, onSave: ?Function) => (ad: Ad) => (
-  dispatch: Dispatch,
-) => dispatch(firebaseApi.ads.update(adId, serializeAd(ad))).then(onSave);
+export const saveAd = (adId: string, ad: Ad) => (dispatch: Dispatch) =>
+  dispatch(firebaseApi.ads.update(adId, serializeAd(ad)));

@@ -9,7 +9,6 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import { red } from 'material-ui/colors';
-import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import PlaceIcon from 'material-ui-icons/Place';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
@@ -99,9 +98,6 @@ const styles = theme => ({
   title: {
     flex: 1,
     wordBreak: 'break-word',
-  },
-  editAdLink: {
-    height: 'auto',
   },
   price: {
     marginBottom: theme.spacing.unit * 2,
@@ -212,14 +208,7 @@ const ViewAd = ({ ad, adId, location, uid, markAdAsSold, classes }: Props) => {
                 variant="title"
                 color="textSecondary"
               />
-              <EditAdLink
-                className={classes.editAdLink}
-                ad={ad}
-                adId={adId}
-                color="primary"
-              >
-                <ModeEditIcon />
-              </EditAdLink>
+              <EditAdLink adId={adId} ad={ad} />
             </div>
             <AdPrice ad={ad} className={classes.price} variant="title" />
             <AdBody ad={ad} className={classes.description} />

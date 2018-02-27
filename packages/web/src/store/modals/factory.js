@@ -1,16 +1,19 @@
 import * as R from 'ramda';
-import { withProps } from 'recompose';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
 import * as actions from './actions';
 
+const mapDispatchToProps = action => (dispatch, { modalProps }) =>
+  bindActionCreators(
+    {
+      onClick: () => action(modalProps),
+    },
+    dispatch,
+  );
+
 const buttonFactory = action =>
-  R.compose(
-    connect(null, { onClick: action }),
-    withProps(({ onClick }) => ({
-      onClick: () => onClick(),
-    })),
-  )(Button);
+  R.compose(connect(null, mapDispatchToProps(action)))(Button);
 
 const modalFactory = id => {
   const showAction = props => dispatch =>
