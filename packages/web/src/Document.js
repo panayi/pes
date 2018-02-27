@@ -77,7 +77,7 @@ class Document extends React.Component {
             type="text/javascript"
             src={assets.client.js}
             defer
-            crossOrigin={process.env.NODE_ENV !== 'production'}
+            crossOrigin="anonymous"
           />
           <script
             /* eslint-disable react/no-danger */
