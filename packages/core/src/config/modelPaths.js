@@ -24,3 +24,4 @@ export const CONVERSATIONS = userId =>
   createModelPath(['myConversations', userId]);
 export const MESSAGES = (adId, buyerId) =>
   createModelPath(['messages', adId, buyerId]);
+export const SUPPORT_MESSAGES = createModelPath(['support']);
