@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
 import { WindowScroller, AutoSizer } from 'react-virtualized';
 import { withStyles } from 'material-ui/styles';
-import { propsChanged } from 'pesposa-utils';
+import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import {
   selectors as searchSelectors,
   actions as searchActions,

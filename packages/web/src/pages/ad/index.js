@@ -5,7 +5,7 @@ import { withProps, setStatic } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import { models } from 'store/firebase/data';
 import { selectors as routerSelectors } from 'store/router';
 import hydrateAd from 'hocs/hydrateAd';

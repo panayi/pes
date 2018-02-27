@@ -2,7 +2,7 @@ import { Component } from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { replace as _replace } from 'react-router-redux';
-import { propsSelector } from 'pesposa-utils';
+import propsSelector from '@pesposa/core/src/utils/propsSelector';
 import { modals } from 'store/modals';
 import needsUserWithId from 'hocs/needsUserWithId';
 

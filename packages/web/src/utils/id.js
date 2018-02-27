@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
-import { algolia as algoliaConfig } from 'pesposa-config';
+import * as algoliaConfig from '@pesposa/core/src/config/algolia';
 
 // id :: Object | String -> String | Nil
 export default R.when(

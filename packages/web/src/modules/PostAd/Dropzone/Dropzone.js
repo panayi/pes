@@ -8,7 +8,7 @@ import { withStyles } from 'material-ui/styles';
 import ReactDropzone from 'react-dropzone';
 import AddIcon from 'material-ui-icons/AddAPhoto';
 import BlockIcon from 'material-ui-icons/Block';
-import { files } from 'pesposa-utils';
+import files from '@pesposa/core/src/utils/files';
 import Spinner from 'components/Spinner/Spinner';
 
 type Props = {

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import FacebookBoxIcon from 'mdi-react/FacebookIcon';
 import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
-import { colors } from 'pesposa-config';
+import * as colors from '@pesposa/core/src/config/colors';
 
 const styles = {
   root: {

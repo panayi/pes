@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 
 // getAdImages :: Ad -> [String] | Nil
 const getAdImages = R.compose(

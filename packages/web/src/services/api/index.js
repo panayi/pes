@@ -1,4 +1,4 @@
-import { env } from 'pesposa-config';
+import env from '@pesposa/core/src/config/env';
 
 require('es6-promise').polyfill();
 require('isomorphic-fetch');

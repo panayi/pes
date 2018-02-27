@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { noop } from 'ramda-adjunct';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
-import { propsChanged } from 'pesposa-utils';
+import propsChanged from '@pesposa/core/src/utils/propsChanged';
 
 const styles = theme => ({
   root: {

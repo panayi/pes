@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { isPlainObj, isFunction } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
-import { makeArray } from 'pesposa-utils';
+import makeArray from '@pesposa/core/src/utils/makeArray';
 
 const getPathSelector = path => {
   if (isFunction(path)) {

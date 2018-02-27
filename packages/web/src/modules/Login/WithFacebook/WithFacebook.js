@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { auth as authConfig, firebase as firebaseConfig } from 'pesposa-config';
+import authConfig from '@pesposa/core/src/config/auth';
+import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import withLoginAction from 'hocs/withLoginAction';
 import FacebookButton from 'components/FacebookButton/FacebookButton';
 

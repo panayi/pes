@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { modelPaths } from 'pesposa-config';
+import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import { modelConnectionsFactory } from 'lib/connectData';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import * as constants from './constants';

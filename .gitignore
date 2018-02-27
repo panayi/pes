@@ -10,9 +10,8 @@ packages/**/test/reports/
 codeclimate-output.html
 
 # production
-packages/**/build/
-packages/web/server/build/
-packages/database/rules.json
+build/
+packages/web/build/
 
 # OS X
 .DS_Store

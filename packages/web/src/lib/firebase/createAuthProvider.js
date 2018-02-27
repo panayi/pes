@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { firebase as firebaseConfig } from 'pesposa-config';
+import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 
 // Based on https://github.com/prescottprue/react-redux-firebase/blob/master/src/utils/auth.js
 // as it is not exposed by react-redux-firebase

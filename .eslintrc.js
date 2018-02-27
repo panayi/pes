@@ -69,11 +69,11 @@ module.exports = {
       },
     },
     {
-      "files": ["packages/backend/src/**/*.js"],
+      "files": ["packages/application/src/**/*.js"],
       "settings": {
         "import/resolver": {
           "webpack": {
-            "config": path.join(__dirname, 'packages', 'backend', 'config', 'webpack.base.js')
+            "config": path.join(__dirname, 'tools', 'config', 'webpack.base.js')
           },
         },
       },

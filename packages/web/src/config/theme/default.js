@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { createMuiTheme } from 'material-ui/styles';
 import { green, purple } from 'material-ui/colors';
-import { layout } from 'pesposa-config';
+import * as layout from '@pesposa/core/src/config/layout';
 
 const shadows = [
   'none',

@@ -6,7 +6,7 @@ import GridList, { GridListTile } from 'material-ui/GridList';
 import { FormHelperText } from 'material-ui/Form';
 import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
-import { images as imagesConfig } from 'pesposa-config';
+import * as imagesConfig from '@pesposa/core/src/config/images';
 import { actions as storageActions } from 'store/firebase/storage';
 import { constants as postAdConstants } from 'store/postAd';
 import Imgix from 'components/Imgix/Imgix';

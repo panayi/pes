@@ -6,8 +6,8 @@ import queryString from 'query-string';
 import { withProps, defaultProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
-import { propSelector } from 'pesposa-utils';
-import { env } from 'pesposa-config';
+import propSelector from '@pesposa/core/src/utils/propSelector';
+import env from '@pesposa/core/src/config/env';
 import requirePropToRender from 'hocs/requirePropToRender';
 
 const BASE_URL = 'https://maps.googleapis.com/maps/api/staticmap';

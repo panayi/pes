@@ -1,5 +1,5 @@
 import React from 'react';
-import * as generate from 'pesposa-utils/src/generateClassName';
+import generateClassName from '@pesposa/core/src/utils/generateClassName';
 import Recaptcha from '../Recaptcha';
 
 describe('[Component] Recaptcha', () => {
@@ -12,16 +12,18 @@ describe('[Component] Recaptcha', () => {
   };
 
   it('should render correctly', () => {
-    generate.default = jest.fn();
-    generate.default.mockReturnValueOnce('myRecaptchaId');
+    generateClassName.default = jest.fn();
+    generateClassName.default.mockReturnValueOnce('myRecaptchaId');
     const wrapper = shallow(<Recaptcha {...defaultProps} />);
     expect(wrapper).toMatchSnapshot();
-    generate.default.mockClear();
+    generateClassName.default.mockClear();
   });
 
   it('should have a unique RECAPTCHA_ID', () => {
-    generate.default = jest.fn();
-    generate.default.mockReturnValueOnce('first').mockReturnValueOnce('second');
+    generateClassName.default = jest.fn();
+    generateClassName.default
+      .mockReturnValueOnce('first')
+      .mockReturnValueOnce('second');
 
     const wrapper = shallow(<Recaptcha {...defaultProps} />);
     const wrapper2 = shallow(<Recaptcha {...defaultProps} />);

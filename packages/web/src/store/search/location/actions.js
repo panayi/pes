@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
-import { zipArgs } from 'pesposa-utils';
+import zipArgs from '@pesposa/core/src/utils/zipArgs';
 import * as types from './types';
 import * as constants from './constants';
 

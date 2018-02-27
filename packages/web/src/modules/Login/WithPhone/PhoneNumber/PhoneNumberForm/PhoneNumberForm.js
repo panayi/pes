@@ -5,7 +5,7 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import { withState, withProps } from 'recompose';
 import { Formik } from 'formik';
 import yup from 'yup';
-import { phoneNumbers as phoneNumbersConfig } from 'pesposa-config';
+import * as phoneNumbersConfig from '@pesposa/core/src/config/phoneNumbers';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import Form from './Form/Form';

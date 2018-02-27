@@ -1,6 +1,6 @@
 import * as R from 'ramda';
-import { propSelector } from 'pesposa-utils';
-import { algolia as algoliaConfig } from 'pesposa-config';
+import propSelector from '@pesposa/core/src/utils/propSelector';
+import * as algoliaConfig from '@pesposa/core/src/config/algolia';
 import * as constants from './constants';
 
 export const hitsSelector = R.path(constants.ROOT_PATH);

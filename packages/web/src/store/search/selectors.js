@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import * as rawParamsSelectors from './rawParams/selectors';
 import * as categorySelectors from './category/selectors';
 import * as locationSelectors from './location/selectors';

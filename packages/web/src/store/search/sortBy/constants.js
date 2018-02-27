@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { algolia as algoliaConfig } from 'pesposa-config';
+import * as algoliaConfig from '@pesposa/core/src/config/algolia';
 import * as searchConstants from '../constants';
 
 export const ROOT_KEY = 'sortBy';

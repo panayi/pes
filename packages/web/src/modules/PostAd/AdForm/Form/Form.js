@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { FormGroup } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
-import { propsChanged } from 'pesposa-utils';
+import propsChanged from '@pesposa/core/src/utils/propsChanged';
 
 const styles = theme => ({
   select: {
