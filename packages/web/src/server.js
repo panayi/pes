@@ -77,7 +77,6 @@ server
         routes,
         assets,
         store,
-        customThing: 'thing',
       });
       res.send(html);
     } catch (error) {

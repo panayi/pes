@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
 import { Helmet } from 'react-helmet';
 import { withStyles } from 'material-ui/styles';
+import getMetaTags from 'utils/getMetaTags';
 import { selectors as routerSelectors } from 'store/router';
 import Layout from 'layouts/Layout/Layout';
 import Search from 'modules/Search/Search';
@@ -35,21 +36,17 @@ const styles = theme => ({
 
 const HomeHeader = withProps({ inHome: true })(Header);
 
-const SearchPage = ({ place, category, classes }) => {
-  const title = getTitle({ place, category });
-
-  return (
-    <Layout
-      header={HomeHeader}
-      sidebar={Sidebar}
-      pageClassName={classes.page}
-      flex
-    >
-      <Helmet>{title && <title>{title}</title>}</Helmet>
-      <Search place={place} category={category} />
-    </Layout>
-  );
-};
+const SearchPage = ({ place, category, classes }) => (
+  <Layout
+    header={HomeHeader}
+    sidebar={Sidebar}
+    pageClassName={classes.page}
+    flex
+  >
+    <Helmet {...getMetaTags({ title: getTitle({ place, category }) })} />
+    <Search place={place} category={category} />
+  </Layout>
+);
 
 export default R.compose(
   withProps(

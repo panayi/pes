@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import propSelector from '@pesposa/core/src/utils/propSelector';
+import getMetaTags from 'utils/getMetaTags';
 import { models } from 'store/firebase/data';
 import { selectors as routerSelectors } from 'store/router';
 import hydrateAd from 'hocs/hydrateAd';
@@ -22,12 +23,11 @@ type Props = {
 
 const AdPage = ({ ad, adId, legacy }: Props) => (
   <Layout header={Header} fixed>
-    <Helmet>
-      <title>{`${ad.title} in ${R.path(
-        ['location', 'address', 'city'],
-        ad,
-      )} - Pesposa`}</title>
-    </Helmet>
+    <Helmet
+      {...getMetaTags({
+        title: `${ad.title} in ${R.path(['location', 'address', 'city'], ad)}`,
+      })}
+    />
     <ViewAd ad={ad} adId={adId} legacy={legacy} />
     {!legacy && (
       <Route

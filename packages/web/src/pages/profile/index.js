@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { models } from 'store/firebase/data';
 import { selectors as routerSelectors } from 'store/router';
+import getMetaTags from 'utils/getMetaTags';
 import Layout from 'layouts/Layout/Layout';
 import withProfileData from 'hocs/withProfileData';
 import Profile from 'modules/Profile/Profile';
@@ -14,11 +15,9 @@ import Header from 'pages/components/Header/Header';
 
 const ProfilePage = ({ userId, displayName }) => (
   <Layout header={Header} fixed flex>
-    {displayName && (
-      <Helmet>
-        <title>{displayName} is selling stuff on Pesposa</title>
-      </Helmet>
-    )}
+    <Helmet
+      {...getMetaTags({ title: `${displayName} is selling stuff on Pesposa` })}
+    />
     <Profile userId={userId} />
   </Layout>
 );

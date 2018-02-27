@@ -63,7 +63,7 @@
     "deploy": "run-p deploy:web deploy:functions && yarn deploy:database"
   },
   "lint-staged": {
-    "{packages/*/src,packages/web/test}/**/*.{js,jsx}": [
+    "{packages/*/src,packages/web/test,tools}/**/*.{js,jsx}": [
       "prettier --write",
       "eslint --fix",
       "git add",
