@@ -277,6 +277,16 @@ type Message {
   createdAt: PastEpoch | Null,
 }
 
+type SupportMessageBody extends String {
+  validate() { this.length > 0 && this.length <= 400 }
+}
+
+type SupportMessage {
+  email: Email,
+  subject: String | Null,
+  body: SupportMessageBody
+}
+
 // ------------------------------------
 // Functions
 // ------------------------------------
@@ -446,4 +456,8 @@ path /messages/{adId}/{buyerId}/{messageId} is Message {
 
 path /messages/{adId} {
   read() { isSeller(adId) }
+}
+
+path /support/{id} is SupportMessage {
+  create() { true }
 }

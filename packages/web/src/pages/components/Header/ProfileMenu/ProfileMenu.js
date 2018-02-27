@@ -7,6 +7,7 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Popover from 'material-ui/Popover';
+import { modals } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as profileSelectors } from 'store/firebase/profile';
 import hideVisitor from 'hocs/hideVisitor';
@@ -16,6 +17,8 @@ import UserFullName from 'components/UserFullName/UserFullName';
 import LogoutButton from './LogoutButton/LogoutButton';
 
 const PROFILE_IMAGE_SIZE = 96;
+
+const ShowSupportButton = modals.support.showButton;
 
 const styles = theme => ({
   root: {
@@ -28,7 +31,8 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2,
   },
   footer: {
-    flexBasis: 32,
+    display: 'flex',
+    justifyContent: 'space-between',
     padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
     borderTop: `1px solid ${theme.palette.divider}`,
     background: theme.palette.background.default,
@@ -41,8 +45,10 @@ const styles = theme => ({
   displayName: {
     fontWeight: 600,
   },
+  supportButton: {
+    textTransform: 'none',
+  },
   logoutButton: {
-    float: 'right',
     border: `1px solid ${theme.palette.grey[400]}`,
   },
   small: {
@@ -130,6 +136,9 @@ class ProfileMenu extends Component {
             </div>
           </div>
           <div className={classes.footer}>
+            <ShowSupportButton className={classes.supportButton}>
+              Help / Feedback
+            </ShowSupportButton>
             <LogoutButton className={classes.logoutButton} dense>
               Sign out
             </LogoutButton>
