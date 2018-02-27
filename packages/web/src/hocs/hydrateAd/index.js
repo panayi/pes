@@ -22,7 +22,7 @@ const hydrateAd = (adIdSelector, legacySelector = R.F) =>
     connectData(
       {
         [AD_KEY]: models.ads(legacySelector).one(adIdSelector),
-        [AD_IMAGES_KEY]: models.adImages(adIdSelector).all,
+        [AD_IMAGES_KEY]: models.adImages(adIdSelector).allObjects,
       },
       createStructuredSelector({
         [AD_ID_KEY]: adIdSelector,

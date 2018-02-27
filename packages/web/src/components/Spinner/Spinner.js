@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import MDSpinner from 'react-md-spinner';
 import { withProps, branch, renderComponent } from 'recompose';
-import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import theme from 'config/theme';
 
@@ -13,7 +12,10 @@ const BaseSpinner = withProps({
 })(MDSpinner);
 
 const styles = {
-  spinnerWrap: {
+  centered: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -27,17 +29,14 @@ const styles = {
 };
 
 const CenteredSpinner = withStyles(styles)(
-  ({ classes, overlay, ...otherProps }) => (
-    <Grid
-      className={classNames(classes.spinnerWrap, {
+  ({ className, overlay, classes, ...otherProps }) => (
+    <div
+      className={classNames(classes.centered, {
         [classes.overlay]: overlay,
       })}
-      container
-      justify="center"
-      alignItems="center"
     >
       <BaseSpinner {...otherProps} />
-    </Grid>
+    </div>
   ),
 );
 

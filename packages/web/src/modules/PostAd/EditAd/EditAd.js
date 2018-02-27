@@ -1,38 +1,34 @@
 /* @flow */
 import * as R from 'ramda';
-import { bindActionCreators } from 'redux';
 import { withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import {
   actions as postAdActions,
   selectors as postAdSelectors,
 } from 'store/postAd';
+import hydrateAd from 'hocs/hydrateAd';
 import AdForm from '../AdForm/AdForm';
-
-type Props = {
-  filesPath: String,
-  adId: string,
-  ad: Ad,
-};
 
 const mapStateToProps = createStructuredSelector({
   filesPath: postAdSelectors.adImagesPathSelector,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch, props: Props) =>
-  bindActionCreators(
-    {
-      onSubmit: postAdActions.saveAd(props.adId, props.onSave),
-    },
-    dispatch,
-  );
+const mapDispatchToProps = {
+  saveAd: postAdActions.saveAd,
+};
 
 const EditAdContent = R.compose(
+  hydrateAd(propSelector(['adId'])),
   connect(mapStateToProps, mapDispatchToProps),
-  withProps({
+  withProps(({ adId, saveAd, hideModal }) => ({
     submitButtonLabel: 'Save',
-  }),
+    onSubmit: async ad => {
+      await saveAd(adId, ad);
+      hideModal();
+    },
+  })),
 )(AdForm);
 
 export default EditAdContent;

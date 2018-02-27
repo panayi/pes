@@ -10,20 +10,11 @@ import Card from './Card/Card';
 import * as constants from '../constants';
 import * as selectors from '../selectors';
 
-// type Props = {
-//   hits: Array<any>,
-//   itemComponent: Class<React$Component<*, *>>,
-//   width: number,
-//   getItemKey: Function,
-//   classes: Object,
-//   theme: Object,
-// };
-
 const styles = {
   collection: {
     '& > div': {
       // fix shadow cutoff on last card
-      paddingBottom: 4,
+      marginBottom: 4,
     },
   },
 };

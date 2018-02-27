@@ -18,3 +18,7 @@ export const uploadImage = (file: File, dbPath: string) => (
 export const uploadImages = (files: Array<File>, dbPath: string) => (
   dispatch: Dispatch,
 ) => Promise.all(R.map(file => dispatch(uploadImage(file, dbPath)), files));
+
+export const deleteImage = (image: Object, dbPath: string) => (
+  dispatch: Dispatch,
+) => dispatch(firebaseApi.files.remove(image.fullPath, dbPath));

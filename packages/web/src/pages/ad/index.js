@@ -3,7 +3,6 @@ import React from 'react';
 import * as R from 'ramda';
 import { withProps, setStatic } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import getMetaTags from 'utils/getMetaTags';
@@ -13,7 +12,6 @@ import hydrateAd from 'hocs/hydrateAd';
 import Layout from 'layouts/Layout/Layout';
 import ViewAd from 'modules/ViewAd/ViewAd';
 import Header from 'pages/components/Header/Header';
-import EditAd from './edit';
 
 type Props = {
   adId: string,
@@ -29,12 +27,6 @@ const AdPage = ({ ad, adId, legacy }: Props) => (
       })}
     />
     <ViewAd ad={ad} adId={adId} legacy={legacy} />
-    {!legacy && (
-      <Route
-        path="/i/:adId/edit"
-        render={props => <EditAd {...props} ad={ad} adId={adId} />}
-      />
-    )}
   </Layout>
 );
 

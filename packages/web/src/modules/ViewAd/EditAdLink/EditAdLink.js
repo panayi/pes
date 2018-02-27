@@ -1,32 +1,36 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { connect } from 'react-redux';
-import { replace as _replace } from 'react-router-redux';
-import IconButton from 'material-ui/IconButton';
+import { withStyles } from 'material-ui/styles';
+import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import propsSelector from '@pesposa/core/src/utils/propsSelector';
+import { modals } from 'store/modals';
 import requirePropToRender from 'hocs/requirePropToRender';
 import withUserWithId from 'hocs/withUserWithId';
 
 type Props = {
-  ad: Ad,
   adId: string,
-  children: React$Node,
-  replace: Function,
+  classes: Object,
 };
 
-const EditAdLink = ({ adId, children, replace, ...rest }: Props) => (
-  <IconButton {...rest} onClick={() => replace(`/i/${adId}/edit`)}>
-    {children}
-  </IconButton>
+const styles = theme => ({
+  root: {
+    minHeight: 'auto',
+    minWidth: 'auto',
+    padding: theme.spacing.unit,
+  },
+});
+
+const EditAdButton = modals.editAd.showButton;
+
+const EditAdLink = ({ adId, classes }: Props) => (
+  <EditAdButton className={classes.root} color="primary" modalProps={{ adId }}>
+    <ModeEditIcon />
+  </EditAdButton>
 );
-
-const mapDispatchToProps = {
-  replace: _replace,
-};
 
 export default R.compose(
   requirePropToRender('ad'),
   withUserWithId(R.compose(R.path(['ad', 'user']), propsSelector)),
-  connect(null, mapDispatchToProps),
+  withStyles(styles),
 )(EditAdLink);
