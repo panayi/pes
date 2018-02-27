@@ -8,7 +8,10 @@ const baseConfig = require('./webpack.base.js');
 const constants = require('../constants');
 const build = require('../scripts/build.functions.js');
 
-const outputPath = path.join(constants.paths.build, constants.folders.functions);
+const outputPath = path.join(
+  constants.paths.build,
+  constants.folders.functions,
+);
 
 module.exports = merge.smart(baseConfig, {
   resolve: {
@@ -30,13 +33,23 @@ module.exports = merge.smart(baseConfig, {
     new WebpackPreBuildPlugin(build),
     new CopyWebpackPlugin([
       {
-        from: path.join(__dirname, '..', 'templates', 'functions.index.js.template'),
+        from: path.join(
+          __dirname,
+          '..',
+          'templates',
+          'functions.index.js.template',
+        ),
         to: path.join(outputPath, 'index.js'),
       },
       {
-        from: path.join(constants.paths.build, 'web', 'server', 'server.bundle.js'),
+        from: path.join(
+          constants.paths.build,
+          'web',
+          'server',
+          'server.bundle.js',
+        ),
         to: path.join(outputPath, 'server.bundle.js'),
-      }
-    ])
+      },
+    ]),
   ],
 });

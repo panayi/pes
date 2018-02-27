@@ -15,17 +15,20 @@ module.exports = {
         loader: 'babel-loader',
         query: {
           babelrc: false,
-          "presets": [
-            ["env", {
-              "targets": {
-                "node": "current"
-              }
-            }]
+          presets: [
+            [
+              'env',
+              {
+                targets: {
+                  node: 'current',
+                },
+              },
+            ],
           ],
-          "plugins": [
-            "transform-async-to-generator",
-            "transform-flow-strip-types"
-          ]
+          plugins: [
+            'transform-async-to-generator',
+            'transform-flow-strip-types',
+          ],
         },
       },
       {
@@ -43,7 +46,10 @@ module.exports = {
     ],
   },
   externals: [
-    nodeExternals({ whitelist: [/^@pesposa/], modulesDir: path.join(constants.paths.root, 'node_modules') }),
+    nodeExternals({
+      whitelist: [/^@pesposa/],
+      modulesDir: path.join(constants.paths.root, 'node_modules'),
+    }),
   ],
   plugins: [
     new Dotenv({
@@ -59,8 +65,8 @@ module.exports = {
         output: {
           comments: false,
           beautify: false,
-        }
-      }
-    })
+        },
+      },
+    }),
   ],
 };

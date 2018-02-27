@@ -10,7 +10,10 @@ module.exports = merge.smart(baseConfig, {
   entry: path.join(constants.paths.admin, 'src', 'index.js'),
   resolve: {
     extensions: ['.js'],
-    modules: [path.join(constants.paths.root, 'node_modules'), path.join(constants.paths.admin, 'src')],
+    modules: [
+      path.join(constants.paths.root, 'node_modules'),
+      path.join(constants.paths.admin, 'src'),
+    ],
   },
   output: {
     path: outputPath,

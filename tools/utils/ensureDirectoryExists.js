@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ensureDirectoryExists = (filePath) => {
+const ensureDirectoryExists = filePath => {
   const dirname = path.dirname(filePath);
 
   if (fs.existsSync(dirname)) {
@@ -10,6 +10,6 @@ const ensureDirectoryExists = (filePath) => {
 
   ensureDirectoryExists(dirname);
   fs.mkdirSync(dirname);
-}
+};
 
 module.exports = ensureDirectoryExists;
