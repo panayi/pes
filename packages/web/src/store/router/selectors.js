@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { isUndefined } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import * as constants from './constants';
 
 const locationSelector = R.path(constants.LOCATION_PATH);

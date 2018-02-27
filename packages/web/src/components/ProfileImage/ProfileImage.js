@@ -5,7 +5,7 @@ import { setDisplayName } from 'recompose';
 import Avatar from 'material-ui/Avatar';
 import { withStyles } from 'material-ui/styles';
 import Face from 'material-ui-icons/Face';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import withProfileData from 'hocs/withProfileData';
 
 const styles = {

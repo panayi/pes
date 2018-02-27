@@ -1,4 +1,4 @@
-import { firebase as firebaseConfig } from 'pesposa-config';
+import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 
 const urlForPath = path => `https://${firebaseConfig.FIREBASE_DOMAIN}${path}`;
 

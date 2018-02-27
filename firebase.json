@@ -14,9 +14,9 @@
     ]
   },
   "functions": {
-    "source": "packages/backend/build/functions"
+    "source": "build/functions"
   },
   "database": {
-    "rules": "packages/database/rules.json"
+    "rules": "build/database/rules.json"
   }
 }

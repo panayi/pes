@@ -1,8 +1,8 @@
 /* @flow */
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
-import { modelPaths } from 'pesposa-config';
-import { propSelector } from 'pesposa-utils';
+import * as modelPaths from '@pesposa/core/src/config/modelPaths';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import * as constants from './constants';
 

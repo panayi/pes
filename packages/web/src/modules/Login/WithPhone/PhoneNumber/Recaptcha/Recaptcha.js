@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { Helmet } from 'react-helmet';
-import { generateClassName } from 'pesposa-utils';
+import generateClassName from '@pesposa/core/src/utils/generateClassName';
 
 type Props = {
   firebase: Object,

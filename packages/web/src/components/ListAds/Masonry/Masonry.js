@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
 import { Collection } from 'react-virtualized';
 import { withStyles } from 'material-ui/styles';
-import { propsChanged } from 'pesposa-utils';
+import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import Card from './Card/Card';
 import * as constants from '../constants';
 import * as selectors from '../selectors';

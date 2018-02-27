@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { replace as _replace } from 'react-router-redux';
 import IconButton from 'material-ui/IconButton';
-import { propsSelector } from 'pesposa-utils';
+import propsSelector from '@pesposa/core/src/utils/propsSelector';
 import requirePropToRender from 'hocs/requirePropToRender';
 import withUserWithId from 'hocs/withUserWithId';
 

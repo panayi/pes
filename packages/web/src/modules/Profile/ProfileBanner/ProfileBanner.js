@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { darken } from 'material-ui/styles/colorManipulator';
 import SettingsIcon from 'material-ui-icons/Settings';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import withProfileData from 'hocs/withProfileData';
 import Imgix from 'components/Imgix/Imgix';

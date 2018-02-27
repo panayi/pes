@@ -7,7 +7,7 @@ import TimeAgo from 'react-timeago';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { blue } from 'material-ui/colors';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';
 import Link from 'components/Link/Link';
 import LineClamp from 'components/LineClamp/LineClamp';

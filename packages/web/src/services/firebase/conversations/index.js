@@ -1,4 +1,4 @@
-import { modelPaths } from 'pesposa-config';
+import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 
 export const updateRead = (uid, conversationId, read) => (
   dispatch,

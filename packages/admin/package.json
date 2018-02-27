@@ -1,0 +1,14 @@
+{
+  "name": "@pesposa/admin",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "commander": "^2.14.1",
+    "node-fetch": "^2.0.0",
+    "@pesposa/core": "^0.1.0",
+    "ramda": "^0.25.0",
+    "ramda-adjunct": "^2.5.0"
+  }
+}

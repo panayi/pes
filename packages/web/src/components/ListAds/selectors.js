@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { isPlainObj } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import id from 'utils/id';
 import { selectors as imagesSelectors } from 'store/images';
 import * as constants from './constants';

@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { isNotNil } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';
-import { firebase as firebaseConfig } from 'pesposa-config';
+import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 
 const FIREBASE_AUTH_PATH = [...firebaseConfig.FIREBASE_PATH, 'auth'];
 

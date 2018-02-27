@@ -3,12 +3,10 @@ import thunk from 'redux-thunk';
 import { routerMiddleware } from 'react-router-redux';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
-import {
-  modelPaths,
-  env,
-  firebase as firebaseConfig,
-  storage as storageConfig,
-} from 'pesposa-config';
+import * as storageConfig from '@pesposa/core/src/config/storage';
+import * as firebaseConfig from '@pesposa/core/src/config/firebase';
+import env from '@pesposa/core/src/config/env';
+import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import { actions as authActions } from './firebase/auth';
 import {
   utils as profileUtils,

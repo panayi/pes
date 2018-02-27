@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { auth as authConfig, firebase as firebaseConfig } from 'pesposa-config';
+import authConfig from '@pesposa/core/src/config/auth';
+import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
 import firebaseApi from 'services/firebase';

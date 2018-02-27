@@ -3,7 +3,7 @@ import { createStructuredSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
 import { withProps } from 'recompose';
 import { connectData } from 'lib/connectData';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import { models } from 'store/firebase/data';
 
 const AD_KEY = '__ad___';

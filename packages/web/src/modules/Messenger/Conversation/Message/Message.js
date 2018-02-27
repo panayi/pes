@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
 import TimeAgo from 'react-timeago';
 import { withStyles } from 'material-ui/styles';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import Tooltip from 'components/Tooltip/Tooltip';
 import MessageBubble from './MessageBubble/MessageBubble';
 

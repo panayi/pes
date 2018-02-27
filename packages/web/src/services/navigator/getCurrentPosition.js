@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { geolocation as geolocationConfig } from 'pesposa-config';
+import * as geolocationConfig from '@pesposa/core/src/config/geolocation';
 
 const DEFAULT_OPTIONS = {
   enableHighAccuracy: true,

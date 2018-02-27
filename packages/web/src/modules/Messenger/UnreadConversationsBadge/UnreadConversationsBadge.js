@@ -5,7 +5,7 @@ import { withProps } from 'recompose';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import Badge from 'material-ui/Badge';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import { selectors as chatSelectors } from 'store/chat';
 import withConversations from '../withConversations/withConversations';
 

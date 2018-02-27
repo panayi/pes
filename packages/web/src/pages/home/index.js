@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators } from 'multireducer';
-import { modelPaths } from 'pesposa-config';
+import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import {
   actions as searchActions,
   constants as searchConstants,

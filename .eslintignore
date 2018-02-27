@@ -6,8 +6,8 @@ packages/**/coverage/**
 packages/**/test/reports/**
 
 # production
-packages/**/build/**
-packages/database/rules.json
+build/
+packages/web/build/
 
 # other
 .circleci/**

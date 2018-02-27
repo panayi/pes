@@ -1,10 +1,8 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { populate, isLoaded } from 'react-redux-firebase';
-import {
-  firebase as firebaseConfig,
-  locale as localeConfig,
-} from 'pesposa-config';
+import * as firebaseConfig from '@pesposa/core/src/config/firebase';
+import * as localeConfig from '@pesposa/core/src/config/locale';
 import * as constants from './constants';
 
 // profileSelector :: State -> Object | Nil

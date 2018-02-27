@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { setDisplayName } from 'recompose';
 import Typography from 'material-ui/Typography';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import omitProps from 'utils/omitProps';
 import withProfileData from 'hocs/withProfileData';
 

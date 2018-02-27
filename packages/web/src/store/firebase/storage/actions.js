@@ -1,7 +1,7 @@
 /* @flow */
 import * as R from 'ramda';
-import { storage as storageConfig } from 'pesposa-config';
-import { generateId } from 'pesposa-utils';
+import * as storageConfig from '@pesposa/core/src/config/storage';
+import generateId from '@pesposa/core/src/utils/generateId';
 import firebaseApi from 'services/firebase';
 
 export const uploadImage = (file: File, dbPath: string) => (

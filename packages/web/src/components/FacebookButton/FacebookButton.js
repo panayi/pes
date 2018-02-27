@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import FacebookBoxIcon from 'mdi-react/FacebookBoxIcon';
-import { colors } from 'pesposa-config';
+import * as colors from '@pesposa/core/src/config/colors';
 
 const styles = theme => ({
   root: {

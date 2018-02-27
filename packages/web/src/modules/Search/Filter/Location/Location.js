@@ -9,8 +9,8 @@ import TextField from 'material-ui/TextField';
 import { InputAdornment } from 'material-ui/Input';
 import { withStyles } from 'material-ui/styles';
 import LocationIcon from 'material-ui-icons/LocationOn';
-import { propsChanged } from 'pesposa-utils';
-import { env } from 'pesposa-config';
+import propsChanged from '@pesposa/core/src/utils/propsChanged';
+import env from '@pesposa/core/src/config/env';
 import {
   selectors as locationSelectors,
   actions as locationActions,

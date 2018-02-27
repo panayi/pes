@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { handleActions } from 'redux-actions';
-import { algolia as algoliaConfig } from 'pesposa-config';
+import * as algoliaConfig from '@pesposa/core/src/config/algolia';
 import * as pageTypes from '../page/types';
 import * as searchTypes from '../types';
 

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import SearchIcon from 'material-ui-icons/Search';
-import { propsChanged } from 'pesposa-utils';
+import propsChanged from '@pesposa/core/src/utils/propsChanged';
 
 // Based on:
 // https://github.com/callemall/material-ui/blob/v1-beta/docs/src/modules/components/AppSearch.js

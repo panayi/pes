@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import createCachedSelector from 're-reselect';
-import { propSelector } from 'pesposa-utils';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import id from 'utils/id';
 import * as utils from './utils';
 
