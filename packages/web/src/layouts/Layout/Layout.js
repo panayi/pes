@@ -29,6 +29,7 @@ const Layout = ({
   sidebar: SidebarContent,
   children,
   pageClassName,
+  sidebarClassName,
   fixed,
   flex,
   wide,
@@ -39,7 +40,7 @@ const Layout = ({
   <div className={classNames(classes.root, { [classes.hasHeader]: hasHeader })}>
     {hasHeader && <Header />}
     {hasSidebar && (
-      <Sidebar>
+      <Sidebar className={sidebarClassName}>
         <SidebarContent />
       </Sidebar>
     )}

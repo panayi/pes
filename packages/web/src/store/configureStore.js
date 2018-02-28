@@ -1,6 +1,5 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { routerMiddleware } from 'react-router-redux';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
 import * as storageConfig from '@pesposa/core/src/config/storage';
@@ -37,11 +36,7 @@ const configureStore = (initialState = {}, history) => {
   }
 
   // Middleware Configuration
-  const middleware = [
-    routerMiddleware(history),
-    thunk.withExtraArgument(getFirebase),
-    searchMiddleware,
-  ];
+  const middleware = [thunk.withExtraArgument(getFirebase), searchMiddleware];
 
   // Store Enhancers
   const enhancers = [reactReduxFirebase(firebase, reduxFirebaseConfig)];

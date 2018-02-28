@@ -1,7 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { connect } from 'react-redux';
-import { push as _push } from 'react-router-redux';
+import { withRouter } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import LineClamp from 'components/LineClamp/LineClamp';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -41,13 +40,13 @@ const styles = theme => ({
   },
 });
 
-const ConversationHeader = ({ ad, otherUserId, push, classes }) => (
+const ConversationHeader = ({ ad, otherUserId, history, classes }) => (
   <div className={classes.root}>
     <div
       className={classes.user}
       role="button"
       tabIndex="-1"
-      onClick={() => push(`/user/${otherUserId}`)}
+      onClick={() => history.push(`/user/${otherUserId}`)}
     >
       <ProfileImage userId={otherUserId} />
       <UserFullName
@@ -60,7 +59,7 @@ const ConversationHeader = ({ ad, otherUserId, push, classes }) => (
       className={classes.ad}
       role="button"
       tabIndex="-1"
-      onClick={() => push(`/i/${ad.id}`)}
+      onClick={() => history.push(`/i/${ad.id}`)}
     >
       <div className={classes.details}>
         <AdTitle
@@ -77,10 +76,4 @@ const ConversationHeader = ({ ad, otherUserId, push, classes }) => (
   </div>
 );
 
-const mapDispatchToProps = {
-  push: _push,
-};
-
-export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
-  ConversationHeader,
-);
+export default R.compose(withRouter, withStyles(styles))(ConversationHeader);

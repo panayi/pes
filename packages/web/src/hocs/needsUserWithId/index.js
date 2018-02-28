@@ -1,10 +1,9 @@
 import * as R from 'ramda';
-import { connectedReduxRedirect } from 'redux-auth-wrapper/history4/redirect';
-import { routerActions } from 'react-router-redux';
+import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect';
 import { selectors as authSelectors } from 'store/firebase/auth';
 
 const needsUserWithId = ({ userSelector, ...otherOptions }) =>
-  connectedReduxRedirect({
+  connectedRouterRedirect({
     redirectPath: '/',
     allowRedirectBack: false,
     authenticatedSelector: R.both(
@@ -12,7 +11,6 @@ const needsUserWithId = ({ userSelector, ...otherOptions }) =>
       authSelectors.isCurrentUserSelector(userSelector),
     ),
     authenticatingSelector: authSelectors.isAuthenticatingSelector,
-    redirectAction: routerActions.replace,
     ...otherOptions,
   });
 

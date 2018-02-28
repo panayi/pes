@@ -4,7 +4,7 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import { setDisplayName } from 'recompose';
 import Avatar from 'material-ui/Avatar';
 import { withStyles } from 'material-ui/styles';
-import Face from 'material-ui-icons/Face';
+import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import withProfileData from 'hocs/withProfileData';
 
@@ -36,7 +36,7 @@ const ProfileImage = ({
       alt={alt}
       style={{ width: `${size}px`, height: `${size}px` }}
     >
-      {withDefault ? <Face /> : null}
+      {withDefault ? <AccountCircleIcon /> : null}
     </RootComponent>
   );
 };

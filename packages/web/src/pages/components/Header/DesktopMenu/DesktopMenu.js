@@ -14,7 +14,7 @@ import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
-import LogoutButton from './LogoutButton/LogoutButton';
+import LogoutButton from '../LogoutButton/LogoutButton';
 
 const PROFILE_IMAGE_SIZE = 96;
 
@@ -29,6 +29,9 @@ const styles = theme => ({
     display: 'flex',
     flex: 1,
     margin: theme.spacing.unit * 2,
+  },
+  menuIcon: {
+    fill: theme.palette.common.white,
   },
   footer: {
     display: 'flex',
@@ -60,7 +63,7 @@ const styles = theme => ({
   },
 });
 
-class ProfileMenu extends Component {
+class DesktopMenu extends Component {
   static propTypes = {
     email: PropTypes.string,
     classes: PropTypes.shape().isRequired,
@@ -75,11 +78,12 @@ class ProfileMenu extends Component {
     anchorEl: null,
   };
 
-  handleClickAnchor = event => {
-    this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
-    });
+  handleAnchorClick = event => {
+    const anchorEl = event.currentTarget;
+    this.setState(({ open }) => ({
+      open: !open,
+      anchorEl,
+    }));
   };
 
   handleClose = () => {
@@ -94,58 +98,66 @@ class ProfileMenu extends Component {
     const { currentUserId, email, phoneNumber, classes } = this.props;
     const { open, anchorEl } = this.state;
 
-    return [
-      <Button key="anchor" size="small" onClick={this.handleClickAnchor}>
-        <ProfileImage userId={currentUserId} />
-      </Button>,
-      <Popover
-        key="content"
-        open={open}
-        anchorEl={anchorEl}
-        onClose={this.handleClose}
-        marginThreshold={8}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-      >
-        <div className={classes.root}>
-          <div className={classes.content}>
-            <div className={classes.imageWrap}>
-              <ProfileImage size={PROFILE_IMAGE_SIZE} userId={currentUserId} />
+    return (
+      <React.Fragment>
+        <Button
+          className={classes.profileButton}
+          size="small"
+          onClick={this.handleAnchorClick}
+        >
+          <ProfileImage userId={currentUserId} />
+        </Button>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={this.handleClose}
+          marginThreshold={8}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+        >
+          <div className={classes.root}>
+            <div className={classes.content}>
+              <div className={classes.imageWrap}>
+                <ProfileImage
+                  size={PROFILE_IMAGE_SIZE}
+                  userId={currentUserId}
+                />
+              </div>
+              <div>
+                <UserFullName
+                  className={classes.displayName}
+                  userId={currentUserId}
+                />
+                <Typography className={classes.small}>{email}</Typography>
+                <Typography className={classes.small}>{phoneNumber}</Typography>
+                <Link
+                  className={classes.profileLink}
+                  to="/profile"
+                  variant="raised"
+                  color="primary"
+                >
+                  My Profile
+                </Link>
+              </div>
             </div>
-            <div>
-              <UserFullName
-                className={classes.displayName}
-                userId={currentUserId}
-              />
-              <Typography className={classes.small}>{email}</Typography>
-              <Typography className={classes.small}>{phoneNumber}</Typography>
-              <Link
-                className={classes.profileLink}
-                to="/profile"
-                variant="raised"
-                color="primary"
-              >
-                My Profile
-              </Link>
+            <div className={classes.footer}>
+              <ShowSupportButton className={classes.supportButton}>
+                Help / Feedback
+              </ShowSupportButton>
+              <LogoutButton className={classes.logoutButton} dense>
+                Sign out
+              </LogoutButton>
             </div>
           </div>
-          <div className={classes.footer}>
-            <ShowSupportButton className={classes.supportButton}>
-              Help / Feedback
-            </ShowSupportButton>
-            <LogoutButton className={classes.logoutButton} dense>
-              Sign out
-            </LogoutButton>
-          </div>
-        </div>
-      </Popover>,
-    ];
+        </Popover>
+      </React.Fragment>
+    );
   }
 }
 
@@ -159,4 +171,4 @@ export default R.compose(
   hideVisitor,
   connect(mapStateToProps),
   withStyles(styles),
-)(ProfileMenu);
+)(DesktopMenu);

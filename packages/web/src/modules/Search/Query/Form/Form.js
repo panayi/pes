@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
-import { push as _push } from 'react-router-redux';
-import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import SearchIcon from 'material-ui-icons/Search';
@@ -61,10 +60,10 @@ class Form extends Component<Props> {
   }
 
   handleFormSubmit = (...args) => {
-    const { inHome, push, handleSubmit } = this.props;
+    const { inHome, history, handleSubmit } = this.props;
 
     if (!inHome) {
-      push('/');
+      history.push('/');
     }
 
     handleSubmit(...args);
@@ -91,10 +90,4 @@ class Form extends Component<Props> {
   }
 }
 
-const mapDispatchToProps = {
-  push: _push,
-};
-
-export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
-  Form,
-);
+export default R.compose(withRouter, withStyles(styles))(Form);

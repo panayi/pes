@@ -5,18 +5,20 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import MessageIcon from 'material-ui-icons/Message';
+import TuneIcon from 'material-ui-icons/Tune';
+import MenuIcon from 'mdi-react/MenuIcon';
 import { modals } from 'store/modals';
 import hideUser from 'hocs/hideUser';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
 import SearchQuery from 'modules/Search/Query/Query';
 import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
-import ProfileMenu from './ProfileMenu/ProfileMenu';
+import DesktopMenu from './DesktopMenu/DesktopMenu';
 
 const ShowLoginButton = hideUser(modals.login.showButton);
-
+const ToggleMobileMenuIconButton = modals.menu.toggleIconButton;
 const ShowCreateAdButton = modals.createAd.showButton;
-
+const ToggleFiltersIconButton = modals.filters.toggleIconButton;
 const MessagesLink = hideVisitor(Link.icon);
 
 const styles = theme => ({
@@ -24,19 +26,18 @@ const styles = theme => ({
     boxShadow: 'none',
   },
   toolbar: {
+    display: 'flex',
+    flex: '1 1 auto',
     padding: 0,
   },
   logoArea: {
-    flex: [0, 0, theme.layout.sidebarWidth],
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
   logoText: {
     textTransform: 'uppercase',
     color: theme.palette.common.white,
-  },
-  content: {
-    display: 'flex',
-    flex: '1 1 auto',
-    alignItems: 'center',
   },
   searchInput: {
     flex: '1 1 auto',
@@ -52,11 +53,57 @@ const styles = theme => ({
     background: theme.palette.secondary.A400,
     color: theme.palette.getContrastText(theme.palette.secondary.A400),
   },
+  menuButton: {
+    display: 'none',
+    [theme.breakpoints.down('xs')]: {
+      display: 'block',
+    },
+  },
+  createAdButton: {
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+  loginButton: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  messagesButton: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  filtersButton: {
+    display: 'none',
+    [theme.breakpoints.down(theme.layout.breakpoints.filtersDialog)]: {
+      display: 'block',
+    },
+  },
+  desktopMenu: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  mobileMenuButton: {
+    display: 'none',
+    [theme.breakpoints.down('xs')]: {
+      display: 'block',
+    },
+  },
+  menuIcon: {
+    fill: theme.palette.common.white,
+  },
 });
 
 const Header = ({ inHome, classes }) => (
   <AppBar className={classes.header}>
     <Toolbar className={classes.toolbar}>
+      <div className={classes.mobileMenuButton}>
+        <ToggleMobileMenuIconButton>
+          <MenuIcon className={classes.menuIcon} />
+        </ToggleMobileMenuIconButton>
+      </div>
       <div className={classes.logoArea}>
         <Link to="/" exact>
           <Typography className={classes.logoText} variant="title">
@@ -64,12 +111,24 @@ const Header = ({ inHome, classes }) => (
           </Typography>
         </Link>
       </div>
-      <div className={classes.content}>
-        <div className={classes.searchInput}>
-          <SearchQuery inHome={inHome} />
-        </div>
-        <ShowCreateAdButton color="inherit">Sell your stuff</ShowCreateAdButton>
-        <ShowLoginButton color="inherit">Login</ShowLoginButton>
+      <div className={classes.searchInput}>
+        <SearchQuery inHome={inHome} />
+      </div>
+      <ShowCreateAdButton className={classes.createAdButton} color="inherit">
+        Sell your stuff
+      </ShowCreateAdButton>
+      <ShowLoginButton className={classes.loginButton} color="inherit">
+        Login
+      </ShowLoginButton>
+      {inHome && (
+        <ToggleFiltersIconButton
+          className={classes.filtersButton}
+          color="inherit"
+        >
+          <TuneIcon />
+        </ToggleFiltersIconButton>
+      )}
+      <div className={classes.messagesButton}>
         <UnreadConversationsBadge
           color="secondary"
           classes={{ badge: classes.unreadBadge }}
@@ -78,7 +137,9 @@ const Header = ({ inHome, classes }) => (
             <MessageIcon />
           </MessagesLink>
         </UnreadConversationsBadge>
-        <ProfileMenu />
+      </div>
+      <div className={classes.desktopMenu}>
+        <DesktopMenu />
       </div>
     </Toolbar>
   </AppBar>

@@ -27,7 +27,8 @@ type Props = {
 
 const styles = () => ({
   root: {
-    width: 370,
+    maxWidth: 370,
+    margin: '0 auto',
   },
   goBack: {
     position: 'absolute',

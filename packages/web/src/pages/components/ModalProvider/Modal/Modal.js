@@ -9,6 +9,7 @@ import Dialog, {
   DialogActions,
 } from 'material-ui/Dialog';
 import IconButton from 'material-ui/IconButton';
+import Slide from 'material-ui/transitions/Slide';
 import { withStyles } from 'material-ui/styles';
 import { Close } from 'material-ui-icons';
 import { selectors, actions as modalActions } from 'store/modals';
@@ -20,17 +21,48 @@ type Props = {
   onExited: ?Function,
   closeButton: boolean,
   hideModal: Function,
+  dialogClassName: string,
+  fullScreen: string | boolean,
+  direction: string,
   classes: Object,
 };
 
-const padding = theme => `${5 * theme.spacing.unit}px`;
+const padding = (direction, theme) => ({
+  [`padding${direction}`]: `${5 * theme.spacing.unit}px !important`,
+  [theme.breakpoints.down('md')]: {
+    [`padding${direction}`]: `${2 * theme.spacing.unit}px !important`,
+  },
+});
+
+const fullSizeStyles = {
+  width: '100%',
+  maxWidth: '100%',
+  height: '100vh',
+  maxHeight: '100vh',
+  margin: 0,
+};
 
 const styles = theme => ({
+  fullScreen: {
+    top: 56,
+    zIndex: 1099, // 1 less than header's z-index
+  },
+  'fullSize-sm': {
+    [theme.breakpoints.down('sm')]: fullSizeStyles,
+  },
+  'fullSize-md': {
+    [theme.breakpoints.down('md')]: fullSizeStyles,
+  },
+  'fullSize-lg': {
+    [theme.breakpoints.down('lg')]: fullSizeStyles,
+  },
   title: {
-    padding: `${padding(theme)} ${padding(theme)} 0 ${padding(theme)}`,
+    ...padding('top', theme),
+    ...padding('right', theme),
+    ...padding('left', theme),
   },
   content: {
-    padding: padding(theme),
+    ...padding('', theme),
   },
   closeButton: {
     position: 'absolute',
@@ -70,6 +102,8 @@ const renderContent = children => (
 const renderActions = children =>
   children ? <DialogActions>{children}</DialogActions> : null;
 
+const Transition = props => <Slide direction="down" {...props} />;
+
 const Modal = (props: Props) => {
   const {
     content: Content,
@@ -77,12 +111,13 @@ const Modal = (props: Props) => {
     closeButton,
     onExited,
     hideModal,
+    fullScreen,
+    direction,
+    dialogClassName,
     classes,
     ...rest
   } = props;
 
-  // Pick more props as needed.
-  // Dialog props: https://material-ui-next.com/api/dialog/
   const componentProps = {
     ...rest,
     hideModal,
@@ -91,13 +126,24 @@ const Modal = (props: Props) => {
     renderActions,
   };
 
+  const fullScreenProps = R.is(String, fullScreen)
+    ? {
+        classes: { paper: classes[`fullSize-${fullScreen}`] },
+      }
+    : {
+        fullScreen,
+        classes: { root: classes.fullScreen },
+      };
+
   return (
     <Dialog
-      key="1"
       open={isOpen}
       onClose={hideModal}
       onExited={onExited}
       disableEscapeKeyDown
+      transition={direction ? Transition : undefined}
+      className={dialogClassName}
+      {...fullScreenProps}
     >
       {closeButton && (
         <IconButton className={classes.closeButton} onClick={() => hideModal()}>
@@ -107,6 +153,10 @@ const Modal = (props: Props) => {
       <Content {...componentProps} />
     </Dialog>
   );
+};
+
+Modal.defaultProps = {
+  fullScreen: 'sm',
 };
 
 const mapStateToProps = (state, props) => ({
