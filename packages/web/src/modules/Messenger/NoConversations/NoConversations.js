@@ -1,9 +1,11 @@
 import React from 'react';
+import * as R from 'ramda';
+import { connect } from 'react-redux';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import MessageIcon from 'material-ui-icons/Message';
-import { modals } from 'store/modals';
+import { actions as modalActions } from 'store/modals';
 import Link from 'components/Link/Link';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
 
@@ -17,14 +19,16 @@ const styles = theme => ({
   },
 });
 
-const ShowCreateAdButton = modals.createAd.showButton;
-
-const NoConversations = ({ classes }) => (
+const NoConversations = ({ openModal, classes }) => (
   <EmptyHero icon={MessageIcon} tagline="You have no messages">
     <div className={classes.actions}>
-      <ShowCreateAdButton variant="raised" color="primary">
+      <Button
+        variant="raised"
+        color="primary"
+        onClick={() => openModal('createAd')}
+      >
         Sell Your Stuff
-      </ShowCreateAdButton>
+      </Button>
       <Link className={classes.browseLink} to="/" component={Button}>
         <Typography variant="button">Browse</Typography>
       </Link>
@@ -32,4 +36,10 @@ const NoConversations = ({ classes }) => (
   </EmptyHero>
 );
 
-export default withStyles(styles)(NoConversations);
+const mapDispatchToProps = {
+  openModal: modalActions.openModal,
+};
+
+export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
+  NoConversations,
+);

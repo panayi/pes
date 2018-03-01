@@ -1,4 +1,3 @@
-import * as R from 'ramda';
 import { createMuiTheme } from 'material-ui/styles';
 import { green, purple } from 'material-ui/colors';
 import * as layout from '@pesposa/core/src/config/layout';
@@ -31,24 +30,50 @@ const shadows = [
   '0px 11px 15px -7px rgba(0, 0, 0, 0.2),0px 24px 38px 3px rgba(0, 0, 0, 0.14),0px 9px 46px 8px rgba(0, 0, 0, 0.12)',
 ];
 
-export default R.compose(R.assoc('shadows', shadows), createMuiTheme)({
+export default createMuiTheme({
   palette: {
     primary: purple, // Purple and green play nicely together.
     secondary: green,
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", sans-serif',
-    fontSize: 13,
+    fontSize: 16,
+    button: {
+      textTransform: 'none',
+    },
   },
   layout: {
     headerHeight: layout.HEADER_HEIGHT,
     sidebarWidth: layout.SIDEBAR_WIDTH,
+    breakpoints: {
+      filtersDialog: 'md',
+    },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 640,
+      md: 832,
+      lg: 1024,
+      xl: 1824,
+    },
+  },
+  shadows,
   borderRadius: {
     xs: 2,
     sm: 4,
     md: 8,
     lg: 10,
     xl: 12,
+  },
+  overrides: {
+    MuiListItemText: {
+      root: {
+        paddingLeft: 0,
+      },
+      inset: {
+        paddingLeft: '40px !important',
+      },
+    },
   },
 });

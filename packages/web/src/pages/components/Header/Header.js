@@ -1,22 +1,29 @@
 import React from 'react';
 import * as R from 'ramda';
+import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import MessageIcon from 'material-ui-icons/Message';
-import { modals } from 'store/modals';
+import TuneIcon from 'material-ui-icons/Tune';
+import MenuIcon from 'mdi-react/MenuIcon';
+import { actions as modalActions } from 'store/modals';
 import hideUser from 'hocs/hideUser';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
+import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
+import Support from 'modules/Support/Support';
+import Login from 'modules/Login/Login';
+import CreateAd from 'modules/PostAd/CreateAd/CreateAd';
 import SearchQuery from 'modules/Search/Query/Query';
 import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
-import ProfileMenu from './ProfileMenu/ProfileMenu';
+import MobileMenu from 'pages/components/Header/MobileMenu/MobileMenu';
+import DesktopMenu from './DesktopMenu/DesktopMenu';
 
-const ShowLoginButton = hideUser(modals.login.showButton);
-
-const ShowCreateAdButton = modals.createAd.showButton;
-
+const LoginButton = hideUser(Button);
 const MessagesLink = hideVisitor(Link.icon);
 
 const styles = theme => ({
@@ -24,19 +31,18 @@ const styles = theme => ({
     boxShadow: 'none',
   },
   toolbar: {
+    display: 'flex',
+    flex: '1 1 auto',
     padding: 0,
   },
   logoArea: {
-    flex: [0, 0, theme.layout.sidebarWidth],
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
   logoText: {
     textTransform: 'uppercase',
     color: theme.palette.common.white,
-  },
-  content: {
-    display: 'flex',
-    flex: '1 1 auto',
-    alignItems: 'center',
   },
   searchInput: {
     flex: '1 1 auto',
@@ -52,36 +58,118 @@ const styles = theme => ({
     background: theme.palette.secondary.A400,
     color: theme.palette.getContrastText(theme.palette.secondary.A400),
   },
+  menuButton: {
+    display: 'none',
+    [theme.breakpoints.down('xs')]: {
+      display: 'block',
+    },
+  },
+  createAdButton: {
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+  loginButton: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  messagesButton: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  filtersButton: {
+    display: 'none',
+    [theme.breakpoints.down(theme.layout.breakpoints.filtersDialog)]: {
+      display: 'block',
+    },
+  },
+  desktopMenu: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+  },
+  mobileMenuButton: {
+    display: 'none',
+    [theme.breakpoints.down('xs')]: {
+      display: 'block',
+    },
+  },
+  menuIcon: {
+    fill: theme.palette.common.white,
+  },
 });
 
-const Header = ({ inHome, classes }) => (
-  <AppBar className={classes.header}>
-    <Toolbar className={classes.toolbar}>
-      <div className={classes.logoArea}>
-        <Link to="/" exact>
-          <Typography className={classes.logoText} variant="title">
-            Pesposa
-          </Typography>
-        </Link>
-      </div>
-      <div className={classes.content}>
+const Header = ({ inHome, openModal, toggleModal, classes }) => (
+  <React.Fragment>
+    <AppBar className={classes.header}>
+      <Toolbar className={classes.toolbar}>
+        <div className={classes.mobileMenuButton}>
+          <IconButton onClick={() => toggleModal('mobileMenu')}>
+            <MenuIcon className={classes.menuIcon} />
+          </IconButton>
+        </div>
+        <div className={classes.logoArea}>
+          <Link to="/" exact>
+            <Typography className={classes.logoText} variant="title">
+              Pesposa
+            </Typography>
+          </Link>
+        </div>
         <div className={classes.searchInput}>
           <SearchQuery inHome={inHome} />
         </div>
-        <ShowCreateAdButton color="inherit">Sell your stuff</ShowCreateAdButton>
-        <ShowLoginButton color="inherit">Login</ShowLoginButton>
-        <UnreadConversationsBadge
-          color="secondary"
-          classes={{ badge: classes.unreadBadge }}
+        <Button
+          className={classes.createAdButton}
+          color="inherit"
+          onClick={() => openModal('createAd')}
         >
-          <MessagesLink color="inherit" to="/messages" size="small">
-            <MessageIcon />
-          </MessagesLink>
-        </UnreadConversationsBadge>
-        <ProfileMenu />
-      </div>
-    </Toolbar>
-  </AppBar>
+          Sell your stuff
+        </Button>
+        <LoginButton
+          className={classes.loginButton}
+          color="inherit"
+          onClick={() => openModal('login')}
+        >
+          Login
+        </LoginButton>
+        {inHome && (
+          <IconButton
+            className={classes.filtersButton}
+            color="inherit"
+            onClick={() => openModal('searchFilters')}
+          >
+            <TuneIcon />
+          </IconButton>
+        )}
+        <div className={classes.messagesButton}>
+          <UnreadConversationsBadge
+            color="secondary"
+            classes={{ badge: classes.unreadBadge }}
+          >
+            <MessagesLink color="inherit" to="/messages" size="small">
+              <MessageIcon />
+            </MessagesLink>
+          </UnreadConversationsBadge>
+        </div>
+        <div className={classes.desktopMenu}>
+          <DesktopMenu />
+        </div>
+      </Toolbar>
+    </AppBar>
+    <ReduxModal id="login" content={Login} closeButton />
+    <ReduxModal id="createAd" content={CreateAd} />
+    <ReduxModal id="support" content={Support} />
+    <ReduxModal id="mobileMenu" content={MobileMenu} />
+  </React.Fragment>
 );
 
-export default R.compose(withStyles(styles))(Header);
+const mapDispatchToProps = {
+  openModal: modalActions.openModal,
+  toggleModal: modalActions.toggleModal,
+};
+
+export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
+  Header,
+);

@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { firebaseStateReducer } from 'react-redux-firebase';
-import routerReducer, { constants as routerConstants } from './router';
 import linkedProvidersReducer, {
   constants as linkedProvidersConstants,
 } from './linkedProviders';
@@ -15,7 +14,6 @@ import searchReducers from './search';
 
 export const makeRootReducer = asyncReducers =>
   combineReducers({
-    [routerConstants.ROOT_KEY]: routerReducer,
     firebase: firebaseStateReducer,
     [anonymousUserConstants.ANONYMOUS_USER_TOKEN_KEY]: anonymousUserTokenReducer,
     [linkedProvidersConstants.ROOT_KEY]: linkedProvidersReducer,

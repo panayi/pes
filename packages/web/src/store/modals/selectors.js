@@ -1,26 +1,26 @@
 import * as R from 'ramda';
-import { isNotNil } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import * as constants from './constants';
 
-export const modalsSelector = R.path(constants.ROOT_PATH);
+const allOpenSelector = R.path(constants.OPEN_PATH);
+const allModalPropsSelector = R.path(constants.MODAL_PROPS_PATH);
+const allContentPropsSelector = R.path(constants.CONTENT_PROPS_PATH);
 
-const modalSelector = createSelector(
+export const openSelector = createSelector(
   propSelector('id'),
-  modalsSelector,
+  allOpenSelector,
+  R.propOr(false),
+);
+
+export const modalPropsSelector = createSelector(
+  propSelector('id'),
+  allModalPropsSelector,
   R.prop,
 );
 
-export const modalPropsSelector = createSelector(modalSelector, R.omit(['id']));
-
-export const willHideModalSelector = createSelector(
-  modalSelector,
-  R.prop('willHide'),
-);
-
-export const isOpenSelector = createSelector(
-  modalSelector,
-  willHideModalSelector,
-  (modal, willHide) => isNotNil(modal) && !willHide,
+export const contentPropsSelector = createSelector(
+  propSelector('id'),
+  allContentPropsSelector,
+  R.prop,
 );

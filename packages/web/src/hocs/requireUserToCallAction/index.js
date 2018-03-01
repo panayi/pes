@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { mapProps } from 'recompose';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import { modals } from 'store/modals';
+import { actions as modalActions } from 'store/modals';
 
 const mapStateToProps = createStructuredSelector({
   isAuthenticated: authSelectors.isAuthenticatedSelector,
 });
 
 const mapDispatchToProps = {
-  showLoginModal: modals.login.showAction,
+  openModal: modalActions.openModal,
 };
 
 const requireUserToCallAction = actionKey =>
@@ -23,7 +23,7 @@ const requireUserToCallAction = actionKey =>
           return props[actionKey](...args);
         }
 
-        return showLoginModal({
+        return showLoginModal('login', {
           onSuccess: () => {
             props[actionKey](...args);
           },

@@ -1,10 +1,12 @@
 /* @flow */
 import React from 'react';
+import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
 import { withStyles } from 'material-ui/styles';
 
 type Props = {
   children: React$Node,
+  className: ?string,
   classes: Object,
 };
 
@@ -14,7 +16,7 @@ type Props = {
 const styles = theme => {
   const hSpacing = 1.5 * theme.spacing.unit;
   const vSpacing = 1.5 * theme.spacing.unit;
-  const width = theme.layout.sidebarWidth - hSpacing;
+  const width = theme.layout.sidebarWidth;
 
   return {
     sidebar: {
@@ -37,8 +39,8 @@ const styles = theme => {
   };
 };
 
-const Sidebar = ({ children, classes }: Props) => (
-  <div className={classes.sidebar}>
+const Sidebar = ({ children, className, classes }: Props) => (
+  <div className={classNames(classes.sidebar, className)}>
     <Drawer
       variant="permanent"
       classes={{

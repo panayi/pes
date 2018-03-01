@@ -1,28 +1,29 @@
 import * as R from 'ramda';
 import { createAction } from 'redux-actions';
 import * as types from './types';
-import * as constants from './constants';
 import * as selectors from './selectors';
 
-export const showModal = createAction(types.SHOW_MODAL, (id, props) =>
+export const openModal = createAction(types.OPEN_MODAL, (id, props) =>
   R.merge(props, { id }),
 );
 
-const hideModalAction = createAction(types.HIDE_MODAL);
+export const closeModal = createAction(types.CLOSE_MODAL);
 
-const willHideModal = createAction(types.WILL_HIDE_MODAL);
+export const setModalProps = createAction(types.SET_MODAL_PROPS, (id, props) =>
+  R.merge(props, { id }),
+);
 
-export const hideModal = id => (dispatch, getState) => {
-  dispatch(willHideModal(id));
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Make sure it wasn't re-opened in the meantime
-      if (selectors.willHideModalSelector(getState(), { id })) {
-        dispatch(hideModalAction(id));
-        resolve();
-      }
+export const unsetModalProps = createAction(
+  types.UNSET_MODAL_PROPS,
+  (id, props) => R.merge(props, { id }),
+);
 
-      reject();
-    }, constants.HIDE_MODAL_DELAY);
-  });
+export const toggleModal = (id, props) => (dispatch, getState) => {
+  const isOpen = selectors.openSelector(getState(), { id });
+
+  if (isOpen) {
+    return dispatch(closeModal(id));
+  }
+
+  return dispatch(openModal(id, props));
 };

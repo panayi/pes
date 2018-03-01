@@ -8,8 +8,8 @@ import getMetaTags from 'utils/getMetaTags';
 import { selectors as routerSelectors } from 'store/router';
 import Layout from 'layouts/Layout/Layout';
 import Search from 'modules/Search/Search';
+import SearchFilters from 'modules/Search/Filters/Filters';
 import Header from 'pages/components/Header/Header';
-import Sidebar from './Sidebar/Sidebar';
 
 const getTitle = ({ place, category }) => {
   if (place && category) {
@@ -32,6 +32,11 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
   },
+  sidebar: {
+    [theme.breakpoints.down(theme.layout.breakpoints.filtersDialog)]: {
+      display: 'none',
+    },
+  },
 });
 
 const HomeHeader = withProps({ inHome: true })(Header);
@@ -39,8 +44,9 @@ const HomeHeader = withProps({ inHome: true })(Header);
 const SearchPage = ({ place, category, classes }) => (
   <Layout
     header={HomeHeader}
-    sidebar={Sidebar}
+    sidebar={SearchFilters}
     pageClassName={classes.page}
+    sidebarClassName={classes.sidebar}
     flex
   >
     <Helmet {...getMetaTags({ title: getTitle({ place, category }) })} />
