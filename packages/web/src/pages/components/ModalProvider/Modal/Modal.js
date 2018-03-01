@@ -47,13 +47,13 @@ const styles = theme => ({
     top: 56,
     zIndex: 1099, // 1 less than header's z-index
   },
-  'fullSize-sm': {
+  'fullScreen-sm': {
     [theme.breakpoints.down('sm')]: fullSizeStyles,
   },
-  'fullSize-md': {
+  'fullScreen-md': {
     [theme.breakpoints.down('md')]: fullSizeStyles,
   },
-  'fullSize-lg': {
+  'fullScreen-lg': {
     [theme.breakpoints.down('lg')]: fullSizeStyles,
   },
   title: {
@@ -67,7 +67,7 @@ const styles = theme => ({
   closeButton: {
     position: 'absolute',
     top: 0,
-    right: 0,
+    left: 0,
   },
 });
 
@@ -128,7 +128,7 @@ const Modal = (props: Props) => {
 
   const fullScreenProps = R.is(String, fullScreen)
     ? {
-        classes: { paper: classes[`fullSize-${fullScreen}`] },
+        classes: { paper: classes[`fullScreen-${fullScreen}`] },
       }
     : {
         fullScreen,

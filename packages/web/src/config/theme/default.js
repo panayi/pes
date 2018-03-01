@@ -37,7 +37,7 @@ export default createMuiTheme({
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", sans-serif',
-    fontSize: 13,
+    fontSize: 16,
     button: {
       textTransform: 'none',
     },
