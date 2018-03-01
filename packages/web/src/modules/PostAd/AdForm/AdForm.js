@@ -39,19 +39,25 @@ type Props = {
   categories: Array<Category>,
   initialize: boolean,
   classes: Object,
-  renderContent: Function,
-  renderActions: Function,
+  DialogTitle: React$Component<*>,
+  DialogContent: React$Component<*>,
+  DialogActions: React$Component<*>,
   submitted: boolean,
   setSubmitted: Function,
 };
 
 const styles = theme => ({
   root: {
-    width: 530,
+    minWidth: 530,
     minHeight: 440,
   },
   editImages: {
     marginBottom: theme.spacing.unit * 2,
+  },
+  content: {
+    [theme.breakpoints.down('sm')]: {
+      marginTop: 50,
+    },
   },
 });
 
@@ -85,20 +91,22 @@ class AdForm extends Component<Props> {
       filesPath,
       onChange,
       onSubmit,
+      title,
       submitButtonLabel,
       images,
       categories,
       classes,
-      renderContent,
-      renderActions,
+      DialogTitle,
+      DialogContent,
+      DialogActions,
       submitted,
     } = this.props;
 
     if (!adIsLoaded) {
       return (
-        <div className={classes.root}>
-          {renderContent(<Spinner centered />)}
-        </div>
+        <DialogContent className={classes.root}>
+          <Spinner centered />
+        </DialogContent>
       );
     }
 
@@ -118,26 +126,27 @@ class AdForm extends Component<Props> {
             <form
               onSubmit={(...args) => this.handleSubmit(formikProps, ...args)}
             >
-              {renderContent(
-                <div>
-                  <div className={classes.editImages}>
-                    <EditAdImages
-                      images={images}
-                      error={isImagesError}
-                      adImagesDbPath={filesPath}
-                      published={!!adId}
-                    />
-                  </div>
-                  <Form
-                    {...formikProps}
-                    onChange={onChange}
-                    categories={categories}
+              <DialogTitle closeButton mobileTitle={title} />
+              <DialogContent className={classes.content}>
+                <div className={classes.editImages}>
+                  <EditAdImages
+                    images={images}
+                    error={isImagesError}
+                    adImagesDbPath={filesPath}
+                    published={!!adId}
                   />
-                </div>,
-              )}
-              {renderActions(
-                <Button type="submit">{submitButtonLabel}</Button>,
-              )}
+                </div>
+                <Form
+                  {...formikProps}
+                  onChange={onChange}
+                  categories={categories}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button color="primary" type="submit">
+                  {submitButtonLabel}
+                </Button>
+              </DialogActions>
             </form>
           )}
         </Formik>

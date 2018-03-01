@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Popover from 'material-ui/Popover';
-import { modals } from 'store/modals';
+import { withStyles } from 'material-ui/styles';
+import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as profileSelectors } from 'store/firebase/profile';
 import hideVisitor from 'hocs/hideVisitor';
@@ -17,8 +17,6 @@ import UserFullName from 'components/UserFullName/UserFullName';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
 const PROFILE_IMAGE_SIZE = 96;
-
-const ShowSupportButton = modals.support.showButton;
 
 const styles = theme => ({
   root: {
@@ -95,7 +93,13 @@ class DesktopMenu extends Component {
   button = null;
 
   render() {
-    const { currentUserId, email, phoneNumber, classes } = this.props;
+    const {
+      currentUserId,
+      email,
+      phoneNumber,
+      openModal,
+      classes,
+    } = this.props;
     const { open, anchorEl } = this.state;
 
     return (
@@ -147,9 +151,12 @@ class DesktopMenu extends Component {
               </div>
             </div>
             <div className={classes.footer}>
-              <ShowSupportButton className={classes.supportButton}>
+              <Button
+                className={classes.supportButton}
+                onClick={() => openModal('support')}
+              >
                 Help / Feedback
-              </ShowSupportButton>
+              </Button>
               <LogoutButton className={classes.logoutButton} dense>
                 Sign out
               </LogoutButton>
@@ -167,8 +174,12 @@ const mapStateToProps = createStructuredSelector({
   phoneNumber: profileSelectors.profilePhoneNumberSelector,
 });
 
+const mapDispatchToProps = {
+  openModal: modalActions.openModal,
+};
+
 export default R.compose(
   hideVisitor,
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles),
 )(DesktopMenu);

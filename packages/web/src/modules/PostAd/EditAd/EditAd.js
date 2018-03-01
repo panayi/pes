@@ -22,11 +22,12 @@ const mapDispatchToProps = {
 const EditAdContent = R.compose(
   hydrateAd(propSelector(['adId'])),
   connect(mapStateToProps, mapDispatchToProps),
-  withProps(({ adId, saveAd, hideModal }) => ({
+  withProps(({ adId, saveAd, closeModal }) => ({
+    title: 'Change your ad',
     submitButtonLabel: 'Save',
     onSubmit: async ad => {
       await saveAd(adId, ad);
-      hideModal();
+      closeModal();
     },
   })),
 )(AdForm);

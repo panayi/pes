@@ -24,18 +24,19 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit,
     fontWeight: theme.typography.fontWeightMedium,
   },
-  saveButton: {
-    marginTop: theme.spacing.unit * 2,
-    display: 'none',
-    [theme.breakpoints.down(theme.layout.breakpoints.filtersDialog)]: {
-      display: 'block',
-    },
-  },
 });
 
-const Filters = ({ classes, renderContent, hideModal }) =>
-  renderContent(
-    <React.Fragment>
+const Filters = ({ classes, DialogTitle, DialogContent, closeModal }) => (
+  <React.Fragment>
+    <DialogTitle
+      mobileTitle="Filters"
+      secondaryAction={
+        <Button color="inherit" size="small" onClick={() => closeModal()}>
+          Save
+        </Button>
+      }
+    />
+    <DialogContent>
       <Card className={classes.section} elevation={0}>
         <CardContent className={classes.sectionContent}>
           <Typography className={classes.title}>Location</Typography>
@@ -60,21 +61,15 @@ const Filters = ({ classes, renderContent, hideModal }) =>
           <Filter.SortBy />
         </CardContent>
       </Card>
-      <Button
-        className={classes.saveButton}
-        variant="raised"
-        color="primary"
-        fullWidth
-        onClick={() => hideModal()}
-      >
-        Save
-      </Button>
-    </React.Fragment>,
-  );
+    </DialogContent>
+  </React.Fragment>
+);
 
 Filters.defaultProps = {
-  renderContent: R.identity,
-  hideModal: noop,
+  DialogTitle: R.always(null),
+  DialogContent: React.Fragment,
+  DialogActions: R.always(null),
+  closeModal: noop,
 };
 
 export default withStyles(styles)(Filters);

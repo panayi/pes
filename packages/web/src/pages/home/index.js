@@ -9,6 +9,8 @@ import {
   constants as searchConstants,
 } from 'store/search';
 import { models } from 'store/firebase/data';
+import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
+import SearchFilters from 'modules/Search/Filters/Filters';
 import Search from './search';
 
 class Home extends React.Component {
@@ -45,6 +47,11 @@ class Home extends React.Component {
           <Route exact path="/:place" component={Search} />
           <Route exact path="/:place/:category" component={Search} />
         </Switch>
+        <ReduxModal
+          id="searchFilters"
+          content={SearchFilters}
+          direction="down"
+        />
       </React.Fragment>
     );
   }

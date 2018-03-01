@@ -1,24 +1,29 @@
 import React from 'react';
 import * as R from 'ramda';
+import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import MessageIcon from 'material-ui-icons/Message';
 import TuneIcon from 'material-ui-icons/Tune';
 import MenuIcon from 'mdi-react/MenuIcon';
-import { modals } from 'store/modals';
+import { actions as modalActions } from 'store/modals';
 import hideUser from 'hocs/hideUser';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
+import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
+import Support from 'modules/Support/Support';
+import Login from 'modules/Login/Login';
+import CreateAd from 'modules/PostAd/CreateAd/CreateAd';
 import SearchQuery from 'modules/Search/Query/Query';
 import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
+import MobileMenu from 'pages/components/Header/MobileMenu/MobileMenu';
 import DesktopMenu from './DesktopMenu/DesktopMenu';
 
-const ShowLoginButton = hideUser(modals.login.showButton);
-const ToggleMobileMenuIconButton = modals.menu.toggleIconButton;
-const ShowCreateAdButton = modals.createAd.showButton;
-const ToggleFiltersIconButton = modals.filters.toggleIconButton;
+const LoginButton = hideUser(Button);
 const MessagesLink = hideVisitor(Link.icon);
 
 const styles = theme => ({
@@ -96,53 +101,75 @@ const styles = theme => ({
   },
 });
 
-const Header = ({ inHome, classes }) => (
-  <AppBar className={classes.header}>
-    <Toolbar className={classes.toolbar}>
-      <div className={classes.mobileMenuButton}>
-        <ToggleMobileMenuIconButton>
-          <MenuIcon className={classes.menuIcon} />
-        </ToggleMobileMenuIconButton>
-      </div>
-      <div className={classes.logoArea}>
-        <Link to="/" exact>
-          <Typography className={classes.logoText} variant="title">
-            Pesposa
-          </Typography>
-        </Link>
-      </div>
-      <div className={classes.searchInput}>
-        <SearchQuery inHome={inHome} />
-      </div>
-      <ShowCreateAdButton className={classes.createAdButton} color="inherit">
-        Sell your stuff
-      </ShowCreateAdButton>
-      <ShowLoginButton className={classes.loginButton} color="inherit">
-        Login
-      </ShowLoginButton>
-      {inHome && (
-        <ToggleFiltersIconButton
-          className={classes.filtersButton}
+const Header = ({ inHome, openModal, toggleModal, classes }) => (
+  <React.Fragment>
+    <AppBar className={classes.header}>
+      <Toolbar className={classes.toolbar}>
+        <div className={classes.mobileMenuButton}>
+          <IconButton onClick={() => toggleModal('mobileMenu')}>
+            <MenuIcon className={classes.menuIcon} />
+          </IconButton>
+        </div>
+        <div className={classes.logoArea}>
+          <Link to="/" exact>
+            <Typography className={classes.logoText} variant="title">
+              Pesposa
+            </Typography>
+          </Link>
+        </div>
+        <div className={classes.searchInput}>
+          <SearchQuery inHome={inHome} />
+        </div>
+        <Button
+          className={classes.createAdButton}
           color="inherit"
+          onClick={() => openModal('createAd')}
         >
-          <TuneIcon />
-        </ToggleFiltersIconButton>
-      )}
-      <div className={classes.messagesButton}>
-        <UnreadConversationsBadge
-          color="secondary"
-          classes={{ badge: classes.unreadBadge }}
+          Sell your stuff
+        </Button>
+        <LoginButton
+          className={classes.loginButton}
+          color="inherit"
+          onClick={() => openModal('login')}
         >
-          <MessagesLink color="inherit" to="/messages" size="small">
-            <MessageIcon />
-          </MessagesLink>
-        </UnreadConversationsBadge>
-      </div>
-      <div className={classes.desktopMenu}>
-        <DesktopMenu />
-      </div>
-    </Toolbar>
-  </AppBar>
+          Login
+        </LoginButton>
+        {inHome && (
+          <IconButton
+            className={classes.filtersButton}
+            color="inherit"
+            onClick={() => openModal('searchFilters')}
+          >
+            <TuneIcon />
+          </IconButton>
+        )}
+        <div className={classes.messagesButton}>
+          <UnreadConversationsBadge
+            color="secondary"
+            classes={{ badge: classes.unreadBadge }}
+          >
+            <MessagesLink color="inherit" to="/messages" size="small">
+              <MessageIcon />
+            </MessagesLink>
+          </UnreadConversationsBadge>
+        </div>
+        <div className={classes.desktopMenu}>
+          <DesktopMenu />
+        </div>
+      </Toolbar>
+    </AppBar>
+    <ReduxModal id="login" content={Login} closeButton />
+    <ReduxModal id="createAd" content={CreateAd} />
+    <ReduxModal id="support" content={Support} />
+    <ReduxModal id="mobileMenu" content={MobileMenu} />
+  </React.Fragment>
 );
 
-export default R.compose(withStyles(styles))(Header);
+const mapDispatchToProps = {
+  openModal: modalActions.openModal,
+  toggleModal: modalActions.toggleModal,
+};
+
+export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
+  Header,
+);

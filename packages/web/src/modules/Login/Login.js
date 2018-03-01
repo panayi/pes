@@ -17,8 +17,8 @@ import LoginButtons from './Buttons/Buttons';
 type Props = {
   onSuccess: Function,
   phoneOnly: ?boolean,
-  renderTitle: Function,
-  renderContent: Function,
+  DialogTitle: React$Component<*>,
+  DialogContent: React$Component<*>,
   loginWithPhoneStep: string,
   setLoginWithPhoneStep: Function,
   spinner: React$Element<*>,
@@ -30,18 +30,13 @@ const styles = () => ({
     maxWidth: 370,
     margin: '0 auto',
   },
-  goBack: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
 });
 
 const Login = ({
   onSuccess,
   phoneOnly,
-  renderTitle,
-  renderContent,
+  DialogTitle,
+  DialogContent,
   spinner,
   loginWithPhoneStep,
   setLoginWithPhoneStep,
@@ -51,16 +46,21 @@ const Login = ({
 
   return (
     <React.Fragment>
-      {showingSmsCodeValidation &&
-        renderTitle(
-          <IconButton
-            className={classes.goBack}
-            onClick={() => setLoginWithPhoneStep('phoneNumber')}
-          >
-            <ArrowBack />
-          </IconButton>,
-        )}
-      {renderContent(
+      <DialogTitle
+        closeButton
+        action={
+          showingSmsCodeValidation && (
+            <IconButton
+              onClick={() => setLoginWithPhoneStep('phoneNumber')}
+              color="inherit"
+            >
+              <ArrowBack />
+            </IconButton>
+          )
+        }
+        mobileTitle="Log in to continue"
+      />
+      <DialogContent>
         <div className={classes.root}>
           {spinner}
           <Grid container alignContent="center">
@@ -74,8 +74,8 @@ const Login = ({
               />
             </Grid>
           </Grid>
-        </div>,
-      )}
+        </div>
+      </DialogContent>
     </React.Fragment>
   );
 };
@@ -93,9 +93,9 @@ const ConnectedLogin = R.compose(
     overlay: true,
   }),
   withState('loginWithPhoneStep', 'setLoginWithPhoneStep', 'phoneNumber'),
-  withProps(({ onSuccess = noop, hideModal }) => ({
+  withProps(({ onSuccess = noop, closeModal }) => ({
     onSuccess: () => {
-      hideModal();
+      closeModal();
       onSuccess();
     },
   })),

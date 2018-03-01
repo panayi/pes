@@ -19,13 +19,13 @@ const styles = theme => ({
 
 const CreateAdSuccess = ({
   onPostAnotherClick,
-  renderContent,
-  renderActions,
+  DialogContent,
+  DialogActions,
   classes,
-  hideModal,
+  closeModal,
 }) => (
-  <div>
-    {renderContent(
+  <React.Fragment>
+    <DialogContent>
       <div className={classes.root}>
         <div className={classes.success}>
           <EmptyHero icon={DoneIcon} tagline="Your ad has been posted!" small />
@@ -33,10 +33,12 @@ const CreateAdSuccess = ({
         <Button onClick={onPostAnotherClick} variant="raised" color="primary">
           Post another ad
         </Button>
-      </div>,
-    )}
-    {renderActions(<Button onClick={() => hideModal()}>Close</Button>)}
-  </div>
+      </div>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={() => closeModal()}>Close</Button>
+    </DialogActions>
+  </React.Fragment>
 );
 
 export default withStyles(styles)(CreateAdSuccess);

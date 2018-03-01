@@ -1,4 +1,4 @@
-export const SHOW_MODAL = 'modal/SHOW_MODAL';
-export const HIDE_MODAL = 'modal/HIDE_MODAL';
-export const WILL_HIDE_MODAL = 'modal/WILL_HIDE_MODAL';
-export const REGISTER_MODAL = 'modal/REGISTER_MODAL';
+export const OPEN_MODAL = 'modals/OPEN_MODAL';
+export const CLOSE_MODAL = 'modals/HIDE_MODAL';
+export const SET_MODAL_PROPS = 'modals/SET_MODAL_PROPS';
+export const UNSET_MODAL_PROPS = 'modals/UNSET_MODAL_PROPS';

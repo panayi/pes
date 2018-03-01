@@ -4,20 +4,19 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
+import Button from 'material-ui/Button';
+import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import HomeIcon from 'material-ui-icons/Home';
-import { modals } from 'store/modals';
+import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
 const PROFILE_IMAGE_SIZE = 96;
-
-const ShowLoginButton = modals.login.showButton;
-const ShowSupportButton = modals.support.showButton;
 
 const styles = theme => ({
   root: {
@@ -68,9 +67,16 @@ class Menu extends Component {
   };
 
   goHome = () => {
-    const { history, hideModal } = this.props;
+    const { history, closeModal } = this.props;
     history.push('/');
-    hideModal();
+    closeModal();
+  };
+
+  handleLoginClick = () => {
+    this.props.openModal('login');
+    setTimeout(() => {
+      this.props.closeModal();
+    }, 500);
   };
 
   renderProfileImage() {
@@ -97,9 +103,9 @@ class Menu extends Component {
     const { isAuthenticated } = this.props;
 
     return !isAuthenticated ? (
-      <ShowLoginButton component={ListItem} button>
+      <Button component={ListItem} button onClick={this.handleLoginClick}>
         <ListItemText primary="Login or Create Account" />
-      </ShowLoginButton>
+      </Button>
     ) : null;
   }
 
@@ -129,35 +135,48 @@ class Menu extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { openModal, DialogContent, DialogTitle, classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        <List component="nav">
-          <ListItem button onClick={this.goHome}>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
-        </List>
-        <Divider />
-        <List component="nav">
-          {this.renderLogin()}
-          {this.renderProfileImage()}
-          {this.renderUserLinks()}
-        </List>
-        <Divider />
-        <List component="nav">
-          <ListItem button>
-            <ListItemText primary="Sell your stuff" />
-          </ListItem>
-          <ShowSupportButton component={ListItem} button>
-            <ListItemText primary="Support / Feedback" />
-          </ShowSupportButton>
-          {this.renderLogout()}
-        </List>
-      </div>
+      <React.Fragment>
+        <DialogTitle>
+          <Typography variant="title" color="inherit">
+            Pesposa
+          </Typography>
+        </DialogTitle>
+        <DialogContent>
+          <div className={classes.root}>
+            <List component="nav">
+              <ListItem button onClick={this.goHome}>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Home" />
+              </ListItem>
+            </List>
+            <Divider />
+            <List component="nav">
+              {this.renderLogin()}
+              {this.renderProfileImage()}
+              {this.renderUserLinks()}
+            </List>
+            <Divider />
+            <List component="nav">
+              <ListItem button>
+                <ListItemText primary="Sell your stuff" />
+              </ListItem>
+              <Button
+                component={ListItem}
+                button
+                onClick={() => openModal('support')}
+              >
+                <ListItemText primary="Support / Feedback" />
+              </Button>
+              {this.renderLogout()}
+            </List>
+          </div>
+        </DialogContent>
+      </React.Fragment>
     );
   }
 }
@@ -167,8 +186,12 @@ const mapStateToProps = createStructuredSelector({
   isAuthenticated: authSelectors.isAuthenticatedSelector,
 });
 
+const mapDispatchToProps = {
+  openModal: modalActions.openModal,
+};
+
 export default R.compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles),
   withRouter,
 )(Menu);

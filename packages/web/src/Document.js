@@ -9,7 +9,6 @@ import { ssrBehavior } from 'react-md-spinner';
 import theme from 'config/theme';
 import jss from 'config/styles';
 import { constants as searchConstants } from 'store/search';
-import ModalProvider from 'pages/components/ModalProvider/ModalProvider';
 import SearchProvider from 'components/SearchProvider/SearchProvider';
 
 class Document extends React.Component {
@@ -29,7 +28,6 @@ class Document extends React.Component {
             <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
               <Reboot />
               <Component {...props} />
-              <ModalProvider />
             </MuiThemeProvider>
           </JssProvider>
         </SearchProvider>

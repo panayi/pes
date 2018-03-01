@@ -1,20 +1,18 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
+import { JssProvider, SheetsRegistry } from 'react-jss';
 import { BrowserRouter } from 'react-router-dom';
 import { ensureReady, After } from '@jaredpalmer/after';
 import createHistory from 'history/createBrowserHistory';
 import { Provider } from 'react-redux';
 import Reboot from 'material-ui/Reboot';
 import { MuiThemeProvider } from 'material-ui/styles';
+import jss from 'config/styles';
 import theme from 'config/theme';
 import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
-import ModalProvider from 'pages/components/ModalProvider/ModalProvider';
 import SearchProvider from 'components/SearchProvider/SearchProvider';
 import routes from 'routes';
-
-import { JssProvider, SheetsRegistry } from 'react-jss';
-import jss from 'config/styles';
 
 const history = createHistory();
 
@@ -34,7 +32,6 @@ ensureReady(routes).then(data => {
             <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
               <Reboot />
               <After data={data} routes={routes} />
-              <ModalProvider />
             </MuiThemeProvider>
           </JssProvider>
         </SearchProvider>

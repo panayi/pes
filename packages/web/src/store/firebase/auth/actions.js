@@ -6,7 +6,7 @@ import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
 import firebaseApi from 'services/firebase';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
-import { modals } from 'store/modals';
+import { actions as modalActions } from 'store/modals';
 import { actions as loginActions } from 'store/login';
 import { actions as locationActions } from 'store/firebase/profile/location';
 import {
@@ -137,7 +137,9 @@ export const linkProvider = providerId => async (
   getFirebase,
 ) => {
   if (providerId === firebaseConfig.PROVIDER_IDS.phone) {
-    dispatch(modals.login.showAction({ phoneOnly: true }));
+    dispatch(
+      modalActions.openModal('login', { contentProps: { phoneOnly: true } }),
+    );
     return;
   }
 

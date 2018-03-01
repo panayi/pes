@@ -44,11 +44,11 @@ class Support extends Component {
   };
 
   renderSuccess() {
-    const { hideModal, renderContent, renderActions, classes } = this.props;
+    const { closeModal, DialogContent, DialogActions, classes } = this.props;
 
     return (
       <React.Fragment>
-        {renderContent(
+        <DialogContent>
           <div className={classes.root}>
             <EmptyHero
               icon={DoneIcon}
@@ -63,14 +63,16 @@ class Support extends Component {
               small
             />
           </div>,
-        )}
-        {renderActions(<Button onClick={() => hideModal()}>Close</Button>)}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => closeModal()}>Close</Button>
+        </DialogActions>
       </React.Fragment>
     );
   }
 
   render() {
-    const { email, renderTitle, renderContent, status, classes } = this.props;
+    const { email, DialogTitle, DialogContent, status, classes } = this.props;
     const initialValues = {
       email,
       subject: '',
@@ -84,8 +86,8 @@ class Support extends Component {
     return (
       <div className={classes.root}>
         {status === 'pending' && <Spinner overlay centered />}
-        {renderTitle(<span>Contact Us</span>)}
-        {renderContent(
+        <DialogTitle>Contact Us</DialogTitle>
+        <DialogContent>
           <Formik
             initialValues={initialValues}
             onSubmit={this.handleSubmit}
@@ -109,7 +111,7 @@ class Support extends Component {
               </form>
             )}
           </Formik>,
-        )}
+        </DialogContent>
       </div>
     );
   }
