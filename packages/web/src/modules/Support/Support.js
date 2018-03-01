@@ -15,12 +15,10 @@ import Spinner from 'components/Spinner/Spinner';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
 import Form from './Form/Form';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
-    width: 450,
-  },
-  button: {
-    marginTop: theme.spacing.unit * 3,
+    minWidth: 450,
+    all: 'inherit',
   },
 });
 
@@ -72,7 +70,14 @@ class Support extends Component {
   }
 
   render() {
-    const { email, DialogTitle, DialogContent, status, classes } = this.props;
+    const {
+      email,
+      DialogTitle,
+      DialogContent,
+      DialogActions,
+      status,
+      classes,
+    } = this.props;
     const initialValues = {
       email,
       subject: '',
@@ -84,35 +89,33 @@ class Support extends Component {
     }
 
     return (
-      <div className={classes.root}>
-        {status === 'pending' && <Spinner overlay centered />}
-        <DialogTitle>Contact Us</DialogTitle>
-        <DialogContent>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={this.handleSubmit}
-            validationSchema={this.getValidationSchema}
-            validateOnChange={false}
-            validateOnBlur={false}
-            enableReinitialize
-          >
-            {formikProps => (
-              <form onSubmit={formikProps.handleSubmit}>
-                <Form {...formikProps} />
-                <Button
-                  className={classes.button}
-                  type="submit"
-                  fullWidth
-                  variant="raised"
-                  color="primary"
-                >
-                  Send
-                </Button>
-              </form>
-            )}
-          </Formik>,
-        </DialogContent>
-      </div>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={this.handleSubmit}
+        validationSchema={this.getValidationSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
+        enableReinitialize
+      >
+        {formikProps => (
+          <form className={classes.root} onSubmit={formikProps.handleSubmit}>
+            {status === 'pending' && <Spinner overlay centered />}
+            <DialogTitle>
+              <Typography variant="title" color="inherit">
+                Contact Us
+              </Typography>
+            </DialogTitle>
+            <DialogContent className={classes.content}>
+              <Form {...formikProps} />
+            </DialogContent>
+            <DialogActions>
+              <Button type="submit" color="primary">
+                Send
+              </Button>
+            </DialogActions>
+          </form>
+        )}
+      </Formik>
     );
   }
 }

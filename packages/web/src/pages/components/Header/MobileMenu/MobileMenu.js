@@ -66,17 +66,21 @@ class Menu extends Component {
     classes: PropTypes.shape().isRequired,
   };
 
-  goHome = () => {
+  navigateTo = path => {
     const { history, closeModal } = this.props;
-    history.push('/');
+    history.push(path);
     closeModal();
   };
 
-  handleLoginClick = () => {
-    this.props.openModal('login');
+  closeWithDelay = () => {
     setTimeout(() => {
       this.props.closeModal();
     }, 500);
+  };
+
+  openAnotherModal = modalId => {
+    this.props.openModal(modalId);
+    this.closeWithDelay();
   };
 
   renderProfileImage() {
@@ -103,7 +107,11 @@ class Menu extends Component {
     const { isAuthenticated } = this.props;
 
     return !isAuthenticated ? (
-      <Button component={ListItem} button onClick={this.handleLoginClick}>
+      <Button
+        component={ListItem}
+        button
+        onClick={() => this.openAnotherModal('login')}
+      >
         <ListItemText primary="Login or Create Account" />
       </Button>
     ) : null;
@@ -114,10 +122,10 @@ class Menu extends Component {
 
     return isAuthenticated ? (
       <React.Fragment>
-        <ListItem button>
+        <ListItem button onClick={() => this.navigateTo('/messages')}>
           <ListItemText inset primary="Chat" />
         </ListItem>
-        <ListItem button>
+        <ListItem button onClick={() => this.navigateTo('/profile')}>
           <ListItemText inset primary="My Profile" />
         </ListItem>
       </React.Fragment>
@@ -135,7 +143,7 @@ class Menu extends Component {
   }
 
   render() {
-    const { openModal, DialogContent, DialogTitle, classes } = this.props;
+    const { DialogContent, DialogTitle, classes } = this.props;
 
     return (
       <React.Fragment>
@@ -147,7 +155,7 @@ class Menu extends Component {
         <DialogContent>
           <div className={classes.root}>
             <List component="nav">
-              <ListItem button onClick={this.goHome}>
+              <ListItem button onClick={() => this.navigateTo('/')}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
@@ -162,13 +170,16 @@ class Menu extends Component {
             </List>
             <Divider />
             <List component="nav">
-              <ListItem button>
+              <ListItem
+                button
+                onClick={() => this.openAnotherModal('createAd')}
+              >
                 <ListItemText primary="Sell your stuff" />
               </ListItem>
               <Button
                 component={ListItem}
                 button
-                onClick={() => openModal('support')}
+                onClick={() => this.openAnotherModal('support')}
               >
                 <ListItemText primary="Support / Feedback" />
               </Button>

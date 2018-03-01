@@ -15,6 +15,9 @@ const styles = theme => ({
   desktopContent: {
     ...paddingStyles('', theme),
   },
+  mobileContent: {
+    marginTop: theme.spacing.unit * 2,
+  },
   ...responsiveStyles(theme),
 });
 
@@ -29,7 +32,9 @@ const Content = ({ mobile, children, className, classes }) => {
       >
         {children}
       </DialogContent>
-      <DialogContent className={classNames(hideDesktop, className)}>
+      <DialogContent
+        className={classNames(classes.mobileContent, hideDesktop, className)}
+      >
         {children}
       </DialogContent>
     </React.Fragment>

@@ -97,11 +97,13 @@ class Title extends React.Component {
               <div className={classes.mobileAction}>
                 {action || <CloseButton onClose={onClose} />}
               </div>
-              <div className={classes.mobileTitle}>
-                <Typography variant="title" color="inherit">
-                  {mobileTitle}
-                </Typography>
-              </div>
+              {children || (
+                <div className={classes.mobileTitle}>
+                  <Typography variant="title" color="inherit">
+                    {mobileTitle}
+                  </Typography>
+                </div>
+              )}
               <div className={classes.mobileAction}>{secondaryAction}</div>
             </Toolbar>
           </AppBar>

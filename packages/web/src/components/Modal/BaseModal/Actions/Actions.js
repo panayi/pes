@@ -6,9 +6,7 @@ import { withStyles } from 'material-ui/styles';
 const styles = theme => ({
   root: {
     marginRight: 2 * theme.spacing.unit,
-    [theme.breakpoints.down('md')]: {
-      marginRight: theme.spacing.unit / 2,
-    },
+    marginLeft: 2 * theme.spacing.unit,
   },
 });
 
