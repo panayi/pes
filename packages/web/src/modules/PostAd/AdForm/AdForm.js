@@ -54,11 +54,6 @@ const styles = theme => ({
   editImages: {
     marginBottom: theme.spacing.unit * 2,
   },
-  content: {
-    [theme.breakpoints.down('sm')]: {
-      marginTop: 50,
-    },
-  },
 });
 
 class AdForm extends Component<Props> {
@@ -127,7 +122,7 @@ class AdForm extends Component<Props> {
               onSubmit={(...args) => this.handleSubmit(formikProps, ...args)}
             >
               <DialogTitle closeButton mobileTitle={title} />
-              <DialogContent className={classes.content}>
+              <DialogContent>
                 <div className={classes.editImages}>
                   <EditAdImages
                     images={images}

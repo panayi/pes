@@ -19,6 +19,8 @@ const styles = () => ({
   root: {
     minWidth: 450,
     all: 'inherit',
+    boxShadow: 'none',
+    margin: 0,
   },
 });
 
