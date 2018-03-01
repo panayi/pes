@@ -48,6 +48,11 @@ type Props = {
 
 const styles = theme => ({
   root: {
+    all: 'inherit',
+    boxShadow: 'none',
+    margin: 0,
+  },
+  content: {
     minWidth: 530,
     minHeight: 440,
   },
@@ -109,43 +114,42 @@ class AdForm extends Component<Props> {
       submitted && R.isEmpty(images) && 'At least 1 image is required';
 
     return (
-      <div className={classes.root}>
-        <Formik
-          initialValues={getInitialValues(this.props)}
-          onSubmit={onSubmit}
-          validationSchema={this.getValidationSchema}
-          validateOnChange={false}
-          validateOnBlur={false}
-        >
-          {formikProps => (
-            <form
-              onSubmit={(...args) => this.handleSubmit(formikProps, ...args)}
-            >
-              <DialogTitle closeButton mobileTitle={title} />
-              <DialogContent>
-                <div className={classes.editImages}>
-                  <EditAdImages
-                    images={images}
-                    error={isImagesError}
-                    adImagesDbPath={filesPath}
-                    published={!!adId}
-                  />
-                </div>
-                <Form
-                  {...formikProps}
-                  onChange={onChange}
-                  categories={categories}
+      <Formik
+        initialValues={getInitialValues(this.props)}
+        onSubmit={onSubmit}
+        validationSchema={this.getValidationSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
+      >
+        {formikProps => (
+          <form
+            className={classes.root}
+            onSubmit={(...args) => this.handleSubmit(formikProps, ...args)}
+          >
+            <DialogTitle closeButton mobileTitle={title} />
+            <DialogContent className={classes.content}>
+              <div className={classes.editImages}>
+                <EditAdImages
+                  images={images}
+                  error={isImagesError}
+                  adImagesDbPath={filesPath}
+                  published={!!adId}
                 />
-              </DialogContent>
-              <DialogActions>
-                <Button color="primary" type="submit">
-                  {submitButtonLabel}
-                </Button>
-              </DialogActions>
-            </form>
-          )}
-        </Formik>
-      </div>
+              </div>
+              <Form
+                {...formikProps}
+                onChange={onChange}
+                categories={categories}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button color="primary" type="submit">
+                {submitButtonLabel}
+              </Button>
+            </DialogActions>
+          </form>
+        )}
+      </Formik>
     );
   }
 }
