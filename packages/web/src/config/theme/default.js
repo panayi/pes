@@ -42,21 +42,21 @@ export default createMuiTheme({
       textTransform: 'none',
     },
   },
-  layout: {
-    headerHeight: layout.HEADER_HEIGHT,
-    sidebarWidth: layout.SIDEBAR_WIDTH,
-    breakpoints: {
-      filtersDialog: 'md',
-    },
-  },
   breakpoints: {
     values: {
-      xs: 0,
-      sm: 640,
-      md: 832,
-      lg: 1024,
-      xl: 1824,
+      xs: 0, // phone
+      sm: 768, // tablet
+      md: 992, // laptop
+      lg: 1200, // desktop
+      xl: 1824, // largeDesktop
     },
+  },
+  map: {
+    phone: 'xs',
+    tablet: 'sm',
+    laptop: 'md',
+    desktop: 'lg',
+    largeDesktop: 'xl',
   },
   shadows,
   borderRadius: {
@@ -65,6 +65,13 @@ export default createMuiTheme({
     md: 8,
     lg: 10,
     xl: 12,
+  },
+  layout: {
+    headerHeight: layout.HEADER_HEIGHT,
+    sidebarWidth: layout.SIDEBAR_WIDTH,
+    breakpoints: {
+      filtersDialog: 'md',
+    },
   },
   overrides: {
     MuiListItemText: {

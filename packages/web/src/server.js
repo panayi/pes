@@ -5,6 +5,7 @@ import createFileStore from 'session-file-store';
 import bodyParser from 'body-parser';
 import firebase from 'firebase-admin';
 import createMemoryHistory from 'history/createMemoryHistory';
+import { mobileParser, setMobileDetect } from 'react-responsive-redux';
 import { render } from '@jaredpalmer/after';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import serviceAccountKey from '@pesposa/core/src/config/serviceAccountKey.json';
@@ -66,6 +67,10 @@ server
           .createCustomToken(req.session.decodedToken.user_id)
           .then(token => store.firebase.auth().signInWithCustomToken(token));
       }
+
+      // Detect mobile
+      const mobileDetect = mobileParser(req);
+      store.dispatch(setMobileDetect(mobileDetect));
 
       const docGetInitialProps = Document.getInitialProps;
       Document.getInitialProps = ctx => docGetInitialProps({ ...ctx, store });
