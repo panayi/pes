@@ -36,7 +36,7 @@ const styles = theme => ({
     padding: 0,
   },
   logoArea: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
   },
@@ -60,22 +60,22 @@ const styles = theme => ({
   },
   menuButton: {
     display: 'none',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(theme.map.phone)]: {
       display: 'block',
     },
   },
   createAdButton: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down(theme.map.laptop)]: {
       display: 'none',
     },
   },
   loginButton: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
   },
   messagesButton: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
   },
@@ -86,13 +86,13 @@ const styles = theme => ({
     },
   },
   desktopMenu: {
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
   },
   mobileMenuButton: {
     display: 'none',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down(theme.map.phone)]: {
       display: 'block',
     },
   },

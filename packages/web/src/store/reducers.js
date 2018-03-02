@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { firebaseStateReducer } from 'react-redux-firebase';
+import { reducer as responsiveReducer } from 'react-responsive-redux';
 import linkedProvidersReducer, {
   constants as linkedProvidersConstants,
 } from './linkedProviders';
@@ -15,6 +16,7 @@ import searchReducers from './search';
 export const makeRootReducer = asyncReducers =>
   combineReducers({
     firebase: firebaseStateReducer,
+    responsive: responsiveReducer,
     [anonymousUserConstants.ANONYMOUS_USER_TOKEN_KEY]: anonymousUserTokenReducer,
     [linkedProvidersConstants.ROOT_KEY]: linkedProvidersReducer,
     [chatConstants.ROOT_KEY]: chatReducer,

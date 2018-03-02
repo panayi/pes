@@ -11,12 +11,12 @@ import Filter from '../Filter';
 const styles = theme => ({
   section: {
     marginBottom: theme.spacing.unit,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       marginBottom: 0,
     },
   },
   sectionContent: {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down(theme.map.laptop)]: {
       paddingBottom: `${theme.spacing.unit}px !important`,
     },
   },
