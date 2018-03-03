@@ -15,9 +15,6 @@ type Props = {
 
 const styles = theme => ({
   page: {
-    ...theme.mixins.gutters({}),
-    paddingTop: theme.spacing.unit * 1.5,
-    paddingBottom: theme.spacing.unit * 1.5,
     flex: '1 1 100%',
     minHeight: '100%',
     backgroundColor: 'transparent',
@@ -65,6 +62,7 @@ const Page = ({
     <Paper
       className={classNames(classes.page, className)}
       elevation={0}
+      square
       {...otherProps}
     >
       {childrenWithFixed}

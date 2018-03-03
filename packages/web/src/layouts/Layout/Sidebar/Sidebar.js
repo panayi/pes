@@ -27,8 +27,6 @@ const styles = theme => {
       backgroundColor: 'transparent',
     },
     drawerAnchor: {
-      top: theme.layout.headerHeight,
-      padding: [vSpacing, 0, vSpacing, hSpacing],
       border: 0,
       // Fixes sluggish scroll,
       // see: https://stackoverflow.com/a/15147497/359104
@@ -36,6 +34,15 @@ const styles = theme => {
       WebkitBackfaceVisibility: 'hidden',
       WebkitPerspective: 1000,
     },
+    content: {
+      padding: [vSpacing, 0, vSpacing, hSpacing],
+      [theme.breakpoints.up(theme.map.phone)]: {
+        marginTop: theme.layout.headerHeight.phone,
+      },
+      [theme.breakpoints.up(theme.map.tablet)]: {
+        marginTop: theme.layout.headerHeight.tablet,
+      },
+    }
   };
 };
 
@@ -49,7 +56,9 @@ const Sidebar = ({ children, className, classes }: Props) => (
       }}
       elevation={0}
     >
-      {children}
+      <div className={classes.content}>
+        {children}
+      </div>
     </Drawer>
   </div>
 );

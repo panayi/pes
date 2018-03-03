@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import { withProps, setStatic } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
+import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import getMetaTags from 'utils/getMetaTags';
 import { models } from 'store/firebase/data';
@@ -11,6 +12,7 @@ import { selectors as routerSelectors } from 'store/router';
 import hydrateAd from 'hocs/hydrateAd';
 import Layout from 'layouts/Layout/Layout';
 import ViewAd from 'modules/ViewAd/ViewAd';
+import MobileViewAd from 'modules/ViewAd/MobileViewAd/MobileViewAd';
 import Header from 'pages/components/Header/Header';
 
 type Props = {
@@ -19,15 +21,30 @@ type Props = {
   legacy: ?boolean,
 };
 
-const AdPage = ({ ad, adId, legacy }: Props) => (
-  <Layout header={Header} fixed>
+const Content = ({ ad, adId, legacy }: Props) => (
+  <React.Fragment>
     <Helmet
       {...getMetaTags({
         title: `${ad.title} in ${R.path(['location', 'address', 'city'], ad)}`,
       })}
     />
     <ViewAd ad={ad} adId={adId} legacy={legacy} />
-  </Layout>
+  </React.Fragment>
+)
+
+const AdPage = (props: Props) => (
+  <React.Fragment>
+    <DesktopScreen>
+      <Layout header={Header} fixed>
+        <Content {...props} />
+      </Layout>
+    </DesktopScreen>
+    <MobileScreen>
+      <Layout>
+        <MobileViewAd adId={props.adId} legacy={props.legacy} />
+      </Layout>
+    </MobileScreen>
+  </React.Fragment>
 );
 
 export default R.compose(

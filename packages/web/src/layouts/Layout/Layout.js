@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { isNotNil } from 'ramda-adjunct';
 import { withProps } from 'recompose';
 import { withStyles } from 'material-ui/styles';
+import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import Page from './Page/Page';
 
@@ -18,17 +19,21 @@ const styles = theme => ({
     backgroundColor: theme.palette.grey[200],
   },
   hasHeader: {
-    marginTop: theme.layout.headerHeight,
-    // TODO: Use constant for header height
-    minHeight: `calc(100vh - ${theme.layout.headerHeight}px)`,
+    [theme.breakpoints.up(theme.map.phone)]: {
+      marginTop: theme.layout.headerHeight.phone,
+    },
+    [theme.breakpoints.up(theme.map.tablet)]: {
+      marginTop: theme.layout.headerHeight.tablet,
+    },
   },
 });
 
 const Layout = ({
-  header: Header,
+  header: HeaderContent,
   sidebar: SidebarContent,
   children,
   pageClassName,
+  headerClassName,
   sidebarClassName,
   fixed,
   flex,
@@ -37,14 +42,19 @@ const Layout = ({
   hasSidebar,
   classes,
 }) => (
-  <div className={classNames(classes.root, { [classes.hasHeader]: hasHeader })}>
-    {hasHeader && <Header />}
+  <div className={classes.root}>
+    {
+      hasHeader && (
+        <Header className={headerClassName}>
+          <HeaderContent />
+        </Header>
+    )}
     {hasSidebar && (
       <Sidebar className={sidebarClassName}>
         <SidebarContent />
       </Sidebar>
     )}
-    <Page className={pageClassName} fixed={fixed} flex={flex} wide={wide}>
+    <Page className={classNames(pageClassName, { [classes.hasHeader]: hasHeader })} fixed={fixed} flex={flex} wide={wide}>
       {children}
     </Page>
   </div>

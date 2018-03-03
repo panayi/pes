@@ -12,6 +12,8 @@ import ArrowButton from './ArrowButton/ArrowButton';
 type Props = {
   images: Array<Image>,
   imgixParams: Object,
+  flex: ?boolean,
+  cover: ?boolean,
   className: ?string,
   classes: Object,
 };
@@ -19,13 +21,26 @@ type Props = {
 const styles = theme => ({
   root: {
     height: '100%',
-    overflow: 'hidden',
     backgroundColor: theme.palette.common.black,
     '& .slick-list': {
       height: '100%',
     },
     '& .slick-track': {
       height: '100%',
+    },
+    '& .slick-dots': {
+      display: 'flex',
+      justifyContent: 'center',
+      bottom: -28,
+    },
+    '& .slick-dots li': {
+      margin: 0,
+      padding: 0,
+    },
+  },
+  desktop: {
+    overflow: 'hidden',
+    '& .slick-track': {
       display: 'flex',
       alignItems: 'center',
     },
@@ -34,7 +49,7 @@ const styles = theme => ({
     },
   },
   imgContainer: {
-    width: 500,
+    width: '100%',
     height: '100%',
     display: 'flex !important',
     justifyContent: 'center',
@@ -57,42 +72,69 @@ const styles = theme => ({
     width: '100%',
     height: 'auto',
   },
+  cover: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    flex: 0,
+  },
 });
 
-const ImageSlider = ({
-  images,
-  imgixParams,
-  className,
-  classes,
-  ...rest
-}: Props) => (
-  <Slider {...rest} className={classNames(classes.root, className)}>
-    {R.map(
-      image => (
-        <div key={image.fullPath} className={classes.imgContainer}>
-          <div key={image.fullPath} className={classes.imgContainerInner}>
+const ImageSlider = (props: Props) => {
+  const {
+    images,
+    imgixParams,
+    flex,
+    cover,
+    className,
+    classes,
+    ...rest
+  } = props;
+
+  return (
+    <Slider
+      {...rest}
+      className={classNames(
+        classes.root,
+        { [classes.desktop]: flex },
+        className,
+      )}
+    >
+      {R.map(
+        image =>
+          flex ? (
+            <div key={image.fullPath} className={classes.imgContainer}>
+              <div key={image.fullPath} className={classes.imgContainerInner}>
+                <Imgix
+                  className={
+                    image.dimensions &&
+                    image.dimensions.height > image.dimensions.width
+                      ? classes.portrait
+                      : classes.landscape
+                  }
+                  image={image}
+                  params={imgixParams}
+                />
+              </div>
+            </div>
+          ) : (
             <Imgix
-              className={
-                image.dimensions &&
-                image.dimensions.height > image.dimensions.width
-                  ? classes.portrait
-                  : classes.landscape
-              }
+              className={classNames({ [classes.cover]: cover })}
               image={image}
               params={imgixParams}
             />
-          </div>
-        </div>
-      ),
-      images,
-    )}
-  </Slider>
-);
+          ),
+        images,
+      )}
+    </Slider>
+  );
+};
 
 ImageSlider.defaultProps = {
   images: [],
   autoplay: false,
   arrows: true,
+  infinite: false,
   dots: false,
   prevArrow: <ArrowButton.prev />,
   nextArrow: <ArrowButton.next />,

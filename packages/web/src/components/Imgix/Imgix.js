@@ -19,7 +19,7 @@ type Props = {
   alt: string,
 };
 
-const LQIP_PARAMS = { px: '16', blur: '200', auto: 'format' };
+const LQIP_PARAMS = { colorquant: 400, blur: 300, auto: 'format' };
 
 const DEFAULT_PARAMS = { auto: 'compress,format' };
 
