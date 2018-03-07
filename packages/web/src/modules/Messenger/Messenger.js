@@ -62,7 +62,12 @@ class Messenger extends Component {
         </Grid>
         <Grid className={classes.conversationWrap} item xs={9}>
           {selectedConversation ? (
-            <Conversation conversation={selectedConversation} />
+            <Conversation
+              conversation={selectedConversation}
+              inputPlaceholder="Type your message..."
+              variant="box"
+              withBackButton
+            />
           ) : (
             <NoConversationSelected />
           )}
@@ -88,7 +93,14 @@ class Messenger extends Component {
       return null;
     }
 
-    return <Conversation conversation={selectedConversation} />;
+    return (
+      <Conversation
+        conversation={selectedConversation}
+        inputPlaceholder="Type your message..."
+        variant="box"
+        withBackButton
+      />
+    );
   }
 
   render() {

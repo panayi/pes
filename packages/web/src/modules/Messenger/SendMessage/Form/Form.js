@@ -10,37 +10,40 @@ const styles = theme => ({
     width: '100%',
     height: 47,
     position: 'relative',
+    display: 'flex',
   },
   input: {
-    width: '100%',
-    height: '100%',
-    border: [1, 'solid', theme.palette.grey[100]],
-    borderRadius: 100,
-    position: 'absolute',
-    top: 0,
-    right: 0,
     boxSizing: 'border-box',
-    padding: [
-      theme.spacing.unit,
-      123,
-      theme.spacing.unit,
-      theme.spacing.unit * 1.5,
-    ],
-    background: theme.palette.grey[100],
-    color: theme.palette.text.primary,
+    padding: [theme.spacing.unit, theme.spacing.unit * 1.5],
   },
-  chat: {
+  action: {
+    textTransform: 'none',
+  },
+  box: {
     '& $input': {
-      borderRadius: 0,
-      border: 0,
-      background: 'none',
-      paddingRight: theme.spacing.unit * 1.5,
+      flex: 1,
+    },
+  },
+  float: {
+    '& $input': {
+      width: '100%',
+      height: '100%',
+      border: [1, 'solid', theme.palette.grey[100]],
+      borderRadius: 100,
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      paddingRight: 123,
+      background: theme.palette.grey[100],
+      color: theme.palette.text.primary,
+    },
+    '& $action': {
+      position: 'absolute',
+      top: 4,
+      right: 4,
     },
   },
   button: {
-    position: 'absolute',
-    top: 4,
-    right: 4,
     height: 40,
     minHeight: 30,
     borderRadius: '100em',
@@ -58,9 +61,10 @@ const Form = props => {
     handleBlur,
     placeholder,
     variant,
+    action,
     classes,
   } = props;
-  const isChatVariant = variant === 'chat';
+  const isFloatVariant = variant === 'float';
 
   return (
     <form
@@ -77,18 +81,21 @@ const Form = props => {
         disableUnderline
         autoComplete="off"
       />
-      {!isChatVariant && (
-        <Button
-          type="submit"
-          className={classes.button}
-          color="primary"
-          variant="raised"
-          disableRipple
-          disableFocusRipple
-        >
-          Send
-        </Button>
-      )}
+      <div className={classes.action}>
+        {action ||
+          (isFloatVariant && (
+            <Button
+              type="submit"
+              className={classes.button}
+              color="primary"
+              variant="raised"
+              disableRipple
+              disableFocusRipple
+            >
+              Send
+            </Button>
+          ))}
+      </div>
     </form>
   );
 };
@@ -100,12 +107,8 @@ Form.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleBlur: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(['default', 'chat']),
+  variant: PropTypes.oneOf(['float', 'box']).isRequired,
   classes: PropTypes.shape().isRequired,
-};
-
-Form.defaultProps = {
-  variant: 'default',
 };
 
 export default withStyles(styles)(Form);

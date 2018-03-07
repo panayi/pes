@@ -34,6 +34,7 @@ const AdThumbnail = ({ ad, adThumbnail, size, classes }: Props) => (
         image={adThumbnail}
         params={{ w: size, h: size, fit: 'edges' }}
         alt={ad.title}
+        style={{ width: size }}
       />
     )}
   </div>
