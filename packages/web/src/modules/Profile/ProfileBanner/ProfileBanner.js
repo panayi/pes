@@ -35,6 +35,9 @@ const styles = theme => ({
     flexDirection: 'column',
     borderRadius: [theme.borderRadius.xl, theme.borderRadius.xl, 0, 0],
     backgroundColor: darken(theme.palette.primary[400], 0.5),
+    [theme.breakpoints.down(theme.map.phone)]: {
+      borderRadius: 0,
+    },
   },
   content: {
     position: 'relative',
