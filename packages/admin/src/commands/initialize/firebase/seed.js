@@ -7,23 +7,8 @@ import locales from '@pesposa/core/src/database/seeds/locales.json';
 import translations from '@pesposa/core/src/database/seeds/translations.json';
 import countries from '@pesposa/core/src/database/seeds/countries.json';
 
-const formatCategories = R.reduce(
-  (acc, category) =>
-    R.useWith(R.merge, [
-      R.identity,
-      R.converge(R.assoc(R.__, R.__, {}), [
-        R.prop('key'),
-        R.over(
-          R.lensProp('categories'),
-          R.compose(formatCategories, R.defaultTo([])),
-        ),
-      ]),
-    ])(acc, category),
-  {},
-);
-
 const seedCategories = async () => {
-  await database.ref('categories').set(formatCategories(categories));
+  await database.ref('categories').set(categories);
 };
 
 const seedLocales = async () => {

@@ -35,6 +35,59 @@ const getAdUrl = (id, category) =>
 
 const getAdPath = ad => `/ads/legacy/${ad.id}`;
 
+const mapLegacyToNewCategory = ad => {
+  const { categoryParent, categoryChild } = ad;
+
+  if (categoryParent === 'real_estate') {
+    return 'real-estate';
+  }
+
+  if (categoryChild === 'cars') {
+    return 'cars';
+  }
+
+  if (categoryParent === 'vehicles') {
+    return 'other-vehicles-and-parts';
+  }
+
+  if (categoryChild === 'home_and_garden') {
+    return 'home-and-garden';
+  }
+
+  if (
+    R.contains(categoryChild, [
+      'home_appliances',
+      'electronics',
+      'computing',
+      'cell_phones',
+      'cameras_and_accessories',
+    ])
+  ) {
+    return 'electronics';
+  }
+
+  if (
+    R.contains(categoryChild, [
+      'hunting_stuff',
+      'fishing_diving_stuff',
+      'musical_instruments',
+      'toys_and_hobbies',
+      'video_games',
+      'sporting_goods',
+      'antiques_collectibles',
+      'books',
+    ])
+  ) {
+    return 'sports-and-leisure';
+  }
+
+  if (R.contains(categoryChild, ['jewelry_watches', 'clothing'])) {
+    return 'fashion';
+  }
+
+  return 'other';
+};
+
 // Transform old ad attributes (MySQL DB) to new ad attributes
 const transformAd = R.compose(
   R.pick([
@@ -72,7 +125,7 @@ const transformAd = R.compose(
     ),
   ),
   computedProp('body', R.compose(striptags, R.prop('description'))),
-  computedProp('category', R.prop('categoryParent')),
+  computedProp('category', mapLegacyToNewCategory),
   computedProp(
     'createdAt',
     R.compose(
