@@ -37,7 +37,8 @@ export default createMuiTheme({
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", sans-serif',
-    fontSize: 16,
+    fontSize: 14,
+    fontWeightBold: 600,
     button: {
       textTransform: 'none',
     },
@@ -67,7 +68,10 @@ export default createMuiTheme({
     xl: 12,
   },
   layout: {
-    headerHeight: layout.HEADER_HEIGHT,
+    headerHeight: {
+      phone: 56,
+      tablet: 64,
+    },
     sidebarWidth: layout.SIDEBAR_WIDTH,
     breakpoints: {
       filtersDialog: 'md',

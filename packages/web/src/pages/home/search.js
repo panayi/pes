@@ -7,6 +7,7 @@ import { withStyles } from 'material-ui/styles';
 import getMetaTags from 'utils/getMetaTags';
 import { selectors as routerSelectors } from 'store/router';
 import Layout from 'layouts/Layout/Layout';
+import ListAds from 'components/ListAds/ListAds';
 import Search from 'modules/Search/Search';
 import SearchFilters from 'modules/Search/Filters/Filters';
 import Header from 'pages/components/Header/Header';
@@ -29,8 +30,9 @@ const getTitle = ({ place, category }) => {
 
 const styles = theme => ({
   page: {
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
+    paddingTop: theme.spacing.unit * 1.5,
+    paddingLeft: theme.spacing.unit * 1.5,
+    paddingRight: theme.spacing.unit * 1.5,
   },
   sidebar: {
     [theme.breakpoints.down(theme.layout.breakpoints.filtersDialog)]: {
@@ -50,7 +52,9 @@ const SearchPage = ({ place, category, classes }) => (
     flex
   >
     <Helmet {...getMetaTags({ title: getTitle({ place, category }) })} />
-    <Search place={place} category={category} />
+    <Search place={place} category={category} params={{ facetFilters: ['sold:false'] }}>
+      {props => <ListAds {...props} />}
+    </Search>
   </Layout>
 );
 

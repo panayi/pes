@@ -6,13 +6,6 @@ import { WindowScroller, AutoSizer } from 'react-virtualized';
 import { withStyles } from 'material-ui/styles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import {
-  selectors as searchSelectors,
-  actions as searchActions,
-} from 'store/search';
-import { selectors as hitsSelectors } from 'store/search/hits';
-import { selectors as pageSelectors } from 'store/search/page';
-import { actions as rawParamsActions } from 'store/search/rawParams';
-import {
   selectors as scrollPositionSelectors,
   actions as scrollPositionActions,
 } from 'store/search/scrollPosition';
@@ -29,9 +22,9 @@ const styles = {
 
 export class ListAds extends Component {
   static propTypes = {
-    params: PropTypes.shape({}),
     hits: PropTypes.arrayOf(PropTypes.shape({})),
-    setRawParams: PropTypes.func.isRequired,
+    page: PropTypes.number.isRequired,
+    loadPage: PropTypes.func.isRequired,
     scrollPosition: PropTypes.number.isRequired,
     setScrollPosition: PropTypes.func.isRequired,
     classes: PropTypes.shape({}).isRequired,
@@ -43,10 +36,7 @@ export class ListAds extends Component {
   };
 
   componentWillMount() {
-    const { setRawParams, params, loadPage } = this.props;
-    if (params) {
-      setRawParams(params);
-    }
+    const { loadPage } = this.props;
     loadPage(0);
   }
 
@@ -59,10 +49,6 @@ export class ListAds extends Component {
       // FIXME: Find a way to avoid forced update
       // list doesn't update otherwise
       this.autoSizerRef.forceUpdate();
-    }
-
-    if (propsChanged(['params'], this.props, nextProps)) {
-      this.props.setRawParams(nextProps.params);
     }
   }
 
@@ -135,15 +121,10 @@ export class ListAds extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  hits: hitsSelectors.hitsSelector,
-  page: pageSelectors.pageSelector,
-  searchParams: searchSelectors.searchParamsSelector,
   scrollPosition: scrollPositionSelectors.scrollPositionSelector,
 });
 
 const mapDispatchToProps = {
-  loadPage: searchActions.loadPage,
-  setRawParams: rawParamsActions.setRawParams,
   setScrollPosition: scrollPositionActions.setScrollPosition,
 };
 

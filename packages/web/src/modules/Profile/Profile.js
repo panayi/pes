@@ -10,8 +10,8 @@ import { selectors as authSelectors } from 'store/firebase/auth';
 import { constants as searchConstants } from 'store/search';
 import needsUser from 'hocs/needsUser';
 import SearchProvider from 'components/SearchProvider/SearchProvider';
-import ListAds from 'components/ListAds/ListAds';
 import ProfileBanner from './ProfileBanner/ProfileBanner';
+import ListUserAds from './ListUserAds/ListUserAds';
 
 const styles = theme => ({
   root: {
@@ -37,8 +37,7 @@ class Profile extends Component {
 
   render() {
     const { userId, currentTab, classes } = this.props;
-    const sold = currentTab === 0 ? false : true; // eslint-disable-line no-unneeded-ternary
-
+    console.log(userId);
     return (
       <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
         <div>
@@ -55,10 +54,7 @@ class Profile extends Component {
               <Tab label="Sold" />
             </Tabs>
             <div className={classes.list}>
-              <ListAds
-                params={{ facetFilters: [`user:${userId}`, `sold:${sold}`] }}
-                sidebarWidth={0}
-              />
+              <ListUserAds userId={userId} currentTab={currentTab} />
             </div>
           </div>
         </div>

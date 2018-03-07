@@ -1,15 +1,17 @@
 import React from 'react';
 import * as R from 'ramda';
-import { withState, withProps } from 'recompose';
+import classNames from 'classnames';
+import { withState, withProps, branch } from 'recompose';
+import { createStructuredSelector } from 'reselect';
 import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import PhoneIcon from 'material-ui-icons/Phone';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import omitProps from 'utils/omitProps';
+import withProfileData from 'hocs/withProfileData';
 
 const styles = theme => ({
   button: {
-    display: 'flex',
-    justifyContent: 'space-between',
     minWidth: 170,
   },
   icon: {
@@ -17,25 +19,53 @@ const styles = theme => ({
   },
 });
 
-const RevealPhoneButton = ({ ad, children, phone, classes, ...rest }) => (
-  <Button
-    href={phone ? `tel:${phone}` : null}
+const RevealPhoneButton = ({
+  ad,
+  component: Komponent,
+  className,
+  children,
+  displayedPhone,
+  onClick,
+  classes,
+  ...rest
+}) => (
+  <Komponent
+    href={displayedPhone ? `tel:${displayedPhone}` : null}
+    onClick={onClick}
     component="a"
-    className={classes.button}
+    className={classNames(classes.button, className)}
     color="primary"
     variant="raised"
     {...rest}
   >
     <PhoneIcon className={classes.icon} />
-    {phone || children}
-  </Button>
+    {displayedPhone || children}
+  </Komponent>
 );
 
+RevealPhoneButton.defaultProps = {
+  component: Button,
+};
+
 export default R.compose(
-  withState('phone', 'setPhone', null),
-  withProps(({ ad, setPhone }) => ({
-    onClick: () => setPhone(ad.phone),
+  withState('displayedPhone', 'setDisplayedPhone', null),
+  branch(
+    R.path(['ad', 'user']),
+    withProfileData(
+      {
+        phone: ['phoneNumber'],
+      },
+      propSelector(['ad', 'user']),
+    ),
+    withProps(
+      createStructuredSelector({
+        phone: R.path(['ad', 'phoneNumber']),
+      }),
+    ),
+  ),
+  withProps(({ phone, setDisplayedPhone }) => ({
+    onClick: () => setDisplayedPhone(phone),
   })),
-  omitProps(['ad', 'setPhone']),
+  omitProps(['ad', 'setDisplayedPhone']),
   withStyles(styles),
 )(RevealPhoneButton);

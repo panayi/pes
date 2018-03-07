@@ -4,6 +4,7 @@ import { JssProvider, SheetsRegistry } from 'react-jss';
 import { BrowserRouter } from 'react-router-dom';
 import { ensureReady, After } from '@jaredpalmer/after';
 import createHistory from 'history/createBrowserHistory';
+import { LastLocationProvider } from 'react-router-last-location';
 import { Provider } from 'react-redux';
 import Reboot from 'material-ui/Reboot';
 import { MuiThemeProvider } from 'material-ui/styles';
@@ -26,16 +27,18 @@ ensureReady(routes).then(data => {
 
   return hydrate(
     <BrowserRouter>
-      <Provider store={store}>
-        <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-          <JssProvider registry={sheetsRegistry} jss={jss}>
-            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-              <Reboot />
-              <After data={data} routes={routes} />
-            </MuiThemeProvider>
-          </JssProvider>
-        </SearchProvider>
-      </Provider>
+      <LastLocationProvider>
+        <Provider store={store}>
+          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+            <JssProvider registry={sheetsRegistry} jss={jss}>
+              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                <Reboot />
+                <After data={data} routes={routes} />
+              </MuiThemeProvider>
+            </JssProvider>
+          </SearchProvider>
+        </Provider>
+      </LastLocationProvider>
     </BrowserRouter>,
     document.getElementById('root'),
     () => {

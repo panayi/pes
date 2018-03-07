@@ -6,7 +6,7 @@ import propSelector from '@pesposa/core/src/utils/propSelector';
 export const routeParamsSelector = propSelector(['match', 'params']);
 
 export const routeParamSelector = key =>
-  R.compose(R.prop(key), R.defaultTo({}), routeParamsSelector);
+  R.compose(R.propOr(null, key), R.defaultTo({}), routeParamsSelector);
 
 export const searchPathSelector = createSelector(
   propSelector('place'),

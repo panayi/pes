@@ -1,8 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
@@ -27,14 +25,6 @@ const LoginButton = hideUser(Button);
 const MessagesLink = hideVisitor(Link.icon);
 
 const styles = theme => ({
-  header: {
-    boxShadow: 'none',
-  },
-  toolbar: {
-    display: 'flex',
-    flex: '1 1 auto',
-    padding: 0,
-  },
   logoArea: {
     [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
@@ -103,61 +93,57 @@ const styles = theme => ({
 
 const Header = ({ inHome, openModal, toggleModal, classes }) => (
   <React.Fragment>
-    <AppBar className={classes.header}>
-      <Toolbar className={classes.toolbar}>
-        <div className={classes.mobileMenuButton}>
-          <IconButton onClick={() => toggleModal('mobileMenu')}>
-            <MenuIcon className={classes.menuIcon} />
-          </IconButton>
-        </div>
-        <div className={classes.logoArea}>
-          <Link to="/" exact>
-            <Typography className={classes.logoText} variant="title">
-              Pesposa
-            </Typography>
-          </Link>
-        </div>
-        <div className={classes.searchInput}>
-          <SearchQuery inHome={inHome} />
-        </div>
-        <Button
-          className={classes.createAdButton}
-          color="inherit"
-          onClick={() => openModal('createAd')}
-        >
-          Sell your stuff
-        </Button>
-        <LoginButton
-          className={classes.loginButton}
-          color="inherit"
-          onClick={() => openModal('login')}
-        >
-          Login
-        </LoginButton>
-        {inHome && (
-          <IconButton
-            className={classes.filtersButton}
-            color="inherit"
-            onClick={() => openModal('searchFilters')}
-          >
-            <TuneIcon />
-          </IconButton>
-        )}
-        <div className={classes.messagesButton}>
-          <UnreadConversationsBadge
-            color="secondary"
-            classes={{ badge: classes.unreadBadge }}
-          >
-            <MessagesLink color="inherit" to="/messages" size="small">
-              <MessageIcon />
-            </MessagesLink>
-          </UnreadConversationsBadge>
-        </div>
-        <div className={classes.desktopMenu}>
-          <DesktopMenu />
-        </div>
-      </Toolbar>
-    </AppBar>
+    <div className={classes.mobileMenuButton}>
+      <IconButton onClick={() => toggleModal('mobileMenu')}>
+        <MenuIcon className={classes.menuIcon} />
+      </IconButton>
+    </div>
+    <div className={classes.logoArea}>
+      <Link to="/" exact>
+        <Typography className={classes.logoText} variant="title">
+          Pesposa
+        </Typography>
+      </Link>
+    </div>
+    <div className={classes.searchInput}>
+      <SearchQuery inHome={inHome} />
+    </div>
+    <Button
+      className={classes.createAdButton}
+      color="inherit"
+      onClick={() => openModal('createAd')}
+    >
+      Sell your stuff
+    </Button>
+    <LoginButton
+      className={classes.loginButton}
+      color="inherit"
+      onClick={() => openModal('login')}
+    >
+      Login
+    </LoginButton>
+    {inHome && (
+      <IconButton
+        className={classes.filtersButton}
+        color="inherit"
+        onClick={() => openModal('searchFilters')}
+      >
+        <TuneIcon />
+      </IconButton>
+    )}
+    <div className={classes.messagesButton}>
+      <UnreadConversationsBadge
+        color="secondary"
+        classes={{ badge: classes.unreadBadge }}
+      >
+        <MessagesLink color="inherit" to="/messages" size="small">
+          <MessageIcon />
+        </MessagesLink>
+      </UnreadConversationsBadge>
+    </div>
+    <div className={classes.desktopMenu}>
+      <DesktopMenu />
+    </div>
     <ReduxModal id="login" content={Login} closeButton />
     <ReduxModal id="createAd" content={CreateAd} />
     <ReduxModal id="support" content={Support} />
