@@ -31,7 +31,7 @@ const styles = theme => ({
     alignItems: 'center',
     justifyContent: 'center',
     height: 85,
-    padding: [theme.spacing.unit * 2, theme.spacing.unit],
+    padding: [theme.spacing.unit * 2, theme.spacing.unit * 1.5],
     borderBottom: [1, 'solid', theme.palette.divider],
   },
   active: {
@@ -41,6 +41,7 @@ const styles = theme => ({
     flex: 0,
     flexBasis: 50,
     width: 50,
+    marginRight: theme.spacing.unit,
   },
   unreadBadge: {
     top: 'auto',
@@ -54,6 +55,9 @@ const styles = theme => ({
   },
   info: {
     flex: 1,
+  },
+  title: {
+    fontWeight: theme.typography.fontWeightMedium,
   },
   profileImage: {
     display: 'flex',
@@ -79,17 +83,18 @@ const ConversationItem = ({
         withNumber={false}
         classes={{ badge: classes.unreadBadge }}
       >
-        <AdThumbnail ad={ad} />
+        <AdThumbnail ad={ad} size={48} />
       </UnreadConversationsBadge>
     </div>
     <div className={classes.info}>
       <UserFullName userId={otherUserId} />
       <AdTitle
+        className={classes.title}
         ad={ad}
-        variant="caption"
         component={LineClamp}
         lines={1}
         height={16}
+        variant="caption"
       />
       <Typography variant="caption">
         <TimeAgo date={conversation.lastMessageCreatedAt} minPeriod={30} />

@@ -7,13 +7,13 @@ import ProfileImage from 'components/ProfileImage/ProfileImage';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdBody from 'components/AdBody/AdBody';
 import UserFullName from 'components/UserFullName/UserFullName';
+import BackButton from '../../BackButton/BackButton';
 import AdThumbnail from '../../AdThumbnail/AdThumbnail';
 
 const styles = theme => ({
   root: {
     display: 'flex',
     flex: 1,
-    justifyContent: 'space-between',
     alignItems: 'center',
   },
   ad: {
@@ -25,6 +25,9 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
+  },
+  flex: {
+    flex: 1,
   },
   userName: {
     marginLeft: theme.spacing.unit,
@@ -38,10 +41,17 @@ const styles = theme => ({
     maxWidth: 250,
     paddingRight: theme.spacing.unit,
   },
+  backButton: {
+    width: 40,
+    height: 40,
+    marginRight: theme.spacing.unit,
+    background: theme.palette.action.selected,
+  },
 });
 
 const ConversationHeader = ({ ad, otherUserId, history, classes }) => (
   <div className={classes.root}>
+    <BackButton defaultLocation="/messages" />
     <div
       className={classes.user}
       role="button"
@@ -55,6 +65,7 @@ const ConversationHeader = ({ ad, otherUserId, history, classes }) => (
         variant="body2"
       />
     </div>
+    <div className={classes.flex} />
     <div
       className={classes.ad}
       role="button"

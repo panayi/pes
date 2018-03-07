@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
-import { withLastLocation } from 'react-router-last-location';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Paper from 'material-ui/Paper';
@@ -13,7 +12,6 @@ import { withStyles } from 'material-ui/styles';
 import PlaceIcon from 'material-ui-icons/Place';
 import TimeIcon from 'material-ui-icons/AccessTime';
 import MessageIcon from 'material-ui-icons/Message';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
 import propSelector from '@pesposa/core/src/utils/propSelector';
@@ -22,6 +20,7 @@ import { selectors as authSelectors } from 'store/firebase/auth';
 import { actions as dataActions } from 'store/firebase/data';
 import ShareIcon from 'mdi-react/ShareIcon';
 import Link from 'components/Link/Link';
+import BackButton from 'components/BackButton/BackButton';
 import RoundButton from 'components/RoundButton/RoundButton';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
@@ -104,7 +103,6 @@ const styles = theme => ({
   },
   moreInfo: {
     textAlign: 'center',
-    // marginBottom: theme.spacing.unit,
   },
   moreInfoButton: {
     textTransform: 'uppercase',
@@ -221,7 +219,6 @@ class MobileViewAd extends React.Component {
       markAdAsSold,
       openSlideshow,
       setCurrentSlide,
-      lastLocation,
       classes,
     } = this.props;
 
@@ -229,13 +226,11 @@ class MobileViewAd extends React.Component {
       <div className={classes.root}>
         <div className={classes.header} role="button" tabIndex="-1">
           <div className={classes.headerActions}>
-            <Link.icon
+            <BackButton
+              component={Link.icon}
               className={classes.actionIconButton}
               color="inherit"
-              to={lastLocation || '/'}
-            >
-              <KeyboardArrowLeft />
-            </Link.icon>
+            />
             <div className={classes.flex} />
             <IconButton className={classes.actionIconButton} color="inherit">
               <ShareIcon />
@@ -403,7 +398,6 @@ const mapDispatchToProps = (dispatch, { adId }) =>
 export default R.compose(
   hydrateAd(propSelector('adId'), propSelector('legacy')),
   connect(mapStateToProps, mapDispatchToProps),
-  withLastLocation,
   withStateHandlers(
     {
       slideshowOpened: false,

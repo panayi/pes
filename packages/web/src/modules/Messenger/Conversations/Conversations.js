@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
+import { DesktopScreen } from 'react-responsive-redux';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import ConversationItem from './Item/Item';
@@ -11,6 +12,10 @@ type Props = {
 };
 
 const styles = theme => ({
+  root: {
+    height: '100%',
+    background: theme.palette.common.white,
+  },
   header: {
     display: 'flex',
     flexDirection: 'column',
@@ -22,10 +27,12 @@ const styles = theme => ({
 });
 
 const ConversationsList = ({ conversations, classes }: Props) => (
-  <div>
-    <div className={classes.header}>
-      <Typography variant="subheading">Conversations</Typography>
-    </div>
+  <div className={classes.root}>
+    <DesktopScreen>
+      <div className={classes.header}>
+        <Typography variant="subheading">Conversations</Typography>
+      </div>
+    </DesktopScreen>
     {R.map(
       conversation => (
         <ConversationItem key={conversation.id} conversation={conversation} />

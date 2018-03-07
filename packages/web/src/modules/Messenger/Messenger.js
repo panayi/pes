@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import Spinner from 'components/Spinner/Spinner';
@@ -30,10 +31,24 @@ const styles = theme => ({
   conversationWrap: {
     display: 'flex',
   },
+  fullHeight: {
+    height: '100%',
+  },
 });
 
 class Messenger extends Component {
-  renderConversations() {
+  renderLoadingConversations() {
+    return !this.props.isLoaded.conversations ? <Spinner centered /> : null;
+  }
+
+  renderNoConversations() {
+    const { conversations, isLoaded } = this.props;
+    const noConversations =
+      isNilOrEmpty(conversations) && isLoaded.conversations;
+    return noConversations ? <NoConversations /> : null;
+  }
+
+  renderConversationsSplitView() {
     const { selectedConversation, conversations, classes } = this.props;
 
     if (isNilOrEmpty(conversations)) {
@@ -56,27 +71,45 @@ class Messenger extends Component {
     );
   }
 
-  renderNoConversations() {
-    const { conversations, isLoaded } = this.props;
-    const noConversations =
-      isNilOrEmpty(conversations) && isLoaded.conversations;
-    return noConversations ? <NoConversations /> : null;
+  renderConversations() {
+    const { conversations } = this.props;
+
+    if (isNilOrEmpty(conversations)) {
+      return null;
+    }
+
+    return <Conversations conversations={conversations} />;
   }
 
-  renderLoadingConversations() {
-    return !this.props.isLoaded.conversations ? <Spinner centered /> : null;
+  renderConversation() {
+    const { selectedConversation } = this.props;
+
+    if (isNilOrEmpty(selectedConversation)) {
+      return null;
+    }
+
+    return <Conversation conversation={selectedConversation} />;
   }
 
   render() {
-    const { classes } = this.props;
+    const { conversationId, classes } = this.props;
 
     return (
       <React.Fragment>
-        <Grid className={classes.root} container spacing={0}>
+        <DesktopScreen>
+          <Grid className={classes.root} container spacing={0}>
+            {this.renderLoadingConversations()}
+            {this.renderNoConversations()}
+            {this.renderConversationsSplitView()}
+          </Grid>
+        </DesktopScreen>
+        <MobileScreen className={classes.fullHeight}>
           {this.renderLoadingConversations()}
           {this.renderNoConversations()}
-          {this.renderConversations()}
-        </Grid>
+          {conversationId
+            ? this.renderConversation()
+            : this.renderConversations()}
+        </MobileScreen>
       </React.Fragment>
     );
   }
