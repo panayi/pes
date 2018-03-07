@@ -1,11 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
 import Layout from 'layouts/Layout/Layout';
 import Messenger from 'modules/Messenger/Messenger';
 import Header from 'pages/components/Header/Header';
 
-const Messages = () => (
-  <Layout header={Header} fixed flex wide>
+const Messages = () => {
+  const content = (
     <Switch>
       <Route exact path="/messages" component={Messenger} />
       <Route
@@ -15,7 +16,19 @@ const Messages = () => (
         )}
       />
     </Switch>
-  </Layout>
-);
+  );
+  return (
+    <React.Fragment>
+      <DesktopScreen>
+        <Layout header={Header} fixed flex wide>
+          {content}
+        </Layout>
+      </DesktopScreen>
+      <MobileScreen>
+        <Layout header={Header}>{content}</Layout>
+      </MobileScreen>
+    </React.Fragment>
+  );
+};
 
 export default Messages;

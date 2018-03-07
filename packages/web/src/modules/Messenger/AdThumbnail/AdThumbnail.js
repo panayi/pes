@@ -10,34 +10,38 @@ import Imgix from 'components/Imgix/Imgix';
 type Props = {
   ad: Object,
   adThumbnail: Object,
+  size: number,
   classes: Object,
 };
 
-const AD_THUMBNAIL_WIDTH = 40;
-const AD_THUMBNAIL_HEIGHT = 40;
+const DEFAULT_SIZE = 40;
 
 const styles = theme => ({
   root: {
     display: 'flex',
-    flex: [0, 0, `${AD_THUMBNAIL_WIDTH}px`],
-    width: AD_THUMBNAIL_WIDTH,
-    height: AD_THUMBNAIL_HEIGHT,
     overflow: 'hidden',
     borderRadius: theme.borderRadius.md,
   },
 });
 
-const AdThumbnail = ({ ad, adThumbnail, classes }: Props) => (
-  <div className={classes.root}>
+const AdThumbnail = ({ ad, adThumbnail, size, classes }: Props) => (
+  <div
+    className={classes.root}
+    style={{ flex: `0 0 ${size}px`, width: size, height: size }}
+  >
     {adThumbnail && (
       <Imgix
         image={adThumbnail}
-        params={{ w: AD_THUMBNAIL_WIDTH, h: AD_THUMBNAIL_HEIGHT, fit: 'edges' }}
+        params={{ w: size, h: size, fit: 'edges' }}
         alt={ad.title}
       />
     )}
   </div>
 );
+
+AdThumbnail.defaultProps = {
+  size: DEFAULT_SIZE,
+};
 
 export default R.compose(
   withProps(

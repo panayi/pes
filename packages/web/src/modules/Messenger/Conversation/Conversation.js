@@ -18,6 +18,7 @@ const styles = theme => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
+    height: '100%',
     backgroundColor: theme.palette.common.white,
   },
   header: {

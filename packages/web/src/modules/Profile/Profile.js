@@ -24,6 +24,11 @@ const styles = theme => ({
     boxShadow: theme.shadows[1],
     background: theme.palette.grey[100],
     borderRadius: [0, 0, theme.borderRadius.xl, theme.borderRadius.xl],
+    [theme.breakpoints.down(theme.map.phone)]: {
+      boxShadow: 'none',
+      background: 'transparent',
+      borderRadius: 0,
+    },
   },
   list: {
     padding: [3 * theme.spacing.unit, 3 * theme.spacing.unit, 0],
@@ -37,7 +42,7 @@ class Profile extends Component {
 
   render() {
     const { userId, currentTab, classes } = this.props;
-    console.log(userId);
+
     return (
       <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
         <div>
