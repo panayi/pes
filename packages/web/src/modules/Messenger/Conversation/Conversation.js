@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { withStyles } from 'material-ui/styles';
 import propSelector from '@pesposa/core/src/utils/propSelector';
@@ -8,8 +9,8 @@ import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import { actions as chatActions } from 'store/chat';
 import hydrateAd from 'hocs/hydrateAd';
-import SendMessage from 'components/SendMessage/SendMessage';
 import * as utils from '../utils';
+import SendMessage from '../SendMessage/SendMessage';
 import ConversationHeader from './Header/Header';
 import Message from './Message/Message';
 
@@ -53,7 +54,7 @@ class Conversation extends Component {
   componentDidMount() {
     this.scrollToBottom();
     this.setActiveConversation(this.props.conversation);
-    this.maybeMarkAsReady(this.props.conversation);
+    this.maybeMarkAsRead(this.props.conversation);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,7 +63,7 @@ class Conversation extends Component {
     if (nextId !== id) {
       this.setActiveConversation(nextProps.conversation);
     }
-    this.maybeMarkAsReady(nextProps.conversation);
+    this.maybeMarkAsRead(nextProps.conversation);
   }
 
   componentDidUpdate(prevProps) {
@@ -76,11 +77,13 @@ class Conversation extends Component {
   }
 
   setActiveConversation(conversation) {
-    this.props.setActiveConversation(conversation.id);
+    if (conversation) {
+      this.props.setActiveConversation(conversation.id);
+    }
   }
 
-  maybeMarkAsReady(conversation) {
-    if (!conversation.read) {
+  maybeMarkAsRead(conversation) {
+    if (conversation && !conversation.read) {
       this.props.markAsRead(conversation.id);
     }
   }
@@ -94,6 +97,10 @@ class Conversation extends Component {
       adId,
       buyerId,
       ad,
+      variant,
+      sendMessageAction,
+      withBackButton,
+      inputPlaceholder,
       otherUserId,
       isBuyer,
       messages,
@@ -103,7 +110,11 @@ class Conversation extends Component {
     return (
       <div className={classes.root}>
         <div className={classes.header}>
-          <ConversationHeader ad={ad} otherUserId={otherUserId} />
+          <ConversationHeader
+            ad={ad}
+            otherUserId={otherUserId}
+            withBackButton={withBackButton}
+          />
         </div>
         <div
           className={classes.messages}
@@ -120,8 +131,9 @@ class Conversation extends Component {
         </div>
         <div className={classes.sendMessage}>
           <SendMessage
-            variant="chat"
-            placeholder="Type your message..."
+            variant={variant}
+            action={sendMessageAction}
+            placeholder={inputPlaceholder}
             adId={adId}
             buyerId={buyerId}
           />
@@ -131,8 +143,14 @@ class Conversation extends Component {
   }
 }
 
-const buyerIdSelector = propSelector(['conversation', 'buyer']);
-const adIdSelector = propSelector(['conversation', 'ad']);
+const buyerIdSelector = R.either(
+  propSelector('buyerId'),
+  propSelector(['conversation', 'buyer']),
+);
+const adIdSelector = R.either(
+  propSelector('adId'),
+  propSelector(['conversation', 'ad']),
+);
 
 const mapDataToProps = {
   messages: models.messages({
@@ -160,5 +178,10 @@ const mapDispatchToProps = {
 export default R.compose(
   hydrateAd(adIdSelector),
   connectData(mapDataToProps, mapStateToProps, mapDispatchToProps),
+  withProps(
+    createStructuredSelector({
+      messages: R.compose(R.defaultTo([]), R.prop('messages')),
+    }),
+  ),
   withStyles(styles),
 )(Conversation);

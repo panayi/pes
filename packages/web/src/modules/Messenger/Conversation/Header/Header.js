@@ -1,13 +1,15 @@
 import React from 'react';
 import * as R from 'ramda';
 import { withRouter } from 'react-router-dom';
+import { DesktopScreen } from 'react-responsive-redux';
 import { withStyles } from 'material-ui/styles';
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
+import Link from 'components/Link/Link';
 import LineClamp from 'components/LineClamp/LineClamp';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdBody from 'components/AdBody/AdBody';
 import UserFullName from 'components/UserFullName/UserFullName';
-import BackButton from '../../BackButton/BackButton';
 import AdThumbnail from '../../AdThumbnail/AdThumbnail';
 
 const styles = theme => ({
@@ -49,9 +51,19 @@ const styles = theme => ({
   },
 });
 
-const ConversationHeader = ({ ad, otherUserId, history, classes }) => (
+const ConversationHeader = ({
+  ad,
+  otherUserId,
+  withBackButton,
+  history,
+  classes,
+}) => (
   <div className={classes.root}>
-    <BackButton defaultLocation="/messages" />
+    {withBackButton && (
+      <Link.icon to="/messages" className={classes.backButton}>
+        <KeyboardArrowLeft />
+      </Link.icon>
+    )}
     <div
       className={classes.user}
       role="button"
@@ -59,11 +71,13 @@ const ConversationHeader = ({ ad, otherUserId, history, classes }) => (
       onClick={() => history.push(`/user/${otherUserId}`)}
     >
       <ProfileImage userId={otherUserId} />
-      <UserFullName
-        className={classes.userName}
-        userId={otherUserId}
-        variant="body2"
-      />
+      <DesktopScreen>
+        <UserFullName
+          className={classes.userName}
+          userId={otherUserId}
+          variant="body2"
+        />
+      </DesktopScreen>
     </div>
     <div className={classes.flex} />
     <div

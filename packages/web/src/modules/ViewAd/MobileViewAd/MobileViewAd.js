@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
-import { withStateHandlers } from 'recompose';
+import { withProps, withStateHandlers, branch } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -9,18 +9,21 @@ import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
+import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import PlaceIcon from 'material-ui-icons/Place';
 import TimeIcon from 'material-ui-icons/AccessTime';
+import CloseIcon from 'material-ui-icons/Close';
 import MessageIcon from 'material-ui-icons/Message';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';
+import withProfileData from 'hocs/withProfileData';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { actions as dataActions } from 'store/firebase/data';
 import ShareIcon from 'mdi-react/ShareIcon';
+import Conversation from 'modules/Messenger/Conversation/Conversation';
 import Link from 'components/Link/Link';
-import BackButton from 'components/BackButton/BackButton';
 import RoundButton from 'components/RoundButton/RoundButton';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
@@ -49,7 +52,7 @@ const styles = theme => ({
     top: 0,
     zIndex: 3,
     width: '100%',
-    paddingTop: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit,
     color: theme.palette.common.white,
     outline: 0,
   }),
@@ -81,9 +84,12 @@ const styles = theme => ({
     zIndex: 1,
   },
   details: {
-    paddingTop: theme.spacing.unit * 3,
+    paddingTop: theme.spacing.unit,
     position: 'relative',
     background: theme.palette.common.white,
+  },
+  withDots: {
+    paddingTop: theme.spacing.unit * 3,
   },
   avatarWrap: {
     position: 'absolute',
@@ -110,6 +116,7 @@ const styles = theme => ({
   title: {
     flex: 1,
     lineHeight: '1.20588em',
+    wordBreak: 'break-word',
     fontWeight: theme.typography.fontWeightRegular,
   },
   price: {
@@ -215,22 +222,27 @@ class MobileViewAd extends React.Component {
     const {
       ad,
       adId,
+      imagesList,
       uid,
       markAdAsSold,
-      openSlideshow,
+      viewSlideShow,
+      viewConversation,
       setCurrentSlide,
       classes,
     } = this.props;
+    const dots = imagesList.length > 1;
 
     return (
       <div className={classes.root}>
         <div className={classes.header} role="button" tabIndex="-1">
           <div className={classes.headerActions}>
-            <BackButton
-              component={Link.icon}
+            <Link.icon
+              to="/"
               className={classes.actionIconButton}
               color="inherit"
-            />
+            >
+              <KeyboardArrowLeft />
+            </Link.icon>
             <div className={classes.flex} />
             <IconButton className={classes.actionIconButton} color="inherit">
               <ShareIcon />
@@ -243,25 +255,29 @@ class MobileViewAd extends React.Component {
         <div className={classes.content}>
           <div
             className={classes.images}
-            onClick={openSlideshow}
+            onClick={viewSlideShow}
             role="button"
             tabIndex="-1"
           >
             <ImageSlider
               className={classes.imageSlider}
-              images={R.values(ad.images)}
+              images={imagesList}
               imgixParams={{ w: 900, auto: 'compress,format' }}
               afterChange={setCurrentSlide}
               swipeToSlide
               arrows={false}
-              dots
+              dots={dots}
               cover
             />
           </div>
           <Paper className={classes.avatarWrap} elevation={0}>
             <ProfileImage userId={ad.user} />
           </Paper>
-          <div className={classes.details}>
+          <div
+            className={classNames(classes.details, {
+              [classes.withDots]: dots,
+            })}
+          >
             <div className={classes.titleBox}>
               <div className={classes.mainDetails}>
                 <AdTitle className={classes.title} ad={ad} variant="title" />
@@ -338,6 +354,7 @@ class MobileViewAd extends React.Component {
                 fullWidth
                 size="small"
                 disabled={ad.sold}
+                onClick={viewConversation}
               >
                 <MessageIcon />&nbsp;&nbsp;Message
               </RoundButton>
@@ -349,7 +366,7 @@ class MobileViewAd extends React.Component {
   }
 
   renderSlideshow() {
-    const { ad, closeSlideshow, classes } = this.props;
+    const { imagesList, viewAd, classes } = this.props;
 
     return (
       <React.Fragment>
@@ -358,14 +375,14 @@ class MobileViewAd extends React.Component {
             className={classes.actionIconButton}
             variant="raised"
             size="small"
-            onClick={closeSlideshow}
+            onClick={viewAd}
           >
             Close
           </Button>
         </div>
         <ImageSlider
           className={classes.slideshow}
-          images={R.values(ad.images)}
+          images={imagesList}
           imgixParams={{ w: 900, auto: 'compress,format' }}
           swipeToSlide
           arrows={false}
@@ -376,10 +393,36 @@ class MobileViewAd extends React.Component {
     );
   }
 
+  renderConversation() {
+    const { uid, adId, sellerName, viewAd } = this.props;
+
+    return (
+      <Conversation
+        buyerId={uid}
+        adId={adId}
+        variant="box"
+        inputPlaceholder={`Ask ${sellerName} a question`}
+        sendMessageAction={
+          <IconButton onClick={viewAd}>
+            <CloseIcon />
+          </IconButton>
+        }
+      />
+    );
+  }
+
   render() {
-    return this.props.slideshowOpened
-      ? this.renderSlideshow()
-      : this.renderAd();
+    const { view } = this.props;
+
+    if (view === 'slideshow') {
+      return this.renderSlideshow();
+    }
+
+    if (view === 'conversation') {
+      return this.renderConversation();
+    }
+
+    return this.renderAd();
   }
 }
 
@@ -398,16 +441,33 @@ const mapDispatchToProps = (dispatch, { adId }) =>
 export default R.compose(
   hydrateAd(propSelector('adId'), propSelector('legacy')),
   connect(mapStateToProps, mapDispatchToProps),
+  withProps(
+    createStructuredSelector({
+      imagesList: R.compose(R.values, R.pathOr({}, ['ad', 'images'])),
+    }),
+  ),
+  branch(
+    propSelector(['ad', 'user']),
+    withProfileData(
+      {
+        sellerName: ['displayName'],
+      },
+      propSelector(['ad', 'user']),
+    ),
+  ),
   withStateHandlers(
     {
-      slideshowOpened: false,
+      view: 'ad',
     },
     {
-      openSlideshow: () => () => ({
-        slideshowOpened: true,
+      viewSlideShow: () => () => ({
+        view: 'slideshow',
       }),
-      closeSlideshow: () => () => ({
-        slideshowOpened: false,
+      viewConversation: () => () => ({
+        view: 'conversation',
+      }),
+      viewAd: () => () => ({
+        view: 'ad',
       }),
     },
   ),
