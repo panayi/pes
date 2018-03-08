@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import fetch from 'node-fetch';
@@ -15,9 +17,6 @@ import * as gmapsService from '../services/gmaps';
 
 const GoogleImagesScraper = new ImagesScraper.Google();
 
-// ------------------------------------
-// Constants
-// ------------------------------------
 export const ADS_ENDPOINT = `${
   process.env.LEGACY_PESPOSA_BASE_URL
 }/posts/json/${process.env.LEGACY_PESPOSA_TOKEN}`;
@@ -25,15 +24,12 @@ export const ADS_ENDPOINT = `${
 const FETCH_FAILED = 'fetchFailed';
 const MAX_IMAGE_WEB_FETCH_RETRIES = 4;
 
-// ------------------------------------
-// Helpers
-// ------------------------------------
 const getAdUrl = (id, category) =>
   `${process.env.LEGACY_PESPOSA_BASE_URL}/post/json/${
     process.env.LEGACY_PESPOSA_TOKEN
   }/${category}/${id}`;
 
-const getAdPath = ad => `/ads/legacy/${ad.id}`;
+const getAdPath = adId => `/ads/legacy/${adId}`;
 
 const mapLegacyToNewCategory = ad => {
   const { categoryParent, categoryChild } = ad;
@@ -89,7 +85,7 @@ const mapLegacyToNewCategory = ad => {
 };
 
 // Transform old ad attributes (MySQL DB) to new ad attributes
-const transformAd = R.compose(
+const transformAdProperties = R.compose(
   R.pick([
     'id',
     'createdAt',
@@ -163,133 +159,163 @@ const findImageWithGoogle = async ad => {
 
 const uploadImage = async (buffer, filename, contentType, dbPath, database) => {
   const newFilename = renameFile(generateId(), filename);
-  const path = `${storageConfig.IMAGES_PATH}/${newFilename}`;
+  const storagePath = `${storageConfig.IMAGES_PATH}/${newFilename}`;
 
   return storageService.uploadImage(
     buffer,
     contentType,
-    path,
+    storagePath,
     newFilename,
     metadata => database.ref(dbPath).push(metadata),
   );
 };
 
-const sequentialImportImage = async (
-  index,
-  images,
-  adId,
-  database,
-  didUploadImages,
-) => {
-  const image = images[index];
-  let didUploadAnImage = didUploadImages;
-
+const fetchImages = async images => {
   try {
-    const { buffer, contentType } = await fetchService.getImage(image);
+    const data = [];
+    await Promise.all(
+      R.map(async image => {
+        const result = await fetchService.getImage(image);
+        const { buffer, contentType } = result;
+        const filename = image
+          .split('/')
+          .pop()
+          .split('?')
+          .shift();
 
-    const filename = image
-      .split('/')
-      .pop()
-      .split('?')
-      .shift();
+        data.push({ buffer, contentType, filename });
 
-    await uploadImage(
-      buffer,
-      filename,
-      contentType,
-      `ads/images/${adId}`,
-      database,
+        return result;
+      }, images),
     );
-    didUploadAnImage = true;
-    log.info(`Added image to ad with id=${adId} - ${image}`);
+    return data;
   } catch (error) {
     log.warn(error.message);
+    return [];
+  }
+};
+
+const transformLegacyAd = async ad => {
+  const transformedAd = transformAdProperties(ad);
+
+  if (isNilOrEmpty(transformedAd.email) && isNilOrEmpty(transformedAd.phone)) {
+    throw new Error(
+      `Legacy ad with id=${ad.id} has neither an email nor a phone`,
+    );
   }
 
-  if (R.isNil(images[index + 1])) {
-    return Promise.resolve(didUploadAnImage);
-  }
+  let images = R.prop('images', transformedAd);
 
-  return sequentialImportImage(
-    index + 1,
-    images,
-    adId,
-    database,
-    didUploadAnImage,
+  const { lat, lng } = ad;
+  const geoposition = {
+    latitude: parseFloat(lat),
+    longitude: parseFloat(lng),
+  };
+  const address = await gmapsService.reverseGeocode(geoposition);
+  const location = { address, geoposition };
+  const finalAd = R.compose(R.assoc('location', location), R.omit(['images']))(
+    transformedAd,
   );
-};
 
-const findImageFromWeb = async (finalAd, database) => {
-  const imageFromWeb = await findImageWithGoogle(finalAd);
-  if (imageFromWeb) {
-    return sequentialImportImage(
-      0,
-      [imageFromWeb],
-      finalAd.id,
-      database,
-      false,
-    );
-  }
+  images = R.isNil(images[0]) ? [] : await fetchImages(images);
 
-  return true;
-};
+  if (R.isEmpty(images)) {
+    let retries = 0;
+    let imageFromWeb = await findImageWithGoogle(finalAd);
+    images = fetchImages([imageFromWeb]);
 
-// ------------------------------------
-// Actions
-// ------------------------------------
-export const importAd = async (ad, database) => {
-  try {
-    const transformedAd = transformAd(ad);
-
-    if (
-      isNilOrEmpty(transformedAd.email) &&
-      isNilOrEmpty(transformedAd.phone)
+    while (
+      imageFromWeb &&
+      R.isEmpty(images) &&
+      retries < MAX_IMAGE_WEB_FETCH_RETRIES
     ) {
-      throw new Error(
-        `Legacy ad with id=${ad.id} has neither an email nor a phone`,
-      );
+      imageFromWeb = await findImageWithGoogle(finalAd); // eslint-disable-line no-await-in-loop
+      images = fetchImages([imageFromWeb]);
+      retries += 1;
     }
-
-    const adPath = getAdPath(transformedAd);
-    const images = R.prop('images', transformedAd);
-
-    const { lat, lng } = ad;
-    const geoposition = {
-      latitude: parseFloat(lat),
-      longitude: parseFloat(lng),
-    };
-    const address = await gmapsService.reverseGeocode(geoposition);
-    const location = { address, geoposition };
-    const finalAd = R.compose(
-      R.assoc('location', location),
-      R.omit(['images']),
-    )(transformedAd);
-    await database.ref(adPath).update(finalAd);
-
-    const didUploadAnImage = R.isNil(images[0])
-      ? await Promise.resolve(false)
-      : await sequentialImportImage(0, images, finalAd.id, database, false);
-
-    if (!didUploadAnImage) {
-      let retries = 0;
-      let didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database);
-
-      while (
-        !didUploadAnImageFromWeb &&
-        retries < MAX_IMAGE_WEB_FETCH_RETRIES
-      ) {
-        didUploadAnImageFromWeb = await findImageFromWeb(finalAd, database); // eslint-disable-line no-await-in-loop
-        retries += 1;
-      }
-    }
-  } catch (error) {
-    log.warn(error.message);
   }
+
+  return R.assoc('images', images, finalAd);
 };
+
+// Adapters
 
 export const fetchAd = async (id, category) => {
   const response = await fetch(getAdUrl(id, category));
   const ad = await response.json();
 
   return ad;
+};
+
+export const legacyToLocal = async (legacyAd, rootDirectory) => {
+  try {
+    const ad = await transformLegacyAd(legacyAd);
+
+    const adPath = path.resolve(rootDirectory, ad.id);
+    const adWithoutImagesBuffer = R.evolve({
+      images: R.map(R.omit(['buffer'])),
+    });
+    fs.writeFile(
+      path.join(adPath, 'data.json'),
+      JSON.stringify(adWithoutImagesBuffer),
+      'utf8',
+    );
+
+    await Promise.all(
+      R.map(
+        image => fs.writeFile(path.join(adPath, image.filename), image.buffer),
+        ad.images,
+      ),
+    );
+  } catch (error) {
+    log.warn(error.message);
+  }
+};
+
+export const localToFirebase = async (adId, database, rootDirectory) => {
+  try {
+    const localAdPath = path.resolve(rootDirectory, adId);
+    const firebaseAdPath = getAdPath(adId);
+    const adJson = fs.readFileSync(path.join(localAdPath, 'data.json'), 'utf8');
+    const ad = JSON.parse(adJson);
+    await database.ref(firebaseAdPath).update(R.omit(['images'], ad));
+
+    await Promise.all(
+      R.map(image => {
+        const buffer = fs.readFileSync(path.join(localAdPath, image.filename));
+        return uploadImage(
+          buffer,
+          image.filename,
+          image.contentType,
+          `ads/images/${adId}`,
+          database,
+        );
+      }, ad.images),
+    );
+  } catch (error) {
+    log.warn(error.message);
+  }
+};
+
+export const legacyToFirebase = async (legacyAd, database) => {
+  try {
+    const ad = transformLegacyAd(legacyAd);
+    const adPath = getAdPath(ad.id);
+    await database.ref(adPath).update(R.omit(['images'], ad));
+    await Promise.all(
+      R.map(
+        ({ buffer, filename, contentType }) =>
+          uploadImage(
+            buffer,
+            filename,
+            contentType,
+            `ads/images/${ad.id}`,
+            database,
+          ),
+        ad.images,
+      ),
+    );
+  } catch (error) {
+    log.warn(error.message);
+  }
 };

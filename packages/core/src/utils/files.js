@@ -13,15 +13,15 @@ const typeKeys = {
 const types = {
   [JPEG]: {
     mimeType: 'image/jpeg',
-    prettyPrint: '.jpg',
+    extension: '.jpg',
   },
   [PNG]: {
     mimeType: 'image/png',
-    prettyPrint: '.png',
+    extension: '.png',
   },
   [GIF]: {
     mimeType: 'image/gif',
-    prettyPrint: '.gif',
+    extension: '.gif',
   },
 };
 
