@@ -1,11 +1,29 @@
-[
-  "real-estate",
-  "cars",
-  "other-vehicles-and-parts",
-  "electronics",
-  "home-and-garden",
-  "fashion-and-accessories",
-  "sports-and-leisure",
-  "kids-and-baby",
-  "other"
-]
+{
+  "real-estate": {
+    "id": "real-estate"
+  },
+  "cars": {
+    "id": "cars"
+  },
+  "other-vehicles-and-parts": {
+    "id": "other-vehicles-and-parts"
+  },
+  "electronics": {
+    "id": "electronics"
+  },
+  "home-and-garden": {
+    "id": "home-and-garden"
+  },
+  "fashion-and-accessories": {
+    "id": "fashion-and-accessories"
+  },
+  "sports-and-leisure": {
+    "id": "sports-and-leisure"
+  },
+  "kids-and-baby": {
+    "id": "kids-and-baby"
+  },
+  "other": {
+    "id": "other"
+  }
+}

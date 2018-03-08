@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs-extra';
 import path from 'path';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
@@ -9,6 +9,7 @@ import ImagesScraper from 'images-scraper';
 import generateId from '../utils/generateId';
 import * as storageConfig from '../config/storage';
 import computedProp from '../utils/computedProp';
+import promiseSerial from '../utils/promiseSerial';
 import * as fetchService from '../services/fetch';
 import * as storageService from '../services/storage';
 import log from '../utils/log';
@@ -170,6 +171,22 @@ const uploadImage = async (buffer, filename, contentType, dbPath, database) => {
   );
 };
 
+const uploadImages = async (images, adId, database) => {
+  const funcs = R.map(
+    image => () =>
+      uploadImage(
+        image.buffer,
+        image.filename,
+        image.contentType,
+        `ads/images/${adId}`,
+        database,
+      ),
+    images,
+  );
+
+  return promiseSerial(funcs);
+};
+
 const fetchImages = async images => {
   try {
     const data = [];
@@ -222,7 +239,7 @@ const transformLegacyAd = async ad => {
   if (R.isEmpty(images)) {
     let retries = 0;
     let imageFromWeb = await findImageWithGoogle(finalAd);
-    images = fetchImages([imageFromWeb]);
+    images = await fetchImages([imageFromWeb]);
 
     while (
       imageFromWeb &&
@@ -230,7 +247,7 @@ const transformLegacyAd = async ad => {
       retries < MAX_IMAGE_WEB_FETCH_RETRIES
     ) {
       imageFromWeb = await findImageWithGoogle(finalAd); // eslint-disable-line no-await-in-loop
-      images = fetchImages([imageFromWeb]);
+      images = await fetchImages([imageFromWeb]); // eslint-disable-line no-await-in-loop
       retries += 1;
     }
   }
@@ -238,26 +255,29 @@ const transformLegacyAd = async ad => {
   return R.assoc('images', images, finalAd);
 };
 
-// Adapters
-
 export const fetchAd = async (id, category) => {
   const response = await fetch(getAdUrl(id, category));
   const ad = await response.json();
-
   return ad;
 };
+
+// Adapters
 
 export const legacyToLocal = async (legacyAd, rootDirectory) => {
   try {
     const ad = await transformLegacyAd(legacyAd);
 
     const adPath = path.resolve(rootDirectory, ad.id);
-    const adWithoutImagesBuffer = R.evolve({
-      images: R.map(R.omit(['buffer'])),
-    });
-    fs.writeFile(
+    fs.ensureDirSync(adPath);
+    const adWithoutImagesBuffer = R.evolve(
+      {
+        images: R.map(R.omit(['buffer'])),
+      },
+      ad,
+    );
+    fs.writeFileSync(
       path.join(adPath, 'data.json'),
-      JSON.stringify(adWithoutImagesBuffer),
+      JSON.stringify(adWithoutImagesBuffer, null, 2),
       'utf8',
     );
 
@@ -269,6 +289,7 @@ export const legacyToLocal = async (legacyAd, rootDirectory) => {
     );
   } catch (error) {
     log.warn(error.message);
+    throw error;
   }
 };
 
@@ -276,46 +297,35 @@ export const localToFirebase = async (adId, database, rootDirectory) => {
   try {
     const localAdPath = path.resolve(rootDirectory, adId);
     const firebaseAdPath = getAdPath(adId);
-    const adJson = fs.readFileSync(path.join(localAdPath, 'data.json'), 'utf8');
-    const ad = JSON.parse(adJson);
+    const ad = fs.readJsonSync(path.join(localAdPath, 'data.json'), 'utf8');
     await database.ref(firebaseAdPath).update(R.omit(['images'], ad));
 
-    await Promise.all(
-      R.map(image => {
-        const buffer = fs.readFileSync(path.join(localAdPath, image.filename));
-        return uploadImage(
-          buffer,
-          image.filename,
-          image.contentType,
-          `ads/images/${adId}`,
-          database,
-        );
-      }, ad.images),
+    const imagesWithBuffer = R.map(
+      image =>
+        R.assoc(
+          'buffer',
+          fs.readFileSync(path.join(localAdPath, image.filename)),
+          image,
+        ),
+      ad.images,
     );
+    return uploadImages(imagesWithBuffer, adId, database);
   } catch (error) {
     log.warn(error.message);
+    throw error;
   }
 };
 
-export const legacyToFirebase = async (legacyAd, database) => {
+export const legacyToFirebase = async (adId, category, database) => {
   try {
+    const legacyAd = await fetchAd(adId, category);
     const ad = transformLegacyAd(legacyAd);
     const adPath = getAdPath(ad.id);
     await database.ref(adPath).update(R.omit(['images'], ad));
-    await Promise.all(
-      R.map(
-        ({ buffer, filename, contentType }) =>
-          uploadImage(
-            buffer,
-            filename,
-            contentType,
-            `ads/images/${ad.id}`,
-            database,
-          ),
-        ad.images,
-      ),
-    );
+
+    return uploadImages(ad.images, ad.id, database);
   } catch (error) {
     log.warn(error.message);
+    throw error;
   }
 };
