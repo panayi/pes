@@ -85,6 +85,8 @@ const mapLegacyToNewCategory = ad => {
   return 'other';
 };
 
+const getLegacyAdId = ({ id, categoryParent }) => `${categoryParent}-${id}`;
+
 // Transform old ad attributes (MySQL DB) to new ad attributes
 const transformAdProperties = R.compose(
   R.pick([
@@ -112,7 +114,7 @@ const transformAdProperties = R.compose(
       R.prop('images'),
     ),
   ),
-  computedProp('id', ({ id, categoryParent }) => `${categoryParent}-${id}`),
+  computedProp('id', getLegacyAdId),
   computedProp(
     'price',
     R.compose(
@@ -265,16 +267,26 @@ export const fetchAd = async (id, category) => {
 
 export const legacyToLocal = async (legacyAd, rootDirectory) => {
   try {
-    const ad = await transformLegacyAd(legacyAd);
+    const adId = getLegacyAdId(legacyAd);
+    const adPath = path.resolve(rootDirectory, adId);
 
-    const adPath = path.resolve(rootDirectory, ad.id);
-    fs.ensureDirSync(adPath);
+    try {
+      fs.statSync(adPath);
+      log.warn(`Ad with id=${adId} is already downloaded`);
+      return;
+    } catch (error) {
+      // do nothing - folder does not exist
+    }
+
+    const ad = await transformLegacyAd(legacyAd);
     const adWithoutImagesBuffer = R.evolve(
       {
         images: R.map(R.omit(['buffer'])),
       },
       ad,
     );
+
+    fs.ensureDirSync(adPath);
     fs.writeFileSync(
       path.join(adPath, 'data.json'),
       JSON.stringify(adWithoutImagesBuffer, null, 2),
@@ -289,7 +301,6 @@ export const legacyToLocal = async (legacyAd, rootDirectory) => {
     );
   } catch (error) {
     log.warn(error.message);
-    throw error;
   }
 };
 
