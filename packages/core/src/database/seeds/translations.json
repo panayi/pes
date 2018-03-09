@@ -1,14 +1,15 @@
 {
   "en": {
     "categories": {
-      "classes": "Classes",
-      "community": "Community",
-      "for_sale": "For Sale",
-      "jobs": "Jobs",
-      "personals": "Personals",
-      "pets": "Pets",
-      "real_estate": "Real Estate",
-      "vehicles": "Vehicles"
+      "real-estate": "Real Estate",
+      "cars": "Cars",
+      "other-vehicles-and-parts": "Other Vehicles and Parts",
+      "electronics": "Electronics",
+      "home-and-garden": "Home and Garden",
+      "fashion-and-accessories": "Fashion and Accessories",
+      "sports-and-leisure": "Sports and Leisure",
+      "kids-and-baby": "Kids and Baby",
+      "other": "Other"
     },
     "sortByOptions": {
       "byDateDesc": "Date (most recent)",
@@ -19,14 +20,15 @@
   },
   "el": {
     "categories": {
-      "classes": "Μαθήματα",
-      "community": "Κοινότητα",
-      "for_sale": "Πωλούνται",
-      "jobs": "Εργασία",
-      "personals": "Προσωπικά",
-      "pets": "Κατοικίδια",
-      "real_estate": "Ακίνητα",
-      "vehicles": "Αυτοκίνητα"
+      "real-estate": "Ακίνητα",
+      "cars": "Αυτοκίνητα",
+      "other-vehicles-and-parts": "Άλλα Οχήματα και Εξαρτήματα",
+      "electronics": "Ηλεκτρονικά",
+      "home-and-garden": "Σπίτι και Κήπος",
+      "fashion-and-accessories": "Μόδα και Αξεσουάρ",
+      "sports-and-leisure": "Αθλητικά και Ψυχαγωγία",
+      "kids-and-baby": "Βρεφικά και Παιδικά",
+      "other": "Άλλα"
     }
   }
 }
