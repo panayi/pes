@@ -38,7 +38,7 @@ const styles = theme => ({
   },
   fromMe: {
     ...common,
-    background: theme.palette.primary[400],
+    background: theme.palette.primary.main,
     color: theme.palette.common.white,
     '&:before': {
       content: '""',
@@ -47,7 +47,7 @@ const styles = theme => ({
       bottom: -2,
       right: -8,
       height: 19,
-      borderRight: [20, 'solid', theme.palette.primary[400]],
+      borderRight: [20, 'solid', theme.palette.primary.main],
       borderBottomLeftRadius: '16px 14px',
       transform: 'translate(0, -2px)',
     },

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import { darken } from 'material-ui/styles/colorManipulator';
 import SettingsIcon from 'material-ui-icons/Settings';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { selectors as authSelectors } from 'store/firebase/auth';
@@ -34,7 +33,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     borderRadius: [theme.borderRadius.xl, theme.borderRadius.xl, 0, 0],
-    backgroundColor: darken(theme.palette.primary[400], 0.5),
+    backgroundColor: theme.palette.primary.dark,
     [theme.breakpoints.down(theme.map.phone)]: {
       borderRadius: 0,
     },

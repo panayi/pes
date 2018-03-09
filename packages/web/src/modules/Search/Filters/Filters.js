@@ -10,7 +10,10 @@ import Filter from '../Filter';
 
 const styles = theme => ({
   section: {
-    marginBottom: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    marginBottom: theme.spacing.unit * 2,
+    border: [1, 'solid', theme.palette.divider],
+    boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.06)',
     [theme.breakpoints.down(theme.map.tablet)]: {
       marginBottom: 0,
     },

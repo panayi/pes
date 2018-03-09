@@ -36,7 +36,7 @@ const styles = theme => ({
     height: 13,
   },
   active: {
-    color: theme.palette.primary[400],
+    color: theme.palette.primary.main,
     fontWeight: theme.typography.fontWeightMedium,
     '& $icon': {
       visibility: 'visible',

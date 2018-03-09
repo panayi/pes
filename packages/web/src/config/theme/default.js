@@ -1,5 +1,4 @@
 import { createMuiTheme } from 'material-ui/styles';
-import { green, purple } from 'material-ui/colors';
 import * as layout from '@pesposa/core/src/config/layout';
 
 const shadows = [
@@ -32,16 +31,24 @@ const shadows = [
 
 export default createMuiTheme({
   palette: {
-    primary: purple, // Purple and green play nicely together.
-    secondary: green,
+    primary: {
+      main: '#f53942',
+      light: '#ff6762',
+      dark: '#bb001a',
+      contrastText: '#fff',
+    },
+    secondary: {
+      main: '#16191C',
+      light: '#3c3f43',
+      dark: '#000000',
+      contrastText: '#fff',
+    },
   },
   typography: {
-    fontFamily: '"Roboto", "Helvetica", sans-serif',
-    fontSize: 14,
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
+    fontSize: 16,
     fontWeightBold: 600,
-    button: {
-      textTransform: 'none',
-    },
   },
   breakpoints: {
     values: {
@@ -84,6 +91,20 @@ export default createMuiTheme({
       },
       inset: {
         paddingLeft: '40px !important',
+      },
+    },
+    MuiButton: {
+      root: {
+        minHeight: 39,
+        textTransform: 'none',
+      },
+      raised: {
+        fontWeight: 700,
+      },
+    },
+    MuiBackdrop: {
+      root: {
+        backgroundColor: 'rgba(255, 255, 255, 0.85)',
       },
     },
   },

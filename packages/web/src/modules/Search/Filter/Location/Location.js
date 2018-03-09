@@ -51,7 +51,7 @@ const styles = theme => ({
   },
   locationIcon: {
     alignSelf: 'center',
-    color: theme.palette.primary[200],
+    color: theme.palette.primary.light,
   },
 });
 

@@ -15,7 +15,7 @@ type Props = {
 
 const styles = theme => {
   const hSpacing = 1.5 * theme.spacing.unit;
-  const vSpacing = 1.5 * theme.spacing.unit;
+  const vSpacing = 3 * theme.spacing.unit;
   const width = theme.layout.sidebarWidth;
 
   return {
@@ -42,7 +42,7 @@ const styles = theme => {
       [theme.breakpoints.up(theme.map.tablet)]: {
         marginTop: theme.layout.headerHeight.tablet,
       },
-    }
+    },
   };
 };
 
@@ -56,9 +56,7 @@ const Sidebar = ({ children, className, classes }: Props) => (
       }}
       elevation={0}
     >
-      <div className={classes.content}>
-        {children}
-      </div>
+      <div className={classes.content}>{children}</div>
     </Drawer>
   </div>
 );
