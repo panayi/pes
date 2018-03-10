@@ -251,7 +251,7 @@ type ProfileImage {
 type Profile {
   displayName: String | Null,
   image: ProfileImage | Null,
-  phoneNumber: PhoneNumber | Null,
+  phone: PhoneNumber | Null,
   providerIds: Map<String, Any> | Null
 }
 

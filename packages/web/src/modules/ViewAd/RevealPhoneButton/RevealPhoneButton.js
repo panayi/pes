@@ -59,7 +59,7 @@ export default R.compose(
     ),
     withProps(
       createStructuredSelector({
-        phone: R.path(['ad', 'phoneNumber']),
+        phone: R.path(['ad', 'phone']),
       }),
     ),
   ),

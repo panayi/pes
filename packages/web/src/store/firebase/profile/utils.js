@@ -41,7 +41,7 @@ export const profileFactory = (userData, profile) => ({
   profile: {
     ...R.propOr({}, 'profile', profile),
     displayName: getDisplayName(userData),
-    phoneNumber: getPhoneNumber(userData),
+    phone: getPhoneNumber(userData),
     image: getPhoto(userData),
     providerIds: getProviderIds(userData),
   },
