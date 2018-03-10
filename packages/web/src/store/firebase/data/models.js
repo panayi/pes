@@ -33,6 +33,9 @@ export const adsByUser = userIdSelector =>
   createModelConnections(
     createSelector(userIdSelector, modelPaths.ADS_BY_USER),
   );
+export const favorites = createModelConnections(
+  createSelector(authSelectors.uidSelector, modelPaths.FAVORITES),
+);
 export const conversations = createModelConnections(
   createSelector(authSelectors.uidSelector, modelPaths.CONVERSATIONS),
 );

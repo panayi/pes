@@ -107,6 +107,10 @@ const modelConnectionsFactory = dataPath => {
         query: createRecordQuery(idSelector, modelPath),
         selector: createRecordSelector(idSelector, modelPath),
       }),
+      oneObject: idSelector => ({
+        query: createRecordQuery(idSelector, modelPath),
+        selector: createDataSelector(modelPath, idSelector),
+      }),
       byChild: (key, valueSelector) => ({
         query: createByChildQuery(key, valueSelector, modelPath),
         selector: createByChildSelector(key, valueSelector, modelPath),

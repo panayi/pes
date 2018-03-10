@@ -20,6 +20,7 @@ export const DRAFT_AD = userId => createModelPath(['ads', 'draft', userId]);
 export const PENDING_REVIEW_ADS = createModelPath(['ads', 'pendingReview']);
 export const ADS_BY_USER = userId => createModelPath(['ads', 'byUser', userId]);
 export const AD_IMAGES = adId => createModelPath(['ads', 'images', adId]);
+export const FAVORITES = userId => createModelPath(['favorites', userId]);
 export const CONVERSATIONS = userId =>
   createModelPath(['myConversations', userId]);
 export const MESSAGES = (adId, buyerId) =>
