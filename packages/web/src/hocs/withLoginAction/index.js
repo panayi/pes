@@ -9,7 +9,7 @@ const mapDispatchToProps = {
   login: authActions.login,
 };
 
-export default R.compose(
+const withLoginAction = R.compose(
   connect(null, mapDispatchToProps),
   defaultProps({
     onSuccess: noop,
@@ -22,3 +22,5 @@ export default R.compose(
         .catch(onError),
   })),
 );
+
+export default withLoginAction;

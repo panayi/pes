@@ -43,6 +43,9 @@ const styles = theme => ({
     flex: '1 1 auto',
     marginRight: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      margin: 0,
+    },
   },
   unreadBadge: {
     top: 0,
@@ -92,16 +95,13 @@ const styles = theme => ({
       display: 'block',
     },
   },
-  menuIcon: {
-    fill: theme.palette.common.white,
-  },
 });
 
 const Header = ({ inHome, openModal, toggleModal, classes }) => (
   <React.Fragment>
     <div className={classes.mobileMenuButton}>
       <IconButton onClick={() => toggleModal('mobileMenu')}>
-        <MenuIcon className={classes.menuIcon} />
+        <MenuIcon />
       </IconButton>
     </div>
     <Link to="/" exact className={classes.logoLink}>

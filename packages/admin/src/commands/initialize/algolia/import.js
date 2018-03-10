@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import log from '@pesposa/core/src/utils/log';
 import { database } from '@pesposa/core/src/config/firebaseClient';
-import algoliaService from '@pesposa/core/src/services/algolia';
+import * as algoliaService from '@pesposa/core/src/services/algolia';
 
 const initialImportAds = async () => {
   const ads = (await database.ref('/ads/legacy').once('value')).val();

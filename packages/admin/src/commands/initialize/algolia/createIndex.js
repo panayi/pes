@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import * as algoliaConfig from '@pesposa/core/src/config/algolia';
-import algoliaService from '@pesposa/core/src/services/algolia';
+import * as algoliaService from '@pesposa/core/src/services/algolia';
 import log from '@pesposa/core/src/utils/log';
 
 const createIndex = async () => {

@@ -4,6 +4,7 @@ import { FormGroup } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
 import { withStyles } from 'material-ui/styles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
+import translate from 'hocs/translate';
 
 const styles = theme => ({
   select: {
@@ -25,6 +26,7 @@ class Form extends Component {
       handleBlur,
       values,
       errors,
+      t,
       classes,
     } = this.props;
 
@@ -77,8 +79,8 @@ class Form extends Component {
           <option value="">Select category</option>
           {R.map(
             category => (
-              <option key={category.key} value={category.key}>
-                {category.key}
+              <option key={category.id} value={category.id}>
+                {t(category.id)}
               </option>
             ),
             R.values(categories),
@@ -89,4 +91,4 @@ class Form extends Component {
   }
 }
 
-export default withStyles(styles)(Form);
+export default R.compose(translate('categories'), withStyles(styles))(Form);
