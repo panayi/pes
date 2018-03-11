@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { red } from 'material-ui/colors';
@@ -41,6 +42,9 @@ const SLIDER_WIDTH = 500;
 const BASE_HEIGHT = 592;
 
 const styles = theme => ({
+  root: {
+    marginTop: theme.spacing.unit,
+  },
   breadcrumb: {
     marginBottom: theme.spacing.unit,
   },
@@ -71,8 +75,6 @@ const styles = theme => ({
     width: SLIDER_WIDTH,
     display: 'flex',
     alignItems: 'center',
-    borderRadius: [theme.borderRadius.xl, 0, 0, theme.borderRadius.xl],
-    backgroundColor: theme.palette.grey[900],
   },
   content: {
     display: 'flex',
@@ -180,11 +182,11 @@ const DesktopViewAd = ({ ad, adId, location, uid, classes }: Props) => {
   const currentUrl = urlForPath(location.pathname);
 
   return (
-    <React.Fragment>
+    <div className={classes.root}>
       <div className={classes.breadcrumb}>
         <Breadcrumbs ad={ad} />
       </div>
-      <div className={classes.ad}>
+      <Paper className={classes.ad}>
         <div className={classes.inner}>
           <div className={classes.images}>
             {ad.sold && (
@@ -276,8 +278,8 @@ const DesktopViewAd = ({ ad, adId, location, uid, classes }: Props) => {
             </React.Fragment>
           )}
         </BrowseAds>
-      </div>
-    </React.Fragment>
+      </Paper>
+    </div>
   );
 };
 

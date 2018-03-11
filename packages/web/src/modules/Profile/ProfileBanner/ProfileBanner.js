@@ -33,7 +33,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     borderRadius: [theme.borderRadius.xl, theme.borderRadius.xl, 0, 0],
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.secondary.light,
     [theme.breakpoints.down(theme.map.phone)]: {
       borderRadius: 0,
     },
@@ -63,6 +63,7 @@ const styles = theme => ({
     },
   },
   settingsIcon: {
+    display: 'none', // TODO: implement settings
     position: 'absolute',
     top: 2 * theme.spacing.unit,
     right: 2 * theme.spacing.unit,

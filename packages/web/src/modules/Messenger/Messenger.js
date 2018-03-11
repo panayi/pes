@@ -21,7 +21,7 @@ const styles = theme => ({
     height: 'calc(100vh - 96px)',
     marginTop: theme.spacing.unit * 2,
     overflow: 'hidden',
-    backgroundColor: '#F7F9FA',
+    backgroundColor: theme.palette.common.white,
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: theme.borderRadius.md,
   },

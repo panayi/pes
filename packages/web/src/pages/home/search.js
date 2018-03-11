@@ -30,7 +30,7 @@ const getTitle = ({ place, category }) => {
 
 const styles = theme => ({
   page: {
-    paddingTop: theme.spacing.unit * 1.5,
+    paddingTop: theme.spacing.unit * 3,
     paddingLeft: theme.spacing.unit * 1.5,
     paddingRight: theme.spacing.unit * 1.5,
   },
@@ -52,7 +52,11 @@ const SearchPage = ({ place, category, classes }) => (
     flex
   >
     <Helmet {...getMetaTags({ title: getTitle({ place, category }) })} />
-    <Search place={place} category={category} params={{ facetFilters: ['sold:false'] }}>
+    <Search
+      place={place}
+      category={category}
+      params={{ facetFilters: ['sold:false'] }}
+    >
       {props => <ListAds {...props} />}
     </Search>
   </Layout>

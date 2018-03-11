@@ -7,7 +7,7 @@ const styles = theme => ({
   appBar: {
     zIndex: 1201, // 1 more than sidebar
     color: theme.palette.text.primary,
-    backgroundColor: 'transparent',
+    backgroundColor: theme.palette.common.white,
     borderBottom: [1, 'solid', theme.palette.divider],
     boxShadow: 'none',
   },

@@ -55,12 +55,7 @@ export const thumbnailHeightSelector = createCachedSelector(
 
 // hitHeightSelector :: { hit, columnWidth } => Number
 const hitHeightSelector = R.compose(
-  thumbnailHeight =>
-    Math.ceil(
-      thumbnailHeight +
-        constants.CARD_HEADER_HEIGHT +
-        constants.CARD_CONTENT_HEIGHT,
-    ),
+  thumbnailHeight => Math.ceil(thumbnailHeight + constants.CARD_CONTENT_HEIGHT),
   thumbnailHeightSelector,
 );
 

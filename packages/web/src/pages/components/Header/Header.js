@@ -22,17 +22,20 @@ import DesktopMenu from './DesktopMenu/DesktopMenu';
 import Logo from './Logo/Logo';
 
 const LoginButton = hideUser(Button);
-const MessagesLink = hideVisitor(Link);
+const MessagesButton = hideVisitor('div');
 
 const styles = theme => ({
   logoLink: {
     color: theme.palette.secondary.main,
+    '&:hover': {
+      background: 'none',
+    },
     [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
   },
   logo: {
-    width: 140,
+    width: 115,
     marginBottom: -4,
     height: 48,
   },
@@ -68,6 +71,7 @@ const styles = theme => ({
     },
   },
   loginButton: {
+    margin: [0, theme.spacing.unit],
     [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
@@ -134,14 +138,14 @@ const Header = ({ inHome, openModal, toggleModal, classes }) => (
         <TuneIcon />
       </IconButton>
     )}
-    <div className={classes.messagesButton}>
+    <MessagesButton className={classes.messagesButton}>
       <UnreadConversationsBadge
         color="secondary"
         classes={{ badge: classes.unreadBadge }}
       >
-        <MessagesLink to="/messages">Messages</MessagesLink>
+        <Link to="/messages">Messages</Link>
       </UnreadConversationsBadge>
-    </div>
+    </MessagesButton>
     <div className={classes.desktopMenu}>
       <DesktopMenu />
     </div>

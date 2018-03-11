@@ -21,7 +21,7 @@ type Props = {
 const styles = theme => ({
   root: {
     height: '100%',
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.secondary.main,
     '& .slick-list': {
       height: '100%',
     },
@@ -36,6 +36,9 @@ const styles = theme => ({
     '& .slick-dots li': {
       margin: 0,
       padding: 0,
+    },
+    [theme.breakpoints.up(theme.map.tablet)]: {
+      borderRadius: [theme.borderRadius.xl, 0, 0, theme.borderRadius.xl],
     },
   },
   desktop: {

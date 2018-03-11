@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { withState, withProps, branch } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import Button from 'material-ui/Button';
+import RoundButton from 'components/RoundButton/RoundButton';
 import { withStyles } from 'material-ui/styles';
 import PhoneIcon from 'material-ui-icons/Phone';
 import propSelector from '@pesposa/core/src/utils/propSelector';
@@ -44,7 +44,7 @@ const RevealPhoneButton = ({
 );
 
 RevealPhoneButton.defaultProps = {
-  component: Button,
+  component: RoundButton,
 };
 
 export default R.compose(
