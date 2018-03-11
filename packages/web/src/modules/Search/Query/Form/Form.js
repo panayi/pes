@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
-import { fade } from 'material-ui/styles/colorManipulator';
 import SearchIcon from 'material-ui-icons/Search';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 
@@ -14,11 +13,10 @@ const styles = theme => ({
   root: {
     fontFamily: theme.typography.fontFamily,
     position: 'relative',
-    borderRadius: 2,
-    background: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      background: fade(theme.palette.common.white, 0.25),
-    },
+    borderRadius: theme.borderRadius.md,
+    border: [1, 'solid', theme.palette.divider],
+    color: theme.palette.text.primary,
+    boxShadow: theme.shadows[1],
   },
   searchIcon: {
     width: theme.spacing.unit * 7,
@@ -31,23 +29,18 @@ const styles = theme => ({
   },
   input: {
     font: 'inherit',
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit}px ${
-      theme.spacing.unit
-    }px ${theme.spacing.unit * 7}px`,
+    color: 'inherit',
+    padding: `9px ${theme.spacing.unit}px 9px ${theme.spacing.unit * 7}px`,
     border: 0,
     display: 'block',
     verticalAlign: 'middle',
     whiteSpace: 'normal',
     background: 'none',
     margin: 0, // Reset for Safari
-    color: 'inherit',
     width: '100%',
     boxSizing: 'border-box',
     '&:focus': {
       outline: 0,
-    },
-    '&::placeholder': {
-      color: fade(theme.palette.common.white, 0.25),
     },
   },
 });

@@ -17,10 +17,10 @@ const styles = theme => ({
     zIndex: 1,
     margin: 'auto',
     transform: 'none',
-    backgroundColor: fade(theme.palette.primary[400], 0.57),
+    backgroundColor: fade(theme.palette.primary.main, 0.57),
     transition: theme.transitions.create('backgroundColor'),
     '&:hover': {
-      backgroundColor: fade(theme.palette.primary[400], 0.8),
+      backgroundColor: fade(theme.palette.primary.main, 0.8),
     },
   },
   prev: {

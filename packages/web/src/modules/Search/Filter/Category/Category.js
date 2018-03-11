@@ -15,7 +15,7 @@ import FilterOption from 'components/FilterOption/FilterOption';
 import Link from 'components/Link/Link';
 
 type LinkType = {
-  key: String,
+  id: String,
   label: String,
   to: String,
 };
@@ -35,9 +35,9 @@ const styles = {
 const FilterByCategory = ({ categoryLinks, classes }: Props) => (
   <List classes={{ root: classes.list }}>
     {R.map(
-      ({ key, label, to }) => (
+      ({ id, label, to }) => (
         <FilterOption
-          key={key}
+          key={id}
           buttonComponent={Link}
           buttonProps={{
             to,
@@ -57,14 +57,14 @@ const categoryLinksSelector = (state, props) => {
   const { categories, t, match } = props;
   return R.compose(
     R.prepend({
-      key: 'home',
+      id: 'home',
       label: 'All',
       to: routerSelectors.searchPathSelector({ category: null, match }),
     }),
-    R.map(({ key }) => ({
-      key,
-      label: t(key),
-      to: routerSelectors.searchPathSelector({ category: key, match }),
+    R.map(({ id }) => ({
+      id,
+      label: t(id),
+      to: routerSelectors.searchPathSelector({ category: id, match }),
     })),
   )(categories);
 };

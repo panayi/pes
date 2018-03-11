@@ -1,3 +1,4 @@
+import downloadLegacyAds from './downloadLegacyAds';
 import initialize from './initialize';
 
-export { initialize };
+export { downloadLegacyAds, initialize };

@@ -6,10 +6,10 @@ import { isLoaded } from 'react-redux-firebase';
 import { Formik } from 'formik';
 import yup from 'yup';
 import { withProps, withState } from 'recompose';
-import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
+import RoundButton from 'components/RoundButton/RoundButton';
 import Spinner from 'components/Spinner/Spinner';
 import EditAdImages from '../EditAdImages/EditAdImages';
 import Form from './Form/Form';
@@ -54,7 +54,7 @@ const styles = theme => ({
   },
   content: {
     minWidth: 530,
-    minHeight: 440,
+    minHeight: 380,
   },
   editImages: {
     marginBottom: theme.spacing.unit * 2,
@@ -143,9 +143,14 @@ class AdForm extends Component<Props> {
               />
             </DialogContent>
             <DialogActions>
-              <Button color="primary" type="submit">
+              <RoundButton
+                color="primary"
+                variant="raised"
+                type="submit"
+                size="large"
+              >
                 {submitButtonLabel}
-              </Button>
+              </RoundButton>
             </DialogActions>
           </form>
         )}

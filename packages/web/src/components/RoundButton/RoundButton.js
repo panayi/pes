@@ -6,15 +6,16 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
   root: {
+    height: 39, // equal to minHeight (see theme/default.js)
     borderRadius: theme.borderRadius.md,
     boxShadow: 'none',
-    border: [3, 'solid', theme.palette.text.primary],
+    border: [2, 'solid', theme.palette.text.primary],
   },
   flatPrimary: {
-    borderColor: theme.palette.primary[400],
+    borderColor: theme.palette.primary.main,
   },
   flatSecondary: {
-    borderColor: theme.palette.secondary[400],
+    borderColor: theme.palette.secondary.main,
   },
   raised: {
     border: 'none',

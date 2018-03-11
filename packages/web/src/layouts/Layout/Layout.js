@@ -11,17 +11,19 @@ import Sidebar from './Sidebar/Sidebar';
 import Page from './Page/Page';
 
 const styles = theme => ({
+  '@global': {
+    body: {
+      backgroundColor: theme.palette.background.default,
+    },
+  },
   root: {
     display: 'flex',
     alignItems: 'stretch',
     minHeight: 'calc(100vh)',
     width: '100%',
-    backgroundColor: theme.palette.grey[200],
   },
   hasHeader: {
-    [theme.breakpoints.up(theme.map.phone)]: {
-      marginTop: theme.layout.headerHeight.phone,
-    },
+    marginTop: theme.layout.headerHeight.phone,
     [theme.breakpoints.up(theme.map.tablet)]: {
       marginTop: theme.layout.headerHeight.tablet,
     },
@@ -43,18 +45,22 @@ const Layout = ({
   classes,
 }) => (
   <div className={classes.root}>
-    {
-      hasHeader && (
-        <Header className={headerClassName}>
-          <HeaderContent />
-        </Header>
+    {hasHeader && (
+      <Header className={headerClassName}>
+        <HeaderContent />
+      </Header>
     )}
     {hasSidebar && (
       <Sidebar className={sidebarClassName}>
         <SidebarContent />
       </Sidebar>
     )}
-    <Page className={classNames(pageClassName, { [classes.hasHeader]: hasHeader })} fixed={fixed} flex={flex} wide={wide}>
+    <Page
+      className={classNames(pageClassName, { [classes.hasHeader]: hasHeader })}
+      fixed={fixed}
+      flex={flex}
+      wide={wide}
+    >
       {children}
     </Page>
   </div>

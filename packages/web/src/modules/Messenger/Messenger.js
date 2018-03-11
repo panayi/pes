@@ -18,9 +18,10 @@ const styles = theme => ({
   root: {
     position: 'relative',
     // TODO: make dynamic
-    height: 'calc(100vh - 88px)',
+    height: 'calc(100vh - 96px)',
+    marginTop: theme.spacing.unit * 2,
     overflow: 'hidden',
-    backgroundColor: '#F7F9FA',
+    backgroundColor: theme.palette.common.white,
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: theme.borderRadius.md,
   },

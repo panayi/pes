@@ -17,7 +17,7 @@ const styles = theme => ({
     boxShadow: 'none',
     background: 'white',
     borderRadius: '50em',
-    color: theme.palette.primary[400],
+    color: theme.palette.primary.main,
   },
   icon: {
     width: 16,

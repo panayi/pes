@@ -20,4 +20,7 @@ module.exports = merge.smart(baseConfig, {
     filename: 'index.js',
     libraryTarget: 'this',
   },
+  node: {
+    __dirname: false,
+  },
 });

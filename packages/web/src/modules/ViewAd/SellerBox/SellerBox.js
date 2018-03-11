@@ -13,7 +13,6 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     color: theme.palette.common.white,
-    textShadow: '0 1px 3px rgba(0,0,0,.8)',
   },
   avatarWrap: {
     padding: 0,
@@ -62,9 +61,7 @@ const SellerBox = ({ ad, classes }) => (
       )}
     </div>
     {/* Only for legacy ads */}
-    {!ad.user && (
-      <RevealPhoneButton ad={ad}>Contact seller</RevealPhoneButton>
-    )}
+    {!ad.user && <RevealPhoneButton ad={ad}>Contact seller</RevealPhoneButton>}
   </div>
 );
 

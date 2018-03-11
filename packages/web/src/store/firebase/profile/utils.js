@@ -13,12 +13,13 @@ const getDisplayName = R.converge(R.or, [
 
 // getPhoneNumber :: User -> String | Null
 const getPhoneNumber = R.compose(
-  R.prop('phoneNumber'),
+  R.propOr(null, 'phoneNumber'),
   findProviderWithProp('phoneNumber'),
 );
 
 // getPhoto :: User -> { downloadURL, providerId }
 const getPhoto = R.compose(
+  R.when(R.isEmpty, R.always(null)),
   renameKeys({ photoURL: 'downloadURL' }),
   R.pick(['photoURL', 'providerId']),
   R.defaultTo({}),
@@ -40,7 +41,7 @@ export const profileFactory = (userData, profile) => ({
   profile: {
     ...R.propOr({}, 'profile', profile),
     displayName: getDisplayName(userData),
-    phoneNumber: getPhoneNumber(userData),
+    phone: getPhoneNumber(userData),
     image: getPhoto(userData),
     providerIds: getProviderIds(userData),
   },

@@ -1,28 +1,26 @@
+import fs from 'fs';
+import path from 'path';
 import * as R from 'ramda';
-import fetch from 'node-fetch';
 import log from '@pesposa/core/src/utils/log';
 import { database } from '@pesposa/core/src/config/firebaseClient';
-import { importAd, ADS_ENDPOINT } from '@pesposa/core/src/services/legacy';
+import { localToFirebase } from '@pesposa/core/src/services/legacy';
+import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
+import * as pathsConfig from '../../../config/paths';
 
-const sequentialImportAd = async (index, ads) => {
-  const ad = ads[index];
-  await importAd(ad, database);
-  log.info(`Firebase: Synced ${ad.categoryParent} ad with id = ${ad.id}`);
-
-  if (R.isNil(ads[index + 1])) {
-    return Promise.resolve();
-  }
-
-  return sequentialImportAd(index + 1, ads);
-};
+const dirs = p =>
+  fs.readdirSync(p).filter(f => fs.statSync(path.join(p, f)).isDirectory());
 
 const importAds = async () => {
-  const response = await fetch(ADS_ENDPOINT);
-  const ads = await response.json();
-  const some = R.take(4, ads);
-  await sequentialImportAd(0, some);
+  const localAdIds = dirs(pathsConfig.LEGACY_ADS_OUTPUT_PATH);
 
-  return R.compose(R.length, R.values)(some);
+  await promiseSerial(
+    R.map(
+      adId => () =>
+        localToFirebase(adId, database, pathsConfig.LEGACY_ADS_OUTPUT_PATH),
+      localAdIds,
+    ),
+  );
+  return R.length(localAdIds);
 };
 
 const importLegacyAds = async () => {

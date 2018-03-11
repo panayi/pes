@@ -1,17 +1,16 @@
 import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
-import MessageIcon from 'material-ui-icons/Message';
 import TuneIcon from 'material-ui-icons/Tune';
 import MenuIcon from 'mdi-react/MenuIcon';
 import { actions as modalActions } from 'store/modals';
 import hideUser from 'hocs/hideUser';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
+import RoundButton from 'components/RoundButton/RoundButton';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Support from 'modules/Support/Support';
 import Login from 'modules/Login/Login';
@@ -20,24 +19,36 @@ import SearchQuery from 'modules/Search/Query/Query';
 import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
 import MobileMenu from 'pages/components/Header/MobileMenu/MobileMenu';
 import DesktopMenu from './DesktopMenu/DesktopMenu';
+import Logo from './Logo/Logo';
 
 const LoginButton = hideUser(Button);
-const MessagesLink = hideVisitor(Link.icon);
+const MessagesButton = hideVisitor('div');
 
 const styles = theme => ({
-  logoArea: {
+  logoLink: {
+    color: theme.palette.secondary.main,
+    '&:hover': {
+      background: 'none',
+    },
     [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
   },
+  logo: {
+    width: 115,
+    marginBottom: -4,
+    height: 48,
+  },
   logoText: {
     textTransform: 'uppercase',
-    color: theme.palette.common.white,
   },
   searchInput: {
     flex: '1 1 auto',
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing.unit * 2,
     marginLeft: theme.spacing.unit,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      margin: 0,
+    },
   },
   unreadBadge: {
     top: 0,
@@ -45,8 +56,8 @@ const styles = theme => ({
     width: 18,
     height: 18,
     fontSize: '0.65rem',
-    background: theme.palette.secondary.A400,
-    color: theme.palette.getContrastText(theme.palette.secondary.A400),
+    background: theme.palette.secondary.main,
+    color: theme.palette.getContrastText(theme.palette.secondary.main),
   },
   menuButton: {
     display: 'none',
@@ -60,11 +71,13 @@ const styles = theme => ({
     },
   },
   loginButton: {
+    margin: [0, theme.spacing.unit],
     [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
   },
   messagesButton: {
+    margin: [0, theme.spacing.unit],
     [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
@@ -86,35 +99,29 @@ const styles = theme => ({
       display: 'block',
     },
   },
-  menuIcon: {
-    fill: theme.palette.common.white,
-  },
 });
 
 const Header = ({ inHome, openModal, toggleModal, classes }) => (
   <React.Fragment>
     <div className={classes.mobileMenuButton}>
       <IconButton onClick={() => toggleModal('mobileMenu')}>
-        <MenuIcon className={classes.menuIcon} />
+        <MenuIcon />
       </IconButton>
     </div>
-    <div className={classes.logoArea}>
-      <Link to="/" exact>
-        <Typography className={classes.logoText} variant="title">
-          Pesposa
-        </Typography>
-      </Link>
-    </div>
+    <Link to="/" exact className={classes.logoLink}>
+      <Logo className={classes.logo} />
+    </Link>
     <div className={classes.searchInput}>
       <SearchQuery inHome={inHome} />
     </div>
-    <Button
+    <RoundButton
       className={classes.createAdButton}
-      color="inherit"
+      color="primary"
+      variant="raised"
       onClick={() => openModal('createAd')}
     >
       Sell your stuff
-    </Button>
+    </RoundButton>
     <LoginButton
       className={classes.loginButton}
       color="inherit"
@@ -131,16 +138,14 @@ const Header = ({ inHome, openModal, toggleModal, classes }) => (
         <TuneIcon />
       </IconButton>
     )}
-    <div className={classes.messagesButton}>
+    <MessagesButton className={classes.messagesButton}>
       <UnreadConversationsBadge
         color="secondary"
         classes={{ badge: classes.unreadBadge }}
       >
-        <MessagesLink color="inherit" to="/messages" size="small">
-          <MessageIcon />
-        </MessagesLink>
+        <Link to="/messages">Messages</Link>
       </UnreadConversationsBadge>
-    </div>
+    </MessagesButton>
     <div className={classes.desktopMenu}>
       <DesktopMenu />
     </div>

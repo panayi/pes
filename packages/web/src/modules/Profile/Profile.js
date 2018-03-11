@@ -15,14 +15,15 @@ import ListUserAds from './ListUserAds/ListUserAds';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    flexDirection: 'column',
+    [theme.breakpoints.up(theme.map.tablet)]: {
+      margin: [theme.spacing.unit, 0],
+    },
   },
   tabs: {
     flex: 1,
     minHeight: 300,
     boxShadow: theme.shadows[1],
-    background: theme.palette.grey[100],
+    background: theme.palette.common.white,
     borderRadius: [0, 0, theme.borderRadius.xl, theme.borderRadius.xl],
     [theme.breakpoints.down(theme.map.phone)]: {
       boxShadow: 'none',
@@ -45,7 +46,7 @@ class Profile extends Component {
 
     return (
       <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
-        <div>
+        <div className={classes.root}>
           <ProfileBanner userId={userId} />
           <div className={classes.tabs}>
             <Tabs

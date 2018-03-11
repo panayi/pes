@@ -250,7 +250,8 @@ type ProfileImage {
 
 type Profile {
   displayName: String | Null,
-  image: ProfileImage | Null
+  image: ProfileImage | Null,
+  phone: PhoneNumber | Null,
   providerIds: Map<String, Any> | Null
 }
 
@@ -294,7 +295,7 @@ isAuthenticated() { auth != null }
 isAuthenticatedWithPhone() { auth != null && auth.provider == 'phone' }
 isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
-adIsValid(adId) { root.ads.published[adId] != null }
+adIsValid(adId) { root.ads.published[adId] != null || root.ads.legacy[adId] != null }
 userIsValid(uid) { root.users[uid] != null }
 localeIsValid(localeId) { root.locales[localeId] != null }
 isSocialProvider(providerId) { providerId == 'google' || providerId == 'facebook.com' || providerId == 'twitter' || providerId == 'github' }
@@ -410,6 +411,20 @@ path /users/{uid} is User {
 
 path /users/{uid}/profile is Profile {
   read() { true }
+}
+
+path /favorites/{uid} {
+  read() { isCurrentUser(uid) }
+}
+
+path /favorites/{uid}/{adId} {
+  read() { isCurrentUser(uid) }
+  create() { isCurrentUser(uid) }
+  delete() { isCurrentUser(uid) }
+
+  validate() {
+    adIsValid(adId)
+  }
 }
 
 path /myConversations/{uid} {

@@ -1,252 +1,29 @@
-[
-  {
-    "key": "classes",
-    "categories": [
-      {
-        "key": "language_classes"
-      },
-      {
-        "key": "computers_multimedia_classes"
-      },
-      {
-        "key": "music_classes"
-      },
-      {
-        "key": "dance_classes"
-      },
-      {
-        "key": "other_classes"
-      }
-    ]
+{
+  "real-estate": {
+    "id": "real-estate"
   },
-  {
-    "key": "community",
-    "categories": [
-      {
-        "key": "seminars_conferences"
-      },
-      {
-        "key": "community_activities"
-      },
-      {
-        "key": "events"
-      },
-      {
-        "key": "volunteers"
-      },
-      {
-        "key": "lost_and_found"
-      }
-    ]
+  "cars": {
+    "id": "cars"
   },
-  {
-    "key": "for_sale",
-    "categories": [
-      {
-        "key": "home_appliances"
-      },
-      {
-        "key": "electronics"
-      },
-      {
-        "key": "home_and_garden"
-      },
-      {
-        "key": "hunting_stuff"
-      },
-      {
-        "key": "fishing_diving_stuff"
-      },
-      {
-        "key": "computing"
-      },
-      {
-        "key": "cell_phones"
-      },
-      {
-        "key": "cameras_and_accessories"
-      },
-      {
-        "key": "books"
-      },
-      {
-        "key": "musical_instruments"
-      },
-      {
-        "key": "jewelry_watches"
-      },
-      {
-        "key": "health_and_beauty"
-      },
-      {
-        "key": "clothing"
-      },
-      {
-        "key": "food"
-      },
-      {
-        "key": "toys_and_hobbies"
-      },
-      {
-        "key": "video_games"
-      },
-      {
-        "key": "sporting_goods"
-      },
-      {
-        "key": "antiques_collectibles"
-      },
-      {
-        "key": "everything_else"
-      }
-    ]
+  "other-vehicles-and-parts": {
+    "id": "other-vehicles-and-parts"
   },
-  {
-    "key": "jobs",
-    "categories": [
-      {
-        "key": "education_teaching_jobs"
-      },
-      {
-        "key": "sales_jobs"
-      },
-      {
-        "key": "hotel_tourist_jobs"
-      },
-      {
-        "key": "customer_service_jobs"
-      },
-      {
-        "key": "marketing_administration_jobs"
-      },
-      {
-        "key": "advertising_public_relation_jobs"
-      },
-      {
-        "key": "accounting_finance_jobs"
-      },
-      {
-        "key": "restaurant_food_service_jobs"
-      },
-      {
-        "key": "construction_development_jobs"
-      },
-      {
-        "key": "internet_based_jobs"
-      },
-      {
-        "key": "engineering_architecture_jobs"
-      },
-      {
-        "key": "hairdresser_beauty_jobs"
-      },
-      {
-        "key": "manual_labor_jobs"
-      },
-      {
-        "key": "secretarial_jobs"
-      },
-      {
-        "key": "transportation_delivery_jobs"
-      },
-      {
-        "key": "other_jobs"
-      }
-    ]
+  "electronics": {
+    "id": "electronics"
   },
-  {
-    "key": "personals",
-    "categories": [
-      {
-        "key": "men_looking_for_women"
-      },
-      {
-        "key": "women_looking_for_men"
-      },
-      {
-        "key": "men_looking_for_men"
-      },
-      {
-        "key": "women_looking_for_women"
-      },
-      {
-        "key": "astrology_medium"
-      },
-      {
-        "key": "massage"
-      }
-    ]
+  "home-and-garden": {
+    "id": "home-and-garden"
   },
-  {
-    "key": "pets",
-    "categories": [
-      {
-        "key": "dogs"
-      },
-      {
-        "key": "cats"
-      },
-      {
-        "key": "fish"
-      },
-      {
-        "key": "birds"
-      },
-      {
-        "key": "horses"
-      },
-      {
-        "key": "reptiles"
-      },
-      {
-        "key": "other_pets"
-      }
-    ]
+  "fashion-and-accessories": {
+    "id": "fashion-and-accessories"
   },
-  {
-    "key": "real_estate",
-    "categories": [
-      {
-        "key": "homes"
-      },
-      {
-        "key": "apartments"
-      },
-      {
-        "key": "land_plots"
-      },
-      {
-        "key": "offices_commercial_space"
-      },
-      {
-        "key": "looking_for_roommates"
-      }
-    ]
+  "sports-and-leisure": {
+    "id": "sports-and-leisure"
   },
-  {
-    "key": "vehicles",
-    "categories": [
-      {
-        "key": "cars"
-      },
-      {
-        "key": "parts_and_accessories"
-      },
-      {
-        "key": "motorcycles"
-      },
-      {
-        "key": "boats"
-      },
-      {
-        "key": "trucks_commercial"
-      },
-      {
-        "key": "caravans"
-      },
-      {
-        "key": "other_vehicles"
-      }
-    ]
+  "kids-and-baby": {
+    "id": "kids-and-baby"
+  },
+  "other": {
+    "id": "other"
   }
-]
+}

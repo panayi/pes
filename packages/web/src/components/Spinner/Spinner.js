@@ -7,7 +7,7 @@ import { withStyles } from 'material-ui/styles';
 import theme from 'config/theme';
 
 const BaseSpinner = withProps({
-  singleColor: theme.palette.primary['500'],
+  singleColor: theme.palette.primary.main,
   size: 42,
 })(MDSpinner);
 

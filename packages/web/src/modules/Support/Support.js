@@ -11,6 +11,7 @@ import { withStyles } from 'material-ui/styles';
 import DoneIcon from 'material-ui-icons/CheckCircle';
 import { actions as supportActions } from 'store/support';
 import { selectors as profileSelectors } from 'store/firebase/profile';
+import RoundButton from 'components/RoundButton/RoundButton';
 import Spinner from 'components/Spinner/Spinner';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
 import Form from './Form/Form';
@@ -111,9 +112,9 @@ class Support extends Component {
               <Form {...formikProps} />
             </DialogContent>
             <DialogActions>
-              <Button type="submit" color="primary">
+              <RoundButton variant="raised" color="primary" type="submit">
                 Send
-              </Button>
+              </RoundButton>
             </DialogActions>
           </form>
         )}

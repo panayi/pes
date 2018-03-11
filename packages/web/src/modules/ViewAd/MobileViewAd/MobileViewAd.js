@@ -15,7 +15,6 @@ import TimeIcon from 'material-ui-icons/AccessTime';
 import CloseIcon from 'material-ui-icons/Close';
 import MessageIcon from 'material-ui-icons/Message';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
-import FavoriteIcon from 'material-ui-icons/FavoriteBorder';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';
 import withProfileData from 'hocs/withProfileData';
@@ -36,6 +35,7 @@ import ImageSlider from '../ImageSlider/ImageSlider';
 import StaticMap from '../StaticMap/StaticMap';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
+import FavoriteAd from '../FavoriteAd/FavoriteAd';
 
 const gutters = (theme, styles = {}) => ({
   paddingLeft: theme.spacing.unit * 2,
@@ -247,9 +247,7 @@ class MobileViewAd extends React.Component {
             <IconButton className={classes.actionIconButton} color="inherit">
               <ShareIcon />
             </IconButton>
-            <IconButton className={classes.actionIconButton} color="inherit">
-              <FavoriteIcon />
-            </IconButton>
+            <FavoriteAd className={classes.actionIconButton} adId={ad.id} />
           </div>
         </div>
         <div className={classes.content}>

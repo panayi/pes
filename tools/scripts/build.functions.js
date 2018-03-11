@@ -19,6 +19,7 @@ const build = () => {
     constants.paths.application,
     'package.json',
   );
+  const rootPackagePath = path.join(constants.paths.root, 'package.json');
   const webPackagePath = path.join(constants.paths.web, 'package.json');
   const corePackagePath = path.join(constants.paths.core, 'package.json');
 
@@ -27,20 +28,22 @@ const build = () => {
     R.evolve({
       dependencies: R.compose(
         R.assoc('ms', '^2.1.1'),
+        R.assoc('isarray', '^1.0.0'),
         R.pickBy((val, key) => !R.test(/^@pesposa/, key)),
       ),
     }),
     R.omit(['devDependencies']),
-    ([a, b, c]) =>
+    ([a, b, c, d]) =>
       R.merge(a, {
         dependencies: R.mergeAll([
           a.dependencies,
           b.dependencies,
           c.dependencies,
+          d.dependencies,
         ]),
       }),
     R.map(filename => JSON.parse(fs.readFileSync(filename, 'utf8'))),
-  )([applicationPackagePath, webPackagePath, corePackagePath]);
+  )([applicationPackagePath, rootPackagePath, webPackagePath, corePackagePath]);
 
   const outputFilePath = path.join(
     constants.paths.build,
