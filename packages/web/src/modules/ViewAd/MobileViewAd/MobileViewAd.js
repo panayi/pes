@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
@@ -23,7 +22,7 @@ import { actions as dataActions } from 'store/firebase/data';
 import ShareIcon from 'mdi-react/ShareIcon';
 import Conversation from 'modules/Messenger/Conversation/Conversation';
 import Link from 'components/Link/Link';
-import RoundButton from 'components/RoundButton/RoundButton';
+import Button from 'components/Button/Button';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdBody from 'components/AdBody/AdBody';
@@ -322,7 +321,7 @@ class MobileViewAd extends React.Component {
         </div>
         <div className={classes.actions}>
           {ad.user === uid ? (
-            <RoundButton
+            <Button
               className={classes.actionButton}
               variant="raised"
               color="primary"
@@ -330,22 +329,21 @@ class MobileViewAd extends React.Component {
               onClick={() => markAdAsSold()}
             >
               Mark as sold
-            </RoundButton>
+            </Button>
           ) : (
             <div className={classes.actionButtons}>
               <RevealPhoneButton
                 ad={ad}
-                component={RoundButton}
                 className={classNames(classes.actionButton, classes.callButton)}
                 color="primary"
                 fullWidth
                 size="small"
-                variant="flat"
+                variant="outline"
                 disabled={ad.sold}
               >
                 Call
               </RevealPhoneButton>
-              <RoundButton
+              <Button
                 className={classes.actionButton}
                 color="primary"
                 variant="raised"
@@ -355,7 +353,7 @@ class MobileViewAd extends React.Component {
                 onClick={viewConversation}
               >
                 <MessageIcon />&nbsp;&nbsp;Message
-              </RoundButton>
+              </Button>
             </div>
           )}
         </div>

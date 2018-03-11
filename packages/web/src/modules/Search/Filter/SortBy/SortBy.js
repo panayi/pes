@@ -10,7 +10,7 @@ import {
 } from 'store/search/sortBy';
 import connectSearch from 'hocs/connectSearch';
 import translate from 'hocs/translate';
-import FilterOption from 'components/FilterOption/FilterOption';
+import FilterOption from '../FilterOption/FilterOption';
 
 const styles = {
   list: {

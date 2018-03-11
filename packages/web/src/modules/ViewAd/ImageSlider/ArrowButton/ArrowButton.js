@@ -2,12 +2,12 @@ import React from 'react';
 import * as R from 'ramda';
 import { mapProps, setDisplayName } from 'recompose';
 import classNames from 'classnames';
-import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import renderNothingWhen from 'hocs/renderNothingWhen';
+import Button from 'components/Button/Button';
 
 const styles = theme => ({
   root: {

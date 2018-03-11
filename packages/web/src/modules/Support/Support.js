@@ -5,13 +5,12 @@ import { createStructuredSelector } from 'reselect';
 import { Formik } from 'formik';
 import yup from 'yup';
 import { connect } from 'react-redux';
-import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import DoneIcon from 'material-ui-icons/CheckCircle';
 import { actions as supportActions } from 'store/support';
 import { selectors as profileSelectors } from 'store/firebase/profile';
-import RoundButton from 'components/RoundButton/RoundButton';
+import Button from 'components/Button/Button';
 import Spinner from 'components/Spinner/Spinner';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
 import Form from './Form/Form';
@@ -112,9 +111,9 @@ class Support extends Component {
               <Form {...formikProps} />
             </DialogContent>
             <DialogActions>
-              <RoundButton variant="raised" color="primary" type="submit">
+              <Button variant="raised" color="primary" type="submit">
                 Send
-              </RoundButton>
+              </Button>
             </DialogActions>
           </form>
         )}

@@ -73,11 +73,18 @@ class Document extends React.Component {
             href="/favicon-16x16.png"
           />
           <link rel="manifest" href="/site.webmanifest" />
-          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff6762" />
+          <link
+            rel="mask-icon"
+            href="/safari-pinned-tab.svg"
+            color={theme.palette.primary.light}
+          />
           <meta name="apple-mobile-web-app-title" content="Pesposa" />
           <meta name="application-name" content="Pesposa" />
-          <meta name="msapplication-TileColor" content="#16191c" />
-          <meta name="theme-color" content="#ffffff" />
+          <meta
+            name="msapplication-TileColor"
+            content={theme.palette.secondary.main}
+          />
+          <meta name="theme-color" content={theme.palette.common.white} />
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           {helmet.title.toComponent()}

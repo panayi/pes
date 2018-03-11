@@ -1,11 +1,11 @@
 /* @flow */
 import React from 'react';
-import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import withStyles from 'material-ui/styles/withStyles';
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown';
 import Imgix from 'components/Imgix/Imgix';
+import Button from 'components/Button/Button';
 import SmsCodeValidationForm from './SmsCodeValidationForm/SmsCodeValidationForm';
 
 type Props = {

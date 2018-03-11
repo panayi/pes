@@ -4,10 +4,10 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Input from 'material-ui/Input';
-import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import withLoginAction from 'hocs/withLoginAction';
+import Button from 'components/Button/Button';
+import withLoginAction from '../withLoginAction';
 
 class LoginWithEmailAndPassword extends Component {
   static propTypes = {

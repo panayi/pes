@@ -3,15 +3,12 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import HomeIcon from 'material-ui-icons/Home';
 import { actions as modalActions } from 'store/modals';
-import { selectors as authSelectors } from 'store/firebase/auth';
+import Button from 'components/Button/Button';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
 import LogoutButton from '../LogoutButton/LogoutButton';
@@ -143,66 +140,51 @@ class Menu extends Component {
   }
 
   render() {
-    const { DialogContent, DialogTitle, classes } = this.props;
+    const { classes } = this.props;
 
     return (
       <React.Fragment>
-        <DialogTitle>
-          <Typography variant="title" color="inherit">
-            Pesposa
-          </Typography>
-        </DialogTitle>
-        <DialogContent>
-          <div className={classes.root}>
-            <List component="nav">
-              <ListItem button onClick={() => this.navigateTo('/')}>
-                <ListItemIcon>
-                  <HomeIcon />
-                </ListItemIcon>
-                <ListItemText primary="Home" />
-              </ListItem>
-            </List>
-            <Divider />
-            <List component="nav">
-              {this.renderLogin()}
-              {this.renderProfileImage()}
-              {this.renderUserLinks()}
-            </List>
-            <Divider />
-            <List component="nav">
-              <ListItem
-                button
-                onClick={() => this.openAnotherModal('createAd')}
-              >
-                <ListItemText primary="Sell your stuff" />
-              </ListItem>
-              <Button
-                component={ListItem}
-                button
-                onClick={() => this.openAnotherModal('support')}
-              >
-                <ListItemText primary="Support / Feedback" />
-              </Button>
-              {this.renderLogout()}
-            </List>
-          </div>
-        </DialogContent>
+        <div className={classes.root}>
+          <List component="nav">
+            <ListItem button onClick={() => this.navigateTo('/')}>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItem>
+          </List>
+          <Divider />
+          <List component="nav">
+            {this.renderLogin()}
+            {this.renderProfileImage()}
+            {this.renderUserLinks()}
+          </List>
+          <Divider />
+          <List component="nav">
+            <ListItem button onClick={() => this.openAnotherModal('createAd')}>
+              <ListItemText primary="Sell your stuff" />
+            </ListItem>
+            <Button
+              component={ListItem}
+              button
+              onClick={() => this.openAnotherModal('support')}
+            >
+              <ListItemText primary="Support / Feedback" />
+            </Button>
+            {this.renderLogout()}
+          </List>
+        </div>
       </React.Fragment>
     );
   }
 }
-
-const mapStateToProps = createStructuredSelector({
-  currentUserId: authSelectors.uidSelector,
-  isAuthenticated: authSelectors.isAuthenticatedSelector,
-});
 
 const mapDispatchToProps = {
   openModal: modalActions.openModal,
 };
 
 export default R.compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(null, mapDispatchToProps),
   withStyles(styles),
   withRouter,
 )(Menu);

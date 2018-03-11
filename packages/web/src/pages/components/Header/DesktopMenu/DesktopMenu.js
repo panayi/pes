@@ -4,7 +4,6 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import Popover from 'material-ui/Popover';
 import { withStyles } from 'material-ui/styles';
 import { actions as modalActions } from 'store/modals';
@@ -12,6 +11,7 @@ import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as profileSelectors } from 'store/firebase/profile';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
+import Button from 'components/Button/Button';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
 import LogoutButton from '../LogoutButton/LogoutButton';
@@ -124,6 +124,7 @@ class DesktopMenu extends Component {
             vertical: 'top',
             horizontal: 'right',
           }}
+          elevation={20}
         >
           <div className={classes.root}>
             <div className={classes.content}>

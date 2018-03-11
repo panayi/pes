@@ -2,10 +2,10 @@ import React from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
 import { ListItem } from 'material-ui/List';
-import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import CheckIcon from 'material-ui-icons/Check';
 import Link from 'components/Link/Link';
+import Button from 'components/Button/Button';
 
 const styles = theme => ({
   item: {
@@ -19,11 +19,11 @@ const styles = theme => ({
     textAlign: 'left',
     width: '100%',
     minHeight: 'auto',
-    padding: 0,
+    padding: [2, 0],
     fontWeight: theme.typography.fontWeightRegular,
     textTransform: 'none',
     '&:hover': {
-      fontWeight: theme.typography.fontWeightMedium,
+      textDecoration: 'underline',
       backgroundColor: 'transparent',
     },
   },
@@ -38,6 +38,10 @@ const styles = theme => ({
   active: {
     color: theme.palette.primary.main,
     fontWeight: theme.typography.fontWeightMedium,
+    cursor: 'default',
+    '&:hover': {
+      textDecoration: 'none',
+    },
     '& $icon': {
       visibility: 'visible',
     },

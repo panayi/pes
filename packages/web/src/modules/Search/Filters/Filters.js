@@ -3,9 +3,9 @@ import React from 'react';
 import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
 import Card, { CardContent } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
+import Button from 'components/Button/Button';
 import Filter from '../Filter';
 
 const styles = theme => ({

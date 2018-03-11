@@ -93,15 +93,6 @@ export default createMuiTheme({
         paddingLeft: '40px !important',
       },
     },
-    MuiButton: {
-      root: {
-        minHeight: 39,
-        textTransform: 'none',
-      },
-      raised: {
-        fontWeight: 700,
-      },
-    },
     MuiBackdrop: {
       root: {
         backgroundColor: 'rgba(255, 255, 255, 0.85)',

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import Button from 'material-ui/Button';
 import Menu, { MenuItem } from 'material-ui/Menu';
-import Link from '../Link/Link';
+import Button from 'components/Button/Button';
+import Link from 'components/Link/Link';
 
 class DropdownMenu extends Component {
   static propTypes = {

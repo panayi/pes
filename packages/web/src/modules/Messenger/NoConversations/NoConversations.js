@@ -6,7 +6,7 @@ import { withStyles } from 'material-ui/styles';
 import MessageIcon from 'material-ui-icons/Message';
 import { actions as modalActions } from 'store/modals';
 import Link from 'components/Link/Link';
-import RoundButton from 'components/RoundButton/RoundButton';
+import Button from 'components/Button/Button';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
 
 const styles = theme => ({
@@ -22,13 +22,13 @@ const styles = theme => ({
 const NoConversations = ({ openModal, classes }) => (
   <EmptyHero icon={MessageIcon} tagline="You have no messages">
     <div className={classes.actions}>
-      <RoundButton
+      <Button
         variant="raised"
         color="primary"
         onClick={() => openModal('createAd')}
       >
         Sell Your Stuff
-      </RoundButton>
+      </Button>
       <Link className={classes.browseLink} to="/">
         <Typography variant="button">Browse</Typography>
       </Link>

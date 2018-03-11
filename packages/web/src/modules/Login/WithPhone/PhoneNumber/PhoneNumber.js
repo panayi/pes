@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withFirebase } from 'react-redux-firebase';
-import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import { selectors as profileSelectors } from 'store/firebase/profile';
+import Button from 'components/Button/Button';
 import Recaptcha from './Recaptcha/Recaptcha';
 import PhoneNumberForm from './PhoneNumberForm/PhoneNumberForm';
 
