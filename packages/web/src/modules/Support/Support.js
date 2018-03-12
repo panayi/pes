@@ -15,12 +15,14 @@ import Spinner from 'components/Spinner/Spinner';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
 import Form from './Form/Form';
 
-const styles = () => ({
+const styles = theme => ({
   root: {
-    minWidth: 450,
     all: 'inherit',
     boxShadow: 'none',
     margin: 0,
+    [theme.breakpoints.up(theme.map.tablet)]: {
+      minWidth: 530,
+    },
   },
 });
 

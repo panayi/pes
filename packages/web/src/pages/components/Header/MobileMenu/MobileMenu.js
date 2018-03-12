@@ -10,58 +10,15 @@ import HomeIcon from 'material-ui-icons/Home';
 import MessageIcon from 'material-ui-icons/Message';
 import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import { actions as modalActions } from 'store/modals';
-import Button from 'components/Button/Button';
 import ProfileBox from '../ProfileBox/ProfileBox';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
-const PROFILE_IMAGE_SIZE = 96;
-
-const styles = theme => ({
+const styles = {
   root: {
     display: 'flex',
     flexDirection: 'column',
   },
-  login: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  content: {
-    display: 'flex',
-    flex: 1,
-    margin: theme.spacing.unit * 2,
-  },
-  menuIcon: {
-    fill: theme.palette.common.white,
-  },
-  footer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
-    borderTop: `1px solid ${theme.palette.divider}`,
-    background: theme.palette.background.default,
-  },
-  imageWrap: {
-    flexBasis: PROFILE_IMAGE_SIZE,
-    alignSelf: 'flex-end',
-    marginRight: theme.spacing.unit * 2,
-  },
-  displayName: {
-    fontWeight: 500,
-  },
-  supportButton: {
-    textTransform: 'none',
-  },
-  logoutButton: {
-    border: `1px solid ${theme.palette.grey[400]}`,
-  },
-  small: {
-    fontSize: '0.8125rem',
-    color: theme.palette.text.secondary,
-  },
-  profileLink: {
-    marginTop: theme.spacing.unit,
-  },
-});
+};
 
 class Menu extends Component {
   static propTypes = {
@@ -88,21 +45,18 @@ class Menu extends Component {
 
     return isAuthenticated ? (
       <React.Fragment>
-        <List component="nav">
-          <ListItem button onClick={() => this.navigateTo('/messages')}>
-            <ListItemIcon>
-              <MessageIcon />
-            </ListItemIcon>
-            <ListItemText primary="Messages" />
-          </ListItem>
-          <ListItem button onClick={() => this.navigateTo('/profile')}>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText primary="My Profile" />
-          </ListItem>
-        </List>
-        <Divider />
+        <ListItem button onClick={() => this.navigateTo('/messages')}>
+          <ListItemIcon>
+            <MessageIcon />
+          </ListItemIcon>
+          <ListItemText primary="Messages" />
+        </ListItem>
+        <ListItem button onClick={() => this.navigateTo('/profile')}>
+          <ListItemIcon>
+            <AccountCircleIcon />
+          </ListItemIcon>
+          <ListItemText primary="My Profile" />
+        </ListItem>
       </React.Fragment>
     ) : null;
   }
@@ -135,20 +89,19 @@ class Menu extends Component {
               </ListItemIcon>
               <ListItemText primary="Home" />
             </ListItem>
+            {this.renderUserLinks()}
           </List>
           <Divider />
-          {this.renderUserLinks()}
           <List component="nav">
             <ListItem button onClick={() => this.openModal('createAd')}>
-              <ListItemText primary="Sell your stuff" />
+              <ListItemText primary="Sell on Pesposa" />
             </ListItem>
-            <Button
-              component={ListItem}
-              button
-              onClick={() => this.openModal('support')}
-            >
+          </List>
+          <Divider />
+          <List component="nav">
+            <ListItem button onClick={() => this.openModal('support')}>
               <ListItemText primary="Support / Feedback" />
-            </Button>
+            </ListItem>
             {this.renderLogout()}
           </List>
         </div>

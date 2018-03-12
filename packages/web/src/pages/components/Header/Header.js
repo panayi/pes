@@ -8,12 +8,12 @@ import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import TuneIcon from 'material-ui-icons/Tune';
 import MenuIcon from 'mdi-react/MenuIcon';
-import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import hideUser from 'hocs/hideUser';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
 import Button from 'components/Button/Button';
+import ShowCreateAdButton from 'components/ShowCreateAdButton/ShowCreateAdButton';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Support from 'modules/Support/Support';
@@ -131,14 +131,7 @@ const Header = ({
     <div className={classes.searchInput}>
       <SearchQuery inHome={inHome} />
     </div>
-    <Button
-      className={classes.createAdButton}
-      color="primary"
-      variant="raised"
-      onClick={() => openModal('createAd')}
-    >
-      Sell your stuff
-    </Button>
+    <ShowCreateAdButton className={classes.createAdButton} />
     <LoginButton
       className={classes.loginButton}
       color="inherit"
@@ -184,12 +177,8 @@ const mapStateToProps = createStructuredSelector({
   isAuthenticated: authSelectors.isAuthenticatedSelector,
 });
 
-const mapDispatchToProps = {
-  openModal: modalActions.openModal,
-};
-
 export default R.compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps),
   withStateHandlers(
     {
       mobileMenuOpened: false,
