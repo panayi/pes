@@ -8,7 +8,6 @@
 // import { connect } from 'react-redux';
 // import { createStructuredSelector } from 'reselect';
 // import Typography from 'material-ui/Typography';
-// import Button from 'material-ui/Button';
 // import IconButton from 'material-ui/IconButton';
 // import Divider from 'material-ui/Divider'
 // import { LinearProgress } from 'material-ui/Progress';
@@ -27,7 +26,7 @@
 // import { selectors as authSelectors } from 'store/firebase/auth';
 // import { actions as dataActions } from 'store/firebase/data';
 // import ShareIcon from 'mdi-react/ShareIcon';
-// import RoundButton from 'components/RoundButton/RoundButton';
+// import Button from 'components/Button/Button';
 // import LinkToViewAd from 'components/LinkToViewAd/LinkToViewAd';
 // import Imgix from 'components/Imgix/Imgix';
 // import AdTitle from 'components/AdTitle/AdTitle';
@@ -65,7 +64,6 @@
 //   paddingRight: theme.spacing.unit * 2,
 //   ...styles,
 // })
-
 
 // const styles = theme => !console.log(theme) && ({
 //   root: {
@@ -421,15 +419,15 @@
 //           <div className={classes.actions}>
 //             <IconButton className={classes.actionIcon} color="inherit"><ShareIcon /></IconButton>
 //             <div className={classes.actionButtons}>
-//               <RoundButton className={classes.actionButton} inverse fullWidth>Call</RoundButton>
-//               <RoundButton className={classes.actionButton} color="primary" variant="raised" fullWidth>Chat</RoundButton>
+//               <Button className={classes.actionButton} inverse fullWidth>Call</Button>
+//               <Button className={classes.actionButton} color="primary" variant="raised" fullWidth>Chat</Button>
 //             </div>
 //             <IconButton className={classes.actionIcon} color="inherit"><FavoriteIcon /></IconButton>
 //           </div>
 //         </div>
 //         <div className={classes.slideshow}>
 //           <div className={classes.header}>
-//             <RoundButton variant="raised" onClick={this.closeSlideshow}>Back to ad</RoundButton>
+//             <Button variant="raised" onClick={this.closeSlideshow}>Back to ad</Button>
 //           </div>
 //           {slideshowOpened && <ImageSlider
 //             className={classes.slider}

@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import DoneIcon from 'material-ui-icons/CheckCircle';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
+import Button from 'components/Button/Button';
 
 const styles = theme => ({
   root: {

@@ -11,8 +11,8 @@ import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import { selectors as routerSelectors } from 'store/router';
 import translate from 'hocs/translate';
-import FilterOption from 'components/FilterOption/FilterOption';
 import Link from 'components/Link/Link';
+import FilterOption from '../FilterOption/FilterOption';
 
 type LinkType = {
   id: String,
@@ -42,7 +42,6 @@ const FilterByCategory = ({ categoryLinks, classes }: Props) => (
           buttonProps={{
             to,
             exact: true,
-            activeClassName: classes.active,
           }}
         >
           {label}

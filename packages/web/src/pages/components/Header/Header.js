@@ -1,16 +1,20 @@
 import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import Button from 'material-ui/Button';
+import { withStateHandlers } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import TuneIcon from 'material-ui-icons/Tune';
 import MenuIcon from 'mdi-react/MenuIcon';
-import { actions as modalActions } from 'store/modals';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import hideUser from 'hocs/hideUser';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
-import RoundButton from 'components/RoundButton/RoundButton';
+import Button from 'components/Button/Button';
+import ShowCreateAdButton from 'components/ShowCreateAdButton/ShowCreateAdButton';
+import ProfileImage from 'components/ProfileImage/ProfileImage';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Support from 'modules/Support/Support';
 import Login from 'modules/Login/Login';
@@ -44,8 +48,7 @@ const styles = theme => ({
   },
   searchInput: {
     flex: '1 1 auto',
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: theme.spacing.unit,
+    marginLeft: theme.spacing.unit * 2,
     [theme.breakpoints.down(theme.map.phone)]: {
       margin: 0,
     },
@@ -66,6 +69,7 @@ const styles = theme => ({
     },
   },
   createAdButton: {
+    marginLeft: theme.spacing.unit * 3,
     [theme.breakpoints.down(theme.map.laptop)]: {
       display: 'none',
     },
@@ -77,7 +81,7 @@ const styles = theme => ({
     },
   },
   messagesButton: {
-    margin: [0, theme.spacing.unit],
+    marginLeft: theme.spacing.unit,
     [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
@@ -101,11 +105,24 @@ const styles = theme => ({
   },
 });
 
-const Header = ({ inHome, openModal, toggleModal, classes }) => (
+const Header = ({
+  inHome,
+  openModal,
+  isAuthenticated,
+  currentUserId,
+  mobileMenuOpened,
+  openMobileMenu,
+  closeMobileMenu,
+  classes,
+}) => (
   <React.Fragment>
     <div className={classes.mobileMenuButton}>
-      <IconButton onClick={() => toggleModal('mobileMenu')}>
-        <MenuIcon />
+      <IconButton onClick={openMobileMenu}>
+        {isAuthenticated ? (
+          <ProfileImage userId={currentUserId} size="28" />
+        ) : (
+          <MenuIcon />
+        )}
       </IconButton>
     </div>
     <Link to="/" exact className={classes.logoLink}>
@@ -114,14 +131,7 @@ const Header = ({ inHome, openModal, toggleModal, classes }) => (
     <div className={classes.searchInput}>
       <SearchQuery inHome={inHome} />
     </div>
-    <RoundButton
-      className={classes.createAdButton}
-      color="primary"
-      variant="raised"
-      onClick={() => openModal('createAd')}
-    >
-      Sell your stuff
-    </RoundButton>
+    <ShowCreateAdButton className={classes.createAdButton} />
     <LoginButton
       className={classes.loginButton}
       color="inherit"
@@ -147,20 +157,40 @@ const Header = ({ inHome, openModal, toggleModal, classes }) => (
       </UnreadConversationsBadge>
     </MessagesButton>
     <div className={classes.desktopMenu}>
-      <DesktopMenu />
+      <DesktopMenu currentUserId={currentUserId} />
     </div>
+    <Drawer open={mobileMenuOpened} onClose={closeMobileMenu}>
+      <MobileMenu
+        isAuthenticated={isAuthenticated}
+        currentUserId={currentUserId}
+        onClose={closeMobileMenu}
+      />
+    </Drawer>
     <ReduxModal id="login" content={Login} closeButton />
     <ReduxModal id="createAd" content={CreateAd} />
     <ReduxModal id="support" content={Support} />
-    <ReduxModal id="mobileMenu" content={MobileMenu} />
   </React.Fragment>
 );
 
-const mapDispatchToProps = {
-  openModal: modalActions.openModal,
-  toggleModal: modalActions.toggleModal,
-};
+const mapStateToProps = createStructuredSelector({
+  currentUserId: authSelectors.uidSelector,
+  isAuthenticated: authSelectors.isAuthenticatedSelector,
+});
 
-export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
-  Header,
-);
+export default R.compose(
+  connect(mapStateToProps),
+  withStateHandlers(
+    {
+      mobileMenuOpened: false,
+    },
+    {
+      openMobileMenu: () => () => ({
+        mobileMenuOpened: true,
+      }),
+      closeMobileMenu: () => () => ({
+        mobileMenuOpened: false,
+      }),
+    },
+  ),
+  withStyles(styles),
+)(Header);

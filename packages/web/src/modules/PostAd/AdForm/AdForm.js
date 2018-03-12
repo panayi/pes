@@ -9,7 +9,7 @@ import { withProps, withState } from 'recompose';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
-import RoundButton from 'components/RoundButton/RoundButton';
+import Button from 'components/Button/Button';
 import Spinner from 'components/Spinner/Spinner';
 import EditAdImages from '../EditAdImages/EditAdImages';
 import Form from './Form/Form';
@@ -143,14 +143,14 @@ class AdForm extends Component<Props> {
               />
             </DialogContent>
             <DialogActions>
-              <RoundButton
+              <Button
                 color="primary"
                 variant="raised"
                 type="submit"
                 size="large"
               >
                 {submitButtonLabel}
-              </RoundButton>
+              </Button>
             </DialogActions>
           </form>
         )}

@@ -1,11 +1,11 @@
 import * as R from 'ramda';
 import classNames from 'classnames';
-import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import { NavLink } from 'react-router-dom';
 import { defaultProps, withProps } from 'recompose';
 import omitProps from 'utils/omitProps';
+import Button from 'components/Button/Button';
 
 const DEFAULT_ACTIVE_CLASS_NAME = 'link--active';
 

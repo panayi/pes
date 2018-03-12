@@ -1,8 +1,8 @@
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
+import AppBar from 'components/AppBar/AppBar';
 import CloseButton from '../../CloseButton/CloseButton';
 
 const styles = () => ({

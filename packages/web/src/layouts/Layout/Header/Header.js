@@ -1,15 +1,11 @@
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import { withStyles } from 'material-ui/styles';
+import AppBar from 'components/AppBar/AppBar';
 
 const styles = theme => ({
   appBar: {
     zIndex: 1201, // 1 more than sidebar
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.common.white,
-    borderBottom: [1, 'solid', theme.palette.divider],
-    boxShadow: 'none',
   },
   toolbar: {
     display: 'flex',
@@ -17,6 +13,8 @@ const styles = theme => ({
     padding: 0,
     minHeight: theme.layout.headerHeight.phone,
     [theme.breakpoints.up(theme.map.tablet)]: {
+      paddingRight: theme.spacing.unit * 2,
+      paddingLeft: theme.spacing.unit * 2,
       minHeight: theme.layout.headerHeight.tablet,
     },
   },

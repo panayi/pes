@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
+import Button from 'components/Button/Button';
 import GoogleIcon from '../GoogleIcon/GoogleIcon';
 
 const styles = theme => ({
@@ -16,7 +16,7 @@ const styles = theme => ({
 });
 
 const GoogleButton = ({ children, classes, ...rest }) => (
-  <Button {...rest} variant="raised" classes={{ root: classes.root }}>
+  <Button {...rest} variant="outline" classes={{ root: classes.root }}>
     <GoogleIcon />
     <span className={classes.text}>{children}</span>
   </Button>

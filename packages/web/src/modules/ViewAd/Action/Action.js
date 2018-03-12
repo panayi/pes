@@ -1,9 +1,9 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Button from 'material-ui/Button';
 import { actions as dataActions } from 'store/firebase/data';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
+import Button from 'components/Button/Button';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 
 const Action = props => {
