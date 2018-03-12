@@ -20,6 +20,9 @@ type Props = {
 };
 
 const styles = theme => ({
+  formGroup: {
+    alignItems: 'flex-end',
+  },
   input: {
     flex: 1,
     marginLeft: theme.spacing.unit,
@@ -40,7 +43,7 @@ const Form = (props: Props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormGroup row>
+      <FormGroup className={classes.formGroup} row>
         <FormControl error={R.has('countryCode', errors)}>
           <CountrySelect
             name="countryCode"

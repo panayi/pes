@@ -13,7 +13,7 @@ import Page from './Page/Page';
 const styles = theme => ({
   '@global': {
     body: {
-      backgroundColor: theme.palette.background.default,
+      backgroundColor: '#f5f5f5',
     },
   },
   root: {

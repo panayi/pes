@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import authConfig from '@pesposa/core/src/config/auth';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import GoogleButton from 'components/GoogleButton/GoogleButton';
-import withLoginAction from '../withLoginAction';
 
 const providerId = firebaseConfig.PROVIDER_IDS.google;
 
@@ -25,4 +24,4 @@ LoginWithGoogle.defaultProps = {
   fullWidth: false,
 };
 
-export default withLoginAction(LoginWithGoogle);
+export default LoginWithGoogle;

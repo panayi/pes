@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import authConfig from '@pesposa/core/src/config/auth';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import FacebookButton from 'components/FacebookButton/FacebookButton';
-import withLoginAction from '../withLoginAction';
 
 const providerId = firebaseConfig.PROVIDER_IDS.facebook;
 
@@ -26,4 +25,4 @@ LoginWithFacebook.defaultProps = {
   fullWidth: false,
 };
 
-export default withLoginAction(LoginWithFacebook);
+export default LoginWithFacebook;

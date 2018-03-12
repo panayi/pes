@@ -23,10 +23,11 @@ const withMyProfileData = mapPropsToPaths => {
 
   const mapStateToProps = (state, props) => {
     const data = dataSelector(state, props);
+    const profile = profileSelectors.profileSelector(state, props);
 
     return {
       ...data,
-      isLoaded: R.map(isLoaded, data),
+      isLoaded: R.map(R.always(isLoaded(profile)), data),
     };
   };
 
