@@ -22,7 +22,7 @@ const mapDispatchToProps = {
 export default R.compose(
   connect(mapStateToProps, mapDispatchToProps),
   withProps({
-    title: 'What are you selling?',
+    title: 'Sell your stuff',
     submitButtonLabel: 'Post Ad',
   }),
   requireUserToCallAction('onSubmit'),

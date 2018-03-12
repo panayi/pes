@@ -33,6 +33,9 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 3,
     paddingLeft: theme.spacing.unit * 1.5,
     paddingRight: theme.spacing.unit * 1.5,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      paddingTop: theme.spacing.unit * 2,
+    },
   },
   sidebar: {
     [theme.breakpoints.down(theme.layout.breakpoints.filtersDialog)]: {
