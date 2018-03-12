@@ -11,6 +11,7 @@ import jss from 'config/styles';
 import theme from 'config/theme';
 import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
+import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import SearchProvider from 'components/SearchProvider/SearchProvider';
 import routes from 'routes';
 
@@ -26,16 +27,18 @@ ensureReady(routes).then(data => {
 
   return hydrate(
     <BrowserRouter>
-      <Provider store={store}>
-        <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-          <JssProvider registry={sheetsRegistry} jss={jss}>
-            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-              <Reboot />
-              <After data={data} routes={routes} />
-            </MuiThemeProvider>
-          </JssProvider>
-        </SearchProvider>
-      </Provider>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+            <JssProvider registry={sheetsRegistry} jss={jss}>
+              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                <Reboot />
+                <After data={data} routes={routes} />
+              </MuiThemeProvider>
+            </JssProvider>
+          </SearchProvider>
+        </Provider>
+      </ErrorBoundary>
     </BrowserRouter>,
     document.getElementById('root'),
     () => {
