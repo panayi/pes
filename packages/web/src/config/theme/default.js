@@ -85,14 +85,6 @@ export default createMuiTheme({
     },
   },
   overrides: {
-    MuiListItemText: {
-      root: {
-        paddingLeft: 0,
-      },
-      inset: {
-        paddingLeft: '40px !important',
-      },
-    },
     MuiBackdrop: {
       root: {
         backgroundColor: 'rgba(255, 255, 255, 0.85)',

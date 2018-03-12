@@ -17,6 +17,8 @@ const styles = theme => ({
     padding: 0,
     minHeight: theme.layout.headerHeight.phone,
     [theme.breakpoints.up(theme.map.tablet)]: {
+      paddingRight: theme.spacing.unit * 2,
+      paddingLeft: theme.spacing.unit * 2,
       minHeight: theme.layout.headerHeight.tablet,
     },
   },

@@ -24,6 +24,12 @@ const styles = theme => ({
   raised: {
     fontWeight: 700,
   },
+  sizeSmall: {
+    minHeight: 34,
+  },
+  sizeLarge: {
+    minHeight: 43,
+  },
   disabled: {
     borderColor: theme.palette.action.disabledBackground,
   },

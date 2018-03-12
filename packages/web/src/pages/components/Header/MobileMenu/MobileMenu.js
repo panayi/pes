@@ -7,10 +7,11 @@ import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import HomeIcon from 'material-ui-icons/Home';
+import MessageIcon from 'material-ui-icons/Message';
+import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import { actions as modalActions } from 'store/modals';
 import Button from 'components/Button/Button';
-import ProfileImage from 'components/ProfileImage/ProfileImage';
-import UserFullName from 'components/UserFullName/UserFullName';
+import ProfileBox from '../ProfileBox/ProfileBox';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
 const PROFILE_IMAGE_SIZE = 96;
@@ -19,6 +20,10 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
+  },
+  login: {
+    display: 'flex',
+    alignItems: 'center',
   },
   content: {
     display: 'flex',
@@ -64,67 +69,40 @@ class Menu extends Component {
   };
 
   navigateTo = path => {
-    const { history, closeModal } = this.props;
-    history.push(path);
-    closeModal();
+    this.props.history.push(path);
   };
 
   closeWithDelay = () => {
     setTimeout(() => {
-      this.props.closeModal();
+      this.props.onClose();
     }, 500);
   };
 
-  openAnotherModal = modalId => {
+  openModal = modalId => {
     this.props.openModal(modalId);
     this.closeWithDelay();
   };
-
-  renderProfileImage() {
-    const { currentUserId, isAuthenticated, classes } = this.props;
-
-    return isAuthenticated ? (
-      <ListItem button>
-        <ListItemIcon>
-          <ProfileImage userId={currentUserId} size="24" />
-        </ListItemIcon>
-        <ListItemText
-          primary={
-            <UserFullName
-              className={classes.displayName}
-              userId={currentUserId}
-            />
-          }
-        />
-      </ListItem>
-    ) : null;
-  }
-
-  renderLogin() {
-    const { isAuthenticated } = this.props;
-
-    return !isAuthenticated ? (
-      <Button
-        component={ListItem}
-        button
-        onClick={() => this.openAnotherModal('login')}
-      >
-        <ListItemText primary="Login or Create Account" />
-      </Button>
-    ) : null;
-  }
 
   renderUserLinks() {
     const { isAuthenticated } = this.props;
 
     return isAuthenticated ? (
       <React.Fragment>
-        <ListItem button onClick={() => this.navigateTo('/messages')}>
-          <ListItemText inset primary="Chat" />
-        </ListItem>
-        <ListItem button onClick={() => this.navigateTo('/profile')}>
-          <ListItemText inset primary="My Profile" />
-        </ListItem>
+        <List component="nav">
+          <ListItem button onClick={() => this.navigateTo('/messages')}>
+            <ListItemIcon>
+              <MessageIcon />
+            </ListItemIcon>
+            <ListItemText primary="Messages" />
+          </ListItem>
+          <ListItem button onClick={() => this.navigateTo('/profile')}>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="My Profile" />
+          </ListItem>
+        </List>
+        <Divider />
       </React.Fragment>
     ) : null;
   }
@@ -140,11 +118,16 @@ class Menu extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { isAuthenticated, currentUserId, classes } = this.props;
 
     return (
       <React.Fragment>
         <div className={classes.root}>
+          <ProfileBox
+            isAuthenticated={isAuthenticated}
+            currentUserId={currentUserId}
+            openModal={this.openModal}
+          />
           <List component="nav">
             <ListItem button onClick={() => this.navigateTo('/')}>
               <ListItemIcon>
@@ -154,20 +137,15 @@ class Menu extends Component {
             </ListItem>
           </List>
           <Divider />
+          {this.renderUserLinks()}
           <List component="nav">
-            {this.renderLogin()}
-            {this.renderProfileImage()}
-            {this.renderUserLinks()}
-          </List>
-          <Divider />
-          <List component="nav">
-            <ListItem button onClick={() => this.openAnotherModal('createAd')}>
+            <ListItem button onClick={() => this.openModal('createAd')}>
               <ListItemText primary="Sell your stuff" />
             </ListItem>
             <Button
               component={ListItem}
               button
-              onClick={() => this.openAnotherModal('support')}
+              onClick={() => this.openModal('support')}
             >
               <ListItemText primary="Support / Feedback" />
             </Button>

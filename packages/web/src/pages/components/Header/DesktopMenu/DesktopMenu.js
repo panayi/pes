@@ -2,18 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import Typography from 'material-ui/Typography';
 import Popover from 'material-ui/Popover';
 import { withStyles } from 'material-ui/styles';
 import { actions as modalActions } from 'store/modals';
-import { selectors as authSelectors } from 'store/firebase/auth';
-import { selectors as profileSelectors } from 'store/firebase/profile';
 import hideVisitor from 'hocs/hideVisitor';
-import Link from 'components/Link/Link';
 import Button from 'components/Button/Button';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
-import UserFullName from 'components/UserFullName/UserFullName';
+import ProfileBox from '../ProfileBox/ProfileBox';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
 const PROFILE_IMAGE_SIZE = 96;
@@ -22,11 +17,6 @@ const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-  },
-  content: {
-    display: 'flex',
-    flex: 1,
-    margin: theme.spacing.unit * 2,
   },
   menuIcon: {
     fill: theme.palette.common.white,
@@ -47,6 +37,7 @@ const styles = theme => ({
     fontWeight: 600,
   },
   supportButton: {
+    marginRight: theme.spacing.unit,
     textTransform: 'none',
   },
   logoutButton: {
@@ -63,12 +54,7 @@ const styles = theme => ({
 
 class DesktopMenu extends Component {
   static propTypes = {
-    email: PropTypes.string,
     classes: PropTypes.shape().isRequired,
-  };
-
-  static defaultProps = {
-    email: null,
   };
 
   state = {
@@ -93,13 +79,7 @@ class DesktopMenu extends Component {
   button = null;
 
   render() {
-    const {
-      currentUserId,
-      email,
-      phoneNumber,
-      openModal,
-      classes,
-    } = this.props;
+    const { currentUserId, openModal, classes } = this.props;
     const { open, anchorEl } = this.state;
 
     return (
@@ -127,30 +107,7 @@ class DesktopMenu extends Component {
           elevation={20}
         >
           <div className={classes.root}>
-            <div className={classes.content}>
-              <div className={classes.imageWrap}>
-                <ProfileImage
-                  size={PROFILE_IMAGE_SIZE}
-                  userId={currentUserId}
-                />
-              </div>
-              <div>
-                <UserFullName
-                  className={classes.displayName}
-                  userId={currentUserId}
-                />
-                <Typography className={classes.small}>{email}</Typography>
-                <Typography className={classes.small}>{phoneNumber}</Typography>
-                <Link
-                  className={classes.profileLink}
-                  to="/profile"
-                  variant="raised"
-                  color="primary"
-                >
-                  My Profile
-                </Link>
-              </div>
-            </div>
+            <ProfileBox currentUserId={currentUserId} isAuthenticated />
             <div className={classes.footer}>
               <Button
                 className={classes.supportButton}
@@ -169,18 +126,12 @@ class DesktopMenu extends Component {
   }
 }
 
-const mapStateToProps = createStructuredSelector({
-  currentUserId: authSelectors.uidSelector,
-  email: profileSelectors.profileEmailSelector,
-  phoneNumber: profileSelectors.profilePhoneNumberSelector,
-});
-
 const mapDispatchToProps = {
   openModal: modalActions.openModal,
 };
 
 export default R.compose(
   hideVisitor,
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(null, mapDispatchToProps),
   withStyles(styles),
 )(DesktopMenu);

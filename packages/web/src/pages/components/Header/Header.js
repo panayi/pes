@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import { withState } from 'recompose';
+import { withStateHandlers } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
@@ -111,13 +111,14 @@ const Header = ({
   isAuthenticated,
   currentUserId,
   mobileMenuOpened,
-  setMobileMenuOpened,
+  openMobileMenu,
+  closeMobileMenu,
   classes,
 }) => (
   <React.Fragment>
     <div className={classes.mobileMenuButton}>
-      <IconButton onClick={() => setMobileMenuOpened(true)}>
-        {currentUserId ? (
+      <IconButton onClick={openMobileMenu}>
+        {isAuthenticated ? (
           <ProfileImage userId={currentUserId} size="28" />
         ) : (
           <MenuIcon />
@@ -163,12 +164,13 @@ const Header = ({
       </UnreadConversationsBadge>
     </MessagesButton>
     <div className={classes.desktopMenu}>
-      <DesktopMenu />
+      <DesktopMenu currentUserId={currentUserId} />
     </div>
-    <Drawer open={mobileMenuOpened} onClose={() => setMobileMenuOpened(false)}>
+    <Drawer open={mobileMenuOpened} onClose={closeMobileMenu}>
       <MobileMenu
         isAuthenticated={isAuthenticated}
         currentUserId={currentUserId}
+        onClose={closeMobileMenu}
       />
     </Drawer>
     <ReduxModal id="login" content={Login} closeButton />
@@ -188,6 +190,18 @@ const mapDispatchToProps = {
 
 export default R.compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withState('mobileMenuOpened', 'setMobileMenuOpened', false),
+  withStateHandlers(
+    {
+      mobileMenuOpened: false,
+    },
+    {
+      openMobileMenu: () => () => ({
+        mobileMenuOpened: true,
+      }),
+      closeMobileMenu: () => () => ({
+        mobileMenuOpened: false,
+      }),
+    },
+  ),
   withStyles(styles),
 )(Header);
