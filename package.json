@@ -30,7 +30,6 @@
     "mkdirp": "^0.5.1",
     "node-cmd": "^3.0.0",
     "npm-run-all": "^4.1.1",
-    "pre-build-webpack": "^0.1.0",
     "prettier": "^1.11.0",
     "svg-inline-loader": "^0.8.0",
     "uglifyjs-webpack-plugin": "^1.2.2",
@@ -52,15 +51,15 @@
     "flow-typed:install": "flow-typed install --libdefDir ./types",
     "codeclimate": "codeclimate analyze ./packages/**/src -f html > codeclimate-output.html",
     "build:web": "cd packages/web && yarn build",
-    "build:functions": "webpack --config ./tools/config/webpack.functions.js",
+    "build:functions": "node ./tools/scripts/build.functions.js",
     "build:database": "node ./tools/scripts/build.database.js",
     "build:admin": "webpack --config ./tools/config/webpack.admin.js",
     "build": "run-p build:web build:functions",
     "deploy:web": "yarn build:web && firebase deploy --only hosting",
-    "deploy:functions": "yarn build:functions && firebase deploy --only functions",
+    "deploy:functions": "yarn build:functions && cd build/functions && yarn && firebase deploy --only functions",
     "deploy:database": "yarn build:database && firebase deploy --only database",
     "admin": "yarn build:admin && node ./build/admin/index.js",
-    "deploy": "run-p deploy:web deploy:functions && yarn deploy:database"
+    "deploy": "run-p deploy:functions && yarn deploy:database && deploy:web"
   },
   "lint-staged": {
     "{packages/*/src,packages/web/test,tools}/**/*.{js,jsx}": [

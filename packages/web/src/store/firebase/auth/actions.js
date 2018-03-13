@@ -68,7 +68,6 @@ export const login = credentials => async dispatch => {
   try {
     await dispatch(firebaseApi.auth.login(credentials));
     dispatch(loginActions.loginSucceeded());
-    dispatch(setCurrentUserInfo());
   } catch (error) {
     dispatch(loginActions.loginFailed());
     throw error;

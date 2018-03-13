@@ -1,7 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const fs = require('fs');
 const path = require('path');
 const R = require('ramda');
+const webpack = require('webpack');
+const logger = require('winston-color');
 const constants = require('../constants');
+const config = require('../config/webpack.functions');
 
 const ensureDirectoryExists = filePath => {
   const dirname = path.dirname(filePath);
@@ -22,6 +26,10 @@ const build = () => {
   const rootPackagePath = path.join(constants.paths.root, 'package.json');
   const webPackagePath = path.join(constants.paths.web, 'package.json');
   const corePackagePath = path.join(constants.paths.core, 'package.json');
+  const outputPath = path.join(
+    constants.paths.build,
+    constants.folders.functions,
+  );
 
   const output = R.compose(
     JSON.stringify,
@@ -45,13 +53,18 @@ const build = () => {
     R.map(filename => JSON.parse(fs.readFileSync(filename, 'utf8'))),
   )([applicationPackagePath, rootPackagePath, webPackagePath, corePackagePath]);
 
-  const outputFilePath = path.join(
-    constants.paths.build,
-    constants.folders.functions,
-    'package.json',
-  );
+  const outputFilePath = path.join(outputPath, 'package.json');
+
+  const compiler = webpack(config);
+
   ensureDirectoryExists(outputFilePath);
   fs.writeFileSync(outputFilePath, output);
+
+  compiler.run(err => {
+    if (err) {
+      logger.error(err);
+    }
+  });
 };
 
-module.exports = build;
+build();

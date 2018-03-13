@@ -3,10 +3,8 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WebpackPreBuildPlugin = require('pre-build-webpack');
 const baseConfig = require('./webpack.base.js');
 const constants = require('../constants');
-const build = require('../scripts/build.functions.js');
 
 const outputPath = path.join(
   constants.paths.build,
@@ -30,7 +28,6 @@ module.exports = merge.smart(baseConfig, {
     new webpack.DefinePlugin({
       'process.env.IS_FIREBASE_FUNCTIONS_ENV': true,
     }),
-    new WebpackPreBuildPlugin(build),
     new CopyWebpackPlugin([
       {
         from: path.join(
