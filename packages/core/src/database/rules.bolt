@@ -348,7 +348,7 @@ path /ads/published/{id} {
   validate() {
     categoryIsValid(this.category) &&
     createOnly(this.createdAt) &&
-    (this.sold == null || this.sold == true)
+    (prior(this.sold) != true || this.sold == true)
   }
 }
 

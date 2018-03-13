@@ -10,4 +10,4 @@ const serializePrice = R.compose(
   R.over(R.lensProp('price'), parseFloat),
 );
 
-export const serializeAd = R.compose(serializePrice);
+export const serializeAd = R.compose(R.omit(['images']), serializePrice);

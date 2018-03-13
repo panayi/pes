@@ -16,6 +16,7 @@ type Props = {
   adId: string,
   openModal: Function,
   classes: Object,
+  children: React$Node,
 };
 
 const styles = theme => ({
@@ -26,14 +27,15 @@ const styles = theme => ({
   },
 });
 
-const EditAdLink = ({ adId, openModal, classes }: Props) => (
+const EditAdLink = ({ adId, openModal, children, classes, ...rest }: Props) => (
   <React.Fragment>
     <Button
       className={classes.root}
       color="primary"
+      {...rest}
       onClick={() => openModal('editAd', { adId })}
     >
-      <ModeEditIcon />
+      {children || <ModeEditIcon />}
     </Button>
     <ReduxModal id="editAd" content={EditAd} />
   </React.Fragment>

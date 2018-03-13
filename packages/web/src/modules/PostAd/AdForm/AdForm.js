@@ -53,8 +53,10 @@ const styles = theme => ({
     margin: 0,
   },
   content: {
-    minWidth: 530,
-    minHeight: 380,
+    [theme.breakpoints.up(theme.map.tablet)]: {
+      minWidth: 530,
+      minHeight: 380,
+    },
   },
   editImages: {
     marginBottom: theme.spacing.unit * 2,

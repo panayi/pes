@@ -23,7 +23,7 @@ const EditAdContent = R.compose(
   hydrateAd(propSelector(['adId'])),
   connect(mapStateToProps, mapDispatchToProps),
   withProps(({ adId, saveAd, closeModal }) => ({
-    title: 'Change your ad',
+    title: 'Edit your ad',
     submitButtonLabel: 'Save',
     onSubmit: async ad => {
       await saveAd(adId, ad);

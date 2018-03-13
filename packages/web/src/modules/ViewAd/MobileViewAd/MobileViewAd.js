@@ -31,6 +31,7 @@ import AdDate from 'components/AdDate/AdDate';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
 import ImageSlider from '../ImageSlider/ImageSlider';
+import EditAdLink from '../EditAdLink/EditAdLink';
 import StaticMap from '../StaticMap/StaticMap';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
@@ -323,108 +324,90 @@ class MobileViewAd extends React.Component {
           </div>
         </div>
         <div className={classes.actions}>
-          <Action
-            ad={ad}
-            currentUserId={uid}
-            seller={
-              <Button
-                className={classes.actionButton}
-                variant="raised"
-                color="primary"
-                fullWidth
-                onClick={() => markAdAsSold()}
-              >
-                Mark as sold
-              </Button>
-            }
-            buyer={
-              <div className={classes.actionButtons}>
+          <div className={classes.actionButtons}>
+            <Action
+              ad={ad}
+              currentUserId={uid}
+              seller={
+                <React.Fragment>
+                  <Button
+                    className={classes.actionButton}
+                    size="small"
+                    variant="outline"
+                    color="primary"
+                    fullWidth
+                    onClick={() => markAdAsSold()}
+                  >
+                    Mark as sold
+                  </Button>
+                  <EditAdLink
+                    className={classes.actionButton}
+                    adId={adId}
+                    ad={ad}
+                    size="small"
+                    variant="raised"
+                    fullWidth
+                  >
+                    Edit your ad
+                  </EditAdLink>
+                </React.Fragment>
+              }
+              buyer={
+                <React.Fragment>
+                  <RevealPhoneButton
+                    ad={ad}
+                    className={classNames(
+                      classes.actionButton,
+                      classes.callButton,
+                    )}
+                    size="small"
+                    variant="outline"
+                    color="primary"
+                    fullWidth
+                  >
+                    Call
+                  </RevealPhoneButton>
+                  <Button
+                    className={classes.actionButton}
+                    size="small"
+                    variant="raised"
+                    color="primary"
+                    fullWidth
+                    onClick={viewConversation}
+                  >
+                    <MessageIcon />&nbsp;&nbsp;Message
+                  </Button>
+                </React.Fragment>
+              }
+              noUser={
                 <RevealPhoneButton
                   ad={ad}
                   className={classNames(
                     classes.actionButton,
                     classes.callButton,
                   )}
-                  color="primary"
-                  fullWidth
                   size="small"
                   variant="outline"
+                  color="primary"
+                  fullWidth
                 >
                   Call
                 </RevealPhoneButton>
-                <Button
+              }
+              sold={
+                <Link
+                  to="/"
                   className={classes.actionButton}
-                  color="primary"
-                  variant="raised"
-                  fullWidth
                   size="small"
-                  onClick={viewConversation}
+                  variant="raised"
+                  color="primary"
+                  fullWidth
                 >
-                  <MessageIcon />&nbsp;&nbsp;Message
-                </Button>
-              </div>
-            }
-            noUser={
-              <RevealPhoneButton
-                ad={ad}
-                className={classNames(classes.actionButton, classes.callButton)}
-                color="primary"
-                fullWidth
-                size="small"
-                variant="outline"
-              >
-                Call
-              </RevealPhoneButton>
-            }
-            sold={
-              <Link
-                to="/"
-                className={classes.actionButton}
-                color="primary"
-                variant="raised"
-                fullWidth
-                size="small"
-              >
-                Find more like this
-              </Link>
-            }
-          />
-          {/* {ad.user === uid ? (
-            <Button
-              className={classes.actionButton}
-              variant="raised"
-              color="primary"
-              fullWidth
-              onClick={() => markAdAsSold()}
-            >
-              Mark as sold
-            </Button>
-          ) : (
-            <div className={classes.actionButtons}>
-              <RevealPhoneButton
-                ad={ad}
-                className={classNames(classes.actionButton, classes.callButton)}
-                color="primary"
-                fullWidth
-                size="small"
-                variant="outline"
-                disabled={ad.sold}
-              >
-                Call
-              </RevealPhoneButton>
-              <Button
-                className={classes.actionButton}
-                color="primary"
-                variant="raised"
-                fullWidth
-                size="small"
-                disabled={ad.sold}
-                onClick={viewConversation}
-              >
-                <MessageIcon />&nbsp;&nbsp;Message
-              </Button>
-            </div>
-          )} */}
+                  Find more like this
+                </Link>
+              }
+            />
+          </div>
         </div>
       </div>
     );
