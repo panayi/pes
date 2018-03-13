@@ -35,6 +35,8 @@ import StaticMap from '../StaticMap/StaticMap';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
 import FavoriteAd from '../FavoriteAd/FavoriteAd';
+import SoldRibbon from '../SoldRibbon/SoldRibbon';
+import Action from '../Action/Action';
 
 const gutters = (theme, styles = {}) => ({
   paddingLeft: theme.spacing.unit * 2,
@@ -256,6 +258,7 @@ class MobileViewAd extends React.Component {
             role="button"
             tabIndex="-1"
           >
+            <SoldRibbon sold={ad.sold} />
             <ImageSlider
               className={classes.imageSlider}
               images={imagesList}
@@ -320,7 +323,73 @@ class MobileViewAd extends React.Component {
           </div>
         </div>
         <div className={classes.actions}>
-          {ad.user === uid ? (
+          <Action
+            ad={ad}
+            currentUserId={uid}
+            seller={
+              <Button
+                className={classes.actionButton}
+                variant="raised"
+                color="primary"
+                fullWidth
+                onClick={() => markAdAsSold()}
+              >
+                Mark as sold
+              </Button>
+            }
+            buyer={
+              <div className={classes.actionButtons}>
+                <RevealPhoneButton
+                  ad={ad}
+                  className={classNames(
+                    classes.actionButton,
+                    classes.callButton,
+                  )}
+                  color="primary"
+                  fullWidth
+                  size="small"
+                  variant="outline"
+                >
+                  Call
+                </RevealPhoneButton>
+                <Button
+                  className={classes.actionButton}
+                  color="primary"
+                  variant="raised"
+                  fullWidth
+                  size="small"
+                  onClick={viewConversation}
+                >
+                  <MessageIcon />&nbsp;&nbsp;Message
+                </Button>
+              </div>
+            }
+            noUser={
+              <RevealPhoneButton
+                ad={ad}
+                className={classNames(classes.actionButton, classes.callButton)}
+                color="primary"
+                fullWidth
+                size="small"
+                variant="outline"
+              >
+                Call
+              </RevealPhoneButton>
+            }
+            sold={
+              <Link
+                to="/"
+                className={classes.actionButton}
+                color="primary"
+                variant="raised"
+                fullWidth
+                size="small"
+              >
+                Find more like this
+              </Link>
+            }
+          />
+          {/* {ad.user === uid ? (
             <Button
               className={classes.actionButton}
               variant="raised"
@@ -355,7 +424,7 @@ class MobileViewAd extends React.Component {
                 <MessageIcon />&nbsp;&nbsp;Message
               </Button>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     );

@@ -1,52 +1,38 @@
-import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { actions as dataActions } from 'store/firebase/data';
-import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
-import Button from 'components/Button/Button';
-import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
+import PropTypes from 'prop-types';
 
 const Action = props => {
-  const { ad, adId, currentUserId, markAdAsSold, onMessageSend } = props;
+  const { sold, noUser, buyer, seller, ad, currentUserId } = props;
 
   if (ad.sold) {
-    return null;
+    return sold;
   }
 
-  if (!ad.user) {
-    return <RevealPhoneButton ad={ad}>Contact seller</RevealPhoneButton>;
+  if (ad.user && ad.user === currentUserId) {
+    return seller;
   }
 
-  if (ad.user !== currentUserId) {
-    return (
-      <SendMessage
-        variant="float"
-        placeholder="Ask a question"
-        adId={adId}
-        onSuccess={onMessageSend}
-      />
-    );
+  if (ad.user && ad.user !== currentUserId) {
+    return buyer;
   }
 
-  // current user is seller
-  return (
-    <Button
-      variant="raised"
-      color="primary"
-      fullWidth
-      onClick={() => markAdAsSold()}
-    >
-      Mark as sold
-    </Button>
-  );
+  return noUser;
 };
 
-const mapDispatchToProps = (dispatch, { adId }) =>
-  bindActionCreators(
-    {
-      markAdAsSold: () => dataActions.markAdAsSold(adId),
-    },
-    dispatch,
-  );
+Action.propTypes = {
+  ad: PropTypes.shape().isRequired,
+  currentUserId: PropTypes.string,
+  seller: PropTypes.node,
+  buyer: PropTypes.node,
+  noUser: PropTypes.node,
+  sold: PropTypes.node,
+};
 
-export default connect(null, mapDispatchToProps)(Action);
+Action.defaultProps = {
+  currentUserId: null,
+  seller: null,
+  buyer: null,
+  noUser: null,
+  sold: null,
+};
+
+export default Action;

@@ -8,7 +8,6 @@ import { createStructuredSelector } from 'reselect';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import { red } from 'material-ui/colors';
 import PlaceIcon from 'material-ui-icons/Place';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
@@ -21,16 +20,19 @@ import AdBody from 'components/AdBody/AdBody';
 import AdAddress from 'components/AdAddress/AdAddress';
 import AdDateChip from 'components/AdDateChip/AdDateChip';
 import FacebookShareButton from 'components/FacebookShareButton/FacebookShareButton';
+import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import TwitterShareButton from '../TwitterShareButton/TwitterShareButton';
 import EmailShareButton from '../EmailShareButton/EmailShareButton';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import StaticMap from '../StaticMap/StaticMap';
 import EditAdLink from '../EditAdLink/EditAdLink';
-import BrowseAds from '../BrowseAds/BrowseAds';
-import SellerBox from '../SellerBox/SellerBox';
-import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
 import Action from '../Action/Action';
-import SentMessages from '../SentMessages/SentMessages';
+import SoldRibbon from '../SoldRibbon/SoldRibbon';
+import MarkAsSold from '../MarkAsSold/MarkAsSold';
+import BrowseAds from './BrowseAds/BrowseAds';
+import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
+import SellerBox from './SellerBox/SellerBox';
+import SentMessages from './SentMessages/SentMessages';
 
 type Props = {
   ad: Ad,
@@ -133,12 +135,15 @@ const styles = theme => ({
   },
   seller: {
     position: 'absolute',
-    bottom: theme.spacing.unit * 2,
+    bottom: 0,
     left: theme.spacing.unit * 2,
     width: SLIDER_WIDTH - theme.spacing.unit * 4,
   },
+  sellerBox: {
+    marginBottom: theme.spacing.unit * 2,
+  },
   interactionBox: {
-    marginTop: theme.spacing.unit * 2,
+    marginBottom: theme.spacing.unit * 2,
   },
   shareButtons: {
     display: 'flex',
@@ -167,19 +172,6 @@ const styles = theme => ({
     boxShadow: 'none',
     borderRadius: '0 50% 50% 0',
   },
-  ribbon: {
-    width: 200,
-    background: red.A400,
-    position: 'absolute',
-    top: 25,
-    left: -50,
-    zIndex: 1,
-    textAlign: 'center',
-    lineHeight: '50px',
-    letterSpacing: 1,
-    color: theme.palette.getContrastText(red.A200),
-    transform: 'rotate(-45deg)',
-  },
 });
 
 const DesktopViewAd = ({
@@ -201,9 +193,7 @@ const DesktopViewAd = ({
       <Paper className={classes.ad}>
         <div className={classes.inner}>
           <div className={classes.images}>
-            {ad.sold && (
-              <Typography className={classes.ribbon}>Sold</Typography>
-            )}
+            <SoldRibbon sold={ad.sold} />
             <ImageSlider
               className={classes.slider}
               images={R.values(ad.images)}
@@ -245,14 +235,21 @@ const DesktopViewAd = ({
             </div>
             <div className={classes.seller}>
               <SentMessages messages={sentMessages} adId={adId} uid={uid} />
-              <SellerBox ad={ad} />
+              <SellerBox className={classes.sellerBox} ad={ad} />
               {ad.user && (
                 <div className={classes.interactionBox}>
                   <Action
                     ad={ad}
-                    adId={adId}
                     currentUserId={uid}
-                    onMessageSend={addMessage}
+                    seller={<MarkAsSold adId={adId} />}
+                    buyer={
+                      <SendMessage
+                        variant="float"
+                        placeholder="Ask a question"
+                        adId={adId}
+                        onSuccess={addMessage}
+                      />
+                    }
                   />
                 </div>
               )}

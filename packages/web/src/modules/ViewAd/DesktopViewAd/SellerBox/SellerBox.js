@@ -1,10 +1,11 @@
 import React from 'react';
+import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import Link from 'components/Link/Link';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
-import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
-import VerifiedWith from '../VerifiedWith/VerifiedWith';
+import RevealPhoneButton from '../../RevealPhoneButton/RevealPhoneButton';
+import VerifiedWith from '../../VerifiedWith/VerifiedWith';
 
 const SIZE = 64;
 
@@ -42,8 +43,8 @@ const styles = theme => ({
   },
 });
 
-const SellerBox = ({ ad, classes }) => (
-  <div className={classes.root}>
+const SellerBox = ({ ad, className, classes }) => (
+  <div className={classNames(classes.root, className)}>
     <Link className={classes.avatarWrap} to={`/user/${ad.user}`}>
       <ProfileImage className={classes.avatar} size={SIZE} userId={ad.user} />
     </Link>
@@ -60,8 +61,9 @@ const SellerBox = ({ ad, classes }) => (
         </React.Fragment>
       )}
     </div>
-    {/* Only for legacy ads */}
-    {!ad.user && <RevealPhoneButton ad={ad}>Contact seller</RevealPhoneButton>}
+    <RevealPhoneButton ad={ad} size="small" variant="raised">
+      Call seller
+    </RevealPhoneButton>
   </div>
 );
 

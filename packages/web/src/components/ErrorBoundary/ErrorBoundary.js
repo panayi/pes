@@ -8,26 +8,26 @@ import theme from 'config/theme';
 
 const rootStyles = {
   margin: '14vh auto 0',
-  padding: '32px 0',
+  padding: '32px 0 24px 0',
   maxWidth: '600px',
   width: '100%',
   boxSizing: 'borderBox',
-  fontSize: '1em',
-  lineHeight: '1.6em',
   textAlign: 'center',
   fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif',
   background: fade(theme.palette.primary.light, 0.4),
 };
 
 const buttonStyles = styles => ({
+  display: 'inline-block',
   minHeight: 38,
   background: 'white',
   color: 'black',
   textDecoration: 'none',
   padding: '10px 24px',
+  margin: 8,
   border: 0,
   borderRadius: 4,
-  fontSize: '16px',
+  fontSize: '15px',
   fontWeight: 400,
   fontFamily: 'Arial',
   cursor: 'pointer',
@@ -52,7 +52,7 @@ export class ErrorBoundary extends Component {
       <h2 variant="title" style={{ marginTop: 0 }}>
         Something went terribly wrong.
       </h2>
-      <p style={{ marginBottom: 40 }}>
+      <p style={{ marginBottom: 32 }}>
         Please contact Pesposa support for assistance.
       </p>
       <div>
@@ -60,7 +60,7 @@ export class ErrorBoundary extends Component {
           href={`mailto:${
             pesposaConfig.SUPPORT_EMAIL_ADDRESS
           }?subject=Support Request`}
-          style={buttonStyles({ marginRight: 16 })}
+          style={buttonStyles()}
         >
           Contact Support
         </a>

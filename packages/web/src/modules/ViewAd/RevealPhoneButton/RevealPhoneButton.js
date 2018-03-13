@@ -7,6 +7,7 @@ import { withStyles } from 'material-ui/styles';
 import PhoneIcon from 'material-ui-icons/Phone';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import omitProps from 'utils/omitProps';
+import requirePropToRender from 'hocs/requirePropToRender';
 import withProfileData from 'hocs/withProfileData';
 import Button from 'components/Button/Button';
 
@@ -34,8 +35,6 @@ const RevealPhoneButton = ({
     onClick={onClick}
     component="a"
     className={classNames(classes.button, className)}
-    color="primary"
-    variant="raised"
     {...rest}
   >
     <PhoneIcon className={classes.icon} />
@@ -63,6 +62,7 @@ export default R.compose(
       }),
     ),
   ),
+  requirePropToRender('phone'),
   withProps(({ phone, setDisplayedPhone }) => ({
     onClick: () => setDisplayedPhone(phone),
   })),
