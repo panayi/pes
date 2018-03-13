@@ -12,15 +12,24 @@ export const resetActiveConversation = createAction(
   types.RESET_ACTIVE_CONVERSATION,
 );
 
-export const createMessage = (body, adId, buyerId) => (dispatch, getState) => {
+export const createMessage = (body, adId, buyerId) => async (
+  dispatch,
+  getState,
+) => {
   const uid = authSelectors.uidSelector(getState());
-  const fromBuyer = R.equals(uid, buyerId);
+  const finalBuyerId = buyerId || uid;
+  const fromBuyer = R.equals(uid, finalBuyerId);
   const data = {
     body,
     fromBuyer,
   };
 
-  return dispatch(firebaseApi.messages.create(data, adId, buyerId));
+  await dispatch(firebaseApi.messages.create(data, adId, finalBuyerId));
+  return {
+    body,
+    adId,
+    buyerId: finalBuyerId,
+  };
 };
 
 export const markAsRead = conversationId => (dispatch, getState) => {

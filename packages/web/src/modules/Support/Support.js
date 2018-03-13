@@ -104,11 +104,7 @@ class Support extends Component {
         {formikProps => (
           <form className={classes.root} onSubmit={formikProps.handleSubmit}>
             {status === 'pending' && <Spinner overlay centered />}
-            <DialogTitle>
-              <Typography variant="title" color="inherit">
-                Contact Us
-              </Typography>
-            </DialogTitle>
+            <DialogTitle title="Contact Us" />
             <DialogContent className={classes.content}>
               <Form {...formikProps} />
             </DialogContent>

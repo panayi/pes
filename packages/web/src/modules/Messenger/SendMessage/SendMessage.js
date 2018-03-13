@@ -1,29 +1,47 @@
 /* @flow */
 import React, { Component } from 'react';
+import * as R from 'ramda';
+import { noop } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
+import yup from 'yup';
 import { actions as chatActions } from 'store/chat';
+import requireUserToCallAction from 'hocs/requireUserToCallAction';
 import Form from './Form/Form';
 
 type Props = {
   adId: String, // eslint-disable-line react/no-unused-prop-types
-  buyerId: String,
+  buyerId: ?String,
+  onSuccess: Function,
   createMessage: Function,
 };
 
 class SendMessage extends Component<Props> {
-  formDispatch: null;
+  static defaultProps = {
+    onSuccess: noop,
+  };
+
+  getValidationSchema = () =>
+    yup.object().shape({
+      body: yup.string().required('Message is required'),
+    });
 
   handleSubmit = ({ body }, { resetForm }) => {
-    const { adId, buyerId, createMessage } = this.props;
-    createMessage(body, adId, buyerId);
+    const { adId, buyerId, createMessage, onSuccess } = this.props;
+    createMessage(body, adId, buyerId).then(onSuccess);
     // Don't wait for createMessage complete
     resetForm();
   };
 
+  formDispatch: null;
+
   render() {
     return (
-      <Formik initialValues={{ body: '' }} onSubmit={this.handleSubmit}>
+      <Formik
+        initialValues={{ body: '' }}
+        validationSchema={this.getValidationSchema}
+        onSubmit={this.handleSubmit}
+      >
         {formikProps => <Form {...formikProps} {...this.props} />}
       </Formik>
     );
@@ -34,4 +52,7 @@ const mapDispatchToProps = {
   createMessage: chatActions.createMessage,
 };
 
-export default connect(null, mapDispatchToProps)(SendMessage);
+export default R.compose(
+  connect(null, mapDispatchToProps),
+  requireUserToCallAction('createMessage'),
+)(SendMessage);

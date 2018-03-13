@@ -9,6 +9,7 @@ import { withStyles } from 'material-ui/styles';
 import TuneIcon from 'material-ui-icons/Tune';
 import MenuIcon from 'mdi-react/MenuIcon';
 import { selectors as authSelectors } from 'store/firebase/auth';
+import { actions as modalActions } from 'store/modals';
 import hideUser from 'hocs/hideUser';
 import hideVisitor from 'hocs/hideVisitor';
 import Link from 'components/Link/Link';
@@ -177,8 +178,12 @@ const mapStateToProps = createStructuredSelector({
   isAuthenticated: authSelectors.isAuthenticatedSelector,
 });
 
+const mapDispatchToProps = {
+  openModal: modalActions.openModal,
+};
+
 export default R.compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   withStateHandlers(
     {
       mobileMenuOpened: false,

@@ -12,6 +12,7 @@ import * as selectors from '../selectors';
 
 const styles = {
   collection: {
+    outline: 'none',
     '& > div': {
       // fix shadow cutoff on last card
       marginBottom: 4,

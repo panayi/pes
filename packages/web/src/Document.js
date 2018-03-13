@@ -9,6 +9,7 @@ import { ssrBehavior } from 'react-md-spinner';
 import theme from 'config/theme';
 import jss from 'config/styles';
 import { constants as searchConstants } from 'store/search';
+import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import SearchProvider from 'components/SearchProvider/SearchProvider';
 
 class Document extends React.Component {
@@ -22,16 +23,18 @@ class Document extends React.Component {
     const sheetsRegistry = new SheetsRegistry();
 
     const page = renderPage(Component => props => (
-      <Provider store={store}>
-        <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-          <JssProvider registry={sheetsRegistry} jss={jss}>
-            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-              <Reboot />
-              <Component {...props} />
-            </MuiThemeProvider>
-          </JssProvider>
-        </SearchProvider>
-      </Provider>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+            <JssProvider registry={sheetsRegistry} jss={jss}>
+              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                <Reboot />
+                <Component {...props} />
+              </MuiThemeProvider>
+            </JssProvider>
+          </SearchProvider>
+        </Provider>
+      </ErrorBoundary>
     ));
 
     const css = sheetsRegistry.toString();

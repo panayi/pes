@@ -36,7 +36,9 @@ const ProfileImage = ({
       alt={alt}
       style={{ width: `${size}px`, height: `${size}px` }}
     >
-      {withDefault ? <AccountCircleIcon /> : null}
+      {withDefault ? (
+        <AccountCircleIcon style={{ width: '100%', height: '100%' }} />
+      ) : null}
     </RootComponent>
   );
 };

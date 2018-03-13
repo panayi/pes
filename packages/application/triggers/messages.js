@@ -1,6 +1,7 @@
 /* @flow */
 import * as functions from 'firebase-functions';
 import { database } from '@pesposa/core/src/config/firebaseClient';
+import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import * as timestamp from '@pesposa/core/src/utils/timestamp';
 
 type Event = {
@@ -25,7 +26,7 @@ const updateUserConversation = async (adId, buyerId, userId, isSender) => {
   }
 
   await database
-    .ref(`myConversations/${userId}/${adId}_${buyerId}`)
+    .ref(modelPaths.CONVERSATION(userId, adId, buyerId))
     .update(conversation);
 };
 

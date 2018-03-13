@@ -31,7 +31,7 @@ const styles = theme => ({
 const Filters = ({ classes, DialogTitle, DialogContent, closeModal }) => (
   <React.Fragment>
     <DialogTitle
-      mobileTitle="Filters"
+      title="Filters"
       secondaryAction={
         <Button color="inherit" size="small" onClick={() => closeModal()}>
           Save

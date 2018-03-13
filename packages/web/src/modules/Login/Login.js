@@ -58,7 +58,11 @@ const Login = ({
             </IconButton>
           )
         }
-        mobileTitle="Log in to continue"
+        title={
+          showingSmsCodeValidation
+            ? 'Verify your phone number'
+            : 'Log in to continue'
+        }
       />
       <DialogContent>
         <div className={classes.root}>

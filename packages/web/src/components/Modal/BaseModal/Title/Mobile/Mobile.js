@@ -20,7 +20,7 @@ const styles = () => ({
 });
 
 const MobileTitle = props => {
-  const { title, action, secondaryAction, onClose, children, classes } = props;
+  const { title, action, secondaryAction, onClose, classes } = props;
 
   return (
     <AppBar className={classes.appBar}>
@@ -28,13 +28,11 @@ const MobileTitle = props => {
         <div className={classes.action}>
           {action || <CloseButton onClose={onClose} />}
         </div>
-        {children || (
-          <div className={classes.title}>
-            <Typography variant="title" color="inherit">
-              {title}
-            </Typography>
-          </div>
-        )}
+        <div className={classes.title}>
+          <Typography variant="title" color="inherit">
+            {title}
+          </Typography>
+        </div>
         <div className={classes.action}>{secondaryAction}</div>
       </Toolbar>
     </AppBar>

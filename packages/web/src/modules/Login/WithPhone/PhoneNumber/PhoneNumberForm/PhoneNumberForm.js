@@ -8,6 +8,7 @@ import yup from 'yup';
 import * as phoneNumbersConfig from '@pesposa/core/src/config/phoneNumbers';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
+import GeneralErrorMessage from 'components/GeneralErrorMessage/GeneralErrorMessage';
 import Form from './Form/Form';
 
 type Props = {
@@ -65,7 +66,7 @@ class PhoneNumberForm extends Component<Props> {
       await this.handleCallback(this.props.onSubmit, values);
     } catch (error) {
       formikBag.setErrors({
-        number: error.message,
+        number: <GeneralErrorMessage />,
       });
     }
     formikBag.setSubmitting(false);

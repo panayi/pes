@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { withProps } from 'recompose';
+import { mapProps } from 'recompose';
 import classNames from 'classnames';
 import AppBar from 'material-ui/AppBar';
 import { withStyles } from 'material-ui/styles';
@@ -15,7 +15,8 @@ const styles = theme => ({
 
 export default R.compose(
   withStyles(styles),
-  withProps(({ className, classes }) => ({
+  mapProps(({ className, classes, ...rest }) => ({
     className: classNames(classes.appBar, className),
+    ...rest,
   })),
 )(AppBar);

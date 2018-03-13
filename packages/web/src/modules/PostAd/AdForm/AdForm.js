@@ -126,7 +126,7 @@ class AdForm extends Component<Props> {
             className={classes.root}
             onSubmit={(...args) => this.handleSubmit(formikProps, ...args)}
           >
-            <DialogTitle closeButton mobileTitle={title} />
+            <DialogTitle closeButton title={title} />
             <DialogContent className={classes.content}>
               <div className={classes.editImages}>
                 <EditAdImages
