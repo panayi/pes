@@ -1,16 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ListAds from 'components/ListAds/ListAds';
 import Search from 'modules/Search/Search';
 
-export default class ListUserAds extends Component {
-  render() {
-    const { userId, currentTab } = this.props;
-    const sold = currentTab === 0 ? false : true; // eslint-disable-line no-unneeded-ternary
+const ListUserAds = ({ facetFilters }) => (
+  <Search params={{ facetFilters }}>
+    {props => <ListAds {...props} sidebarWidth={0} />}
+  </Search>
+);
 
-    return (
-      <Search params={{ facetFilters: [`user:${userId}`, `sold:${sold}`] }}>
-        {props => <ListAds {...props} sidebarWidth={0} />}
-      </Search>
-    );
-  }
-}
+export default ListUserAds;
