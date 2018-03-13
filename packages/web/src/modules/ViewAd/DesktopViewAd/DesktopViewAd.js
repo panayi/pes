@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
+import { withStateHandlers } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -29,12 +30,15 @@ import BrowseAds from '../BrowseAds/BrowseAds';
 import SellerBox from '../SellerBox/SellerBox';
 import Breadcrumbs from '../Breadcrumbs/Breadcrumbs';
 import Action from '../Action/Action';
+import SentMessages from '../SentMessages/SentMessages';
 
 type Props = {
   ad: Ad,
   adId: string,
   location: Object,
   uid: string,
+  sentMessages: Array<string>,
+  addMessage: Function,
   classes: Object,
 };
 
@@ -178,7 +182,15 @@ const styles = theme => ({
   },
 });
 
-const DesktopViewAd = ({ ad, adId, location, uid, classes }: Props) => {
+const DesktopViewAd = ({
+  ad,
+  adId,
+  location,
+  uid,
+  sentMessages,
+  addMessage,
+  classes,
+}: Props) => {
   const currentUrl = urlForPath(location.pathname);
 
   return (
@@ -232,10 +244,16 @@ const DesktopViewAd = ({ ad, adId, location, uid, classes }: Props) => {
               />
             </div>
             <div className={classes.seller}>
+              <SentMessages messages={sentMessages} adId={adId} uid={uid} />
               <SellerBox ad={ad} />
               {ad.user && (
                 <div className={classes.interactionBox}>
-                  <Action ad={ad} adId={adId} currentUserId={uid} />
+                  <Action
+                    ad={ad}
+                    adId={adId}
+                    currentUserId={uid}
+                    onMessageSend={addMessage}
+                  />
                 </div>
               )}
             </div>
@@ -294,5 +312,15 @@ const mapStateToProps = createStructuredSelector({
 export default R.compose(
   connect(mapStateToProps),
   withRouter,
+  withStateHandlers(
+    {
+      sentMessages: [],
+    },
+    {
+      addMessage: ({ sentMessages }) => ({ body }) => ({
+        sentMessages: R.append(body, sentMessages),
+      }),
+    },
+  ),
   withStyles(styles),
 )(DesktopViewAd);

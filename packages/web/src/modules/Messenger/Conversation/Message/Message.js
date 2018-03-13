@@ -27,7 +27,7 @@ const styles = theme => ({
   },
 });
 
-const Message = ({ message, isFromOtherUser, classes }) => (
+const Message = ({ message, isFromOtherUser, variant, classes }) => (
   <div
     className={classNames(classes.root, {
       [classes.fromOther]: isFromOtherUser,
@@ -38,12 +38,15 @@ const Message = ({ message, isFromOtherUser, classes }) => (
         fromOther={isFromOtherUser}
         data-tip="tip"
         data-for={message.id}
+        variant={variant}
       >
         {message.body}
       </MessageBubble>
-      <Tooltip id={message.id}>
-        <TimeAgo date={message.createdAt} />
-      </Tooltip>
+      {variant === 'conversation' && (
+        <Tooltip id={message.id}>
+          <TimeAgo date={message.createdAt} />
+        </Tooltip>
+      )}
     </div>
   </div>
 );
@@ -51,6 +54,11 @@ const Message = ({ message, isFromOtherUser, classes }) => (
 Message.propTypes = {
   message: PropTypes.shape({}).isRequired,
   isBuyer: PropTypes.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
+  variant: PropTypes.oneOf(['conversation', 'ad']),
+};
+
+Message.defaultProps = {
+  variant: 'conversation',
 };
 
 const isFromOtherUserSelector = createCachedSelector(

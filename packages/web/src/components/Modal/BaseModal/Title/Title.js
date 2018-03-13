@@ -22,10 +22,9 @@ class Title extends React.Component {
       desktopOnly,
       action,
       secondaryAction,
-      mobileTitle,
+      title,
       closeButton,
       onClose,
-      children,
     } = this.props;
 
     return (
@@ -33,24 +32,21 @@ class Title extends React.Component {
         {!mobileOnly && (
           <DesktopScreen>
             <DesktopTitle
+              title={title}
               action={action}
               closeButton={closeButton}
               onClose={onClose}
-            >
-              {children}
-            </DesktopTitle>
+            />
           </DesktopScreen>
         )}
         {!desktopOnly && (
           <MobileScreen>
             <MobileTitle
-              title={mobileTitle}
+              title={title}
               action={action}
               secondaryAction={secondaryAction}
               onClose={onClose}
-            >
-              {children}
-            </MobileTitle>
+            />
           </MobileScreen>
         )}
       </React.Fragment>

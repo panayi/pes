@@ -6,6 +6,8 @@ const createModelPath = path => {
   return path;
 };
 
+export const getConversationId = (adId, buyerId) => `${adId}_${buyerId}`;
+
 export const TRANSLATIONS = (language, namespace) =>
   createModelPath(['translations', language, ...makeArray(namespace)]);
 export const COUNTRIES = createModelPath(['countries']);
@@ -23,6 +25,12 @@ export const AD_IMAGES = adId => createModelPath(['ads', 'images', adId]);
 export const FAVORITES = userId => createModelPath(['favorites', userId]);
 export const CONVERSATIONS = userId =>
   createModelPath(['myConversations', userId]);
+export const CONVERSATION = (userId, adId, buyerId) =>
+  createModelPath([
+    'myConversations',
+    userId,
+    getConversationId(adId, buyerId),
+  ]);
 export const MESSAGES = (adId, buyerId) =>
   createModelPath(['messages', adId, buyerId]);
 export const SUPPORT_MESSAGES = createModelPath(['support']);

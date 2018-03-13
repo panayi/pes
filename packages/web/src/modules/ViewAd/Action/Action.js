@@ -7,7 +7,7 @@ import Button from 'components/Button/Button';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 
 const Action = props => {
-  const { ad, adId, currentUserId, markAdAsSold } = props;
+  const { ad, adId, currentUserId, markAdAsSold, onMessageSend } = props;
 
   if (ad.sold) {
     return null;
@@ -23,7 +23,7 @@ const Action = props => {
         variant="float"
         placeholder="Ask a question"
         adId={adId}
-        buyerId={currentUserId}
+        onSuccess={onMessageSend}
       />
     );
   }

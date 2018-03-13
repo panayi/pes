@@ -1,55 +1,48 @@
 import React from 'react';
-import { DialogTitle } from 'material-ui/Dialog';
+import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import CloseButton from '../../CloseButton/CloseButton';
 
 const styles = theme => ({
-  appBar: {
-    position: 'relative',
+  root: {
+    display: 'flex',
+    padding: [
+      theme.spacing.unit * 3,
+      theme.spacing.unit * 3,
+      theme.spacing.unit * 2.5,
+    ],
   },
-  onlyActionWrap: {
-    paddingTop: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit * 6,
-  },
-  onlyAction: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
+  action: {
+    marginRight: theme.spacing.unit * 3,
+    '& > button': {
+      width: 'auto',
+      height: 'auto',
+    },
   },
 });
 
 class DesktopTitle extends React.Component {
   renderDesktopAction() {
-    const { closeButton, action, onClose } = this.props;
+    const { action, classes } = this.props;
 
-    return (
-      <React.Fragment>
-        {action}
-        {closeButton && !action ? <CloseButton onClose={onClose} /> : null}
-      </React.Fragment>
-    );
+    return action ? (
+      <div className={classes.onlyActionWrap}>
+        <div className={classes.onlyAction}>{action}</div>
+      </div>
+    ) : null;
   }
 
   render() {
-    const { children, classes } = this.props;
+    const { title, action, classes } = this.props;
 
-    return children ? (
-      <DialogTitle>
-        {this.renderDesktopAction()}
-        {children}
-      </DialogTitle>
-    ) : (
-      <div className={classes.onlyActionWrap}>
-        <div className={classes.onlyAction}>
-          {this.renderDesktopAction(classes.onlyAction)}
-        </div>
+    return (
+      <div className={classes.root}>
+        {action && <div className={classes.action}>{action}</div>}
+        <Typography variant="title" color="inherit">
+          {title}
+        </Typography>
       </div>
     );
   }
 }
-
-DesktopTitle.defaultProps = {
-  closeButton: false,
-};
 
 export default withStyles(styles)(DesktopTitle);

@@ -5,7 +5,11 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
   root: {
-    margin: 2 * theme.spacing.unit,
+    margin: [
+      theme.spacing.unit,
+      2 * theme.spacing.unit,
+      2 * theme.spacing.unit,
+    ],
   },
 });
 

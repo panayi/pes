@@ -292,6 +292,7 @@ type SupportMessage {
 // Functions
 // ------------------------------------
 isAuthenticated() { auth != null }
+isNotAnonymous() { isAuthenticated() && auth.anonymous != true }
 isAuthenticatedWithPhone() { auth != null && auth.provider == 'phone' }
 isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
@@ -354,8 +355,6 @@ path /ads/published/{id} {
 path /ads/pendingReview/{id} is PendingReviewAd {
   read() { true }
 
-  // TODO: Temporarily require phone-number auth, until merging-accounts is implemented
-  // create() { isAuthenticatedWithPhone() }
   create() { isCurrentUser(this.user) }
 
   validate() {
@@ -456,7 +455,7 @@ path /messages/{adId}/{buyerId} {
 }
 
 path /messages/{adId}/{buyerId}/{messageId} is Message {
-  create() { isCurrentUser(buyerId) || isSeller(adId) }
+  create() { isNotAnonymous() && isCurrentUser(buyerId) || isSeller(adId) }
   update() { (this.fromBuyer && isCurrentUser(buyerId)) || (!this.fromBuyer && isSeller(adId)) }
   delete() { (this.fromBuyer && isCurrentUser(buyerId)) || (!this.fromBuyer && isSeller(adId)) }
 
