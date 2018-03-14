@@ -141,6 +141,7 @@ const styles = theme => ({
   map: {
     display: 'block',
     maxWidth: '100%',
+    height: 'auto',
   },
   seller: {
     position: 'absolute',
