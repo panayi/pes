@@ -13,7 +13,7 @@ import { selectors as profileSelectors } from 'store/firebase/profile';
 const USER_ID = '___user_id';
 const IS_CURRENT_USER = '____is_current_user';
 
-const withMyProfileData = mapPropsToPaths => {
+export const withMyProfileData = mapPropsToPaths => {
   const dataSelector = createStructuredSelector(
     R.map(
       R.compose(profileSelectors.profilePropSelector, R.prepend('profile')),
@@ -34,7 +34,7 @@ const withMyProfileData = mapPropsToPaths => {
   return connect(mapStateToProps, {});
 };
 
-const withUserProfileData = (mapPropsToPaths, userIdSelector) => {
+export const withUserProfileData = (mapPropsToPaths, userIdSelector) => {
   const mapDataToProps = R.map(
     path => models.profiles(userIdSelector).child(path),
     mapPropsToPaths,

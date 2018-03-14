@@ -255,7 +255,12 @@ class MobileViewAd extends React.Component {
             <IconButton className={classes.actionIconButton} color="inherit">
               <ShareIcon />
             </IconButton>
-            <FavoriteAd className={classes.actionIconButton} adId={ad.id} />
+            <FavoriteAd
+              className={classes.actionIconButton}
+              ad={ad}
+              adId={adId}
+              uid={uid}
+            />
           </div>
         </div>
         <div className={classes.content}>

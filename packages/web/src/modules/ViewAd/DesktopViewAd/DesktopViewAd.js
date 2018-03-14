@@ -29,6 +29,7 @@ import EditAdLink from '../EditAdLink/EditAdLink';
 import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import MarkAsSold from '../MarkAsSold/MarkAsSold';
+import FavoriteAd from '../FavoriteAd/FavoriteAd';
 import BrowseAds from './BrowseAds/BrowseAds';
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
 import SellerBox from './SellerBox/SellerBox';
@@ -98,6 +99,12 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 3,
     borderBottom: ['1px', 'solid', theme.palette.divider],
+  },
+  headerAction: {
+    marginTop: -12,
+  },
+  favoriteButton: {
+    color: theme.palette.primary.main,
   },
   title: {
     flex: 1,
@@ -209,7 +216,15 @@ const DesktopViewAd = ({
                 variant="title"
                 color="textSecondary"
               />
-              <EditAdLink adId={adId} ad={ad} />
+              <div className={classes.headerAction}>
+                <EditAdLink adId={adId} ad={ad} />
+                <FavoriteAd
+                  className={classes.favoriteButton}
+                  ad={ad}
+                  adId={adId}
+                  uid={uid}
+                />
+              </div>
             </div>
             <AdPrice ad={ad} className={classes.price} variant="title" />
             <AdBody ad={ad} className={classes.description} />

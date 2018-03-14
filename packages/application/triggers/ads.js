@@ -1,6 +1,6 @@
 /* @flow */
 import * as functions from 'firebase-functions';
-import algoliaService from '@pesposa/core/src/services/algolia';
+import * as algoliaService from '@pesposa/core/src/services/algolia';
 import * as adModel from '@pesposa/core/src/models/ad';
 
 type Event = {

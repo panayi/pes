@@ -1,45 +1,55 @@
 import React from 'react';
 import * as R from 'ramda';
-import { withState } from 'recompose';
+import { branch, renderNothing } from 'recompose';
 import IconButton from 'material-ui/IconButton';
 import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 import { connectData } from 'lib/connectData';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
-import { models, actions as dataActions } from 'store/firebase/data';
+import {
+  models,
+  actions as dataActions,
+  selectors as dataSelectors,
+} from 'store/firebase/data';
 
 class FavoriteAd extends React.Component {
-  static maybeSetIsFavorited(nextProps, props) {
-    if (propsChanged(['favorite'], nextProps, props)) {
-      nextProps.setIsFavorited(!!nextProps.favorite);
-    }
-  }
+  state = {
+    isFavorited: false,
+  };
 
   componentWillMount() {
-    FavoriteAd.maybeSetIsFavorited(this.props, {});
+    this.maybeSetIsFavorited(this.props, {});
   }
 
   componentWillReceiveProps(nextProps) {
-    FavoriteAd.maybeSetIsFavorited(nextProps, this.props);
+    this.maybeSetIsFavorited(nextProps, this.props);
+  }
+
+  setIsFavorited = value => {
+    this.setState({
+      isFavorited: value,
+    });
+  };
+
+  maybeSetIsFavorited(nextProps, props) {
+    if (propsChanged(['favorite'], nextProps, props)) {
+      this.setIsFavorited(!!nextProps.favorite);
+    }
   }
 
   handleClick = () => {
-    const {
-      adId,
-      isFavorited,
-      setIsFavorited,
-      favoriteAd,
-      unfavoriteAd,
-    } = this.props;
+    const { adId, favoriteAd, unfavoriteAd } = this.props;
+    const { isFavorited } = this.state;
     const action = isFavorited ? unfavoriteAd : favoriteAd;
 
-    setIsFavorited(!isFavorited);
+    this.setIsFavorited(!isFavorited);
     action(adId);
   };
 
   render() {
-    const { isFavorited, className } = this.props;
+    const { className } = this.props;
+    const { isFavorited } = this.state;
 
     return (
       <IconButton
@@ -63,6 +73,6 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  withState('isFavorited', 'setIsFavorited', false),
+  branch(dataSelectors.isSellerSelector, renderNothing),
   connectData(mapDataToProps, null, mapDispatchToProps),
 )(FavoriteAd);
