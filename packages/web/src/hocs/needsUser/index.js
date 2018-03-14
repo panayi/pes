@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { withRouter } from 'react-router-dom';
 import { withProps } from 'recompose';
 import { connectedRouterRedirect } from 'redux-auth-wrapper/history4/redirect';
 import { selectors as authSelectors } from 'store/firebase/auth';
@@ -9,13 +10,16 @@ const CenteredSpinner = withProps({
 })(Spinner);
 
 const needsUser = options =>
-  connectedRouterRedirect({
-    redirectPath: '/',
-    allowRedirectBack: false,
-    authenticatedSelector: authSelectors.isAuthenticatedSelector,
-    authenticatingSelector: authSelectors.isAuthenticatingSelector,
-    AuthenticatingComponent: CenteredSpinner,
-    ...R.defaultTo({}, options),
-  });
+  R.compose(
+    withRouter,
+    connectedRouterRedirect({
+      redirectPath: '/',
+      allowRedirectBack: false,
+      authenticatedSelector: authSelectors.isAuthenticatedSelector,
+      authenticatingSelector: authSelectors.isAuthenticatingSelector,
+      AuthenticatingComponent: CenteredSpinner,
+      ...R.defaultTo({}, options),
+    }),
+  );
 
 export default needsUser;
