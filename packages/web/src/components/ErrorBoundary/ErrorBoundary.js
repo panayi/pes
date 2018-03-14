@@ -17,14 +17,17 @@ const rootStyles = {
   background: fade(theme.palette.primary.light, 0.4),
 };
 
-const buttonStyles = styles => ({
+const buttonWrapStyles = {
   display: 'inline-block',
+  margin: 8,
+};
+
+const buttonStyles = styles => ({
   minHeight: 38,
   background: 'white',
   color: 'black',
   textDecoration: 'none',
   padding: '10px 24px',
-  margin: 8,
   border: 0,
   borderRadius: 4,
   fontSize: '15px',
@@ -56,23 +59,27 @@ export class ErrorBoundary extends Component {
         Please contact Pesposa support for assistance.
       </p>
       <div>
-        <a
-          href={`mailto:${
-            pesposaConfig.SUPPORT_EMAIL_ADDRESS
-          }?subject=Support Request`}
-          style={buttonStyles()}
-        >
-          Contact Support
-        </a>
-        <button
-          onClick={() => window.location.reload()}
-          style={buttonStyles({
-            background: theme.palette.primary.main,
-            color: 'white',
-          })}
-        >
-          Reload Pesposa
-        </button>
+        <div style={buttonWrapStyles}>
+          <a
+            href={`mailto:${
+              pesposaConfig.SUPPORT_EMAIL_ADDRESS
+            }?subject=Support Request`}
+            style={buttonStyles()}
+          >
+            Contact Support
+          </a>
+        </div>
+        <div style={buttonWrapStyles}>
+          <button
+            onClick={() => window.location.reload()}
+            style={buttonStyles({
+              background: theme.palette.primary.main,
+              color: 'white',
+            })}
+          >
+            Reload Pesposa
+          </button>
+        </div>
       </div>
     </div>
   );
