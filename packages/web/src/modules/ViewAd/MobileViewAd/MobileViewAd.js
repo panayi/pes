@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
-import { withProps, withStateHandlers, branch } from 'recompose';
+import { withProps, withStateHandlers } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -18,7 +18,7 @@ import MessageIcon from 'material-ui-icons/Message';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';
-import withProfileData from 'hocs/withProfileData';
+import { withUserProfileData } from 'hocs/withProfileData';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { actions as dataActions } from 'store/firebase/data';
 import ShareIcon from 'mdi-react/ShareIcon';
@@ -511,14 +511,11 @@ export default R.compose(
       imagesList: R.compose(R.values, R.pathOr({}, ['ad', 'images'])),
     }),
   ),
-  branch(
+  withUserProfileData(
+    {
+      sellerName: ['displayName'],
+    },
     propSelector(['ad', 'user']),
-    withProfileData(
-      {
-        sellerName: ['displayName'],
-      },
-      propSelector(['ad', 'user']),
-    ),
   ),
   withStateHandlers(
     {

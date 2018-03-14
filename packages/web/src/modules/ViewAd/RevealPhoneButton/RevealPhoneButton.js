@@ -8,7 +8,7 @@ import PhoneIcon from 'material-ui-icons/Phone';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import omitProps from 'utils/omitProps';
 import requirePropToRender from 'hocs/requirePropToRender';
-import withProfileData from 'hocs/withProfileData';
+import { withUserProfileData } from 'hocs/withProfileData';
 import Button from 'components/Button/Button';
 
 const styles = theme => ({
@@ -50,7 +50,7 @@ export default R.compose(
   withState('displayedPhoneNumber', 'setDisplayedPhoneNumber', null),
   branch(
     R.path(['ad', 'user']),
-    withProfileData(
+    withUserProfileData(
       {
         phoneNumber: ['phoneNumber'],
       },
