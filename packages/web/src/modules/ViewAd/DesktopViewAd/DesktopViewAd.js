@@ -11,8 +11,10 @@ import { withStyles } from 'material-ui/styles';
 import PlaceIcon from 'material-ui-icons/Place';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import urlForPath from 'utils/urlForPath';
 import { selectors as authSelectors } from 'store/firebase/auth';
+import { withUserProfileData } from 'hocs/withProfileData';
 import LinkToViewAd from 'components/LinkToViewAd/LinkToViewAd';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
@@ -188,6 +190,7 @@ const DesktopViewAd = ({
   uid,
   sentMessages,
   addMessage,
+  sellerName,
   classes,
 }: Props) => {
   const currentUrl = urlForPath(location.pathname);
@@ -260,7 +263,7 @@ const DesktopViewAd = ({
                     buyer={
                       <SendMessage
                         variant="float"
-                        placeholder="Ask a question"
+                        placeholder={`Ask ${sellerName} a question`}
                         adId={adId}
                         onSuccess={addMessage}
                       />
@@ -324,6 +327,12 @@ const mapStateToProps = createStructuredSelector({
 export default R.compose(
   connect(mapStateToProps),
   withRouter,
+  withUserProfileData(
+    {
+      sellerName: ['displayName'],
+    },
+    propSelector(['ad', 'user']),
+  ),
   withStateHandlers(
     {
       sentMessages: [],
