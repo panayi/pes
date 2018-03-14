@@ -1,6 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
+import { withRouter } from 'react-router-dom';
 import { withProps, withStateHandlers, branch } from 'recompose';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -57,7 +58,7 @@ const styles = theme => ({
     width: '100%',
     outline: 0,
     borderBottom: [1, 'solid', theme.palette.divider],
-    background: fade(theme.palette.common.white, 0.7),
+    background: fade(theme.palette.common.white, 0.85),
   }),
   headerActions: {
     display: 'flex',
@@ -98,7 +99,7 @@ const styles = theme => ({
   avatarWrap: {
     position: 'absolute',
     right: theme.spacing.unit * 2,
-    top: 'calc(100vw - 58px)',
+    top: 'calc(100vw - 12px)',
     zIndex: 2,
     padding: 2,
     borderRadius: '50%',
@@ -234,6 +235,7 @@ class MobileViewAd extends React.Component {
       viewSlideShow,
       viewConversation,
       setCurrentSlide,
+      history,
       classes,
     } = this.props;
     const dots = imagesList.length > 1;
@@ -311,7 +313,12 @@ class MobileViewAd extends React.Component {
               width={640}
               height={300}
             />
-            <div className={classes.sellerBox}>
+            <div
+              role="link"
+              tabIndex="-1"
+              className={classes.sellerBox}
+              onClick={ad.user && (() => history.push(`/user/${ad.user}`))}
+            >
               <ProfileImage
                 className={classes.avatar}
                 userId={ad.user}
@@ -491,6 +498,7 @@ const mapDispatchToProps = (dispatch, { adId }) =>
   );
 
 export default R.compose(
+  withRouter,
   hydrateAd(propSelector('adId'), propSelector('legacy')),
   connect(mapStateToProps, mapDispatchToProps),
   withProps(
