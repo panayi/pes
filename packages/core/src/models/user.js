@@ -45,11 +45,14 @@ export const migrateAnonymousUser = async (anonymousUserId: ID, userId: ID) => {
   const anonymousUserSnapshot = await get(anonymousUserId);
   const userSnapshot = await get(userId);
 
-  if (isNilOrEmpty(anonymousUserSnapshot)) {
+  if (
+    isNilOrEmpty(anonymousUserSnapshot) ||
+    isNilOrEmpty(anonymousUserSnapshot.val())
+  ) {
     throw new Error(`Anonymous user with id=${anonymousUserId} does not exist`);
   }
 
-  if (isNilOrEmpty(userSnapshot)) {
+  if (isNilOrEmpty(userSnapshot) || isNilOrEmpty(userSnapshot.val())) {
     throw new Error(`User with id=${userId} does not exist`);
   }
 

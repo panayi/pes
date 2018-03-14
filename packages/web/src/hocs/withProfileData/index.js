@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { isNotNil } from 'ramda-adjunct';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { isLoaded } from 'react-redux-firebase';
 import { createStructuredSelector } from 'reselect';
@@ -59,7 +59,7 @@ const withProfileData = (mapPropsToPaths, userIdSelector) => {
     }),
     connect(mapStateToProps, {}),
     branch(
-      R.propSatisfies(isNotNil, USER_ID),
+      R.propSatisfies(R.complement(isNilOrEmpty), USER_ID),
       branch(
         R.prop(IS_CURRENT_USER),
         withMyProfileData(mapPropsToPaths),

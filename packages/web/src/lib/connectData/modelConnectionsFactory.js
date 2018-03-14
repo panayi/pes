@@ -20,14 +20,6 @@ const createPathSelector = (...paths) =>
 const createPathStringSelector = (...paths) =>
   createSelector(createPathSelector(...paths), R.join('/'));
 
-// createRecordQuery :: Selector, Selector -> Selector
-const createRecordQuery = (idSelector, ...paths) =>
-  createSelector(
-    createPathStringSelector(...paths),
-    idSelector,
-    (modelPathString, id) => `${modelPathString}/${id}`,
-  );
-
 // createByChildQuery :: String, Selector, Selector -> Selector
 const createByChildQuery = (key, valueSelector, ...paths) =>
   createSelector(
@@ -62,9 +54,9 @@ const modelConnectionsFactory = dataPath => {
   // createRecordSelector :: Selector, Selector -> Selector
   const createRecordSelector = (idSelector, ...paths) =>
     createSelector(
+      createDataSelector(...paths, idSelector),
       idSelector,
-      R.compose(R.defaultTo([]), createCollectionSelector(...paths)),
-      R.useWith(R.find, [R.propEq('id'), R.identity]),
+      (record, id) => (isPlainObj(record) ? R.merge(record, { id }) : record),
     );
 
   // createByChildSelector :: String, Selector, Selector -> Selector
@@ -103,13 +95,17 @@ const modelConnectionsFactory = dataPath => {
         query: modelPathStringSelector,
         selector: createCollectionSelector(modelPath),
       },
-      one: idSelector => ({
-        query: createRecordQuery(idSelector, modelPath),
-        selector: createRecordSelector(idSelector, modelPath),
-      }),
       oneObject: idSelector => ({
-        query: createRecordQuery(idSelector, modelPath),
+        query: createPathStringSelector(modelPath, idSelector),
         selector: createDataSelector(modelPath, idSelector),
+      }),
+      one: idSelector => ({
+        query: createPathStringSelector(modelPath, idSelector),
+        selector: createRecordSelector(idSelector, modelPath),
+        child: childPath => ({
+          query: createPathStringSelector(modelPath, idSelector, childPath),
+          selector: createDataSelector(modelPath, idSelector, childPath),
+        }),
       }),
       byChild: (key, valueSelector) => ({
         query: createByChildQuery(key, valueSelector, modelPath),

@@ -248,9 +248,11 @@ type ProfileImage {
   fullPath: String | Null, // Storage path to large-size image downloaded from `providerId`
 }
 
+// This is set on the client by react-redux-firebase,
+// and is publicly available
 type Profile {
   displayName: String | Null,
-  image: ProfileImage | Null,
+  avatarUrl: URL | Null, // Provider (facebook, google, etc.) avatar
   phone: PhoneNumber | Null,
   providerIds: Map<String, Any> | Null
 }
@@ -261,7 +263,9 @@ type User {
   locale: String | Null,
   location: Location | Null,
   ip: IPv4 | Null,
+  // Public below
   profile: Profile | Null,
+  avatarPath: String | Null,  // Storage path to large-size image downloaded from `providerId`
 }
 
 type Conversation {
@@ -409,6 +413,10 @@ path /users/{uid} is User {
 }
 
 path /users/{uid}/profile is Profile {
+  read() { true }
+}
+
+path /users/{uid}/avatarPath is String {
   read() { true }
 }
 

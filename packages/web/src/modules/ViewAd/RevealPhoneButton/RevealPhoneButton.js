@@ -25,20 +25,20 @@ const RevealPhoneButton = ({
   component: Komponent,
   className,
   children,
-  displayedPhone,
+  displayedPhoneNumber,
   onClick,
   classes,
   ...rest
 }) => (
   <Komponent
-    href={displayedPhone ? `tel:${displayedPhone}` : null}
+    href={displayedPhoneNumber ? `tel:${displayedPhoneNumber}` : null}
     onClick={onClick}
     component="a"
     className={classNames(classes.button, className)}
     {...rest}
   >
     <PhoneIcon className={classes.icon} />
-    {displayedPhone || children}
+    {displayedPhoneNumber || children}
   </Komponent>
 );
 
@@ -47,24 +47,24 @@ RevealPhoneButton.defaultProps = {
 };
 
 export default R.compose(
-  withState('displayedPhone', 'setDisplayedPhone', null),
+  withState('displayedPhoneNumber', 'setDisplayedPhoneNumber', null),
   branch(
     R.path(['ad', 'user']),
     withProfileData(
       {
-        phone: ['phoneNumber'],
+        phoneNumber: ['phoneNumber'],
       },
       propSelector(['ad', 'user']),
     ),
     withProps(
       createStructuredSelector({
-        phone: R.path(['ad', 'phone']),
+        phoneNumber: R.path(['ad', 'phone']),
       }),
     ),
   ),
-  requirePropToRender('phone'),
-  withProps(({ phone, setDisplayedPhone }) => ({
-    onClick: () => setDisplayedPhone(phone),
+  requirePropToRender('phoneNumber'),
+  withProps(({ phoneNumber, setDisplayedPhoneNumber }) => ({
+    onClick: () => setDisplayedPhoneNumber(phoneNumber),
   })),
   omitProps(['ad', 'setDisplayedPhone']),
   withStyles(styles),

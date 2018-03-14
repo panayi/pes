@@ -52,7 +52,7 @@ export default R.compose(
   setDisplayName('ProfileImage'),
   withProfileData(
     {
-      src: ['image', 'downloadURL'],
+      src: ['avatarUrl'],
     },
     propSelector('userId'),
   ),

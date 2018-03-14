@@ -1,13 +1,14 @@
 import React from 'react';
 import * as R from 'ramda';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import SettingsIcon from 'material-ui-icons/Settings';
 import propSelector from '@pesposa/core/src/utils/propSelector';
+import defaultTheme from 'config/theme';
+import { connectData } from 'lib/connectData';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import withProfileData from 'hocs/withProfileData';
+import { models } from 'store/firebase/data';
 import Imgix from 'components/Imgix/Imgix';
 import UserFullName from 'components/UserFullName/UserFullName';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -17,13 +18,12 @@ const IMGIX_PARAMS = {
   w: 900,
   h: 300,
   auto: 'compress',
-  blend: '9A30AE',
+  blend: defaultTheme.palette.primary.light,
   balph: 100,
   bm: 'multiply',
   colorquant: 3,
-  faceindex: 1,
-  facepad: 2.5,
-  fit: 'facearea',
+  fit: 'crop',
+  crop: 'faces,edges',
   blur: 30,
 };
 
@@ -75,11 +75,11 @@ const styles = theme => ({
 
 export const ProfileBanner = ({
   userId,
-  profileImage,
+  avatarPath,
   isCurrentUser,
   classes,
 }) => (
-  <Imgix params={IMGIX_PARAMS} image={profileImage}>
+  <Imgix params={IMGIX_PARAMS} image={{ fullPath: avatarPath }}>
     {({ src }) => (
       <div
         className={classes.root}
@@ -107,17 +107,15 @@ export const ProfileBanner = ({
   </Imgix>
 );
 
+const mapDataToProps = {
+  avatarPath: models.users.one(propSelector('userId')).child('avatarPath'),
+};
+
 const mapStateToProps = createStructuredSelector({
   isCurrentUser: authSelectors.isCurrentUserSelector(propSelector('userId')),
 });
 
 export default R.compose(
-  withProfileData(
-    {
-      profileImage: ['image'],
-    },
-    propSelector('userId'),
-  ),
-  connect(mapStateToProps),
+  connectData(mapDataToProps, mapStateToProps),
   withStyles(styles),
 )(ProfileBanner);

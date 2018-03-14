@@ -109,15 +109,18 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
   return (
     <MenuItem selected={isHighlighted} component="div" dense>
       <div>
-        {parts.map((part, index) => part.highlight ? (
-            <span key={String(index)} style={{ fontWeight: 500 }}>
-              {part.text}
-            </span>
-          ) : (
-            <strong key={String(index)} style={{ fontWeight: 300 }}>
-              {part.text}
-            </strong>
-          ))}
+        {parts.map(
+          (part, index) =>
+            part.highlight ? (
+              <span key={String(index)} style={{ fontWeight: 500 }}>
+                {part.text}
+              </span>
+            ) : (
+              <strong key={String(index)} style={{ fontWeight: 300 }}>
+                {part.text}
+              </strong>
+            ),
+        )}
       </div>
     </MenuItem>
   );
@@ -295,8 +298,8 @@ export default R.compose(
         value,
       }),
       selectAddress: () => value => ({
-        value,
-        selectedAddress: value,
+        value: value || '',
+        selectedAddress: value || '',
       }),
       setResults: () => results => ({
         results: results || [],

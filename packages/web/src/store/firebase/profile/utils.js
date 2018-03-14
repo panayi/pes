@@ -1,5 +1,4 @@
 import * as R from 'ramda';
-import { renameKeys } from 'ramda-adjunct';
 
 // getPropInProviderData :: String -> Object | Null
 const findProviderWithProp = propKey =>
@@ -17,12 +16,9 @@ const getPhoneNumber = R.compose(
   findProviderWithProp('phoneNumber'),
 );
 
-// getPhoto :: User -> { downloadURL, providerId }
-const getPhoto = R.compose(
-  R.when(R.isEmpty, R.always(null)),
-  renameKeys({ photoURL: 'downloadURL' }),
-  R.pick(['photoURL', 'providerId']),
-  R.defaultTo({}),
+// getAvatar :: User -> String | Null
+const getAvatarUrl = R.compose(
+  R.propOr(null, 'photoURL'),
   findProviderWithProp('photoURL'),
 );
 
@@ -35,14 +31,13 @@ const getProviderIds = R.compose(
 );
 
 // profileFactory :: User -> Object
-export const profileFactory = (userData, profile) => ({
+export const profileFactory = userData => ({
   email: userData.email,
   providerData: getProviderData(userData),
   profile: {
-    ...R.propOr({}, 'profile', profile),
     displayName: getDisplayName(userData),
-    phone: getPhoneNumber(userData),
-    image: getPhoto(userData),
+    avatarUrl: getAvatarUrl(userData),
+    phoneNumber: getPhoneNumber(userData),
     providerIds: getProviderIds(userData),
   },
 });
