@@ -10,21 +10,24 @@ import Filter from '../Filter';
 
 const styles = theme => ({
   section: {
-    marginBottom: theme.spacing.unit * 2,
-    border: [1, 'solid', theme.palette.divider],
-    boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.06)',
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      marginBottom: 0,
+    marginBottom: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit * 1.5,
+
+    [theme.breakpoints.up(theme.map.tablet)]: {
+      marginBottom: theme.spacing.unit * 2,
+      paddingBottom: 0,
+      border: [1, 'solid', theme.palette.divider],
+      boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.06)',
     },
   },
   sectionContent: {
-    [theme.breakpoints.down(theme.map.laptop)]: {
-      paddingBottom: `${theme.spacing.unit}px !important`,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      padding: [theme.spacing.unit * 2, 0, theme.spacing.unit, 0, '!important'],
     },
   },
   title: {
     marginBottom: theme.spacing.unit,
-    fontWeight: theme.typography.fontWeightMedium,
+    fontWeight: theme.typography.fontWeightBold,
   },
 });
 
