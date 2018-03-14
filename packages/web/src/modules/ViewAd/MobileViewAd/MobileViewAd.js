@@ -8,6 +8,7 @@ import { createStructuredSelector } from 'reselect';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
+import { fade } from 'material-ui/styles/colorManipulator';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import PlaceIcon from 'material-ui-icons/Place';
 import TimeIcon from 'material-ui-icons/AccessTime';
@@ -54,9 +55,9 @@ const styles = theme => ({
     top: 0,
     zIndex: 3,
     width: '100%',
-    paddingTop: theme.spacing.unit,
-    color: theme.palette.common.white,
     outline: 0,
+    borderBottom: [1, 'solid', theme.palette.divider],
+    background: fade(theme.palette.common.white, 0.7),
   }),
   headerActions: {
     display: 'flex',
@@ -78,6 +79,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100vw',
+    paddingTop: 48,
     paddingBottom: 74,
   },
   images: {
@@ -212,6 +214,8 @@ const styles = theme => ({
   },
   slideshowHeader: {
     paddingTop: theme.spacing.unit * 3,
+    border: 0,
+    background: 'none',
   },
 });
 
@@ -236,7 +240,7 @@ class MobileViewAd extends React.Component {
 
     return (
       <div className={classes.root}>
-        <div className={classes.header} role="button" tabIndex="-1">
+        <div className={classes.header}>
           <div className={classes.headerActions}>
             <Link.icon
               to="/"
