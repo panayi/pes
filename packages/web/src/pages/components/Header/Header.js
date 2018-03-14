@@ -56,12 +56,13 @@ const styles = theme => ({
   },
   unreadBadge: {
     top: 0,
-    right: 0,
+    right: 1,
     width: 18,
     height: 18,
     fontSize: '0.65rem',
-    background: theme.palette.secondary.main,
-    color: theme.palette.getContrastText(theme.palette.secondary.main),
+    fontWeight: theme.typography.fontWeightBold,
+    background: theme.palette.primary.main,
+    color: theme.palette.getContrastText(theme.palette.primary.main),
   },
   menuButton: {
     display: 'none',
@@ -150,10 +151,7 @@ const Header = ({
       </IconButton>
     )}
     <MessagesButton className={classes.messagesButton}>
-      <UnreadConversationsBadge
-        color="secondary"
-        classes={{ badge: classes.unreadBadge }}
-      >
+      <UnreadConversationsBadge classes={{ badge: classes.unreadBadge }}>
         <Link to="/messages">Messages</Link>
       </UnreadConversationsBadge>
     </MessagesButton>
