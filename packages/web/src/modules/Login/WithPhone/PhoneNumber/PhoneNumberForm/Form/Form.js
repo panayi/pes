@@ -2,7 +2,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { lifecycle } from 'recompose';
-import { FormGroup, FormControl, FormHelperText } from 'material-ui/Form';
+import { FormControl, FormHelperText } from 'material-ui/Form';
 import { withStyles } from 'material-ui/styles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import MaskedInput from 'components/MaskedInput/MaskedInput';
@@ -20,12 +20,15 @@ type Props = {
 };
 
 const styles = theme => ({
-  formGroup: {
-    alignItems: 'flex-end',
+  root: {
+    display: 'flex',
+  },
+  inputWrap: {
+    flex: 1,
+    marginLeft: theme.spacing.unit,
   },
   input: {
     flex: 1,
-    marginLeft: theme.spacing.unit,
   },
 });
 
@@ -43,7 +46,7 @@ const Form = (props: Props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormGroup className={classes.formGroup} row>
+      <div className={classes.root}>
         <FormControl error={R.has('countryCode', errors)}>
           <CountrySelect
             name="countryCode"
@@ -56,8 +59,12 @@ const Form = (props: Props) => {
             <FormHelperText>{errors.countryCode}</FormHelperText>
           )}
         </FormControl>
-        <FormControl className={classes.input} error={R.has('number', errors)}>
+        <FormControl
+          className={classes.inputWrap}
+          error={R.has('number', errors)}
+        >
           <MaskedInput
+            className={classes.input}
             name="number"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -68,7 +75,7 @@ const Form = (props: Props) => {
           />
           {errors.number && <FormHelperText>{errors.number}</FormHelperText>}
         </FormControl>
-      </FormGroup>
+      </div>
       {children}
     </form>
   );
