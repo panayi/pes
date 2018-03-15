@@ -1,17 +1,17 @@
 import React from 'react';
 import * as R from 'ramda';
 import TextField from 'material-ui/TextField';
-import { MenuItem } from 'material-ui/Menu';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 
 const CountrySelect = ({ getLabel, countries, ...rest }) => (
-  <TextField select {...rest}>
+  <TextField select SelectProps={{ native: true }} {...rest}>
+    <option value="">Select Country</option>
     {R.map(
       country => (
-        <MenuItem key={country.code} value={country.code}>
+        <option key={country.code} value={country.code}>
           {getLabel(country)}
-        </MenuItem>
+        </option>
       ),
       countries,
     )}
