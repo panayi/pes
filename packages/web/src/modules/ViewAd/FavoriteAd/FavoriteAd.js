@@ -1,10 +1,11 @@
 import React from 'react';
 import * as R from 'ramda';
-import { branch, renderNothing } from 'recompose';
+import { withProps, branch, renderNothing } from 'recompose';
 import IconButton from 'material-ui/IconButton';
 import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 import { connectData } from 'lib/connectData';
+import requireUserToCallAction from 'hocs/requireUserToCallAction';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import {
@@ -38,24 +39,15 @@ class FavoriteAd extends React.Component {
     }
   }
 
-  handleClick = () => {
-    const { adId, favoriteAd, unfavoriteAd } = this.props;
-    const { isFavorited } = this.state;
-    const action = isFavorited ? unfavoriteAd : favoriteAd;
-
-    this.setIsFavorited(!isFavorited);
-    action(adId);
-  };
-
   render() {
-    const { className } = this.props;
+    const { className, toggleFavorite } = this.props;
     const { isFavorited } = this.state;
 
     return (
       <IconButton
         className={className}
         color="inherit"
-        onClick={this.handleClick}
+        onClick={() => toggleFavorite(isFavorited, this.setIsFavorited)}
       >
         {isFavorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
@@ -75,4 +67,12 @@ const mapDispatchToProps = {
 export default R.compose(
   branch(dataSelectors.isSellerSelector, renderNothing),
   connectData(mapDataToProps, null, mapDispatchToProps),
+  withProps(({ adId, favoriteAd, unfavoriteAd }) => ({
+    toggleFavorite: (isFavorited, setIsFavorited) => {
+      const action = isFavorited ? unfavoriteAd : favoriteAd;
+      setIsFavorited(!isFavorited);
+      action(adId);
+    },
+  })),
+  requireUserToCallAction('toggleFavorite'),
 )(FavoriteAd);
