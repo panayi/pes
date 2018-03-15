@@ -19,10 +19,12 @@ import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';
 import { withUserProfileData } from 'hocs/withProfileData';
+import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { actions as dataActions } from 'store/firebase/data';
 import ShareIcon from 'mdi-react/ShareIcon';
 import Conversation from 'modules/Messenger/Conversation/Conversation';
+import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Link from 'components/Link/Link';
 import Button from 'components/Button/Button';
 import AdTitle from 'components/AdTitle/AdTitle';
@@ -40,6 +42,7 @@ import VerifiedWith from '../VerifiedWith/VerifiedWith';
 import FavoriteAd from '../FavoriteAd/FavoriteAd';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import Action from '../Action/Action';
+import ShareAd from './ShareAd/ShareAd';
 
 const gutters = (theme, styles = {}) => ({
   paddingLeft: theme.spacing.unit * 2,
@@ -235,6 +238,7 @@ class MobileViewAd extends React.Component {
       viewSlideShow,
       viewConversation,
       setCurrentSlide,
+      openModal,
       history,
       classes,
     } = this.props;
@@ -252,7 +256,11 @@ class MobileViewAd extends React.Component {
               <KeyboardArrowLeft />
             </Link.icon>
             <div className={classes.flex} />
-            <IconButton className={classes.actionIconButton} color="inherit">
+            <IconButton
+              className={classes.actionIconButton}
+              color="inherit"
+              onClick={() => openModal('shareAd', { ad })}
+            >
               <ShareIcon />
             </IconButton>
             <FavoriteAd
@@ -425,6 +433,7 @@ class MobileViewAd extends React.Component {
             />
           </div>
         </div>
+        <ReduxModal id="shareAd" content={ShareAd} />
       </div>
     );
   }
@@ -498,6 +507,7 @@ const mapDispatchToProps = (dispatch, { adId }) =>
   bindActionCreators(
     {
       markAdAsSold: () => dataActions.markAdAsSold(adId),
+      openModal: modalActions.openModal,
     },
     dispatch,
   );

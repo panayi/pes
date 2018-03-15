@@ -25,6 +25,7 @@ const GeneralErrorMessage = ({ openModal, classes }) => (
     </a>.
   </Typography>
 );
+
 const mapDispatchToProps = {
   openModal: modalActions.openModal,
 };

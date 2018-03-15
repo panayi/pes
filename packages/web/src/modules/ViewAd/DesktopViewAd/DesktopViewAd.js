@@ -12,19 +12,16 @@ import PlaceIcon from 'material-ui-icons/Place';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import propSelector from '@pesposa/core/src/utils/propSelector';
-import urlForPath from 'utils/urlForPath';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { withUserProfileData } from 'hocs/withProfileData';
 import LinkToViewAd from 'components/LinkToViewAd/LinkToViewAd';
+import FacebookShareButton from 'components/FacebookShareButton/FacebookShareButton';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdBody from 'components/AdBody/AdBody';
 import AdAddress from 'components/AdAddress/AdAddress';
 import AdDateChip from 'components/AdDateChip/AdDateChip';
-import FacebookShareButton from 'components/FacebookShareButton/FacebookShareButton';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
-import TwitterShareButton from '../TwitterShareButton/TwitterShareButton';
-import EmailShareButton from '../EmailShareButton/EmailShareButton';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import StaticMap from '../StaticMap/StaticMap';
 import EditAdLink from '../EditAdLink/EditAdLink';
@@ -32,6 +29,8 @@ import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import MarkAsSold from '../MarkAsSold/MarkAsSold';
 import FavoriteAd from '../FavoriteAd/FavoriteAd';
+import TwitterShareAdButton from '../TwitterShareAdButton/TwitterShareAdButton';
+import EmailShareAdButton from '../EmailShareAdButton/EmailShareAdButton';
 import BrowseAds from './BrowseAds/BrowseAds';
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
 import SellerBox from './SellerBox/SellerBox';
@@ -42,6 +41,7 @@ type Props = {
   adId: string,
   location: Object,
   uid: string,
+  sellerName: string,
   sentMessages: Array<string>,
   addMessage: Function,
   classes: Object,
@@ -66,8 +66,9 @@ const styles = theme => ({
   offset: {
     position: 'absolute',
     bottom: 0,
-    right: -60,
-    width: 60,
+    right: -64,
+    zIndex: 1,
+    width: 64,
     boxSizing: 'border-box',
     padding: [theme.spacing.unit * 2, theme.spacing.unit],
   },
@@ -158,9 +159,6 @@ const styles = theme => ({
   shareButtons: {
     display: 'flex',
     flexDirection: 'column',
-    '& > div + div': {
-      marginTop: theme.spacing.unit,
-    },
   },
   previousLinkWrap: {
     position: 'absolute',
@@ -194,7 +192,7 @@ const DesktopViewAd = ({
   sellerName,
   classes,
 }: Props) => {
-  const currentUrl = urlForPath(location.pathname);
+  const path = location.pathname;
 
   return (
     <div className={classes.root}>
@@ -277,13 +275,9 @@ const DesktopViewAd = ({
         </div>
         <div className={classes.offset}>
           <div className={classes.shareButtons}>
-            <FacebookShareButton url={currentUrl} />
-            <TwitterShareButton url={currentUrl} />
-            <EmailShareButton
-              url={currentUrl}
-              subject="Check this out!"
-              body={currentUrl}
-            />
+            <FacebookShareButton path={path} />
+            <TwitterShareAdButton path={path} ad={ad} />
+            <EmailShareAdButton path={path} ad={ad} />
           </div>
         </div>
         <BrowseAds adId={adId}>

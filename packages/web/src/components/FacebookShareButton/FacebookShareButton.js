@@ -1,35 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import elementType from 'prop-types-extra/lib/elementType';
 import { FacebookShareButton as ReactFacebookShareButton } from 'react-share';
-import { withStyles } from 'material-ui/styles';
+import IconButton from 'material-ui/IconButton';
+import urlForPath from 'utils/urlForPath';
 import FacebookAvatar from 'components/FacebookAvatar/FacebookAvatar';
 
-const styles = {
-  root: {
-    cursor: 'pointer',
-  },
-};
-
-const FacebookShareButton = ({ url, quote, hashTag, classes }) => (
-  <ReactFacebookShareButton
-    url={url}
+const FacebookShareButton = ({
+  path,
+  quote,
+  hashTag,
+  component: Komponent,
+  children,
+}) => (
+  <Komponent
+    component={ReactFacebookShareButton}
+    url={urlForPath(path)}
     quote={quote}
     hashTag={hashTag}
-    className={classes.root}
   >
     <FacebookAvatar />
-  </ReactFacebookShareButton>
+    {children}
+  </Komponent>
 );
 
 FacebookShareButton.propTypes = {
-  url: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
   quote: PropTypes.string,
   hashTag: PropTypes.string,
+  component: elementType,
+  children: PropTypes.node,
 };
 
 FacebookShareButton.defaultProps = {
   quote: null,
   hashTag: null,
+  component: IconButton,
+  children: null,
 };
 
-export default withStyles(styles)(FacebookShareButton);
+export default FacebookShareButton;
