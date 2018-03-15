@@ -296,7 +296,7 @@ type SupportMessage {
 // Functions
 // ------------------------------------
 isAuthenticated() { auth != null }
-isNotAnonymous() { isAuthenticated() && auth.anonymous != true }
+isNotAnonymous() { isAuthenticated() && auth.provider != 'anonymous' }
 isAuthenticatedWithPhone() { auth != null && auth.provider == 'phone' }
 isCurrentUser(uid) { auth != null && auth.uid == uid }
 categoryIsValid(categoryId) { root.categories[categoryId] != null }
@@ -426,7 +426,7 @@ path /favorites/{uid} {
 
 path /favorites/{uid}/{adId} {
   read() { isCurrentUser(uid) }
-  create() { isCurrentUser(uid) }
+  create() { isCurrentUser(uid) && isNotAnonymous() }
   delete() { isCurrentUser(uid) }
 
   validate() {
