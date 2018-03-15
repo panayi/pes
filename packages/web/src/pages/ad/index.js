@@ -30,7 +30,7 @@ const Content = ({ ad, adId, legacy }: Props) => (
     />
     <ViewAd ad={ad} adId={adId} legacy={legacy} />
   </React.Fragment>
-)
+);
 
 const AdPage = (props: Props) => (
   <React.Fragment>
@@ -69,6 +69,8 @@ export default R.compose(
         type: 'once',
       },
     ]);
+
+    return store.getState();
   }),
   withProps(
     createStructuredSelector({

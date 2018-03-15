@@ -8,7 +8,6 @@ import {
   actions as searchActions,
   constants as searchConstants,
 } from 'store/search';
-import { models } from 'store/firebase/data';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import SearchFilters from 'modules/Search/Filters/Filters';
 import Search from './search';
@@ -20,15 +19,16 @@ class Home extends React.Component {
       store.dispatch,
       searchConstants.HOME_SEARCH_ID,
     );
-    const state = store.getState();
 
-    return Promise.all([
+    await Promise.all([
       store.firebase.promiseEvents([
-        { path: modelPaths.CATEGORIES, type: 'once' },
-        { path: models.conversations.all.query(state), type: 'once' },
+        { path: modelPaths.CATEGORIES.string, type: 'once' },
+        { path: modelPaths.TRANSLATIONS('en', []).string, type: 'once' },
       ]),
       actions.loadPage(0),
     ]);
+
+    return store.getState();
   }
 
   render() {

@@ -35,10 +35,6 @@ type Date extends String {
   validate() { this.test(/^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(.[0-9]+)?(Z)?$/) }
 }
 
-type PastEpoch extends Number {
-  validate() { this <= now }
-}
-
 type Decimal extends String {
   validate() { this.test(/^[-+]?([0-9]+|\.[0-9]+|[0-9]+\.[0-9]+)$/) }
 }
@@ -115,7 +111,11 @@ type PositiveNumber extends Number {
   }
 }
 
-type InitialTimestamp extends PastEpoch {
+type CurrentTimestamp extends Number {
+  validate() { this == now }
+}
+
+type InitialTimestamp extends Number {
   validate() { initial(this, now) }
 }
 
@@ -171,11 +171,11 @@ type Image {
   fullPath: String,
   name: String,
   // createdAt: InitialTimestamp,
-  // FIXME: this should be InitialTimestamp, but because Images are copied from
+  // TODO: this should be InitialTimestamp, but because Images are copied from
   // drafts to pendingReview, validation will fail. Instead, we should store draft - images
   // in a different collection (e.g. draftImages), and move them in a firebase-function
   // on pendingReviewAd create.
-  createdAt: PastEpoch,
+  createdAt: CurrentTimestamp,
   dimensions: Dimension | Null,
 }
 
@@ -195,7 +195,7 @@ type LegacyAd {
   category: String,
   email: Email | Null,
   phone: String | Null,
-  createdAt: PastEpoch,
+  createdAt: InitialTimestamp,
 }
 
 type Ad {
@@ -206,7 +206,7 @@ type Ad {
   category: String,
   user: String,
   sold: Boolean | Null,
-  createdAt: PastEpoch,
+  createdAt: InitialTimestamp,
 }
 
 type PendingReviewAd {
@@ -216,6 +216,7 @@ type PendingReviewAd {
   category: String,
   user: String,
   images: Map<String, Image>,
+  createdAt: InitialTimestamp
 }
 
 type DraftAd {
@@ -272,14 +273,14 @@ type Conversation {
   ad: String,
   buyer: String,
   read: Boolean | Null,
-  lastMessageCreatedAt: PastEpoch,
+  lastMessageCreatedAt: CurrentTimestamp,
 }
 
 type Message {
   body: String,
   fromBuyer: Boolean,
   read: Boolean | Null,
-  createdAt: PastEpoch | Null,
+  createdAt: InitialTimestamp,
 }
 
 type SupportMessageBody extends String {

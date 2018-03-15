@@ -17,12 +17,12 @@ import routes from 'routes';
 
 const history = createHistory();
 
-const store = configureStore(window.__PRELOADED_STATE__, history);
-
 // This is needed in order to deduplicate the injection of CSS in the page.
 const sheetsManager = new WeakMap();
 
 ensureReady(routes).then(data => {
+  const store = configureStore(data, history);
+
   const sheetsRegistry = new SheetsRegistry();
 
   return hydrate(

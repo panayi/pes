@@ -2,7 +2,6 @@ import React from 'react';
 import { AfterRoot, AfterData } from '@jaredpalmer/after';
 import { Provider } from 'react-redux';
 import { JssProvider, SheetsRegistry } from 'react-jss';
-import serialize from 'serialize-javascript';
 import Reboot from 'material-ui/Reboot';
 import { MuiThemeProvider } from 'material-ui/styles';
 import { ssrBehavior } from 'react-md-spinner';
@@ -14,9 +13,6 @@ import SearchProvider from 'components/SearchProvider/SearchProvider';
 
 class Document extends React.Component {
   static async getInitialProps({ assets, data, renderPage, req, store }) {
-    // Grab the initial state from our Redux store
-    const state = store.getState();
-
     // This is needed in order to deduplicate the injection of CSS in the page.
     const sheetsManager = new WeakMap();
     // This is needed in order to inject the critical CSS.
@@ -43,14 +39,13 @@ class Document extends React.Component {
       assets,
       data,
       css,
-      state,
       userAgent: req.headers['user-agent'],
       ...page,
     };
   }
 
   render() {
-    const { helmet, assets, data, css, state, userAgent } = this.props;
+    const { helmet, assets, data, css, userAgent } = this.props;
     // get attributes from React Helmet
     const htmlAttrs = helmet.htmlAttributes.toComponent();
     const bodyAttrs = helmet.bodyAttributes.toComponent();
@@ -107,13 +102,6 @@ class Document extends React.Component {
             src={assets.client.js}
             defer
             crossOrigin="anonymous"
-          />
-          <script
-            /* eslint-disable react/no-danger */
-            dangerouslySetInnerHTML={{
-              __html: `window.__PRELOADED_STATE__ = ${serialize(state)}`,
-            }}
-            /* eslint-enable react/no-danger */
           />
         </body>
       </html>

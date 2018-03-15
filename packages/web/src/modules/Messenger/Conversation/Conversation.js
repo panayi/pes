@@ -83,7 +83,9 @@ class Conversation extends Component {
   }
 
   maybeMarkAsRead(conversation) {
+    console.log('maybeMarkAsRead');
     if (conversation && !conversation.read) {
+      console.log('YES!');
       this.props.markAsRead(conversation.id);
     }
   }

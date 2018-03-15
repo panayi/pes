@@ -42,8 +42,10 @@ const search = (options = {}) => async (
     const result = await algoliaService.search(indexName, finalParams);
     dispatch(requestSucceeded(result));
     dispatch(pageActions.nextPage());
+    return result;
   } catch (error) {
     dispatch(requestFailed(error));
+    return null;
   }
 };
 

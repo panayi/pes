@@ -18,7 +18,7 @@ const UnreadConversationsBadge = ({
 }) =>
   unreadCount > 0 ? (
     <Badge
-      badgeContent={withNumber ? unreadCount : null}
+      badgeContent={withNumber ? unreadCount : ''}
       color={color}
       classes={classes}
     >
@@ -57,8 +57,11 @@ export default R.compose(
         (activeConversation, conversations) =>
           R.compose(
             R.length,
-            R.reject(
-              R.either(R.prop('read'), R.propEq('id', activeConversation)),
+            R.filter(
+              R.both(
+                R.propEq('read', false),
+                R.complement(R.propEq('id', activeConversation)),
+              ),
             ),
             R.defaultTo([]),
           )(conversations),

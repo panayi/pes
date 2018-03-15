@@ -27,7 +27,7 @@ export default R.compose(
     const { userId } = match.params;
 
     if (!userId) {
-      return;
+      return store.getState();
     }
 
     await store.firebase.promiseEvents([
@@ -38,6 +38,8 @@ export default R.compose(
         type: 'once',
       },
     ]);
+
+    return store.getState();
   }),
   withProps(
     createStructuredSelector({

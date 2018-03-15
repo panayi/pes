@@ -1,8 +1,8 @@
 /* @flow */
 import * as functions from 'firebase-functions';
-import { database } from '@pesposa/core/src/config/firebaseClient';
+import firebase, { database } from '@pesposa/core/src/config/firebaseClient';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
-import * as timestamp from '@pesposa/core/src/utils/timestamp';
+import getTimestamp from '@pesposa/core/src/utils/getTimestamp';
 
 type Event = {
   params: {
@@ -18,7 +18,7 @@ const updateUserConversation = async (adId, buyerId, userId, isSender) => {
   const conversation: Conversation = {
     ad: adId,
     buyer: buyerId,
-    lastMessageCreatedAt: timestamp.get(),
+    lastMessageCreatedAt: getTimestamp(firebase),
   };
 
   if (!isSender) {
@@ -26,7 +26,7 @@ const updateUserConversation = async (adId, buyerId, userId, isSender) => {
   }
 
   await database
-    .ref(modelPaths.CONVERSATION(userId, adId, buyerId))
+    .ref(modelPaths.CONVERSATION(userId, adId, buyerId).string)
     .update(conversation);
 };
 
@@ -47,7 +47,6 @@ const handleCreate = async (event: Event) => {
   const { fromBuyer }: { fromBuyer: boolean } = message;
   const { adId, buyerId } = event.params;
 
-  await timestamp.set('createdAt', snapshot.ref);
   await updateUsersConversation(adId, buyerId, fromBuyer);
 };
 

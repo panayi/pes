@@ -31,6 +31,7 @@ const styles = theme => ({
   },
   conversationWrap: {
     display: 'flex',
+    height: '100%',
   },
   fullHeight: {
     height: '100%',

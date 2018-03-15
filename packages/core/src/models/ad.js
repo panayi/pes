@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from '../config/firebaseClient';
 import * as algoliaService from '../services/algolia';
-import * as timestamp from '../utils/timestamp';
 import * as userModel from './user';
 import * as adImageModel from './adImage';
 
@@ -22,11 +21,9 @@ export const create = async (ad: PendingReviewAd) => {
   const userSnapshot = await userModel.get(user);
   const { location } = userSnapshot.val();
 
-  const finalAd = R.compose(
-    R.omit(['images']),
-    R.assoc('location', location),
-    R.assoc('createdAt', timestamp.get()),
-  )(ad);
+  const finalAd = R.compose(R.omit(['images']), R.assoc('location', location))(
+    ad,
+  );
 
   // Publish ad
   const { key: adId }: { key: ID } = await database
