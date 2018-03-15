@@ -105,7 +105,7 @@ type Price extends Number {
 
 type PhoneNumber extends String {
   validate() {
-    this.test(/^\+357\d{8}$/i) // Cyprus only
+    this.test(/^(\+357\d{8})|(\+30\d{10})$/i) // Cyprus and Greece only
   }
 }
 

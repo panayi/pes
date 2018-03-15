@@ -9,5 +9,16 @@
     "callingCode": "+357",
     "currency": "EUR",
     "default": true
-  }
+  },
+  "GR": {
+    "code": "GR",
+    "name": "Greece",
+    "geoposition": {
+      "latitude": 39.074208,
+      "longitude": 21.824311999999964
+    },
+    "callingCode": "+30",
+    "currency": "EUR",
+    "default": false
+  },
 }
