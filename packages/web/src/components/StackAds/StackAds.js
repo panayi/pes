@@ -65,7 +65,7 @@
 //   ...styles,
 // })
 
-// const styles = theme => !console.log(theme) && ({
+// const styles = theme => ({
 //   root: {
 //     // position: 'relative',
 //     // width: '100vw',

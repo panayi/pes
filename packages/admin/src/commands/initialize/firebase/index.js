@@ -22,9 +22,9 @@ export const canInitialize = async () => {
   return true;
 };
 
-const initializeFirebase = async () => {
-  const seedResult = await seed();
-  const importResult = await importLegacyAds();
+const initializeFirebase = async options => {
+  const seedResult = await seed(options);
+  const importResult = await importLegacyAds(options);
 
   return [seedResult, importResult];
 };

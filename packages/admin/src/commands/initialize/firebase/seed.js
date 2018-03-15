@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { database } from '@pesposa/core/src/config/firebaseClient';
 import log from '@pesposa/core/src/utils/log';
+import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
 import * as storageService from '@pesposa/core/src/services/storage';
 import categories from '@pesposa/core/src/database/seeds/categories.json';
 import locales from '@pesposa/core/src/database/seeds/locales.json';
@@ -22,9 +23,9 @@ const seedTranslations = async () => {
 const seedCountries = async () => {
   await database.ref('countries').set(countries);
 
-  return Promise.all(
+  return promiseSerial(
     R.compose(
-      R.map(countryCode => {
+      R.map(countryCode => () => {
         // eslint-disable-next-line
         const file = require('@pesposa/core/src/database/seeds/images/countries/' +
           R.toLower(countryCode) +
