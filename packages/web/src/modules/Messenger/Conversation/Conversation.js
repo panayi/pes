@@ -53,17 +53,11 @@ class Conversation extends Component {
 
   componentDidMount() {
     this.scrollToBottom();
-    this.setActiveConversation(this.props.conversation);
-    this.maybeMarkAsRead(this.props.conversation);
+    this.activateConversation(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    const nextId = R.pathOr(null, ['conversation', 'id'], nextProps);
-    const id = R.pathOr(null, ['conversation', 'id'], this.props);
-    if (nextId !== id) {
-      this.setActiveConversation(nextProps.conversation);
-    }
-    this.maybeMarkAsRead(nextProps.conversation);
+    this.activateConversation(nextProps);
   }
 
   componentDidUpdate(prevProps) {
@@ -73,21 +67,11 @@ class Conversation extends Component {
   }
 
   componentWillUnmount() {
-    this.props.resetActiveConversation();
+    this.props.deactivateConversation();
   }
 
-  setActiveConversation(conversation) {
-    if (conversation) {
-      this.props.setActiveConversation(conversation.id);
-    }
-  }
-
-  maybeMarkAsRead(conversation) {
-    console.log('maybeMarkAsRead');
-    if (conversation && !conversation.read) {
-      console.log('YES!');
-      this.props.markAsRead(conversation.id);
-    }
+  activateConversation(props) {
+    this.props.activateConversation(R.path(['conversation', 'id'], props));
   }
 
   scrollToBottom() {
@@ -172,9 +156,8 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  setActiveConversation: chatActions.setActiveConversation,
-  resetActiveConversation: chatActions.resetActiveConversation,
-  markAsRead: chatActions.markAsRead,
+  activateConversation: chatActions.activateConversation,
+  deactivateConversation: chatActions.deactivateConversation,
 };
 
 export default R.compose(

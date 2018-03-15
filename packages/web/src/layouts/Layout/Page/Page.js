@@ -13,7 +13,7 @@ type Props = {
   wide: ?boolean,
 };
 
-const styles = theme => ({
+const styles = {
   page: {
     flex: '1 1 100%',
     minHeight: '100%',
@@ -34,7 +34,7 @@ const styles = theme => ({
   wide: {
     maxWidth: 1200,
   },
-});
+};
 
 const Page = ({
   children,

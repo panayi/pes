@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { connect } from 'react-redux';
+import { isLoaded } from 'react-redux-firebase';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+import { models } from 'store/firebase/data';
 import Spinner from 'components/Spinner/Spinner';
-import withConversations from './withConversations/withConversations';
 import Conversations from './Conversations/Conversations';
 import Conversation from './Conversation/Conversation';
 import NoConversations from './NoConversations/NoConversations';
@@ -40,13 +42,13 @@ const styles = theme => ({
 
 class Messenger extends Component {
   renderLoadingConversations() {
-    return !this.props.isLoaded.conversations ? <Spinner centered /> : null;
+    return !isLoaded(this.props.conversations) ? <Spinner centered /> : null;
   }
 
   renderNoConversations() {
-    const { conversations, isLoaded } = this.props;
+    const { conversations } = this.props;
     const noConversations =
-      isNilOrEmpty(conversations) && isLoaded.conversations;
+      isNilOrEmpty(conversations) && isLoaded(conversations);
     return noConversations ? <NoConversations /> : null;
   }
 
@@ -141,8 +143,12 @@ Messenger.defaultProps = {
   conversations: null,
 };
 
+const mapStateToProps = createStructuredSelector({
+  conversations: models.conversations.all.selector,
+});
+
 export default R.compose(
-  withConversations,
+  connect(mapStateToProps),
   withProps(
     createStructuredSelector({
       selectedConversation: R.converge(R.find, [

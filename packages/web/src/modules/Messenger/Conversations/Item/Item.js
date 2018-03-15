@@ -97,7 +97,7 @@ const ConversationItem = ({
         variant="caption"
       />
       <Typography variant="caption">
-        <TimeAgo date={conversation.lastMessageCreatedAt} minPeriod={30} />
+        <TimeAgo date={conversation.lastMessageReceivedAt} minPeriod={30} />
       </Typography>
     </div>
     <div className={classes.profileImage}>

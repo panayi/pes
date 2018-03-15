@@ -272,14 +272,13 @@ type User {
 type Conversation {
   ad: String,
   buyer: String,
-  read: Boolean | Null,
-  lastMessageCreatedAt: CurrentTimestamp,
+  lastMessageReceivedAt: CurrentTimestamp | Null,
+  lastActiveAt: CurrentTimestamp | Null,
 }
 
 type Message {
   body: String,
   fromBuyer: Boolean,
-  read: Boolean | Null,
   createdAt: InitialTimestamp,
 }
 
@@ -442,21 +441,12 @@ path /myConversations/{uid} {
 path /myConversations/{uid}/{adIdBuyerId} is Conversation {
   read() { isCurrentUser(uid) }
 
-  index() { return ['lastMessageCreatedAt'] }
+  index() { return ['lastMessageReceivedAt'] }
 }
 
-path /myConversations/{uid}/{adIdBuyerId}/read is Boolean {
-  update() { isCurrentUser(uid) }
-}
-
-path /myConversations/{uid}/{adIdBuyerId}/read {
+path /myConversations/{uid}/{adIdBuyerId}/lastActiveAt is CurrentTimestamp {
   create() { isCurrentUser(uid) }
   update() { isCurrentUser(uid) }
-
-  validate() {
-    // Disallow setting to unread
-    this == true
-  }
 }
 
 path /messages/{adId}/{buyerId} {

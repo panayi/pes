@@ -5,17 +5,15 @@ import hydrateAd from 'hocs/hydrateAd';
 import DesktopViewAd from './DesktopViewAd/DesktopViewAd';
 import MobileViewAd from './MobileViewAd/MobileViewAd';
 
-const ViewAd = (props) => {
-  return (
-    <React.Fragment>
-      <DesktopScreen>
-        <DesktopViewAd {...props} />
-      </DesktopScreen>
-      <MobileScreen>
-        <MobileViewAd {...props} />
-      </MobileScreen>
-    </React.Fragment>
-  )
-};
+const ViewAd = props => (
+  <React.Fragment>
+    <DesktopScreen>
+      <DesktopViewAd {...props} />
+    </DesktopScreen>
+    <MobileScreen>
+      <MobileViewAd {...props} />
+    </MobileScreen>
+  </React.Fragment>
+);
 
 export default hydrateAd(propSelector('adId'), propSelector('legacy'))(ViewAd);

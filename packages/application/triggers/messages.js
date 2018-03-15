@@ -1,8 +1,7 @@
 /* @flow */
 import * as functions from 'firebase-functions';
-import firebase, { database } from '@pesposa/core/src/config/firebaseClient';
+import { database } from '@pesposa/core/src/config/firebaseClient';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
-import getTimestamp from '@pesposa/core/src/utils/getTimestamp';
 
 type Event = {
   params: {
@@ -14,15 +13,14 @@ type Event = {
   data: $npm$firebase$database$DataSnapshot,
 };
 
-const updateUserConversation = async (adId, buyerId, userId, isSender) => {
+const updateUserConversation = async (adId, buyerId, userId, isSender, createdAt) => {
   const conversation: Conversation = {
     ad: adId,
     buyer: buyerId,
-    lastMessageCreatedAt: getTimestamp(firebase),
   };
 
   if (!isSender) {
-    conversation.read = false;
+    conversation.lastMessageReceivedAt = createdAt;
   }
 
   await database
@@ -30,24 +28,24 @@ const updateUserConversation = async (adId, buyerId, userId, isSender) => {
     .update(conversation);
 };
 
-const updateUsersConversation = async (adId, buyerId, fromBuyer) => {
+const updateUsersConversation = async (adId, buyerId, fromBuyer, createdAt) => {
   const adRef = database.ref(`/ads/published/${adId}`);
   const adSnapshot = await adRef.once('value');
   const sellerId = adSnapshot.val().user;
 
   await Promise.all([
-    updateUserConversation(adId, buyerId, buyerId, fromBuyer),
-    updateUserConversation(adId, buyerId, sellerId, !fromBuyer),
+    updateUserConversation(adId, buyerId, buyerId, fromBuyer, createdAt),
+    updateUserConversation(adId, buyerId, sellerId, !fromBuyer, createdAt),
   ]);
 };
 
 const handleCreate = async (event: Event) => {
   const snapshot = event.data;
   const message: Message = snapshot.val();
-  const { fromBuyer }: { fromBuyer: boolean } = message;
+  const { fromBuyer, createdAt } = message;
   const { adId, buyerId } = event.params;
 
-  await updateUsersConversation(adId, buyerId, fromBuyer);
+  await updateUsersConversation(adId, buyerId, fromBuyer, createdAt);
 };
 
 export const messageCreated = functions.database

@@ -17,6 +17,7 @@ import Button from 'components/Button/Button';
 import ShowCreateAdButton from 'components/ShowCreateAdButton/ShowCreateAdButton';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
+import WithConversations from 'modules/Messenger/WithConversations/WithConversations';
 import Support from 'modules/Support/Support';
 import Login from 'modules/Login/Login';
 import CreateAd from 'modules/PostAd/CreateAd/CreateAd';
@@ -117,58 +118,60 @@ const Header = ({
   closeMobileMenu,
   classes,
 }) => (
-  <React.Fragment>
-    <div className={classes.mobileMenuButton}>
-      <IconButton onClick={openMobileMenu}>
-        {isAuthenticated ? (
-          <ProfileImage userId={currentUserId} size="28" />
-        ) : (
-          <MenuIcon />
-        )}
-      </IconButton>
-    </div>
-    <Link to="/" exact className={classes.logoLink}>
-      <Logo className={classes.logo} />
-    </Link>
-    <div className={classes.searchInput}>
-      <SearchQuery inHome={inHome} />
-    </div>
-    <ShowCreateAdButton className={classes.createAdButton} />
-    <LoginButton
-      className={classes.loginButton}
-      color="inherit"
-      onClick={() => openModal('login')}
-    >
-      Login
-    </LoginButton>
-    {inHome && (
-      <IconButton
-        className={classes.filtersButton}
+  <WithConversations>
+    <React.Fragment>
+      <div className={classes.mobileMenuButton}>
+        <IconButton onClick={openMobileMenu}>
+          {isAuthenticated ? (
+            <ProfileImage userId={currentUserId} size="28" />
+          ) : (
+            <MenuIcon />
+          )}
+        </IconButton>
+      </div>
+      <Link to="/" exact className={classes.logoLink}>
+        <Logo className={classes.logo} />
+      </Link>
+      <div className={classes.searchInput}>
+        <SearchQuery inHome={inHome} />
+      </div>
+      <ShowCreateAdButton className={classes.createAdButton} />
+      <LoginButton
+        className={classes.loginButton}
         color="inherit"
-        onClick={() => openModal('searchFilters')}
+        onClick={() => openModal('login')}
       >
-        <TuneIcon />
-      </IconButton>
-    )}
-    <MessagesButton className={classes.messagesButton}>
-      <UnreadConversationsBadge classes={{ badge: classes.unreadBadge }}>
-        <Link to="/messages">Messages</Link>
-      </UnreadConversationsBadge>
-    </MessagesButton>
-    <div className={classes.desktopMenu}>
-      <DesktopMenu currentUserId={currentUserId} />
-    </div>
-    <Drawer open={mobileMenuOpened} onClose={closeMobileMenu}>
-      <MobileMenu
-        isAuthenticated={isAuthenticated}
-        currentUserId={currentUserId}
-        onClose={closeMobileMenu}
-      />
-    </Drawer>
-    <ReduxModal id="login" content={Login} closeButton />
-    <ReduxModal id="createAd" content={CreateAd} />
-    <ReduxModal id="support" content={Support} />
-  </React.Fragment>
+        Login
+      </LoginButton>
+      {inHome && (
+        <IconButton
+          className={classes.filtersButton}
+          color="inherit"
+          onClick={() => openModal('searchFilters')}
+        >
+          <TuneIcon />
+        </IconButton>
+      )}
+      <MessagesButton className={classes.messagesButton}>
+        <UnreadConversationsBadge classes={{ badge: classes.unreadBadge }}>
+          <Link to="/messages">Messages</Link>
+        </UnreadConversationsBadge>
+      </MessagesButton>
+      <div className={classes.desktopMenu}>
+        <DesktopMenu currentUserId={currentUserId} />
+      </div>
+      <Drawer open={mobileMenuOpened} onClose={closeMobileMenu}>
+        <MobileMenu
+          isAuthenticated={isAuthenticated}
+          currentUserId={currentUserId}
+          onClose={closeMobileMenu}
+        />
+      </Drawer>
+      <ReduxModal id="login" content={Login} closeButton />
+      <ReduxModal id="createAd" content={CreateAd} />
+      <ReduxModal id="support" content={Support} />
+    </React.Fragment>
+  </WithConversations>
 );
 
 const mapStateToProps = createStructuredSelector({

@@ -19,8 +19,7 @@ const styles = theme => ({
   },
 });
 
-const VerifiedWith = ({ user, size, className, classes }) => {
-  return (
+const VerifiedWith = ({ user, className, classes }) => (
     <div className={classNames(classes.verified, className)}>
       <Typography color="inherit">Verified with&nbsp;</Typography>
       <ListUserProviders
@@ -29,7 +28,6 @@ const VerifiedWith = ({ user, size, className, classes }) => {
         hideDisabled
       />
     </div>
-  )
-}
+  );
 
-export default withStyles(styles)(VerifiedWith)
+export default withStyles(styles)(VerifiedWith);
