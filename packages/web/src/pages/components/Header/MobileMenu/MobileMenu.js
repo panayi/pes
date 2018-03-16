@@ -10,15 +10,26 @@ import HomeIcon from 'material-ui-icons/Home';
 import MessageIcon from 'material-ui-icons/Message';
 import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import { actions as modalActions } from 'store/modals';
+import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
 import ProfileBox from '../ProfileBox/ProfileBox';
 import LogoutButton from '../LogoutButton/LogoutButton';
 
-const styles = {
+const styles = theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
   },
-};
+  unreadBadge: {
+    top: -8,
+    right: 6,
+    width: 18,
+    height: 18,
+    fontSize: '0.65rem',
+    fontWeight: theme.typography.fontWeightBold,
+    background: theme.palette.primary.main,
+    color: theme.palette.getContrastText(theme.palette.primary.main),
+  },
+});
 
 class Menu extends Component {
   static propTypes = {
@@ -41,14 +52,16 @@ class Menu extends Component {
   };
 
   renderUserLinks() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, classes } = this.props;
 
     return isAuthenticated ? (
       <React.Fragment>
         <ListItem button onClick={() => this.navigateTo('/messages')}>
-          <ListItemIcon>
-            <MessageIcon />
-          </ListItemIcon>
+          <UnreadConversationsBadge classes={{ badge: classes.unreadBadge }}>
+            <ListItemIcon>
+              <MessageIcon />
+            </ListItemIcon>
+          </UnreadConversationsBadge>
           <ListItemText primary="Messages" />
         </ListItem>
         <ListItem button onClick={() => this.navigateTo('/profile')}>

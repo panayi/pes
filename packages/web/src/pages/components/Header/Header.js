@@ -1,5 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { withStateHandlers } from 'recompose';
 import { createStructuredSelector } from 'reselect';
@@ -65,6 +66,10 @@ const styles = theme => ({
     background: theme.palette.primary.main,
     color: theme.palette.getContrastText(theme.palette.primary.main),
   },
+  mobileUnreadBadge: {
+    top: 2,
+    right: 2,
+  },
   menuButton: {
     display: 'none',
     [theme.breakpoints.down(theme.map.phone)]: {
@@ -121,13 +126,19 @@ const Header = ({
   <WithConversations>
     <React.Fragment>
       <div className={classes.mobileMenuButton}>
-        <IconButton onClick={openMobileMenu}>
-          {isAuthenticated ? (
-            <ProfileImage userId={currentUserId} size="28" />
-          ) : (
-            <MenuIcon />
-          )}
-        </IconButton>
+        <UnreadConversationsBadge
+          classes={{
+            badge: classNames(classes.unreadBadge, classes.mobileUnreadBadge),
+          }}
+        >
+          <IconButton onClick={openMobileMenu}>
+            {isAuthenticated ? (
+              <ProfileImage userId={currentUserId} size="28" />
+            ) : (
+              <MenuIcon />
+            )}
+          </IconButton>
+        </UnreadConversationsBadge>
       </div>
       <Link to="/" exact className={classes.logoLink}>
         <Logo className={classes.logo} />
