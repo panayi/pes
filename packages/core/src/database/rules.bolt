@@ -474,3 +474,8 @@ path /messages/{adId} {
 path /support/{id} is SupportMessage {
   create() { true }
 }
+
+// BETA
+path /betaUsers {
+  read() { true }
+}

@@ -48,3 +48,9 @@ export const profileLocaleSelector = R.compose(
   R.defaultTo(localeConfig.DEFAULT_LOCALE),
   profilePropSelector(['locale'], { populated: true }),
 );
+
+export const providerIdsSelector = R.compose(
+  R.pluck('uid'),
+  R.defaultTo([]),
+  profilePropSelector(['providerData']),
+);

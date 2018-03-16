@@ -1,5 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { withStateHandlers } from 'recompose';
 import { createStructuredSelector } from 'reselect';
@@ -25,7 +26,7 @@ import SearchQuery from 'modules/Search/Query/Query';
 import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
 import MobileMenu from 'pages/components/Header/MobileMenu/MobileMenu';
 import DesktopMenu from './DesktopMenu/DesktopMenu';
-import Logo from './Logo/Logo';
+import Logo from '../Logo/Logo';
 
 const LoginButton = hideUser(Button);
 const MessagesButton = hideVisitor('div');
@@ -64,6 +65,10 @@ const styles = theme => ({
     fontWeight: theme.typography.fontWeightBold,
     background: theme.palette.primary.main,
     color: theme.palette.getContrastText(theme.palette.primary.main),
+  },
+  mobileUnreadBadge: {
+    top: 2,
+    right: 2,
   },
   menuButton: {
     display: 'none',
@@ -121,13 +126,19 @@ const Header = ({
   <WithConversations>
     <React.Fragment>
       <div className={classes.mobileMenuButton}>
-        <IconButton onClick={openMobileMenu}>
-          {isAuthenticated ? (
-            <ProfileImage userId={currentUserId} size="28" />
-          ) : (
-            <MenuIcon />
-          )}
-        </IconButton>
+        <UnreadConversationsBadge
+          classes={{
+            badge: classNames(classes.unreadBadge, classes.mobileUnreadBadge),
+          }}
+        >
+          <IconButton onClick={openMobileMenu}>
+            {isAuthenticated ? (
+              <ProfileImage userId={currentUserId} size="28" />
+            ) : (
+              <MenuIcon />
+            )}
+          </IconButton>
+        </UnreadConversationsBadge>
       </div>
       <Link to="/" exact className={classes.logoLink}>
         <Logo className={classes.logo} />

@@ -10,6 +10,8 @@ import { render } from '@jaredpalmer/after';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import serviceAccountKey from '@pesposa/core/src/config/serviceAccountKey.json';
 import configureStore from 'store/configureStore';
+import { models } from 'store/firebase/data';
+import { BETA_ENABLED, isBetaUserSelector } from 'pages/beta';
 import routes from './routes';
 import Document from './Document';
 
@@ -23,6 +25,90 @@ if (!firebase.apps.length) {
     credential: firebase.credential.cert(serviceAccountKey),
   });
 }
+
+// BETA
+const requireBetaUser = async (req, res, next) => {
+  if (!BETA_ENABLED) {
+    next();
+    return;
+  }
+
+  const { store } = req;
+  await store.firebase.promiseEvents([models.betaUsers.all.query({})]);
+  const isBetaUser = isBetaUserSelector(store.getState());
+
+  if (isBetaUser) {
+    next();
+    return;
+  }
+
+  res.redirect('/beta');
+  res.end();
+};
+
+const requireNonBetaUser = async (req, res, next) => {
+  const { store } = req;
+  await store.firebase.promiseEvents([models.betaUsers.all.query({})]);
+  const isBetaUser = isBetaUserSelector(store.getState());
+
+  if (isBetaUser) {
+    res.redirect('/');
+    res.end();
+  } else {
+    next();
+  }
+};
+
+const needsBetaEnabled = async (req, res, next) => {
+  if (!BETA_ENABLED) {
+    res.redirect('/');
+    res.end();
+  } else {
+    next();
+  }
+};
+
+const setupData = async (req, res, next) => {
+  const store = configureStore({}, createMemoryHistory());
+
+  // Sign-in user using session
+  const userId = R.path(['session', 'decodedToken', 'user_id'], req);
+  if (userId) {
+    await firebase
+      .auth()
+      .createCustomToken(req.session.decodedToken.user_id)
+      .then(token => store.firebase.auth().signInWithCustomToken(token));
+  }
+
+  req.store = store;
+  next();
+};
+
+const renderApp = async (req, res) => {
+  try {
+    const { store } = req;
+
+    // Detect mobile
+    const mobileDetect = mobileParser(req);
+    store.dispatch(setMobileDetect(mobileDetect));
+
+    const docGetInitialProps = Document.getInitialProps;
+    Document.getInitialProps = ctx => docGetInitialProps({ ...ctx, store });
+
+    const html = await render({
+      req,
+      res,
+      document: Document,
+      routes,
+      assets,
+      store,
+    });
+    res.send(html);
+  } catch (error) {
+    console.error(error); // eslint-disable-line no-console
+    res.json(error);
+  }
+};
 
 const server = express();
 server
@@ -55,39 +141,7 @@ server
     req.session.decodedToken = null;
     res.json({ status: true });
   })
-  .get('/*', async (req, res) => {
-    try {
-      const store = configureStore({}, createMemoryHistory());
-
-      // Sign-in user using session
-      const userId = R.path(['session', 'decodedToken', 'user_id'], req);
-      if (userId) {
-        await firebase
-          .auth()
-          .createCustomToken(req.session.decodedToken.user_id)
-          .then(token => store.firebase.auth().signInWithCustomToken(token));
-      }
-
-      // Detect mobile
-      const mobileDetect = mobileParser(req);
-      store.dispatch(setMobileDetect(mobileDetect));
-
-      const docGetInitialProps = Document.getInitialProps;
-      Document.getInitialProps = ctx => docGetInitialProps({ ...ctx, store });
-
-      const html = await render({
-        req,
-        res,
-        document: Document,
-        routes,
-        assets,
-        store,
-      });
-      res.send(html);
-    } catch (error) {
-      console.error(error); // eslint-disable-line no-console
-      res.json(error);
-    }
-  });
+  .get('/beta', setupData, needsBetaEnabled, requireNonBetaUser, renderApp) // BETA
+  .get('/*', setupData, requireBetaUser, renderApp);
 
 export default server;
