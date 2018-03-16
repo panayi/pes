@@ -34,3 +34,6 @@ export const CONVERSATION = (userId, adId, buyerId) =>
 export const MESSAGES = (adId, buyerId) =>
   createModelPath(['messages', adId, buyerId]);
 export const SUPPORT_MESSAGES = createModelPath(['support']);
+
+// BETA
+export const BETA_USERS = createModelPath(['betaUsers']);

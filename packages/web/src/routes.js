@@ -1,8 +1,10 @@
+import * as R from 'ramda';
 import { withProps } from 'recompose';
 import Home from 'pages/home/index';
 import Profile from 'pages/profile/index';
 import ViewAd from 'pages/ad/index';
 import Messages from 'pages/messages/index';
+import Beta, { BETA_ENABLED } from 'pages/beta/index';
 
 const routes = [
   {
@@ -31,4 +33,15 @@ const routes = [
   },
 ];
 
-export default routes;
+// BETA
+const finalRoutes = BETA_ENABLED
+  ? R.prepend(
+      {
+        path: '/beta',
+        component: Beta,
+      },
+      routes,
+    )
+  : routes;
+
+export default finalRoutes;

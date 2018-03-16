@@ -1,4 +1,7 @@
 import downloadLegacyAds from './downloadLegacyAds';
 import initialize from './initialize';
 
-export { downloadLegacyAds, initialize };
+// BETA
+import addBetaUser from './addBetaUser';
+
+export { downloadLegacyAds, initialize, addBetaUser };

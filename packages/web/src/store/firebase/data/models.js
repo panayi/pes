@@ -48,3 +48,8 @@ export const messages = ({ adSelector, buyerSelector }) =>
   createModelConnections(
     createSelector(adSelector, buyerSelector, modelPaths.MESSAGES),
   );
+
+// BETA
+export const betaUsers = createModelConnections(modelPaths.BETA_USERS, {
+  type: 'once',
+});

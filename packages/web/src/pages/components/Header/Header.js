@@ -25,7 +25,7 @@ import SearchQuery from 'modules/Search/Query/Query';
 import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
 import MobileMenu from 'pages/components/Header/MobileMenu/MobileMenu';
 import DesktopMenu from './DesktopMenu/DesktopMenu';
-import Logo from './Logo/Logo';
+import Logo from '../Logo/Logo';
 
 const LoginButton = hideUser(Button);
 const MessagesButton = hideVisitor('div');

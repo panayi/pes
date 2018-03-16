@@ -14,9 +14,10 @@ const styles = theme => ({
     width: '100%',
     height: '100%',
     textAlign: 'center',
-    color: theme.palette.grey[400],
+    color: theme.palette.text.default,
   },
   icon: {
+    color: 'inherit',
     width: 200,
     height: 200,
   },
@@ -31,10 +32,11 @@ const EmptyHero = ({
   title,
   tagline,
   small,
+  className,
   children,
   classes,
 }) => (
-  <div className={classes.root}>
+  <div className={classNames(classes.root, className)}>
     {Icon && (
       <Icon
         className={classNames(classes.icon, { [classes.smallIcon]: small })}
@@ -43,13 +45,14 @@ const EmptyHero = ({
     {title && (
       <Typography
         variant={small ? 'display1' : 'display3'}
+        color="inherit"
         component="h2"
         paragraph
       >
         {title}
       </Typography>
     )}
-    <Typography variant="headline" color="textSecondary">
+    <Typography variant="headline" color="inherit">
       {tagline}
     </Typography>
     {children}
