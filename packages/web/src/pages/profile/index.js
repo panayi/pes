@@ -34,7 +34,7 @@ export default R.compose(
       {
         path: models.users
           .one(propSelector('userId'))
-          .query(store.getState(), { userId }),
+          .query(store.getState(), { userId }).path,
         type: 'once',
       },
     ]);

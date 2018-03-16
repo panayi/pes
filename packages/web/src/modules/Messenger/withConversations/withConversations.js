@@ -16,7 +16,10 @@ import { selectors as authSelectors } from 'store/firebase/auth';
 const WithConversations = ({ children }) => Children.only(children);
 
 const mapStateToProps = createStructuredSelector({
-  conversationsQueryPath: models.conversations.all.query,
+  conversationsQueryPath: R.compose(
+    R.prop('path'),
+    models.conversations.all.query,
+  ),
   isAuthenticated: authSelectors.isAuthenticatedSelector,
 });
 

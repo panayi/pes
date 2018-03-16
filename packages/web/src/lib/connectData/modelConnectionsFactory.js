@@ -17,17 +17,21 @@ const createPathSelector = (...paths) =>
     R.unapply(R.reduce(R.concat, [])),
   );
 
-const createPathStringSelector = (...paths) =>
-  createSelector(createPathSelector(...paths), R.join('/'));
+const createPathStringSelector = (type, ...paths) =>
+  createSelector(createPathSelector(...paths), segments => ({
+    path: R.join('/', segments),
+    type,
+  }));
 
 // createByChildQuery :: String, Selector, Selector -> Selector
-const createByChildQuery = (key, valueSelector, ...paths) =>
+const createByChildQuery = (type, key, valueSelector, ...paths) =>
   createSelector(
     valueSelector,
     createPathStringSelector(...paths),
     (value, modelPathString) => ({
       path: modelPathString,
       queryParams: [`orderByChild=${key}`, `equalTo=${value}`],
+      type,
     }),
   );
 
@@ -73,14 +77,15 @@ const modelConnectionsFactory = dataPath => {
   //     String | [String]
   const createModelConnections = (modelPath, options) => {
     const singleton = R.propOr(false, 'singleton', options);
-    const modelPathStringSelector = createPathStringSelector(modelPath);
+    const type = R.propOr('value', 'type', options);
+    const modelPathStringSelector = createPathStringSelector(type, modelPath);
 
     if (singleton) {
       return {
         query: modelPathStringSelector,
         selector: createDataSelector(modelPath),
         child: childPath => ({
-          query: createPathStringSelector(modelPath, childPath),
+          query: createPathStringSelector(type, modelPath, childPath),
           selector: createDataSelector(modelPath, childPath),
         }),
       };
@@ -96,19 +101,24 @@ const modelConnectionsFactory = dataPath => {
         selector: createCollectionSelector(modelPath),
       },
       oneObject: idSelector => ({
-        query: createPathStringSelector(modelPath, idSelector),
+        query: createPathStringSelector(type, modelPath, idSelector),
         selector: createDataSelector(modelPath, idSelector),
       }),
       one: idSelector => ({
-        query: createPathStringSelector(modelPath, idSelector),
+        query: createPathStringSelector(type, modelPath, idSelector),
         selector: createRecordSelector(idSelector, modelPath),
         child: childPath => ({
-          query: createPathStringSelector(modelPath, idSelector, childPath),
+          query: createPathStringSelector(
+            type,
+            modelPath,
+            idSelector,
+            childPath,
+          ),
           selector: createDataSelector(modelPath, idSelector, childPath),
         }),
       }),
       byChild: (key, valueSelector) => ({
-        query: createByChildQuery(key, valueSelector, modelPath),
+        query: createByChildQuery(type, key, valueSelector, modelPath),
         selector: createByChildSelector(key, valueSelector, modelPath),
       }),
     };

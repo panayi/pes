@@ -13,9 +13,14 @@ export const translations = (languageSelector, namespaceSelector) =>
       namespaceSelector,
       modelPaths.TRANSLATIONS,
     ),
+    { type: 'once' },
   );
-export const countries = createModelConnections(modelPaths.COUNTRIES);
-export const categories = createModelConnections(modelPaths.CATEGORIES);
+export const countries = createModelConnections(modelPaths.COUNTRIES, {
+  type: 'once',
+});
+export const categories = createModelConnections(modelPaths.CATEGORIES, {
+  type: 'once',
+});
 export const users = createModelConnections(modelPaths.USERS);
 export const profiles = userIdSelector =>
   createModelConnections(createSelector(userIdSelector, modelPaths.PROFILES), {
