@@ -92,7 +92,7 @@ const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
               variant="subheading"
               ad={hit}
               lines={2}
-              height={48}
+              height={37}
               tagName="h3"
             />
             <div className={classes.location}>

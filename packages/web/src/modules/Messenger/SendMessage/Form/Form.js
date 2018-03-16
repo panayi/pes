@@ -36,6 +36,9 @@ const styles = theme => ({
       paddingRight: 123,
       background: theme.palette.grey[100],
       color: theme.palette.text.primary,
+      '& input': {
+        padding: 0,
+      },
     },
     '& $action': {
       position: 'absolute',

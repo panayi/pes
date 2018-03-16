@@ -33,6 +33,7 @@ const styles = theme => ({
     height: 85,
     padding: [theme.spacing.unit * 2, theme.spacing.unit * 1.5],
     borderBottom: [1, 'solid', theme.palette.divider],
+    borderRadius: 0,
   },
   active: {
     background: '#f5f0f0',

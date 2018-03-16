@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import TimeAgo from 'react-timeago';
 import Typography from 'material-ui/Typography';
 import { fade } from 'material-ui/styles/colorManipulator';
 import { withStyles } from 'material-ui/styles';
@@ -7,64 +8,53 @@ import { withStyles } from 'material-ui/styles';
 const common = {
   position: 'relative',
   padding: [10, 20],
-  borderRadius: 25,
+  margin: '0.25em',
+  borderRadius: '0.6em',
 };
 
 const styles = theme => ({
   fromOther: {
     ...common,
     background: theme.palette.grey[200],
+    '& $date': {
+      opacity: 0.3,
+    },
   },
   fromMe: {
     ...common,
     background: theme.palette.primary.main,
     color: theme.palette.common.white,
+    '& $date': {
+      opacity: 0.7,
+    },
+  },
+  date: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    paddingTop: theme.spacing.unit / 2,
   },
   conversation: {
     '&:before': {
       content: '""',
+      display: 'block',
+      width: '0.75em',
+      height: '0.5em',
       position: 'absolute',
-      transform: 'translate(0, -2px)',
-      height: 19,
-    },
-    '&:after': {
-      content: '""',
-      position: 'absolute',
-      transform: 'translate(-30px, -2px)',
-      height: 20,
+      bottom: 0,
     },
     '&$fromOther': {
       '&:before': {
-        zIndex: 2,
-        bottom: -2,
-        left: -7,
-        borderLeft: [20, 'solid', theme.palette.grey[200]],
-        borderBottomRightRadius: '16px 14px',
-      },
-      '&:after': {
-        zIndex: 3,
-        bottom: -2,
-        left: 4,
-        width: 26,
-        background: 'white',
-        borderBottomRightRadius: 10,
+        left: '-0.25em',
+        borderRight: ['0.5em', 'solid', theme.palette.grey[200]],
+        borderBottomRightRadius: '100%',
       },
     },
     '&$fromMe': {
       '&:before': {
-        zIndex: 1,
-        bottom: -2,
-        right: -8,
-        borderRight: [20, 'solid', theme.palette.primary.main],
-        borderBottomLeftRadius: '16px 14px',
-      },
-      '&:after': {
-        zIndex: 1,
-        bottom: -2,
-        right: -42,
-        width: 12,
-        background: 'white',
-        borderBottomLeftRadius: 10,
+        right: '-0.25em',
+        borderLeft: ['0.5em', 'solid', theme.palette.primary.main],
+        borderBottomLeftRadius: '100%',
       },
     },
   },
@@ -75,7 +65,7 @@ const styles = theme => ({
   },
 });
 
-const MessageBubble = ({ fromOther, variant, children, classes, ...rest }) => (
+const MessageBubble = ({ fromOther, variant, message, classes, ...rest }) => (
   <div
     {...rest}
     className={classNames(classes[variant], {
@@ -83,7 +73,12 @@ const MessageBubble = ({ fromOther, variant, children, classes, ...rest }) => (
       [classes.fromMe]: !fromOther,
     })}
   >
-    <Typography color="inherit">{children}</Typography>
+    <Typography color="inherit">{message.body}</Typography>
+    <div className={classes.date}>
+      <Typography color="inherit" variant="caption">
+        <TimeAgo date={message.createdAt} minPeriod={30} />
+      </Typography>
+    </div>
   </div>
 );
 
