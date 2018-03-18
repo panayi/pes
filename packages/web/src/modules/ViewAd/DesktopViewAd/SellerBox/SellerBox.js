@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import Link from 'components/Link/Link';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -53,15 +54,24 @@ const SellerBox = ({ ad, className, classes }) => (
         <React.Fragment>
           <UserFullName
             userId={ad.user}
-            className={classes.name}
-            color="inherit"
-            variant="subheading"
+            render={({ userFullName }) => (
+              <Typography
+                className={classes.name}
+                variant="subheading"
+                color="inherit"
+              >
+                {userFullName}
+              </Typography>
+            )}
           />
           <VerifiedWith user={ad.user} />
         </React.Fragment>
       )}
     </div>
-    <RevealPhoneButton ad={ad} size="small" variant="raised">
+    <RevealPhoneButton
+      ad={ad}
+      buttonProps={{ size: 'small', variant: 'raised' }}
+    >
       Call seller
     </RevealPhoneButton>
   </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { withRouter } from 'react-router-dom';
 import { DesktopScreen } from 'react-responsive-redux';
+import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import Link from 'components/Link/Link';
@@ -73,9 +74,12 @@ const ConversationHeader = ({
       <ProfileImage userId={otherUserId} />
       <DesktopScreen>
         <UserFullName
-          className={classes.userName}
           userId={otherUserId}
-          variant="body2"
+          render={({ userFullName }) => (
+            <Typography className={classes.userName} variant="body2">
+              {userFullName}
+            </Typography>
+          )}
         />
       </DesktopScreen>
     </div>
@@ -93,8 +97,15 @@ const ConversationHeader = ({
           variant="subheading"
           component={LineClamp}
           lines={1}
+          height={24}
         />
-        <AdBody ad={ad} component={LineClamp} variant="caption" lines={1} />
+        <AdBody
+          ad={ad}
+          component={LineClamp}
+          variant="caption"
+          lines={1}
+          height={16}
+        />
       </div>
       <AdThumbnail ad={ad} />
     </div>

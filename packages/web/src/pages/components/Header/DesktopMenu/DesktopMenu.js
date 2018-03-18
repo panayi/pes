@@ -115,7 +115,7 @@ class DesktopMenu extends Component {
               >
                 Help / Feedback
               </Button>
-              <LogoutButton className={classes.logoutButton} dense>
+              <LogoutButton className={classes.logoutButton} size="small">
                 Sign out
               </LogoutButton>
             </div>

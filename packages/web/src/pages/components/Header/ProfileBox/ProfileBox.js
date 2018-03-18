@@ -99,9 +99,12 @@ class ProfileBox extends Component {
         </div>
         <div>
           <UserFullName
-            className={classes.displayName}
             userId={currentUserId}
-            color="inherit"
+            render={({ userFullName }) => (
+              <Typography className={classes.displayName} color="inherit">
+                {userFullName}
+              </Typography>
+            )}
           />
           <Typography className={classes.smallText} variant="caption">
             {email}

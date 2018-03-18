@@ -88,9 +88,12 @@ export const ProfileBanner = ({
         <div className={classes.content}>
           <ProfileImage userId={userId} size={94} />
           <UserFullName
-            className={classes.fullname}
             userId={userId}
-            variant="title"
+            render={({ userFullName }) => (
+              <Typography className={classes.fullname} variant="title">
+                {userFullName}
+              </Typography>
+            )}
           />
           <Typography className={classes.verifiedTitle} variant="button">
             Verified Accounts

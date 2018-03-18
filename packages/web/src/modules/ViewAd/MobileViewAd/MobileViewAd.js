@@ -3,11 +3,11 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import { withProps, withStateHandlers } from 'recompose';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
+import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
@@ -21,7 +21,6 @@ import hydrateAd from 'hocs/hydrateAd';
 import { withUserProfileData } from 'hocs/withProfileData';
 import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import { actions as dataActions } from 'store/firebase/data';
 import ShareIcon from 'mdi-react/ShareIcon';
 import Conversation from 'modules/Messenger/Conversation/Conversation';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
@@ -37,6 +36,7 @@ import UserFullName from 'components/UserFullName/UserFullName';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import EditAdLink from '../EditAdLink/EditAdLink';
 import StaticMap from '../StaticMap/StaticMap';
+import MarkAsSold from '../MarkAsSold/MarkAsSold';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
 import FavoriteAd from '../FavoriteAd/FavoriteAd';
@@ -234,7 +234,6 @@ class MobileViewAd extends React.Component {
       adId,
       imagesList,
       uid,
-      markAdAsSold,
       viewSlideShow,
       viewConversation,
       setCurrentSlide,
@@ -338,7 +337,12 @@ class MobileViewAd extends React.Component {
                 size={40}
               />
               <div className={classes.verifiedWith}>
-                <UserFullName userId={ad.user} />
+                <UserFullName
+                  userId={ad.user}
+                  render={({ userFullName }) => (
+                    <Typography>{userFullName}</Typography>
+                  )}
+                />
                 <VerifiedWith user={ad.user} />
               </div>
               <IconButton className={classes.profileButton}>
@@ -354,16 +358,12 @@ class MobileViewAd extends React.Component {
               currentUserId={uid}
               seller={
                 <React.Fragment>
-                  <Button
+                  <MarkAsSold
+                    adId={adId}
                     className={classes.actionButton}
                     size="small"
                     variant="outline"
-                    color="primary"
-                    fullWidth
-                    onClick={() => markAdAsSold()}
-                  >
-                    Mark as sold
-                  </Button>
+                  />
                   <EditAdLink
                     className={classes.actionButton}
                     adId={adId}
@@ -384,10 +384,12 @@ class MobileViewAd extends React.Component {
                       classes.actionButton,
                       classes.callButton,
                     )}
-                    size="small"
-                    variant="outline"
-                    color="primary"
-                    fullWidth
+                    buttonProps={{
+                      size: 'small',
+                      variant: 'outline',
+                      color: 'primary',
+                      fullWidth: true,
+                    }}
                   >
                     Call
                   </RevealPhoneButton>
@@ -503,14 +505,9 @@ const mapStateToProps = createStructuredSelector({
   uid: authSelectors.uidSelector,
 });
 
-const mapDispatchToProps = (dispatch, { adId }) =>
-  bindActionCreators(
-    {
-      markAdAsSold: () => dataActions.markAdAsSold(adId),
-      openModal: modalActions.openModal,
-    },
-    dispatch,
-  );
+const mapDispatchToProps = {
+  openModal: modalActions.openModal,
+};
 
 export default R.compose(
   withRouter,

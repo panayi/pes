@@ -23,6 +23,7 @@ const EmailShareButton = ({
       url={url}
       subject={subject}
       body={finalBody}
+      tabIndex="0"
     >
       <EmailAvatar />
       {children}

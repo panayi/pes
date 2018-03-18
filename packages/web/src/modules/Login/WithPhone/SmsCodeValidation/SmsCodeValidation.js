@@ -56,9 +56,9 @@ export const CodeForm = (props: Props) => {
           {phoneNumber}
         </Typography>
         <IconButton
-          dense
           onClick={onBackClick}
           title="Enter a different phone number"
+          size="small"
         >
           <KeyboardArrowDown />
         </IconButton>

@@ -7,12 +7,12 @@ type Props = {
   mask: Array<string>,
 };
 
-const MaskedInput = ({ mask, ...rest }: Props) => (
+const MaskedInput = ({ inputProps, ...rest }: Props) => (
   <Input
     inputComponent={ReactMaskedInput}
     inputProps={{
-      mask,
       'data-lpignore': true, // Disable LastPass grey box
+      ...inputProps,
     }}
     {...rest}
   />

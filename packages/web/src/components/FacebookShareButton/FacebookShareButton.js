@@ -18,6 +18,7 @@ const FacebookShareButton = ({
     url={urlForPath(path)}
     quote={quote}
     hashTag={hashTag}
+    tabIndex="0"
   >
     <FacebookAvatar />
     {children}

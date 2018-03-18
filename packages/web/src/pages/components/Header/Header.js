@@ -178,7 +178,7 @@ const Header = ({
           onClose={closeMobileMenu}
         />
       </Drawer>
-      <ReduxModal id="login" content={Login} closeButton />
+      <ReduxModal id="login" content={Login} />
       <ReduxModal id="createAd" content={CreateAd} />
       <ReduxModal id="support" content={Support} />
     </React.Fragment>

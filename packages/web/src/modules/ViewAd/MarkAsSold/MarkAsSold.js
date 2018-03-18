@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { actions as dataActions } from 'store/firebase/data';
 import Button from 'components/Button/Button';
 
-const MarkAsSold = ({ markAdAsSold, ...rest }) => (
+const MarkAsSold = ({ variant, size, className, markAdAsSold }) => (
   <Button
-    variant="raised"
+    variant={variant}
+    size={size}
+    className={className}
     color="primary"
     fullWidth
-    {...rest}
     onClick={() => markAdAsSold()}
   >
     Mark as sold

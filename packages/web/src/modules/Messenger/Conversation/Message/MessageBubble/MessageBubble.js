@@ -1,9 +1,15 @@
 import React from 'react';
+import * as R from 'ramda';
 import classNames from 'classnames';
 import TimeAgo from 'react-timeago';
 import Typography from 'material-ui/Typography';
-import { fade } from 'material-ui/styles/colorManipulator';
 import { withStyles } from 'material-ui/styles';
+import { fade } from 'material-ui/styles/colorManipulator';
+import { blue } from 'material-ui/colors';
+
+const getFromMeBg = R.always(blue[700]);
+
+const getFromOtherBg = theme => theme.palette.grey[200];
 
 const common = {
   position: 'relative',
@@ -12,58 +18,64 @@ const common = {
   borderRadius: '0.6em',
 };
 
-const styles = theme => ({
-  fromOther: {
-    ...common,
-    background: theme.palette.grey[200],
-    '& $date': {
-      opacity: 0.3,
-    },
-  },
-  fromMe: {
-    ...common,
-    background: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    '& $date': {
-      opacity: 0.7,
-    },
-  },
-  date: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    width: '100%',
-    paddingTop: theme.spacing.unit / 2,
-  },
-  conversation: {
-    '&:before': {
-      content: '""',
-      display: 'block',
-      width: '0.75em',
-      height: '0.5em',
-      position: 'absolute',
-      bottom: 0,
-    },
-    '&$fromOther': {
-      '&:before': {
-        left: '-0.25em',
-        borderRight: ['0.5em', 'solid', theme.palette.grey[200]],
-        borderBottomRightRadius: '100%',
+const styles = theme => {
+  const fromMeBg = getFromMeBg(theme);
+  const fromOtherBg = getFromOtherBg(theme);
+
+  return {
+    fromOther: {
+      ...common,
+      background: fromOtherBg,
+      color: theme.palette.getContrastText(fromOtherBg),
+      '& $date': {
+        opacity: 0.3,
       },
     },
-    '&$fromMe': {
-      '&:before': {
-        right: '-0.25em',
-        borderLeft: ['0.5em', 'solid', theme.palette.primary.main],
-        borderBottomLeftRadius: '100%',
+    fromMe: {
+      ...common,
+      background: fromMeBg,
+      color: theme.palette.getContrastText(fromMeBg),
+      '& $date': {
+        opacity: 0.7,
       },
     },
-  },
-  ad: {
-    '&$fromMe': {
-      background: fade(theme.palette.primary.light, 0.8),
+    date: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      width: '100%',
+      paddingTop: theme.spacing.unit / 2,
     },
-  },
-});
+    conversation: {
+      '&:before': {
+        content: '""',
+        display: 'block',
+        width: '0.75em',
+        height: '0.5em',
+        position: 'absolute',
+        bottom: 0,
+      },
+      '&$fromOther': {
+        '&:before': {
+          left: '-0.25em',
+          borderRight: ['0.5em', 'solid', fromOtherBg],
+          borderBottomRightRadius: '100%',
+        },
+      },
+      '&$fromMe': {
+        '&:before': {
+          right: '-0.25em',
+          borderLeft: ['0.5em', 'solid', fromMeBg],
+          borderBottomLeftRadius: '100%',
+        },
+      },
+    },
+    ad: {
+      '&$fromMe': {
+        background: fade(fromMeBg, 0.8),
+      },
+    },
+  };
+};
 
 const MessageBubble = ({ fromOther, variant, message, classes, ...rest }) => (
   <div
