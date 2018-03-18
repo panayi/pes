@@ -161,8 +161,8 @@ class Beta extends React.Component {
               </span>
             </Typography>
           </div>
-          <ReduxModal id="login" content={Login} closeButton />
-          <ReduxModal id="loginSuccess" content={LoginSuccess} closeButton />
+          <ReduxModal id="login" content={Login} />
+          <ReduxModal id="loginSuccess" content={LoginSuccess} />
         </Layout>
       </MuiThemeProvider>
     );

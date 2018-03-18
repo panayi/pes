@@ -39,7 +39,7 @@ const Button = ({ classes, variant, className, children, ...rest }) => (
   <MaterialButton
     classes={R.omit(['outline'], classes)}
     className={classNames(classes[variant], className)}
-    variant={variant}
+    variant={variant === 'outline' ? null : variant}
     {...rest}
   >
     {children}

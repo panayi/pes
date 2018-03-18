@@ -96,7 +96,7 @@ class Masonry extends PureComponent<Props> {
         scrollTop={scrollTop}
         autoHeight
         verticalOverscanSize={1000}
-        tabIndex={-1}
+        tabIndex="-1"
         style={{
           overflowX: 'auto',
           overflowY: 'auto',

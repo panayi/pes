@@ -17,9 +17,9 @@ import LocationIcon from 'material-ui-icons/LocationOn';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import env from '@pesposa/core/src/config/env';
 import {
-  selectors as locationSelectors,
-  actions as locationActions,
-} from 'store/search/location';
+  selectors as paramsSelectors,
+  actions as paramsActions,
+} from 'store/search/params';
 import { selectors as profileLocationSelectors } from 'store/firebase/profile/location';
 import connectSearch from 'hocs/connectSearch';
 import poweredByGoogleImage from './images/poweredByGoogle.png';
@@ -276,12 +276,12 @@ class SearchLocation extends Component<Props, State> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  address: locationSelectors.addressSelector,
+  address: paramsSelectors.addressSelector,
   countryCode: profileLocationSelectors.countryCodeSelector,
 });
 
 const mapDispatchToProps = {
-  setLocation: locationActions.setLocation,
+  setLocation: paramsActions.setLocation,
 };
 
 export default R.compose(

@@ -258,7 +258,7 @@ const DesktopViewAd = ({
                   <Action
                     ad={ad}
                     currentUserId={uid}
-                    seller={<MarkAsSold adId={adId} />}
+                    seller={<MarkAsSold adId={adId} variant="raised" />}
                     buyer={
                       <SendMessage
                         variant="float"

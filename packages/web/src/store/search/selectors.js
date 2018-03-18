@@ -2,25 +2,28 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import propSelector from '@pesposa/core/src/utils/propSelector';
-import * as rawParamsSelectors from './rawParams/selectors';
-import * as categorySelectors from './category/selectors';
-import * as locationSelectors from './location/selectors';
-import * as priceSelectors from './price/selectors';
-import * as querySelectors from './query/selectors';
+import * as paramsSelectors from './params/selectors';
+import * as paramsConstants from './params/constants';
 import * as pageSelectors from './page/selectors';
-import * as sortBySelectors from './sortBy/selectors';
 import * as totalHitsSelectors from './totalHits/selectors';
-import * as sortByConstants from './sortBy/constants';
 import * as constants from './constants';
 
 const facetFiltersSelector = createSelector(
-  categorySelectors.categorySelector,
-  category => (isNilOrEmpty(category) ? [] : [`category:${category}`]),
+  paramsSelectors.categorySelector,
+  paramsSelectors.userSelector,
+  paramsSelectors.soldSelector,
+  R.compose(
+    R.map(R.join(':')),
+    R.toPairs,
+    R.reject(isNilOrEmpty),
+    R.zipObj(['category', 'user', 'sold']),
+    R.unapply(R.identity),
+  ),
 );
 
 const filtersSelector = createSelector(
-  priceSelectors.minPriceSelector,
-  priceSelectors.maxPriceSelector,
+  paramsSelectors.minPriceSelector,
+  paramsSelectors.maxPriceSelector,
   (priceMin, priceMax) => {
     const hasPriceMin = !isNilOrEmpty(priceMin);
     const hasPriceMax = !isNilOrEmpty(priceMax);
@@ -36,44 +39,55 @@ const filtersSelector = createSelector(
 );
 
 export const indexNameSelector = createSelector(
-  sortBySelectors.sortBySelector,
-  querySelectors.querySelector,
+  paramsSelectors.sortBySelector,
+  paramsSelectors.querySelector,
   (sortBy, queryValue) => {
     if (!isNilOrEmpty(sortBy)) {
-      return sortByConstants.SORT_BY_OPTIONS[sortBy];
+      return paramsConstants.SORT_BY_OPTIONS[sortBy];
     }
 
     if (!isNilOrEmpty(queryValue)) {
-      return sortByConstants.SORT_BY_OPTIONS.default;
+      return paramsConstants.SORT_BY_OPTIONS.default;
     }
 
-    return sortByConstants.SORT_BY_OPTIONS.byDateDesc;
+    return paramsConstants.SORT_BY_OPTIONS.byDateDesc;
   },
 );
 
 export const searchParamsSelector = createSelector(
-  rawParamsSelectors.rawParamsSelector,
-  querySelectors.querySelector,
+  paramsSelectors.querySelector,
   facetFiltersSelector,
   filtersSelector,
   indexNameSelector,
-  locationSelectors.geopositionSelector,
-  (rawParams, queryValue, facetFilters, filters, indexName, geoposition) =>
-    R.reject(isNilOrEmpty, {
-      query: queryValue,
-      facetFilters: R.concat(rawParams.facetFilters || [], facetFilters),
-      filters,
-      hitsPerPage: constants.HITS_PER_PAGE,
-      aroundLatLng:
-        indexName === sortByConstants.SORT_BY_OPTIONS.byDateDesc
-          ? undefined
-          : geoposition && `${geoposition.latitude}, ${geoposition.longitude}`,
-      aroundLatLngViaIP:
-        indexName === sortByConstants.SORT_BY_OPTIONS.byDateDesc
-          ? true
-          : undefined,
-      getRankingInfo: true,
-    }),
+  paramsSelectors.geopositionSelector,
+  paramsSelectors.idsSelector,
+  (queryValue, facetFilters, filters, indexName, geoposition, ids) => {
+    if (isNilOrEmpty(ids)) {
+      return R.reject(isNilOrEmpty, {
+        query: queryValue,
+        facetFilters,
+        filters,
+        hitsPerPage: constants.HITS_PER_PAGE,
+        aroundLatLng:
+          indexName === paramsConstants.SORT_BY_OPTIONS.byDateDesc
+            ? undefined
+            : geoposition &&
+              `${geoposition.latitude}, ${geoposition.longitude}`,
+        // TODO: this should be removed
+        aroundLatLngViaIP:
+          indexName === paramsConstants.SORT_BY_OPTIONS.byDateDesc
+            ? true
+            : undefined,
+        getRankingInfo: true,
+      });
+    }
+
+    // Setting `ids` overrides everything else
+    return {
+      // Prefix with '\', since firebase IDs can start with '-'. See why: https://goo.gl/nqPUrG
+      facetFilters: R.map(id => `objectID:\\${id}`, ids),
+    };
+  },
 );
 
 export const noMoreResultsSelector = createSelector(

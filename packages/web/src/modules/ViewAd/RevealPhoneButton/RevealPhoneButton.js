@@ -21,21 +21,20 @@ const styles = theme => ({
 });
 
 const RevealPhoneButton = ({
-  ad,
   component: Komponent,
   className,
+  buttonProps,
   children,
   displayedPhoneNumber,
   onClick,
   classes,
-  ...rest
 }) => (
   <Komponent
     href={displayedPhoneNumber ? `tel:${displayedPhoneNumber}` : null}
     onClick={onClick}
     component="a"
     className={classNames(classes.button, className)}
-    {...rest}
+    {...buttonProps}
   >
     <PhoneIcon className={classes.icon} />
     {displayedPhoneNumber || children}

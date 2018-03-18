@@ -4,8 +4,22 @@ import TextField from 'material-ui/TextField';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 
-const CountrySelect = ({ getLabel, countries, ...rest }) => (
-  <TextField select SelectProps={{ native: true }} {...rest}>
+const CountrySelect = ({
+  getLabel,
+  countries,
+  name,
+  value,
+  onChange,
+  onBlur,
+}) => (
+  <TextField
+    select
+    SelectProps={{ native: true }}
+    name={name}
+    value={value}
+    onChange={onChange}
+    onBlur={onBlur}
+  >
     <option value="">Select Country</option>
     {R.map(
       country => (

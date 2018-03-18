@@ -21,6 +21,7 @@ const TwitterShareButton = ({
     title={title}
     via={via}
     hashTags={hashTags}
+    tabIndex="0"
   >
     <TwitterAvatar />
     {children}

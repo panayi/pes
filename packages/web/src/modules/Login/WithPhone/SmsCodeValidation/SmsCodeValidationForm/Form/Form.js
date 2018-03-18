@@ -33,11 +33,13 @@ const Form = (props: Props) => {
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.code}
-          mask={MASK}
-          placeholderChar="#"
           fullWidth
           placeholder="Enter SMS code"
           autoComplete="off"
+          inputProps={{
+            mask: MASK,
+            placeholderChar: '#',
+          }}
         />
         {errors.code && <FormHelperText>{errors.code}</FormHelperText>}
       </FormControl>

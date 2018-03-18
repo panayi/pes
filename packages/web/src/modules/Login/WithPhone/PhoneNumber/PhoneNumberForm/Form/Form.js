@@ -69,9 +69,11 @@ const Form = (props: Props) => {
             onChange={handleChange}
             onBlur={handleBlur}
             value={values.number}
-            mask={mask}
             placeholder="Your phone number"
             autoComplete="tel"
+            inputProps={{
+              mask,
+            }}
           />
           {errors.number && <FormHelperText>{errors.number}</FormHelperText>}
         </FormControl>

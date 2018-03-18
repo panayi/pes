@@ -10,8 +10,6 @@ import * as selectors from './selectors';
 import * as types from './types';
 import { getWrappedState } from './utils';
 
-export const loadMore = createAction(types.LOAD_MORE);
-
 export const requestStarted = createAction(types.SEARCH_REQUEST_STARTED);
 export const requestSucceeded = createAction(types.SEARCH_REQUEST_SUCCEEDED);
 export const requestFailed = createAction(types.SEARCH_REQUEST_FAILED);

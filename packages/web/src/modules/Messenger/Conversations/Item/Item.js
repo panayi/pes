@@ -88,7 +88,10 @@ const ConversationItem = ({
       </UnreadConversationsBadge>
     </div>
     <div className={classes.info}>
-      <UserFullName userId={otherUserId} />
+      <UserFullName
+        userId={otherUserId}
+        render={({ userFullName }) => <Typography>{userFullName}</Typography>}
+      />
       <AdTitle
         className={classes.title}
         ad={ad}

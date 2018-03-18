@@ -11,7 +11,6 @@ import {
   utils as profileUtils,
   constants as profileConstants,
 } from './firebase/profile';
-import { middleware as searchMiddleware } from './search';
 import makeRootReducer from './reducers';
 
 const configureStore = (initialState = {}, history) => {
@@ -36,7 +35,7 @@ const configureStore = (initialState = {}, history) => {
   }
 
   // Middleware Configuration
-  const middleware = [thunk.withExtraArgument(getFirebase), searchMiddleware];
+  const middleware = [thunk.withExtraArgument(getFirebase)];
 
   // Store Enhancers
   const enhancers = [reactReduxFirebase(firebase, reduxFirebaseConfig)];
