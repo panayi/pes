@@ -26,9 +26,7 @@ const SortBy = ({ sortBy, setSortBy, t, classes }) => (
         <FilterOption
           key={sortByOption}
           active={sortByOption === sortBy}
-          buttonProps={{
-            onClick: () => setSortBy(sortByOption),
-          }}
+          onClick={() => setSortBy(sortByOption)}
         >
           {t(sortByOption)}
         </FilterOption>
