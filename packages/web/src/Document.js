@@ -9,7 +9,7 @@ import theme from 'config/theme';
 import jss from 'config/styles';
 import { constants as searchConstants } from 'store/search';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
-import SearchProvider from 'components/SearchProvider/SearchProvider';
+import SearchProvider from 'modules/Search/Provider/Provider';
 
 class Document extends React.Component {
   static async getInitialProps({ assets, data, renderPage, req, store }) {

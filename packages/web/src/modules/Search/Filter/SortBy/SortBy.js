@@ -4,10 +4,10 @@ import { createStructuredSelector } from 'reselect';
 import List from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import {
-  selectors as sortBySelectors,
-  actions as sortByActions,
-  constants as sortByConstants,
-} from 'store/search/sortBy';
+  selectors as paramsSelectors,
+  actions as paramsActions,
+  constants as paramsConstants,
+} from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
 import translate from 'hocs/translate';
 import FilterOption from '../FilterOption/FilterOption';
@@ -33,17 +33,17 @@ const SortBy = ({ sortBy, setSortBy, t, classes }) => (
           {t(sortByOption)}
         </FilterOption>
       ),
-      sortByConstants.SORT_BY_OPTIONS_WITHOUT_DEFAULT_KEYS,
+      paramsConstants.SORT_BY_OPTIONS_WITHOUT_DEFAULT_KEYS,
     )}
   </List>
 );
 
 const mapStateToProps = createStructuredSelector({
-  sortBy: sortBySelectors.sortBySelector,
+  sortBy: paramsSelectors.sortBySelector,
 });
 
 const mapDispatchToProps = {
-  setSortBy: sortByActions.setSortBy,
+  setSortBy: paramsActions.setSortBy,
 };
 
 export default R.compose(

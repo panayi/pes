@@ -23,8 +23,7 @@ const styles = {
 export class ListAds extends Component {
   static propTypes = {
     hits: PropTypes.arrayOf(PropTypes.shape({})),
-    page: PropTypes.number.isRequired,
-    loadPage: PropTypes.func.isRequired,
+    loadNextPage: PropTypes.func.isRequired,
     scrollPosition: PropTypes.number.isRequired,
     setScrollPosition: PropTypes.func.isRequired,
     classes: PropTypes.shape({}).isRequired,
@@ -34,11 +33,6 @@ export class ListAds extends Component {
     params: null,
     hits: [],
   };
-
-  componentWillMount() {
-    const { loadPage } = this.props;
-    loadPage(0);
-  }
 
   componentDidMount() {
     window.scrollTo(0, this.props.scrollPosition);
@@ -63,7 +57,7 @@ export class ListAds extends Component {
       scrollTop >=
       listHeight - this.containerHeight - constants.SCROLL_OFFSET_FETCH_TRIGGER
     ) {
-      this.props.loadPage(this.props.page + 1);
+      this.props.loadNextPage();
     }
   };
 

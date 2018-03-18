@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { Formik } from 'formik';
 import {
-  selectors as querySelectors,
-  actions as queryActions,
-} from 'store/search/query';
+  selectors as paramsSelectors,
+  actions as paramsActions,
+} from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
 import Form from './Form/Form';
 
@@ -37,11 +37,11 @@ class QueryAds extends Component<Props> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  query: querySelectors.querySelector,
+  query: paramsSelectors.querySelector,
 });
 
 const mapDispatchToProps = {
-  setQuery: queryActions.setQuery,
+  setQuery: paramsActions.setQuery,
 };
 
 export default connectSearch(mapStateToProps, mapDispatchToProps)(QueryAds);

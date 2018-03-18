@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { createStructuredSelector } from 'reselect';
 import { Formik } from 'formik';
 import {
-  selectors as priceSelectors,
-  actions as priceActions,
-} from 'store/search/price';
+  selectors as paramsSelectors,
+  actions as paramsActions,
+} from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
 import Form from './Form/Form';
 
@@ -14,11 +14,11 @@ class FilterByPrice extends Component {
   };
 
   render() {
-    const { price } = this.props;
+    const { minPrice, maxPrice } = this.props;
 
     return (
       <Formik
-        initialValues={{ min: price.min, max: price.max }}
+        initialValues={{ min: minPrice, max: maxPrice }}
         onSubmit={this.handleSubmit}
       >
         {formikProps => <Form {...formikProps} />}
@@ -28,11 +28,12 @@ class FilterByPrice extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  price: priceSelectors.priceSelector,
+  minPrice: paramsSelectors.minPriceSelector,
+  maxPrice: paramsSelectors.maxPriceSelector,
 });
 
 const mapDispatchToProps = {
-  setPrice: priceActions.setPrice,
+  setPrice: paramsActions.setPrice,
 };
 
 export default connectSearch(mapStateToProps, mapDispatchToProps)(

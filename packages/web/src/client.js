@@ -12,7 +12,7 @@ import theme from 'config/theme';
 import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
-import SearchProvider from 'components/SearchProvider/SearchProvider';
+import SearchProvider from 'modules/Search/Provider/Provider';
 import routes from 'routes';
 
 const history = createHistory();

@@ -1,71 +1,73 @@
 import React from 'react';
 import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
-import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import { actions as searchActions } from 'store/search';
 import { selectors as hitsSelectors } from 'store/search/hits';
 import { selectors as pageSelectors } from 'store/search/page';
 import {
-  selectors as categorySelectors,
-  actions as categoryActions,
-} from 'store/search/category';
-import {
-  selectors as ramParamsSelecotrs,
-  actions as rawParamsActions,
-} from 'store/search/rawParams';
+  selectors as paramsSelectors,
+  actions as paramsActions,
+} from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
 
 class Search extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     const {
-      category,
-      currentCategory,
-      setSelectedCategory,
       params,
-      currentParams,
-      setRawParams,
+      paramsState,
+      setParamsFromProps,
+      loadFirstPage,
     } = this.props;
-    if (category !== currentCategory) {
-      setSelectedCategory(category);
-    }
-
-    if (!R.equals(params, currentParams)) {
-      setRawParams(params);
-    }
+    this.initialParamsState = R.merge(paramsState, params);
+    setParamsFromProps(params);
+    loadFirstPage();
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.category !== this.props.category) {
-      this.props.setSelectedCategory(nextProps.category);
+    if (!R.equals(nextProps.params, this.props.params)) {
+      this.props.setParamsFromProps(nextProps.params);
     }
 
-    if (propsChanged(['params'], this.props, nextProps)) {
-      this.props.setRawParams(nextProps.params);
+    const paramsStateChanged = !R.equals(
+      nextProps.paramsState,
+      this.props.paramsState,
+    );
+    const isInitialParamsState = R.equals(
+      nextProps.paramsState,
+      this.initialParamsState,
+    );
+
+    if (!isInitialParamsState && paramsStateChanged) {
+      this.props.loadFirstPage();
+      this.initialParamsState = null;
     }
   }
 
+  handleLoadNextPage = () => {
+    const { page, loadPage } = this.props;
+    loadPage(page + 1);
+  };
+
   render() {
-    const { hits, page, loadPage, children } = this.props;
+    const { hits, children } = this.props;
 
     return children({
       hits,
-      page,
-      loadPage,
+      loadNextPage: this.handleLoadNextPage,
     });
   }
 }
 
 const mapStateToProps = createStructuredSelector({
+  paramsState: paramsSelectors.paramsSelector,
   hits: hitsSelectors.hitsSelector,
   page: pageSelectors.pageSelector,
-  currentCategory: categorySelectors.categorySelector,
-  currentParams: ramParamsSelecotrs.rawParamsSelector,
 });
 
 const mapDispatchToProps = {
+  setParamsFromProps: paramsActions.setParamsFromProps,
+  loadFirstPage: searchActions.loadFirstPage,
   loadPage: searchActions.loadPage,
-  setSelectedCategory: categoryActions.setCategory,
-  setRawParams: rawParamsActions.setRawParams,
 };
 
 export default connectSearch(mapStateToProps, mapDispatchToProps)(Search);

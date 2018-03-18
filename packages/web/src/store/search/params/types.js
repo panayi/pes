@@ -1,0 +1,9 @@
+export const SET_PARAMS_FROM_PROPS = 'search/SET_PARAMS_FROM_PROPS';
+export const SET_CATEGORY = 'search/SET_CATEGORY';
+export const SET_LOCATION = 'search/SET_LOCATION';
+export const SET_PRICE = 'search/SET_PRICE';
+export const SET_QUERY = 'search/SET_QUERY';
+export const SET_SORT_BY = 'search/SET_SORT_BY';
+export const SET_USER = 'search/SET_USER';
+export const SET_SOLD = 'search/SET_SOLD';
+export const SET_IDS = 'search/SET_IDS';

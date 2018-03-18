@@ -1,60 +1,117 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import * as R from 'ramda';
+import { createSelector, createStructuredSelector } from 'reselect';
+import { withProps, setStatic } from 'recompose';
 import { bindActionCreators } from 'multireducer';
 import { Helmet } from 'react-helmet';
+import { withStyles } from 'material-ui/styles';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import getMetaTags from 'utils/getMetaTags';
 import {
   actions as searchActions,
   constants as searchConstants,
 } from 'store/search';
+import { actions as paramsActions } from 'store/search/params';
+import { selectors as routerSelectors } from 'store/router';
+import Layout from 'layouts/Layout/Layout';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
+import ListAds from 'components/ListAds/ListAds';
+import Search from 'modules/Search/Search';
 import SearchFilters from 'modules/Search/Filters/Filters';
-import Search from './search';
+import Header from 'pages/components/Header/Header';
 
-class Home extends React.Component {
-  static async getInitialProps({ store }) {
+const getTitle = ({ place, category }) => {
+  if (place && category) {
+    return `Buy and sell ${category} in ${place} - Pesposa`;
+  }
+
+  if (place) {
+    return `Buy and sell stuff in ${place} - Pesposa`;
+  }
+
+  if (category) {
+    return `Buy and sell ${category} in Cyprus - Pesposa`;
+  }
+
+  return 'Buy and sell stuff in Cyprus - Pesposa';
+};
+
+const styles = theme => ({
+  page: {
+    paddingTop: theme.spacing.unit * 3,
+    paddingLeft: theme.spacing.unit * 1.5,
+    paddingRight: theme.spacing.unit * 1.5,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      paddingTop: theme.spacing.unit * 2,
+    },
+  },
+  sidebar: {
+    [theme.breakpoints.down(theme.layout.breakpoints.filtersDialog)]: {
+      display: 'none',
+    },
+  },
+});
+
+const HomeHeader = withProps({ inHome: true })(Header);
+
+const Home = ({ place, category, searchParamsFromProps, classes }) => (
+  <Layout
+    header={HomeHeader}
+    sidebar={SearchFilters}
+    pageClassName={classes.page}
+    sidebarClassName={classes.sidebar}
+    flex
+  >
+    <Helmet
+      {...getMetaTags({
+        title: getTitle({ place, category }),
+        description:
+          'Sell your stuff quickly and connect with thousands of buyers. Find cars, houses, electronics and much more, near your location.',
+      })}
+    />
+    <Search params={searchParamsFromProps}>
+      {props => <ListAds {...props} />}
+    </Search>
+    <ReduxModal id="searchFilters" content={SearchFilters} direction="down" />
+  </Layout>
+);
+
+export const searchParamsFromPropsSelector = createSelector(
+  routerSelectors.routeParamSelector('category'),
+  category => ({
+    category,
+    sold: false,
+  }),
+);
+
+export default R.compose(
+  setStatic('getInitialProps', async ({ match, store }) => {
     const actions = bindActionCreators(
-      { loadPage: searchActions.loadPage },
+      {
+        loadFirstPage: searchActions.loadFirstPage,
+        setParamsFromProps: paramsActions.setParamsFromProps,
+      },
       store.dispatch,
       searchConstants.HOME_SEARCH_ID,
     );
+
+    const paramsFromProps = searchParamsFromPropsSelector({ match });
+    actions.setParamsFromProps(paramsFromProps);
 
     await Promise.all([
       store.firebase.promiseEvents([
         { path: modelPaths.CATEGORIES.string, type: 'once' },
         { path: modelPaths.TRANSLATIONS('en', []).string, type: 'once' },
       ]),
-      actions.loadPage(0),
+      actions.loadFirstPage(),
     ]);
 
     return store.getState();
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <Helmet
-          {...getMetaTags({
-            title: 'Buy and sell stuff in Cyprus - Pesposa',
-            description:
-              'Sell your stuff quickly and connect with thousands of buyers. Find cars, houses, electronics and much more, near your location.',
-          })}
-        />
-        <Switch>
-          <Route exact path="/" component={Search} />
-          <Route exact path="/c/:category" component={Search} />
-          <Route exact path="/:place" component={Search} />
-          <Route exact path="/:place/:category" component={Search} />
-        </Switch>
-        <ReduxModal
-          id="searchFilters"
-          content={SearchFilters}
-          direction="down"
-        />
-      </React.Fragment>
-    );
-  }
-}
-
-export default Home;
+  }),
+  withProps(
+    createStructuredSelector({
+      searchParamsFromProps: searchParamsFromPropsSelector,
+    }),
+  ),
+  withStyles(styles),
+)(Home);

@@ -8,11 +8,11 @@ import Beta, { BETA_ENABLED } from 'pages/beta/index';
 
 const routes = [
   {
-    path: '/profile',
+    path: '/profile/:tab?',
     component: Profile,
   },
   {
-    path: '/user/:userId',
+    path: '/user/:userId/:tab?',
     component: Profile,
   },
   {
@@ -26,6 +26,18 @@ const routes = [
   {
     path: '/messages',
     component: Messages,
+  },
+  {
+    path: '/c/:category',
+    component: Home,
+  },
+  {
+    path: '/:place',
+    component: Home,
+  },
+  {
+    path: '/:place/:category',
+    component: Home,
   },
   {
     path: '/',
