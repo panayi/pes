@@ -1,17 +1,18 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { defaultProps } from 'recompose';
-import { withRouter } from 'react-router-dom';
+import {
+  selectors as paramsSelectors,
+  actions as paramsActions,
+} from 'store/search/params';
 import List from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
-import { selectors as routerSelectors } from 'store/router';
+import connectSearch from 'hocs/connectSearch';
 import translate from 'hocs/translate';
-import Link from 'components/Link/Link';
 import FilterOption from '../FilterOption/FilterOption';
 
 type LinkType = {
@@ -22,6 +23,8 @@ type LinkType = {
 
 type Props = {
   categoryLinks: Array<LinkType>,
+  currentCategory: string,
+  setCategory: Function,
   classes: Object,
 };
 
@@ -32,17 +35,21 @@ const styles = {
   },
 };
 
-const FilterByCategory = ({ categoryLinks, classes }: Props) => (
+const FilterByCategory = ({
+  categoryLinks,
+  currentCategory,
+  setCategory,
+  classes,
+}: Props) => (
   <List classes={{ root: classes.list }}>
     {R.map(
-      ({ id, label, to }) => (
+      ({ id, label }) => (
         <FilterOption
           key={id}
-          buttonComponent={Link}
-          buttonProps={{
-            to,
-            exact: true,
-          }}
+          active={
+            id === 'all' ? R.isNil(currentCategory) : id === currentCategory
+          }
+          onClick={() => setCategory(id === 'all' ? null : id)}
         >
           {label}
         </FilterOption>
@@ -53,32 +60,34 @@ const FilterByCategory = ({ categoryLinks, classes }: Props) => (
 );
 
 const categoryLinksSelector = (state, props) => {
-  const { categories, t, match } = props;
+  const { categories, t } = props;
   return R.compose(
     R.prepend({
-      id: 'home',
+      id: 'all',
       label: 'All',
-      to: routerSelectors.searchPathSelector({ category: null, match }),
     }),
     R.map(({ id }) => ({
       id,
       label: t(id),
-      to: routerSelectors.searchPathSelector({ category: id, match }),
     })),
   )(categories);
 };
 
 const mapStateToProps = createStructuredSelector({
+  currentCategory: paramsSelectors.categorySelector,
   categoryLinks: categoryLinksSelector,
 });
 
+const mapDispatchToProps = {
+  setCategory: paramsActions.setCategory,
+};
+
 export default R.compose(
   connectData({ categories: models.categories.all }),
-  withRouter,
   translate('categories'),
   defaultProps({
     categories: [],
   }),
-  connect(mapStateToProps),
+  connectSearch(mapStateToProps, mapDispatchToProps),
   withStyles(styles),
 )(FilterByCategory);

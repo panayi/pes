@@ -1,6 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
 import { actions as searchActions } from 'store/search';
 import { selectors as hitsSelectors } from 'store/search/hits';
 import { selectors as pageSelectors } from 'store/search/page';
@@ -38,8 +39,17 @@ class Search extends React.Component {
     );
 
     if (!isInitialParamsState && paramsStateChanged) {
-      this.props.loadFirstPage();
+      const { loadFirstPage, mapParamsToUrl, match, history } = this.props;
+      loadFirstPage();
       this.initialParamsState = null;
+
+      if (mapParamsToUrl) {
+        const nextUrl = mapParamsToUrl(nextProps.paramsState);
+
+        if (nextUrl !== match.url) {
+          history.push(nextUrl);
+        }
+      }
     }
   }
 
@@ -70,4 +80,7 @@ const mapDispatchToProps = {
   loadPage: searchActions.loadPage,
 };
 
-export default connectSearch(mapStateToProps, mapDispatchToProps)(Search);
+export default R.compose(
+  connectSearch(mapStateToProps, mapDispatchToProps),
+  withRouter,
+)(Search);

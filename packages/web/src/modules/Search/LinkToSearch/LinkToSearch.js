@@ -16,11 +16,11 @@ const LinkToSearch = ({
 
   let path = '/';
   if (finalLocation && finalCategory) {
-    path = `/${finalLocation}/${finalCategory}`;
+    path = `/${finalCategory}/${finalLocation}`;
   } else if (finalLocation) {
-    path = `/${finalLocation}`;
+    path = `/all/${finalLocation}`;
   } else if (finalCategory) {
-    path = `/c/${finalCategory}`;
+    path = `/${finalCategory}`;
   }
 
   return <Link to={path} {...rest} />;

@@ -28,19 +28,7 @@ const routes = [
     component: Messages,
   },
   {
-    path: '/c/:category',
-    component: Home,
-  },
-  {
-    path: '/:place',
-    component: Home,
-  },
-  {
-    path: '/:place/:category',
-    component: Home,
-  },
-  {
-    path: '/',
+    path: '/:category?/:place?',
     component: Home,
   },
 ];

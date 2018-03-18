@@ -18,11 +18,11 @@ export const searchPathSelector = createSelector(
     const finalCategory = isUndefined(category) ? currentCategory : category;
 
     if (finalPlace && finalCategory) {
-      return `/${finalPlace}/${finalCategory}`;
+      return `/${finalCategory}/${finalPlace}`;
     } else if (finalPlace) {
-      return `/${finalPlace}`;
+      return `/all/${finalPlace}`;
     } else if (finalCategory) {
-      return `/c/${finalCategory}`;
+      return `/${finalCategory}`;
     }
 
     return '/';

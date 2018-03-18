@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import { withProps, withStateHandlers } from 'recompose';
-import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
@@ -16,12 +15,14 @@ import TimeIcon from 'material-ui-icons/AccessTime';
 import CloseIcon from 'material-ui-icons/Close';
 import MessageIcon from 'material-ui-icons/Message';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
+import ShareIcon from 'mdi-react/ShareIcon';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';
 import { withUserProfileData } from 'hocs/withProfileData';
+import connectSearch from 'hocs/connectSearch';
 import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import ShareIcon from 'mdi-react/ShareIcon';
+import { selectors as paramsSelectors } from 'store/search/params';
 import Conversation from 'modules/Messenger/Conversation/Conversation';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Link from 'components/Link/Link';
@@ -234,6 +235,7 @@ class MobileViewAd extends React.Component {
       adId,
       imagesList,
       uid,
+      category,
       viewSlideShow,
       viewConversation,
       setCurrentSlide,
@@ -248,7 +250,7 @@ class MobileViewAd extends React.Component {
         <div className={classes.header}>
           <div className={classes.headerActions}>
             <Link.icon
-              to="/"
+              to={category ? `/${category}` : '/'}
               className={classes.actionIconButton}
               color="inherit"
             >
@@ -503,6 +505,7 @@ class MobileViewAd extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   uid: authSelectors.uidSelector,
+  category: paramsSelectors.categorySelector,
 });
 
 const mapDispatchToProps = {
@@ -512,7 +515,7 @@ const mapDispatchToProps = {
 export default R.compose(
   withRouter,
   hydrateAd(propSelector('adId'), propSelector('legacy')),
-  connect(mapStateToProps, mapDispatchToProps),
+  connectSearch(mapStateToProps, mapDispatchToProps),
   withProps(
     createStructuredSelector({
       imagesList: R.compose(R.values, R.pathOr({}, ['ad', 'images'])),

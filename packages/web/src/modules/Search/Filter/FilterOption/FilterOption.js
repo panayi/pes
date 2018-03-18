@@ -1,34 +1,26 @@
 import React from 'react';
-import * as R from 'ramda';
 import classNames from 'classnames';
-import { ListItem } from 'material-ui/List';
+import { ListItem, ListItemText } from 'material-ui/List';
 import { withStyles } from 'material-ui/styles';
 import CheckIcon from 'material-ui-icons/Check';
-import Link from 'components/Link/Link';
-import Button from 'components/Button/Button';
 
 const styles = theme => ({
-  item: {
-    padding: 0,
-    '& + &': {
-      paddingTop: theme.spacing.unit / 2,
-    },
-  },
-  button: {
+  root: {
     justifyContent: 'flex-start',
     textAlign: 'left',
     width: '100%',
     minHeight: 'auto',
     padding: [2, 0],
-    fontWeight: theme.typography.fontWeightRegular,
-    textTransform: 'none',
     '&:hover': {
       textDecoration: 'underline',
       backgroundColor: 'transparent',
     },
+    '& + &': {
+      paddingTop: theme.spacing.unit / 2,
+    },
   },
-  label: {
-    flex: 1,
+  text: {
+    color: 'inherit',
   },
   icon: {
     visibility: 'hidden',
@@ -37,10 +29,12 @@ const styles = theme => ({
   },
   active: {
     color: theme.palette.primary.main,
-    fontWeight: theme.typography.fontWeightMedium,
     cursor: 'default',
     '&:hover': {
       textDecoration: 'none',
+    },
+    '& $text': {
+      fontWeight: theme.typography.fontWeightMedium,
     },
     '& $icon': {
       visibility: 'visible',
@@ -48,37 +42,16 @@ const styles = theme => ({
   },
 });
 
-const FilterOption = ({
-  buttonComponent: ButtonComponent,
-  buttonProps,
-  active,
-  children,
-  classes,
-}) => {
-  const finalButtonProps =
-    ButtonComponent === Link
-      ? R.merge(buttonProps, {
-          className: classes.button,
-          activeClassName: classes.active,
-        })
-      : R.merge(buttonProps, {
-          className: classNames(classes.button, { [classes.active]: active }),
-        });
-
-  return (
-    <ListItem classes={{ root: classes.item }} dense>
-      <ButtonComponent disableRipple {...finalButtonProps}>
-        <span className={classes.label}>{children}</span>
-        <span>
-          <CheckIcon className={classes.icon} />
-        </span>
-      </ButtonComponent>
-    </ListItem>
-  );
-};
-
-FilterOption.defaultProps = {
-  buttonComponent: Button,
-};
+const FilterOption = ({ active, onClick, children, classes }) => (
+  <ListItem
+    classes={{ root: classNames(classes.root, { [classes.active]: active }) }}
+    onClick={onClick}
+    button
+    disableRipple
+  >
+    <ListItemText classes={{ primary: classes.text }} primary={children} />
+    <CheckIcon className={classes.icon} />
+  </ListItem>
+);
 
 export default withStyles(styles)(FilterOption);

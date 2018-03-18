@@ -96,7 +96,7 @@ const ConnectedLogin = R.compose(
     centered: true,
     overlay: true,
   }),
-  withState('loginWithPhoneStep', 'setLoginWithPhoneStep', 'smsCodeValidation'),
+  withState('loginWithPhoneStep', 'setLoginWithPhoneStep', 'phoneNumber'),
   withProps(({ onSuccess = noop, closeModal }) => ({
     onSuccess: () => {
       closeModal();

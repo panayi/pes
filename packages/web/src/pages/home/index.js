@@ -69,7 +69,10 @@ const Home = ({ place, category, searchParamsFromProps, classes }) => (
           'Sell your stuff quickly and connect with thousands of buyers. Find cars, houses, electronics and much more, near your location.',
       })}
     />
-    <Search params={searchParamsFromProps}>
+    <Search
+      params={searchParamsFromProps}
+      mapParamsToUrl={({ category: cat }) => (cat ? `/${cat}` : '/')}
+    >
       {props => <ListAds {...props} />}
     </Search>
     <ReduxModal id="searchFilters" content={SearchFilters} direction="down" />
