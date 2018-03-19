@@ -35,29 +35,40 @@ const styles = {
   },
 };
 
-const FilterByCategory = ({
-  categoryLinks,
-  currentCategory,
-  setCategory,
-  classes,
-}: Props) => (
-  <List classes={{ root: classes.list }}>
-    {R.map(
-      ({ id, label }) => (
-        <FilterOption
-          key={id}
-          active={
-            id === 'all' ? R.isNil(currentCategory) : id === currentCategory
-          }
-          onClick={() => setCategory(id === 'all' ? null : id)}
-        >
-          {label}
-        </FilterOption>
-      ),
-      R.values(categoryLinks),
-    )}
-  </List>
-);
+class FilterByCategory extends React.Component<Props> {
+  renderContent = () => {
+    const { categoryLinks, currentCategory, setCategory, classes } = this.props;
+
+    return (
+      <List classes={{ root: classes.list }}>
+        {R.map(
+          ({ id, label }) => (
+            <FilterOption
+              key={id}
+              active={
+                id === 'all' ? R.isNil(currentCategory) : id === currentCategory
+              }
+              onClick={() => setCategory(id === 'all' ? null : id)}
+            >
+              {label}
+            </FilterOption>
+          ),
+          R.values(categoryLinks),
+        )}
+      </List>
+    );
+  };
+
+  render() {
+    const { hasValue, resetCategory, children } = this.props;
+
+    return children({
+      render: this.renderContent,
+      hasValue,
+      reset: resetCategory,
+    });
+  }
+}
 
 const categoryLinksSelector = (state, props) => {
   const { categories, t } = props;
@@ -75,11 +86,13 @@ const categoryLinksSelector = (state, props) => {
 
 const mapStateToProps = createStructuredSelector({
   currentCategory: paramsSelectors.categorySelector,
+  hasValue: paramsSelectors.categoryHasValueSelector,
   categoryLinks: categoryLinksSelector,
 });
 
 const mapDispatchToProps = {
   setCategory: paramsActions.setCategory,
+  resetCategory: paramsActions.resetCategory,
 };
 
 export default R.compose(

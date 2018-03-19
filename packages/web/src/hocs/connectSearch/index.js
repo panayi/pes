@@ -3,7 +3,10 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'multireducer';
 import { getContext } from 'recompose';
-import { constants as searchConstants } from 'store/search';
+import {
+  constants as searchConstants,
+  utils as searchUtils,
+} from 'store/search';
 
 const createMapStateToProps = mapStateToProps => {
   if (!R.is(Function, mapStateToProps)) {
@@ -12,8 +15,10 @@ const createMapStateToProps = mapStateToProps => {
 
   return (state, props) => {
     const searchId = props[searchConstants.CONTEXT_SEARCH_ID_KEY];
-    const searchState = R.path([searchId, searchConstants.ROOT_KEY], state);
-    const finalState = R.assoc(searchConstants.ROOT_KEY, searchState, state);
+    const finalState = searchUtils.getStateWithSearch(
+      searchId,
+      R.always(state),
+    );
 
     return mapStateToProps(finalState, props);
   };

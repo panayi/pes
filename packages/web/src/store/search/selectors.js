@@ -68,16 +68,9 @@ export const searchParamsSelector = createSelector(
         facetFilters,
         filters,
         hitsPerPage: constants.HITS_PER_PAGE,
-        aroundLatLng:
-          indexName === paramsConstants.SORT_BY_OPTIONS.byDateDesc
-            ? undefined
-            : geoposition &&
-              `${geoposition.latitude}, ${geoposition.longitude}`,
-        // TODO: this should be removed
-        aroundLatLngViaIP:
-          indexName === paramsConstants.SORT_BY_OPTIONS.byDateDesc
-            ? true
-            : undefined,
+        aroundLatLng: geoposition
+          ? `${geoposition.latitude}, ${geoposition.longitude}`
+          : null,
         getRankingInfo: true,
       });
     }

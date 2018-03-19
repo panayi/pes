@@ -8,7 +8,7 @@ import * as totalHitsSelectors from './totalHits/selectors';
 import * as pageActions from './page/actions';
 import * as selectors from './selectors';
 import * as types from './types';
-import { getWrappedState } from './utils';
+import { getStateWithSearch } from './utils';
 
 export const requestStarted = createAction(types.SEARCH_REQUEST_STARTED);
 export const requestSucceeded = createAction(types.SEARCH_REQUEST_SUCCEEDED);
@@ -28,7 +28,7 @@ const search = (options = {}) => async (
     dispatch(pageActions.resetPage());
   }
 
-  const state = getWrappedState(getState, searchId);
+  const state = getStateWithSearch(searchId, getState);
   const indexName = selectors.indexNameSelector(state);
   const params = selectors.searchParamsSelector(state);
   const currentPage = pageSelectors.pageSelector(state);
@@ -55,7 +55,7 @@ export const loadPage = page => (
   globalDispatch,
   searchId,
 ) => {
-  const state = getWrappedState(getState, searchId);
+  const state = getStateWithSearch(searchId, getState);
   const isRequestPending = requestSelectors.isRequestPendingSelector(state);
 
   if (isRequestPending) {

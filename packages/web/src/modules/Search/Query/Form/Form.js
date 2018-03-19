@@ -4,6 +4,7 @@ import { noop } from 'ramda-adjunct';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import SearchIcon from 'material-ui-icons/Search';
+import CloseIcon from 'material-ui-icons/Close';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 
 // Based on:
@@ -43,6 +44,13 @@ const styles = theme => ({
       outline: 0,
     },
   },
+  clearButton: {
+    position: 'absolute',
+    right: theme.spacing.unit,
+    top: 6,
+    color: theme.palette.text.secondary,
+    cursor: 'pointer',
+  },
 });
 
 class Form extends Component<Props> {
@@ -63,7 +71,14 @@ class Form extends Component<Props> {
   };
 
   render() {
-    const { values, handleChange, handleBlur, classes } = this.props;
+    const {
+      values,
+      handleChange,
+      handleBlur,
+      handleClear,
+      hasValue,
+      classes,
+    } = this.props;
 
     return (
       <form className={classes.root} onSubmit={this.handleFormSubmit}>
@@ -78,6 +93,16 @@ class Form extends Component<Props> {
           value={values.query}
           placeholder="What are you looking for?"
         />
+        {hasValue && (
+          <a
+            role="button"
+            tabIndex="0"
+            className={classes.clearButton}
+            onClick={handleClear}
+          >
+            <CloseIcon />
+          </a>
+        )}
       </form>
     );
   }

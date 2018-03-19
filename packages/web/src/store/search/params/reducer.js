@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions';
 import * as types from './types';
 import * as constants from './constants';
 
-const initialState = {
+export const initialState = {
   [constants.CATEGORY_KEY]: null,
   [constants.LOCATION_KEY]: null,
   [constants.PRICE_KEY]: {
@@ -37,6 +37,34 @@ const priceReducer = handleActions(
       R.assoc(constants.SOLD_KEY, payload, state),
     [types.SET_IDS]: (state, { payload }) =>
       R.assoc(constants.IDS_KEY, payload, state),
+    [types.RESET_CATEGORY]: state =>
+      R.assoc(
+        constants.CATEGORY_KEY,
+        initialState[constants.CATEGORY_KEY],
+        state,
+      ),
+    [types.RESET_LOCATION]: state =>
+      R.assoc(
+        constants.LOCATION_KEY,
+        initialState[constants.LOCATION_KEY],
+        state,
+      ),
+    [types.RESET_PRICE]: state =>
+      R.assoc(constants.PRICE_KEY, initialState[constants.PRICE_KEY], state),
+    [types.RESET_QUERY]: state =>
+      R.assoc(constants.QUERY_KEY, initialState[constants.QUERY_KEY], state),
+    [types.RESET_SORT_BY]: state =>
+      R.assoc(
+        constants.SORT_BY_KEY,
+        initialState[constants.SORT_BY_KEY],
+        state,
+      ),
+    [types.RESET_USER]: state =>
+      R.assoc(constants.USER_KEY, initialState[constants.USER_KEY], state),
+    [types.RESET_SOLD]: state =>
+      R.assoc(constants.SOLD_KEY, initialState[constants.SOLD_KEY], state),
+    [types.RESET_IDS]: state =>
+      R.assoc(constants.IDS_KEY, initialState[constants.IDS_KEY], state),
   },
   initialState,
 );

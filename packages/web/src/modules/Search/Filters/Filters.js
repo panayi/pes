@@ -2,8 +2,6 @@ import React from 'react';
 import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
 import { createStructuredSelector } from 'reselect';
-import Typography from 'material-ui/Typography';
-import Card, { CardContent } from 'material-ui/Card';
 import { withStyles } from 'material-ui/styles';
 import {
   selectors as paramsSelectors,
@@ -11,7 +9,11 @@ import {
 } from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
 import Button from 'components/Button/Button';
-import Filter from '../Filter';
+import FilterByCategory from '../FilterByCategory/FilterByCategory';
+import FilterByLocation from '../FilterByLocation/FilterByLocation';
+import FilterByPrice from '../FilterByPrice/FilterByPrice';
+import SortBy from '../SortBy/SortBy';
+import Filter from '../Filter/Filter';
 
 const styles = theme => ({
   section: {
@@ -30,9 +32,16 @@ const styles = theme => ({
       padding: [theme.spacing.unit * 2, 0, theme.spacing.unit, 0, '!important'],
     },
   },
+  sectionTitle: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   title: {
     marginBottom: theme.spacing.unit,
     fontWeight: theme.typography.fontWeightBold,
+  },
+  clearButton: {
+    padding: 0,
   },
   applyButton: {
     marginRight: theme.spacing.unit,
@@ -80,30 +89,10 @@ class Filters extends React.Component {
           }
         />
         <DialogContent>
-          <Card className={classes.section} elevation={0}>
-            <CardContent className={classes.sectionContent}>
-              <Typography className={classes.title}>Location</Typography>
-              <Filter.ByLocation />
-            </CardContent>
-          </Card>
-          <Card className={classes.section} elevation={0}>
-            <CardContent className={classes.sectionContent}>
-              <Typography className={classes.title}>Categories</Typography>
-              <Filter.ByCategory />
-            </CardContent>
-          </Card>
-          <Card className={classes.section} elevation={0}>
-            <CardContent className={classes.sectionContent}>
-              <Typography className={classes.title}>Price</Typography>
-              <Filter.ByPrice />
-            </CardContent>
-          </Card>
-          <Card className={classes.section} elevation={0}>
-            <CardContent className={classes.sectionContent}>
-              <Typography className={classes.title}>Sort by</Typography>
-              <Filter.SortBy />
-            </CardContent>
-          </Card>
+          <Filter title="Location" filterComponent={FilterByLocation} />
+          <Filter title="Categories" filterComponent={FilterByCategory} />
+          <Filter title="Price" filterComponent={FilterByPrice} />
+          <Filter title="Sort by" filterComponent={SortBy} />
         </DialogContent>
       </React.Fragment>
     );

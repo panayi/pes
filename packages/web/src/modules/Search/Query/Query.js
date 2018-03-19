@@ -26,11 +26,22 @@ class QueryAds extends Component<Props> {
   };
 
   render() {
-    const { query, inHome } = this.props;
+    const { query, inHome, resetQuery, hasValue } = this.props;
 
     return (
-      <Formik initialValues={{ query }} onSubmit={this.handleSubmit}>
-        {formikProps => <Form {...formikProps} inHome={inHome} />}
+      <Formik
+        initialValues={{ query }}
+        onSubmit={this.handleSubmit}
+        enableReinitialize
+      >
+        {formikProps => (
+          <Form
+            {...formikProps}
+            inHome={inHome}
+            handleClear={() => resetQuery()}
+            hasValue={hasValue}
+          />
+        )}
       </Formik>
     );
   }
@@ -38,10 +49,12 @@ class QueryAds extends Component<Props> {
 
 const mapStateToProps = createStructuredSelector({
   query: paramsSelectors.querySelector,
+  hasValue: paramsSelectors.queryHasValueSelector,
 });
 
 const mapDispatchToProps = {
   setQuery: paramsActions.setQuery,
+  resetQuery: paramsActions.resetQuery,
 };
 
 export default connectSearch(mapStateToProps, mapDispatchToProps)(QueryAds);

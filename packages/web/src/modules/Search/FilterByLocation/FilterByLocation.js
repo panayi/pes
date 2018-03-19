@@ -22,7 +22,7 @@ import {
 } from 'store/search/params';
 import { selectors as profileLocationSelectors } from 'store/firebase/profile/location';
 import connectSearch from 'hocs/connectSearch';
-import poweredByGoogleImage from './images/poweredByGoogle.png';
+import poweredByGoogleImage from './images/poweredByGoogleSm.png';
 
 const GOOGLE_MAPS_SCRIPT_URL = `https://maps.googleapis.com/maps/api/js?key=${
   env.googleApisKey
@@ -57,7 +57,7 @@ const styles = theme => ({
   suggestionsContainer: {
     '& .googleLogo': {
       display: 'flex',
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
       padding: [theme.spacing.unit, theme.spacing.unit * 2],
       borderTop: [1, 'solid', theme.palette.divider],
     },
@@ -107,7 +107,12 @@ function renderSuggestion(suggestion, { query, isHighlighted }) {
   const parts = parse(suggestion.description, matches);
 
   return (
-    <MenuItem selected={isHighlighted} component="div" dense>
+    <MenuItem
+      selected={isHighlighted}
+      component="div"
+      title={suggestion.description}
+      dense
+    >
       <div>
         {parts.map(
           (part, index) =>
@@ -233,7 +238,7 @@ class SearchLocation extends Component<Props, State> {
     });
   };
 
-  render() {
+  renderContent = () => {
     const { value, isScriptLoadSucceed, results, classes } = this.props;
 
     return (
@@ -272,16 +277,27 @@ class SearchLocation extends Component<Props, State> {
         }}
       />
     );
+  };
+
+  render() {
+    const { resetLocation, hasValue, children } = this.props;
+    return children({
+      render: this.renderContent,
+      hasValue,
+      reset: resetLocation,
+    });
   }
 }
 
 const mapStateToProps = createStructuredSelector({
   address: paramsSelectors.addressSelector,
   countryCode: profileLocationSelectors.countryCodeSelector,
+  hasValue: paramsSelectors.locationHasValueSelector,
 });
 
 const mapDispatchToProps = {
   setLocation: paramsActions.setLocation,
+  resetLocation: paramsActions.resetLocation,
 };
 
 export default R.compose(

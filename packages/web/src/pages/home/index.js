@@ -80,7 +80,7 @@ const Home = ({ place, category, searchParamsFromProps, classes }) => (
 );
 
 export const searchParamsFromPropsSelector = createSelector(
-  routerSelectors.routeParamSelector('category'),
+  R.compose(R.defaultTo(null), routerSelectors.routeParamSelector('category')),
   category => ({
     category,
     sold: false,

@@ -13,27 +13,40 @@ class FilterByPrice extends Component {
     this.props.setPrice(values);
   };
 
-  render() {
+  renderContent = () => {
     const { minPrice, maxPrice } = this.props;
 
     return (
       <Formik
         initialValues={{ min: minPrice, max: maxPrice }}
         onSubmit={this.handleSubmit}
+        enableReinitialize
       >
         {formikProps => <Form {...formikProps} />}
       </Formik>
     );
+  };
+
+  render() {
+    const { hasValue, resetPrice, children } = this.props;
+
+    return children({
+      render: this.renderContent,
+      hasValue,
+      reset: resetPrice,
+    });
   }
 }
 
 const mapStateToProps = createStructuredSelector({
   minPrice: paramsSelectors.minPriceSelector,
   maxPrice: paramsSelectors.maxPriceSelector,
+  hasValue: paramsSelectors.priceHasValueSelector,
 });
 
 const mapDispatchToProps = {
   setPrice: paramsActions.setPrice,
+  resetPrice: paramsActions.resetPrice,
 };
 
 export default connectSearch(mapStateToProps, mapDispatchToProps)(
