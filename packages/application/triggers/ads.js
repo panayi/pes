@@ -30,3 +30,11 @@ export const adUpdated = functions.database
 export const adDeleted = functions.database
   .ref('/ads/published/{adId}')
   .onDelete(handleAdDeleted);
+
+export const legacyAdUpdated = functions.database
+  .ref('/ads/legacy/{adId}')
+  .onUpdate(handleAdUpdated);
+
+export const legacyAdDeleted = functions.database
+  .ref('/ads/legacy/{adId}')
+  .onDelete(handleAdDeleted);
