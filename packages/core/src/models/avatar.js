@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import fetch from 'node-fetch';
 import env from '../config/env';
+import log from '../utils/log';
 import * as fetchService from '../services/fetch';
 import * as storageService from '../services/storage';
 
@@ -30,7 +31,7 @@ const getGoogleImageUrl = async uid => {
     const imageUrl = R.path(['image', 'url'], json);
     return imageUrl ? removeQueryString(imageUrl) : null;
   } catch (error) {
-    console.error(error);
+    log.error(error);
     return null;
   }
 };
