@@ -19,11 +19,11 @@ import ShowCreateAdButton from 'components/ShowCreateAdButton/ShowCreateAdButton
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import WithConversations from 'modules/Messenger/WithConversations/WithConversations';
+import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
 import Support from 'modules/Support/Support';
 import Login from 'modules/Login/Login';
 import CreateAd from 'modules/PostAd/CreateAd/CreateAd';
 import SearchQuery from 'modules/Search/Query/Query';
-import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
 import MobileMenu from 'pages/components/Header/MobileMenu/MobileMenu';
 import DesktopMenu from './DesktopMenu/DesktopMenu';
 import Logo from '../Logo/Logo';

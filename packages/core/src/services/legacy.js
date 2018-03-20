@@ -309,7 +309,14 @@ export const localToFirebase = async (adId, database, rootDirectory) => {
     const localAdPath = path.resolve(rootDirectory, adId);
     const firebaseAdPath = getAdPath(adId);
     const ad = fs.readJsonSync(path.join(localAdPath, 'data.json'), 'utf8');
-    await database.ref(firebaseAdPath).update(R.omit(['images'], ad));
+
+    const adRef = database.ref(firebaseAdPath);
+    const adSnapshot = await adRef.once('value');
+    if (adSnapshot.exists()) {
+      return null;
+    }
+
+    await adRef.update(R.omit(['images'], ad));
 
     const imagesWithBuffer = R.map(
       image =>
@@ -322,7 +329,7 @@ export const localToFirebase = async (adId, database, rootDirectory) => {
     );
     return uploadImages(imagesWithBuffer, adId, database);
   } catch (error) {
-    log.warn(error.message);
+    log.error(error.message);
     throw error;
   }
 };

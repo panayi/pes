@@ -28,7 +28,12 @@ const canInitialize = async service => {
 
 const initialize = async (service, options) => {
   log.info('Starting initialization script');
-  await canInitialize(service);
+
+  if (options.force) {
+    log.info('Forced initialization');
+  } else {
+    await canInitialize(service);
+  }
 
   if (shouldInitializeFirebase(service)) {
     const firebaseResult = await initializeFirebase(options);
@@ -57,6 +62,10 @@ const command = program =>
   program
     .command('initialize [service]')
     .option('-i, --import <n>', 'How many legacy ads to import')
+    .option(
+      '-f, --force',
+      'Force initialization. WARNING !!! This can potentially overwrite data',
+    )
     .description('Initialize [service] or all services')
     .action(action);
 
