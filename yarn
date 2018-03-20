@@ -42,6 +42,9 @@ fi
 # Copy serviceAccountKey file
 cp -v "$SOURCE_SERVICE_ACCOUNT_KEY_PATH" "$TARGET_SERVICE_ACCOUNT_KEY_PATH"
 
+# Set Firebase project for deployment
+firebase use $DEPLOYMENT
+
 # Run command
 yarn $ARGUMENTS -P $DEPLOYMENT
 
