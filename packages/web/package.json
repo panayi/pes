@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "UNLICENSED",
   "dependencies": {
-    "@jaredpalmer/after": "latest",
+    "@jaredpalmer/after": "^1.2.1",
     "@pesposa/core": "^0.1.0",
     "algoliasearch": "^3.25.1",
     "autosuggest-highlight": "^3.1.1",
@@ -24,14 +24,14 @@
     "lodash.debounce": "^4.0.8",
     "material-ui": "^1.0.0-beta.34",
     "material-ui-icons": "^1.0.0-beta.36",
-    "mdi-react": "^2.1.19",
+    "mdi-react": "^3.0.0",
     "multireducer": "^3.1.0",
     "prop-types": "^15.6.1",
     "prop-types-extra": "^1.0.1",
-    "query-string": "^5.1.0",
+    "query-string": "^6.0.0",
     "ramda": "^0.25.0",
-    "ramda-adjunct": "^2.5.0",
-    "razzle": "^0.8.12",
+    "ramda-adjunct": "^2.6.0",
+    "razzle": "latest",
     "re-reselect": "^1.0.1",
     "react": "^16.2.0",
     "react-async-script-loader": "^0.3.0",
@@ -50,7 +50,7 @@
     "react-sizes": "^1.0.3",
     "react-slick": "^0.20.0",
     "react-swipe": "^5.1.1",
-    "react-text-mask": "^5.1.0",
+    "react-text-mask": "^5.2.0",
     "react-timeago": "^3.4.3",
     "react-tooltip": "^3.4.0",
     "react-virtualized": "^9.18.5",
@@ -88,8 +88,6 @@
     "start:prod": "NODE_PATH=src/ NODE_ENV=production node build/server.js"
   },
   "jest": {
-    "setupFiles": [
-      "raf/polyfill"
-    ]
+    "transformIgnorePatterns": ["node_modules/(?!(\\@pesposa|my-project|react-native-button)/)"]
   }
 }

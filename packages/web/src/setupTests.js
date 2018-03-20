@@ -16,7 +16,7 @@ import configureMockStore from 'redux-mock-store';
 import detectPort from 'detect-port';
 import Enzyme, { shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import 'jest-enzyme';
+// import 'jest-enzyme';
 
 // Fail tests on any warning
 // console.error = (message) => {

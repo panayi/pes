@@ -535,9 +535,9 @@
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/@google/maps/-/maps-0.4.5.tgz#72eb9cf8e7de944619245d0f8f3f969571ea84d8"
 
-"@jaredpalmer/after@latest":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@jaredpalmer/after/-/after-1.1.0.tgz#2a662ba07ddba189f134d5c3a33246b27b5fc3df"
+"@jaredpalmer/after@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@jaredpalmer/after/-/after-1.2.1.tgz#c42b86569e5eee52563a4f9fe077b22b922f43fe"
   dependencies:
     react-helmet "^5.2.0"
     react-router-dom "^4.2.2"
@@ -4385,9 +4385,9 @@ eslint-plugin-jsx-a11y@5.1.1:
     emoji-regex "^6.1.0"
     jsx-ast-utils "^1.4.0"
 
-eslint-plugin-ramda@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ramda/-/eslint-plugin-ramda-2.4.0.tgz#778f3dbee914294c76f1d068d8e520e5b2434aa4"
+eslint-plugin-ramda@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ramda/-/eslint-plugin-ramda-2.5.0.tgz#4c6de02fde494f0c312e9129dbb45bf1ffe85feb"
   dependencies:
     create-eslint-index "^1.0.0"
     ramda "0.25.0"
@@ -8609,9 +8609,9 @@ md5@^2.2.1:
     crypt "~0.0.1"
     is-buffer "~1.1.1"
 
-mdi-react@^2.1.19:
-  version "2.1.19"
-  resolved "https://registry.yarnpkg.com/mdi-react/-/mdi-react-2.1.19.tgz#aa05f3ebe4b073578c60ddfa30a8ec7eb36873b7"
+mdi-react@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/mdi-react/-/mdi-react-3.0.0.tgz#9e16c7f13fc39eb4510153f4762f9613201f2db6"
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -10256,7 +10256,11 @@ prettier@^1.10.2:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.10.2.tgz#1af8356d1842276a99a5b5529c82dd9e9ad3cc93"
 
-prettier@^1.11.0, prettier@^1.5.3:
+prettier@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.11.1.tgz#61e43fc4cd44e68f2b0dfc2c38cd4bb0fccdcc75"
+
+prettier@^1.5.3:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.11.0.tgz#c024f70cab158c993f50fc0c25ffe738cb8b0f85"
 
@@ -10526,13 +10530,20 @@ query-string@4.3.4, query-string@^4.1.0:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-query-string@^5.0.1, query-string@^5.1.0:
+query-string@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.0.tgz#9583b15fd1307f899e973ed418886426a9976469"
   dependencies:
     decode-uri-component "^0.2.0"
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
+
+query-string@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.0.0.tgz#8b8f39447b73e8290d6f5e3581779218e9171142"
+  dependencies:
+    decode-uri-component "^0.2.0"
+    strict-uri-encode "^2.0.0"
 
 querystring-es3@^0.2.0, querystring-es3@^0.2.1:
   version "0.2.1"
@@ -10569,6 +10580,10 @@ railroad-diagrams@^1.0.0:
 ramda-adjunct@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/ramda-adjunct/-/ramda-adjunct-2.5.0.tgz#50d7d74ca273731b05dcdda77d102bc57d7c1145"
+
+ramda-adjunct@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/ramda-adjunct/-/ramda-adjunct-2.6.0.tgz#ec71a0868054bd2b957ef6e5ab046a6c702fedf4"
 
 ramda@0.25.0, ramda@^0.25.0:
   version "0.25.0"
@@ -10627,7 +10642,7 @@ razzle-dev-utils@^0.8.10:
     sockjs-client "1.1.4"
     strip-ansi "4.0.0"
 
-razzle@^0.8.12:
+razzle@latest:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/razzle/-/razzle-0.8.12.tgz#c3115a382641bf4755044c1c48cbd800f7cda288"
   dependencies:
@@ -10975,9 +10990,9 @@ react-test-renderer@^16.0.0-0, react-test-renderer@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-text-mask@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/react-text-mask/-/react-text-mask-5.1.0.tgz#490aa519aae73398d491edd675c821dc947b764b"
+react-text-mask@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/react-text-mask/-/react-text-mask-5.2.0.tgz#45afaaf4b69f227d94382d89ea0a87a673b997c3"
   dependencies:
     prop-types "^15.5.6"
 
@@ -12338,6 +12353,10 @@ strict-uri-encode@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-1.1.0.tgz#279b225df1d582b1f54e65addd4352e18faa0713"
 
+strict-uri-encode@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
+
 string-convert@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/string-convert/-/string-convert-0.2.1.tgz#6982cc3049fbb4cd85f8b24568b9d9bf39eeff97"
@@ -13655,7 +13674,7 @@ winston@2.1.x:
     pkginfo "0.3.x"
     stack-trace "0.0.x"
 
-winston@2.4.0, winston@^2.1.1, winston@^2.4.0:
+winston@2.4.0, winston@^2.1.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/winston/-/winston-2.4.0.tgz#808050b93d52661ed9fb6c26b3f0c826708b0aee"
   dependencies:
@@ -13676,6 +13695,17 @@ winston@^1.0.1:
     eyes "0.1.x"
     isstream "0.1.x"
     pkginfo "0.3.x"
+    stack-trace "0.0.x"
+
+winston@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/winston/-/winston-2.4.1.tgz#a3a9265105564263c6785b4583b8c8aca26fded6"
+  dependencies:
+    async "~1.0.0"
+    colors "1.0.x"
+    cycle "1.0.x"
+    eyes "0.1.x"
+    isstream "0.1.x"
     stack-trace "0.0.x"
 
 wordwrap@0.0.2:
