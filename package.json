@@ -50,16 +50,16 @@
     "flow": "flow",
     "flow-typed:install": "flow-typed install --libdefDir ./types",
     "codeclimate": "codeclimate analyze ./packages/**/src -f html > codeclimate-output.html",
+    "build:admin": "webpack --config ./tools/config/webpack.admin.js",
     "admin": "yarn build:admin && node ./build/admin/index.js",
     "build:web": "cd packages/web && yarn build",
     "build:functions": "node ./tools/scripts/build.functions.js",
     "build:database": "node ./tools/scripts/build.database.js",
-    "build:admin": "webpack --config ./tools/config/webpack.admin.js",
-    "build": "run-p build:web build:functions build:database",
+    "build": "yarn build:web && yarn build:functions && yarn build:database",
     "deploy:web": "firebase deploy --only hosting",
-    "deploy:functions": "cd build/functions && yarn && firebase deploy --only functions",
+    "deploy:functions": "cd build/functions && yarn && npm rebuild && firebase deploy --only functions",
     "deploy:database": "firebase deploy --only database",
-    "deploy": "yarn build && run-p deploy:functions deploy:database deploy:web"
+    "deploy": "yarn build && yarn deploy:web && yarn deploy:functions && yarn deploy:database"
   },
   "lint-staged": {
     "{packages/*/src,packages/web/test,tools}/**/*.{js,jsx}": [
