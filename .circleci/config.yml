@@ -138,21 +138,21 @@ workflows:
       - deploy_development:
           requires:
             - lint
-            - unit_test
-            - e2e_test
+            # - unit_test
+            # - e2e_test
           filters:
             branches: *development_branches
       - deploy_staging:
           requires:
             - lint
-            - unit_test
-            - e2e_test
+            # - unit_test
+            # - e2e_test
           filters:
             branches: *staging_branches
       - deploy_production:
           requires:
             - lint
-            - unit_test
-            - e2e_test
+            # - unit_test
+            # - e2e_test
           filters:
             branches: *production_branches
