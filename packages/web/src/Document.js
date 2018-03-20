@@ -18,7 +18,7 @@ class Document extends React.Component {
     // This is needed in order to inject the critical CSS.
     const sheetsRegistry = new SheetsRegistry();
 
-    const page = renderPage(Component => props => (
+    const page = await renderPage(Component => props => (
       <ErrorBoundary>
         <Provider store={store}>
           <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
@@ -46,6 +46,7 @@ class Document extends React.Component {
 
   render() {
     const { helmet, assets, data, css, userAgent } = this.props;
+
     // get attributes from React Helmet
     const htmlAttrs = helmet.htmlAttributes.toComponent();
     const bodyAttrs = helmet.bodyAttributes.toComponent();

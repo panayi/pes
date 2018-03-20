@@ -31,7 +31,7 @@
     "query-string": "^6.0.0",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.6.0",
-    "razzle": "latest",
+    "razzle": "^0.8.12",
     "re-reselect": "^1.0.1",
     "react": "^16.2.0",
     "react-async-script-loader": "^0.3.0",

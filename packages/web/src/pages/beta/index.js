@@ -19,7 +19,7 @@ import LoginSuccess from './LoginSuccess/LoginSuccess';
 
 // BETA
 
-export const BETA_ENABLED = process.env.RAZZLE_BETA;
+export const BETA_ENABLED = process.env.RAZZLE_BETA === 'true';
 
 const customTheme = R.assocPath(
   ['overrides', 'MuiBackdrop'],
