@@ -101,7 +101,7 @@ jobs:
       - *attach_workspace
       - deploy:
           name: Deploy to Development environment
-          command: DEPLOYMENT=development ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+          command: CI=false DEPLOYMENT=development ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
 
   deploy_staging:
     <<: *defaults
@@ -109,7 +109,7 @@ jobs:
       - *attach_workspace
       - deploy:
           name: Deploy to Staging environment
-          command: DEPLOYMENT=staging ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+          command: CI=false DEPLOYMENT=staging ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
 
   deploy_production:
     <<: *defaults
