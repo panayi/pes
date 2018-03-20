@@ -80,7 +80,7 @@ jobs:
       - *attach_workspace
       - run:
           name: Run unit tests
-          command: yarn test
+          command: yarn test:web
 
   e2e_test:
     <<: *defaults
