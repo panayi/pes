@@ -7,7 +7,7 @@ import firebase from 'firebase-admin';
 import createMemoryHistory from 'history/createMemoryHistory';
 import { mobileParser, setMobileDetect } from 'react-responsive-redux';
 import { render } from '@jaredpalmer/after';
-import * as firebaseConfig from '@pesposa/core/src/config/firebase';
+import env from '@pesposa/core/src/config/env';
 import serviceAccountKey from '@pesposa/core/src/config/serviceAccountKey.json';
 import configureStore from 'store/configureStore';
 import { models } from 'store/firebase/data';
@@ -21,7 +21,7 @@ const jsonParser = bodyParser.json();
 
 if (!firebase.apps.length) {
   firebase.initializeApp({
-    databaseURL: firebaseConfig.FIREBASE_DATABASE_URL,
+    databaseURL: env.firebaseDatabaseUrl,
     credential: firebase.credential.cert(serviceAccountKey),
   });
 }

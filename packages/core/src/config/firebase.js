@@ -1,11 +1,3 @@
-import env from './env';
-
-export const FIREBASE_DOMAIN = `${env.firebaseProjectId}.firebaseapp.com`;
-export const FIREBASE_DATABASE_URL = `https://${
-  env.firebaseProjectId
-}.firebaseio.com`;
-export const FIREBASE_CONSOLE_BASE_URL =
-  'https://console.firebase.google.com/u/0/project';
 export const FIREBASE_PATH = ['firebase'];
 
 export const PROVIDER_IDS = {

@@ -20,7 +20,7 @@ const createFirebaseClient = baseConfig => {
 const firebaseConfig = isFirebaseFunctionsEnv
   ? functions.config().firebase
   : {
-      databaseURL: `https://${env.firebaseProjectId}.firebaseio.com`,
+      databaseURL: env.firebaseDatabaseUrl,
     };
 
 const firebaseClient = createFirebaseClient(firebaseConfig);

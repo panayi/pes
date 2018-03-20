@@ -1,8 +1,8 @@
 import * as R from 'ramda';
-import * as firebaseConfig from '@pesposa/core/src/config/firebase';
+import env from '@pesposa/core/src/config/env';
 
 const urlForPath = R.compose(
-  path => `https://${firebaseConfig.FIREBASE_DOMAIN}${path}`,
+  path => `https://${env.firebaseDomain}${path}`,
   R.when(R.compose(R.not, R.equals('/'), R.head), R.concat('/')),
 );
 

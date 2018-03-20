@@ -17,8 +17,10 @@
 
 const output = {
   firebaseApiKey: process.env.RAZZLE_FIREBASE_API_KEY,
-  firebaseProjectId: process.env.RAZZLE_FIREBASE_PROJECT_ID,
+  firebaseDatabaseUrl: process.env.RAZZLE_FIREBASE_DATABASE_URL,
+  firebaseDomain: process.env.RAZZLE_FIREBASE_DOMAIN,
   firebaseFunctionsBaseUrl: process.env.RAZZLE_FIREBASE_FUNCTIONS_BASE_URL,
+  firebaseStorageBucket: process.env.RAZZLE_FIREBASE_STORAGE_BUCKET,
   algoliaAppId: process.env.RAZZLE_ALGOLIA_APP_ID,
   algoliaSearchKey: process.env.RAZZLE_ALGOLIA_SEARCH_KEY,
   imgixHost: process.env.RAZZLE_IMGIX_HOST,

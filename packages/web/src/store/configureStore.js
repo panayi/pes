@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
 import * as storageConfig from '@pesposa/core/src/config/storage';
-import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import env from '@pesposa/core/src/config/env';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import { actions as authActions } from './firebase/auth';
@@ -16,8 +15,8 @@ import makeRootReducer from './reducers';
 const configureStore = (initialState = {}, history) => {
   const firebaseAppConfig = {
     apiKey: env.firebaseApiKey,
-    authDomain: firebaseConfig.FIREBASE_DOMAIN,
-    databaseURL: firebaseConfig.FIREBASE_DATABASE_URL,
+    authDomain: env.firebaseDomain,
+    databaseURL: env.firebaseDatabaseUrl,
     storageBucket: storageConfig.BUCKET,
   };
 

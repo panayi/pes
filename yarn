@@ -16,13 +16,13 @@ DEPLOYMENT=$DEPLOYMENT
 
 ENV_FILE=".env.$DEPLOYMENT"
 SOURCE_ENV_PATH="$BASE_PATH/secrets/$ENV_FILE"
-TARGET_ENV_PATH="$BASE_PATH/.env"
-BACKUP_ENV_PATH="$BASE_PATH/.env.backup"
+TARGET_ENV_PATH="$BASE_PATH/packages/web/.env"
+BACKUP_ENV_PATH="$BASE_PATH/packages/web/.env.backup"
 
 SERVICE_ACCOUNT_KEY_FILE="$DEPLOYMENT.json"
 SOURCE_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/secrets/serviceAccountKeys/$SERVICE_ACCOUNT_KEY_FILE"
-TARGET_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/backend/lib/serviceAccountKey.json"
-BACKUP_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/backend/lib/serviceAccountKey.json.backup"
+TARGET_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/packages/core/src/config/serviceAccountKey.json"
+BACKUP_SERVICE_ACCOUNT_KEY_PATH="$BASE_PATH/packages/core/src/config/serviceAccountKey.json.backup"
 
 # Backup existing env file
 if [ -f "$TARGET_ENV_PATH" ]

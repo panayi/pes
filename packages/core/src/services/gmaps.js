@@ -1,9 +1,10 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import gmaps from '@google/maps';
+import env from '../config/env';
 
 const client = gmaps.createClient({
-  key: process.env.GOOGLE_APIS_SERVER_KEY,
+  key: env.googleApisServerKey,
 });
 
 // Find all gMaps types here:

@@ -59,7 +59,7 @@
     "deploy:functions": "yarn build:functions && cd build/functions && yarn && firebase deploy --only functions",
     "deploy:database": "yarn build:database && firebase deploy --only database",
     "admin": "yarn build:admin && node ./build/admin/index.js",
-    "deploy": "run-p deploy:functions && yarn deploy:database && deploy:web"
+    "deploy": "run-p deploy:functions && deploy:database && deploy:web"
   },
   "lint-staged": {
     "{packages/*/src,packages/web/test,tools}/**/*.{js,jsx}": [
