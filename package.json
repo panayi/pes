@@ -50,16 +50,16 @@
     "flow": "flow",
     "flow-typed:install": "flow-typed install --libdefDir ./types",
     "codeclimate": "codeclimate analyze ./packages/**/src -f html > codeclimate-output.html",
+    "admin": "yarn build:admin && node ./build/admin/index.js",
     "build:web": "cd packages/web && yarn build",
     "build:functions": "node ./tools/scripts/build.functions.js",
     "build:database": "node ./tools/scripts/build.database.js",
     "build:admin": "webpack --config ./tools/config/webpack.admin.js",
-    "build": "run-p build:web build:functions",
-    "deploy:web": "yarn build:web && firebase deploy --only hosting",
-    "deploy:functions": "yarn build:functions && cd build/functions && yarn && firebase deploy --only functions",
-    "deploy:database": "yarn build:database && firebase deploy --only database",
-    "admin": "yarn build:admin && node ./build/admin/index.js",
-    "deploy": "run-p deploy:functions && deploy:database && deploy:web"
+    "build": "run-p build:web build:functions build:database",
+    "deploy:web": "firebase deploy --only hosting",
+    "deploy:functions": "cd build/functions && yarn && firebase deploy --only functions",
+    "deploy:database": "firebase deploy --only database",
+    "deploy": "yarn build && run-p deploy:functions deploy:database deploy:web"
   },
   "lint-staged": {
     "{packages/*/src,packages/web/test,tools}/**/*.{js,jsx}": [
