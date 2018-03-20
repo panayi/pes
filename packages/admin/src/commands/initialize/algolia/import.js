@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import log from '@pesposa/core/src/utils/log';
 import { database } from '@pesposa/core/src/config/firebaseClient';
+import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
 import * as algoliaService from '@pesposa/core/src/services/algolia';
 
 const initialImportAds = async () => {
@@ -21,7 +22,11 @@ const initialImportAds = async () => {
     }),
   )(ads);
 
-  return algoliaService.addMany(finalAds);
+  const groupOfAds = R.splitEvery(1000, finalAds);
+
+  return promiseSerial(
+    R.map(group => () => algoliaService.addMany(group), groupOfAds),
+  );
 };
 
 const initialImport = async () => {
