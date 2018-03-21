@@ -30,6 +30,9 @@ const styles = theme => ({
   hero: {
     color: theme.palette.text.secondary,
   },
+  spinner: {
+    overflow: 'hidden',
+  },
 });
 
 class FetchAdsProgress extends Component {
