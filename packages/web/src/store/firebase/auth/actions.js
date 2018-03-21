@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import authConfig from '@pesposa/core/src/config/auth';
+import env from '@pesposa/core/src/config/env';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import api from 'services/api';
@@ -153,4 +154,12 @@ export const linkProvider = providerId => async (
   const user = R.prop('user', result);
   const newUser = profileUtils.profileFactory(user, user);
   dispatch(profileActions.updateProfile(newUser));
+};
+
+export const logout = () => async (dispatch, getState, getFirebase) => {
+  await getFirebase().logout();
+
+  if (env.betaEnabled) {
+    window.location.href = '/beta';
+  }
 };

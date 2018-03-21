@@ -6,6 +6,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { connectData } from 'lib/connectData';
 import Typography from 'material-ui/Typography';
 import { MuiThemeProvider, withStyles } from 'material-ui/styles';
+import env from '@pesposa/core/src/config/env';
 import defaultTheme from 'config/theme';
 import { actions as modalActions } from 'store/modals';
 import { models } from 'store/firebase/data';
@@ -18,9 +19,6 @@ import Logo from '../components/Logo/Logo';
 import LoginSuccess from './LoginSuccess/LoginSuccess';
 
 // BETA
-
-export const BETA_ENABLED = process.env.RAZZLE_BETA === 'true';
-
 const customTheme = R.assocPath(
   ['overrides', 'MuiBackdrop'],
   null,
@@ -89,7 +87,7 @@ class Beta extends React.Component {
   };
 
   componentWillMount() {
-    if (!BETA_ENABLED || this.props.isBetaUser) {
+    if (!env.betaEnabled || this.props.isBetaUser) {
       this.goHome();
     }
   }

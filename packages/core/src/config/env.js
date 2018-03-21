@@ -29,6 +29,7 @@ const output = {
   algoliaApiKey: process.env.ALGOLIA_API_KEY,
   legacyPesposaBaseUrl: process.env.LEGACY_PESPOSA_BASE_URL,
   legacyPesposaToken: process.env.LEGACY_PESPOSA_TOKEN,
+  betaEnabled: process.env.RAZZLE_BETA === 'true',
 };
 
 export default output;

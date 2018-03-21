@@ -11,7 +11,7 @@ import env from '@pesposa/core/src/config/env';
 import serviceAccountKey from '@pesposa/core/src/config/serviceAccountKey.json';
 import configureStore from 'store/configureStore';
 import { models } from 'store/firebase/data';
-import { BETA_ENABLED, isBetaUserSelector } from 'pages/beta';
+import { isBetaUserSelector } from 'pages/beta';
 import routes from './routes';
 import Document from './Document';
 
@@ -28,7 +28,7 @@ if (!firebase.apps.length) {
 
 // BETA
 const requireBetaUser = async (req, res, next) => {
-  if (!BETA_ENABLED) {
+  if (!env.betaEnabled) {
     next();
     return;
   }
@@ -60,7 +60,7 @@ const requireNonBetaUser = async (req, res, next) => {
 };
 
 const needsBetaEnabled = async (req, res, next) => {
-  if (!BETA_ENABLED) {
+  if (!env.betaEnabled) {
     res.redirect('/');
     res.end();
   } else {

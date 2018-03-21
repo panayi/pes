@@ -1,10 +1,11 @@
 import * as R from 'ramda';
 import { withProps } from 'recompose';
+import env from '@pesposa/core/src/config/env';
 import Home from 'pages/home/index';
 import Profile from 'pages/profile/index';
 import ViewAd from 'pages/ad/index';
 import Messages from 'pages/messages/index';
-import Beta, { BETA_ENABLED } from 'pages/beta/index';
+import Beta from 'pages/beta/index';
 
 const routes = [
   {
@@ -34,7 +35,7 @@ const routes = [
 ];
 
 // BETA
-const finalRoutes = BETA_ENABLED
+const finalRoutes = env.betaEnabled
   ? R.prepend(
       {
         path: '/beta',
