@@ -123,6 +123,10 @@ const transformAdProperties = R.compose(
       R.prop('price'),
     ),
   ),
+  computedProp(
+    'city',
+    R.compose(R.when(R.equals('Lefkoşa'), R.always('Nicosia')), R.prop('city')),
+  ),
   computedProp('body', R.compose(striptags, R.prop('description'))),
   computedProp('category', mapLegacyToNewCategory),
   computedProp(
