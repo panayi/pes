@@ -31,12 +31,12 @@ class Masonry extends PureComponent<Props> {
   };
 
   componentWillMount() {
-    this.resetColumnHeights();
+    this.resetColumnHeights(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     if (propsChanged(['hits', 'containerWidth'], this.props, nextProps)) {
-      this.resetColumnHeights();
+      this.resetColumnHeights(nextProps);
       this.collectionRef.recomputeCellSizesAndPositions();
     }
   }
@@ -55,10 +55,10 @@ class Masonry extends PureComponent<Props> {
     return values;
   };
 
-  resetColumnHeights = () => {
+  resetColumnHeights = props => {
     const columnCount =
       selectors.columnCountSelector({
-        containerWidth: this.props.containerWidth,
+        containerWidth: props.containerWidth,
       }) || 0;
     this.columnHeights = R.times(R.always(0), columnCount);
   };

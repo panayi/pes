@@ -40,7 +40,7 @@ export class ListAds extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (propsChanged(['hits'], this.props, nextProps)) {
-      // FIXME: Find a way to avoid forced update
+      // TODO: Find a way to avoid forced update
       // list doesn't update otherwise
       this.autoSizerRef.forceUpdate();
     }
@@ -68,9 +68,8 @@ export class ListAds extends Component {
   renderContent = ({ height, scrollTop }) => ({ width }) => {
     const { hits } = this.props;
 
-    // TODO: should use client hints on server
-    const finalWidth = process.browser ? width : 500;
-    const finalHeight = process.browser ? height : 500;
+    const finalWidth = process.browser ? width : 0;
+    const finalHeight = process.browser ? height : 0;
 
     return (
       <Masonry
