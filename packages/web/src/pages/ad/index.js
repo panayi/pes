@@ -51,16 +51,16 @@ const legacySelector = R.compose(R.test(/^\/il/), R.path(['match', 'path']));
 export default R.compose(
   setStatic('getInitialProps', async ({ match, store }) => {
     const props = {
-      adId: match.params,
+      adId: routerSelectors.routeParamSelector('adId')({ match }),
       legacy: legacySelector({ match }),
     };
     const state = store.getState();
     const adConnection = models
       .ads(propSelector('legacy'))
       .one(propSelector('adId'));
-    const adQuery = adConnection.query(state, props);
-    await store.firebase.promiseEvents([{ path: adQuery, type: 'once' }]);
+    const adQuery = adConnection.query(state, props).path;
 
+    await store.firebase.promiseEvents([{ path: adQuery, type: 'once' }]);
     const ad = adConnection.selector(store.getState(), props);
 
     if (ad.user) {
