@@ -53,10 +53,6 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: Install Firebase tools
-          command: sudo npm install -g firebase-tools
-
-      - run:
           name: Install dependencies
           command: yarn install
 

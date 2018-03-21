@@ -48,6 +48,7 @@
     "lint": "./node_modules/eslint/bin/eslint.js ./ --cache --ext .js,.es6,.jsx",
     "test:web": "cd packages/web && CI=true yarn test -- --bail",
     "flow": "flow",
+    "firebase": "./node_modules/.bin/firebase",
     "flow-typed:install": "flow-typed install --libdefDir ./types",
     "codeclimate": "codeclimate analyze ./packages/**/src -f html > codeclimate-output.html",
     "build:admin": "webpack --config ./tools/config/webpack.admin.js",
@@ -56,9 +57,9 @@
     "build:functions": "node ./tools/scripts/build.functions.js",
     "build:database": "node ./tools/scripts/build.database.js",
     "build": "yarn build:web && yarn build:functions && yarn build:database",
-    "deploy:web": "firebase deploy --only hosting",
-    "deploy:functions": "cd build/functions && yarn && npm rebuild && firebase deploy --only functions",
-    "deploy:database": "firebase deploy --only database",
+    "deploy:web": "yarn firebase deploy --only hosting",
+    "deploy:functions": "cd build/functions && yarn && npm rebuild && yarn firebase deploy --only functions",
+    "deploy:database": "yarn firebase deploy --only database",
     "deploy": "yarn build && yarn deploy:web && yarn deploy:functions && yarn deploy:database"
   },
   "lint-staged": {
