@@ -1,21 +1,19 @@
+import React from 'react';
 import * as R from 'ramda';
-import { withProps, setDisplayName } from 'recompose';
-import { isNilOrEmpty, isPositive } from 'ramda-adjunct';
+import { withProps } from 'recompose';
+import { createStructuredSelector } from 'reselect';
+import { isPositive } from 'ramda-adjunct';
 import renderNothingWhen from 'hocs/renderNothingWhen';
-import AdProp from '../AdProp/AdProp';
+import Currency from '../Currency/Currency';
 
-const getPrice = R.prop('price');
+const AdPrice = ({ price, render, children }) =>
+  (children || render)({ price: price ? <Currency value={price} /> : null });
 
 export default R.compose(
-  renderNothingWhen(
-    R.compose(R.complement(isPositive), getPrice, R.prop('ad')),
+  withProps(
+    createStructuredSelector({
+      price: R.path(['ad', 'price']),
+    }),
   ),
-  withProps({
-    getProp: R.compose(
-      R.unless(isNilOrEmpty, R.concat('€')),
-      R.toString,
-      getPrice,
-    ),
-  }),
-  setDisplayName('AdPrice'),
-)(AdProp);
+  renderNothingWhen(R.compose(R.complement(isPositive), R.prop('price'))),
+)(AdPrice);

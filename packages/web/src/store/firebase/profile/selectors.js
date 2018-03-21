@@ -44,6 +44,11 @@ export const profileCountryCodeSelector = profilePropSelector([
   'country',
 ]);
 
+export const profileCountrySelector = R.compose(
+  R.defaultTo(localeConfig.DEFAULT_LOCALE),
+  profilePropSelector(['location', 'address', 'country'], { populated: true }),
+);
+
 export const profileLocaleSelector = R.compose(
   R.defaultTo(localeConfig.DEFAULT_LOCALE),
   profilePropSelector(['locale'], { populated: true }),

@@ -228,7 +228,15 @@ const DesktopViewAd = ({
                 />
               </div>
             </div>
-            <AdPrice ad={ad} className={classes.price} variant="title" />
+            <AdPrice ad={ad}>
+              {({ price }) =>
+                price ? (
+                  <Typography className={classes.price} variant="title">
+                    {price}
+                  </Typography>
+                ) : null
+              }
+            </AdPrice>
             <AdBody ad={ad} className={classes.description} />
             <div className={classes.date}>
               <AdDateChip ad={ad} />
