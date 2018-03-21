@@ -36,6 +36,7 @@ export class ListAds extends Component {
 
   componentDidMount() {
     window.scrollTo(0, this.props.scrollPosition);
+    this.ensureCanScroll();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -46,8 +47,23 @@ export class ListAds extends Component {
     }
   }
 
+  componentDidUpdate() {
+    this.ensureCanScroll();
+  }
+
   componentWillUnmount() {
     this.props.setScrollPosition(window.scrollY);
+  }
+
+  ensureCanScroll() {
+    const hasHits = R.complement(R.isEmpty)(this.props.hits);
+    const scrollIsVisible =
+      document.documentElement.scrollHeight >
+      document.documentElement.clientHeight;
+
+    if (hasHits && !scrollIsVisible) {
+      this.props.loadNextPage();
+    }
   }
 
   handleScroll = ({ scrollTop }) => {
@@ -68,14 +84,11 @@ export class ListAds extends Component {
   renderContent = ({ height, scrollTop }) => ({ width }) => {
     const { hits } = this.props;
 
-    const finalWidth = process.browser ? width : 0;
-    const finalHeight = process.browser ? height : 0;
-
     return (
       <Masonry
         registerCollection={this.registerCollection}
-        containerWidth={finalWidth}
-        containerHeight={finalHeight}
+        containerWidth={width}
+        containerHeight={height}
         scrollTop={scrollTop}
         hits={hits}
       />
@@ -104,7 +117,11 @@ export class ListAds extends Component {
 
     return (
       <div className={classes.root}>
-        <WindowScroller onScroll={this.handleScroll}>
+        <WindowScroller
+          onScroll={this.handleScroll}
+          serverWidth={0}
+          serverHeight={0}
+        >
           {this.renderAutoSizer}
         </WindowScroller>
         <FetchAdsProgress />
