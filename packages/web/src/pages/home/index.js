@@ -114,6 +114,7 @@ export default R.compose(
   withProps(
     createStructuredSelector({
       searchParamsFromProps: searchParamsFromPropsSelector,
+      category: routerSelectors.routeParamSelector('category'),
     }),
   ),
   withStyles(styles),

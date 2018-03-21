@@ -1,5 +1,4 @@
 import * as R from 'ramda';
-import { withProps } from 'recompose';
 import env from '@pesposa/core/src/config/env';
 import Home from 'pages/home/index';
 import Profile from 'pages/profile/index';
@@ -22,7 +21,7 @@ const routes = [
   },
   {
     path: '/il/:adId',
-    component: withProps({ legacy: true })(ViewAd),
+    component: ViewAd,
   },
   {
     path: '/messages',

@@ -12,7 +12,6 @@ import { selectors as routerSelectors } from 'store/router';
 import hydrateAd from 'hocs/hydrateAd';
 import Layout from 'layouts/Layout/Layout';
 import ViewAd from 'modules/ViewAd/ViewAd';
-import MobileViewAd from 'modules/ViewAd/MobileViewAd/MobileViewAd';
 import Header from 'pages/components/Header/Header';
 
 type Props = {
@@ -41,17 +40,19 @@ const AdPage = (props: Props) => (
     </DesktopScreen>
     <MobileScreen>
       <Layout>
-        <MobileViewAd adId={props.adId} legacy={props.legacy} />
+        <Content {...props} />
       </Layout>
     </MobileScreen>
   </React.Fragment>
 );
 
+const legacySelector = R.compose(R.test(/^\/il/), R.path(['match', 'path']));
+
 export default R.compose(
-  setStatic('getInitialProps', async ({ store, match }) => {
+  setStatic('getInitialProps', async ({ match, store }) => {
     const props = {
       adId: match.params,
-      legacy: R.test(/^\/il/, match.path),
+      legacy: legacySelector({ match }),
     };
     const state = store.getState();
     const adConnection = models
@@ -61,20 +62,24 @@ export default R.compose(
     await store.firebase.promiseEvents([{ path: adQuery, type: 'once' }]);
 
     const ad = adConnection.selector(store.getState(), props);
-    await store.firebase.promiseEvents([
-      {
-        path: models.users
-          .one(propSelector('userId'))
-          .query(state, { userId: ad.user }).path,
-        type: 'once',
-      },
-    ]);
+
+    if (ad.user) {
+      await store.firebase.promiseEvents([
+        {
+          path: models.users
+            .one(propSelector('userId'))
+            .query(state, { userId: ad.user }).path,
+          type: 'once',
+        },
+      ]);
+    }
 
     return store.getState();
   }),
   withProps(
     createStructuredSelector({
       adId: routerSelectors.routeParamSelector('adId'),
+      legacy: legacySelector,
     }),
   ),
   hydrateAd(propSelector('adId'), propSelector('legacy')),

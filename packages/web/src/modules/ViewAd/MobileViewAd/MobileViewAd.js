@@ -422,10 +422,12 @@ class MobileViewAd extends React.Component {
                     classes.actionButton,
                     classes.callButton,
                   )}
-                  size="small"
-                  variant="outline"
-                  color="primary"
-                  fullWidth
+                  buttonProps={{
+                    size: 'small',
+                    variant: 'outline',
+                    color: 'primary',
+                    fullWidth: true,
+                  }}
                 >
                   Call
                 </RevealPhoneButton>
