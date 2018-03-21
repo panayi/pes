@@ -12,9 +12,9 @@
       "other": "Other"
     },
     "sortByOptions": {
-      "byDateDesc": "Date (most recent)",
-      "byPriceAsc": "Price: high to low",
-      "byPriceDesc": "Price: low to high",
+      "byDateDesc": "Newest",
+      "byPriceAsc": "Price: Low to High",
+      "byPriceDesc": "Price: High to Low",
       "byDistance": "Closest"
     }
   },
