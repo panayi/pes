@@ -27,9 +27,8 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     maxWidth: 400,
   },
-  noResultsIcon: {
-    width: 200,
-    height: 200,
+  hero: {
+    color: theme.palette.text.secondary,
   },
 });
 
@@ -50,9 +49,10 @@ class FetchAdsProgress extends Component {
     return noResults ? (
       <div className={classes.noResults}>
         {isProfileSearch ? (
-          <EmptyHero tagline="No listings yet!" />
+          <EmptyHero className={classes.hero} tagline="No listings yet!" />
         ) : (
           <EmptyHero
+            className={classes.hero}
             icon={MoodBadIcon}
             title="Oh snap!"
             tagline="No results found, try looking for something different."
