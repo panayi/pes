@@ -12,10 +12,14 @@ const DEFAULT_ACTIVE_CLASS_NAME = 'link--active';
 const styles = {
   root: {
     textTransform: 'none',
+    cursor: 'default',
 
     [`&.${DEFAULT_ACTIVE_CLASS_NAME}`]: {
       // Styles for active link go here
     },
+  },
+  clickable: {
+    cursor: 'pointer',
   },
 };
 
@@ -26,7 +30,9 @@ const makeLink = R.compose(
   withStyles(styles),
   withProps(({ to, classes, className }) => ({
     component: to ? NavLink : null,
-    className: classNames(classes.root, className),
+    className: classNames(classes.root, className, {
+      [classes.clickable]: !!to,
+    }),
   })),
   omitProps(['classes', 'dispatch']),
 );
