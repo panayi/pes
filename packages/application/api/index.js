@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import createCors from 'cors';
 import { isAuthenticated } from './utils';
 import setCurrentUserInfo from './setCurrentUserInfo';
-import syncLegacyAd from './syncLegacyAd';
 import migrateAnonymousUser from './migrateAnonymousUser';
 
 const app = express();
@@ -16,7 +15,6 @@ const jsonParser = bodyParser.json();
 const cors = createCors({ credentials: true, origin: '*' });
 
 // Public routes
-app.get('/:category/:id', syncLegacyAd);
 
 // Protected routes
 app.use(cors);

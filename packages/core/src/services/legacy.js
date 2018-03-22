@@ -178,8 +178,8 @@ const uploadImage = async (buffer, filename, contentType, dbPath, database) => {
 };
 
 const uploadImages = async (images, adId, database) => {
-  const funcs = R.map(
-    image => () =>
+  const funcs = R.compose(
+    R.map(image => () =>
       uploadImage(
         image.buffer,
         image.filename,
@@ -187,8 +187,9 @@ const uploadImages = async (images, adId, database) => {
         `ads/images/${adId}`,
         database,
       ),
-    images,
-  );
+    ),
+    R.defaultTo([]),
+  )(images);
 
   return promiseSerial(funcs);
 };
@@ -334,20 +335,6 @@ export const localToFirebase = async (adId, database, rootDirectory) => {
     return uploadImages(imagesWithBuffer, adId, database);
   } catch (error) {
     log.error(error.message);
-    throw error;
-  }
-};
-
-export const legacyToFirebase = async (adId, category, database) => {
-  try {
-    const legacyAd = await fetchAd(adId, category);
-    const ad = transformLegacyAd(legacyAd);
-    const adPath = getAdPath(ad.id);
-    await database.ref(adPath).update(R.omit(['images'], ad));
-
-    return uploadImages(ad.images, ad.id, database);
-  } catch (error) {
-    log.warn(error.message);
     throw error;
   }
 };
