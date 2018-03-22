@@ -37,9 +37,7 @@ class DesktopTitle extends React.Component {
     return (
       <div className={classes.root}>
         {action && <div className={classes.action}>{action}</div>}
-        <Typography variant="title" color="inherit">
-          {title}
-        </Typography>
+        <Typography variant="title">{title}</Typography>
       </div>
     );
   }

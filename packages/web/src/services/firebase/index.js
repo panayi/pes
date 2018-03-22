@@ -8,6 +8,7 @@ import * as messages from './messages';
 import * as pendingReviewAds from './pendingReviewAds';
 import * as profile from './profile';
 import * as supportMessages from './supportMessages';
+import * as ratings from './ratings';
 
 const api = {
   ads,
@@ -20,6 +21,7 @@ const api = {
   pendingReviewAds,
   profile,
   supportMessages,
+  ratings,
 };
 
 export default api;

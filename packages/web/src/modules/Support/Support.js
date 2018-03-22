@@ -109,9 +109,7 @@ class Support extends Component {
               <Form {...formikProps} />
             </DialogContent>
             <DialogActions>
-              <Button variant="raised" color="primary" type="submit">
-                Send
-              </Button>
+              <Button type="submit">Send</Button>
             </DialogActions>
           </form>
         )}

@@ -113,7 +113,10 @@ class Menu extends Component {
           <Divider />
           <List component="nav">
             <ListItem button onClick={() => this.openModal('support')}>
-              <ListItemText primary="Support / Feedback" />
+              <ListItemText primary="Support" />
+            </ListItem>
+            <ListItem button onClick={() => this.openModal('rate')}>
+              <ListItemText primary="Give us feedback" />
             </ListItem>
             <ListItem button onClick={() => this.navigateTo('/privacy')}>
               <ListItemText primary="Privacy Policy" />
