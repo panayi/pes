@@ -89,6 +89,11 @@ export const searchParamsFromPropsSelector = createSelector(
 
 export default R.compose(
   setStatic('getInitialProps', async ({ match, store }) => {
+    // TODO: should we do this?
+    if (process.browser) {
+      return null;
+    }
+
     const actions = bindActionCreators(
       {
         loadFirstPage: searchActions.loadFirstPage,

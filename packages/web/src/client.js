@@ -33,7 +33,7 @@ ensureReady(routes).then(data => {
             <JssProvider registry={sheetsRegistry} jss={jss}>
               <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
                 <Reboot />
-                <After data={data} routes={routes} />
+                <After data={data} routes={routes} store={store} />
               </MuiThemeProvider>
             </JssProvider>
           </SearchProvider>

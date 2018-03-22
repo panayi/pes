@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "UNLICENSED",
   "dependencies": {
-    "@jaredpalmer/after": "^1.2.1",
+    "@jaredpalmer/after": "^1.3.0",
     "@pesposa/core": "^0.1.0",
     "algoliasearch": "^3.25.1",
     "autosuggest-highlight": "^3.1.1",
@@ -31,7 +31,7 @@
     "query-string": "^6.0.0",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.6.0",
-    "razzle": "^0.8.12",
+    "razzle": "^0.8.14",
     "re-reselect": "^1.0.1",
     "react": "^16.2.0",
     "react-async-script-loader": "^0.3.0",
@@ -88,6 +88,8 @@
     "start:prod": "NODE_PATH=src/ NODE_ENV=production node build/server.js"
   },
   "jest": {
-    "transformIgnorePatterns": ["node_modules/(?!(\\@pesposa|my-project|react-native-button)/)"]
+    "transformIgnorePatterns": [
+      "node_modules/(?!(\\@pesposa|my-project|react-native-button)/)"
+    ]
   }
 }

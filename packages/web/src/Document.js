@@ -1,6 +1,5 @@
 import React from 'react';
 import { AfterRoot, AfterData } from '@jaredpalmer/after';
-import { Provider } from 'react-redux';
 import { JssProvider, SheetsRegistry } from 'react-jss';
 import Reboot from 'material-ui/Reboot';
 import { MuiThemeProvider } from 'material-ui/styles';
@@ -12,7 +11,7 @@ import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import SearchProvider from 'modules/Search/Provider/Provider';
 
 class Document extends React.Component {
-  static async getInitialProps({ assets, data, renderPage, req, store }) {
+  static async getInitialProps({ assets, data, renderPage, req }) {
     // This is needed in order to deduplicate the injection of CSS in the page.
     const sheetsManager = new WeakMap();
     // This is needed in order to inject the critical CSS.
@@ -20,16 +19,14 @@ class Document extends React.Component {
 
     const page = await renderPage(Component => props => (
       <ErrorBoundary>
-        <Provider store={store}>
-          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-            <JssProvider registry={sheetsRegistry} jss={jss}>
-              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-                <Reboot />
-                <Component {...props} />
-              </MuiThemeProvider>
-            </JssProvider>
-          </SearchProvider>
-        </Provider>
+        <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+          <JssProvider registry={sheetsRegistry} jss={jss}>
+            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+              <Reboot />
+              <Component {...props} />
+            </MuiThemeProvider>
+          </JssProvider>
+        </SearchProvider>
       </ErrorBoundary>
     ));
 

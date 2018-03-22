@@ -1,9 +1,12 @@
 import express from 'express';
+import React from 'react';
 import * as R from 'ramda';
 import session from 'express-session';
 import createFileStore from 'session-file-store';
 import bodyParser from 'body-parser';
+import { renderToString } from 'react-dom/server';
 import firebase from 'firebase-admin';
+import { Provider } from 'react-redux';
 import createMemoryHistory from 'history/createMemoryHistory';
 import { mobileParser, setMobileDetect } from 'react-responsive-redux';
 import { render } from '@jaredpalmer/after';
@@ -92,8 +95,11 @@ const renderApp = async (req, res) => {
     const mobileDetect = mobileParser(req);
     store.dispatch(setMobileDetect(mobileDetect));
 
-    const docGetInitialProps = Document.getInitialProps;
-    Document.getInitialProps = ctx => docGetInitialProps({ ...ctx, store });
+    const customRenderer = node => {
+      const App = <Provider store={store}>{node}</Provider>;
+      const html = renderToString(App);
+      return { html, store };
+    };
 
     const html = await render({
       req,
@@ -101,6 +107,7 @@ const renderApp = async (req, res) => {
       document: Document,
       routes,
       assets,
+      customRenderer,
       store,
     });
     res.send(html);

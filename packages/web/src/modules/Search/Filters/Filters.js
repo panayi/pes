@@ -67,6 +67,7 @@ class Filters extends React.Component {
 
   render() {
     const { classes, DialogTitle, DialogContent, closeModal } = this.props;
+
     return (
       <React.Fragment>
         <DialogTitle
