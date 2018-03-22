@@ -318,12 +318,22 @@ class MobileViewAd extends React.Component {
               <div className={classes.info}>
                 <div className={classes.location}>
                   <PlaceIcon className={classes.locationIcon} />
-                  <AdAddress ad={ad} color="inherit" />
+                  <AdAddress ad={ad}>
+                    {({ address }) =>
+                      address ? (
+                        <Typography color="inherit">{address}</Typography>
+                      ) : null
+                    }
+                  </AdAddress>
                 </div>
                 <div className={classes.posted}>
                   <div className={classes.date}>
                     <TimeIcon className={classes.locationIcon} />
-                    <AdDate ad={ad} color="inherit" />
+                    <AdDate ad={ad}>
+                      {({ date }) => (
+                        <Typography color="inherit">{date}</Typography>
+                      )}
+                    </AdDate>
                   </div>
                 </div>
               </div>

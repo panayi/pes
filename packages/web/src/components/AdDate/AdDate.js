@@ -1,13 +1,19 @@
 import React from 'react';
 import * as R from 'ramda';
-import TimeAgo from 'react-timeago';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
-import AdProp from '../AdProp/AdProp';
+import TimeAgo from 'react-timeago';
+import renderNothingWhen from 'hocs/renderNothingWhen';
 
-export default withProps({
-  getProp: R.compose(
-    R.unless(isNilOrEmpty, date => <TimeAgo date={date} />),
-    R.prop('createdAt'),
+const AdDate = ({ date, render, children }) =>
+  (children || render)({ date: <TimeAgo date={date} /> });
+
+export default R.compose(
+  withProps(
+    createStructuredSelector({
+      date: R.path(['ad', 'createdAt']),
+    }),
   ),
-})(AdProp);
+  renderNothingWhen(R.propSatisfies(isNilOrEmpty, 'date')),
+)(AdDate);

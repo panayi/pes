@@ -1,8 +1,17 @@
-/* @flow */
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
+import { createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
-import AdProp from '../AdProp/AdProp';
+import renderNothingWhen from 'hocs/renderNothingWhen';
 
-export default withProps({ getProp: R.path(['location', 'address', 'city']) })(
-  AdProp,
-);
+const AdAddress = ({ address, render, children }) =>
+  (children || render)({ address });
+
+export default R.compose(
+  withProps(
+    createStructuredSelector({
+      address: R.path(['ad', 'location', 'address', 'city']),
+    }),
+  ),
+  renderNothingWhen(R.propSatisfies(isNilOrEmpty, 'address')),
+)(AdAddress);

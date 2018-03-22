@@ -20,7 +20,6 @@ import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdBody from 'components/AdBody/AdBody';
 import AdAddress from 'components/AdAddress/AdAddress';
-import AdDateChip from 'components/AdDateChip/AdDateChip';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import StaticMap from '../StaticMap/StaticMap';
@@ -35,6 +34,7 @@ import BrowseAds from './BrowseAds/BrowseAds';
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
 import SellerBox from './SellerBox/SellerBox';
 import SentMessages from './SentMessages/SentMessages';
+import AdDateChip from './AdDateChip/AdDateChip';
 
 type Props = {
   ad: Ad,
@@ -98,20 +98,24 @@ const styles = theme => ({
     flex: 1,
   },
   header: {
-    display: 'flex',
+    position: 'relative',
+    width: '100%',
+    minHeight: theme.spacing.unit * 6,
     marginBottom: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 3,
     borderBottom: ['1px', 'solid', theme.palette.divider],
   },
+  title: {
+    marginRight: 48,
+    wordBreak: 'break-word',
+  },
   headerAction: {
-    marginTop: -12,
+    position: 'absolute',
+    top: -11,
+    right: 0,
   },
   favoriteButton: {
     color: theme.palette.primary.main,
-  },
-  title: {
-    flex: 1,
-    wordBreak: 'break-word',
   },
   price: {
     marginBottom: theme.spacing.unit * 2,
@@ -134,6 +138,7 @@ const styles = theme => ({
     width: 19,
     height: 19,
     marginRight: 2,
+    color: theme.palette.text.secondary,
   },
   mapWrap: {
     width: '100%',
@@ -241,14 +246,22 @@ const DesktopViewAd = ({
             <div className={classes.date}>
               <AdDateChip ad={ad} />
             </div>
-            <Typography
-              className={classes.location}
-              color="textSecondary"
-              component="div"
-            >
-              <PlaceIcon className={classes.locationIcon} />
-              <AdAddress ad={ad} className={classes.address} />
-            </Typography>
+            <AdAddress ad={ad}>
+              {({ address }) =>
+                address ? (
+                  <div className={classes.location}>
+                    <PlaceIcon className={classes.locationIcon} />
+                    <Typography
+                      className={classes.address}
+                      color="textSecondary"
+                      component="div"
+                    >
+                      {address}
+                    </Typography>
+                  </div>
+                ) : null
+              }
+            </AdAddress>
             <div className={classes.mapWrap}>
               <StaticMap
                 id={adId}

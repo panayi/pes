@@ -195,7 +195,7 @@ type LegacyAd {
   category: String,
   email: Email | Null,
   phone: String | Null,
-  createdAt: InitialTimestamp,
+  createdAt: Number,
 }
 
 type Ad {

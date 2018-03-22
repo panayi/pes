@@ -15,16 +15,22 @@ const styles = {
   },
 };
 
-const AdDateChip = ({ classes, ...rest }) => (
-  <Chip
-    classes={{ root: classes.root }}
-    avatar={
-      <Avatar className={classes.icon}>
-        <ScheduleIcon />
-      </Avatar>
+const AdDateChip = ({ classes, ad }) => (
+  <AdDate ad={ad}>
+    {({ date }) =>
+      date ? (
+        <Chip
+          classes={{ root: classes.root }}
+          avatar={
+            <Avatar className={classes.icon}>
+              <ScheduleIcon />
+            </Avatar>
+          }
+          label={date}
+        />
+      ) : null
     }
-    label={<AdDate {...rest} />}
-  />
+  </AdDate>
 );
 
 export default withStyles(styles)(AdDateChip);

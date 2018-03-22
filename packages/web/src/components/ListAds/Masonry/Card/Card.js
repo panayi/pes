@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import Card, { CardMedia, CardContent } from 'material-ui/Card';
+import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
 import LineClamp from 'components/LineClamp/LineClamp';
@@ -96,7 +97,15 @@ const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
               tagName="h3"
             />
             <div className={classes.location}>
-              <AdAddress ad={hit} variant="caption" align="center" />
+              <AdAddress ad={hit}>
+                {({ address }) =>
+                  address ? (
+                    <Typography variant="caption" align="center">
+                      {address}
+                    </Typography>
+                  ) : null
+                }
+              </AdAddress>
               <AdDistance
                 ad={hit}
                 variant="caption"
