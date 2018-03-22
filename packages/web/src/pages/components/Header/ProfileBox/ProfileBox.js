@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { NavLink } from 'react-router-dom';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
@@ -51,6 +52,10 @@ const styles = theme => ({
   loginButton: {
     whiteSpace: 'nowrap',
   },
+  info: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
   displayName: {
     fontWeight: 600,
   },
@@ -62,8 +67,15 @@ const styles = theme => ({
       color: lighten(theme.palette.primary.main, 0.9),
     },
   },
+  privacyLink: {
+    color: theme.palette.primary.main,
+    textDecoration: 'underline',
+    [theme.breakpoints.down(theme.map.phone)]: {
+      display: 'none',
+    },
+  },
   profileLink: {
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing.unit * 2,
     [theme.breakpoints.down(theme.map.phone)]: {
       display: 'none',
     },
@@ -97,7 +109,7 @@ class ProfileBox extends Component {
             userId={currentUserId}
           />
         </div>
-        <div>
+        <div className={classes.info}>
           <UserFullName
             userId={currentUserId}
             render={({ userFullName }) => (
@@ -106,11 +118,22 @@ class ProfileBox extends Component {
               </Typography>
             )}
           />
-          <Typography className={classes.smallText} variant="caption">
-            {email}
-          </Typography>
-          <Typography className={classes.smallText} variant="caption">
-            {phoneNumber}
+          {email && (
+            <Typography className={classes.smallText} variant="caption">
+              {email}
+            </Typography>
+          )}
+          {phoneNumber && (
+            <Typography className={classes.smallText} variant="caption">
+              {phoneNumber}
+            </Typography>
+          )}
+          <Typography
+            className={classes.privacyLink}
+            component={NavLink}
+            to="/privacy"
+          >
+            Privacy
           </Typography>
           <Link
             className={classes.profileLink}

@@ -4,6 +4,7 @@ import Home from 'pages/home/index';
 import Profile from 'pages/profile/index';
 import ViewAd from 'pages/ad/index';
 import Messages from 'pages/messages/index';
+import Privacy from 'pages/privacy/index';
 import Beta from 'pages/beta/index';
 
 const routes = [
@@ -26,6 +27,10 @@ const routes = [
   {
     path: '/messages',
     component: Messages,
+  },
+  {
+    path: '/privacy',
+    component: Privacy,
   },
   {
     path: '/:category?/:place?',

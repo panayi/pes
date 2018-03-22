@@ -115,6 +115,9 @@ class Menu extends Component {
             <ListItem button onClick={() => this.openModal('support')}>
               <ListItemText primary="Support / Feedback" />
             </ListItem>
+            <ListItem button onClick={() => this.navigateTo('/privacy')}>
+              <ListItemText primary="Privacy Policy" />
+            </ListItem>
             {this.renderLogout()}
           </List>
         </div>
