@@ -20,20 +20,15 @@ development_branches: &development_branches
     - dev
     - /^feat\/.*/
 
-staging_branches: &staging_branches
-  only:
-    - master
-
 production_branches: &production_branches
   only:
-    - production
+    - master
 
 deployment_branches: &deployment_branches
   only:
     - dev
     - /^feat\/.*/
     - master
-    - production
 
 jobs:
   # Install dependencies
@@ -103,21 +98,13 @@ jobs:
           name: Deploy to Development environment
           command: CI=false DEPLOYMENT=development ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
 
-  deploy_staging:
-    <<: *defaults
-    steps:
-      - *attach_workspace
-      - deploy:
-          name: Deploy to Staging environment
-          command: CI=false DEPLOYMENT=staging ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
-
   deploy_production:
     <<: *defaults
     steps:
       - *attach_workspace
       - deploy:
           name: Deploy to Production environment
-          command: DEPLOYMENT=production ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+          command: CI=false DEPLOYMENT=production ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
 
 workflows:
   version: 2
@@ -142,13 +129,6 @@ workflows:
             # - e2e_test
           filters:
             branches: *development_branches
-      - deploy_staging:
-          requires:
-            - lint
-            # - unit_test
-            # - e2e_test
-          filters:
-            branches: *staging_branches
       - deploy_production:
           requires:
             - lint

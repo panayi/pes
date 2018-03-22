@@ -3,7 +3,7 @@
 # based on $DEPLOYMENT value
 
 # Example:
-# DEPLOYMENT=staging ./yarn deploy
+# DEPLOYMENT=development ./yarn deploy
 
 # Exit immediately if any command exits with a nonzero exit value
 # See https://stackoverflow.com/a/821419/359104
