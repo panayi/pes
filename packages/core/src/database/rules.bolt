@@ -292,6 +292,12 @@ type SupportMessage {
   body: SupportMessageBody
 }
 
+type Rating {
+  stars: Number,
+  body: String | Null,
+  user: String | Null
+}
+
 // ------------------------------------
 // Functions
 // ------------------------------------
@@ -473,6 +479,10 @@ path /messages/{adId} {
 
 path /support/{id} is SupportMessage {
   create() { true }
+}
+
+path /ratings/{id} is Rating {
+  create() { !this.user || isCurrentUser(this.user) }
 }
 
 // BETA

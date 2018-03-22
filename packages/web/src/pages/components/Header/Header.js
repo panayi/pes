@@ -24,6 +24,7 @@ import Support from 'modules/Support/Support';
 import Login from 'modules/Login/Login';
 import CreateAd from 'modules/PostAd/CreateAd/CreateAd';
 import SearchQuery from 'modules/Search/Query/Query';
+import Rate from 'modules/Rate/Rate';
 import MobileMenu from 'pages/components/Header/MobileMenu/MobileMenu';
 import DesktopMenu from './DesktopMenu/DesktopMenu';
 import Logo from '../Logo/Logo';
@@ -181,6 +182,7 @@ const Header = ({
       <ReduxModal id="login" content={Login} />
       <ReduxModal id="createAd" content={CreateAd} />
       <ReduxModal id="support" content={Support} />
+      <Rate />
     </React.Fragment>
   </WithConversations>
 );
