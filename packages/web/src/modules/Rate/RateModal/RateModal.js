@@ -15,7 +15,7 @@ import Stars from './Stars/Stars';
 
 const styles = theme => ({
   content: {
-    padding: [0, theme.spacing.unit * 2],
+    padding: [0, theme.spacing.unit * 2.5],
     textAlign: 'center',
   },
   starsIcon: {
@@ -42,15 +42,14 @@ const styles = theme => ({
     },
   },
   textFieldInput: {
-    borderRadius: 4,
+    borderRadius: theme.borderRadius.small,
     backgroundColor: theme.palette.common.white,
-    border: '1px solid #ced4da',
-    fontSize: 16,
+    border: [1, 'solid', theme.palette.grey[300]],
     padding: '10px 12px',
     width: 'calc(100% - 24px)',
   },
   textFieldFormLabel: {
-    fontSize: 18,
+    fontSize: 20,
   },
   success: {
     padding: [theme.spacing.unit * 2, 0],
@@ -85,6 +84,7 @@ class RateModal extends Component {
               root: classes.textFieldRoot,
               input: classes.textFieldInput,
             },
+            autoFocus: true,
             rows: 5,
           }}
           InputLabelProps={{
