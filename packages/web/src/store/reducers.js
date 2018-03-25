@@ -7,6 +7,7 @@ import linkedProvidersReducer, {
 import anonymousUserTokenReducer, {
   constants as anonymousUserConstants,
 } from './anonymousUserToken';
+import userInfoReducer, { constants as userInfoConstants } from './userInfo';
 import chatReducer, { constants as chatConstants } from './chat';
 import loginReducer, { constants as loginConstants } from './login';
 import modalsReducer, { constants as modalConstants } from './modals';
@@ -18,6 +19,7 @@ export const makeRootReducer = asyncReducers =>
     firebase: firebaseStateReducer,
     responsive: responsiveReducer,
     [anonymousUserConstants.ANONYMOUS_USER_TOKEN_KEY]: anonymousUserTokenReducer,
+    [userInfoConstants.ROOT_KEY]: userInfoReducer,
     [linkedProvidersConstants.ROOT_KEY]: linkedProvidersReducer,
     [chatConstants.ROOT_KEY]: chatReducer,
     [loginConstants.ROOT_KEY]: loginReducer,
@@ -27,6 +29,7 @@ export const makeRootReducer = asyncReducers =>
     ...asyncReducers,
   });
 
+// TODO: remove this
 export const injectReducer = (store, { key, reducer }) => {
   if (Object.hasOwnProperty.call(store.asyncReducers, key)) {
     return;

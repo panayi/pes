@@ -15,7 +15,7 @@ export const translations = (languageSelector, namespaceSelector) =>
     ),
     { type: 'once' },
   );
-export const countries = createModelConnections(modelPaths.COUNTRIES, {
+export const countryFlags = createModelConnections(modelPaths.COUNTRY_FLAGS, {
   type: 'once',
 });
 export const categories = createModelConnections(modelPaths.CATEGORIES, {

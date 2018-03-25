@@ -17,6 +17,7 @@
 
 const output = {
   firebaseApiKey: process.env.RAZZLE_FIREBASE_API_KEY,
+  firebaseProject: process.env.RAZZLE_FIREBASE_PROJECT,
   firebaseDatabaseUrl: process.env.RAZZLE_FIREBASE_DATABASE_URL,
   firebaseDomain: process.env.RAZZLE_FIREBASE_DOMAIN,
   firebaseFunctionsBaseUrl: process.env.RAZZLE_FIREBASE_FUNCTIONS_BASE_URL,
@@ -30,6 +31,8 @@ const output = {
   legacyPesposaBaseUrl: process.env.LEGACY_PESPOSA_BASE_URL,
   legacyPesposaToken: process.env.LEGACY_PESPOSA_TOKEN,
   betaEnabled: process.env.RAZZLE_BETA === 'true',
+  isDevelopment: process.env.NODE_ENV === 'development',
+  isProduction: process.env.NODE_ENV === 'production',
 };
 
 export default output;

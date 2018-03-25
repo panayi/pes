@@ -1,29 +1,31 @@
 /* @flow */
 import * as functions from 'firebase-functions';
 import express from 'express';
-import bodyParser from 'body-parser';
 import createCors from 'cors';
+import env from '@pesposa/core/src/config/env';
 import { isAuthenticated } from './utils';
-import setCurrentUserInfo from './setCurrentUserInfo';
+import reverseGeocode from './reverseGeocode';
+import geoip from './geoip';
 import migrateAnonymousUser from './migrateAnonymousUser';
 
 const app = express();
-const jsonParser = bodyParser.json();
 
-// TODO: should restrict origin
-// and perhaps enable only on DEV environment
-const cors = createCors({ credentials: true, origin: '*' });
+if (env.firebaseProject === 'pesposa-dev') {
+  const cors = createCors({ credentials: true, origin: '*' });
+  app.use(cors);
+}
 
 // Public routes
+app.post(
+  '/reverse-geocode',
+  reverseGeocode
+)
+app.post(
+  '/geoip',
+  geoip
+)
 
 // Protected routes
-app.use(cors);
-app.post(
-  '/users/current/info',
-  isAuthenticated(),
-  jsonParser,
-  setCurrentUserInfo,
-);
 app.post(
   '/users/migrate',
   isAuthenticated(),

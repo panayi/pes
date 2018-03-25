@@ -175,7 +175,7 @@ type Image {
   // drafts to pendingReview, validation will fail. Instead, we should store draft - images
   // in a different collection (e.g. draftImages), and move them in a firebase-function
   // on pendingReviewAd create.
-  createdAt: CurrentTimestamp,
+  createdAt: CurrentTimestamp | Null,
   dimensions: Dimension | Null,
 }
 
@@ -330,9 +330,12 @@ path /translations {
   read() { true }
 }
 
-path /countries is Country[] {
+path /countryFlags is Image[] {
   read() { true }
-  index() { ['default'] }
+}
+
+path /countryFlags/:countryCode is Image {
+  read() { true }
 }
 
 path /categories is Category[] {

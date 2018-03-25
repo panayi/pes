@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withFirebase } from 'react-redux-firebase';
 import { withStyles } from 'material-ui/styles';
-import { selectors as profileSelectors } from 'store/firebase/profile';
+import { selectors as userInfoSelectors } from 'store/userInfo';
 import Button from 'components/Button/Button';
 import Recaptcha from './Recaptcha/Recaptcha';
 import PhoneNumberForm from './PhoneNumberForm/PhoneNumberForm';
@@ -65,7 +65,7 @@ class PhoneNumber extends Component<Props> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  countryCode: profileSelectors.profileCountryCodeSelector,
+  countryCode: userInfoSelectors.countryCodeSelector,
 });
 
 export default R.compose(

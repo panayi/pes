@@ -1,9 +1,9 @@
 import * as R from 'ramda';
 import HttpStatus from 'http-status-codes';
 
-const sendErrorResponse = R.curry((code, res) =>
+const sendErrorResponse = R.curry((code, res, error) =>
   res.status(code).send({
-    error: HttpStatus.getStatusText(code),
+    error: error || HttpStatus.getStatusText(code),
   }),
 );
 

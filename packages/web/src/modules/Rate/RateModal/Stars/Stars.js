@@ -31,6 +31,7 @@ const Stars = ({
     {R.map(
       index => (
         <div
+          key={index}
           className={classes.star}
           onMouseEnter={() => handleMouseEnter(index)}
           onMouseLeave={handleMouseLeave}

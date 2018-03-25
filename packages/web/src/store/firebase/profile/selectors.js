@@ -2,7 +2,6 @@ import * as R from 'ramda';
 import { createSelector } from 'reselect';
 import { populate, isLoaded } from 'react-redux-firebase';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
-import * as localeConfig from '@pesposa/core/src/config/locale';
 import * as constants from './constants';
 
 // profileSelector :: State -> Object | Nil
@@ -37,22 +36,6 @@ export const profilePhoneNumberSelector = profilePropSelector([
   'profile',
   'phoneNumber',
 ]);
-
-export const profileCountryCodeSelector = profilePropSelector([
-  'location',
-  'address',
-  'country',
-]);
-
-export const profileCountrySelector = R.compose(
-  R.defaultTo(localeConfig.DEFAULT_LOCALE),
-  profilePropSelector(['location', 'address', 'country'], { populated: true }),
-);
-
-export const profileLocaleSelector = R.compose(
-  R.defaultTo(localeConfig.DEFAULT_LOCALE),
-  profilePropSelector(['locale'], { populated: true }),
-);
 
 export const providerIdsSelector = R.compose(
   R.pluck('uid'),

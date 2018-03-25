@@ -6,10 +6,11 @@ import { withState, withProps } from 'recompose';
 import { Formik } from 'formik';
 import yup from 'yup';
 import * as phoneNumbersConfig from '@pesposa/core/src/config/phoneNumbers';
-import { connectData } from 'lib/connectData';
-import { models } from 'store/firebase/data';
+import * as countryModel from '@pesposa/core/src/models/country';
 import GeneralErrorMessage from 'components/GeneralErrorMessage/GeneralErrorMessage';
 import Form from './Form/Form';
+
+const countries = countryModel.getAll();
 
 type Props = {
   countryCode: string,
@@ -30,7 +31,6 @@ class PhoneNumberForm extends Component<Props> {
   static defaultProps = {
     countryCode: '',
     number: '',
-    countries: {},
   };
 
   getValidationSchema = () => {
@@ -46,7 +46,6 @@ class PhoneNumberForm extends Component<Props> {
   };
 
   mapValues = values => {
-    const { countries } = this.props;
     const { countryCode, number } = values;
     const country = R.prop(countryCode, countries);
 
@@ -57,7 +56,6 @@ class PhoneNumberForm extends Component<Props> {
     return {
       ...values,
       phoneNumber,
-      country,
     };
   };
 
@@ -108,12 +106,7 @@ class PhoneNumberForm extends Component<Props> {
   }
 }
 
-const mapDataToProps = {
-  countries: models.countries.allObjects,
-};
-
 export default R.compose(
-  connectData(mapDataToProps),
   withState('selectedCountryCode', 'setSelectedCountryCode', null),
   withProps(({ selectedCountryCode, countryCode }) => ({
     phoneNumberFormat: R.propOr(

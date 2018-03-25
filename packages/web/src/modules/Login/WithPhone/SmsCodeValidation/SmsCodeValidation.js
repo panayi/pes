@@ -1,15 +1,18 @@
 /* @flow */
 import React from 'react';
+import * as R from 'ramda';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import withStyles from 'material-ui/styles/withStyles';
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown';
+import { connectData } from 'lib/connectData';
+import { models } from 'store/firebase/data';
 import Imgix from 'components/Imgix/Imgix';
 import Button from 'components/Button/Button';
 import SmsCodeValidationForm from './SmsCodeValidationForm/SmsCodeValidationForm';
 
 type Props = {
-  country: Object,
+  countryFlag: Object,
   phoneNumber: string,
   onSubmit: Function,
   onBackClick: Function,
@@ -40,15 +43,15 @@ const styles = theme => ({
 });
 
 export const CodeForm = (props: Props) => {
-  const { country, phoneNumber, onSubmit, onBackClick, classes } = props;
+  const { countryFlag, phoneNumber, onSubmit, onBackClick, classes } = props;
 
   return (
     <div>
       <div className={classes.header}>
-        {country && (
+        {countryFlag && (
           <Imgix
             className={classes.flag}
-            image={country.flag}
+            image={countryFlag}
             params={{ w: 24 }}
           />
         )}
@@ -87,4 +90,10 @@ export const CodeForm = (props: Props) => {
   );
 };
 
-export default withStyles(styles)(CodeForm);
+const mapDataToProps = {
+  countryFlag: models.countryFlags.one(R.prop('countryCode')),
+};
+
+export default R.compose(connectData(mapDataToProps), withStyles(styles))(
+  CodeForm,
+);

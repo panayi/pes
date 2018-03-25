@@ -3,8 +3,6 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from '../config/firebaseClient';
 import * as draftAdModel from './draftAd';
-import * as locationModel from './location';
-import * as localeModel from './locale';
 
 export const get = async (userId: ID) =>
   database.ref(`/users/${userId}`).once('value');
@@ -19,26 +17,6 @@ export const getProviderById = async (providerId: string, userId: ID) => {
   const user = (await get(userId)).val();
   const providerData = R.propOr([], 'providerData', user);
   return R.find(R.propEq('providerId', providerId), providerData);
-};
-
-export const setInfo = async (
-  {
-    geoposition,
-    ip,
-    locales,
-  }: { geoposition: Geoposition, ip: IP, locales: Array<string> },
-  userId: ID,
-) => {
-  const location = await locationModel.get(geoposition, ip);
-
-  // TODO: In the future we should not need
-  // to store the detected locale on the database
-  // Once we add SSR, the locale will be calculated on the server
-  // and be used to generate content, as well as include it in the HTML response.
-  const locale = await localeModel.find(locales);
-  const data = { location, ip, locale };
-
-  await update(data, userId);
 };
 
 export const migrateAnonymousUser = async (anonymousUserId: ID, userId: ID) => {

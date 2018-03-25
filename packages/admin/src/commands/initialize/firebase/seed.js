@@ -4,26 +4,19 @@ import log from '@pesposa/core/src/utils/log';
 import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
 import * as storageService from '@pesposa/core/src/services/storage';
 import categories from '@pesposa/core/src/database/seeds/categories.json';
-import locales from '@pesposa/core/src/database/seeds/locales.json';
 import translations from '@pesposa/core/src/database/seeds/translations.json';
-import countries from '@pesposa/core/src/database/seeds/countries.json';
+import countries from '@pesposa/core/src/config/countries';
 
 const seedCategories = async () => {
   await database.ref('categories').set(categories);
-};
-
-const seedLocales = async () => {
-  await database.ref('locales').set(locales);
 };
 
 const seedTranslations = async () => {
   await database.ref('translations').set(translations);
 };
 
-const seedCountries = async () => {
-  await database.ref('countries').set(countries);
-
-  return promiseSerial(
+const seedCountryFlags = async () =>
+  promiseSerial(
     R.compose(
       R.map(countryCode => () => {
         // eslint-disable-next-line
@@ -37,22 +30,20 @@ const seedCountries = async () => {
           `${countryCode}.png`,
           metadata =>
             database
-              .ref(`countries/${countryCode}`)
+              .ref(`countryFlags/${countryCode}`)
               .child('flag')
               .set(metadata),
         );
       }),
-      R.keys,
+      R.pluck('code'),
     )(countries),
   );
-};
 
 const seed = async () => {
   try {
     await seedCategories();
-    await seedLocales();
     await seedTranslations();
-    await seedCountries();
+    await seedCountryFlags();
     return 'Seeded categories, locales, countries';
   } catch (error) {
     log.error('Firebase: Failed to seed data');

@@ -1,17 +1,11 @@
 import React from 'react';
 import * as R from 'ramda';
 import TextField from 'material-ui/TextField';
-import { connectData } from 'lib/connectData';
-import { models } from 'store/firebase/data';
+import * as countryModel from '@pesposa/core/src/models/country';
 
-const CountrySelect = ({
-  getLabel,
-  countries,
-  name,
-  value,
-  onChange,
-  onBlur,
-}) => (
+const countries = countryModel.getAll();
+
+const CountrySelect = ({ getLabel, name, value, onChange, onBlur }) => (
   <TextField
     select
     SelectProps={{ native: true }}
@@ -37,8 +31,4 @@ CountrySelect.defaultProps = {
   getLabel: R.prop('name'),
 };
 
-const mapDataToProps = {
-  countries: models.countries.all,
-};
-
-export default R.compose(connectData(mapDataToProps, null, {}))(CountrySelect);
+export default CountrySelect;

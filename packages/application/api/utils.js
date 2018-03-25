@@ -2,7 +2,7 @@
 import * as R from 'ramda';
 import { auth } from '@pesposa/core/src/config/firebaseClient';
 import log from '@pesposa/core/src/utils/log';
-import * as respond from '../utils/respond';
+import * as respond from '@pesposa/core/src/utils/respond';
 
 type Options = {
   headerKey?: string,
