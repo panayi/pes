@@ -3,19 +3,6 @@ import env from '@pesposa/core/src/config/env';
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-const setCurrentUserInfo = (data, { token }) => () => {
-  const url = `${env.firebaseFunctionsBaseUrl}/users/current/info`;
-
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-
 const migrateAnonymousUser = ({ token, anonymousUserToken }) => () => {
   const url = `${env.firebaseFunctionsBaseUrl}/users/migrate`;
 
@@ -29,7 +16,7 @@ const migrateAnonymousUser = ({ token, anonymousUserToken }) => () => {
 };
 
 const createSession = token => () => {
-  const url = '/_token';
+  const url = '/token';
 
   return fetch(url, {
     method: 'POST',
@@ -42,7 +29,7 @@ const createSession = token => () => {
 };
 
 const deleteSession = () => () => {
-  const url = '/_token';
+  const url = '/token';
   return fetch(url, {
     method: 'DELETE',
     headers: {
@@ -52,11 +39,39 @@ const deleteSession = () => () => {
   });
 };
 
+const reverseGeocode = data => async () => {
+  const url = `${env.firebaseFunctionsBaseUrl}/reverse-geocode`;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.ok ? response.json() : null;
+};
+
+const geoip = () => async () => {
+  const url = `${env.firebaseFunctionsBaseUrl}/geoip`;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.ok ? response.json() : null;
+};
+
 const api = {
-  setCurrentUserInfo,
   migrateAnonymousUser,
   createSession,
   deleteSession,
+  reverseGeocode,
+  geoip,
 };
 
 export default api;

@@ -9,45 +9,27 @@ import firebaseApi from 'services/firebase';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { actions as modalActions } from 'store/modals';
 import { actions as loginActions } from 'store/login';
-import { actions as locationActions } from 'store/firebase/profile/location';
 import {
   actions as profileActions,
   utils as profileUtils,
 } from 'store/firebase/profile';
 import * as selectors from './selectors';
 
-export const setCurrentUserInfo = () => async (dispatch, getState) => {
-  const state = getState();
-  const uid = selectors.uidSelector(state);
-  const token = selectors.tokenSelector(state);
-
-  if (isNilOrEmpty(uid) || isNilOrEmpty(token)) {
-    return null;
-  }
-
-  if (!process.browser) {
-    return null;
-  }
-
-  let geoposition = null;
-  try {
-    geoposition = await dispatch(locationActions.getCurrentPosition());
-  } catch (error) {
-    console.warn(error); // eslint-disable-line no-console
-  }
-
-  return dispatch(api.setCurrentUserInfo({ geoposition }, { token }));
-};
-
 export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
   if (!process.browser) {
-    return null;
+    return;
   }
 
   // If user is not logged in => login anonymously
   if (isNilOrEmpty(authData)) {
-    return dispatch(firebaseApi.auth.loginAnonymously());
+    dispatch(firebaseApi.auth.loginAnonymously());
+    return;
   }
+
+  if (authData.isAnonymous) {
+    return;
+  }
+
   // Otherwise, user was just logged in
 
   // Save session to make it available on SSR
@@ -55,12 +37,8 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
     dispatch(api.createSession(token));
   });
 
-  if (!authData.isAnonymous) {
-    // Migrate when user has just logged in and not anonymous
-    await dispatch(migrateAnonymousUser());
-  }
-
-  return dispatch(setCurrentUserInfo());
+  // Migrate when user has just logged in and not anonymous
+  await dispatch(migrateAnonymousUser());
 };
 
 export const login = credentials => async dispatch => {
@@ -158,6 +136,7 @@ export const linkProvider = providerId => async (
 
 export const logout = () => async (dispatch, getState, getFirebase) => {
   await getFirebase().logout();
+  await dispatch(api.deleteSession());
 
   if (env.betaEnabled) {
     window.location.href = '/beta';

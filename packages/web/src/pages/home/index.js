@@ -16,6 +16,7 @@ import { selectors as routerSelectors } from 'store/router';
 import Layout from 'layouts/Layout/Layout';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import ListAds from 'components/ListAds/ListAds';
+import GetCurrentPosition from 'modules/GetCurrentPosition/GetCurrentPosition';
 import Search from 'modules/Search/Search';
 import SearchFilters from 'modules/Search/Filters/Filters';
 import Header from 'pages/components/Header/Header';
@@ -55,28 +56,30 @@ const styles = theme => ({
 const HomeHeader = withProps({ inHome: true })(Header);
 
 const Home = ({ place, category, searchParamsFromProps, classes }) => (
-  <Layout
-    header={HomeHeader}
-    sidebar={SearchFilters}
-    pageClassName={classes.page}
-    sidebarClassName={classes.sidebar}
-    flex
-  >
-    <Helmet
-      {...getMetaTags({
-        title: getTitle({ place, category }),
-        description:
-          'Sell your stuff quickly and connect with thousands of buyers. Find cars, houses, electronics and much more, near your location.',
-      })}
-    />
-    <Search
-      params={searchParamsFromProps}
-      mapParamsToUrl={({ category: cat }) => (cat ? `/${cat}` : '/')}
+  <GetCurrentPosition>
+    <Layout
+      header={HomeHeader}
+      sidebar={SearchFilters}
+      pageClassName={classes.page}
+      sidebarClassName={classes.sidebar}
+      flex
     >
-      {props => <ListAds {...props} />}
-    </Search>
-    <ReduxModal id="searchFilters" content={SearchFilters} direction="down" />
-  </Layout>
+      <Helmet
+        {...getMetaTags({
+          title: getTitle({ place, category }),
+          description:
+            'Sell your stuff quickly and connect with thousands of buyers. Find cars, houses, electronics and much more, near your location.',
+        })}
+      />
+      <Search
+        params={searchParamsFromProps}
+        mapParamsToUrl={({ category: cat }) => (cat ? `/${cat}` : '/')}
+      >
+        {props => <ListAds {...props} />}
+      </Search>
+      <ReduxModal id="searchFilters" content={SearchFilters} direction="down" />
+    </Layout>
+  </GetCurrentPosition>
 );
 
 export const searchParamsFromPropsSelector = createSelector(

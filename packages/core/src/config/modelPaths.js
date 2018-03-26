@@ -10,7 +10,7 @@ export const getConversationId = (adId, buyerId) => `${adId}_${buyerId}`;
 
 export const TRANSLATIONS = (language, namespace) =>
   createModelPath(['translations', language, ...makeArray(namespace)]);
-export const COUNTRIES = createModelPath(['countries']);
+export const COUNTRY_FLAGS = createModelPath(['countryFlags']);
 export const CATEGORIES = createModelPath(['categories']);
 export const USERS = createModelPath(['users']);
 export const PROFILES = userId => createModelPath(['users', userId, 'profile']);

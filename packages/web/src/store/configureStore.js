@@ -2,10 +2,12 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
+import persistState from 'redux-localstorage';
 import * as storageConfig from '@pesposa/core/src/config/storage';
 import env from '@pesposa/core/src/config/env';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import { actions as authActions } from './firebase/auth';
+import { constants as userInfoConstants } from './userInfo';
 import {
   utils as profileUtils,
   constants as profileConstants,
@@ -37,7 +39,10 @@ const configureStore = (initialState = {}, history) => {
   const middleware = [thunk.withExtraArgument(getFirebase)];
 
   // Store Enhancers
-  const enhancers = [reactReduxFirebase(firebase, reduxFirebaseConfig)];
+  let enhancers = [reactReduxFirebase(firebase, reduxFirebaseConfig)];
+  if (process.browser) {
+    enhancers = [...enhancers, persistState(userInfoConstants.ROOT_KEY)];
+  }
   let composeEnhancers = compose;
 
   // FIXME: this should only be on DEV environment

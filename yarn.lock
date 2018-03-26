@@ -5043,9 +5043,9 @@ firebase-token-generator@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/firebase-token-generator/-/firebase-token-generator-2.0.0.tgz#9767d759ec13abdc99ba115fd5ea99d8b93d1206"
 
-firebase-tools@^3.17.4:
-  version "3.17.6"
-  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-3.17.6.tgz#78246016d93c8dd12c45591294b46d31392825e2"
+firebase-tools@^3.17.7:
+  version "3.17.7"
+  resolved "https://registry.yarnpkg.com/firebase-tools/-/firebase-tools-3.17.7.tgz#3d5a3011b917864e10389d2d87c9f92a87096707"
   dependencies:
     JSONStream "^1.2.1"
     archiver "^2.1.1"
@@ -11273,6 +11273,10 @@ redux-auth-wrapper@^2.0.2:
     lodash.isempty "4.4.0"
     prop-types "^15.5.0"
     query-string "4.3.4"
+
+redux-localstorage@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/redux-localstorage/-/redux-localstorage-0.4.1.tgz#faf6d719c581397294d811473ffcedee065c933c"
 
 redux-mock-store@^1.5.1:
   version "1.5.1"

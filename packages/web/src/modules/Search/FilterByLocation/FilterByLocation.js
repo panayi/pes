@@ -20,7 +20,7 @@ import {
   selectors as paramsSelectors,
   actions as paramsActions,
 } from 'store/search/params';
-import { selectors as profileLocationSelectors } from 'store/firebase/profile/location';
+import { selectors as userInfoSelectors } from 'store/userInfo';
 import connectSearch from 'hocs/connectSearch';
 import poweredByGoogleImage from './images/poweredByGoogleSm.png';
 
@@ -291,7 +291,7 @@ class SearchLocation extends Component<Props, State> {
 
 const mapStateToProps = createStructuredSelector({
   address: paramsSelectors.addressSelector,
-  countryCode: profileLocationSelectors.countryCodeSelector,
+  countryCode: userInfoSelectors.countryCodeSelector,
   hasValue: paramsSelectors.locationHasValueSelector,
 });
 

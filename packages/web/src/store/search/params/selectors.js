@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { createSelector } from 'reselect';
-import { selectors as locationSelectors } from 'store/firebase/profile/location';
+import round from '@pesposa/core/src/utils/round';
+import { selectors as userInfoSelectors } from 'store/userInfo';
 import * as constants from './constants';
 import { initialState } from './reducer';
 
@@ -36,7 +37,7 @@ export const selectedAddressSelector = R.compose(
 
 export const addressSelector = createSelector(
   selectedAddressSelector,
-  locationSelectors.addressStringSelector,
+  userInfoSelectors.addressStringSelector,
   R.or,
 );
 
@@ -47,8 +48,8 @@ const selectedGeopositionSelector = R.compose(
 
 export const geopositionSelector = createSelector(
   selectedGeopositionSelector,
-  locationSelectors.geopositionSelector,
-  R.or,
+  userInfoSelectors.geopositionSelector,
+  R.compose(R.map(round), R.or),
 );
 
 // Price

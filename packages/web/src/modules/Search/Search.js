@@ -2,13 +2,13 @@ import React from 'react';
 import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
-import { actions as searchActions } from 'store/search';
+import {
+  actions as searchActions,
+  selectors as searchSelectors,
+} from 'store/search';
 import { selectors as hitsSelectors } from 'store/search/hits';
 import { selectors as pageSelectors } from 'store/search/page';
-import {
-  selectors as paramsSelectors,
-  actions as paramsActions,
-} from 'store/search/params';
+import { actions as paramsActions } from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
 
 class Search extends React.Component {
@@ -64,7 +64,7 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  paramsState: paramsSelectors.paramsSelector,
+  paramsState: searchSelectors.searchParamsSelector,
   hits: hitsSelectors.hitsSelector,
   page: pageSelectors.pageSelector,
 });
