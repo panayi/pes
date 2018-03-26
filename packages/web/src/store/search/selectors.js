@@ -58,10 +58,9 @@ export const searchParamsSelector = createSelector(
   paramsSelectors.querySelector,
   facetFiltersSelector,
   filtersSelector,
-  indexNameSelector,
   paramsSelectors.geopositionSelector,
   paramsSelectors.idsSelector,
-  (queryValue, facetFilters, filters, indexName, geoposition, ids) => {
+  (queryValue, facetFilters, filters, geoposition, ids) => {
     if (isNilOrEmpty(ids)) {
       return R.reject(isNilOrEmpty, {
         query: queryValue,

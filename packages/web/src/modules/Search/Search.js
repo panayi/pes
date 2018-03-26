@@ -24,6 +24,10 @@ class Search extends React.Component {
       this.props.setParamsFromProps(nextProps.params);
     }
 
+    const indexNameChanged = !R.equals(
+      nextProps.indexName,
+      this.props.indexName,
+    );
     const paramsStateChanged = !R.equals(
       nextProps.paramsState,
       this.props.paramsState,
@@ -33,7 +37,7 @@ class Search extends React.Component {
       this.initialParamsState,
     );
 
-    if (!isInitialParamsState && paramsStateChanged) {
+    if (indexNameChanged || (!isInitialParamsState && paramsStateChanged)) {
       const { loadFirstPage, mapParamsToUrl, match, history } = this.props;
       loadFirstPage();
       this.initialParamsState = null;
@@ -65,6 +69,7 @@ class Search extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   paramsState: searchSelectors.searchParamsSelector,
+  indexName: searchSelectors.indexNameSelector,
   hits: hitsSelectors.hitsSelector,
   page: pageSelectors.pageSelector,
 });
