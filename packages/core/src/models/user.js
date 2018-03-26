@@ -20,32 +20,22 @@ export const getProviderById = async (providerId: string, userId: ID) => {
 };
 
 export const migrateAnonymousUser = async (anonymousUserId: ID, userId: ID) => {
-  const anonymousUserSnapshot = await get(anonymousUserId);
-  const userSnapshot = await get(userId);
+  const anonymousUser = (await get(anonymousUserId)).val();
+  const user = (await get(userId)).val();
 
-  if (
-    isNilOrEmpty(anonymousUserSnapshot) ||
-    isNilOrEmpty(anonymousUserSnapshot.val())
-  ) {
-    throw new Error(`Anonymous user with id=${anonymousUserId} does not exist`);
-  }
-
-  if (isNilOrEmpty(userSnapshot) || isNilOrEmpty(userSnapshot.val())) {
+  if (isNilOrEmpty(user)) {
     throw new Error(`User with id=${userId} does not exist`);
   }
-
-  // Move {`ip`, `location`, `locationFromIp`} from anonymousUser to user
-  const migrateProps = R.pick(
-    ['ip', 'location', 'locationFromIp'],
-    anonymousUserSnapshot.val(),
-  );
-  await update(migrateProps, userId);
 
   // Move draft ad from anonymousUser to user
   await draftAdModel.move(anonymousUserId, userId);
 
-  // Delete anonymousUser
-  return remove(anonymousUserId);
+  // Move {`ip`, `location`} from anonymousUser to user
+  if (!isNilOrEmpty(anonymousUser)) {
+    const migrateProps = R.pick(['ip', 'location'], anonymousUser);
+    await update(migrateProps, userId);
+    await remove(anonymousUserId);
+  }
 };
 
 export const associateAd = async (adId: ID, userId: ID) =>

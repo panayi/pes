@@ -4,6 +4,7 @@ import { createAction } from 'redux-actions';
 import debounce from 'lodash.debounce';
 import firebaseApi from 'services/firebase';
 import { selectors as authSelectors } from 'store/firebase/auth';
+import { selectors as userInfoSelectors } from 'store/userInfo';
 import * as types from './types';
 import { serializeAd } from './utils';
 import { isCreateAdIdleSelector } from './selectors';
@@ -43,10 +44,12 @@ export const createAd = (ad: Ad) => (
   dispatch: Dispatch,
   getState: Function,
 ) => {
-  const userObj = {
-    user: authSelectors.uidSelector(getState()),
+  const state = getState();
+  const additionalData = {
+    user: authSelectors.uidSelector(state),
+    location: userInfoSelectors.locationSelector(state),
   };
-  const finalAd = R.compose(serializeAd, R.merge(ad))(userObj);
+  const finalAd = R.compose(serializeAd, R.merge(ad))(additionalData);
 
   dispatch(createAdPending());
 

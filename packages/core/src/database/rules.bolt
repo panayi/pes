@@ -175,7 +175,7 @@ type Image {
   // drafts to pendingReview, validation will fail. Instead, we should store draft - images
   // in a different collection (e.g. draftImages), and move them in a firebase-function
   // on pendingReviewAd create.
-  createdAt: CurrentTimestamp | Null,
+  createdAt: Number | Null,
   dimensions: Dimension | Null,
 }
 
@@ -213,6 +213,7 @@ type PendingReviewAd {
   title: AdTitle,
   body: AdBody,
   price: Price,
+  location: Location,
   category: String,
   user: String,
   images: Map<String, Image>,
@@ -372,8 +373,7 @@ path /ads/pendingReview/{id} is PendingReviewAd {
 
   validate() {
     this.images != null &&
-    categoryIsValid(this.category) &&
-    requireUserHasIp(this.user)
+    categoryIsValid(this.category)
   }
 }
 

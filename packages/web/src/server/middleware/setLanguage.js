@@ -9,7 +9,6 @@ const setLanguage = (req, res, next) => {
     req.acceptsLanguages(...supportedLanguageIds) || defaultLanguage;
 
   store.dispatch(userInfoActions.setLanguage(language));
-
   next();
 };
 

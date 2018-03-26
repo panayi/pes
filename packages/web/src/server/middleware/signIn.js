@@ -6,6 +6,7 @@ const signIn = async (req, res, next) => {
 
   // Sign-in user using session
   const userId = R.path(['session', 'decodedToken', 'user_id'], req);
+
   const isAnonymous = R.pathEq(
     ['session', 'decodedToken', 'provider_id'],
     'anonymous',

@@ -15,5 +15,6 @@ export const createToken = async (req, res) => {
 
 export const deleteToken = async (req, res) => {
   req.session.decodedToken = null;
+  req.session.destroy();
   res.json({ status: true });
 };

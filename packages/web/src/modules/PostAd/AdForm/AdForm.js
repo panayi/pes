@@ -106,7 +106,7 @@ class AdForm extends Component<Props> {
 
     if (!adIsLoaded) {
       return (
-        <DialogContent className={classes.root}>
+        <DialogContent className={classes.content}>
           <Spinner centered />
         </DialogContent>
       );

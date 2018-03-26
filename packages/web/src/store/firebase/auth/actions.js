@@ -26,6 +26,10 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
     return;
   }
 
+  if (authData.isAnonymous) {
+    return;
+  }
+
   // Otherwise, user was just logged in
 
   // Save session to make it available on SSR
@@ -33,10 +37,8 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
     dispatch(api.createSession(token));
   });
 
-  if (!authData.isAnonymous) {
-    // Migrate when user has just logged in and not anonymous
-    await dispatch(migrateAnonymousUser());
-  }
+  // Migrate when user has just logged in and not anonymous
+  await dispatch(migrateAnonymousUser());
 };
 
 export const login = credentials => async dispatch => {
@@ -134,6 +136,7 @@ export const linkProvider = providerId => async (
 
 export const logout = () => async (dispatch, getState, getFirebase) => {
   await getFirebase().logout();
+  await dispatch(api.deleteSession());
 
   if (env.betaEnabled) {
     window.location.href = '/beta';
