@@ -36,6 +36,7 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .use(
     session({
+      name: '__session', // Important for working with Firebase, see https://firebase.google.com/docs/hosting/functions#using_cookies
       store: new FirebaseStore({
         database: ref.database(),
       }),
