@@ -21,6 +21,10 @@ module.exports = {
       appConfig.output.libraryTarget = 'commonjs2';
     }
 
+    if (target === 'node') {
+      appConfig.resolve.mainFields = ['main', 'module'];
+    }
+
     return appConfig;
   },
 };

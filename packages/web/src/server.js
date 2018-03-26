@@ -1,6 +1,5 @@
 import express from 'express';
 import session from 'express-session';
-import createFileStore from 'session-file-store';
 import bodyParser from 'body-parser';
 import firebase from 'firebase-admin';
 import env from '@pesposa/core/src/config/env';
@@ -18,16 +17,16 @@ import signIn from 'server/middleware/signIn';
 import setLocation from 'server/middleware/setLocation';
 import setLanguage from 'server/middleware/setLanguage';
 
-const FileStore = createFileStore(session);
 const jsonParser = bodyParser.json();
 
 // Create Firebase app
-if (!firebase.apps.length) {
-  firebase.initializeApp({
-    databaseURL: env.firebaseDatabaseUrl,
-    credential: firebase.credential.cert(serviceAccountKey),
-  });
-}
+const ref = firebase.apps.length
+  ? firebase.apps[0]
+  : firebase.initializeApp({
+      databaseURL: env.firebaseDatabaseUrl,
+      credential: firebase.credential.cert(serviceAccountKey),
+    });
+const FirebaseStore = require('connect-session-firebase')(session);
 
 const server = express();
 
@@ -37,12 +36,12 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .use(
     session({
+      store: new FirebaseStore({
+        database: ref.database(),
+      }),
       secret: 'geheimnis', // TODO: this should be an env variable
+      resave: true,
       saveUninitialized: true,
-      store: new FileStore({ path: '/tmp/sessions', secret: 'geheimnis' }), // TODO: this should be an env variable
-      resave: false,
-      rolling: true,
-      httpOnly: true,
       cookie: { maxAge: 604800000 }, // week
     }),
   );
