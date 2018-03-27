@@ -135,9 +135,10 @@ export class ListAds extends Component {
 
 const serverWidthSelector = createSelector(
   R.pathOr(0, ['responsive', 'fakeWidth']),
+  R.pathOr(0, ['responsive', 'phone']),
   userInfoSelectors.isBotSelector,
-  (fakeWidth, isBot) => {
-    if (!isBot) {
+  (fakeWidth, phone, isBot) => {
+    if (phone && !isBot) {
       return 0;
     }
 
