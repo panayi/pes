@@ -1,4 +1,5 @@
-import { applyMiddleware, compose, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/logOnlyInProduction';
 import thunk from 'redux-thunk';
 import { reactReduxFirebase, getFirebase } from 'react-redux-firebase';
 import * as firebase from 'firebase';
@@ -43,14 +44,7 @@ const configureStore = (initialState = {}, history) => {
   if (process.browser) {
     enhancers = [...enhancers, persistState(userInfoConstants.ROOT_KEY)];
   }
-  let composeEnhancers = compose;
-
-  // FIXME: this should only be on DEV environment
-  /* eslint-disable no-underscore-dangle */
-  if (typeof global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function') {
-    composeEnhancers = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-  }
-  /* eslint-enable no-underscore-dangle */
+  const composeEnhancers = composeWithDevTools;
 
   // Store Instantiation and HMR Setup
   const store = createStore(
