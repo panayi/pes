@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { actions as modalActions } from 'store/modals';
 
 const styles = () => ({

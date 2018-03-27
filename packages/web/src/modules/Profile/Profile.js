@@ -6,7 +6,7 @@ import { branch, withProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import Tabs, { Tab } from 'material-ui/Tabs';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';

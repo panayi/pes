@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { NavLink } from 'react-router-dom';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { lighten } from 'material-ui/styles/colorManipulator';
 import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import { selectors as profileSelectors } from 'store/firebase/profile';

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import Link from 'components/Link/Link';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';

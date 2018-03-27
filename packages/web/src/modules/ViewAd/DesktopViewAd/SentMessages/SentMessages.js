@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withProps, branch, renderNothing } from 'recompose';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import ArrowForwardIcon from 'material-ui-icons/ArrowForward';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import propSelector from '@pesposa/core/src/utils/propSelector';

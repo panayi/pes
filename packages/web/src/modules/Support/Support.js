@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import yup from 'yup';
 import { connect } from 'react-redux';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import DoneIcon from 'material-ui-icons/CheckCircle';
 import { actions as supportActions } from 'store/support';
 import { selectors as profileSelectors } from 'store/firebase/profile';

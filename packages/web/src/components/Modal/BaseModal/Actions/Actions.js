@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { DialogActions } from 'material-ui/Dialog';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 
 const styles = theme => ({
   root: {

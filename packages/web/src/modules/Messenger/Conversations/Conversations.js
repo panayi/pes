@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { DesktopScreen } from 'react-responsive-redux';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import ConversationItem from './Item/Item';
 
 type Props = {

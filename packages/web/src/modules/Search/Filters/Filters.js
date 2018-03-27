@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
 import { createStructuredSelector } from 'reselect';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import {
   selectors as paramsSelectors,
   actions as paramsActions,

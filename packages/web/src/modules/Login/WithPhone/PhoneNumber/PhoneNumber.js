@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withFirebase } from 'react-redux-firebase';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { selectors as userInfoSelectors } from 'store/userInfo';
 import Button from 'components/Button/Button';
 import Recaptcha from './Recaptcha/Recaptcha';

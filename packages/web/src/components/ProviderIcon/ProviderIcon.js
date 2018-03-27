@@ -6,7 +6,7 @@ import { withProps } from 'recompose';
 import createCachedSelector from 're-reselect';
 import Avatar from 'material-ui/Avatar';
 import green from 'material-ui/colors/green';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import CheckIcon from 'material-ui-icons/Check';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import propSelector from '@pesposa/core/src/utils/propSelector';

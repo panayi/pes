@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { ensureReady, After } from '@jaredpalmer/after';
 import createHistory from 'history/createBrowserHistory';
 import { Provider } from 'react-redux';
-import Reboot from 'material-ui/Reboot';
-import { MuiThemeProvider } from 'material-ui/styles';
+import CssBaseline from 'material-ui/CssBaseline';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import jss from 'config/styles';
 import theme from 'config/theme';
 import configureStore from 'store/configureStore';
@@ -32,8 +32,10 @@ ensureReady(routes).then(data => {
           <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
             <JssProvider registry={sheetsRegistry} jss={jss}>
               <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-                <Reboot />
-                <After data={data} routes={routes} store={store} />
+                <React.Fragment>
+                  <CssBaseline />
+                  <After data={data} routes={routes} store={store} />
+                </React.Fragment>
               </MuiThemeProvider>
             </JssProvider>
           </SearchProvider>

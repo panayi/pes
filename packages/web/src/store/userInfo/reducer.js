@@ -23,7 +23,15 @@ const languageReducer = handleActions(
   initialState,
 );
 
+const isBotReducer = handleActions(
+  {
+    [types.SET_IS_BOT]: (state, { payload }) => payload,
+  },
+  initialState,
+);
+
 export default combineReducers({
   [constants.LOCATION_KEY]: locationReducer,
   [constants.LANGUAGE_KEY]: languageReducer,
+  [constants.IS_BOT_KEY]: isBotReducer,
 });

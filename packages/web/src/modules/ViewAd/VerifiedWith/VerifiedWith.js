@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import ListUserProviders from 'components/ListUserProviders/ListUserProviders';
 
 const styles = theme => ({
@@ -20,14 +20,14 @@ const styles = theme => ({
 });
 
 const VerifiedWith = ({ user, className, classes }) => (
-    <div className={classNames(classes.verified, className)}>
-      <Typography color="inherit">Verified with&nbsp;</Typography>
-      <ListUserProviders
-        className={classes.userProviders}
-        userId={user}
-        hideDisabled
-      />
-    </div>
-  );
+  <div className={classNames(classes.verified, className)}>
+    <Typography color="inherit">Verified with&nbsp;</Typography>
+    <ListUserProviders
+      className={classes.userProviders}
+      userId={user}
+      hideDisabled
+    />
+  </div>
+);
 
 export default withStyles(styles)(VerifiedWith);

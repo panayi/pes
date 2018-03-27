@@ -2,7 +2,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import propsSelector from '@pesposa/core/src/utils/propsSelector';
 import { actions as modalActions } from 'store/modals';

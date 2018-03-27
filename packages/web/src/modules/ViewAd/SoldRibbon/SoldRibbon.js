@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { branch, renderNothing } from 'recompose';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 
 const styles = theme => ({
   root: {

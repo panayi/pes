@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import PlaceIcon from 'material-ui-icons/Place';
@@ -190,7 +190,7 @@ const styles = theme => ({
     width: '100%',
     display: 'flex',
     padding: [theme.spacing.unit * 2, 0],
-    background: 'rgba(255, 255, 255, 0.85)',
+    background: theme.palette.common.white,
     borderTop: [1, 'solid', theme.palette.divider],
   }),
   actionButtons: {
@@ -205,9 +205,6 @@ const styles = theme => ({
     '&:last-child': {
       marginLeft: theme.spacing.unit,
     },
-  },
-  callButton: {
-    background: theme.palette.common.white,
   },
   slideshow: {
     height: '100vh',
@@ -400,10 +397,7 @@ class MobileViewAd extends React.Component {
                 <React.Fragment>
                   <RevealPhoneButton
                     ad={ad}
-                    className={classNames(
-                      classes.actionButton,
-                      classes.callButton,
-                    )}
+                    className={classes.actionButton}
                     buttonProps={{
                       size: 'small',
                       variant: 'outline',
@@ -428,13 +422,10 @@ class MobileViewAd extends React.Component {
               noUser={
                 <RevealPhoneButton
                   ad={ad}
-                  className={classNames(
-                    classes.actionButton,
-                    classes.callButton,
-                  )}
+                  className={classes.actionButton}
                   buttonProps={{
                     size: 'small',
-                    variant: 'outline',
+                    variant: 'raised',
                     color: 'primary',
                     fullWidth: true,
                   }}

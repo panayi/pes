@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withState, withProps } from 'recompose';
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import StarsIcon from 'material-ui-icons/Stars';
 import DoneIcon from 'material-ui-icons/CheckCircle';
 import { actions as dataActions } from 'store/firebase/data';

@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { lifecycle } from 'recompose';
 import { FormControl, FormHelperText } from 'material-ui/Form';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import MaskedInput from 'components/MaskedInput/MaskedInput';
 import CountrySelect from './CountrySelect/CountrySelect';

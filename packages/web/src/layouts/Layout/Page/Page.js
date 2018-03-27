@@ -2,7 +2,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 
 type Props = {
   children: React$Node,

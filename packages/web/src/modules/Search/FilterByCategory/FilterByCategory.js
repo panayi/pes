@@ -8,7 +8,7 @@ import {
   actions as paramsActions,
 } from 'store/search/params';
 import List from 'material-ui/List';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import connectSearch from 'hocs/connectSearch';

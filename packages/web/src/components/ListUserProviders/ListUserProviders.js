@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { defaultProps, withProps } from 'recompose';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import authConfig from '@pesposa/core/src/config/auth';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { actions as authActions } from 'store/firebase/auth';

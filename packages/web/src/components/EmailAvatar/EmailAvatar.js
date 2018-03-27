@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Avatar from 'material-ui/Avatar';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import EmailIcon from 'material-ui-icons/Email';
 
 const styles = theme => ({

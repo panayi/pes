@@ -1,4 +1,4 @@
-import { createMuiTheme } from 'material-ui/styles';
+import createMuiTheme from 'material-ui/styles/createMuiTheme';
 import * as layout from '@pesposa/core/src/config/layout';
 
 const shadows = [
@@ -47,7 +47,6 @@ export default createMuiTheme({
   typography: {
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"',
-    fontSize: 16,
     fontWeightBold: 600,
   },
   breakpoints: {

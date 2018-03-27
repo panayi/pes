@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { setDisplayName } from 'recompose';
 import Avatar from 'material-ui/Avatar';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import withProfileData from 'hocs/withProfileData';

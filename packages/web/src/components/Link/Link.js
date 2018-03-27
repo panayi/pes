@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import classNames from 'classnames';
 import IconButton from 'material-ui/IconButton';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { NavLink } from 'react-router-dom';
 import { defaultProps, withProps } from 'recompose';
 import omitProps from 'utils/omitProps';

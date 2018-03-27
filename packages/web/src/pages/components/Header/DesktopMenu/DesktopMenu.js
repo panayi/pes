@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
 import Popover from 'material-ui/Popover';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { actions as modalActions } from 'store/modals';
 import hideVisitor from 'hocs/hideVisitor';
 import Button from 'components/Button/Button';

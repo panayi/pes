@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import TwitterIcon from 'mdi-react/TwitterIcon';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import Avatar from 'material-ui/Avatar';
 import * as colors from '@pesposa/core/src/config/colors';
 

@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { withProps } from 'recompose';
 import classNames from 'classnames';
 import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import ReactDropzone from 'react-dropzone';
 import AddIcon from 'material-ui-icons/AddAPhoto';
 import BlockIcon from 'material-ui-icons/Block';

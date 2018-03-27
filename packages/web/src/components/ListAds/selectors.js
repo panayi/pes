@@ -73,7 +73,6 @@ export const hitSizeAndPositionSelector = createSelector(
       columnHeights,
     );
     const column = R.findIndex(R.equals(minColumnHeight), columnHeights);
-    // const column = index % (columnCount || 1);
     const height = hit
       ? hitHeightSelector({ hit, columnWidth })
       : constants.DEFAULT_CARD_HEIGHT;

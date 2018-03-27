@@ -5,7 +5,9 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { isNotNil } from 'ramda-adjunct';
 import { withProps } from 'recompose';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
+import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
+import Login from 'modules/Login/Login';
 import Header from './Header/Header';
 import Sidebar from './Sidebar/Sidebar';
 import Page from './Page/Page';
@@ -63,6 +65,7 @@ const Layout = ({
     >
       {children}
     </Page>
+    <ReduxModal id="login" content={Login} />
   </div>
 );
 

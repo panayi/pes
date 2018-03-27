@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { selectors as imagesSelectors } from 'store/images';
 import Imgix from 'components/Imgix/Imgix';
 

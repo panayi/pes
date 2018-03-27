@@ -6,7 +6,7 @@ import { withStateHandlers } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import TuneIcon from 'material-ui-icons/Tune';
 import MenuIcon from 'mdi-react/MenuIcon';
 import { selectors as authSelectors } from 'store/firebase/auth';
@@ -21,7 +21,6 @@ import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import WithConversations from 'modules/Messenger/WithConversations/WithConversations';
 import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
 import Support from 'modules/Support/Support';
-import Login from 'modules/Login/Login';
 import CreateAd from 'modules/PostAd/CreateAd/CreateAd';
 import SearchQuery from 'modules/Search/Query/Query';
 import Rate from 'modules/Rate/Rate';
@@ -179,7 +178,6 @@ const Header = ({
           onClose={closeMobileMenu}
         />
       </Drawer>
-      <ReduxModal id="login" content={Login} />
       <ReduxModal id="createAd" content={CreateAd} />
       <ReduxModal id="support" content={Support} />
       <Rate />

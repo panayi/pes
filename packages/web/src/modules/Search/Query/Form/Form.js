@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import SearchIcon from 'material-ui-icons/Search';
 import CloseIcon from 'material-ui-icons/Close';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';

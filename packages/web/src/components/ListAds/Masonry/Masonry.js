@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
 import { Collection } from 'react-virtualized';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import Card from './Card/Card';
 import * as constants from '../constants';
@@ -43,6 +43,7 @@ class Masonry extends PureComponent<Props> {
 
   getHitSizeAndPosition = ({ index }) => {
     const { hits, containerWidth } = this.props;
+
     const values = selectors.hitSizeAndPositionSelector({
       index,
       hits,

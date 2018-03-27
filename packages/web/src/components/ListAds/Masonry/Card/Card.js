@@ -5,7 +5,7 @@ import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import Card, { CardMedia, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { Link } from 'react-router-dom';
 import LineClamp from 'components/LineClamp/LineClamp';
 import Imgix from 'components/Imgix/Imgix';

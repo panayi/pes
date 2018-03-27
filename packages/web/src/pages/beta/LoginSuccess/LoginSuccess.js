@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import DoneIcon from 'material-ui-icons/CheckCircle';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
 import Button from 'components/Button/Button';

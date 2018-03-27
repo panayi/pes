@@ -33,6 +33,8 @@ export const languageSelector = R.pathOr(
   constants.LANGUAGE_PATH,
 );
 
+export const isBotSelector = R.path(constants.IS_BOT_PATH);
+
 export const geopositionSelector = createSelector(
   locationSelector,
   R.prop('geoposition'),
