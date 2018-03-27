@@ -97,7 +97,7 @@ class Document extends React.Component {
           <AfterData data={data} />
           <script
             type="text/javascript"
-            src="http://192.168.0.26:3001/static/js/bundle.js"
+            src={assets.client.js}
             defer
             crossOrigin="anonymous"
           />
