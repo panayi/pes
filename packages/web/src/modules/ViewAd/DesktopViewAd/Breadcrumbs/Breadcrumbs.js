@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import HomeIcon from 'material-ui-icons/Home';
 import translate from 'hocs/translate';
 import Link from 'components/Link/Link';

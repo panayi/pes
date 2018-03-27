@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { mapProps, setDisplayName } from 'recompose';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';

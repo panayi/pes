@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import Avatar from 'material-ui/Avatar';
 import PhoneIcon from 'material-ui-icons/Phone';
 

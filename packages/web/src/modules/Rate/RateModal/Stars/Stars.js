@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { withStateHandlers } from 'recompose';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import Star from './Star/Star';
 
 const STARS_COUNT = 5;

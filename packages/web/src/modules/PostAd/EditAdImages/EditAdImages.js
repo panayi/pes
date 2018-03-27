@@ -6,7 +6,7 @@ import { withProps, withState } from 'recompose';
 import GridList, { GridListTile } from 'material-ui/GridList';
 import { FormHelperText } from 'material-ui/Form';
 import IconButton from 'material-ui/IconButton';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import DeleteIcon from 'material-ui-icons/Delete';
 import { connect } from 'react-redux';
 import * as imagesConfig from '@pesposa/core/src/config/images';

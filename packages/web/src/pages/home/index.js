@@ -4,7 +4,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { withProps, setStatic } from 'recompose';
 import { bindActionCreators } from 'multireducer';
 import { Helmet } from 'react-helmet';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import getMetaTags from 'utils/getMetaTags';
 import {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import ScheduleIcon from 'material-ui-icons/Schedule';
 import AdDate from 'components/AdDate/AdDate';
 

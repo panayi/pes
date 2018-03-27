@@ -12,7 +12,7 @@ import TextField from 'material-ui/TextField';
 import { InputAdornment } from 'material-ui/Input';
 import { MenuItem } from 'material-ui/Menu';
 import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import LocationIcon from 'material-ui-icons/LocationOn';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import env from '@pesposa/core/src/config/env';
@@ -39,7 +39,6 @@ type Props = {
   setValue: Function,
   selectAddress: Function,
   setResults: Function,
-  handleFocus: Function,
   handleBlur: Function,
   classes: Object,
 };

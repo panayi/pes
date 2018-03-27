@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
 import Slider from 'react-slick';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Imgix from 'components/Imgix/Imgix';
@@ -107,7 +107,7 @@ const ImageSlider = (props: Props) => {
         image =>
           flex ? (
             <div key={image.fullPath} className={classes.imgContainer}>
-              <div key={image.fullPath} className={classes.imgContainerInner}>
+              <div className={classes.imgContainerInner}>
                 <Imgix
                   className={
                     image.dimensions &&
@@ -122,6 +122,7 @@ const ImageSlider = (props: Props) => {
             </div>
           ) : (
             <Imgix
+              key={image.fullPath}
               className={classNames({ [classes.cover]: cover })}
               image={image}
               params={imgixParams}

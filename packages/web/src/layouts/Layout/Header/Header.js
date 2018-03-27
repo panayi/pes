@@ -1,6 +1,6 @@
 import React from 'react';
 import Toolbar from 'material-ui/Toolbar';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import AppBar from 'components/AppBar/AppBar';
 
 const styles = theme => ({

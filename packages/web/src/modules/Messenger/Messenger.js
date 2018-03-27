@@ -8,7 +8,7 @@ import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
 import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { models } from 'store/firebase/data';
 import Spinner from 'components/Spinner/Spinner';
 import Conversations from './Conversations/Conversations';

@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import { mapProps } from 'recompose';
 import classNames from 'classnames';
 import AppBar from 'material-ui/AppBar';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 
 const styles = theme => ({
   appBar: {

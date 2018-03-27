@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { withState } from 'recompose';
 import { connect } from 'react-redux';
 import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { actions as authActions } from 'store/firebase/auth';
 import TextDivider from 'components/TextDivider/TextDivider';
 import GeneralErrorMessage from 'components/GeneralErrorMessage/GeneralErrorMessage';
@@ -14,7 +14,6 @@ import LoginWithGoogle from './WithGoogle/WithGoogle';
 type Props = {
   onSuccess: Function,
   login: Function,
-  openModal: Function,
   errored: boolean,
   setErrored: Function,
   classes: Object,

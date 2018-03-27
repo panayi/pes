@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import MDSpinner from 'react-md-spinner';
 import { withProps, branch, renderComponent } from 'recompose';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import theme from 'config/theme';
 
 const BaseSpinner = withProps({

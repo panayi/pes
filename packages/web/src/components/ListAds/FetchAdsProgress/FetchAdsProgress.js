@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
 import MoodBadIcon from 'material-ui-icons/MoodBad';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { selectors as requestSelectors } from 'store/search/request';
 import { selectors as totalHitsSelector } from 'store/search/totalHits';
 import { selectors as searchSelectors } from 'store/search';

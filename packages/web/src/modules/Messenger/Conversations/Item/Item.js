@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import TimeAgo from 'react-timeago';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { blue } from 'material-ui/colors';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';

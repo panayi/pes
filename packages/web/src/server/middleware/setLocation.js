@@ -10,7 +10,7 @@ const setLocation = async (req, res, next) => {
       store.dispatch(userInfoActions.setLocation(response.location));
     }
   } catch (error) {
-    console.log('Failed to setLocation', error);
+    console.error('Failed to setLocation', error); // eslint-disable-line no-console
   }
 
   next();

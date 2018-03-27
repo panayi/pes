@@ -11,7 +11,7 @@
 // import IconButton from 'material-ui/IconButton';
 // import Divider from 'material-ui/Divider'
 // import { LinearProgress } from 'material-ui/Progress';
-// import { withStyles } from 'material-ui/styles';
+// import withStyles from 'material-ui/styles/withStyles';
 // import { red } from 'material-ui/colors';
 // import PlaceIcon from 'material-ui-icons/Place';
 // import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';

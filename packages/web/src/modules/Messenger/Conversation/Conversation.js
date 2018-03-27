@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';

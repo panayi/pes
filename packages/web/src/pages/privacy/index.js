@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import Layout from 'layouts/Layout/Layout';
 import Header from 'pages/components/Header/Header';
 

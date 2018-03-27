@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import Button from 'components/Button/Button';
 import GoogleIcon from '../GoogleIcon/GoogleIcon';
 

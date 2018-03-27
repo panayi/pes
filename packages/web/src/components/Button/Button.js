@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import MaterialButton from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 
 const styles = theme => ({
   outline: {
@@ -11,6 +11,7 @@ const styles = theme => ({
   },
   root: {
     minHeight: 39,
+    fontWeight: theme.typography.fontWeightBold,
     borderRadius: theme.borderRadius.md,
     boxShadow: 'none',
     textTransform: 'none',

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { ListItem, ListItemText } from 'material-ui/List';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import CheckIcon from 'material-ui-icons/Check';
 
 const styles = theme => ({

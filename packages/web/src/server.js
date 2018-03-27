@@ -6,6 +6,7 @@ import appRoute from 'server/routes/app';
 import createStore from 'server/middleware/createStore';
 import setLocation from 'server/middleware/setLocation';
 import setLanguage from 'server/middleware/setLanguage';
+import setIsBot from 'server/middleware/setIsBot';
 
 // Create Firebase app
 if (!firebase.apps.length) {
@@ -23,6 +24,6 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR));
 
 // Default route
-server.get('/*', createStore, setLocation, setLanguage, appRoute);
+server.get('/*', createStore, setLocation, setLanguage, setIsBot, appRoute);
 
 export default server;

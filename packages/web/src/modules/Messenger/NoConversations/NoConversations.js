@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import MessageIcon from 'material-ui-icons/Message';
 import Link from 'components/Link/Link';
 import EmptyHero from 'components/EmptyHero/EmptyHero';

@@ -9,6 +9,8 @@ export const setLocation = createAction(types.SET_LOCATION);
 
 export const setLanguage = createAction(types.SET_LANGUAGE);
 
+export const setIsBot = createAction(types.SET_IS_BOT);
+
 export const setUserInfo = createAction(
   types.SET_USER_INFO,
   zipArgs([constants.LOCATION_KEY, constants.LANGUAGE_KEY]),

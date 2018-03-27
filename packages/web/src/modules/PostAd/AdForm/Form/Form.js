@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { FormGroup } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import translate from 'hocs/translate';
 

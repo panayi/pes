@@ -6,7 +6,7 @@ import { isLoaded } from 'react-redux-firebase';
 import { Formik } from 'formik';
 import yup from 'yup';
 import { withProps, withState } from 'recompose';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import Button from 'components/Button/Button';

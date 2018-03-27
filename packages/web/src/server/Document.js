@@ -1,8 +1,8 @@
 import React from 'react';
 import { AfterRoot, AfterData } from '@jaredpalmer/after';
 import { JssProvider, SheetsRegistry } from 'react-jss';
-import Reboot from 'material-ui/Reboot';
-import { MuiThemeProvider } from 'material-ui/styles';
+import CssBaseline from 'material-ui/CssBaseline';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { ssrBehavior } from 'react-md-spinner';
 import theme from 'config/theme';
 import jss from 'config/styles';
@@ -22,7 +22,7 @@ class Document extends React.Component {
         <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
           <JssProvider registry={sheetsRegistry} jss={jss}>
             <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-              <Reboot />
+              <CssBaseline />
               <Component {...props} />
             </MuiThemeProvider>
           </JssProvider>
@@ -97,7 +97,7 @@ class Document extends React.Component {
           <AfterData data={data} />
           <script
             type="text/javascript"
-            src={assets.client.js}
+            src="http://192.168.0.26:3001/static/js/bundle.js"
             defer
             crossOrigin="anonymous"
           />

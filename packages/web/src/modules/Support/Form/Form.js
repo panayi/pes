@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { FormGroup } from 'material-ui/Form';
 import TextField from 'material-ui/TextField';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 
 const SUBJECTS = [
   { id: 'loginIssue', label: 'Login issue' },

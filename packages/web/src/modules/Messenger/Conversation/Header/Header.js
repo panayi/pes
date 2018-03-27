@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { withRouter } from 'react-router-dom';
 import { DesktopScreen } from 'react-responsive-redux';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import Link from 'components/Link/Link';
 import LineClamp from 'components/LineClamp/LineClamp';

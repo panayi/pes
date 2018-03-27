@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import TimeAgo from 'react-timeago';
 import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import { blue } from 'material-ui/colors';
 

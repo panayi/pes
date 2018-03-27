@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import { setDisplayName, withProps, withState } from 'recompose';
 import Grid from 'material-ui/Grid';
 import IconButton from 'material-ui/IconButton';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import ArrowBack from 'material-ui-icons/ArrowBack';
 import { selectors as loginSelectors } from 'store/login';
 import withSpinnerWhen from 'hocs/withSpinnerWhen';

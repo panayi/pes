@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import { createStructuredSelector } from 'reselect';
+import { createSelector, createStructuredSelector } from 'reselect';
 import { WindowScroller, AutoSizer } from 'react-virtualized';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import * as layout from '@pesposa/core/src/config/layout';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import {
   selectors as scrollPositionSelectors,
   actions as scrollPositionActions,
 } from 'store/search/scrollPosition';
+import { selectors as userInfoSelectors } from 'store/userInfo';
 import connectSearch from 'hocs/connectSearch';
 import * as constants from './constants';
 import Masonry from './Masonry/Masonry';
@@ -116,14 +117,13 @@ export class ListAds extends Component {
   };
 
   render() {
-    const { serverWidth, classes } = this.props;
+    const { serverHeight, classes } = this.props;
 
     return (
       <div className={classes.root}>
         <WindowScroller
           onScroll={this.handleScroll}
-          serverWidth={serverWidth}
-          serverHeight={serverWidth * 16 / 9}
+          serverHeight={serverHeight}
         >
           {this.renderAutoSizer}
         </WindowScroller>
@@ -133,14 +133,28 @@ export class ListAds extends Component {
   }
 }
 
-const fakeWidthSelector = R.compose(fakeWidth => {
-  const finalWidth = fakeWidth - layout.SIDEBAR_WIDTH;
-  return finalWidth > 0 ? finalWidth : 0;
-}, R.pathOr(0, ['responsive', 'fakeWidth']));
+const serverWidthSelector = createSelector(
+  R.pathOr(0, ['responsive', 'fakeWidth']),
+  userInfoSelectors.isBotSelector,
+  (fakeWidth, isBot) => {
+    if (!isBot) {
+      return 0;
+    }
+
+    const finalWidth = fakeWidth - layout.SIDEBAR_WIDTH;
+    return finalWidth > 0 ? finalWidth : 0;
+  },
+);
+
+const serverHeightSelector = R.compose(
+  serverWidth => serverWidth * 16 / 9,
+  serverWidthSelector,
+);
 
 const mapStateToProps = createStructuredSelector({
   scrollPosition: scrollPositionSelectors.scrollPositionSelector,
-  serverWidth: fakeWidthSelector,
+  serverWidth: serverWidthSelector,
+  serverHeight: serverHeightSelector,
 });
 
 const mapDispatchToProps = {

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { withProps } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import MessageBubble from './MessageBubble/MessageBubble';
 

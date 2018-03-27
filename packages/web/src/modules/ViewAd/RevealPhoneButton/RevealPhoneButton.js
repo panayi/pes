@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { withState, withProps, branch } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import { withStyles } from 'material-ui/styles';
+import withStyles from 'material-ui/styles/withStyles';
 import PhoneIcon from 'material-ui-icons/Phone';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import omitProps from 'utils/omitProps';
