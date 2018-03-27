@@ -4,7 +4,6 @@ import authConfig from '@pesposa/core/src/config/auth';
 import env from '@pesposa/core/src/config/env';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
-import api from 'services/api';
 import firebaseApi from 'services/firebase';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { actions as modalActions } from 'store/modals';
@@ -31,11 +30,6 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
   }
 
   // Otherwise, user was just logged in
-
-  // Save session to make it available on SSR
-  authData.getIdToken().then(token => {
-    dispatch(api.createSession(token));
-  });
 
   // Migrate when user has just logged in and not anonymous
   await dispatch(migrateAnonymousUser());
@@ -136,7 +130,6 @@ export const linkProvider = providerId => async (
 
 export const logout = () => async (dispatch, getState, getFirebase) => {
   await getFirebase().logout();
-  await dispatch(api.deleteSession());
 
   if (env.betaEnabled) {
     window.location.href = '/beta';

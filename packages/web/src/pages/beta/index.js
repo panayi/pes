@@ -1,18 +1,17 @@
 import React from 'react';
 import * as R from 'ramda';
-import { isArray } from 'ramda-adjunct';
 import classNames from 'classnames';
-import { createSelector, createStructuredSelector } from 'reselect';
-import { connectData } from 'lib/connectData';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
 import Typography from 'material-ui/Typography';
 import { MuiThemeProvider, withStyles } from 'material-ui/styles';
 import env from '@pesposa/core/src/config/env';
 import defaultTheme from 'config/theme';
 import { actions as modalActions } from 'store/modals';
-import { models } from 'store/firebase/data';
 import { selectors as profileSelectors } from 'store/firebase/profile';
 import Layout from 'layouts/Layout/Layout';
 import Login from 'modules/Login/Login';
+import needsNonBetaUser from 'hocs/needsNonBetaUser';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Button from 'components/Button/Button';
 import Logo from '../components/Logo/Logo';
@@ -167,34 +166,8 @@ class Beta extends React.Component {
   }
 }
 
-export const isBetaUserSelector = createSelector(
-  profileSelectors.profileEmailSelector,
-  profileSelectors.profilePhoneNumberSelector,
-  profileSelectors.providerIdsSelector,
-  R.compose(R.defaultTo([]), models.betaUsers.all.selector),
-  (email, phoneNumber, providerIds, betaUsers) =>
-    R.find(
-      R.anyPass([
-        betaUser => email && betaUser.email && betaUser.email === email,
-        betaUser =>
-          phoneNumber &&
-          betaUser.phoneNumber &&
-          betaUser.phoneNumber === phoneNumber,
-        betaUser =>
-          isArray(providerIds) &&
-          betaUser.providerId &&
-          R.contains(betaUser.providerId, providerIds),
-      ]),
-      betaUsers,
-    ),
-);
-
-const mapDataToProps = {
-  betaUsers: models.betaUsers.all,
-};
-
 const mapStateToProps = createStructuredSelector({
-  isBetaUser: isBetaUserSelector,
+  isBetaUser: profileSelectors.isBetaUserSelector,
 });
 
 const mapDispatchToProps = {
@@ -202,6 +175,7 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connectData(mapDataToProps, mapStateToProps, mapDispatchToProps),
+  needsNonBetaUser,
+  connect(mapStateToProps, mapDispatchToProps),
   withStyles(styles),
 )(Beta);

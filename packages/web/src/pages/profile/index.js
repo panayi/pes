@@ -16,6 +16,7 @@ import { selectors as routerSelectors } from 'store/router';
 import * as authSelectors from 'store/firebase/auth/selectors';
 import getMetaTags from 'utils/getMetaTags';
 import Layout from 'layouts/Layout/Layout';
+import needsBetaUser from 'hocs/needsBetaUser';
 import withProfileData from 'hocs/withProfileData';
 import Profile, { searchParamsByTabSelector } from 'modules/Profile/Profile';
 import Header from 'pages/components/Header/Header';
@@ -76,6 +77,7 @@ export default R.compose(
 
     return store.getState();
   }),
+  needsBetaUser,
   withProps(
     createStructuredSelector({
       userId: routerSelectors.routeParamSelector('userId'),

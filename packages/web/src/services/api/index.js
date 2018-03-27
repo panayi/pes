@@ -15,30 +15,6 @@ const migrateAnonymousUser = ({ token, anonymousUserToken }) => () => {
   });
 };
 
-const createSession = token => () => {
-  const url = '/token';
-
-  return fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'same-origin',
-    body: JSON.stringify({ token }),
-  });
-};
-
-const deleteSession = () => () => {
-  const url = '/token';
-  return fetch(url, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'same-origin',
-  });
-};
-
 const reverseGeocode = data => async () => {
   const url = `${env.firebaseFunctionsBaseUrl}/reverse-geocode`;
 
@@ -68,8 +44,6 @@ const geoip = () => async () => {
 
 const api = {
   migrateAnonymousUser,
-  createSession,
-  deleteSession,
   reverseGeocode,
   geoip,
 };

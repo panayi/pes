@@ -9,6 +9,7 @@ import propSelector from '@pesposa/core/src/utils/propSelector';
 import getMetaTags from 'utils/getMetaTags';
 import { models } from 'store/firebase/data';
 import { selectors as routerSelectors } from 'store/router';
+import needsBetaUser from 'hocs/needsBetaUser';
 import hydrateAd from 'hocs/hydrateAd';
 import Layout from 'layouts/Layout/Layout';
 import ViewAd from 'modules/ViewAd/ViewAd';
@@ -81,6 +82,7 @@ export default R.compose(
 
     return store.getState();
   }),
+  needsBetaUser,
   withProps(
     createStructuredSelector({
       adId: routerSelectors.routeParamSelector('adId'),

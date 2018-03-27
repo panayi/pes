@@ -14,6 +14,7 @@ import {
 import { actions as paramsActions } from 'store/search/params';
 import { selectors as routerSelectors } from 'store/router';
 import Layout from 'layouts/Layout/Layout';
+import needsBetaUser from 'hocs/needsBetaUser';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import ListAds from 'components/ListAds/ListAds';
 import GetCurrentPosition from 'modules/GetCurrentPosition/GetCurrentPosition';
@@ -119,6 +120,7 @@ export default R.compose(
 
     return store.getState();
   }),
+  needsBetaUser,
   withProps(
     createStructuredSelector({
       searchParamsFromProps: searchParamsFromPropsSelector,
