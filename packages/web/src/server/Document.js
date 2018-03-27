@@ -98,6 +98,7 @@ class Document extends React.Component {
           <script
             type="text/javascript"
             src={assets.client.js}
+            async
             defer
             crossOrigin="anonymous"
           />
