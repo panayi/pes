@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
 import { WindowScroller, AutoSizer } from 'react-virtualized';
 import { withStyles } from 'material-ui/styles';
+import * as layout from '@pesposa/core/src/config/layout';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import {
   selectors as scrollPositionSelectors,
@@ -96,6 +97,7 @@ export class ListAds extends Component {
   };
 
   renderAutoSizer = ({ height, scrollTop }) => {
+    const { serverWidth } = this.props;
     this.containerHeight = height;
 
     return (
@@ -105,6 +107,7 @@ export class ListAds extends Component {
         }}
         disableHeight
         height={height}
+        defaultWidth={serverWidth}
         scrollTop={scrollTop}
       >
         {this.renderContent({ height, scrollTop })}
@@ -113,14 +116,14 @@ export class ListAds extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { serverWidth, classes } = this.props;
 
     return (
       <div className={classes.root}>
         <WindowScroller
           onScroll={this.handleScroll}
-          serverWidth={0}
-          serverHeight={0}
+          serverWidth={serverWidth}
+          serverHeight={serverWidth * 16 / 9}
         >
           {this.renderAutoSizer}
         </WindowScroller>
@@ -130,8 +133,14 @@ export class ListAds extends Component {
   }
 }
 
+const fakeWidthSelector = R.compose(fakeWidth => {
+  const finalWidth = fakeWidth - layout.SIDEBAR_WIDTH;
+  return finalWidth > 0 ? finalWidth : 0;
+}, R.pathOr(0, ['responsive', 'fakeWidth']));
+
 const mapStateToProps = createStructuredSelector({
   scrollPosition: scrollPositionSelectors.scrollPositionSelector,
+  serverWidth: fakeWidthSelector,
 });
 
 const mapDispatchToProps = {

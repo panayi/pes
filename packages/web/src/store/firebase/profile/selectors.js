@@ -1,7 +1,9 @@
 import * as R from 'ramda';
+import { isArray } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import { populate, isLoaded } from 'react-redux-firebase';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import * as constants from './constants';
 
 // profileSelector :: State -> Object | Nil
@@ -41,4 +43,26 @@ export const providerIdsSelector = R.compose(
   R.pluck('uid'),
   R.defaultTo([]),
   profilePropSelector(['providerData']),
+);
+
+export const isBetaUserSelector = createSelector(
+  profileEmailSelector,
+  profilePhoneNumberSelector,
+  providerIdsSelector,
+  R.compose(R.defaultTo([]), propSelector('betaUsers')),
+  (email, phoneNumber, providerIds, betaUsers) =>
+    R.find(
+      R.anyPass([
+        betaUser => email && betaUser.email && betaUser.email === email,
+        betaUser =>
+          phoneNumber &&
+          betaUser.phoneNumber &&
+          betaUser.phoneNumber === phoneNumber,
+        betaUser =>
+          isArray(providerIds) &&
+          betaUser.providerId &&
+          R.contains(betaUser.providerId, providerIds),
+      ]),
+      betaUsers,
+    ),
 );

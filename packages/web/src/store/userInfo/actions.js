@@ -19,11 +19,13 @@ export const getCurrentLocation = () => async dispatch =>
     try {
       const geoposition = await navigatorService.getCurrentPosition();
       const response = await dispatch(api.reverseGeocode({ geoposition }));
+
       if (response && response.location) {
         dispatch(setLocation(response.location));
       }
       resolve();
     } catch (error) {
+      console.log(error); // eslint-disable-line no-console
       reject();
     }
   });

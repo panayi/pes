@@ -488,11 +488,6 @@ path /ratings/{id} is Rating {
   create() { !this.user || isCurrentUser(this.user) }
 }
 
-path /sessions {
-  read() { false }
-  write() { false }
-}
-
 // BETA
 path /betaUsers {
   read() { true }
