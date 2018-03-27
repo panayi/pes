@@ -8,7 +8,10 @@ import {
 } from 'store/search';
 import { selectors as hitsSelectors } from 'store/search/hits';
 import { selectors as pageSelectors } from 'store/search/page';
-import { actions as paramsActions } from 'store/search/params';
+import {
+  selectors as paramsSelectors,
+  actions as paramsActions,
+} from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
 
 class Search extends React.Component {
@@ -28,16 +31,16 @@ class Search extends React.Component {
       nextProps.indexName,
       this.props.indexName,
     );
-    const paramsStateChanged = !R.equals(
-      nextProps.paramsState,
-      this.props.paramsState,
-    );
-    const isInitialParamsState = R.equals(
+    const isInitialParams = R.equals(
       nextProps.paramsState,
       this.initialParamsState,
     );
+    const searchParamsChanged = !R.equals(
+      nextProps.searchParams,
+      this.props.searchParams,
+    );
 
-    if (indexNameChanged || (!isInitialParamsState && paramsStateChanged)) {
+    if (indexNameChanged || (!isInitialParams && searchParamsChanged)) {
       const { loadFirstPage, mapParamsToUrl, match, history } = this.props;
       loadFirstPage();
       this.initialParamsState = null;
@@ -68,7 +71,8 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  paramsState: searchSelectors.searchParamsSelector,
+  paramsState: paramsSelectors.paramsSelector,
+  searchParams: searchSelectors.searchParamsSelector,
   indexName: searchSelectors.indexNameSelector,
   hits: hitsSelectors.hitsSelector,
   page: pageSelectors.pageSelector,
