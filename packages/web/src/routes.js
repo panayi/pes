@@ -1,40 +1,49 @@
 import * as R from 'ramda';
+import { asyncComponent } from '@jaredpalmer/after';
 import env from '@pesposa/core/src/config/env';
-import Home from 'pages/home/index';
-import Profile from 'pages/profile/index';
-import ViewAd from 'pages/ad/index';
-import Messages from 'pages/messages/index';
-import Privacy from 'pages/privacy/index';
-import Beta from 'pages/beta/index';
 
 const routes = [
   {
     path: '/profile/:tab?',
-    component: Profile,
+    component: asyncComponent({
+      loader: () => import('./pages/profile/index'),
+    }),
   },
   {
     path: '/user/:userId/:tab?',
-    component: Profile,
+    component: asyncComponent({
+      loader: () => import('./pages/profile/index'),
+    }),
   },
   {
     path: '/i/:adId',
-    component: ViewAd,
+    component: asyncComponent({
+      loader: () => import('./pages/ad/index'),
+    }),
   },
   {
     path: '/il/:adId',
-    component: ViewAd,
+    component: asyncComponent({
+      loader: () => import('./pages/ad/index'),
+    }),
   },
   {
     path: '/messages',
-    component: Messages,
+    component: asyncComponent({
+      loader: () => import('./pages/messages/index'),
+    }),
   },
   {
     path: '/privacy',
-    component: Privacy,
+    component: asyncComponent({
+      loader: () => import('./pages/privacy/index'),
+    }),
   },
   {
     path: '/:category?/:place?',
-    component: Home,
+    component: asyncComponent({
+      loader: () => import('./pages/home/index'),
+    }),
   },
 ];
 
@@ -43,7 +52,9 @@ const finalRoutes = env.betaEnabled
   ? R.prepend(
       {
         path: '/beta',
-        component: Beta,
+        component: asyncComponent({
+          loader: () => import('./pages/beta/index'),
+        }),
       },
       routes,
     )
