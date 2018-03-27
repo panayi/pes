@@ -15,7 +15,7 @@ import Page from './Page/Page';
 const styles = theme => ({
   '@global': {
     body: {
-      backgroundColor: '#f5f5f5',
+      backgroundColor: '#f0f1f2',
     },
   },
   root: {

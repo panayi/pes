@@ -13,7 +13,7 @@ export const COLUMN_COUNTS = {
 export const MIN_WIDTHS = R.compose(R.sort(R.lt), R.map(parseInt), R.keys)(
   COLUMN_COUNTS,
 );
-export const GUTTER = 10;
+export const GUTTER = 9;
 export const CARD_CONTENT_HEIGHT = 80;
 export const THUMBNAIL_WIDTH = 250;
 export const DEFAULT_CARD_HEIGHT = 450;
