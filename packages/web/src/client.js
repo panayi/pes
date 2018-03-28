@@ -15,6 +15,13 @@ import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import routes from 'routes';
 
+// TODO: Find a better way to implement a spinner
+// that is shown while script is loading
+window.onload = () => {
+  const element = document.querySelector('#script-loading-spinner');
+  element.parentNode.removeChild(element);
+};
+
 const history = createHistory();
 
 // This is needed in order to deduplicate the injection of CSS in the page.

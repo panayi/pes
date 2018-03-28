@@ -7,6 +7,7 @@ import { ssrBehavior } from 'react-md-spinner';
 import theme from 'config/theme';
 import jss from 'config/styles';
 import { constants as searchConstants } from 'store/search';
+import Spinner from 'components/Spinner/Spinner';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import SearchProvider from 'modules/Search/Provider/Provider';
 
@@ -93,6 +94,21 @@ class Document extends React.Component {
           {ssrBehavior.getStylesheetComponent(userAgent)}
         </head>
         <body {...bodyAttrs}>
+          <div
+            id="script-loading-spinner"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Spinner />
+          </div>
           <AfterRoot />
           <AfterData data={data} />
           <script
