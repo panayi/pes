@@ -87,7 +87,7 @@ export const addMany = async ads => {
   } catch (error) {
     log.error('Failed to create/update multiple ads in Algolia, with error:');
     log.error(error);
-    throw error;
+    return null;
   }
 };
 
@@ -103,7 +103,7 @@ export const add = async (ad, id) => {
       `Failed to create/update ad with id=${id} in Algolia, with error:`,
     );
     log.error(error);
-    throw error;
+    return null;
   }
 };
 
@@ -118,7 +118,7 @@ export const update = async (props, id) => {
   } catch (error) {
     log.error(`Failed to update ad with id=${id} in Algolia, with error:`);
     log.error(error);
-    throw error;
+    return null;
   }
 };
 
@@ -129,6 +129,5 @@ export const remove = async id => {
   } catch (error) {
     log.error(`Failed to delete ad with id=${id} in Algolia, with error:`);
     log.error(error);
-    throw error;
   }
 };
