@@ -8,7 +8,7 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit,
     paddingBottom: theme.spacing.unit * 1.5,
 
-    [theme.breakpoints.up(theme.map.tablet)]: {
+    [theme.breakpoints.up(theme.map.laptop)]: {
       marginBottom: theme.spacing.unit * 2,
       paddingBottom: 0,
       border: [1, 'solid', theme.palette.divider],
@@ -16,7 +16,7 @@ const styles = theme => ({
     },
   },
   sectionContent: {
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       padding: [theme.spacing.unit * 2, 0, theme.spacing.unit, 0, '!important'],
     },
   },

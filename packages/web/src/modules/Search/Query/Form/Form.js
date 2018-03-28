@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
+import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import withStyles from 'material-ui/styles/withStyles';
 import SearchIcon from 'material-ui-icons/Search';
 import CloseIcon from 'material-ui-icons/Close';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
+import { selectors as responsiveSelectors } from 'store/responsive';
 
 // Based on:
 // https://github.com/callemall/material-ui/blob/v1-beta/docs/src/modules/components/AppSearch.js
@@ -27,11 +30,13 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: theme.palette.text.secondary,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      width: theme.spacing.unit * 5,
+    },
   },
   input: {
-    font: 'inherit',
-    color: 'inherit',
-    padding: `9px ${theme.spacing.unit}px 9px ${theme.spacing.unit * 7}px`,
+    padding: `9px ${theme.spacing.unit}px 9px ${theme.spacing.unit * 6.5}px`,
     border: 0,
     display: 'block',
     verticalAlign: 'middle',
@@ -40,8 +45,17 @@ const styles = theme => ({
     margin: 0, // Reset for Safari
     width: '100%',
     boxSizing: 'border-box',
+    font: 'inherit',
+    color: theme.palette.text.secondary,
     '&:focus': {
       outline: 0,
+    },
+    '&::placeholder': {
+      color: 'inherit',
+    },
+    [theme.breakpoints.down(theme.map.phone)]: {
+      paddingLeft: theme.spacing.unit * 4.5,
+      fontSize: 15,
     },
   },
   clearButton: {
@@ -77,6 +91,7 @@ class Form extends Component<Props> {
       handleBlur,
       handleClear,
       hasValue,
+      isPhone,
       classes,
     } = this.props;
 
@@ -91,7 +106,7 @@ class Form extends Component<Props> {
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.query}
-          placeholder="What are you looking for?"
+          placeholder={isPhone ? 'Search' : 'What are you looking for?'}
         />
         {hasValue && (
           <a
@@ -108,4 +123,12 @@ class Form extends Component<Props> {
   }
 }
 
-export default R.compose(withRouter, withStyles(styles))(Form);
+const mapStateToProps = createStructuredSelector({
+  isPhone: responsiveSelectors.isPhoneSelector,
+});
+
+export default R.compose(
+  withRouter,
+  connect(mapStateToProps),
+  withStyles(styles),
+)(Form);

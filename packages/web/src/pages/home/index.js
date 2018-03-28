@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withProps, setStatic } from 'recompose';
 import { bindActionCreators } from 'multireducer';
+import { DesktopScreen, MobileScreen } from 'react-responsive-redux';
 import { Helmet } from 'react-helmet';
 import withStyles from 'material-ui/styles/withStyles';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
@@ -43,43 +44,52 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 3,
     paddingLeft: theme.spacing.unit * 1.5,
     paddingRight: theme.spacing.unit * 1.5,
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       paddingTop: theme.spacing.unit * 2,
-    },
-  },
-  sidebar: {
-    [theme.breakpoints.down(theme.layout.breakpoints.filtersDialog)]: {
-      display: 'none',
     },
   },
 });
 
 const HomeHeader = withProps({ inHome: true })(Header);
 
-const Home = ({ place, category, searchParamsFromProps, classes }) => (
-  <GetCurrentPosition>
-    <Layout
-      header={HomeHeader}
-      sidebar={SearchFilters}
-      pageClassName={classes.page}
-      sidebarClassName={classes.sidebar}
-      flex
+const Content = ({ place, category, searchParamsFromProps }) => (
+  <React.Fragment>
+    <Helmet
+      {...getMetaTags({
+        title: getTitle({ place, category }),
+        description:
+          'Sell your stuff quickly and connect with thousands of buyers. Find cars, houses, electronics and much more, near your location.',
+      })}
+    />
+    <Search
+      params={searchParamsFromProps}
+      mapParamsToUrl={({ category: cat }) => (cat ? `/${cat}` : '/')}
     >
-      <Helmet
-        {...getMetaTags({
-          title: getTitle({ place, category }),
-          description:
-            'Sell your stuff quickly and connect with thousands of buyers. Find cars, houses, electronics and much more, near your location.',
-        })}
-      />
-      <Search
-        params={searchParamsFromProps}
-        mapParamsToUrl={({ category: cat }) => (cat ? `/${cat}` : '/')}
-      >
-        {props => <ListAds {...props} />}
-      </Search>
-      <ReduxModal id="searchFilters" content={SearchFilters} direction="down" />
-    </Layout>
+      {props => <ListAds {...props} />}
+    </Search>
+    <ReduxModal id="searchFilters" content={SearchFilters} direction="down" />
+  </React.Fragment>
+);
+
+const Home = ({ classes, ...rest }) => (
+  <GetCurrentPosition>
+    <React.Fragment>
+      <DesktopScreen>
+        <Layout
+          header={HomeHeader}
+          sidebar={SearchFilters}
+          pageClassName={classes.page}
+          flex
+        >
+          <Content {...rest} />
+        </Layout>
+      </DesktopScreen>
+      <MobileScreen>
+        <Layout header={HomeHeader} pageClassName={classes.page} flex>
+          <Content {...rest} />
+        </Layout>
+      </MobileScreen>
+    </React.Fragment>
   </GetCurrentPosition>
 );
 

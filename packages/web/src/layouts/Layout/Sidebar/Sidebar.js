@@ -36,12 +36,7 @@ const styles = theme => {
     },
     content: {
       padding: [vSpacing, 0, vSpacing, hSpacing],
-      [theme.breakpoints.up(theme.map.phone)]: {
-        marginTop: theme.layout.headerHeight.phone,
-      },
-      [theme.breakpoints.up(theme.map.tablet)]: {
-        marginTop: theme.layout.headerHeight.tablet,
-      },
+      marginTop: theme.layout.headerHeight.tablet,
     },
   };
 };

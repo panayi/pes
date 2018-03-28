@@ -11,14 +11,15 @@ import userInfoReducer, { constants as userInfoConstants } from './userInfo';
 import chatReducer, { constants as chatConstants } from './chat';
 import loginReducer, { constants as loginConstants } from './login';
 import modalsReducer, { constants as modalConstants } from './modals';
+import { constants as responsiveConstants } from './responsive';
 import postAdReducer from './postAd';
 import searchReducers from './search';
 
 export const makeRootReducer = asyncReducers =>
   combineReducers({
     firebase: firebaseStateReducer,
-    responsive: responsiveReducer,
-    [anonymousUserConstants.ANONYMOUS_USER_TOKEN_KEY]: anonymousUserTokenReducer,
+    [responsiveConstants.ROOT_KEY]: responsiveReducer,
+    [anonymousUserConstants.ROOT_KEY]: anonymousUserTokenReducer,
     [userInfoConstants.ROOT_KEY]: userInfoReducer,
     [linkedProvidersConstants.ROOT_KEY]: linkedProvidersReducer,
     [chatConstants.ROOT_KEY]: chatReducer,

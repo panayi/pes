@@ -80,7 +80,7 @@ export default createMuiTheme({
     },
     sidebarWidth: layout.SIDEBAR_WIDTH,
     breakpoints: {
-      filtersDialog: 'md',
+      filtersDialog: 'sm',
     },
   },
   overrides: {

@@ -18,6 +18,7 @@ import Button from 'components/Button/Button';
 import ShowCreateAdButton from 'components/ShowCreateAdButton/ShowCreateAdButton';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
+import Logo from 'components/Logo/Logo';
 import WithConversations from 'modules/Messenger/WithConversations/WithConversations';
 import UnreadConversationsBadge from 'modules/Messenger/UnreadConversationsBadge/UnreadConversationsBadge';
 import Support from 'modules/Support/Support';
@@ -26,7 +27,6 @@ import SearchQuery from 'modules/Search/Query/Query';
 import Rate from 'modules/Rate/Rate';
 import MobileMenu from 'pages/components/Header/MobileMenu/MobileMenu';
 import DesktopMenu from './DesktopMenu/DesktopMenu';
-import Logo from '../Logo/Logo';
 
 const LoginButton = hideUser(Button);
 const MessagesButton = hideVisitor('div');
@@ -37,8 +37,9 @@ const styles = theme => ({
     '&:hover': {
       background: 'none',
     },
-    [theme.breakpoints.down(theme.map.phone)]: {
-      display: 'none',
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      paddingLeft: 0,
+      paddingRight: theme.spacing.unit * 1.5,
     },
   },
   logo: {
@@ -52,7 +53,7 @@ const styles = theme => ({
   searchInput: {
     flex: '1 1 auto',
     marginLeft: theme.spacing.unit * 2,
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       margin: 0,
     },
   },
@@ -72,25 +73,25 @@ const styles = theme => ({
   },
   menuButton: {
     display: 'none',
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       display: 'block',
     },
   },
   createAdButton: {
     marginLeft: theme.spacing.unit * 3,
-    [theme.breakpoints.down(theme.map.laptop)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       display: 'none',
     },
   },
   loginButton: {
     margin: [0, theme.spacing.unit],
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       display: 'none',
     },
   },
   messagesButton: {
     marginLeft: theme.spacing.unit,
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       display: 'none',
     },
   },
@@ -101,13 +102,13 @@ const styles = theme => ({
     },
   },
   desktopMenu: {
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       display: 'none',
     },
   },
   mobileMenuButton: {
     display: 'none',
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       display: 'block',
     },
   },

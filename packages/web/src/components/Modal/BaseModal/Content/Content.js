@@ -7,7 +7,7 @@ import withStyles from 'material-ui/styles/withStyles';
 
 const styles = theme => ({
   content: {
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       marginTop: theme.spacing.unit * 2,
     },
   },

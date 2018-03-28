@@ -63,20 +63,20 @@ const styles = theme => ({
     '& + $smallText': {
       paddingTop: 2,
     },
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       color: lighten(theme.palette.primary.main, 0.9),
     },
   },
   privacyLink: {
     color: theme.palette.primary.main,
     textDecoration: 'underline',
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       display: 'none',
     },
   },
   profileLink: {
     marginTop: theme.spacing.unit * 2,
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       display: 'none',
     },
   },

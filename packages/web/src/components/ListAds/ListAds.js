@@ -11,6 +11,7 @@ import {
   actions as scrollPositionActions,
 } from 'store/search/scrollPosition';
 import { selectors as userInfoSelectors } from 'store/userInfo';
+import { selectors as responsiveSelectors } from 'store/responsive';
 import connectSearch from 'hocs/connectSearch';
 import * as constants from './constants';
 import Masonry from './Masonry/Masonry';
@@ -134,11 +135,11 @@ export class ListAds extends Component {
 }
 
 const serverWidthSelector = createSelector(
-  R.pathOr(0, ['responsive', 'fakeWidth']),
-  R.pathOr(0, ['responsive', 'phone']),
+  R.compose(R.defaultTo(0), responsiveSelectors.fakeWidthSelector),
+  responsiveSelectors.isPhoneSelector,
   userInfoSelectors.isBotSelector,
-  (fakeWidth, phone, isBot) => {
-    if (phone && !isBot) {
+  (fakeWidth, isPhone, isBot) => {
+    if (isPhone && !isBot) {
       return 0;
     }
 

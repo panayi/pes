@@ -13,7 +13,7 @@ const styles = theme => ({
     fontWeight: theme.typography.fontWeightBold,
     color: theme.palette.getContrastText(theme.palette.primary.main),
     background: theme.palette.primary.main,
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
       bottom: theme.spacing.unit * 3,
       padding: [theme.spacing.unit, theme.spacing.unit * 2],
       borderRadius: 0,

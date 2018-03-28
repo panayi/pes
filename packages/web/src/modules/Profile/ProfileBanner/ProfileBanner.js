@@ -34,7 +34,7 @@ const styles = theme => ({
     flexDirection: 'column',
     borderRadius: [theme.borderRadius.xl, theme.borderRadius.xl, 0, 0],
     backgroundColor: theme.palette.secondary.light,
-    [theme.breakpoints.down(theme.map.phone)]: {
+    [theme.breakpoints.down(theme.map.laptop)]: {
       borderRadius: 0,
     },
   },
