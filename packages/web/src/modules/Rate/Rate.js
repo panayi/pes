@@ -8,7 +8,8 @@ import RateModal from './RateModal/RateModal';
 import MobileTrigger from './MobileTrigger/MobileTrigger';
 
 const COOKIE_NAME = 'pesposa-rate-modal';
-const MIN_TIME_BEFORE_SHOW = 50 * 1000; // 50 seconds
+const DESKTOP_MIN_TIME_BEFORE_SHOW = 50 * 1000; // 50 seconds
+const MOBILE_MIN_TIME_BEFORE_SHOW = 90 * 1000; // 90 seconds
 
 const Rate = () => (
   <React.Fragment>
@@ -17,11 +18,11 @@ const Rate = () => (
         modalId="rate"
         cookieName={COOKIE_NAME}
         cookieExpire={2}
-        timer={MIN_TIME_BEFORE_SHOW}
+        timer={DESKTOP_MIN_TIME_BEFORE_SHOW}
       />
     </DesktopScreen>
     <MobileScreen>
-      <MobileTrigger timeout={MIN_TIME_BEFORE_SHOW} />
+      <MobileTrigger timeout={MOBILE_MIN_TIME_BEFORE_SHOW} />
     </MobileScreen>
     <ReduxModal id="rate" content={RateModal} />
   </React.Fragment>
