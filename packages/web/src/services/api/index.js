@@ -18,9 +18,7 @@ const migrateAnonymousUser = ({ token, anonymousUserToken }) => () => {
 // BETA
 
 const createBetaUser = (data, token) => () => {
-  // const url = `${env.firebaseFunctionsBaseUrl}/beta-users/create`;
-  const url =
-    'http://localhost:5000/pesposa-dev/us-central1/api/beta-users/create';
+  const url = `${env.firebaseFunctionsBaseUrl}/beta-users/create`;
 
   return fetch(url, {
     method: 'POST',
