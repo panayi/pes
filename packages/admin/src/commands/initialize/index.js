@@ -51,11 +51,10 @@ const initialize = async (service, options) => {
 const action = async (service, options) => {
   try {
     await initialize(service, options);
-    process.exit();
   } catch (error) {
     log.error(error.message);
-    process.exit();
   }
+  process.exit();
 };
 
 const command = program =>

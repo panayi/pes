@@ -24,11 +24,11 @@ const downloadLegacyAds = async () => {
     await sequentialDownloadAd(0, ads);
 
     const numberOfAds = R.compose(R.length, R.values)(ads);
-    return `Downloaded ${numberOfAds} ads`;
+    log.success(`Downloaded ${numberOfAds} ads`);
   } catch (error) {
     log.error('Firebase: Failed to download legacy ads');
-    throw error;
   }
+  process.exit();
 };
 
 const command = program =>

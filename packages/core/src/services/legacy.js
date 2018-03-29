@@ -2,6 +2,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import uuid from 'uuid-v4';
 import fetch from 'node-fetch';
 import random from 'lodash.random';
 import striptags from 'striptags';
@@ -201,11 +202,7 @@ const fetchImages = async images => {
       R.map(async image => {
         const result = await fetchService.getImage(image);
         const { buffer, contentType } = result;
-        const filename = image
-          .split('/')
-          .pop()
-          .split('?')
-          .shift();
+        const filename = uuid();
 
         data.push({ buffer, contentType, filename });
 
