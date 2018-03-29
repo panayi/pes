@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@pesposa/core": "^0.1.0",
+    "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "firebase-functions": "^0.8.1",

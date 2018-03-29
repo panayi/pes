@@ -1,8 +1,9 @@
 import * as R from 'ramda';
-import { isNotNil } from 'ramda-adjunct';
+import { isNotNil, isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import { isLoaded } from 'react-redux-firebase';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 
 const FIREBASE_AUTH_PATH = [...firebaseConfig.FIREBASE_PATH, 'auth'];
 
@@ -78,3 +79,12 @@ export const isCurrentUserSelector = userIdSelector =>
     (isAuthenticated, currentUserId, userId) =>
       isAuthenticated && R.equals(currentUserId, userId),
   );
+
+// BETA
+
+export const isBetaUserSelector = createSelector(
+  uidSelector,
+  R.compose(R.defaultTo([]), R.keys, propSelector('betaUsers')),
+  (uid, betaUsers) =>
+    R.compose(R.complement(isNilOrEmpty), R.find(R.equals(uid)))(betaUsers),
+);

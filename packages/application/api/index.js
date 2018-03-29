@@ -1,12 +1,14 @@
 /* @flow */
 import * as functions from 'firebase-functions';
 import express from 'express';
+import bodyParser from 'body-parser';
 import createCors from 'cors';
 import env from '@pesposa/core/src/config/env';
 import { isAuthenticated } from './utils';
 import reverseGeocode from './reverseGeocode';
 import geoip from './geoip';
 import migrateAnonymousUser from './migrateAnonymousUser';
+import createBetaUser from './createBetaUser';
 
 const app = express();
 
@@ -18,6 +20,7 @@ if (env.firebaseProject === 'pesposa-dev') {
 // Public routes
 app.post(
   '/reverse-geocode',
+  bodyParser.json(),
   reverseGeocode
 )
 app.post(
@@ -35,5 +38,12 @@ app.post(
   }),
   migrateAnonymousUser,
 );
+
+app.post(
+  '/beta-users/create',
+  isAuthenticated(),
+  bodyParser.json(),
+  createBetaUser
+)
 
 export default functions.https.onRequest(app);

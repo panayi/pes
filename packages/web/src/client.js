@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import { hydrate } from 'react-dom';
 import { JssProvider, SheetsRegistry } from 'react-jss';
 import { BrowserRouter } from 'react-router-dom';
@@ -19,7 +20,9 @@ import routes from 'routes';
 // that is shown while script is loading
 window.onload = () => {
   const element = document.querySelector('#script-loading-spinner');
-  element.parentNode.removeChild(element);
+  if (element) {
+    element.parentNode.removeChild(element);
+  }
 };
 
 const history = createHistory();
@@ -28,7 +31,11 @@ const history = createHistory();
 const sheetsManager = new WeakMap();
 
 ensureReady(routes).then(data => {
-  const store = configureStore(data, history);
+  const finalData = R.compose(
+    R.dissocPath(['firebase', 'auth']),
+    R.omit(['showSpinner']),
+  )(data);
+  const store = configureStore(finalData, history);
 
   const sheetsRegistry = new SheetsRegistry();
 

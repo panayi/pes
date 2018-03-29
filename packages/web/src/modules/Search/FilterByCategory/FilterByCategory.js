@@ -81,6 +81,7 @@ const categoryLinksSelector = (state, props) => {
       id,
       label: t(id),
     })),
+    R.defaultTo([]),
   )(categories);
 };
 

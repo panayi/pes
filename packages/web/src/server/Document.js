@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import { AfterRoot, AfterData } from '@jaredpalmer/after';
 import { JssProvider, SheetsRegistry } from 'react-jss';
 import CssBaseline from 'material-ui/CssBaseline';
@@ -44,6 +45,7 @@ class Document extends React.Component {
 
   render() {
     const { helmet, assets, data, css, userAgent } = this.props;
+    const showSpinner = R.prop('showSpinner', data);
 
     // get attributes from React Helmet
     const htmlAttrs = helmet.htmlAttributes.toComponent();
@@ -94,21 +96,23 @@ class Document extends React.Component {
           {ssrBehavior.getStylesheetComponent(userAgent)}
         </head>
         <body {...bodyAttrs}>
-          <div
-            id="script-loading-spinner"
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Spinner />
-          </div>
+          {showSpinner && (
+            <div
+              id="script-loading-spinner"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Spinner />
+            </div>
+          )}
           <AfterRoot />
           <AfterData data={data} />
           <script

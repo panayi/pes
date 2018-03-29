@@ -128,7 +128,7 @@ export default R.compose(
       actions.loadFirstPage(),
     ]);
 
-    return store.getState();
+    return { ...store.getState(), showSpinner: true };
   }),
   needsBetaUser,
   withProps(
