@@ -50,6 +50,4 @@ export const messages = ({ adSelector, buyerSelector }) =>
   );
 
 // BETA
-export const betaUsers = createModelConnections(modelPaths.BETA_USERS, {
-  type: 'once',
-});
+export const betaUsers = createModelConnections(modelPaths.BETA_USERS);

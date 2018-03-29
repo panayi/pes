@@ -6,7 +6,6 @@ import env from '@pesposa/core/src/config/env';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import { selectors as profileSelectors } from 'store/firebase/profile';
 import Spinner from 'components/Spinner/Spinner';
 
 const CenteredSpinner = withProps({
@@ -14,7 +13,7 @@ const CenteredSpinner = withProps({
 })(Spinner);
 
 const mapDataToProps = {
-  betaUsers: models.betaUsers.all,
+  betaUsers: models.betaUsers.allObjects,
 };
 
 const needsNonBetaUser = branch(
@@ -25,7 +24,7 @@ const needsNonBetaUser = branch(
     connectedRouterRedirect({
       redirectPath: '/',
       allowRedirectBack: false,
-      authenticatedSelector: R.complement(profileSelectors.isBetaUserSelector),
+      authenticatedSelector: R.complement(authSelectors.isBetaUserSelector),
       authenticatingSelector: authSelectors.isAuthenticatingSelector,
       AuthenticatingComponent: CenteredSpinner,
     }),

@@ -3,8 +3,10 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import authConfig from '@pesposa/core/src/config/auth';
 import env from '@pesposa/core/src/config/env';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
+import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import firebaseApi from 'services/firebase';
+import api from 'services/api';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { actions as modalActions } from 'store/modals';
 import { actions as loginActions } from 'store/login';
@@ -134,4 +136,26 @@ export const logout = () => async (dispatch, getState, getFirebase) => {
   if (env.betaEnabled) {
     window.location.href = '/beta';
   }
+};
+
+// BETA
+
+export const createBetaUser = ({ code, email }) => async (
+  dispatch,
+  getState,
+  getFirebase,
+) => {
+  const token = selectors.tokenSelector(getState());
+  const response = await dispatch(api.createBetaUser({ code, email }, token));
+
+  if (response.ok) {
+    // Refetch beta users
+    await getFirebase()
+      .ref(modelPaths.BETA_USERS.string)
+      .once('value');
+
+    return true;
+  }
+
+  return false;
 };
