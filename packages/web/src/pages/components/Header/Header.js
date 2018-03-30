@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { withStateHandlers } from 'recompose';
 import { createStructuredSelector } from 'reselect';
+import { DesktopScreen, MobileScreen } from 'react-responsive-redux';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import withStyles from 'material-ui/styles/withStyles';
@@ -71,46 +72,14 @@ const styles = theme => ({
     top: 2,
     right: 2,
   },
-  menuButton: {
-    display: 'none',
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      display: 'block',
-    },
-  },
   createAdButton: {
     marginLeft: theme.spacing.unit * 3,
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      display: 'none',
-    },
   },
   loginButton: {
     margin: [0, theme.spacing.unit],
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      display: 'none',
-    },
   },
   messagesButton: {
     marginLeft: theme.spacing.unit,
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      display: 'none',
-    },
-  },
-  filtersButton: {
-    display: 'none',
-    [theme.breakpoints.down(theme.layout.breakpoints.filtersDialog)]: {
-      display: 'block',
-    },
-  },
-  desktopMenu: {
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      display: 'none',
-    },
-  },
-  mobileMenuButton: {
-    display: 'none',
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      display: 'block',
-    },
   },
 });
 
@@ -126,7 +95,7 @@ const Header = ({
 }) => (
   <WithConversations>
     <React.Fragment>
-      <div className={classes.mobileMenuButton}>
+      <MobileScreen>
         <UnreadConversationsBadge
           classes={{
             badge: classNames(classes.unreadBadge, classes.mobileUnreadBadge),
@@ -140,38 +109,45 @@ const Header = ({
             )}
           </IconButton>
         </UnreadConversationsBadge>
-      </div>
+      </MobileScreen>
       <Link to="/" exact className={classes.logoLink}>
         <Logo className={classes.logo} />
       </Link>
       <div className={classes.searchInput}>
         <SearchQuery inHome={inHome} />
       </div>
-      <ShowCreateAdButton className={classes.createAdButton} />
-      <LoginButton
-        className={classes.loginButton}
-        color="inherit"
-        onClick={() => openModal('login')}
-      >
-        Login
-      </LoginButton>
-      {inHome && (
-        <IconButton
-          className={classes.filtersButton}
+      <DesktopScreen>
+        <ShowCreateAdButton className={classes.createAdButton} />
+      </DesktopScreen>
+      <DesktopScreen>
+        <LoginButton
+          className={classes.loginButton}
           color="inherit"
-          onClick={() => openModal('searchFilters')}
+          onClick={() => openModal('login')}
         >
-          <TuneIcon />
-        </IconButton>
-      )}
-      <MessagesButton className={classes.messagesButton}>
-        <UnreadConversationsBadge classes={{ badge: classes.unreadBadge }}>
-          <Link to="/messages">Messages</Link>
-        </UnreadConversationsBadge>
-      </MessagesButton>
-      <div className={classes.desktopMenu}>
+          Login
+        </LoginButton>
+      </DesktopScreen>
+      <MobileScreen>
+        {inHome && (
+          <IconButton
+            color="inherit"
+            onClick={() => openModal('searchFilters')}
+          >
+            <TuneIcon />
+          </IconButton>
+        )}
+      </MobileScreen>
+      <DesktopScreen>
+        <MessagesButton className={classes.messagesButton}>
+          <UnreadConversationsBadge classes={{ badge: classes.unreadBadge }}>
+            <Link to="/messages">Messages</Link>
+          </UnreadConversationsBadge>
+        </MessagesButton>
+      </DesktopScreen>
+      <DesktopScreen>
         <DesktopMenu currentUserId={currentUserId} />
-      </div>
+      </DesktopScreen>
       <Drawer open={mobileMenuOpened} onClose={closeMobileMenu}>
         <MobileMenu
           isAuthenticated={isAuthenticated}

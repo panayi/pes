@@ -1,7 +1,5 @@
 import React from 'react';
-import * as R from 'ramda';
 import { asyncComponent } from '@jaredpalmer/after';
-import env from '@pesposa/core/src/config/env';
 import Spinner from 'components/Spinner/Spinner';
 
 const Placeholder = () => <Spinner overlay centered />;
@@ -49,6 +47,13 @@ const routes = [
       Placeholder,
     }),
   },
+  // BETA
+  {
+    path: '/beta',
+    component: asyncComponent({
+      loader: () => import('./pages/beta/index'),
+    }),
+  },
   {
     path: '/:category?/:place?',
     component: asyncComponent({
@@ -58,17 +63,4 @@ const routes = [
   },
 ];
 
-// BETA
-const finalRoutes = env.betaEnabled
-  ? R.prepend(
-      {
-        path: '/beta',
-        component: asyncComponent({
-          loader: () => import('./pages/beta/index'),
-        }),
-      },
-      routes,
-    )
-  : routes;
-
-export default finalRoutes;
+export default routes;

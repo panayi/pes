@@ -79,9 +79,6 @@ export default createMuiTheme({
       tablet: 64,
     },
     sidebarWidth: layout.SIDEBAR_WIDTH,
-    breakpoints: {
-      filtersDialog: 'sm',
-    },
   },
   overrides: {
     MuiBackdrop: {

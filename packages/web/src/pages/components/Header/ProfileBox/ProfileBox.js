@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { NavLink } from 'react-router-dom';
+import { DesktopScreen } from 'react-responsive-redux';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
@@ -70,15 +71,9 @@ const styles = theme => ({
   privacyLink: {
     color: theme.palette.primary.main,
     textDecoration: 'underline',
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      display: 'none',
-    },
   },
   profileLink: {
     marginTop: theme.spacing.unit * 2,
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      display: 'none',
-    },
   },
 });
 
@@ -128,22 +123,26 @@ class ProfileBox extends Component {
               {phoneNumber}
             </Typography>
           )}
-          <Typography
-            className={classes.privacyLink}
-            component={NavLink}
-            to="/privacy"
-          >
-            Privacy
-          </Typography>
-          <Link
-            className={classes.profileLink}
-            to="/profile"
-            variant="raised"
-            size="small"
-            color="primary"
-          >
-            My Profile
-          </Link>
+          <DesktopScreen>
+            <Typography
+              className={classes.privacyLink}
+              component={NavLink}
+              to="/privacy"
+            >
+              Privacy
+            </Typography>
+          </DesktopScreen>
+          <DesktopScreen>
+            <Link
+              className={classes.profileLink}
+              to="/profile"
+              variant="raised"
+              size="small"
+              color="primary"
+            >
+              My Profile
+            </Link>
+          </DesktopScreen>
         </div>
       </div>
     ) : null;
