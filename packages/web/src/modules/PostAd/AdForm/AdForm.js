@@ -153,6 +153,7 @@ class AdForm extends Component<Props> {
                 variant="raised"
                 type="submit"
                 size="large"
+                fullWidth
               >
                 {submitButtonLabel}
               </Button>
