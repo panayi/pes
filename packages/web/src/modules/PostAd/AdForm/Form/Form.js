@@ -60,7 +60,7 @@ class Form extends Component {
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.price}
-          label="Price"
+          label="Price (EUR)" // TODO: shouldn't be hard-coded, but based on user location
           error={R.has('price', errors)}
           helperText={errors.price}
         />

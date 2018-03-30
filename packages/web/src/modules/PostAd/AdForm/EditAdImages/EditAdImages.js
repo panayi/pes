@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
 import { withProps, withState } from 'recompose';
-import GridList, { GridListTile } from 'material-ui/GridList';
 import { FormHelperText } from 'material-ui/Form';
 import IconButton from 'material-ui/IconButton';
 import withStyles from 'material-ui/styles/withStyles';
@@ -14,7 +13,9 @@ import { actions as storageActions } from 'store/firebase/storage';
 import { constants as postAdConstants } from 'store/postAd';
 import Imgix from 'components/Imgix/Imgix';
 import Spinner from 'components/Spinner/Spinner';
-import Dropzone from '../Dropzone/Dropzone';
+import Dropzone from './Dropzone/Dropzone';
+
+const ITEM_SIZE = 83;
 
 type Props = {
   images: Object,
@@ -33,19 +34,48 @@ type Props = {
 };
 
 const styles = theme => ({
+  list: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+  },
+  listInner: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    overflow: 'auto',
+    padding: 0,
+    transform: 'translateZ(0)',
+  },
+  item: {
+    flex: `0 0 ${ITEM_SIZE}px`,
+    height: ITEM_SIZE,
+    width: ITEM_SIZE,
+    overflow: 'hidden',
+    position: 'relative',
+    '& + $item': {
+      marginLeft: theme.spacing.unit * 2,
+    },
+  },
   errorBox: {
     borderColor: theme.palette.error.main,
   },
   errorText: {
     color: theme.palette.error.main,
   },
-  deleteIcon: {
+  deleteButtonWrap: {
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteButton: {
     color: theme.palette.common.white,
+    background: theme.palette.action.disabled,
     '& svg': {
       width: '1.2em',
       height: '1.2em',
@@ -91,36 +121,39 @@ export class EditAdImages extends Component<Props> {
     const canDelete = !published || imagesCount > 1;
 
     return (
-      <IconButton
-        className={classNames(classes.deleteIcon, {
-          [classes.disabled]: !canDelete,
-        })}
-        dense
-        disabled={!canDelete}
-        onClick={() => this.handleDeleteImage(imageId, image)}
-      >
-        <DeleteIcon />
-      </IconButton>
+      <div className={classes.deleteButtonWrap}>
+        <IconButton
+          className={classNames(classes.deleteButton, {
+            [classes.disabled]: !canDelete,
+          })}
+          disabled={!canDelete}
+          size="small"
+          onClick={() => this.handleDeleteImage(imageId, image)}
+        >
+          <DeleteIcon />
+        </IconButton>
+      </div>
     );
   };
 
   render() {
     const { images, isLoading, canUploadImage, error, classes } = this.props;
-    const list = R.map(
-      ([imageId, image]) => (
-        <GridListTile key={image.fullPath}>
+    const list = R.compose(
+      R.map(([imageId, image]) => (
+        <div className={classes.item} key={image.fullPath}>
           <Imgix
             image={image}
-            params={{ h: 87, w: 87, fit: 'fill', bg: '000' }}
+            params={{ h: ITEM_SIZE, w: ITEM_SIZE, fit: 'fill', bg: '000' }}
           />
           {this.renderActionForImage(imageId, image)}
-        </GridListTile>
-      ),
-      R.toPairs(images),
-    );
+        </div>
+      )),
+      R.reverse,
+      R.toPairs,
+    )(images);
     const finalList = canUploadImage
-      ? R.append(
-          <GridListTile key="add">
+      ? R.prepend(
+          <div className={classes.item} key="add">
             <Dropzone
               acceptedFileTypes={imagesConfig.ACCEPTED_TYPES}
               className={error && classes.errorBox}
@@ -128,16 +161,16 @@ export class EditAdImages extends Component<Props> {
               isLoading={isLoading}
               multiple
             />
-          </GridListTile>,
+          </div>,
           list,
         )
       : list;
 
     return (
       <div>
-        <GridList cellHeight={87} cols={postAdConstants.MAXIMUM_IMAGES_PER_AD}>
-          {finalList}
-        </GridList>
+        <div className={classes.list}>
+          <div className={classes.listInner}>{finalList}</div>
+        </div>
         {error && (
           <FormHelperText className={classes.errorText}>{error}</FormHelperText>
         )}

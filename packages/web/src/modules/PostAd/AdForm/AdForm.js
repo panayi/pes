@@ -11,7 +11,7 @@ import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import Button from 'components/Button/Button';
 import Spinner from 'components/Spinner/Spinner';
-import EditAdImages from '../EditAdImages/EditAdImages';
+import EditAdImages from './EditAdImages/EditAdImages';
 import Form from './Form/Form';
 
 const DEFAULT_VALUES = {
@@ -53,13 +53,16 @@ const styles = theme => ({
     margin: 0,
   },
   content: {
-    [theme.breakpoints.up(theme.map.tablet)]: {
+    [theme.breakpoints.up(theme.map.laptop)]: {
       minWidth: 530,
       minHeight: 380,
     },
   },
   editImages: {
     marginBottom: theme.spacing.unit * 2,
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      marginBottom: 0,
+    },
   },
 });
 
