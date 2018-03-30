@@ -56,9 +56,16 @@ const styles = theme => ({
   },
   searchInput: {
     flex: '1 1 auto',
+    marginRight: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit * 2,
     [theme.breakpoints.down(theme.map.tablet)]: {
-      margin: 0,
+      marginRight: theme.spacing.unit * 2,
+      marginLeft: 0,
+    },
+  },
+  searchInputHome: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      marginRight: 0,
     },
   },
   unreadBadge: {
@@ -74,9 +81,6 @@ const styles = theme => ({
   mobileUnreadBadge: {
     top: 2,
     right: 2,
-  },
-  createAdButton: {
-    marginLeft: theme.spacing.unit * 3,
   },
   loginButton: {
     margin: [0, theme.spacing.unit],
@@ -116,11 +120,15 @@ const Header = ({
       <Link to="/" exact className={classes.logoLink}>
         <Logo className={classes.logo} />
       </Link>
-      <div className={classes.searchInput}>
+      <div
+        className={classNames(classes.searchInput, {
+          [classes.searchInputHome]: inHome,
+        })}
+      >
         <SearchQuery inHome={inHome} />
       </div>
       <DesktopScreen>
-        <ShowCreateAdButton className={classes.createAdButton} />
+        <ShowCreateAdButton />
       </DesktopScreen>
       <DesktopScreen>
         <LoginButton

@@ -1,8 +1,13 @@
 import React from 'react';
+import { withProps } from 'recompose';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import Layout from 'layouts/Layout/Layout';
 import Header from 'pages/components/Header/Header';
+
+const Section = withProps({
+  component: 'div',
+})(Typography);
 
 const styles = theme => ({
   root: {
@@ -35,7 +40,7 @@ const Privacy = ({ classes }) => (
       <Typography className={classes.title} variant="headline">
         Privacy Policy
       </Typography>
-      <Typography paragraph>
+      <Section paragraph>
         This privacy policy has been compiled to better serve those who are
         concerned with how their &quot;Personally Identifiable Information&quot;
         (PII) is being used online. PII, as described in US privacy law and
@@ -45,28 +50,28 @@ const Privacy = ({ classes }) => (
         carefully to get a clear understanding of how we collect, use, protect
         or otherwise handle your Personally Identifiable Information in
         accordance with our website.
-      </Typography>
-      <Typography className={classes.sectionTitle}>
+      </Section>
+      <Section className={classes.sectionTitle}>
         What personal information do we collect from the people that visit our
         blog, website or app?
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         When ordering or registering on our site, as appropriate, you may be
         asked to enter your name, email address, phone number or other details
         to help you with your experience.
-      </Typography>
-      <Typography className={classes.sectionTitle}>
+      </Section>
+      <Section className={classes.sectionTitle}>
         When do we collect information?
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         We collect information from you when you register on our site or enter
         information on our site, and when you provide us with feedback on our
         products or services
-      </Typography>
-      <Typography className={classes.sectionTitle}>
+      </Section>
+      <Section className={classes.sectionTitle}>
         How do we use your information?
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         We may use the information we collect from you when you register, make a
         purchase, sign up for our newsletter, respond to a survey or marketing
         communication, surf the website, or use certain other site features in
@@ -79,11 +84,11 @@ const Privacy = ({ classes }) => (
           <li>To quickly process your transactions.</li>
           <li>To ask for ratings and reviews of services or products</li>
         </ol>
-      </Typography>
-      <Typography className={classes.sectionTitle}>
+      </Section>
+      <Section className={classes.sectionTitle}>
         How do we protect your information?
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         <ol className={classes.list}>
           <li>
             We do not use vulnerability scanning and/or scanning to PCI
@@ -104,11 +109,9 @@ const Privacy = ({ classes }) => (
         submits, or accesses their information to maintain the safety of your
         personal information. All transactions are processed through a gateway
         provider and are not stored or processed on our servers.
-      </Typography>
-      <Typography className={classes.sectionTitle}>
-        Do we use cookies?
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section className={classes.sectionTitle}>Do we use cookies?</Section>
+      <Section paragraph>
         Yes. Cookies are small files that a site or its service provider
         transfers to your computer&apos;s hard drive through your Web browser
         (if you allow) that enables the site&apos;s or service provider&apos;s
@@ -123,8 +126,8 @@ const Privacy = ({ classes }) => (
         <br />
         We use cookies to understand and save user&apos;s preferences for future
         visits.
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         You can choose to have your computer warn you each time a cookie is
         being sent, or you can choose to turn off all cookies. You do this
         through your browser settings. Since browser is a little different, look
@@ -135,11 +138,9 @@ const Privacy = ({ classes }) => (
         experience more efficient may not function properly.It won&apos;t affect
         the user&apos;s experience that make your site experience more efficient
         and may not function properly.
-      </Typography>
-      <Typography className={classes.sectionTitle}>
-        Third-party disclosure
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section className={classes.sectionTitle}>Third-party disclosure</Section>
+      <Section paragraph>
         We do not sell, trade, or otherwise transfer to outside parties your
         Personally Identifiable Information unless we provide users with advance
         notice. This does not include website hosting partners and other parties
@@ -150,20 +151,18 @@ const Privacy = ({ classes }) => (
         policies, or protect ours or others&apos; rights, property or safety.
         However, non-personally identifiable visitor information may be provided
         to other parties for marketing, advertising, or other uses.
-      </Typography>
-      <Typography className={classes.sectionTitle}>
-        Third-party links
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section className={classes.sectionTitle}>Third-party links</Section>
+      <Section paragraph>
         Occasionally, at our discretion, we may include or offer third-party
         products or services on our website. These third-party sites have
         separate and independent privacy policies. We therefore have no
         responsibility or liability for the content and activities of these
         linked sites. Nonetheless, we seek to protect the integrity of our site
         and welcome any feedback about these sites.
-      </Typography>
-      <Typography className={classes.sectionTitle}>Google</Typography>
-      <Typography paragraph>
+      </Section>
+      <Section className={classes.sectionTitle}>Google</Section>
+      <Section paragraph>
         Google&apos;s advertising requirements can be summed up by Google&apos;s
         Advertising Principles. They are put in place to provide a positive
         experience for users.
@@ -176,8 +175,8 @@ const Privacy = ({ classes }) => (
         users based on previous visits to our site and other sites on the
         Internet. Users may opt-out of the use of the DART cookie by visiting
         the Google Ad and Content Network privacy policy.
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         We have implemented the following:
         <ol className={classes.list}>
           <li>Google Display Network Impression Reporting</li>
@@ -189,17 +188,17 @@ const Privacy = ({ classes }) => (
         (such as the DoubleClick cookie) or other third-party identifiers
         together to compile data regarding user interactions with ad impressions
         and other ad service functions as they relate to our website.
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         <u>Opting out:</u> Users can set preferences for how Google advertises
         to you using the Google Ad Settings page. Alternatively, you can opt out
         by visiting the Network Advertising Initiative Opt Out page or by using
         the Google Analytics Opt Out Browser add on.
-      </Typography>
-      <Typography className={classes.sectionTitle}>
+      </Section>
+      <Section className={classes.sectionTitle}>
         California Online Privacy Protection Act
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         CalOPPA is the first state law in the nation to require commercial
         websites and online services to post a privacy policy. The law&apos;s
         reach stretches well beyond California to require any person or company
@@ -231,24 +230,22 @@ const Privacy = ({ classes }) => (
             account.
           </li>
         </ul>
-      </Typography>
-      <Typography className={classes.sectionTitle}>
+      </Section>
+      <Section className={classes.sectionTitle}>
         How does our site handle Do Not Track signals?
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         We honor Do Not Track signals and Do Not Track, plant cookies, or use
         advertising when a Do Not Track (DNT) browser mechanism is in place.
-      </Typography>
-      <Typography className={classes.sectionTitle}>
+      </Section>
+      <Section className={classes.sectionTitle}>
         Does our site allow third-party behavioral tracking?
-      </Typography>
-      <Typography paragraph>
-        We allow third-party behavioral tracking
-      </Typography>
-      <Typography className={classes.sectionTitle}>
+      </Section>
+      <Section paragraph>We allow third-party behavioral tracking</Section>
+      <Section className={classes.sectionTitle}>
         COPPA (Children Online Privacy Protection Act)
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         When it comes to the collection of personal information from children
         under the age of 13 years old, the Children&apos;s Online Privacy
         Protection Act (COPPA) puts parents in control. The Federal Trade
@@ -257,19 +254,19 @@ const Privacy = ({ classes }) => (
         services must do to protect children&apos;s privacy and safety online.
         <br />
         We do not specifically market to children under the age of 13 years old.
-      </Typography>
-      <Typography className={classes.sectionTitle}>
+      </Section>
+      <Section className={classes.sectionTitle}>
         Fair Information Practices
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         The Fair Information Practices Principles form the backbone of privacy
         law in the United States and the concepts they include have played a
         significant role in the development of data protection laws around the
         globe. Understanding the Fair Information Practice Principles and how
         they should be implemented is critical to comply with the various
         privacy laws that protect personal information.
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         In order to be in line with Fair Information Practices we will take the
         following responsive action, should a data breach occur:
         <ol className={classes.list}>
@@ -279,8 +276,8 @@ const Privacy = ({ classes }) => (
             days.
           </li>
         </ol>
-      </Typography>
-      <Typography paragraph>
+      </Section>
+      <Section paragraph>
         We also agree to the Individual Redress Principle which requires that
         individuals have the right to legally pursue enforceable rights against
         data collectors and processors who fail to adhere to the law. This
@@ -288,10 +285,10 @@ const Privacy = ({ classes }) => (
         against data users, but also that individuals have recourse to courts or
         government agencies to investigate and/or prosecute non-compliance by
         data processors.
-      </Typography>
-      <Typography className={classes.modified}>
+      </Section>
+      <Section className={classes.modified}>
         Last Modified: 22 March 2018
-      </Typography>
+      </Section>
     </div>
   </Layout>
 );
