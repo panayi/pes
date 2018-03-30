@@ -6,4 +6,5 @@ export const LEGACY_ADS_OUTPUT_PATH = path.join(
   '..',
   '..',
   'legacyData',
+  'data',
 );

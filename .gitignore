@@ -13,9 +13,6 @@ codeclimate-output.html
 build/
 packages/web/build/
 
-# data
-legacyData/
-
 # OS X
 .DS_Store
 

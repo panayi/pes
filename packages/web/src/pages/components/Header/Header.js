@@ -42,6 +42,9 @@ const styles = theme => ({
       paddingLeft: 0,
       paddingRight: theme.spacing.unit * 1.5,
     },
+    '@media (max-width: 320px)': {
+      display: 'none',
+    },
   },
   logo: {
     width: 115,
