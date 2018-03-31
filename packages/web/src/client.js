@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { hydrate } from 'react-dom';
+import ReactDOM, { hydrate } from 'react-dom';
 import { JssProvider, SheetsRegistry } from 'react-jss';
 import { BrowserRouter } from 'react-router-dom';
 import { ensureReady, After } from '@jaredpalmer/after';
@@ -12,6 +12,7 @@ import jss from 'config/styles';
 import theme from 'config/theme';
 import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
+import { selectors as responsiveSelectors } from 'store/responsive';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import routes from 'routes';
@@ -39,7 +40,13 @@ ensureReady(routes).then(data => {
 
   const sheetsRegistry = new SheetsRegistry();
 
-  return hydrate(
+  const widthMismatch = responsiveSelectors.widthMismatchSelector(finalData);
+
+  // If the app was rendered with a different breakpoint on the server than on the client,
+  // fuck it and just re-render the whole app
+  const renderMethod = widthMismatch ? ReactDOM.render : hydrate;
+
+  renderMethod(
     <BrowserRouter>
       <ErrorBoundary>
         <Provider store={store}>
