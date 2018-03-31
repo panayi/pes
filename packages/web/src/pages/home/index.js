@@ -45,7 +45,7 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 1.5,
     paddingRight: theme.spacing.unit * 1.5,
     [theme.breakpoints.down(theme.map.tablet)]: {
-      paddingTop: theme.spacing.unit * 2,
+      paddingTop: theme.spacing.unit,
     },
   },
 });
