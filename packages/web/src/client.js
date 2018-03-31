@@ -14,6 +14,7 @@ import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
 import { selectors as responsiveSelectors } from 'store/responsive';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
+import WidthMatch from 'components/WidthMatch/WidthMatch';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import routes from 'routes';
 
@@ -40,30 +41,39 @@ ensureReady(routes).then(data => {
 
   const sheetsRegistry = new SheetsRegistry();
 
-  const widthMismatch = responsiveSelectors.widthMismatchSelector(finalData);
+  let renderMethod = hydrate;
+  let rootId = 'root';
 
   // If the app was rendered with a different breakpoint on the server than on the client,
   // fuck it and just re-render the whole app
-  const renderMethod = widthMismatch ? ReactDOM.render : hydrate;
+  const widthMismatch = responsiveSelectors.widthMismatchSelector(finalData);
+  if (widthMismatch) {
+    const rootEl = document.getElementById('root');
+    rootEl.parentNode.removeChild(rootEl);
+    rootId = 'root2';
+    renderMethod = ReactDOM.render;
+  }
 
   renderMethod(
     <BrowserRouter>
       <ErrorBoundary>
         <Provider store={store}>
-          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-            <JssProvider registry={sheetsRegistry} jss={jss}>
-              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-                <React.Fragment>
-                  <CssBaseline />
-                  <After data={data} routes={routes} store={store} />
-                </React.Fragment>
-              </MuiThemeProvider>
-            </JssProvider>
-          </SearchProvider>
+          <WidthMatch>
+            <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+              <JssProvider registry={sheetsRegistry} jss={jss}>
+                <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                  <React.Fragment>
+                    <CssBaseline />
+                    <After data={data} routes={routes} store={store} />
+                  </React.Fragment>
+                </MuiThemeProvider>
+              </JssProvider>
+            </SearchProvider>
+          </WidthMatch>
         </Provider>
       </ErrorBoundary>
     </BrowserRouter>,
-    document.getElementById('root'),
+    document.getElementById(rootId),
     () => {
       // [ReHydratation](https://github.com/cssinjs/jss/blob/master/docs/ssr.md)
       const jssStyles = document.getElementById('jss-ssr');

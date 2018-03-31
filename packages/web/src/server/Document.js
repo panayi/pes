@@ -11,6 +11,7 @@ import { constants as searchConstants } from 'store/search';
 import Spinner from 'components/Spinner/Spinner';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import SearchProvider from 'modules/Search/Provider/Provider';
+import WidthMatch from 'components/WidthMatch/WidthMatch';
 
 class Document extends React.Component {
   static async getInitialProps({ assets, data, renderPage, req }) {
@@ -21,14 +22,16 @@ class Document extends React.Component {
 
     const page = await renderPage(Component => props => (
       <ErrorBoundary>
-        <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-          <JssProvider registry={sheetsRegistry} jss={jss}>
-            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-              <CssBaseline />
-              <Component {...props} />
-            </MuiThemeProvider>
-          </JssProvider>
-        </SearchProvider>
+        <WidthMatch>
+          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+            <JssProvider registry={sheetsRegistry} jss={jss}>
+              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                <CssBaseline />
+                <Component {...props} />
+              </MuiThemeProvider>
+            </JssProvider>
+          </SearchProvider>
+        </WidthMatch>
       </ErrorBoundary>
     ));
 
@@ -114,6 +117,7 @@ class Document extends React.Component {
             </div>
           )}
           <AfterRoot />
+          <div id="root2" />
           <AfterData data={data} />
           <script
             type="text/javascript"

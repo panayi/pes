@@ -8,32 +8,32 @@ export const isTabletSelector = R.path(constants.TABLET_PATH);
 export const isDesktopSelector = R.path(constants.DESKTOP_PATH);
 export const fakeWidthSelector = R.path(constants.FAKE_WIDTH_PATH);
 
-const breakpointsValues = R.values(theme.breakpoints.values);
+const breakpoints = theme.breakpoints.values;
 
-const isWithin = (value, lower, upper) => value >= lower && value < upper;
+const getWidthBreakpoint = width =>
+  R.compose(
+    R.head,
+    R.find(([name, value]) => width >= value), // eslint-disable-line no-unused-vars
+    R.reverse,
+    R.toPairs,
+  )(breakpoints);
+
+export const fakeWidthBreakpointSelector = createSelector(
+  fakeWidthSelector,
+  getWidthBreakpoint,
+);
+
+export const actualWidthBreakpointSelector = () => {
+  const actualWidth =
+    window.innerWidth ||
+    document.documentElement.clientWidth ||
+    document.body.clientWidth;
+
+  return getWidthBreakpoint(actualWidth);
+};
 
 export const widthMismatchSelector = createSelector(
-  fakeWidthSelector,
-  fakeWidth => {
-    const actualWidth =
-      window.innerWidth ||
-      document.documentElement.clientWidth ||
-      document.body.clientWidth;
-    let mismatch = true;
-
-    R.addIndex(R.forEach)(
-      (breakpoint, index) => {
-        const previousBreakpoint = breakpointsValues[index - 1] || 0;
-        if (
-          isWithin(fakeWidth, previousBreakpoint, breakpoint) &&
-          isWithin(actualWidth, previousBreakpoint, breakpoint)
-        ) {
-          mismatch = false;
-        }
-      },
-      [...breakpointsValues, Number.MAX_SAFE_INTEGER],
-    );
-
-    return mismatch;
-  },
+  fakeWidthBreakpointSelector,
+  actualWidthBreakpointSelector,
+  R.complement(R.equals),
 );

@@ -53,6 +53,7 @@ const BASE_HEIGHT = 592;
 const styles = theme => ({
   root: {
     marginTop: theme.spacing.unit,
+    marginBottom: theme.spacing.unit * 5,
   },
   breadcrumb: {
     marginBottom: theme.spacing.unit,
