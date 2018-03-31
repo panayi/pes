@@ -339,8 +339,8 @@ class MobileViewAd extends React.Component {
               id={adId}
               className={classes.map}
               center={R.path(['location', 'geoposition'], ad)}
-              width={640}
-              height={300}
+              width={768}
+              height={360}
             />
             <div
               role="link"
