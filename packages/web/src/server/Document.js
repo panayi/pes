@@ -22,16 +22,16 @@ class Document extends React.Component {
 
     const page = await renderPage(Component => props => (
       <ErrorBoundary>
-        <WidthMatch>
-          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-            <JssProvider registry={sheetsRegistry} jss={jss}>
-              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-                <CssBaseline />
+        <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+          <JssProvider registry={sheetsRegistry} jss={jss}>
+            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+              <CssBaseline />
+              <WidthMatch>
                 <Component {...props} />
-              </MuiThemeProvider>
-            </JssProvider>
-          </SearchProvider>
-        </WidthMatch>
+              </WidthMatch>
+            </MuiThemeProvider>
+          </JssProvider>
+        </SearchProvider>
       </ErrorBoundary>
     ));
 

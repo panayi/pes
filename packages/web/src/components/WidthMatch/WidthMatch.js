@@ -1,28 +1,23 @@
 import React from 'react';
-import * as R from 'ramda';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import theme from 'config/theme';
 import { selectors as responsiveSelectors } from 'store/responsive';
 
-const WidthMatch = ({ fakeWidthBreakpoint, children }) => {
-  if (process.browser) {
-    return <div>{children}</div>;
-  }
-
-  return (
-    <div
-      className={classNames(
-        'WidthMatch--root',
-        `WidthMatch--${fakeWidthBreakpoint}`,
-      )}
-    >
-      {children}
-      <style
-        dangerouslySetInnerHTML={{
-          // eslint-disable-line react/no-danger
-          __html: `
+const WidthMatch = ({ fakeWidthBreakpoint, children }) => (
+  <div
+    className={
+      process.browser
+        ? ''
+        : classNames('WidthMatch--root', `WidthMatch--${fakeWidthBreakpoint}`)
+    }
+  >
+    {children}
+    <style
+      /* eslint-disable react/no-danger */
+      dangerouslySetInnerHTML={{
+        __html: `
           .WidthMatch--root {
             display: none;
           }
@@ -52,14 +47,14 @@ const WidthMatch = ({ fakeWidthBreakpoint, children }) => {
             }
           }
         `,
-        }}
-      />
-    </div>
-  );
-};
+      }}
+      /* eslint-disable react/no-danger */
+    />
+  </div>
+);
 
 const mapStateToProps = createStructuredSelector({
   fakeWidthBreakpoint: responsiveSelectors.fakeWidthBreakpointSelector,
 });
 
-export default R.compose(connect(mapStateToProps))(WidthMatch);
+export default connect(mapStateToProps)(WidthMatch);

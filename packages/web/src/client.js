@@ -14,7 +14,6 @@ import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
 import { selectors as responsiveSelectors } from 'store/responsive';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
-import WidthMatch from 'components/WidthMatch/WidthMatch';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import routes from 'routes';
 
@@ -56,22 +55,22 @@ ensureReady(routes).then(data => {
 
   renderMethod(
     <BrowserRouter>
-      <ErrorBoundary>
-        <Provider store={store}>
-          <WidthMatch>
-            <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-              <JssProvider registry={sheetsRegistry} jss={jss}>
-                <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-                  <React.Fragment>
-                    <CssBaseline />
+      <Provider store={store}>
+        <ErrorBoundary>
+          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+            <JssProvider registry={sheetsRegistry} jss={jss}>
+              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                <React.Fragment>
+                  <CssBaseline />
+                  <div>
                     <After data={data} routes={routes} store={store} />
-                  </React.Fragment>
-                </MuiThemeProvider>
-              </JssProvider>
-            </SearchProvider>
-          </WidthMatch>
-        </Provider>
-      </ErrorBoundary>
+                  </div>
+                </React.Fragment>
+              </MuiThemeProvider>
+            </JssProvider>
+          </SearchProvider>
+        </ErrorBoundary>
+      </Provider>
     </BrowserRouter>,
     document.getElementById(rootId),
     () => {
