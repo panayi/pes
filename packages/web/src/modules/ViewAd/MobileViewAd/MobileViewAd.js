@@ -362,9 +362,11 @@ class MobileViewAd extends React.Component {
                 />
                 <VerifiedWith user={ad.user} />
               </div>
-              <IconButton className={classes.profileButton}>
-                <KeyboardArrowRight />
-              </IconButton>
+              {ad.user && (
+                <IconButton className={classes.profileButton}>
+                  <KeyboardArrowRight />
+                </IconButton>
+              )}
             </div>
           </div>
         </div>

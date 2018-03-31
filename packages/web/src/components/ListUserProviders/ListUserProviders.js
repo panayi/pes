@@ -46,6 +46,7 @@ class UserProviders extends Component<Props> {
   render() {
     const {
       providerComponent: Provider,
+      prefix,
       className,
       providers,
       link,
@@ -53,18 +54,21 @@ class UserProviders extends Component<Props> {
     } = this.props;
 
     return (
-      <div className={classNames({ [classes.clickable]: link }, className)}>
-        {R.map(
-          provider => (
-            <Provider
-              key={provider.providerId}
-              onClick={() => this.handleProviderClick(provider)}
-              {...provider}
-            />
-          ),
-          providers,
-        )}
-      </div>
+      <React.Fragment>
+        {providers.length ? prefix : null}
+        <div className={classNames({ [classes.clickable]: link }, className)}>
+          {R.map(
+            provider => (
+              <Provider
+                key={provider.providerId}
+                onClick={() => this.handleProviderClick(provider)}
+                {...provider}
+              />
+            ),
+            providers,
+          )}
+        </div>
+      </React.Fragment>
     );
   }
 }

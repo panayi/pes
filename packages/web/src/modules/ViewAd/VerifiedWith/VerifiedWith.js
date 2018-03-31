@@ -21,11 +21,11 @@ const styles = theme => ({
 
 const VerifiedWith = ({ user, className, classes }) => (
   <div className={classNames(classes.verified, className)}>
-    <Typography color="inherit">Verified with&nbsp;</Typography>
     <ListUserProviders
       className={classes.userProviders}
       userId={user}
       hideDisabled
+      prefix={<Typography color="inherit">Verified with&nbsp;</Typography>}
     />
   </div>
 );
