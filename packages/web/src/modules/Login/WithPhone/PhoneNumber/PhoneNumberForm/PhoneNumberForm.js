@@ -47,7 +47,7 @@ class PhoneNumberForm extends Component<Props> {
 
   mapValues = values => {
     const { countryCode, number } = values;
-    const country = R.prop(countryCode, countries);
+    const country = R.find(R.propEq('code', countryCode), countries);
 
     const phoneNumber = isNilOrEmpty(country)
       ? number

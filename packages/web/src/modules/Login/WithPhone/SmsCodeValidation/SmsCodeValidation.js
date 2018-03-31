@@ -5,6 +5,7 @@ import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import withStyles from 'material-ui/styles/withStyles';
 import KeyboardArrowDown from 'material-ui-icons/KeyboardArrowDown';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import Imgix from 'components/Imgix/Imgix';
@@ -42,7 +43,7 @@ const styles = theme => ({
   },
 });
 
-export const CodeForm = (props: Props) => {
+export const SmsCodeValidation = (props: Props) => {
   const { countryFlag, phoneNumber, onSubmit, onBackClick, classes } = props;
 
   return (
@@ -91,9 +92,9 @@ export const CodeForm = (props: Props) => {
 };
 
 const mapDataToProps = {
-  countryFlag: models.countryFlags.one(R.prop('countryCode')),
+  countryFlag: models.countryFlags.one(propSelector('countryCode')),
 };
 
 export default R.compose(connectData(mapDataToProps), withStyles(styles))(
-  CodeForm,
+  SmsCodeValidation,
 );

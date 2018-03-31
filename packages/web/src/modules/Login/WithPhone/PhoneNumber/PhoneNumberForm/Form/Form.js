@@ -22,10 +22,21 @@ type Props = {
 const styles = theme => ({
   root: {
     display: 'flex',
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      flexWrap: 'wrap',
+    },
   },
-  inputWrap: {
-    flex: 1,
-    marginLeft: theme.spacing.unit,
+  formControl: {
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      width: '100%',
+      marginBottom: theme.spacing.unit * 1.5,
+    },
+    '& + $formControl': {
+      marginLeft: theme.spacing.unit,
+      [theme.breakpoints.down(theme.map.tablet)]: {
+        marginLeft: 0,
+      },
+    },
   },
   input: {
     flex: 1,
@@ -47,7 +58,10 @@ const Form = (props: Props) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className={classes.root}>
-        <FormControl error={R.has('countryCode', errors)}>
+        <FormControl
+          className={classes.formControl}
+          error={R.has('countryCode', errors)}
+        >
           <CountrySelect
             name="countryCode"
             onChange={handleChange}
@@ -60,7 +74,7 @@ const Form = (props: Props) => {
           )}
         </FormControl>
         <FormControl
-          className={classes.inputWrap}
+          className={classes.formControl}
           error={R.has('number', errors)}
         >
           <MaskedInput

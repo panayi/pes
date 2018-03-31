@@ -100,6 +100,12 @@ export const validateSmsCode = (code, confirmationResult) => async (
     }
     dispatch(loginActions.loginSucceeded());
   } catch (error) {
+    if (error.code === 'auth/credential-already-in-use') {
+      // TODO: Use a proper dialog and provide a better UX (e.g. a button to click for requesting merge accounts)
+      window.alert(
+        'This phone number is already associated with another user. Please contact support: contact-us@pesposa.com',
+      ); // eslint-disable-line no-alert
+    }
     dispatch(loginActions.loginFailed());
     throw error;
   }
@@ -112,7 +118,10 @@ export const linkProvider = providerId => async (
 ) => {
   if (providerId === firebaseConfig.PROVIDER_IDS.phone) {
     dispatch(
-      modalActions.openModal('login', { contentProps: { phoneOnly: true } }),
+      modalActions.openModal('login', {
+        phoneOnly: true,
+        title: 'Connect your phone number',
+      }),
     );
     return;
   }

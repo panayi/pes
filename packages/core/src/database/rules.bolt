@@ -255,7 +255,7 @@ type ProfileImage {
 type Profile {
   displayName: String | Null,
   avatarUrl: URL | Null, // Provider (facebook, google, etc.) avatar
-  phone: PhoneNumber | Null,
+  phoneNumber: PhoneNumber | Null,
   providerIds: Map<String, Any> | Null
 }
 

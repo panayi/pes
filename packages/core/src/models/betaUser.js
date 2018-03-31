@@ -13,8 +13,7 @@ export const create = async ({ code, email }, currentUserId) => {
 
   // Check if betaUser already exists
   const betaUserSnapshot = await get(currentUserId);
-  const betaUser = betaUserSnapshot && betaUserSnapshot.val();
-  if (betaUser) {
+  if (betaUserSnapshot.exists()) {
     throw new Error('Beta user already exists');
   }
 

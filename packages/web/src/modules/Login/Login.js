@@ -17,6 +17,7 @@ import LoginButtons from './Buttons/Buttons';
 type Props = {
   onSuccess: Function,
   phoneOnly: ?boolean,
+  title: ?string,
   DialogTitle: React$Component<*>,
   DialogContent: React$Component<*>,
   loginWithPhoneStep: string,
@@ -35,6 +36,7 @@ const styles = () => ({
 const Login = ({
   onSuccess,
   phoneOnly,
+  title,
   DialogTitle,
   DialogContent,
   spinner,
@@ -61,7 +63,7 @@ const Login = ({
         title={
           showingSmsCodeValidation
             ? 'Verify your phone number'
-            : 'Log in to continue'
+            : title || 'Log in to continue'
         }
       />
       <DialogContent>

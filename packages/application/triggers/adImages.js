@@ -2,6 +2,7 @@
 import * as functions from 'firebase-functions';
 import * as algoliaService from '@pesposa/core/src/services/algolia';
 import * as adImageModel from '@pesposa/core/src/models/adImage';
+import * as adModel from '@pesposa/core/src/models/ad';
 
 type Event = {
   params: {
@@ -26,7 +27,12 @@ const handleCreate = async (event: Event) => {
 
 const handleDelete = async (event: Event) => {
   const { adId } = event.params;
-  return syncAngolia(adId);
+  const adSnapshot = await adModel.get(adId);
+
+  // If the ad doesn't exist, it was (or will be) deleted from Algolia anyway
+  if (adSnapshot.exists()) {
+    return syncAngolia(adId);
+  }
 };
 
 // TODO: How to type check the path, and ensure
