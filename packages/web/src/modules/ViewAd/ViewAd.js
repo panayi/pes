@@ -1,5 +1,5 @@
 import React from 'react';
-import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
+import { XsScreen, XsScreenHidden } from 'react-responsive-redux';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';
 import DesktopViewAd from './DesktopViewAd/DesktopViewAd';
@@ -7,12 +7,12 @@ import MobileViewAd from './MobileViewAd/MobileViewAd';
 
 const ViewAd = props => (
   <React.Fragment>
-    <DesktopScreen>
+    <XsScreenHidden>
       <DesktopViewAd {...props} />
-    </DesktopScreen>
-    <MobileScreen>
+    </XsScreenHidden>
+    <XsScreen>
       <MobileViewAd {...props} />
-    </MobileScreen>
+    </XsScreen>
   </React.Fragment>
 );
 

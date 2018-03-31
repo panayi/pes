@@ -48,7 +48,9 @@ ensureReady(routes).then(data => {
   const widthMismatch = responsiveSelectors.widthMismatchSelector(finalData);
   if (widthMismatch) {
     const rootEl = document.getElementById('root');
-    rootEl.parentNode.removeChild(rootEl);
+    if (rootEl) {
+      rootEl.parentNode.removeChild(rootEl);
+    }
     rootId = 'root2';
     renderMethod = ReactDOM.render;
   }

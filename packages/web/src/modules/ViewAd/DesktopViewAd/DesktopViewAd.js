@@ -47,16 +47,25 @@ type Props = {
   classes: Object,
 };
 
-const SLIDER_WIDTH = 500;
+const SLIDER_WIDTH_DESKTOP = 500;
+const SLIDER_WIDTH_TABLET = 430;
 const BASE_HEIGHT = 592;
 
 const styles = theme => ({
   root: {
-    marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit * 5,
+    padding: [
+      theme.spacing.unit,
+      theme.spacing.unit * 2,
+      theme.spacing.unit * 2,
+      theme.spacing.unit * 2,
+    ],
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      marginBottom: theme.spacing.unit * 8,
+    },
   },
   breadcrumb: {
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing.unit * 1.5,
   },
   ad: {
     position: 'relative',
@@ -72,6 +81,19 @@ const styles = theme => ({
     width: 64,
     boxSizing: 'border-box',
     padding: [theme.spacing.unit * 2, theme.spacing.unit],
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      right: 0,
+      bottom: -80,
+      marginRight: theme.spacing.unit * 2.5,
+      transform: 'translateX(-100%)',
+    },
+  },
+  shareButtons: {
+    display: 'flex',
+    flexDirection: 'column',
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      flexDirection: 'row',
+    },
   },
   inner: {
     display: 'flex',
@@ -83,9 +105,12 @@ const styles = theme => ({
   },
   images: {
     position: 'relative',
-    width: SLIDER_WIDTH,
+    width: SLIDER_WIDTH_DESKTOP,
     display: 'flex',
     alignItems: 'center',
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      width: SLIDER_WIDTH_TABLET,
+    },
   },
   content: {
     display: 'flex',
@@ -154,17 +179,16 @@ const styles = theme => ({
     position: 'absolute',
     bottom: 0,
     left: theme.spacing.unit * 2,
-    width: SLIDER_WIDTH - theme.spacing.unit * 4,
+    width: SLIDER_WIDTH_DESKTOP - theme.spacing.unit * 4,
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      width: SLIDER_WIDTH_TABLET - theme.spacing.unit * 4,
+    },
   },
   sellerBox: {
     marginBottom: theme.spacing.unit * 2,
   },
   interactionBox: {
     marginBottom: theme.spacing.unit * 2,
-  },
-  shareButtons: {
-    display: 'flex',
-    flexDirection: 'column',
   },
   previousLinkWrap: {
     position: 'absolute',

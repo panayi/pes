@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { withProps, setStatic } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
+import { XsScreen, XsScreenHidden } from 'react-responsive-redux';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import getMetaTags from 'utils/getMetaTags';
 import { models } from 'store/firebase/data';
@@ -34,16 +34,16 @@ const Content = ({ ad, adId, legacy }: Props) => (
 
 const AdPage = (props: Props) => (
   <React.Fragment>
-    <DesktopScreen>
+    <XsScreenHidden>
       <Layout header={Header} fixed>
         <Content {...props} />
       </Layout>
-    </DesktopScreen>
-    <MobileScreen>
+    </XsScreenHidden>
+    <XsScreen>
       <Layout>
         <Content {...props} />
       </Layout>
-    </MobileScreen>
+    </XsScreen>
   </React.Fragment>
 );
 
