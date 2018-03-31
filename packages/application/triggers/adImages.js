@@ -33,6 +33,8 @@ const handleDelete = async (event: Event) => {
   if (adSnapshot.exists()) {
     return syncAngolia(adId);
   }
+
+  return null;
 };
 
 // TODO: How to type check the path, and ensure

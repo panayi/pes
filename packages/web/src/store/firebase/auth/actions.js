@@ -102,9 +102,11 @@ export const validateSmsCode = (code, confirmationResult) => async (
   } catch (error) {
     if (error.code === 'auth/credential-already-in-use') {
       // TODO: Use a proper dialog and provide a better UX (e.g. a button to click for requesting merge accounts)
+      /* eslint-disable no-alert */
       window.alert(
         'This phone number is already associated with another user. Please contact support: contact-us@pesposa.com',
-      ); // eslint-disable-line no-alert
+      );
+      /* eslint-enable no-alert */
     }
     dispatch(loginActions.loginFailed());
     throw error;
