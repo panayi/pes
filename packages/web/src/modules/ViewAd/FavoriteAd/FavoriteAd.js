@@ -1,6 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { withProps, branch, renderNothing } from 'recompose';
+import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
 import FavoriteIcon from 'material-ui-icons/Favorite';
@@ -13,6 +14,12 @@ import {
   actions as dataActions,
   selectors as dataSelectors,
 } from 'store/firebase/data';
+
+const styles = theme => ({
+  active: {
+    color: theme.palette.primary.light,
+  },
+});
 
 class FavoriteAd extends React.Component {
   state = {
@@ -40,7 +47,7 @@ class FavoriteAd extends React.Component {
   }
 
   render() {
-    const { className, toggleFavorite } = this.props;
+    const { className, toggleFavorite, classes } = this.props;
     const { isFavorited } = this.state;
 
     return (
@@ -49,7 +56,11 @@ class FavoriteAd extends React.Component {
         color="inherit"
         onClick={() => toggleFavorite(isFavorited, this.setIsFavorited)}
       >
-        {isFavorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        {isFavorited ? (
+          <FavoriteIcon className={classes.active} />
+        ) : (
+          <FavoriteBorderIcon />
+        )}
       </IconButton>
     );
   }
@@ -75,4 +86,5 @@ export default R.compose(
     },
   })),
   requireUserToCallAction('toggleFavorite'),
+  withStyles(styles),
 )(FavoriteAd);
