@@ -28,27 +28,31 @@ const seedCountryFlags = async () =>
           'image/png',
           'countries',
           `${countryCode}.png`,
-          metadata =>
-            database
-              .ref(`countryFlags/${countryCode}`)
-              .child('flag')
-              .set(metadata),
+          metadata => database.ref(`countryFlags/${countryCode}`).set(metadata),
         );
       }),
       R.pluck('code'),
     )(countries),
   );
 
-const seed = async () => {
+export const seed = async () => {
   try {
     await seedCategories();
     await seedTranslations();
     await seedCountryFlags();
-    return 'Seeded categories, locales, countries';
+    log.info('Firebase: Seeded categories, locales, countries');
   } catch (error) {
     log.error('Firebase: Failed to seed data');
     throw error;
   }
 };
 
-export default seed;
+const command = program =>
+  program
+    .command('seed')
+    .description(
+      'Seed Firebase DB with static data (categories, countryFlags, translations)',
+    )
+    .action(seed);
+
+export default command;

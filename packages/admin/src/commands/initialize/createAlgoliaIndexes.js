@@ -3,7 +3,7 @@ import * as algoliaConfig from '@pesposa/core/src/config/algolia';
 import * as algoliaService from '@pesposa/core/src/services/algolia';
 import log from '@pesposa/core/src/utils/log';
 
-const createIndex = async () => {
+const createAlgoliaIndexes = async () => {
   const { INDEXES } = algoliaConfig;
 
   try {
@@ -40,9 +40,11 @@ const createIndex = async () => {
       }, INDEXES),
     );
 
-    return R.map(({ name, replicas }) => {
+    return R.forEach(({ name, replicas }) => {
       const replicasList = R.compose(R.join(', '), R.pluck('name'))(replicas);
-      return `Created "${name}" index with replicas [${replicasList}]`;
+      log.info(
+        `Algolia: Created "${name}" index with replicas [${replicasList}]`,
+      );
     }, INDEXES);
   } catch (error) {
     log.error('Algolia: Create indexes failed');
@@ -50,4 +52,4 @@ const createIndex = async () => {
   }
 };
 
-export default createIndex;
+export default createAlgoliaIndexes;

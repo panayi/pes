@@ -1,11 +1,10 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import log from '@pesposa/core/src/utils/log';
 import { database } from '@pesposa/core/src/config/firebaseClient';
 import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
 import * as algoliaService from '@pesposa/core/src/services/algolia';
 
-const initialImportAds = async () => {
+const importAds = async () => {
   const ads = (await database.ref('/ads/legacy').once('value')).val();
   const images = (await database.ref('/ads/images').once('value')).val();
 
@@ -29,14 +28,4 @@ const initialImportAds = async () => {
   );
 };
 
-const initialImport = async () => {
-  try {
-    const ads = await initialImportAds();
-    return [`Imported ${ads.length} ads`];
-  } catch (error) {
-    log.error('Algolia: Failed to import ads');
-    throw error;
-  }
-};
-
-export default initialImport;
+export default importAds;

@@ -1,8 +1,6 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from '@pesposa/core/src/config/firebaseClient';
-import seed from './seed';
-import importLegacyAds from './importLegacyAds';
 
 export const canInitialize = async () => {
   const ref = database.ref();
@@ -22,11 +20,4 @@ export const canInitialize = async () => {
   return true;
 };
 
-const initializeFirebase = async options => {
-  const seedResult = await seed(options);
-  const importResult = await importLegacyAds(options);
-
-  return [seedResult, importResult];
-};
-
-export default initializeFirebase;
+export default canInitialize;

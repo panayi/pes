@@ -1,7 +1,9 @@
-import downloadLegacyAds from './downloadLegacyAds';
+import seed from './seed';
+import importLegacyAds from './importLegacyAds';
 import initialize from './initialize';
+import downloadLegacyAds from './downloadLegacyAds';
 
 // BETA
-import addBetaUser from './addBetaUser';
+import makeBetaUser from './makeBetaUser';
 
-export { downloadLegacyAds, initialize, addBetaUser };
+export { seed, importLegacyAds, initialize, downloadLegacyAds, makeBetaUser };

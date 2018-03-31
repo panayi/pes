@@ -1,56 +1,37 @@
-import * as R from 'ramda';
 import log from '@pesposa/core/src/utils/log';
-import initializeFirebase, {
-  canInitialize as canInitializeFirebase,
-} from './firebase';
-import initializeAlgolia, {
-  canInitialize as canInitializeAlgolia,
-} from './algolia';
+import { seed } from '../seed';
+import { importLegacyAds } from '../importLegacyAds';
+import createAlgoliaIndexes from './createAlgoliaIndexes';
+import canInitializeFirebase from './canInitializeFirebase';
+import canInitializeAlgolia from './canInitializeAlgolia';
 
-const shouldInitializeService = name => R.either(R.isNil, R.equals(name));
-
-const shouldInitializeFirebase = shouldInitializeService('firebase');
-const shouldInitializeAlgolia = shouldInitializeService('algolia');
-
-const canInitialize = async service => {
+const canInitialize = async () => {
   log.info('Checking ability to initialize');
 
-  if (shouldInitializeFirebase(service)) {
-    await canInitializeFirebase();
-    log.success('Firebase: OK');
-  }
+  await canInitializeFirebase();
+  log.success('Firebase: OK');
 
-  if (shouldInitializeAlgolia(service)) {
-    await canInitializeAlgolia();
-    log.success('Algolia: OK');
-  }
+  await canInitializeAlgolia();
+  log.success('Algolia: OK');
 };
 
-const initialize = async (service, options) => {
+const initialize = async options => {
   log.info('Starting initialization script');
 
   if (options.force) {
     log.info('Forced initialization');
   } else {
-    await canInitialize(service);
+    await canInitialize();
   }
 
-  if (shouldInitializeFirebase(service)) {
-    const firebaseResult = await initializeFirebase(options);
-    log.success('Firebase: Initialized');
-    R.forEach(msg => log.info(`Firebase: ${msg}`), firebaseResult);
-  }
-
-  if (shouldInitializeAlgolia(service)) {
-    const algoliaResult = await initializeAlgolia(options);
-    log.success('Algolia: Initialized');
-    R.forEach(msg => log.info(`Algolia: ${msg}`), algoliaResult);
-  }
+  await createAlgoliaIndexes();
+  await seed();
+  await importLegacyAds(options);
 };
 
-const action = async (service, options) => {
+const action = async options => {
   try {
-    await initialize(service, options);
+    await initialize(options);
   } catch (error) {
     log.error(error.message);
   }
@@ -59,13 +40,13 @@ const action = async (service, options) => {
 
 const command = program =>
   program
-    .command('initialize [service]')
+    .command('initialize')
     .option('-i, --import <n>', 'How many legacy ads to import')
     .option(
       '-f, --force',
       'Force initialization. WARNING !!! This can potentially overwrite data',
     )
-    .description('Initialize [service] or all services')
+    .description('Runs `seed` and then `importLegacyAds`')
     .action(action);
 
 export default command;
