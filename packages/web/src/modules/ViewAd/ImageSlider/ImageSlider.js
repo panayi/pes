@@ -37,7 +37,7 @@ const styles = theme => ({
       margin: 0,
       padding: 0,
     },
-    [theme.breakpoints.up(theme.map.tablet)]: {
+    [theme.breakpoints.up(theme.map.laptop)]: {
       borderRadius: [theme.borderRadius.xl, 0, 0, theme.borderRadius.xl],
     },
   },
