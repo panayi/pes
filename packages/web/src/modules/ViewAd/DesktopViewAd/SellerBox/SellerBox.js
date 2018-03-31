@@ -73,7 +73,10 @@ const SellerBox = ({ ad, className, classes }) => (
     </div>
     <RevealPhoneButton
       ad={ad}
-      buttonProps={{ size: 'small', variant: 'raised' }}
+      buttonProps={{
+        variant: 'raised',
+        color: ad.user ? 'default' : 'primary',
+      }}
     >
       Call seller
     </RevealPhoneButton>
