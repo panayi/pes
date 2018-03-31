@@ -60,11 +60,12 @@ export class ListAds extends Component {
 
   ensureCanScroll() {
     const hasHits = R.complement(R.isEmpty)(this.props.hits);
-    const scrollIsVisible =
-      document.documentElement.scrollHeight >
-      document.documentElement.clientHeight;
+    const shouldFetchMore =
+      document.documentElement.scrollHeight -
+        document.documentElement.clientHeight <
+      400;
 
-    if (hasHits && !scrollIsVisible) {
+    if (hasHits && shouldFetchMore) {
       this.props.loadNextPage();
     }
   }
