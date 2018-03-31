@@ -58,7 +58,8 @@ class LoginButtons extends React.Component<Props> {
             <GeneralErrorMessage />
           </Grid>
         )}
-        <Grid item xs={12} className={classes.divider}>
+        <Grid item xs={1} />
+        <Grid item xs={10} className={classes.divider}>
           <TextDivider variant="subheading" color="textSecondary">
             or login with your phone
           </TextDivider>

@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
+import classNames from 'classnames';
 import { lifecycle } from 'recompose';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import withStyles from 'material-ui/styles/withStyles';
@@ -27,6 +28,7 @@ const styles = theme => ({
     },
   },
   formControl: {
+    marginBottom: theme.spacing.unit,
     [theme.breakpoints.down(theme.map.tablet)]: {
       width: '100%',
       marginBottom: theme.spacing.unit * 1.5,
@@ -37,6 +39,9 @@ const styles = theme => ({
         marginLeft: 0,
       },
     },
+  },
+  phoneInput: {
+    flex: 1,
   },
   input: {
     flex: 1,
@@ -74,7 +79,7 @@ const Form = (props: Props) => {
           )}
         </FormControl>
         <FormControl
-          className={classes.formControl}
+          className={classNames(classes.formControl, classes.phoneInput)}
           error={R.has('number', errors)}
         >
           <MaskedInput

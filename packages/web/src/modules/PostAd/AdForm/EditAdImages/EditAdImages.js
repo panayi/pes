@@ -37,7 +37,6 @@ const styles = theme => ({
   list: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
     overflow: 'hidden',
   },
   listInner: {

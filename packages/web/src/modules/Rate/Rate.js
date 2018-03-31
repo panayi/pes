@@ -9,7 +9,7 @@ import MobileTrigger from './MobileTrigger/MobileTrigger';
 
 const COOKIE_NAME = 'pesposa-rate-modal';
 const DESKTOP_MIN_TIME_BEFORE_SHOW = 50 * 1000; // 50 seconds
-const MOBILE_MIN_TIME_BEFORE_SHOW = 90 * 1000; // 90 seconds
+const MOBILE_MIN_TIME_BEFORE_SHOW = 150 * 1000; // 150 seconds
 
 const Rate = () => (
   <React.Fragment>
