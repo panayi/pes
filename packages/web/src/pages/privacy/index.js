@@ -6,16 +6,26 @@ import Layout from 'layouts/Layout/Layout';
 import Header from 'pages/components/Header/Header';
 
 const Section = withProps({
-  component: 'div',
+  component: 'p',
+})(Typography);
+
+const Ol = withProps({
+  component: 'ol',
+})(Typography);
+
+const Ul = withProps({
+  component: 'ul',
 })(Typography);
 
 const styles = theme => ({
   root: {
+    maxWidth: '100vw',
     padding: [
       theme.spacing.unit,
       theme.spacing.unit * 2,
       theme.spacing.unit * 5,
     ],
+    wordBreak: 'break-word',
   },
   title: {
     margin: [theme.spacing.unit * 2, 0],
@@ -25,9 +35,11 @@ const styles = theme => ({
   sectionTitle: {
     fontSize: theme.typography.subheading.fontSize,
     fontWeight: theme.typography.fontWeightBold,
+    marginBottom: theme.spacing.unit / 2,
   },
   list: {
-    marginBottom: 0,
+    marginBottom: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
   },
   modified: {
     fontStyle: 'italic',
@@ -76,30 +88,28 @@ const Privacy = ({ classes }) => (
         purchase, sign up for our newsletter, respond to a survey or marketing
         communication, surf the website, or use certain other site features in
         the following ways:
-        <ol className={classes.list}>
-          <li>
-            To personalize your experience and to allow us to deliver the type
-            of content and product offerings in which you are most interested.
-          </li>
-          <li>To quickly process your transactions.</li>
-          <li>To ask for ratings and reviews of services or products</li>
-        </ol>
       </Section>
+      <Ol className={classes.list}>
+        <li>
+          To personalize your experience and to allow us to deliver the type of
+          content and product offerings in which you are most interested.
+        </li>
+        <li>To quickly process your transactions.</li>
+        <li>To ask for ratings and reviews of services or products</li>
+      </Ol>
       <Section className={classes.sectionTitle}>
         How do we protect your information?
       </Section>
+      <Ol className={classes.list}>
+        <li>
+          We do not use vulnerability scanning and/or scanning to PCI standards.
+        </li>
+        <li>
+          An external PCI compliant payment gateway handles all CC transactions.
+        </li>
+        <li>We use regular Malware Scanning.</li>
+      </Ol>
       <Section paragraph>
-        <ol className={classes.list}>
-          <li>
-            We do not use vulnerability scanning and/or scanning to PCI
-            standards.
-          </li>
-          <li>
-            An external PCI compliant payment gateway handles all CC
-            transactions.
-          </li>
-          <li>We use regular Malware Scanning.</li>
-        </ol>
         Your personal information is contained behind secured networks and is
         only accessible by a limited number of persons who have special access
         rights to such systems, and are required to keep the information
@@ -176,13 +186,12 @@ const Privacy = ({ classes }) => (
         Internet. Users may opt-out of the use of the DART cookie by visiting
         the Google Ad and Content Network privacy policy.
       </Section>
+      <Section paragraph>We have implemented the following:</Section>
+      <Ol className={classes.list}>
+        <li>Google Display Network Impression Reporting</li>
+        <li>Demographics and Interests Reporting</li>
+      </Ol>
       <Section paragraph>
-        We have implemented the following:
-        <ol className={classes.list}>
-          <li>Google Display Network Impression Reporting</li>
-          <li>Demographics and Interests Reporting</li>
-        </ol>
-        <br />
         We, along with third-party vendors such as Google use first-party
         cookies (such as the Google Analytics cookies) and third-party cookies
         (such as the DoubleClick cookie) or other third-party identifiers
@@ -210,27 +219,27 @@ const Privacy = ({ classes }) => (
         http://consumercal.org/california-online-privacy-protection-act-caloppa/#sthash.0FdRbT51.dpuf
         <br />
         According to CalOPPA, we agree to the following:
-        <ul className={classes.list}>
-          <li>Users can visit our site anonymously.</li>
-          <li>
-            Once this privacy policy is created, we will add a link to it on our
-            home page or as a minimum, on the first significant page after
-            entering our website.
-          </li>
-          <li>
-            Our Privacy Policy link includes the word &quot;Privacy&quot; and
-            can easily be found on the page specified above.
-          </li>
-          <li>
-            You will be notified of any Privacy Policy changes, on our Privacy
-            Policy page.
-          </li>
-          <li>
-            You can change your personal information by logging in to your
-            account.
-          </li>
-        </ul>
       </Section>
+      <Ul className={classes.list}>
+        <li>Users can visit our site anonymously.</li>
+        <li>
+          Once this privacy policy is created, we will add a link to it on our
+          home page or as a minimum, on the first significant page after
+          entering our website.
+        </li>
+        <li>
+          Our Privacy Policy link includes the word &quot;Privacy&quot; and can
+          easily be found on the page specified above.
+        </li>
+        <li>
+          You will be notified of any Privacy Policy changes, on our Privacy
+          Policy page.
+        </li>
+        <li>
+          You can change your personal information by logging in to your
+          account.
+        </li>
+      </Ul>
       <Section className={classes.sectionTitle}>
         How does our site handle Do Not Track signals?
       </Section>
@@ -269,14 +278,14 @@ const Privacy = ({ classes }) => (
       <Section paragraph>
         In order to be in line with Fair Information Practices we will take the
         following responsive action, should a data breach occur:
-        <ol className={classes.list}>
-          <li>We will notify you via email</li>
-          <li>
-            We will notify the users via in-site notification, within 7 business
-            days.
-          </li>
-        </ol>
       </Section>
+      <Ol className={classes.list}>
+        <li>We will notify you via email</li>
+        <li>
+          We will notify the users via in-site notification, within 7 business
+          days.
+        </li>
+      </Ol>
       <Section paragraph>
         We also agree to the Individual Redress Principle which requires that
         individuals have the right to legally pursue enforceable rights against
