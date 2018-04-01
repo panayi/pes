@@ -8,8 +8,6 @@ import UserFullName from 'components/UserFullName/UserFullName';
 import RevealPhoneButton from '../../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../../VerifiedWith/VerifiedWith';
 
-const SIZE = 64;
-
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -22,19 +20,27 @@ const styles = theme => ({
   },
   avatar: {
     border: [4, 'solid', theme.palette.common.white],
+    width: '64px !important',
+    height: '64px !important',
     '& > svg': {
       width: 52,
       height: 52,
+    },
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      width: '48px !important',
+      height: '48px !important',
     },
   },
   details: {
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
-    height: SIZE,
     boxSizing: 'border-box',
     marginLeft: theme.spacing.unit * 2,
     padding: [theme.spacing.unit, 0],
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      marginLeft: theme.spacing.unit,
+    },
   },
   name: {
     marginBottom: theme.spacing.unit / 2,
@@ -50,7 +56,7 @@ const SellerBox = ({ ad, className, classes }) => (
       className={classes.avatarWrap}
       to={ad.user ? `/user/${ad.user}` : null}
     >
-      <ProfileImage className={classes.avatar} size={SIZE} userId={ad.user} />
+      <ProfileImage className={classes.avatar} userId={ad.user} />
     </Link>
     <div className={classes.details}>
       {ad.user && (

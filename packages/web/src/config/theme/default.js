@@ -52,10 +52,10 @@ export default createMuiTheme({
   breakpoints: {
     values: {
       xs: 0, // phone
-      sm: 768, // tablet
-      md: 992, // laptop
-      lg: 1200, // desktop
-      xl: 1824, // largeDesktop
+      sm: 769, // tablet
+      md: 993, // laptop
+      lg: 1201, // desktop
+      xl: 1825, // largeDesktop
     },
   },
   map: {

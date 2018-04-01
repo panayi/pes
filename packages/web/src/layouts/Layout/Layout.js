@@ -25,9 +25,9 @@ const styles = theme => ({
     width: '100%',
   },
   hasHeader: {
-    marginTop: theme.layout.headerHeight.phone,
-    [theme.breakpoints.up(theme.map.tablet)]: {
-      marginTop: theme.layout.headerHeight.tablet,
+    marginTop: theme.layout.headerHeight.tablet,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      marginTop: theme.layout.headerHeight.phone,
     },
   },
 });

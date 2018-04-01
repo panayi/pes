@@ -1,13 +1,13 @@
 import React from 'react';
 import * as R from 'ramda';
-import { mapProps, setDisplayName } from 'recompose';
+import { mapProps } from 'recompose';
 import classNames from 'classnames';
+import IconButton from 'material-ui/IconButton';
 import withStyles from 'material-ui/styles/withStyles';
 import { fade } from 'material-ui/styles/colorManipulator';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import renderNothingWhen from 'hocs/renderNothingWhen';
-import Button from 'components/Button/Button';
 
 const styles = theme => ({
   root: {
@@ -17,7 +17,8 @@ const styles = theme => ({
     zIndex: 1,
     margin: 'auto',
     transform: 'none',
-    backgroundColor: fade(theme.palette.primary.main, 0.57),
+    color: fade(theme.palette.common.white, 0.9),
+    backgroundColor: fade(theme.palette.primary.main, 0.67),
     transition: theme.transitions.create('backgroundColor'),
     '&:hover': {
       backgroundColor: fade(theme.palette.primary.main, 0.8),
@@ -29,24 +30,32 @@ const styles = theme => ({
   next: {
     right: theme.spacing.unit * 2,
   },
+  disabled: {
+    opacity: 0.5,
+    pointerEvents: 'none',
+  },
 });
 
-const createArrowButton = (Icon, extraClass) =>
+const isDisabled = (direction, props) =>
+  direction === 'prev'
+    ? props.currentSlide === 0
+    : props.currentSlide === props.slideCount - 1;
+
+const createArrowButton = (Icon, direction) =>
   R.compose(
     renderNothingWhen(R.propEq('slideCount', 1)),
     withStyles(styles),
-    setDisplayName('ArrowButton'),
     mapProps(props => ({
       onClick: props.onClick,
-      variant: 'fab',
-      color: 'primary',
       disableRipple: true,
       children: <Icon />,
       classes: {
-        root: classNames(props.classes.root, props.classes[extraClass]),
+        root: classNames(props.classes.root, props.classes[direction], {
+          [props.classes.disabled]: isDisabled(direction, props),
+        }),
       },
     })),
-  )(Button);
+  )(IconButton);
 
 const ArrowButton = {
   prev: createArrowButton(KeyboardArrowLeft, 'prev'),

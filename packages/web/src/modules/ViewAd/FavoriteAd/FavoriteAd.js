@@ -1,5 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
+import classNames from 'classnames';
 import { withProps, branch, renderNothing } from 'recompose';
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
@@ -16,6 +17,9 @@ import {
 } from 'store/firebase/data';
 
 const styles = theme => ({
+  icon: {
+    fontSize: '32px',
+  },
   active: {
     color: theme.palette.primary.light,
   },
@@ -57,9 +61,9 @@ class FavoriteAd extends React.Component {
         onClick={() => toggleFavorite(isFavorited, this.setIsFavorited)}
       >
         {isFavorited ? (
-          <FavoriteIcon className={classes.active} />
+          <FavoriteIcon className={classNames(classes.icon, classes.active)} />
         ) : (
-          <FavoriteBorderIcon />
+          <FavoriteBorderIcon className={classes.icon} />
         )}
       </IconButton>
     );

@@ -16,6 +16,9 @@ const styles = theme => ({
     '& > div + div': {
       marginLeft: theme.spacing.unit,
     },
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      marginLeft: 0,
+    },
   },
 });
 

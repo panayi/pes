@@ -29,7 +29,7 @@ const styles = theme => ({
       width: '100%',
       height: '100%',
       border: [1, 'solid', theme.palette.grey[100]],
-      borderRadius: 100,
+      borderRadius: 8,
       position: 'absolute',
       top: 0,
       right: 0,
@@ -49,7 +49,6 @@ const styles = theme => ({
   button: {
     height: 40,
     minHeight: 30,
-    borderRadius: '100em',
     boxShadow: 'none',
     fontSize: '16px',
     transition: 'background-color 0.25s ease',

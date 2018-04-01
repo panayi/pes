@@ -14,6 +14,9 @@ import Button from 'components/Button/Button';
 const styles = theme => ({
   button: {
     minWidth: 170,
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      minWidth: 0,
+    },
   },
   icon: {
     marginRight: theme.spacing.unit,

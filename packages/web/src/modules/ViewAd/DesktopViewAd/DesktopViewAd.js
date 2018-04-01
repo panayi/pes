@@ -2,20 +2,16 @@
 import React from 'react';
 import * as R from 'ramda';
 import { withStateHandlers } from 'recompose';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { DesktopScreen, TabletScreen } from 'react-responsive-redux';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import PlaceIcon from 'material-ui-icons/Place';
-import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { withUserProfileData } from 'hocs/withProfileData';
-import LinkToViewAd from 'components/LinkToViewAd/LinkToViewAd';
-import FacebookShareButton from 'components/FacebookShareButton/FacebookShareButton';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdBody from 'components/AdBody/AdBody';
@@ -28,18 +24,17 @@ import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import MarkAsSold from '../MarkAsSold/MarkAsSold';
 import FavoriteAd from '../FavoriteAd/FavoriteAd';
-import TwitterShareAdButton from '../TwitterShareAdButton/TwitterShareAdButton';
-import EmailShareAdButton from '../EmailShareAdButton/EmailShareAdButton';
 import BrowseAds from './BrowseAds/BrowseAds';
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
 import SellerBox from './SellerBox/SellerBox';
 import SentMessages from './SentMessages/SentMessages';
 import AdDateChip from './AdDateChip/AdDateChip';
+import ShareButtons from './ShareButtons/ShareButtons';
+import BrowseButton from './BrowseButton/BrowseButton';
 
 type Props = {
   ad: Ad,
   adId: string,
-  location: Object,
   uid: string,
   sellerName: string,
   sentMessages: Array<string>,
@@ -48,7 +43,7 @@ type Props = {
 };
 
 const SLIDER_WIDTH_DESKTOP = 500;
-const SLIDER_WIDTH_TABLET = 430;
+const SLIDER_WIDTH_TABLET = 440;
 const BASE_HEIGHT = 592;
 
 const styles = theme => ({
@@ -61,7 +56,7 @@ const styles = theme => ({
       theme.spacing.unit * 2,
     ],
     [theme.breakpoints.down(theme.map.tablet)]: {
-      marginBottom: theme.spacing.unit * 8,
+      marginBottom: theme.spacing.unit * 6,
     },
   },
   breadcrumb: {
@@ -81,27 +76,21 @@ const styles = theme => ({
     width: 64,
     boxSizing: 'border-box',
     padding: [theme.spacing.unit * 2, theme.spacing.unit],
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      right: 0,
-      bottom: -80,
-      marginRight: theme.spacing.unit * 2.5,
-      transform: 'translateX(-100%)',
-    },
   },
   shareButtons: {
     display: 'flex',
     flexDirection: 'column',
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      flexDirection: 'row',
-    },
   },
   inner: {
     display: 'flex',
     width: '100%',
-    height: '72vh',
+    height: '75vh',
     minHeight: BASE_HEIGHT,
     position: 'relative',
     overflow: 'hidden',
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      height: '80vh',
+    },
   },
   images: {
     position: 'relative',
@@ -189,42 +178,21 @@ const styles = theme => ({
   },
   interactionBox: {
     marginBottom: theme.spacing.unit * 2,
-  },
-  previousLinkWrap: {
-    position: 'absolute',
-    left: -56,
-    top: BASE_HEIGHT / 2,
-    bottom: 0,
-  },
-  nextLinkWrap: {
-    position: 'absolute',
-    right: -56,
-    top: BASE_HEIGHT / 2,
-    bottom: 0,
-  },
-  previousLink: {
-    boxShadow: 'none',
-    borderRadius: '50% 0 0 50%',
-  },
-  nextLink: {
-    boxShadow: 'none',
-    borderRadius: '0 50% 50% 0',
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      marginTop: -theme.spacing.unit,
+    },
   },
 });
 
 const DesktopViewAd = ({
   ad,
   adId,
-  location,
   uid,
   sentMessages,
   addMessage,
   sellerName,
   classes,
-}: Props) => {
-  const path = location.pathname;
-
-  return (
+}: Props) => (
     <div className={classes.root}>
       <div className={classes.breadcrumb}>
         <Breadcrumbs ad={ad} />
@@ -296,6 +264,9 @@ const DesktopViewAd = ({
                 height={190}
               />
             </div>
+            <TabletScreen>
+              <ShareButtons />
+            </TabletScreen>
             <div className={classes.seller}>
               <SentMessages messages={sentMessages} adId={adId} uid={uid} />
               <SellerBox className={classes.sellerBox} ad={ad} />
@@ -319,43 +290,24 @@ const DesktopViewAd = ({
             </div>
           </div>
         </div>
-        <div className={classes.offset}>
-          <div className={classes.shareButtons}>
-            <FacebookShareButton path={path} />
-            <TwitterShareAdButton path={path} ad={ad} />
-            <EmailShareAdButton path={path} ad={ad} />
+        <DesktopScreen>
+          <div className={classes.offset}>
+            <div className={classes.shareButtons}>
+              <ShareButtons />
+            </div>
           </div>
-        </div>
+        </DesktopScreen>
         <BrowseAds adId={adId}>
           {({ previousAd, nextAd }) => (
             <React.Fragment>
-              <div className={classes.previousLinkWrap}>
-                <LinkToViewAd
-                  ad={previousAd}
-                  className={classes.previousLink}
-                  disabled={R.isNil(previousAd)}
-                  variant="fab"
-                >
-                  <KeyboardArrowLeft />
-                </LinkToViewAd>
-              </div>
-              <div className={classes.nextLinkWrap}>
-                <LinkToViewAd
-                  ad={nextAd}
-                  className={classes.nextLink}
-                  disabled={R.isNil(nextAd)}
-                  variant="fab"
-                >
-                  <KeyboardArrowRight />
-                </LinkToViewAd>
-              </div>
+              <BrowseButton ad={previousAd} direction="previous" />
+              <BrowseButton ad={nextAd} direction="next" />
             </React.Fragment>
           )}
         </BrowseAds>
       </Paper>
     </div>
   );
-};
 
 DesktopViewAd.defaultProps = {
   ad: {},
@@ -367,7 +319,6 @@ const mapStateToProps = createStructuredSelector({
 
 export default R.compose(
   connect(mapStateToProps),
-  withRouter,
   withUserProfileData(
     {
       sellerName: ['displayName'],
