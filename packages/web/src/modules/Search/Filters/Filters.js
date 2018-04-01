@@ -21,6 +21,7 @@ const styles = theme => ({
     fontWeight: theme.typography.fontWeightBold,
   },
   clearButton: {
+    marginLeft: theme.spacing.unit,
     padding: 0,
   },
   applyButton: {
@@ -53,7 +54,12 @@ class Filters extends React.Component {
         <DialogTitle
           title="Filters"
           action={
-            <Button color="inherit" size="small" onClick={this.handleCancel}>
+            <Button
+              className={classes.clearButton}
+              color="inherit"
+              size="small"
+              onClick={this.handleCancel}
+            >
               Cancel
             </Button>
           }

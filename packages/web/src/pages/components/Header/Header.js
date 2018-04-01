@@ -50,6 +50,9 @@ const styles = theme => ({
     width: 115,
     marginBottom: -4,
     height: 48,
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      height: 44,
+    },
   },
   logoText: {
     textTransform: 'uppercase',

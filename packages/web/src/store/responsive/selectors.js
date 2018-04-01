@@ -11,12 +11,10 @@ export const fakeWidthSelector = R.path(constants.FAKE_WIDTH_PATH);
 const breakpoints = theme.breakpoints.values;
 
 const getWidthBreakpoint = width =>
-  R.compose(
-    R.head,
-    R.find(([name, value]) => width >= value), // eslint-disable-line no-unused-vars
-    R.reverse,
-    R.toPairs,
-  )(breakpoints);
+  R.converge(R.prop, [
+    R.compose(R.find(value => width >= value), R.reverse, R.values),
+    R.invert,
+  ])(breakpoints);
 
 export const fakeWidthBreakpointSelector = createSelector(
   fakeWidthSelector,

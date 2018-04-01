@@ -28,25 +28,28 @@ export const INDEXES = [
       {
         name: ADS_INDEXES.byDateDesc,
         settings: {
-          ranking: ['desc(createdAt)', ...SECONDARY_RANKING_ATTRIBUTES],
+          ranking: R.prepend('desc(createdAt)', SECONDARY_RANKING_ATTRIBUTES),
         },
       },
       {
         name: ADS_INDEXES.byPriceAsc,
         settings: {
-          ranking: ['asc(price)', ...SECONDARY_RANKING_ATTRIBUTES],
+          ranking: R.prepend('asc(price)', SECONDARY_RANKING_ATTRIBUTES),
         },
       },
       {
         name: ADS_INDEXES.byPriceDesc,
         settings: {
-          ranking: ['desc(price)', ...SECONDARY_RANKING_ATTRIBUTES],
+          ranking: R.prepend('desc(price)', SECONDARY_RANKING_ATTRIBUTES),
         },
       },
       {
         name: ADS_INDEXES.byDistance,
         settings: {
-          ranking: ['geo', ...R.without(['geo'], SECONDARY_RANKING_ATTRIBUTES)],
+          ranking: R.prepend(
+            'geo',
+            R.without(['geo'], SECONDARY_RANKING_ATTRIBUTES),
+          ),
         },
       },
     ],

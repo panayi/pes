@@ -22,12 +22,11 @@ const styles = theme => {
     sidebar: {
       flex: [0, 0, `${theme.layout.sidebarWidth}px`],
     },
-    drawerPaper: {
+    drawerAnchor: {
       width,
       backgroundColor: 'transparent',
-    },
-    drawerAnchor: {
       border: 0,
+      paddingRight: theme.spacing.unit,
       // Fixes sluggish scroll,
       // see: https://stackoverflow.com/a/15147497/359104
       transform: 'translate3d(0, 0, 0)',
@@ -46,7 +45,6 @@ const Sidebar = ({ children, className, classes }: Props) => (
     <Drawer
       variant="permanent"
       classes={{
-        paper: classes.drawerPaper,
         paperAnchorDockedLeft: classes.drawerAnchor,
       }}
       elevation={0}

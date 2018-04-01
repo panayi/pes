@@ -21,11 +21,14 @@ type Props = {
 
 const styles = theme => ({
   first: {
-    marginTop: 3 * theme.spacing.unit,
+    marginTop: theme.spacing.unit,
+  },
+  second: {
+    marginTop: theme.spacing.unit * 2,
   },
   divider: {
-    marginTop: 5 * theme.spacing.unit,
-    marginBottom: 2 * theme.spacing.unit,
+    marginTop: theme.spacing.unit * 3.5,
+    marginBottom: theme.spacing.unit * 5,
   },
 });
 
@@ -50,7 +53,7 @@ class LoginButtons extends React.Component<Props> {
         <Grid item xs={12} className={classes.first}>
           <LoginWithFacebook login={this.login} fullWidth />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.second}>
           <LoginWithGoogle login={this.login} fullWidth />
         </Grid>
         {errored && (

@@ -1,6 +1,4 @@
-import * as firebaseConfig from './firebase';
-
-const { PROVIDER_IDS } = firebaseConfig;
+import { PROVIDER_IDS } from './firebase';
 
 const auth = {
   providers: [PROVIDER_IDS.facebook, PROVIDER_IDS.google, PROVIDER_IDS.phone],

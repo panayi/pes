@@ -21,7 +21,7 @@ type Props = {
 
 const styles = theme => ({
   submitButton: {
-    marginTop: 2 * theme.spacing.unit,
+    marginTop: theme.spacing.unit * 1.5,
   },
   hidden: {
     display: 'none',
