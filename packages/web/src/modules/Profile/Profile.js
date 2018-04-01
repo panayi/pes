@@ -19,14 +19,14 @@ import ListUserAds from './ListUserAds/ListUserAds';
 
 const styles = theme => ({
   root: {
-    [theme.breakpoints.up(theme.map.tablet)]: {
-      margin: [theme.spacing.unit, 0],
+    [theme.breakpoints.up(theme.map.laptop)]: {
+      margin: [theme.spacing.unit, 0, theme.spacing.unit * 3, 0],
     },
   },
   tabsWrap: {
     flex: 1,
     minHeight: 300,
-    [theme.breakpoints.up(theme.map.tablet)]: {
+    [theme.breakpoints.up(theme.map.laptop)]: {
       boxShadow: theme.shadows[1],
       background: theme.palette.common.white,
       borderRadius: [0, 0, theme.borderRadius.xl, theme.borderRadius.xl],

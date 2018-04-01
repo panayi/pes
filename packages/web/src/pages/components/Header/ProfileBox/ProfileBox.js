@@ -19,13 +19,13 @@ import UserFullName from 'components/UserFullName/UserFullName';
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.primary.main,
-    [theme.breakpoints.up(theme.map.tablet)]: {
+    [theme.breakpoints.up(theme.map.laptop)]: {
       backgroundColor: 'transparent',
     },
   },
   color: {
     color: theme.palette.common.white,
-    [theme.breakpoints.up(theme.map.tablet)]: {
+    [theme.breakpoints.up(theme.map.laptop)]: {
       color: theme.palette.text.primary,
     },
   },
