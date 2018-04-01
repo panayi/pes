@@ -1,7 +1,8 @@
 import React from 'react';
 import * as R from 'ramda';
-import { isNotNil, isNilOrEmpty } from 'ramda-adjunct';
-import { withProps, setStatic, branch } from 'recompose';
+import { isNilOrEmpty } from 'ramda-adjunct';
+import { withProps, setStatic } from 'recompose';
+import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { bindActionCreators } from 'multireducer';
 import { Helmet } from 'react-helmet';
@@ -84,13 +85,15 @@ export default R.compose(
       tab: routerSelectors.routeParamSelector('tab'),
     }),
   ),
-  branch(
-    R.propSatisfies(isNotNil, 'userId'),
-    withProfileData(
-      {
-        displayName: ['displayName'],
-      },
-      propSelector('userId'),
-    ),
+  connect(
+    createStructuredSelector({
+      currentUserId: authSelectors.uidSelector,
+    }),
+  ),
+  withProfileData(
+    {
+      displayName: ['displayName'],
+    },
+    R.either(propSelector('userId'), propSelector('currentUserId')),
   ),
 )(ProfilePage);
