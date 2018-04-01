@@ -39,28 +39,6 @@ export const cancelSetLastActiveAtOnDisconnect = conversationId => (
   );
 };
 
-export const activateConversation = conversationId => async (
-  dispatch,
-  getState,
-) => {
-  if (R.isNil(conversationId)) {
-    return dispatch(this.deactivateConversation());
-  }
-
-  const currentConversationId = selectors.activeConversationSelector(
-    getState(),
-  );
-  if (currentConversationId === conversationId) {
-    return null;
-  }
-
-  dispatch(this.deactivateConversation(currentConversationId));
-
-  // Begin activation
-  dispatch(setActiveConversation(conversationId));
-  return dispatch(setLastActiveAtOnDisconnect(conversationId));
-};
-
 export const deactivateConversation = conversationId => async (
   dispatch,
   getState,
@@ -75,6 +53,28 @@ export const deactivateConversation = conversationId => async (
   dispatch(resetActiveConversation(finalConversationId));
   await dispatch(setLastActiveAt(finalConversationId));
   return dispatch(cancelSetLastActiveAtOnDisconnect(finalConversationId));
+};
+
+export const activateConversation = conversationId => async (
+  dispatch,
+  getState,
+) => {
+  if (R.isNil(conversationId)) {
+    return dispatch(deactivateConversation());
+  }
+
+  const currentConversationId = selectors.activeConversationSelector(
+    getState(),
+  );
+  if (currentConversationId === conversationId) {
+    return null;
+  }
+
+  dispatch(deactivateConversation(currentConversationId));
+
+  // Begin activation
+  dispatch(setActiveConversation(conversationId));
+  return dispatch(setLastActiveAtOnDisconnect(conversationId));
 };
 
 export const createMessage = (body, adId, buyerId) => async (

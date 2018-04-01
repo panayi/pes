@@ -19,11 +19,11 @@ import ShareIcon from 'mdi-react/ShareIcon';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';
 import { withUserProfileData } from 'hocs/withProfileData';
-import connectSearch from 'hocs/connectSearch';
 import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as paramsSelectors } from 'store/search/params';
-import Conversation from 'modules/Messenger/Conversation/Conversation';
+import requireUserToCallAction from 'hocs/requireUserToCallAction';
+import connectSearch from 'hocs/connectSearch';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Link from 'components/Link/Link';
 import Button from 'components/Button/Button';
@@ -34,6 +34,7 @@ import AdAddress from 'components/AdAddress/AdAddress';
 import AdDate from 'components/AdDate/AdDate';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
+import Conversation from 'modules/Messenger/Conversation/Conversation';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import EditAdLink from '../EditAdLink/EditAdLink';
 import StaticMap from '../StaticMap/StaticMap';
@@ -556,5 +557,6 @@ export default R.compose(
       }),
     },
   ),
+  requireUserToCallAction('viewConversation'),
   withStyles(styles),
 )(MobileViewAd);

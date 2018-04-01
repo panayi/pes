@@ -10,7 +10,7 @@ const ViewAd = props => (
     <XsScreenHidden>
       <DesktopViewAd {...props} />
     </XsScreenHidden>
-    <XsScreen>
+    <XsScreen component={React.Fragment}>
       <MobileViewAd {...props} />
     </XsScreen>
   </React.Fragment>
