@@ -73,7 +73,7 @@ export class ErrorBoundary extends Component {
           <button
             onClick={() => window.location.reload()}
             style={buttonStyles({
-              background: theme.palette.primary.main,
+              background: theme.palette.secondary.main,
               color: 'white',
             })}
           >
