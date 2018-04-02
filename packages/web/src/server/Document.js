@@ -97,6 +97,7 @@ class Document extends React.Component {
           )}
           {css ? <style id="jss-ssr">{css}</style> : ''}
           {ssrBehavior.getStylesheetComponent(userAgent)}
+          <script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
         </head>
         <body {...bodyAttrs}>
           {showSpinner && (
