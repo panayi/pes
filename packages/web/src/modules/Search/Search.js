@@ -1,5 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import {
@@ -16,10 +17,24 @@ import connectSearch from 'hocs/connectSearch';
 
 class Search extends React.Component {
   componentDidMount() {
-    const { params, paramsState, setParamsFromProps, loadPage } = this.props;
+    const {
+      params,
+      paramsState,
+      searchParams,
+      setParamsFromProps,
+      loadPage,
+      loadFirstPage,
+    } = this.props;
     this.initialParamsState = R.merge(paramsState, params);
     setParamsFromProps(params);
-    loadPage(0);
+
+    if (isNilOrEmpty(searchParams.query)) {
+      loadPage(0);
+    } else {
+      // If query is set, it means the search form was submitted from another page
+      // Later, if we serialize query value into URL, we should use a different logic.
+      loadFirstPage();
+    }
   }
 
   componentWillReceiveProps(nextProps) {

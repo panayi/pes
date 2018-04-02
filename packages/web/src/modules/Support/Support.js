@@ -46,10 +46,11 @@ class Support extends Component {
   };
 
   renderSuccess() {
-    const { closeModal, DialogContent, DialogActions, classes } = this.props;
+    const { DialogTitle, DialogContent, classes } = this.props;
 
     return (
       <React.Fragment>
+        <DialogTitle />
         <DialogContent>
           <div className={classes.root}>
             <EmptyHero
@@ -66,9 +67,6 @@ class Support extends Component {
             />
           </div>,
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => closeModal()}>Close</Button>
-        </DialogActions>
       </React.Fragment>
     );
   }

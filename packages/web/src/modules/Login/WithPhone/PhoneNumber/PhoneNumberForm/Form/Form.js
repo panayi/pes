@@ -41,7 +41,7 @@ const styles = theme => ({
     },
   },
   phoneInput: {
-    flex: 1,
+    flex: '1 1 auto',
   },
   input: {
     flex: 1,
@@ -90,6 +90,7 @@ const Form = (props: Props) => {
             value={values.number}
             placeholder="Your phone number"
             autoComplete="tel"
+            type="tel"
             inputProps={{
               mask,
             }}
