@@ -53,6 +53,7 @@ const getMetaTags = ({
       ]
     : [];
 
+  const metaFacebookType = [{ property: 'og:type', content: 'website' }];
   const metaFacebookSiteName = finalFacebook.siteName
     ? [{ property: 'og:site_name', content: finalFacebook.siteName }]
     : [];
@@ -78,6 +79,7 @@ const getMetaTags = ({
       ...metaTitle,
       ...metaDescription,
       ...metaImage,
+      ...metaFacebookType,
       ...metaFacebookSiteName,
       ...metaFacebookAdmins,
       ...metaFacebookAppId,
