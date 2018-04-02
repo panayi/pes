@@ -18,7 +18,7 @@ const OutdatedBrowser = () => (
       type="text/javascript"
       dangerouslySetInnerHTML={{
         __html: `
-            var $buoop = {notify:{e:11,f:-4,o:-4,s:9,c:-4},insecure:true,api:5,style:"corner",reminder: 48};
+            var $buoop = {notify:{e:11,f:-4,o:-4,s:8,c:-4},insecure:true,api:5,style:"corner",reminder: 48};
             function $buo_f(){
             var e = document.createElement("script");
             e.src = "//browser-update.org/update.min.js";
