@@ -26,6 +26,9 @@ const styles = theme => ({
   second: {
     marginTop: theme.spacing.unit * 2,
   },
+  error: {
+    marginTop: theme.spacing.unit,
+  },
   divider: {
     marginTop: theme.spacing.unit * 3.5,
     marginBottom: theme.spacing.unit * 5,
@@ -57,7 +60,7 @@ class LoginButtons extends React.Component<Props> {
           <LoginWithGoogle login={this.login} fullWidth />
         </Grid>
         {errored && (
-          <Grid item xs={12}>
+          <Grid item xs={12} className={classes.error}>
             <GeneralErrorMessage />
           </Grid>
         )}

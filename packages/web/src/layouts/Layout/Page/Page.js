@@ -15,15 +15,15 @@ type Props = {
 
 const styles = theme => ({
   page: {
-    flex: '1 1 100%',
     backgroundColor: 'transparent',
+    flex: 1,
     minHeight: `calc(100% - ${theme.layout.headerHeight.tablet}px)`,
     [theme.breakpoints.down(theme.map.phone)]: {
       minHeight: `calc(100% - ${theme.layout.headerHeight.phone}px)`,
     },
   },
   fixed: {
-    flex: '1 1 100%',
+    flex: '1 1 auto',
     maxWidth: 900,
     height: '100%',
     margin: '0 auto',
