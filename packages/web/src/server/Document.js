@@ -10,8 +10,9 @@ import jss from 'config/styles';
 import { constants as searchConstants } from 'store/search';
 import Spinner from 'components/Spinner/Spinner';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
-import SearchProvider from 'modules/Search/Provider/Provider';
 import WidthMatch from 'components/WidthMatch/WidthMatch';
+import OutdatedBrowser from 'components/OutdatedBrowser/OutdatedBrowser';
+import SearchProvider from 'modules/Search/Provider/Provider';
 
 class Document extends React.Component {
   static async getInitialProps({ assets, data, renderPage, req }) {
@@ -127,6 +128,7 @@ class Document extends React.Component {
             defer
             crossOrigin="anonymous"
           />
+          <OutdatedBrowser />
         </body>
       </html>
     );
