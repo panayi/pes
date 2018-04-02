@@ -3,7 +3,7 @@ import * as R from 'ramda';
 // Maps min container width to number of columns
 export const COLUMN_COUNTS = {
   0: 1,
-  350: 2,
+  290: 2,
   500: 3,
   700: 4,
   1000: 5,
