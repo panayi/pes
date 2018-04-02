@@ -19,8 +19,7 @@ import NoConversationSelected from './NoConversationSelected/NoConversationSelec
 const styles = theme => ({
   root: {
     position: 'relative',
-    // TODO: make dynamic
-    height: 'calc(100vh - 96px)',
+    height: `calc(100% - ${theme.spacing.unit * 4})`,
     marginTop: theme.spacing.unit * 2,
     overflow: 'hidden',
     backgroundColor: theme.palette.common.white,
@@ -112,7 +111,7 @@ class Messenger extends Component {
 
     return (
       <React.Fragment>
-        <DesktopScreen>
+        <DesktopScreen component={React.Fragment}>
           <Grid className={classes.root} container spacing={0}>
             {this.renderLoadingConversations()}
             {this.renderNoConversations()}

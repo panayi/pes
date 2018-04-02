@@ -22,6 +22,7 @@ const styles = {
   fixed: {
     flex: '1 1 100%',
     maxWidth: 900,
+    height: '100%',
     margin: '0 auto',
   },
   flex: {
