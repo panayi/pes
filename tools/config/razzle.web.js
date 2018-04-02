@@ -11,9 +11,6 @@ module.exports = {
       appConfig.module.rules[0].include,
       path.join(__dirname, '..', '..', 'packages/core/src'),
     ];
-    appConfig.module.rules[0].use[0].options.baseConfig = require.resolve(
-      '../../.eslintrc.js',
-    );
     appConfig.module.rules[1].include = [
       ...appConfig.module.rules[1].include,
       path.join(__dirname, '..', '..', 'packages/core/src'),

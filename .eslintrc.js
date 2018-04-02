@@ -12,6 +12,7 @@ module.exports = {
   "plugins": [
     "flowtype",
     "ramda",
+    "import"
   ],
   "rules": {
     "no-underscore-dangle": "off",
@@ -63,7 +64,7 @@ module.exports = {
       "settings": {
         "import/resolver": {
           "node": {
-            "paths": [path.join(__dirname, 'packages', 'web', 'src')],
+            "moduleDirectory": ["node_modules", "packages/web/src"]
           },
         },
       },
