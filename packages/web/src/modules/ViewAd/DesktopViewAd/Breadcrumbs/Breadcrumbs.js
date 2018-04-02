@@ -33,8 +33,15 @@ const styles = theme => ({
   item: {
     color: theme.palette.text.secondary,
   },
+  linkItem: {
+    padding: 0,
+    minWidth: 0,
+    '&:hover': {
+      background: 'none',
+    },
+  },
   separator: {
-    margin: [0, 10],
+    margin: [0, theme.spacing.unit / 2],
     color: theme.palette.text.secondary,
   },
   ellipsis: {
@@ -57,7 +64,9 @@ const BreadCrumbs = ({ ad, t, classes }) => (
       }
     </AdAddress>
     <Typography className={classes.separator}>/</Typography>
-    <Typography className={classes.item}>{t(ad.category)}</Typography>
+    <Link to={`/${ad.category}`} className={classes.linkItem}>
+      {t(ad.category)}
+    </Link>
     <Typography className={classes.separator}>/</Typography>
     <AdTitle className={classNames(classes.item, classes.ellipsis)} ad={ad} />
   </div>
