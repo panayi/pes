@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import * as pesposaConfig from '@pesposa/core/src/config/pesposa';
 import urlForPath from 'utils/urlForPath';
 
 const getMetaTags = ({
@@ -9,8 +10,25 @@ const getMetaTags = ({
   facebook,
   twitter,
 }) => {
-  const linkCanonical = path
-    ? [{ rel: 'canonical', href: urlForPath(path) }]
+  const href = path && urlForPath(path);
+
+  const finalFacebook = R.merge(
+    {
+      siteName: pesposaConfig.SITE_NAME,
+      appId: pesposaConfig.FACEBOOK_APP_ID,
+    },
+    facebook,
+  );
+
+  const finalTwitter = R.merge(
+    {
+      site: `@${pesposaConfig.TWITTER_HANDLE}`,
+    },
+    twitter,
+  );
+
+  const linkCanonical = href
+    ? [{ rel: 'canonical', href }, { property: 'og:url', content: href }]
     : [];
 
   const metaTitle = title
@@ -35,30 +53,22 @@ const getMetaTags = ({
       ]
     : [];
 
-  const metaFacebookSiteName =
-    facebook && facebook.siteName
-      ? [{ property: 'og:site_name', content: facebook.siteName }]
-      : [];
-  const metaFacebookAdmins =
-    facebook && facebook.userId
-      ? [{ property: 'fb:admins', content: facebook.userId }]
-      : [];
-  const metaFacebookAppId =
-    facebook && facebook.appId
-      ? [{ property: 'fb:app_id', content: facebook.appId }]
-      : [];
+  const metaFacebookSiteName = finalFacebook.siteName
+    ? [{ property: 'og:site_name', content: finalFacebook.siteName }]
+    : [];
+  const metaFacebookAdmins = finalFacebook.userId
+    ? [{ property: 'fb:admins', content: finalFacebook.userId }]
+    : [];
+  const metaFacebookAppId = finalFacebook.appId
+    ? [{ property: 'fb:app_id', content: finalFacebook.appId }]
+    : [];
 
   const metaTwitterCard = [
     { name: 'twitter:card', content: 'summary_large_image' },
   ];
-  const metaTwitterCreator =
-    twitter && twitter.handle
-      ? [{ name: 'twitter:creator', content: twitter.handle }]
-      : [];
-  const metaTwitterSite =
-    twitter && twitter.handle
-      ? [{ name: 'twitter:site', content: twitter.handle }]
-      : [];
+  const metaTwitterSite = finalTwitter.site
+    ? [{ name: 'twitter:site', content: finalTwitter.site }]
+    : [];
 
   return R.filter(R.identity, {
     title,
@@ -71,7 +81,6 @@ const getMetaTags = ({
       ...metaFacebookAdmins,
       ...metaFacebookAppId,
       ...metaTwitterCard,
-      ...metaTwitterCreator,
       ...metaTwitterSite,
     ],
   });

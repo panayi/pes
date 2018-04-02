@@ -26,6 +26,13 @@ const Content = ({ ad, adId, legacy }: Props) => (
     <Helmet
       {...getMetaTags({
         title: `${ad.title} in ${R.path(['location', 'address', 'city'], ad)}`,
+        description: R.prop('body', ad),
+        image: R.compose(
+          R.prop('downloadURL'),
+          R.head,
+          R.values,
+          R.propOr({}, 'images'),
+        )(ad),
       })}
     />
     <ViewAd ad={ad} adId={adId} legacy={legacy} />
@@ -61,12 +68,16 @@ export default R.compose(
       legacy: legacySelector({ match }),
     };
     const state = store.getState();
-    const adConnection = models
-      .ads(propSelector('legacy'))
-      .one(propSelector('adId'));
+    const adIdSelector = propSelector('adId');
+    const adConnection = models.ads(propSelector('legacy')).one(adIdSelector);
     const adQuery = adConnection.query(state, props).path;
+    const adImagesConnection = models.adImages(adIdSelector).allObjects;
+    const adImagesQuery = adImagesConnection.query(state, props).path;
 
-    await store.firebase.promiseEvents([{ path: adQuery, type: 'once' }]);
+    await store.firebase.promiseEvents([
+      { path: adQuery, type: 'once' },
+      { path: adImagesQuery, type: 'once' },
+    ]);
     const ad = adConnection.selector(store.getState(), props);
 
     if (ad.user) {
