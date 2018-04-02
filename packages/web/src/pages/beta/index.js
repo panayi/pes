@@ -5,9 +5,11 @@ import classNames from 'classnames';
 import queryString from 'query-string';
 import { withProps, withState } from 'recompose';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import Typography from 'material-ui/Typography';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import withStyles from 'material-ui/styles/withStyles';
+import getMetaTags from 'utils/getMetaTags';
 import defaultTheme from 'config/theme';
 import { actions as modalActions } from 'store/modals';
 import { actions as authActions } from 'store/firebase/auth';
@@ -142,7 +144,7 @@ class Beta extends React.Component {
   };
 
   renderBody = () => {
-    const { name, loginSuccess, classes } = this.props;
+    const { name, loginSuccess, location, classes } = this.props;
     const buttonLabel = this.getButtonLabel();
 
     if (loginSuccess) {
@@ -152,6 +154,12 @@ class Beta extends React.Component {
     if (this.hasBetaInvite()) {
       return (
         <React.Fragment>
+          <Helmet
+            {...getMetaTags({
+              title: `Pesposa Beta`,
+              path: location.pathname,
+            })}
+          />
           <strong className={classes.name}>Hello {name || 'beta user'}!</strong>
           <span className={classes.fade}>
             Thanks for accepting the beta invitation.

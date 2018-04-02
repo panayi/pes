@@ -22,10 +22,14 @@ import withProfileData from 'hocs/withProfileData';
 import Profile, { searchParamsByTabSelector } from 'modules/Profile/Profile';
 import Header from 'pages/components/Header/Header';
 
-const ProfilePage = ({ userId, tab, displayName }) => (
+const ProfilePage = ({ userId, tab, displayName, avatarUrl, location }) => (
   <Layout header={Header} fixed flex>
     <Helmet
-      {...getMetaTags({ title: `${displayName} is selling stuff on Pesposa` })}
+      {...getMetaTags({
+        title: `${displayName} is selling stuff on Pesposa`,
+        image: avatarUrl,
+        path: location.pathname,
+      })}
     />
     <Profile userId={userId} tab={tab} />
   </Layout>
@@ -59,8 +63,8 @@ export default R.compose(
     } else {
       await store.firebase.promiseEvents([
         {
-          path: models.users
-            .one(propSelector('userId'))
+          path: models
+            .profiles(propSelector('userId'))
             .query(store.getState(), { userId }).path,
           type: 'once',
         },
@@ -93,6 +97,7 @@ export default R.compose(
   withProfileData(
     {
       displayName: ['displayName'],
+      avatarUrl: ['avatarUrl'],
     },
     R.either(propSelector('userId'), propSelector('currentUserId')),
   ),

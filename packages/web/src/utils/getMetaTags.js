@@ -2,6 +2,8 @@ import * as R from 'ramda';
 import * as pesposaConfig from '@pesposa/core/src/config/pesposa';
 import urlForPath from 'utils/urlForPath';
 
+const LOGO = 'logo.png';
+
 const getMetaTags = ({
   path,
   title,
@@ -11,7 +13,7 @@ const getMetaTags = ({
   twitter,
 }) => {
   const href = path && urlForPath(path);
-
+  const finalImage = image || urlForPath(LOGO);
   const finalFacebook = R.merge(
     {
       siteName: pesposaConfig.SITE_NAME,
@@ -46,10 +48,10 @@ const getMetaTags = ({
       ]
     : [];
 
-  const metaImage = image
+  const metaImage = finalImage
     ? [
-        { property: 'og:image', content: image },
-        { property: 'twitter:image', content: image },
+        { property: 'og:image', content: finalImage },
+        { property: 'twitter:image', content: finalImage },
       ]
     : [];
 

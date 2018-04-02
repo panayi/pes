@@ -53,13 +53,14 @@ const styles = theme => ({
 
 const HomeHeader = withProps({ inHome: true })(Header);
 
-const Content = ({ place, category, searchParamsFromProps }) => (
+const Content = ({ place, category, searchParamsFromProps, location }) => (
   <React.Fragment>
     <Helmet
       {...getMetaTags({
         title: getTitle({ place, category }),
         description:
           'Sell your stuff quickly and connect with thousands of buyers. Find cars, houses, electronics and much more, near your location.',
+        path: location.pathname,
       })}
     />
     <Search
