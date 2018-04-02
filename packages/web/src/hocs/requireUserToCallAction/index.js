@@ -10,13 +10,13 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  openModal: modalActions.openModal,
+  __openModal: modalActions.openModal,
 };
 
 const requireUserToCallAction = actionKey =>
   R.compose(
     connect(mapStateToProps, mapDispatchToProps),
-    mapProps(({ isAuthenticated, openModal, ...props }) => ({
+    mapProps(({ isAuthenticated, __openModal, ...props }) => ({
       ...props,
       [actionKey]: (...args) => {
         if (isAuthenticated) {
@@ -24,7 +24,7 @@ const requireUserToCallAction = actionKey =>
         }
 
         return new Promise(resolve =>
-          openModal('login', {
+          __openModal('login', {
             onSuccess: async () => {
               const result = await props[actionKey](...args);
               resolve(result);
