@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import { XsScreen, XsScreenHidden } from 'react-responsive-redux';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import getMetaTags from 'utils/getMetaTags';
+import { buildUrl } from 'services/imgix';
 import { models } from 'store/firebase/data';
 import { selectors as routerSelectors } from 'store/router';
 import needsBetaUser from 'hocs/needsBetaUser';
@@ -21,18 +22,20 @@ type Props = {
   legacy: ?boolean,
 };
 
-const Content = ({ ad, adId, legacy }: Props) => (
+const Content = ({ ad, adId, legacy, location }: Props) => (
   <React.Fragment>
     <Helmet
       {...getMetaTags({
         title: `${ad.title} in ${R.path(['location', 'address', 'city'], ad)}`,
         description: R.prop('body', ad),
         image: R.compose(
-          R.prop('downloadURL'),
+          buildUrl,
+          R.prop('fullPath'),
           R.head,
           R.values,
           R.propOr({}, 'images'),
         )(ad),
+        path: location.pathname,
       })}
     />
     <ViewAd ad={ad} adId={adId} legacy={legacy} />

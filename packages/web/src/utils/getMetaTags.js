@@ -27,9 +27,9 @@ const getMetaTags = ({
     twitter,
   );
 
-  const linkCanonical = href
-    ? [{ rel: 'canonical', href }, { property: 'og:url', content: href }]
-    : [];
+  const linkCanonical = href ? [{ rel: 'canonical', href }] : [];
+
+  const metaUrl = href ? [{ property: 'og:url', content: href }] : [];
 
   const metaTitle = title
     ? [
@@ -74,6 +74,7 @@ const getMetaTags = ({
     title,
     link: linkCanonical,
     meta: [
+      ...metaUrl,
       ...metaTitle,
       ...metaDescription,
       ...metaImage,
