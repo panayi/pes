@@ -193,121 +193,121 @@ const DesktopViewAd = ({
   sellerName,
   classes,
 }: Props) => (
-  <div className={classes.root}>
-    <div className={classes.breadcrumb}>
-      <Breadcrumbs ad={ad} />
-    </div>
-    <Paper className={classes.ad}>
-      <div className={classes.inner}>
-        <div className={classes.images}>
-          <SoldRibbon sold={ad.sold} />
-          <ImageSlider
-            className={classes.slider}
-            images={R.values(ad.images)}
-            imgixParams={{ w: 900, auto: 'compress,format' }}
-            flex
-          />
-        </div>
-        <div className={classes.content}>
-          <div className={classes.header}>
-            <AdTitle
-              className={classes.title}
-              ad={ad}
-              variant="title"
-              color="textSecondary"
+    <div className={classes.root}>
+      <div className={classes.breadcrumb}>
+        <Breadcrumbs ad={ad} />
+      </div>
+      <Paper className={classes.ad}>
+        <div className={classes.inner}>
+          <div className={classes.images}>
+            <SoldRibbon sold={ad.sold} />
+            <ImageSlider
+              className={classes.slider}
+              images={R.values(ad.images)}
+              imgixParams={{ w: 900, auto: 'compress,format' }}
+              flex
             />
-            <div className={classes.headerAction}>
-              <EditAdLink adId={adId} ad={ad} />
-              <FavoriteAd
-                className={classes.favoriteButton}
+          </div>
+          <div className={classes.content}>
+            <div className={classes.header}>
+              <AdTitle
+                className={classes.title}
                 ad={ad}
-                adId={adId}
-                uid={uid}
+                variant="title"
+                color="textSecondary"
               />
-            </div>
-          </div>
-          <AdPrice ad={ad}>
-            {({ price }) =>
-              price ? (
-                <Typography className={classes.price} variant="title">
-                  {price}
-                </Typography>
-              ) : null
-            }
-          </AdPrice>
-          <AdBody ad={ad} className={classes.description} />
-          <div className={classes.date}>
-            <AdDateChip ad={ad} />
-          </div>
-          <AdAddress ad={ad}>
-            {({ address }) =>
-              address ? (
-                <div className={classes.location}>
-                  <PlaceIcon className={classes.locationIcon} />
-                  <Typography
-                    className={classes.address}
-                    color="textSecondary"
-                    component="div"
-                  >
-                    {address}
-                  </Typography>
-                </div>
-              ) : null
-            }
-          </AdAddress>
-          <div className={classes.mapWrap}>
-            <StaticMap
-              id={adId}
-              className={classes.map}
-              center={R.path(['location', 'geoposition'], ad)}
-              width={400}
-              height={190}
-            />
-          </div>
-          <TabletScreen>
-            <ShareButtons />
-          </TabletScreen>
-          <div className={classes.seller}>
-            <SentMessages messages={sentMessages} adId={adId} uid={uid} />
-            <SellerBox className={classes.sellerBox} ad={ad} uid={uid} />
-            {ad.user && (
-              <div className={classes.interactionBox}>
-                <Action
+              <div className={classes.headerAction}>
+                <EditAdLink adId={adId} ad={ad} />
+                <FavoriteAd
+                  className={classes.favoriteButton}
                   ad={ad}
-                  currentUserId={uid}
-                  seller={<MarkAsSold adId={adId} variant="raised" />}
-                  buyer={
-                    <SendMessage
-                      variant="float"
-                      placeholder={`Ask ${sellerName} a question`}
-                      adId={adId}
-                      onSuccess={addMessage}
-                    />
-                  }
+                  adId={adId}
+                  uid={uid}
                 />
               </div>
-            )}
+            </div>
+            <AdPrice ad={ad}>
+              {({ price }) =>
+                price ? (
+                  <Typography className={classes.price} variant="title">
+                    {price}
+                  </Typography>
+                ) : null
+              }
+            </AdPrice>
+            <AdBody ad={ad} className={classes.description} />
+            <div className={classes.date}>
+              <AdDateChip ad={ad} />
+            </div>
+            <AdAddress ad={ad}>
+              {({ address }) =>
+                address ? (
+                  <div className={classes.location}>
+                    <PlaceIcon className={classes.locationIcon} />
+                    <Typography
+                      className={classes.address}
+                      color="textSecondary"
+                      component="div"
+                    >
+                      {address}
+                    </Typography>
+                  </div>
+                ) : null
+              }
+            </AdAddress>
+            <div className={classes.mapWrap}>
+              <StaticMap
+                id={adId}
+                className={classes.map}
+                center={R.path(['location', 'geoposition'], ad)}
+                width={400}
+                height={190}
+              />
+            </div>
+            <TabletScreen>
+              <ShareButtons />
+            </TabletScreen>
+            <div className={classes.seller}>
+              <SentMessages messages={sentMessages} adId={adId} uid={uid} />
+              <SellerBox className={classes.sellerBox} ad={ad} />
+              {ad.user && (
+                <div className={classes.interactionBox}>
+                  <Action
+                    ad={ad}
+                    currentUserId={uid}
+                    seller={<MarkAsSold adId={adId} variant="raised" />}
+                    buyer={
+                      <SendMessage
+                        variant="float"
+                        placeholder={`Ask ${sellerName} a question`}
+                        adId={adId}
+                        onSuccess={addMessage}
+                      />
+                    }
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <DesktopScreen>
-        <div className={classes.offset}>
-          <div className={classes.shareButtons}>
-            <ShareButtons />
+        <DesktopScreen>
+          <div className={classes.offset}>
+            <div className={classes.shareButtons}>
+              <ShareButtons />
+            </div>
           </div>
-        </div>
-      </DesktopScreen>
-      <BrowseAds adId={adId}>
-        {({ previousAd, nextAd }) => (
-          <React.Fragment>
-            <BrowseButton ad={previousAd} direction="previous" />
-            <BrowseButton ad={nextAd} direction="next" />
-          </React.Fragment>
-        )}
-      </BrowseAds>
-    </Paper>
-  </div>
-);
+        </DesktopScreen>
+        <BrowseAds adId={adId}>
+          {({ previousAd, nextAd }) => (
+            <React.Fragment>
+              <BrowseButton ad={previousAd} direction="previous" />
+              <BrowseButton ad={nextAd} direction="next" />
+            </React.Fragment>
+          )}
+        </BrowseAds>
+      </Paper>
+    </div>
+  );
 
 DesktopViewAd.defaultProps = {
   ad: {},
