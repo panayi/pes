@@ -89,6 +89,7 @@ class ProfileBox extends Component {
 
   renderUser() {
     const {
+      onClick,
       isAuthenticated,
       email,
       phoneNumber,
@@ -97,7 +98,12 @@ class ProfileBox extends Component {
     } = this.props;
 
     return isAuthenticated ? (
-      <div className={classes.user}>
+      <div
+        className={classes.user}
+        onClick={onClick}
+        role="button"
+        tabIndex="-1"
+      >
         <div className={classes.profileImageWrap}>
           <ProfileImage
             className={classNames({ [classes.profileImage]: isAuthenticated })}

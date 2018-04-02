@@ -94,6 +94,7 @@ class Menu extends Component {
             isAuthenticated={isAuthenticated}
             currentUserId={currentUserId}
             openModal={this.openModal}
+            onClick={() => this.navigateTo('/profile')}
           />
           <List component="nav">
             <ListItem button onClick={() => this.navigateTo('/')}>
