@@ -10,6 +10,7 @@ import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
 import Grid from 'material-ui/Grid';
 import withStyles from 'material-ui/styles/withStyles';
 import { models } from 'store/firebase/data';
+import needsUser from 'hocs/needsUser';
 import Spinner from 'components/Spinner/Spinner';
 import Conversations from './Conversations/Conversations';
 import Conversation from './Conversation/Conversation';
@@ -147,6 +148,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 export default R.compose(
+  needsUser(),
   connect(mapStateToProps),
   withProps(
     createStructuredSelector({
