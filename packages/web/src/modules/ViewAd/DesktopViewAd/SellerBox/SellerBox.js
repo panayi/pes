@@ -1,7 +1,11 @@
 import React from 'react';
+import * as R from 'ramda';
 import classNames from 'classnames';
+import { withProps } from 'recompose';
+import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
+import { selectors as dataSelectors } from 'store/firebase/data';
 import Link from 'components/Link/Link';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
@@ -50,7 +54,7 @@ const styles = theme => ({
   },
 });
 
-const SellerBox = ({ ad, className, classes }) => (
+const SellerBox = ({ ad, className, isSeller, classes }) => (
   <div className={classNames(classes.root, className)}>
     <Link
       className={classes.avatarWrap}
@@ -77,16 +81,25 @@ const SellerBox = ({ ad, className, classes }) => (
         </React.Fragment>
       )}
     </div>
-    <RevealPhoneButton
-      ad={ad}
-      buttonProps={{
-        variant: 'raised',
-        color: ad.user ? 'default' : 'primary',
-      }}
-    >
-      Call seller
-    </RevealPhoneButton>
+    {!isSeller && (
+      <RevealPhoneButton
+        ad={ad}
+        buttonProps={{
+          variant: 'raised',
+          color: ad.user ? 'default' : 'primary',
+        }}
+      >
+        Call seller
+      </RevealPhoneButton>
+    )}
   </div>
 );
 
-export default withStyles(styles)(SellerBox);
+export default R.compose(
+  withProps(
+    createStructuredSelector({
+      isSeller: dataSelectors.isSellerSelector,
+    }),
+  ),
+  withStyles(styles),
+)(SellerBox);
