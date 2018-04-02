@@ -36,6 +36,7 @@ const styles = theme => ({
   linkItem: {
     padding: 0,
     minWidth: 0,
+    minHeight: 0,
     '&:hover': {
       background: 'none',
     },

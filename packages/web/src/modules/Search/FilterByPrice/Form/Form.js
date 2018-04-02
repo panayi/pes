@@ -14,6 +14,7 @@ const styles = theme => ({
     alignSelf: 'flex-end',
   },
   input: {
+    flex: '1 1 auto', // Fix IE11
     '& + &': {
       marginLeft: theme.spacing.unit,
     },

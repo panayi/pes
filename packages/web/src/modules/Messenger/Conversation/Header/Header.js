@@ -6,7 +6,7 @@ import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import Link from 'components/Link/Link';
-import LineClamp from 'components/LineClamp/LineClamp';
+import Truncate from 'components/Truncate/Truncate';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdBody from 'components/AdBody/AdBody';
@@ -95,17 +95,10 @@ const ConversationHeader = ({
           className={classes.title}
           ad={ad}
           variant="subheading"
-          component={LineClamp}
+          component={Truncate}
           lines={1}
-          height={24}
         />
-        <AdBody
-          ad={ad}
-          component={LineClamp}
-          variant="caption"
-          lines={1}
-          height={16}
-        />
+        <AdBody ad={ad} component={Truncate} variant="caption" lines={1} />
       </div>
       <AdThumbnail ad={ad} />
     </div>

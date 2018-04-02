@@ -69,7 +69,7 @@ const styles = theme => ({
   portrait: {
     width: 'auto',
     height: '100%',
-    flex: 0,
+    flex: '0 0 auto',
   },
   landscape: {
     width: '100%',
@@ -79,7 +79,7 @@ const styles = theme => ({
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    flex: 0,
+    flex: '0 0 auto',
   },
 });
 

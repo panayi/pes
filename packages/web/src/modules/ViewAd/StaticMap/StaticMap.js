@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import queryString from 'query-string';
+import qs from 'querystringify';
 import { withProps, defaultProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
@@ -58,8 +58,8 @@ const srcSelector = createCachedSelector(
   propSelector('mapType'),
   propSelector('language'),
   R.compose(
-    R.concat(`${BASE_URL}?`),
-    queryString.stringify,
+    R.concat(BASE_URL),
+    params => qs.stringify(params, true),
     R.reject(isNilOrEmpty),
     R.zipObj(['center', 'size', 'zoom', 'maptype', 'language', 'key']),
     R.append(env.googleApisKey),

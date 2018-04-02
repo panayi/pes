@@ -10,7 +10,7 @@ import { blue } from 'material-ui/colors';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import hydrateAd from 'hocs/hydrateAd';
 import Link from 'components/Link/Link';
-import LineClamp from 'components/LineClamp/LineClamp';
+import Truncate from 'components/Truncate/Truncate';
 import UserFullName from 'components/UserFullName/UserFullName';
 import AdTitle from 'components/AdTitle/AdTitle';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -95,9 +95,8 @@ const ConversationItem = ({
       <AdTitle
         className={classes.title}
         ad={ad}
-        component={LineClamp}
+        component={Truncate}
         lines={1}
-        height={16}
         variant="caption"
       />
       <Typography variant="caption">

@@ -13,11 +13,14 @@ type Props = {
   wide: ?boolean,
 };
 
-const styles = {
+const styles = theme => ({
   page: {
     flex: '1 1 100%',
-    minHeight: '100%',
     backgroundColor: 'transparent',
+    minHeight: `calc(100% - ${theme.layout.headerHeight.tablet}px)`,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      minHeight: `calc(100% - ${theme.layout.headerHeight.phone}px)`,
+    },
   },
   fixed: {
     flex: '1 1 100%',
@@ -33,7 +36,7 @@ const styles = {
   wide: {
     maxWidth: 1200,
   },
-};
+});
 
 const Page = ({
   children,

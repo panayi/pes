@@ -28,7 +28,7 @@ type Props = {
 
 const styles = () => ({
   root: {
-    maxWidth: 370,
+    width: 370,
     margin: '0 auto',
   },
 });

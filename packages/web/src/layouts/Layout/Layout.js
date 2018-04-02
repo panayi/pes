@@ -21,7 +21,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     alignItems: 'stretch',
-    minHeight: 'calc(100vh)',
+    height: '100vh',
     width: '100%',
   },
   hasHeader: {

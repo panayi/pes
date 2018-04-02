@@ -7,7 +7,7 @@ import Card, { CardMedia, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import { Link } from 'react-router-dom';
-import LineClamp from 'components/LineClamp/LineClamp';
+import Truncate from 'components/Truncate/Truncate';
 import Imgix from 'components/Imgix/Imgix';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdAddress from 'components/AdAddress/AdAddress';
@@ -89,11 +89,10 @@ const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
           <CardContent className={classes.content}>
             <AdTitle
               className={classes.title}
-              component={LineClamp}
+              component={Truncate}
               variant="subheading"
               ad={hit}
               lines={2}
-              height={37}
               tagName="h3"
             />
             <div className={classes.location}>

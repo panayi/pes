@@ -55,7 +55,9 @@ export class ListAds extends Component {
   }
 
   componentWillUnmount() {
-    this.props.setScrollPosition(window.scrollY);
+    this.props.setScrollPosition(
+      window.pageYOffset || document.documentElement.scrollTop,
+    );
   }
 
   ensureCanScroll() {
