@@ -19,7 +19,7 @@ import NoConversationSelected from './NoConversationSelected/NoConversationSelec
 const styles = theme => ({
   root: {
     position: 'relative',
-    height: `calc(100% - ${theme.spacing.unit * 4})`,
+    height: `calc(100% - ${theme.spacing.unit * 4}px)`,
     marginTop: theme.spacing.unit * 2,
     overflow: 'hidden',
     backgroundColor: theme.palette.common.white,
