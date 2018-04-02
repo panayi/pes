@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import classNames from 'classnames';
-import queryString from 'query-string';
+import qs from 'querystringify';
 import { withProps, withState } from 'recompose';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
@@ -265,7 +265,7 @@ export default R.compose(
   connect(null, mapDispatchToProps),
   withProps(props => {
     const search = R.pathOr('', ['location', 'search'], props);
-    const params = queryString.parse(search);
+    const params = qs.parse(search);
     return {
       code: params.code,
       email: params.email,
