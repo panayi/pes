@@ -457,8 +457,8 @@ class MobileViewAd extends React.Component {
   }
 
   renderSlideshow() {
-    const { imagesList, viewAd, classes } = this.props;
-
+    const { imagesList, viewAd, currentSlideIndex, classes } = this.props;
+    console.log(currentSlideIndex);
     return (
       <React.Fragment>
         <div className={classNames(classes.header, classes.slideshowHeader)}>
@@ -476,6 +476,7 @@ class MobileViewAd extends React.Component {
           images={imagesList}
           imgixParams={{ w: 900, auto: 'compress,format' }}
           swipeToSlide
+          initialSlide={currentSlideIndex}
           arrows={false}
           dots
           flex
@@ -544,6 +545,7 @@ export default R.compose(
   withStateHandlers(
     {
       view: 'ad',
+      currentSlideIndex: 0,
     },
     {
       viewSlideShow: () => () => ({
@@ -551,9 +553,14 @@ export default R.compose(
       }),
       viewConversation: () => () => ({
         view: 'conversation',
+        currentSlideIndex: 0,
       }),
       viewAd: () => () => ({
         view: 'ad',
+        currentSlideIndex: 0,
+      }),
+      setCurrentSlide: () => currentSlideIndex => ({
+        currentSlideIndex,
       }),
     },
   ),
