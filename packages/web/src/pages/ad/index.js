@@ -27,7 +27,9 @@ const Content = ({ ad, adId, legacy, location }: Props) => (
   <React.Fragment>
     <Helmet
       {...getMetaTags({
-        title: `${ad.title} in ${R.path(['location', 'address', 'city'], ad)}`,
+        title: ad
+          ? `${ad.title} in ${R.path(['location', 'address', 'city'], ad)}`
+          : null,
         description: R.prop('body', ad),
         image: R.compose(
           buildUrl,

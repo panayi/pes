@@ -26,7 +26,9 @@ const ProfilePage = ({ userId, tab, displayName, avatarUrl, location }) => (
   <Layout header={Header} fixed flex>
     <Helmet
       {...getMetaTags({
-        title: `${displayName} is selling stuff on Pesposa`,
+        title: displayName
+          ? `${displayName} is selling stuff on Pesposa`
+          : null,
         image: avatarUrl,
         path: location.pathname,
       })}
