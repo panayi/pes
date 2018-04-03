@@ -458,7 +458,7 @@ class MobileViewAd extends React.Component {
 
   renderSlideshow() {
     const { imagesList, viewAd, currentSlideIndex, classes } = this.props;
-    console.log(currentSlideIndex);
+
     return (
       <React.Fragment>
         <div className={classNames(classes.header, classes.slideshowHeader)}>
