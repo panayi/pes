@@ -53,6 +53,9 @@ const command = program =>
     .description(
       'Seed Firebase DB with static data (categories, countryFlags, translations)',
     )
-    .action(seed);
+    .action(async (...args) => {
+      await seed(...args);
+      process.exit();
+    });
 
 export default command;

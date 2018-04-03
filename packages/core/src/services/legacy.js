@@ -40,6 +40,10 @@ const mapLegacyToNewCategory = ad => {
     return 'real-estate';
   }
 
+  if (categoryParent === 'personals') {
+    return 'personals';
+  }
+
   if (categoryChild === 'cars') {
     return 'cars';
   }

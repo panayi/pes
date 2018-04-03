@@ -11,9 +11,14 @@ import List from 'material-ui/List';
 import withStyles from 'material-ui/styles/withStyles';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
+import { selectors as authSelectors } from 'store/firebase/auth';
+import { actions as modalActions } from 'store/modals';
+import { selectors as profileSelectors } from 'store/firebase/profile';
 import connectSearch from 'hocs/connectSearch';
 import translate from 'hocs/translate';
+import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import FilterOption from '../FilterOption/FilterOption';
+import ConfirmAdult from './ConfirmAdult/ConfirmAdult';
 
 type LinkType = {
   id: String,
@@ -36,26 +41,62 @@ const styles = {
 };
 
 class FilterByCategory extends React.Component<Props> {
+  setCategory = category => {
+    const id = category.id === 'all' ? null : category.id;
+    this.props.setCategory(id);
+  };
+
+  confirmAdult = category => {
+    const { adult, openModal } = this.props;
+
+    if (adult) {
+      this.setCategory(category);
+    } else {
+      openModal('confirmAdult', {
+        onSuccess: () => this.setCategory(category),
+      });
+    }
+  };
+
+  handleCategoryClick = category => {
+    const { isAuthenticated, openModal } = this.props;
+
+    if (category.requireAdult && !isAuthenticated) {
+      openModal('login', {
+        onSuccess: () => this.confirmAdult(category),
+      });
+    } else if (category.requireAdult && isAuthenticated) {
+      this.confirmAdult(category);
+    } else {
+      this.setCategory(category);
+    }
+  };
+
   renderContent = () => {
-    const { categoryLinks, currentCategory, setCategory, classes } = this.props;
+    const { categoryLinks, currentCategory, classes } = this.props;
 
     return (
-      <List classes={{ root: classes.list }}>
-        {R.map(
-          ({ id, label }) => (
-            <FilterOption
-              key={id}
-              active={
-                id === 'all' ? R.isNil(currentCategory) : id === currentCategory
-              }
-              onClick={() => setCategory(id === 'all' ? null : id)}
-            >
-              {label}
-            </FilterOption>
-          ),
-          R.values(categoryLinks),
-        )}
-      </List>
+      <React.Fragment>
+        <List classes={{ root: classes.list }}>
+          {R.map(
+            category => (
+              <FilterOption
+                key={category.id}
+                active={
+                  category.id === 'all'
+                    ? R.isNil(currentCategory)
+                    : category.id === currentCategory
+                }
+                onClick={() => this.handleCategoryClick(category)}
+              >
+                {category.label}
+              </FilterOption>
+            ),
+            R.values(categoryLinks),
+          )}
+        </List>
+        <ReduxModal id="confirmAdult" content={ConfirmAdult} />
+      </React.Fragment>
     );
   };
 
@@ -77,9 +118,9 @@ const categoryLinksSelector = (state, props) => {
       id: 'all',
       label: 'All',
     }),
-    R.map(({ id }) => ({
-      id,
-      label: t(id),
+    R.map(category => ({
+      ...category,
+      label: t(category.id),
     })),
     R.defaultTo([]),
   )(categories);
@@ -89,11 +130,14 @@ const mapStateToProps = createStructuredSelector({
   currentCategory: paramsSelectors.categorySelector,
   hasValue: paramsSelectors.categoryHasValueSelector,
   categoryLinks: categoryLinksSelector,
+  isAuthenticated: authSelectors.isAuthenticatedSelector,
+  adult: profileSelectors.profileAdultSelector,
 });
 
 const mapDispatchToProps = {
   setCategory: paramsActions.setCategory,
   resetCategory: paramsActions.resetCategory,
+  openModal: modalActions.openModal,
 };
 
 export default R.compose(

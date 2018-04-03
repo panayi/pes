@@ -24,7 +24,8 @@
     "id": "kids-and-baby"
   },
   "personals": {
-    "id": "personals"
+    "id": "personals",
+    "requireAdult": true
   },
   "other": {
     "id": "other"
