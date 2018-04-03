@@ -122,6 +122,7 @@ const categoryLinksSelector = (state, props) => {
       ...category,
       label: t(category.id),
     })),
+    R.sortBy(R.prop('order')),
     R.defaultTo([]),
   )(categories);
 };
