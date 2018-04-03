@@ -130,7 +130,7 @@ export default R.compose(
       actions.loadFirstPage(),
     ]);
 
-    return { ...store.getState(), showSpinner: true };
+    return store.getState();
   }),
   needsBetaUser,
   withProps(
