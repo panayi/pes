@@ -37,6 +37,7 @@ const styles = theme => ({
     padding: 0,
     minWidth: 0,
     minHeight: 0,
+    lineHeight: '1.46429em', // TODO: refactor
     '&:hover': {
       background: 'none',
     },
