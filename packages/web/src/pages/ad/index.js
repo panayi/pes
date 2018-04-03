@@ -93,8 +93,8 @@ export default R.compose(
     if (ad.user) {
       await store.firebase.promiseEvents([
         {
-          path: models.users
-            .one(propSelector('userId'))
+          path: models
+            .profiles(propSelector('userId'))
             .query(state, { userId: ad.user }).path,
           type: 'once',
         },
