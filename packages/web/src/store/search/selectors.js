@@ -9,7 +9,13 @@ import * as totalHitsSelectors from './totalHits/selectors';
 import * as constants from './constants';
 
 const facetFiltersSelector = createSelector(
-  paramsSelectors.categorySelector,
+  R.compose(
+    R.when(
+      R.isNil,
+      R.always('-personals'), // Exclude `personals` ads from results
+    ),
+    paramsSelectors.categorySelector,
+  ),
   paramsSelectors.userSelector,
   paramsSelectors.soldSelector,
   R.compose(
