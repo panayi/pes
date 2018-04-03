@@ -12,10 +12,9 @@ import createBetaUser from './createBetaUser';
 
 const app = express();
 
-if (env.firebaseProject === 'pesposa-dev') {
-  const cors = createCors({ credentials: true, origin: '*' });
-  app.use(cors);
-}
+const origin = env.firebaseProject === 'pesposa-dev' ? '*' : '*.pesposa.com';
+const cors = createCors({ credentials: true, origin });
+app.use(cors);
 
 // Public routes
 app.post(
