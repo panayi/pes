@@ -9,6 +9,7 @@
       "fashion-and-accessories": "Fashion and Accessories",
       "sports-and-leisure": "Sports and Leisure",
       "kids-and-baby": "Kids and Baby",
+      "personals": "Personals",
       "other": "Other"
     },
     "sortByOptions": {
@@ -28,6 +29,7 @@
       "fashion-and-accessories": "Μόδα και Αξεσουάρ",
       "sports-and-leisure": "Αθλητικά και Ψυχαγωγία",
       "kids-and-baby": "Βρεφικά και Παιδικά",
+      "personals": "Προσωπικά",
       "other": "Άλλα"
     }
   }
