@@ -3,7 +3,8 @@ import * as respond from '@pesposa/core/src/utils/respond';
 
 const geoip = (req, res) => {
   try {
-    const location = locationService.getFromIp(req);
+    const { ip } = req.body;
+    const location = locationService.getFromIp(ip, req);
     res.json({ location });
   } catch (error) {
     respond.internalServerError(res, error);

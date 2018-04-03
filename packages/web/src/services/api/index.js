@@ -44,11 +44,12 @@ const reverseGeocode = data => async () => {
   return response.ok ? response.json() : null;
 };
 
-const geoip = () => async () => {
+const geoip = data => async () => {
   const url = `${env.firebaseFunctionsBaseUrl}/geoip`;
 
   const response = await fetch(url, {
     method: 'POST',
+    body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json',
     },

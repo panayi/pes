@@ -16,14 +16,15 @@ export const getFromGeoposition = async geoposition => {
   return location;
 };
 
-export const getFromIp = req => {
-  const ip = env.isDevelopment ? '80.244.26.50' : requestIp.getClientIp(req);
+export const getFromIp = (ip, req) => {
+  const finalIp =
+    ip || (env.isDevelopment ? '80.244.26.50' : requestIp.getClientIp(req));
 
-  if (isNilOrEmpty(ip)) {
+  if (isNilOrEmpty(finalIp)) {
     return null;
   }
 
-  const result = geoip.lookup(ip);
+  const result = geoip.lookup(finalIp);
   const [latitude, longitude] = R.propOr([], 'll', result);
   const geoposition =
     latitude && longitude

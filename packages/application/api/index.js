@@ -24,6 +24,7 @@ app.post(
 )
 app.post(
   '/geoip',
+  bodyParser.json(),
   geoip
 )
 
