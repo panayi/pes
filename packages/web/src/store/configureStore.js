@@ -28,7 +28,15 @@ const configureStore = (initialState = {}, history) => {
     profileParamsToPopulate: profileConstants.PROFILE_POPULATES,
     profileFactory: profileUtils.profileFactory,
     onAuthStateChanged: authActions.handleAuthStateChanged,
-    preserveOnLogout: ['categories', 'locales', 'translations', 'countries'],
+    preserveOnLogout: [
+      'categories',
+      'locales',
+      'translations',
+      'countryFlags',
+      'ads',
+      'users',
+      'betaUsers',
+    ],
   };
 
   // initialize firebase instance
