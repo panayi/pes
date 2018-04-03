@@ -17,25 +17,13 @@ import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import routes from 'routes';
 
-// TODO: Find a better way to implement a spinner
-// that is shown while script is loading
-window.onload = () => {
-  const element = document.querySelector('#script-loading-spinner');
-  if (element) {
-    element.parentNode.removeChild(element);
-  }
-};
-
 const history = createHistory();
 
 // This is needed in order to deduplicate the injection of CSS in the page.
 const sheetsManager = new WeakMap();
 
 ensureReady(routes).then(data => {
-  const finalData = R.compose(
-    R.dissocPath(['firebase', 'auth']),
-    R.omit(['showSpinner']),
-  )(data);
+  const finalData = R.compose(R.dissocPath(['firebase', 'auth']))(data);
   const store = configureStore(finalData, history);
 
   const sheetsRegistry = new SheetsRegistry();

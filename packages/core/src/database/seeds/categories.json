@@ -1,29 +1,43 @@
 {
   "real-estate": {
-    "id": "real-estate"
+    "id": "real-estate",
+    "order": 1
   },
   "cars": {
-    "id": "cars"
+    "id": "cars",
+    "order": 2
   },
   "other-vehicles-and-parts": {
-    "id": "other-vehicles-and-parts"
+    "id": "other-vehicles-and-parts",
+    "order": 3
   },
   "electronics": {
-    "id": "electronics"
-  },
-  "home-and-garden": {
-    "id": "home-and-garden"
+    "id": "electronics",
+    "order": 4
   },
   "fashion-and-accessories": {
-    "id": "fashion-and-accessories"
+    "id": "fashion-and-accessories",
+    "order": 5
   },
   "sports-and-leisure": {
-    "id": "sports-and-leisure"
+    "id": "sports-and-leisure",
+    "order": 6
+  },
+  "home-and-garden": {
+    "id": "home-and-garden",
+    "order": 7
   },
   "kids-and-baby": {
-    "id": "kids-and-baby"
+    "id": "kids-and-baby",
+    "order": 8
+  },
+  "personals": {
+    "id": "personals",
+    "order": 9,
+    "requireAdult": true
   },
   "other": {
-    "id": "other"
+    "id": "other",
+    "order": 10
   }
 }

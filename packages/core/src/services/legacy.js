@@ -40,6 +40,10 @@ const mapLegacyToNewCategory = ad => {
     return 'real-estate';
   }
 
+  if (categoryParent === 'personals') {
+    return 'personals';
+  }
+
   if (categoryChild === 'cars') {
     return 'cars';
   }
@@ -330,6 +334,27 @@ export const localToFirebase = async (adId, database, rootDirectory) => {
       ad.images,
     );
     return uploadImages(imagesWithBuffer, adId, database);
+  } catch (error) {
+    log.error(error.message);
+    throw error;
+  }
+};
+
+export const migratePersonals = async (adId, database, rootDirectory) => {
+  try {
+    if (!R.test(/^personals-/, adId)) {
+      return;
+    }
+
+    const localAdPath = path.resolve(rootDirectory, adId);
+    const ad = fs.readJsonSync(path.join(localAdPath, 'data.json'), 'utf8');
+    const migratedAd = R.merge(ad, { category: 'personals' });
+
+    fs.writeFileSync(
+      path.join(localAdPath, 'data.json'),
+      JSON.stringify(migratedAd, null, 2),
+      'utf8',
+    );
   } catch (error) {
     log.error(error.message);
     throw error;

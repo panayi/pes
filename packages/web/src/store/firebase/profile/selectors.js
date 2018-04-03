@@ -37,6 +37,8 @@ export const profilePhoneNumberSelector = profilePropSelector([
   'phoneNumber',
 ]);
 
+export const profileAdultSelector = profilePropSelector(['adult']);
+
 export const providerIdsSelector = R.compose(
   R.pluck('uid'),
   R.defaultTo([]),

@@ -265,6 +265,7 @@ type User {
   locale: String | Null,
   location: Location | Null,
   ip: IPv4 | Null,
+  adult: Boolean | Null,
   // Public below
   profile: Profile | Null,
   avatarPath: String | Null,  // Storage path to large-size image downloaded from `providerId`
