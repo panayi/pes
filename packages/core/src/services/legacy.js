@@ -312,11 +312,17 @@ export const legacyToLocal = async (legacyAd, rootDirectory) => {
 
 export const localToFirebase = async (adId, database, rootDirectory) => {
   try {
-    const localAdPath = path.resolve(rootDirectory, adId);
-    const firebaseAdPath = getAdPath(adId);
-    const ad = fs.readJsonSync(path.join(localAdPath, 'data.json'), 'utf8');
+    log.info(`Publishing legacy ad with id=${adId}`);
 
+    const localAdPath = path.resolve(rootDirectory, adId);
+    const ad = fs.readJsonSync(path.join(localAdPath, 'data.json'), 'utf8');
+    const firebaseAdPath = getAdPath(adId);
     const adRef = database.ref(firebaseAdPath);
+
+    if (isNilOrEmpty(ad.images)) {
+      log.warn(`Ad with ${adId} has no images`);
+    }
+
     const adSnapshot = await adRef.once('value');
     if (adSnapshot.exists()) {
       return null;
@@ -324,15 +330,16 @@ export const localToFirebase = async (adId, database, rootDirectory) => {
 
     await adRef.update(R.omit(['images'], ad));
 
-    const imagesWithBuffer = R.map(
-      image =>
+    const imagesWithBuffer = R.compose(
+      R.map(image =>
         R.assoc(
           'buffer',
           fs.readFileSync(path.join(localAdPath, image.filename)),
           image,
         ),
-      ad.images,
-    );
+      ),
+      R.defaultTo([]),
+    )(ad.images);
     return uploadImages(imagesWithBuffer, adId, database);
   } catch (error) {
     log.error(error.message);

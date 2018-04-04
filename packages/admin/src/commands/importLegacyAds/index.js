@@ -20,6 +20,8 @@ export const importLegacyAds = async options => {
     log.error('Algolia: Failed to import ads');
     throw error;
   }
+
+  process.exit();
 };
 
 const command = program =>
