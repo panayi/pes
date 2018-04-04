@@ -175,6 +175,7 @@ Find variables inherited by create-react-app
 | Staging     |  `staging`   | Runs the "next" version of the application, i.e., the release candidate. It is an exact mirror of the production environment, and shares the same resources (database, algolia, etc.) as the production environment. This environment is used for stress testing and comprehensive QA. Access is restricted to development team. |
 | Production  | `production` |                                                                                                                                     Runs the currently released version of the application.                                                                                                                                      |
 
+
 ## 5. Custom yarn script
 We have a custom yarn script at `./yarn` for allowing operations on multiple deployments. Don't edit `.env` or `serviceAccountKey.json` files directly; instead edit them in `secrets` repo and update the submodule. Next time `DEPLOYMENT=development ./yarn <command>` runs will update these files.
 
