@@ -43,13 +43,20 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.common.white,
+    [theme.breakpoints.up(theme.map.tablet)]: {
+      justifyContent: 'space-evenly',
+    },
   },
-  brand: {
-    flex: 1,
+  item: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  brand: {
+    [theme.breakpoints.down(theme.map.phone)]: {
+      flex: 1,
+    },
   },
   logo: {
     marginBottom: theme.spacing.unit * 2,
@@ -206,32 +213,34 @@ class Beta extends React.Component {
 
     return (
       <React.Fragment>
-        <div className={classes.brand}>
+        <div className={classNames(classes.item, classes.brand)}>
           <Logo className={classes.logo} />
           <Typography className={classes.title} variant="title" color="inherit">
             Buy and sell stuff in Cyprus.
           </Typography>
         </div>
-        <div className={classes.buttonWrap}>
-          <Button
-            className={classNames(classes.button, {
-              [classes.disabled]: loginSuccess,
-            })}
-            disabled={loginSuccess}
-            size="large"
-            color="primary"
-            variant="raised"
-            fullWidth
-            onClick={() =>
-              openModal('login', { onSuccess: this.handleLoginSuccess })
-            }
-          >
-            {loginSuccess ? 'Thank you!' : this.getButtonLabel()}
-          </Button>
+        <div className={classes.item}>
+          <div className={classes.buttonWrap}>
+            <Button
+              className={classNames(classes.button, {
+                [classes.disabled]: loginSuccess,
+              })}
+              disabled={loginSuccess}
+              size="large"
+              color="primary"
+              variant="raised"
+              fullWidth
+              onClick={() =>
+                openModal('login', { onSuccess: this.handleLoginSuccess })
+              }
+            >
+              {loginSuccess ? 'Thank you!' : this.getButtonLabel()}
+            </Button>
+          </div>
+          <Typography className={classes.body} color="inherit">
+            {this.renderBody()}
+          </Typography>
         </div>
-        <Typography className={classes.body} color="inherit">
-          {this.renderBody()}
-        </Typography>
       </React.Fragment>
     );
   }
