@@ -38,9 +38,16 @@ export const isAuthenticated = (options: Options = {}) => (
     .verifyIdToken(idToken)
     .then(decodedIdToken => {
       // TODO: should check that the user is NOT anonymous (if headerKey is "authorization")
-      log.info(`Authenticated with id=${decodedIdToken.user_id}, ${decodedIdToken.firebase.sign_in_provider}`);
-      req[propKey] = decodedIdToken;
-      next();
+      const provider = R.path(['firebase', 'sign_in_provider'], decodedIdToken);
+      const isActualUser = provider && provider !== 'anonymous';
+
+      if (headerKey !== 'authorization' || isActualUser) {
+        log.info(`Authenticated with id=${decodedIdToken.user_id}, ${decodedIdToken.firebase.sign_in_provider}`);
+        req[propKey] = decodedIdToken;
+        next();
+      } else {
+        throw new Error('Expected an actual user - not an anonymous user');
+      }
     })
     .catch(error => {
       log.error('Error while verifying Firebase ID token:', error);
