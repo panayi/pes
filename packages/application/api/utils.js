@@ -37,7 +37,8 @@ export const isAuthenticated = (options: Options = {}) => (
   auth
     .verifyIdToken(idToken)
     .then(decodedIdToken => {
-      log.info(`Authenticated with id=${decodedIdToken.user_id}`);
+      // TODO: should check that the user is NOT anonymous (if headerKey is "authorization")
+      log.info(`Authenticated with id=${decodedIdToken.user_id}, ${decodedIdToken.firebase.sign_in_provider}`);
       req[propKey] = decodedIdToken;
       next();
     })

@@ -41,6 +41,7 @@ app.post(
 
 app.post(
   '/beta-users/create',
+  isAuthenticated(),
   bodyParser.json(),
   createBetaUser
 )

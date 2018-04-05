@@ -150,6 +150,12 @@ class Beta extends React.Component {
     return this.handleCreateBetaUserFail();
   };
 
+  handleLoginClick = async () => {
+    const { logout, openModal } = this.props;
+    await logout();
+    openModal('login', { onSuccess: this.handleLoginSuccess });
+  };
+
   renderBody = () => {
     const { name, loginSuccess, location, classes } = this.props;
     const buttonLabel = this.getButtonLabel();
@@ -209,7 +215,7 @@ class Beta extends React.Component {
   }
 
   renderDefault() {
-    const { loginSuccess, openModal, classes } = this.props;
+    const { loginSuccess, classes } = this.props;
 
     return (
       <React.Fragment>
@@ -230,9 +236,7 @@ class Beta extends React.Component {
               color="primary"
               variant="raised"
               fullWidth
-              onClick={() =>
-                openModal('login', { onSuccess: this.handleLoginSuccess })
-              }
+              onClick={this.handleLoginClick}
             >
               {loginSuccess ? 'Thank you!' : this.getButtonLabel()}
             </Button>
@@ -266,6 +270,7 @@ class Beta extends React.Component {
 
 const mapDispatchToProps = {
   createBetaUser: authActions.createBetaUser,
+  logout: authActions.logout,
   openModal: modalActions.openModal,
 };
 

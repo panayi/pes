@@ -16,6 +16,10 @@ import {
 } from 'store/firebase/profile';
 import * as selectors from './selectors';
 
+// Hacky code!
+// TODO: refactor or remove soon
+const isInBetaPage = () => R.equals(window.location.pathname, '/beta');
+
 export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
   if (!process.browser) {
     return;
@@ -23,7 +27,9 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
 
   // If user is not logged in => login anonymously
   if (isNilOrEmpty(authData)) {
-    dispatch(firebaseApi.auth.loginAnonymously());
+    if (!isInBetaPage()) {
+      dispatch(firebaseApi.auth.loginAnonymously());
+    }
     return;
   }
 
@@ -144,7 +150,7 @@ export const linkProvider = providerId => async (
 export const logout = () => async (dispatch, getState, getFirebase) => {
   await getFirebase().logout();
 
-  if (env.betaEnabled) {
+  if (env.betaEnabled && !isInBetaPage()) {
     window.location.href = '/beta';
   }
 };
