@@ -16,6 +16,13 @@ import {
 import connectSearch from 'hocs/connectSearch';
 
 class Search extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this._handleLoadNextPage = this.handleLoadNextPage;
+    this.handleLoadNextPage = R.memoize(this._handleLoadNextPage);
+  }
+
   componentDidMount() {
     const {
       params,
@@ -56,31 +63,42 @@ class Search extends React.Component {
     );
 
     if (indexNameChanged || (!isInitialParams && searchParamsChanged)) {
-      const { loadFirstPage, mapParamsToUrl, match, history } = this.props;
-      loadFirstPage();
-      this.initialParamsState = null;
-
-      if (mapParamsToUrl) {
-        const nextUrl = mapParamsToUrl(nextProps.paramsState);
-
-        if (nextUrl !== match.url) {
-          history.push(nextUrl);
-        }
-      }
+      this.handleLoadFirstPage(nextProps);
     }
   }
 
-  handleLoadNextPage = () => {
-    const { page, loadPage } = this.props;
-    loadPage(page + 1);
+  handleLoadFirstPage = props => {
+    const { loadFirstPage, mapParamsToUrl, match, history } = props;
+
+    this.handleLoadNextPage = R.memoize(this._handleLoadNextPage);
+    this.initialParamsState = null;
+    loadFirstPage();
+
+    if (mapParamsToUrl) {
+      const nextUrl = mapParamsToUrl(props.paramsState);
+
+      if (nextUrl !== match.url) {
+        history.push(nextUrl);
+      }
+    }
+  };
+
+  handleLoadNextPage = async nextPage => {
+    const { loadPage } = this.props;
+
+    const scrollPosition = document.documentElement.scrollTop;
+    await loadPage(nextPage);
+    // This ensures that scrolling to bottom aggressively
+    // will not send a burst of loadPage(1), loadPage(2), ... requests
+    window.scrollTo(0, scrollPosition);
   };
 
   render() {
-    const { hits, children } = this.props;
+    const { hits, page, children } = this.props;
 
     return children({
       hits,
-      loadNextPage: this.handleLoadNextPage,
+      loadNextPage: () => this.handleLoadNextPage(page + 1),
     });
   }
 }
