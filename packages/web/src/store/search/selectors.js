@@ -73,9 +73,9 @@ export const searchParamsSelector = createSelector(
         facetFilters,
         filters,
         hitsPerPage: constants.HITS_PER_PAGE,
-        // aroundLatLng: geoposition
-        //   ? `${geoposition.latitude}, ${geoposition.longitude}`
-        //   : null,
+        aroundLatLng: geoposition
+          ? `${geoposition.latitude}, ${geoposition.longitude}`
+          : null,
         getRankingInfo: true,
       });
     }
