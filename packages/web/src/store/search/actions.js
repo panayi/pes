@@ -4,7 +4,7 @@ import * as algoliaService from 'services/algolia';
 import * as hitsSelectors from './hits/selectors';
 import * as requestSelectors from './request/selectors';
 import * as pageSelectors from './page/selectors';
-import * as totalHitsSelectors from './totalHits/selectors';
+import * as pagesCountSelectors from './pagesCount/selectors';
 import * as pageActions from './page/actions';
 import * as selectors from './selectors';
 import * as types from './types';
@@ -70,7 +70,7 @@ export const loadPage = page => (
   }
 
   const currentPage = pageSelectors.pageSelector(state);
-  const pagesCount = totalHitsSelectors.pagesCountSelector(state);
+  const pagesCount = pagesCountSelectors.pagesCountSelector(state);
 
   if (!isFirstPage && page > currentPage && page < pagesCount) {
     return dispatch(search());

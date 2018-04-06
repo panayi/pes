@@ -7,7 +7,9 @@ import requestReducer, { constants as requestConstants } from './request';
 import scrollPositionReducer, {
   constants as scrollPositionConstants,
 } from './scrollPosition';
-import totalHitsReducer, { constants as totalHitsConstants } from './totalHits';
+import pagesCountReducer, {
+  constants as pagesCountConstants,
+} from './pagesCount';
 import * as constants from './constants';
 
 const searchReducer = combineReducers({
@@ -16,7 +18,7 @@ const searchReducer = combineReducers({
   [paramsConstants.ROOT_KEY]: paramsReducer,
   [requestConstants.ROOT_KEY]: requestReducer,
   [scrollPositionConstants.ROOT_KEY]: scrollPositionReducer,
-  [totalHitsConstants.ROOT_KEY]: totalHitsReducer,
+  [pagesCountConstants.ROOT_KEY]: pagesCountReducer,
 });
 
 const searchReducers = {

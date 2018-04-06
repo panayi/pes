@@ -38,9 +38,7 @@ class ConfirmAdult extends React.Component {
             You must be over 18 and agree to the terms below before continuing:
           </Typography> */}
           <Typography component="ul">
-            <li>
-              I have attained the Age of Majority in my country (typically 18).
-            </li>
+            <li>I have attained the Age of Majority in my country.</li>
             <li>
               The sexually explicit material I am viewing is for my own personal
               use and I will not expose any minors to the material.

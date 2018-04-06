@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography';
 import MoodBadIcon from 'material-ui-icons/MoodBad';
 import withStyles from 'material-ui/styles/withStyles';
 import { selectors as requestSelectors } from 'store/search/request';
-import { selectors as totalHitsSelector } from 'store/search/totalHits';
+import { selectors as pagesCountSelectors } from 'store/search/pagesCount';
 import { selectors as searchSelectors } from 'store/search';
 import connectSearch from 'hocs/connectSearch';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
@@ -89,7 +89,7 @@ class FetchAdsProgress extends Component {
 
 const mapStateToProps = createStructuredSelector({
   isLoading: requestSelectors.isRequestPendingSelector,
-  noResults: totalHitsSelector.noResultsSelector,
+  noResults: pagesCountSelectors.noResultsSelector,
   noMoreResults: searchSelectors.noMoreResultsSelector,
   isProfileSearch: searchSelectors.isProfileSearchSelector,
 });

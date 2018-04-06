@@ -1,5 +1,7 @@
 import * as R from 'ramda';
 
+const PAGINATION_LIMIT = 5000;
+
 const SECONDARY_RANKING_ATTRIBUTES = [
   'typo',
   'geo',
@@ -29,18 +31,21 @@ export const INDEXES = [
         name: ADS_INDEXES.byDateDesc,
         settings: {
           ranking: R.prepend('desc(createdAt)', SECONDARY_RANKING_ATTRIBUTES),
+          paginationLimitedTo: PAGINATION_LIMIT,
         },
       },
       {
         name: ADS_INDEXES.byPriceAsc,
         settings: {
           ranking: R.prepend('asc(price)', SECONDARY_RANKING_ATTRIBUTES),
+          paginationLimitedTo: PAGINATION_LIMIT,
         },
       },
       {
         name: ADS_INDEXES.byPriceDesc,
         settings: {
           ranking: R.prepend('desc(price)', SECONDARY_RANKING_ATTRIBUTES),
+          paginationLimitedTo: PAGINATION_LIMIT,
         },
       },
       {
@@ -50,12 +55,14 @@ export const INDEXES = [
             'geo',
             R.without(['geo'], SECONDARY_RANKING_ATTRIBUTES),
           ),
+          paginationLimitedTo: PAGINATION_LIMIT,
         },
       },
     ],
     settings: {
       searchableAttributes: ['title', 'body'],
       attributesForFaceting: ['category', 'user', 'sold'],
+      paginationLimitedTo: PAGINATION_LIMIT,
     },
   },
 ];

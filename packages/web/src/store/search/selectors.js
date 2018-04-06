@@ -5,7 +5,7 @@ import propSelector from '@pesposa/core/src/utils/propSelector';
 import * as paramsSelectors from './params/selectors';
 import * as paramsConstants from './params/constants';
 import * as pageSelectors from './page/selectors';
-import * as totalHitsSelectors from './totalHits/selectors';
+import * as pagesCountSelectors from './pagesCount/selectors';
 import * as constants from './constants';
 
 const facetFiltersSelector = createSelector(
@@ -73,9 +73,9 @@ export const searchParamsSelector = createSelector(
         facetFilters,
         filters,
         hitsPerPage: constants.HITS_PER_PAGE,
-        aroundLatLng: geoposition
-          ? `${geoposition.latitude}, ${geoposition.longitude}`
-          : null,
+        // aroundLatLng: geoposition
+        //   ? `${geoposition.latitude}, ${geoposition.longitude}`
+        //   : null,
         getRankingInfo: true,
       });
     }
@@ -90,8 +90,8 @@ export const searchParamsSelector = createSelector(
 
 export const noMoreResultsSelector = createSelector(
   pageSelectors.pageSelector,
-  totalHitsSelectors.pagesCountSelector,
-  totalHitsSelectors.noResultsSelector,
+  pagesCountSelectors.pagesCountSelector,
+  pagesCountSelectors.noResultsSelector,
   (currentPage, availablePages, noResults) => {
     if (noResults) {
       return false;

@@ -5,14 +5,14 @@ import * as searchTypes from '../types';
 
 const initialState = null;
 
-const totalHitsReducer = handleActions(
+const pagesCountReducer = handleActions(
   {
     [searchTypes.SEARCH_REQUEST_SUCCEEDED]: (state, { payload }) =>
-      R.prop('nbHits', payload),
+      R.prop('nbPages', payload),
 
     [pageTypes.RESET_PAGE]: R.always(initialState),
   },
   initialState,
 );
 
-export default totalHitsReducer;
+export default pagesCountReducer;
