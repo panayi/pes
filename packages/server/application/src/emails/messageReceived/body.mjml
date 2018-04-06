@@ -1,0 +1,74 @@
+<mjml>
+  <mj-head>
+    <mj-title>{{subject}}</mj-title>
+    <mj-attributes>
+      <mj-all font-family="Helvetica, Arial, sans-serif" padding="0px"></mj-all>
+      <mj-text font-family="Helvetica, Arial, sans-serif" padding="0 25px" font-size="16px" line-height="150%" color="#484848"></mj-text>
+      <mj-button font-family="Helvetica, Arial, sans-serif"></mj-button>
+      <mj-section background-color="#ffffff"></mj-section>
+      <mj-class name="preheader" color="#000000" font-size="11px"></mj-class>
+    </mj-attributes>
+    <mj-style inline="inline">
+      a {
+        color: #048beb;
+        font-weight: normal;
+        text-decoration: underline;
+      }
+      .email-link {
+        color: #000000!important;
+        text-decoration: none!important;
+      }
+      .footer-link {
+        color: #a5a5a5;
+      }
+      .button {
+        letter-spacing: 0.5px;
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column width="100%">
+        <mj-image src="{{logoUrl}}" alt="Pesposa" width="140" padding="32px 0 0 0"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="10px 0 20px 0">
+      <mj-column>
+        <mj-text padding="20px 25px 25px 25px" align="center" font-size="28px">You have a new message on Pesposa!</mj-text>
+        <mj-image src="{{otherUserPhotoUrl}}" alt="{{otherUserName}}" padding="0px" height="90px" width="90px" border-radius="100%"></mj-image>
+        <mj-text align="center" padding-top="8px" font-weight="bold" font-size="20px">
+          {{otherUserName}},
+        </mj-text>
+        <mj-text align="center" padding="8px 0">
+          sent you a message about
+        </mj-text>
+        <mj-text align="center" font-weight="bold" font-size="18px">
+          "{{adTitle}}".
+        </mj-text>
+        <mj-button href={{replyUrl}} line-height="180%" font-family="Arial" background-color="#ff6762" color="white" padding-top="40px" font-size="24px" font-weight="bold" border-radius="4px" css-class="button">
+          {{replyText}}
+        </mj-button>
+        <mj-text align="center" padding="40px 0" font-size="18px" color="#a5a5a5">
+          {{htmlExternalUserMessage}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="0 0 25px 0">
+      <mj-column>
+        <mj-divider border-width="2px" border-style="solid" border-color="#EAEAEA" padding-bottom="15px" />
+        <mj-text align="center" font-size="14px" font-weight="bold">
+          Pesposa · All rights reserved
+        </mj-text>
+        <mj-text align="center" font-size="14px">
+          <a href="mailto:{{mainEmail}}" class="email-link">{{mainEmail}}</a>
+        </mj-text>
+        <mj-text align="center" font-size="14px">
+          <a class="footer-link" href="{{facebookPageUrl}}">Follow us on Facebook</a>
+        </mj-text>
+        <mj-text align="center" font-size="14px" padding-top="15px">
+          <a class="footer-link" href="%tag_unsubscribe_url%">Unsubscribe</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

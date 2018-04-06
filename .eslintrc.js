@@ -2,20 +2,29 @@ const path = require('path');
 
 module.exports = {
   "extends": [
-    "plugin:flowtype/recommended",
     "airbnb",
     "prettier",
-    "prettier/flowtype",
     "prettier/react"
   ],
   "parser": "babel-eslint",
   "plugins": [
-    "flowtype",
     "ramda",
     "import"
   ],
   "rules": {
     "no-underscore-dangle": "off",
+
+    "jsx-a11y/anchor-is-valid": ["error", {
+      "components": ["Link"],
+      "specialLink": ["to"],
+      "aspects": ["noHref", "invalidHref", "preferButton"],
+    }],
+    "jsx-a11y/click-events-have-key-events": "off",
+
+    // See why we do this here:
+    // https://github.com/facebook/create-react-app/issues/2631#issuecomment-312894470
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }],
 
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",
@@ -60,21 +69,31 @@ module.exports = {
   },
   "overrides": [
     {
-      "files": ["packages/web/src/**/*.js"],
+      "files": ["packages/server/application/src/**/*.js"],
       "settings": {
         "import/resolver": {
-          "node": {
-            "moduleDirectory": ["node_modules", "packages/web/src"]
+          "webpack": {
+            "config": path.join(__dirname, 'tools', 'config', 'webpack.base.js')
           },
         },
       },
     },
     {
-      "files": ["packages/application/src/**/*.js"],
+      "files": ["packages/client/manager/src/**/*.js"],
       "settings": {
         "import/resolver": {
-          "webpack": {
-            "config": path.join(__dirname, 'tools', 'config', 'webpack.base.js')
+          "node": {
+            "moduleDirectory": ["node_modules", "packages/client/manager/src"]
+          },
+        },
+      },
+    },
+    {
+      "files": ["packages/client/web/src/**/*.js"],
+      "settings": {
+        "import/resolver": {
+          "node": {
+            "moduleDirectory": ["node_modules", "packages/client/web/src"]
           },
         },
       },

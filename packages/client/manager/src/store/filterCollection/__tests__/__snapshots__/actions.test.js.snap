@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`filterCollection actions setQuery should create SET_QUERY action with correct payload 1`] = `
+Object {
+  "payload": Object {
+    "id": "foo",
+    "value": "bar",
+  },
+  "type": "filterCollection/setQuery",
+}
+`;

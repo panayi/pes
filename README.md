@@ -50,7 +50,6 @@ file being tested.
 * `.storybook`: [Storybook](https://github.com/storybooks/storybook)
   configuration files.
 * `database`: Contains Firebase database rules.
-* `flow-typed`: Flow types definitions.
 * `functions`: Firebase functions (backend).
 * `public`: Read about this folder at
   [create-react-app/Using the public folder](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#using-the-public-folder).
@@ -109,7 +108,7 @@ Run unit tests with watch.
 
 Run unit tests once.
 
-### `yarn test -- --coverage`
+### `yarn test --coverage`
 
 Run unit tests once and generate coverage report.
 
@@ -143,19 +142,19 @@ Update git submodules
 
 We use CircleCI to automatically deploy the latest code to Firebase Hosting. You
 can find CircleCI configuration at `.circleci/config.yml`. You should never need
-to run the following commands manually, besides `yarn admin` for setting a new
+to run the following commands manually, besides `yarn devops` for setting a new
 deployment.
 
-### `yarn admin initialize`
+### `yarn devops initialize`
 
 Seed a Firebase DB, and initial import to Algolia. You should typically run this
 to setup a new deployment.
 
-Run `yarn admin` to see all available admin operations.
+Run `yarn devops` to see all available dev operations.
 
 ### `yarn build`
 
-Build all the apps (UI, functions, database, admin).
+Build all the apps (UI, functions, database).
 
 ### `yarn deploy`
 

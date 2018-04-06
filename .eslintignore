@@ -7,7 +7,7 @@ packages/**/test/reports/**
 
 # production
 build/
-packages/web/build/
+packages/client/web/build/
 
 # other
 .circleci/**

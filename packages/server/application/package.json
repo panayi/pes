@@ -1,0 +1,23 @@
+{
+  "name": "@pesposa/application",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@pesposa/core": "^0.1.0",
+    "@pesposa/server-core": "^0.1.0",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "firebase-admin": "^5.12.1",
+    "firebase-functions": "^1.0.3",
+    "mjml": "^4.0.5",
+    "morgan": "^1.9.0",
+    "mustache": "^2.3.0",
+    "nanoid": "^1.0.2",
+    "ramda": "^0.25.0",
+    "ramda-adjunct": "^2.9.0",
+    "sitemap": "^1.13.0"
+  }
+}
