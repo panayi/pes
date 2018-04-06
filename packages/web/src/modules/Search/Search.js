@@ -86,11 +86,11 @@ class Search extends React.Component {
   handleLoadNextPage = async nextPage => {
     const { loadPage } = this.props;
 
-    const scrollPosition = document.documentElement.scrollTop;
+    // const scrollPosition = document.documentElement.scrollTop;
     await loadPage(nextPage);
     // This ensures that scrolling to bottom aggressively
     // will not send a burst of loadPage(1), loadPage(2), ... requests
-    window.scrollTo(0, scrollPosition);
+    // window.scrollTo(0, scrollPosition);
   };
 
   render() {

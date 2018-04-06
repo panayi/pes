@@ -18,6 +18,14 @@ import Masonry from './Masonry/Masonry';
 import FetchAdsProgress from './FetchAdsProgress/FetchAdsProgress';
 
 const styles = {
+  '@global': {
+    body: {
+      // Fixes issue where scrolling to bottom and fetching next page,
+      // scrolling remains at the bottom after next page render,
+      // leading to another page being fetched.
+      overflowAnchor: 'none',
+    },
+  },
   root: {
     flex: 1,
   },
