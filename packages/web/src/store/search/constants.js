@@ -4,4 +4,4 @@ export const PROFILE_SEARCH_ID = 'profile';
 
 export const CONTEXT_SEARCH_ID_KEY = '__search_id';
 
-export const HITS_PER_PAGE = 200;
+export const HITS_PER_PAGE = 30;
