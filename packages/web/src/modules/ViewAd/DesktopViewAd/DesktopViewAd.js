@@ -12,6 +12,7 @@ import PlaceIcon from 'material-ui-icons/Place';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { withUserProfileData } from 'hocs/withProfileData';
+import A from 'components/A/A';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdBody from 'components/AdBody/AdBody';
@@ -24,6 +25,7 @@ import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import MarkAsSold from '../MarkAsSold/MarkAsSold';
 import FavoriteAd from '../FavoriteAd/FavoriteAd';
+import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
 import BrowseAds from './BrowseAds/BrowseAds';
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
 import SellerBox from './SellerBox/SellerBox';
@@ -150,7 +152,7 @@ const styles = theme => ({
     width: 19,
     height: 19,
     marginRight: 2,
-    color: theme.palette.text.secondary,
+    color: theme.palette.primary.main,
   },
   mapWrap: {
     width: '100%',
@@ -236,22 +238,26 @@ const DesktopViewAd = ({
           <div className={classes.date}>
             <AdDateChip ad={ad} />
           </div>
-          <AdAddress ad={ad}>
-            {({ address }) =>
-              address ? (
-                <div className={classes.location}>
-                  <PlaceIcon className={classes.locationIcon} />
-                  <Typography
-                    className={classes.address}
-                    color="textSecondary"
-                    component="div"
-                  >
-                    {address}
-                  </Typography>
-                </div>
-              ) : null
-            }
-          </AdAddress>
+          <MapDirectionsUrl ad={ad}>
+            {({ url }) => (
+              <AdAddress ad={ad}>
+                {({ address }) =>
+                  address ? (
+                    <div className={classes.location}>
+                      <PlaceIcon className={classes.locationIcon} />
+                      <A
+                        href={url}
+                        target="_blank"
+                        title="View directions on map"
+                      >
+                        {address}
+                      </A>
+                    </div>
+                  ) : null
+                }
+              </AdAddress>
+            )}
+          </MapDirectionsUrl>
           <div className={classes.mapWrap}>
             <StaticMap
               id={adId}

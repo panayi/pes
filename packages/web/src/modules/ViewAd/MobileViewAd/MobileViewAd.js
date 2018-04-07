@@ -26,6 +26,7 @@ import requireUserToCallAction from 'hocs/requireUserToCallAction';
 import connectSearch from 'hocs/connectSearch';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Link from 'components/Link/Link';
+import A from 'components/A/A';
 import Button from 'components/Button/Button';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
@@ -44,6 +45,7 @@ import VerifiedWith from '../VerifiedWith/VerifiedWith';
 import FavoriteAd from '../FavoriteAd/FavoriteAd';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import Action from '../Action/Action';
+import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
 import ShareAd from './ShareAd/ShareAd';
 
 const gutters = (theme, styles = {}) => ({
@@ -149,6 +151,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     marginBottom: theme.spacing.unit,
+    color: theme.palette.primary.main,
   },
   posted: {
     display: 'flex',
@@ -316,13 +319,19 @@ class MobileViewAd extends React.Component {
               <div className={classes.info}>
                 <div className={classes.location}>
                   <PlaceIcon className={classes.locationIcon} />
-                  <AdAddress ad={ad}>
-                    {({ address }) =>
-                      address ? (
-                        <Typography color="inherit">{address}</Typography>
-                      ) : null
-                    }
-                  </AdAddress>
+                  <MapDirectionsUrl ad={ad}>
+                    {({ url }) => (
+                      <AdAddress ad={ad}>
+                        {({ address }) =>
+                          address ? (
+                            <A href={url} target="_blank">
+                              {address}
+                            </A>
+                          ) : null
+                        }
+                      </AdAddress>
+                    )}
+                  </MapDirectionsUrl>
                 </div>
                 <div className={classes.posted}>
                   <div className={classes.date}>
