@@ -6,6 +6,7 @@ import { darken } from 'material-ui/styles/colorManipulator';
 
 const styles = theme => ({
   root: {
+    cursor: 'pointer',
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'underline',
@@ -17,12 +18,12 @@ const styles = theme => ({
 });
 
 const A = ({ className, classes, ...rest }) => (
-    <Typography
-      className={classNames(classes.root, className)}
-      {...rest}
-      color="primary"
-      component="a"
-    />
-  );
+  <Typography
+    className={classNames(classes.root, className)}
+    {...rest}
+    color="primary"
+    component="a"
+  />
+);
 
 export default withStyles(styles)(A);

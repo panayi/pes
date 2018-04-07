@@ -15,7 +15,6 @@ import { withUserProfileData } from 'hocs/withProfileData';
 import A from 'components/A/A';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
-import AdBody from 'components/AdBody/AdBody';
 import AdAddress from 'components/AdAddress/AdAddress';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import ImageSlider from '../ImageSlider/ImageSlider';
@@ -33,6 +32,7 @@ import SentMessages from './SentMessages/SentMessages';
 import AdDateChip from './AdDateChip/AdDateChip';
 import ShareButtons from './ShareButtons/ShareButtons';
 import BrowseButton from './BrowseButton/BrowseButton';
+import AdBody from './AdBody/AdBody';
 
 type Props = {
   ad: Ad,
@@ -104,7 +104,6 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    height: BASE_HEIGHT,
     paddingTop: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 4,
   },
@@ -135,12 +134,8 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 2,
   },
   description: {
-    flex: 1,
-    maxHeight: 180,
     paddingTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 4,
-    wordBreak: 'break-word',
-    overflowY: 'auto',
   },
   date: {
     marginBottom: theme.spacing.unit * 2,
@@ -234,7 +229,9 @@ const DesktopViewAd = ({
               ) : null
             }
           </AdPrice>
-          <AdBody ad={ad} className={classes.description} />
+          <div className={classes.description}>
+            <AdBody adId={adId} ad={ad} />
+          </div>
           <div className={classes.date}>
             <AdDateChip ad={ad} />
           </div>
