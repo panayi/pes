@@ -12,10 +12,10 @@ const styles = theme => ({
   },
 });
 
-const ShowCreateAdButton = ({ openModal, classes, ...rest }) => (
+const ShowCreateAdButton = ({ openModal, classes, children, ...rest }) => (
   <Button {...rest} onClick={() => openModal('createAd')}>
     <PhotoCameraIcon className={classes.icon} />
-    Sell on Pesposa
+    {children}
   </Button>
 );
 
@@ -24,6 +24,7 @@ const mapDispatchToProps = {
 };
 
 ShowCreateAdButton.defaultProps = {
+  children: 'Sell on Pesposa',
   variant: 'raised',
   color: 'primary',
 };

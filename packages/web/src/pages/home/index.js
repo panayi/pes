@@ -18,6 +18,7 @@ import Layout from 'layouts/Layout/Layout';
 import needsBetaUser from 'hocs/needsBetaUser';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import ListAds from 'components/ListAds/ListAds';
+import ShowCreateAdButton from 'components/ShowCreateAdButton/ShowCreateAdButton';
 import GetCurrentPosition from 'modules/GetCurrentPosition/GetCurrentPosition';
 import Search from 'modules/Search/Search';
 import SearchFilters from 'modules/Search/Filters/Filters';
@@ -49,11 +50,27 @@ const styles = theme => ({
       paddingLeft: theme.spacing.unit * 1.5,
     },
   },
+  createAdButtonWrap: {
+    position: 'fixed',
+    bottom: theme.spacing.unit * 2,
+    left: '50%',
+    transform: 'translate(-50%, 0)',
+  },
+  createAdButton: {
+    boxShadow: theme.shadows[5],
+    fontSize: theme.typography.subheading.fontSize,
+  },
 });
 
 const HomeHeader = withProps({ inHome: true })(Header);
 
-const Content = ({ place, category, searchParamsFromProps, location }) => (
+const Content = ({
+  place,
+  category,
+  searchParamsFromProps,
+  location,
+  classes,
+}) => (
   <React.Fragment>
     <Helmet
       {...getMetaTags({
@@ -67,28 +84,37 @@ const Content = ({ place, category, searchParamsFromProps, location }) => (
       params={searchParamsFromProps}
       mapParamsToUrl={({ category: cat }) => (cat ? `/${cat}` : '/')}
     >
-      {props => <ListAds {...props} />}
+      {props => (
+        <React.Fragment>
+          <ListAds {...props} />
+          <MobileScreen className={classes.createAdButtonWrap}>
+            <ShowCreateAdButton className={classes.createAdButton}>
+              Sell
+            </ShowCreateAdButton>
+          </MobileScreen>
+        </React.Fragment>
+      )}
     </Search>
     <ReduxModal id="searchFilters" content={SearchFilters} direction="down" />
   </React.Fragment>
 );
 
-const Home = ({ classes, ...rest }) => (
+const Home = props => (
   <GetCurrentPosition>
     <React.Fragment>
       <DesktopScreen>
         <Layout
           header={HomeHeader}
           sidebar={SearchFilters}
-          pageClassName={classes.page}
+          pageClassName={props.classes.page}
           flex
         >
-          <Content {...rest} />
+          <Content {...props} />
         </Layout>
       </DesktopScreen>
       <MobileScreen>
-        <Layout header={HomeHeader} pageClassName={classes.page} flex>
-          <Content {...rest} />
+        <Layout header={HomeHeader} pageClassName={props.classes.page} flex>
+          <Content {...props} />
         </Layout>
       </MobileScreen>
     </React.Fragment>
