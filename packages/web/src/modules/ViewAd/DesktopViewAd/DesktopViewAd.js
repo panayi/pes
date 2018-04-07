@@ -23,7 +23,7 @@ import StaticMap from '../StaticMap/StaticMap';
 import EditAdLink from '../EditAdLink/EditAdLink';
 import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
-import MarkAsSold from '../MarkAsSold/MarkAsSold';
+import ToggleSold from '../ToggleSold/ToggleSold';
 import FavoriteAd from '../FavoriteAd/FavoriteAd';
 import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
 import BrowseAds from './BrowseAds/BrowseAds';
@@ -278,7 +278,7 @@ const DesktopViewAd = ({
                 <Action
                   ad={ad}
                   currentUserId={uid}
-                  seller={<MarkAsSold adId={adId} variant="raised" />}
+                  seller={<ToggleSold ad={ad} variant="raised" />}
                   buyer={
                     <SendMessage
                       variant="float"

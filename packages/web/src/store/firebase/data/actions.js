@@ -2,10 +2,10 @@ import * as R from 'ramda';
 import firebaseApi from 'services/firebase';
 import { selectors as authSelectors } from 'store/firebase/auth';
 
-export const markAdAsSold = adId => dispatch =>
+export const toggleSold = ad => dispatch =>
   dispatch(
-    firebaseApi.ads.update(adId, {
-      sold: true,
+    firebaseApi.ads.update(ad.id, {
+      sold: !ad.sold,
     }),
   );
 

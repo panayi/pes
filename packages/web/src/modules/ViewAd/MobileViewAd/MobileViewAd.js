@@ -39,7 +39,7 @@ import Conversation from 'modules/Messenger/Conversation/Conversation';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import EditAdLink from '../EditAdLink/EditAdLink';
 import StaticMap from '../StaticMap/StaticMap';
-import MarkAsSold from '../MarkAsSold/MarkAsSold';
+import ToggleSold from '../ToggleSold/ToggleSold';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
 import FavoriteAd from '../FavoriteAd/FavoriteAd';
@@ -387,8 +387,8 @@ class MobileViewAd extends React.Component {
               currentUserId={uid}
               seller={
                 <React.Fragment>
-                  <MarkAsSold
-                    adId={adId}
+                  <ToggleSold
+                    ad={ad}
                     className={classes.actionButton}
                     size="small"
                     variant="outline"
