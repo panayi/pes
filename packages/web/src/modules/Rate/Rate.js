@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
-import { actions as modalActions } from 'store/modals';
+import { withState } from 'recompose';
 import OpenModalOnBounce from 'components/Modal/OpenModalOnBounce/OpenModalOnBounce';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import RateModal from './RateModal/RateModal';
@@ -11,25 +9,33 @@ const COOKIE_NAME = 'pesposa-rate-modal';
 const DESKTOP_MIN_TIME_BEFORE_SHOW = 50 * 1000; // 50 seconds
 const MOBILE_MIN_TIME_BEFORE_SHOW = 150 * 1000; // 150 seconds
 
-const Rate = () => (
-  <React.Fragment>
-    <DesktopScreen>
-      <OpenModalOnBounce
-        modalId="rate"
-        cookieName={COOKIE_NAME}
-        cookieExpire={2}
-        timer={DESKTOP_MIN_TIME_BEFORE_SHOW}
-      />
-    </DesktopScreen>
-    <MobileScreen>
-      <MobileTrigger timeout={MOBILE_MIN_TIME_BEFORE_SHOW} />
-    </MobileScreen>
-    <ReduxModal id="rate" content={RateModal} />
-  </React.Fragment>
-);
+class Rate extends React.Component {
+  componentDidMount() {
+    window.addEventListener('touchstart', this.handleTouchStart, false);
+  }
 
-const mapDispatchToProps = {
-  openModal: modalActions.openModal,
-};
+  handleTouchStart = () => {
+    this.props.setIsTouch(true);
+    window.removeEventListener('touchstart', this.handleTouchStart, false);
+  };
 
-export default connect(null, mapDispatchToProps)(Rate);
+  render() {
+    return (
+      <React.Fragment>
+        {this.props.isTouch ? (
+          <MobileTrigger timeout={MOBILE_MIN_TIME_BEFORE_SHOW} />
+        ) : (
+          <OpenModalOnBounce
+            modalId="rate"
+            cookieName={COOKIE_NAME}
+            cookieExpire={2}
+            timer={DESKTOP_MIN_TIME_BEFORE_SHOW}
+          />
+        )}
+        <ReduxModal id="rate" content={RateModal} />
+      </React.Fragment>
+    );
+  }
+}
+
+export default withState('isTouch', 'setIsTouch', false)(Rate);
