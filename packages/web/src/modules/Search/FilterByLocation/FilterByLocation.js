@@ -79,7 +79,6 @@ const styles = theme => ({
     listStyleType: 'none',
   },
   locationIcon: {
-    flex: '1 0 auto', // fix IE11
     alignSelf: 'center',
     color: theme.palette.primary.light,
   },
