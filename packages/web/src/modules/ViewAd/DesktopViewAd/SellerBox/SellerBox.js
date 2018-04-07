@@ -38,6 +38,7 @@ const styles = theme => ({
     boxSizing: 'border-box',
     marginLeft: theme.spacing.unit * 2,
     padding: [theme.spacing.unit, 0],
+    textShadow: '0 1px 3px rgba(0,0,0,.8)',
     [theme.breakpoints.down(theme.map.tablet)]: {
       marginLeft: theme.spacing.unit,
     },
