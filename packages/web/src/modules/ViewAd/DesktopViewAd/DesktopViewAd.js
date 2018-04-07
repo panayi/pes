@@ -12,18 +12,19 @@ import PlaceIcon from 'material-ui-icons/Place';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { withUserProfileData } from 'hocs/withProfileData';
+import A from 'components/A/A';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
-import AdBody from 'components/AdBody/AdBody';
 import AdAddress from 'components/AdAddress/AdAddress';
+import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import StaticMap from '../StaticMap/StaticMap';
 import EditAdLink from '../EditAdLink/EditAdLink';
 import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
-import MarkAsSold from '../MarkAsSold/MarkAsSold';
-import FavoriteAd from '../FavoriteAd/FavoriteAd';
+import ToggleSold from '../ToggleSold/ToggleSold';
+import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
 import BrowseAds from './BrowseAds/BrowseAds';
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
 import SellerBox from './SellerBox/SellerBox';
@@ -31,6 +32,7 @@ import SentMessages from './SentMessages/SentMessages';
 import AdDateChip from './AdDateChip/AdDateChip';
 import ShareButtons from './ShareButtons/ShareButtons';
 import BrowseButton from './BrowseButton/BrowseButton';
+import AdBody from './AdBody/AdBody';
 
 type Props = {
   ad: Ad,
@@ -102,7 +104,6 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    height: BASE_HEIGHT,
     paddingTop: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 4,
   },
@@ -128,17 +129,17 @@ const styles = theme => ({
   },
   favoriteButton: {
     color: theme.palette.primary.main,
+    '& svg': {
+      width: 32,
+      height: 32,
+    },
   },
   price: {
     marginBottom: theme.spacing.unit * 2,
   },
   description: {
-    flex: 1,
-    maxHeight: 180,
     paddingTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 4,
-    wordBreak: 'break-word',
-    overflowY: 'auto',
   },
   date: {
     marginBottom: theme.spacing.unit * 2,
@@ -150,7 +151,7 @@ const styles = theme => ({
     width: 19,
     height: 19,
     marginRight: 2,
-    color: theme.palette.text.secondary,
+    color: theme.palette.primary.main,
   },
   mapWrap: {
     width: '100%',
@@ -219,7 +220,6 @@ const DesktopViewAd = ({
                 className={classes.favoriteButton}
                 ad={ad}
                 adId={adId}
-                uid={uid}
               />
             </div>
           </div>
@@ -232,26 +232,32 @@ const DesktopViewAd = ({
               ) : null
             }
           </AdPrice>
-          <AdBody ad={ad} className={classes.description} />
+          <div className={classes.description}>
+            <AdBody adId={adId} ad={ad} />
+          </div>
           <div className={classes.date}>
             <AdDateChip ad={ad} />
           </div>
-          <AdAddress ad={ad}>
-            {({ address }) =>
-              address ? (
-                <div className={classes.location}>
-                  <PlaceIcon className={classes.locationIcon} />
-                  <Typography
-                    className={classes.address}
-                    color="textSecondary"
-                    component="div"
-                  >
-                    {address}
-                  </Typography>
-                </div>
-              ) : null
-            }
-          </AdAddress>
+          <MapDirectionsUrl ad={ad}>
+            {({ url }) => (
+              <AdAddress ad={ad}>
+                {({ address }) =>
+                  address ? (
+                    <div className={classes.location}>
+                      <PlaceIcon className={classes.locationIcon} />
+                      <A
+                        href={url}
+                        target="_blank"
+                        title="View directions on map"
+                      >
+                        {address}
+                      </A>
+                    </div>
+                  ) : null
+                }
+              </AdAddress>
+            )}
+          </MapDirectionsUrl>
           <div className={classes.mapWrap}>
             <StaticMap
               id={adId}
@@ -272,7 +278,7 @@ const DesktopViewAd = ({
                 <Action
                   ad={ad}
                   currentUserId={uid}
-                  seller={<MarkAsSold adId={adId} variant="raised" />}
+                  seller={<ToggleSold ad={ad} variant="raised" />}
                   buyer={
                     <SendMessage
                       variant="float"
@@ -290,7 +296,7 @@ const DesktopViewAd = ({
       <DesktopScreen>
         <div className={classes.offset}>
           <div className={classes.shareButtons}>
-            <ShareButtons />
+            <ShareButtons ad={ad} />
           </div>
         </div>
       </DesktopScreen>

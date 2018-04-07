@@ -21,11 +21,11 @@ import hydrateAd from 'hocs/hydrateAd';
 import { withUserProfileData } from 'hocs/withProfileData';
 import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import { selectors as paramsSelectors } from 'store/search/params';
 import requireUserToCallAction from 'hocs/requireUserToCallAction';
 import connectSearch from 'hocs/connectSearch';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Link from 'components/Link/Link';
+import A from 'components/A/A';
 import Button from 'components/Button/Button';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
@@ -34,16 +34,18 @@ import AdAddress from 'components/AdAddress/AdAddress';
 import AdDate from 'components/AdDate/AdDate';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
+import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import Conversation from 'modules/Messenger/Conversation/Conversation';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import EditAdLink from '../EditAdLink/EditAdLink';
 import StaticMap from '../StaticMap/StaticMap';
-import MarkAsSold from '../MarkAsSold/MarkAsSold';
+import ToggleSold from '../ToggleSold/ToggleSold';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
-import FavoriteAd from '../FavoriteAd/FavoriteAd';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import Action from '../Action/Action';
+import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
+import BackToListButton from '../BackToListButton/BackToListButton';
 import ShareAd from './ShareAd/ShareAd';
 
 const gutters = (theme, styles = {}) => ({
@@ -73,7 +75,6 @@ const styles = theme => ({
   },
   actionIconButton: {
     '& svg': {
-      fill: 'currentColor',
       width: 30,
       height: 30,
     },
@@ -149,6 +150,7 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     marginBottom: theme.spacing.unit,
+    color: theme.palette.primary.main,
   },
   posted: {
     display: 'flex',
@@ -233,7 +235,6 @@ class MobileViewAd extends React.Component {
       adId,
       imagesList,
       uid,
-      category,
       viewSlideShow,
       viewConversation,
       setCurrentSlide,
@@ -247,13 +248,13 @@ class MobileViewAd extends React.Component {
       <div className={classes.root}>
         <div className={classes.header}>
           <div className={classes.headerActions}>
-            <Link.icon
-              to={category ? `/${category}` : '/'}
+            <BackToListButton
+              component={Link.icon}
               className={classes.actionIconButton}
               color="inherit"
             >
               <KeyboardArrowLeft />
-            </Link.icon>
+            </BackToListButton>
             <div className={classes.flex} />
             <IconButton
               className={classes.actionIconButton}
@@ -266,7 +267,6 @@ class MobileViewAd extends React.Component {
               className={classes.actionIconButton}
               ad={ad}
               adId={adId}
-              uid={uid}
             />
           </div>
         </div>
@@ -316,13 +316,19 @@ class MobileViewAd extends React.Component {
               <div className={classes.info}>
                 <div className={classes.location}>
                   <PlaceIcon className={classes.locationIcon} />
-                  <AdAddress ad={ad}>
-                    {({ address }) =>
-                      address ? (
-                        <Typography color="inherit">{address}</Typography>
-                      ) : null
-                    }
-                  </AdAddress>
+                  <MapDirectionsUrl ad={ad}>
+                    {({ url }) => (
+                      <AdAddress ad={ad}>
+                        {({ address }) =>
+                          address ? (
+                            <A href={url} target="_blank">
+                              {address}
+                            </A>
+                          ) : null
+                        }
+                      </AdAddress>
+                    )}
+                  </MapDirectionsUrl>
                 </div>
                 <div className={classes.posted}>
                   <div className={classes.date}>
@@ -378,8 +384,8 @@ class MobileViewAd extends React.Component {
               currentUserId={uid}
               seller={
                 <React.Fragment>
-                  <MarkAsSold
-                    adId={adId}
+                  <ToggleSold
+                    ad={ad}
                     className={classes.actionButton}
                     size="small"
                     variant="outline"
@@ -520,7 +526,6 @@ class MobileViewAd extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   uid: authSelectors.uidSelector,
-  category: paramsSelectors.categorySelector,
 });
 
 const mapDispatchToProps = {

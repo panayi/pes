@@ -26,7 +26,7 @@ const styles = theme => ({
   root: {
     position: 'relative',
     height: '100%',
-    border: `2px dashed ${theme.palette.grey[200]}`,
+    border: `2px dashed ${theme.palette.grey[400]}`,
     cursor: 'pointer',
     transition: theme.transitions.create('border-color'),
     '&:hover': {

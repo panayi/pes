@@ -4,25 +4,25 @@ import { connect } from 'react-redux';
 import { actions as dataActions } from 'store/firebase/data';
 import Button from 'components/Button/Button';
 
-const MarkAsSold = ({ variant, size, className, markAdAsSold }) => (
+const ToggleSold = ({ ad, variant, size, className, toggleSold }) => (
   <Button
     variant={variant}
     size={size}
     className={className}
-    color="primary"
+    color={ad.sold ? 'default' : 'primary'}
     fullWidth
-    onClick={() => markAdAsSold()}
+    onClick={() => toggleSold()}
   >
-    Mark as sold
+    {ad.sold ? 'Sell it again' : 'Mark as sold'}
   </Button>
 );
 
-const mapDispatchToProps = (dispatch, { adId }) =>
+const mapDispatchToProps = (dispatch, { ad }) =>
   bindActionCreators(
     {
-      markAdAsSold: () => dataActions.markAdAsSold(adId),
+      toggleSold: () => dataActions.toggleSold(ad),
     },
     dispatch,
   );
 
-export default connect(null, mapDispatchToProps)(MarkAsSold);
+export default connect(null, mapDispatchToProps)(ToggleSold);

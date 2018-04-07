@@ -31,6 +31,12 @@
       "kids-and-baby": "Βρεφικά και Παιδικά",
       "personals": "Προσωπικά",
       "other": "Άλλα"
+    },
+    "sortByOptions": {
+      "byDateDesc": "Ημερομηνία",
+      "byPriceAsc": "Χαμηλότερη τιμή",
+      "byPriceDesc": "Υψηλότερη τιμή",
+      "byDistance": "Κοντινότερα"
     }
   }
 }

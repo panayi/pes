@@ -68,7 +68,7 @@ class RateModal extends Component {
   renderInput() {
     const { numberOfStars, body, setBody, classes } = this.props;
 
-    if (numberOfStars && numberOfStars < 5) {
+    if (numberOfStars) {
       return (
         <TextField
           onChange={event => setBody(event.target.value)}

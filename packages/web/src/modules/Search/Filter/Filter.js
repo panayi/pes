@@ -9,7 +9,6 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 1.5,
 
     [theme.breakpoints.up(theme.map.laptop)]: {
-      marginBottom: theme.spacing.unit * 2,
       paddingBottom: 0,
       border: [1, 'solid', theme.palette.divider],
       boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.06)',

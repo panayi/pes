@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTruncate from 'react-truncate';
 
-const Truncate = ({ lines, children, className }) => (
-  <ReactTruncate className={className} lines={lines}>
+const Truncate = ({ lines, ellipsis, children, className }) => (
+  <ReactTruncate className={className} lines={lines} ellipsis={ellipsis}>
     {children}
   </ReactTruncate>
 );

@@ -8,6 +8,7 @@ import translate from 'hocs/translate';
 import Link from 'components/Link/Link';
 import AdAddress from 'components/AdAddress/AdAddress';
 import AdTitle from 'components/AdTitle/AdTitle';
+import BackToListButton from '../../BackToListButton/BackToListButton';
 
 const styles = theme => ({
   root: {
@@ -54,9 +55,13 @@ const styles = theme => ({
 
 const BreadCrumbs = ({ ad, t, classes }) => (
   <div className={classes.root}>
-    <Link to="/" className={classes.homeButton} size="small" variant="raised">
+    <BackToListButton
+      className={classes.homeButton}
+      size="small"
+      variant="raised"
+    >
       <HomeIcon className={classes.icon} />Home
-    </Link>
+    </BackToListButton>
     <Typography className={classes.separator}>/</Typography>
     <AdAddress ad={ad}>
       {({ address }) =>

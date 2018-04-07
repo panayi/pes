@@ -33,14 +33,20 @@ const filtersSelector = createSelector(
   (priceMin, priceMax) => {
     const hasPriceMin = !isNilOrEmpty(priceMin);
     const hasPriceMax = !isNilOrEmpty(priceMax);
-    if (!hasPriceMin && !hasPriceMax) {
-      return null;
+
+    if (hasPriceMin && hasPriceMax) {
+      return `price>=${priceMin} AND price<=${priceMax}`;
     }
 
-    const finalPriceMin = hasPriceMin ? priceMin : 0;
-    const finalPriceMax = hasPriceMax ? priceMax : Number.MAX_SAFE_INTEGER;
+    if (hasPriceMin) {
+      return `price>=${priceMin}`;
+    }
 
-    return `price:${finalPriceMin} TO ${finalPriceMax}`;
+    if (hasPriceMax) {
+      return `price<=${priceMax}`;
+    }
+
+    return null;
   },
 );
 
