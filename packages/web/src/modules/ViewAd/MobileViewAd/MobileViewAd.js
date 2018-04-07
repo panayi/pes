@@ -21,7 +21,6 @@ import hydrateAd from 'hocs/hydrateAd';
 import { withUserProfileData } from 'hocs/withProfileData';
 import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import { selectors as paramsSelectors } from 'store/search/params';
 import requireUserToCallAction from 'hocs/requireUserToCallAction';
 import connectSearch from 'hocs/connectSearch';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
@@ -46,6 +45,7 @@ import FavoriteAd from '../FavoriteAd/FavoriteAd';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import Action from '../Action/Action';
 import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
+import BackToListButton from '../BackToListButton/BackToListButton';
 import ShareAd from './ShareAd/ShareAd';
 
 const gutters = (theme, styles = {}) => ({
@@ -236,7 +236,6 @@ class MobileViewAd extends React.Component {
       adId,
       imagesList,
       uid,
-      category,
       viewSlideShow,
       viewConversation,
       setCurrentSlide,
@@ -250,13 +249,13 @@ class MobileViewAd extends React.Component {
       <div className={classes.root}>
         <div className={classes.header}>
           <div className={classes.headerActions}>
-            <Link.icon
-              to={category ? `/${category}` : '/'}
+            <BackToListButton
+              component={Link.icon}
               className={classes.actionIconButton}
               color="inherit"
             >
               <KeyboardArrowLeft />
-            </Link.icon>
+            </BackToListButton>
             <div className={classes.flex} />
             <IconButton
               className={classes.actionIconButton}
@@ -529,7 +528,6 @@ class MobileViewAd extends React.Component {
 
 const mapStateToProps = createStructuredSelector({
   uid: authSelectors.uidSelector,
-  category: paramsSelectors.categorySelector,
 });
 
 const mapDispatchToProps = {
