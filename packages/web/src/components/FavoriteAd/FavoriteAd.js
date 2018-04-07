@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
-import classNames from 'classnames';
 import { withProps, branch, renderNothing } from 'recompose';
+import { createStructuredSelector } from 'reselect';
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
 import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
@@ -17,9 +17,6 @@ import {
 } from 'store/firebase/data';
 
 const styles = theme => ({
-  icon: {
-    fontSize: '32px',
-  },
   active: {
     color: theme.palette.primary.light,
   },
@@ -61,7 +58,7 @@ class FavoriteAd extends React.Component {
         onClick={() => toggleFavorite(isFavorited, this.setIsFavorited)}
       >
         {isFavorited ? (
-          <FavoriteIcon className={classNames(classes.icon, classes.active)} />
+          <FavoriteIcon className={classes.active} />
         ) : (
           <FavoriteBorderIcon className={classes.icon} />
         )}
@@ -74,14 +71,18 @@ const mapDataToProps = {
   favorite: models.favorites.oneObject(propSelector('adId')),
 };
 
+const mapStateToProps = createStructuredSelector({
+  isSeller: dataSelectors.isSellerSelector,
+});
+
 const mapDispatchToProps = {
   favoriteAd: dataActions.favoriteAd,
   unfavoriteAd: dataActions.unfavoriteAd,
 };
 
 export default R.compose(
-  branch(dataSelectors.isSellerSelector, renderNothing),
-  connectData(mapDataToProps, null, mapDispatchToProps),
+  connectData(mapDataToProps, mapStateToProps, mapDispatchToProps),
+  branch(R.prop('isSeller'), renderNothing),
   withProps(({ adId, favoriteAd, unfavoriteAd }) => ({
     toggleFavorite: (isFavorited, setIsFavorited) => {
       const action = isFavorited ? unfavoriteAd : favoriteAd;

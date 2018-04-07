@@ -16,6 +16,7 @@ import A from 'components/A/A';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdAddress from 'components/AdAddress/AdAddress';
+import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import StaticMap from '../StaticMap/StaticMap';
@@ -23,7 +24,6 @@ import EditAdLink from '../EditAdLink/EditAdLink';
 import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import ToggleSold from '../ToggleSold/ToggleSold';
-import FavoriteAd from '../FavoriteAd/FavoriteAd';
 import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
 import BrowseAds from './BrowseAds/BrowseAds';
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
@@ -129,6 +129,10 @@ const styles = theme => ({
   },
   favoriteButton: {
     color: theme.palette.primary.main,
+    '& svg': {
+      width: 32,
+      height: 32,
+    },
   },
   price: {
     marginBottom: theme.spacing.unit * 2,
@@ -216,7 +220,6 @@ const DesktopViewAd = ({
                 className={classes.favoriteButton}
                 ad={ad}
                 adId={adId}
-                uid={uid}
               />
             </div>
           </div>

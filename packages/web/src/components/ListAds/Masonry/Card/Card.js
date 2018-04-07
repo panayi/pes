@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
-import { withProps } from 'recompose';
+import { withProps, withStateHandlers } from 'recompose';
 import { createStructuredSelector } from 'reselect';
 import Card, { CardMedia, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
+import Paper from 'material-ui/Paper';
 import withStyles from 'material-ui/styles/withStyles';
 import { Link } from 'react-router-dom';
 import Truncate from 'components/Truncate/Truncate';
+import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import Imgix from 'components/Imgix/Imgix';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdAddress from 'components/AdAddress/AdAddress';
@@ -34,6 +36,21 @@ const styles = theme => ({
     justifyContent: 'flex-end',
     width: '100%',
     borderRadius: `${theme.borderRadius.xl}px ${theme.borderRadius.xl}px 0 0`,
+  },
+  favorite: {
+    position: 'absolute',
+    top: theme.spacing.unit * 1.5,
+    right: theme.spacing.unit * 1.5,
+    borderRadius: '50%',
+  },
+  favoriteButton: {
+    color: theme.palette.primary.main,
+    width: 44,
+    height: 44,
+    '& svg': {
+      width: 28,
+      height: 28,
+    },
   },
   header: {
     padding: theme.spacing.unit,
@@ -68,8 +85,22 @@ const styles = theme => ({
 
 const AdLink = withProps({ component: Link })(LinkToViewAd);
 
-const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
-  <div className={classes.root} style={style}>
+const AdCard = ({
+  hit,
+  style,
+  thumbnail,
+  thumbnailHeight,
+  handleMouseEnter,
+  handleMouseLeave,
+  hovered,
+  classes,
+}) => (
+  <div
+    className={classes.root}
+    style={style}
+    onMouseEnter={handleMouseEnter}
+    onMouseLeave={handleMouseLeave}
+  >
     <Imgix params={constants.IMGIX_PARAMS} image={thumbnail}>
       {({ src }) => (
         <Card
@@ -85,7 +116,20 @@ const AdCard = ({ hit, style, thumbnail, thumbnailHeight, classes }) => (
             className={classes.media}
             image={src}
             style={{ height: `${thumbnailHeight}px` }}
-          />
+          >
+            {hovered && (
+              <Paper
+                className={classes.favorite}
+                onClick={e => e.preventDefault()}
+              >
+                <FavoriteAd
+                  className={classes.favoriteButton}
+                  ad={hit}
+                  adId={hit.objectID}
+                />
+              </Paper>
+            )}
+          </CardMedia>
           <CardContent className={classes.content}>
             <AdTitle
               className={classes.title}
@@ -133,6 +177,19 @@ export default R.compose(
       thumbnail: selectors.thumbnailSelector,
       thumbnailHeight: selectors.thumbnailHeightSelector,
     }),
+  ),
+  withStateHandlers(
+    {
+      hovered: false,
+    },
+    {
+      handleMouseEnter: () => () => ({
+        hovered: true,
+      }),
+      handleMouseLeave: () => () => ({
+        hovered: false,
+      }),
+    },
   ),
   withStyles(styles),
 )(AdCard);

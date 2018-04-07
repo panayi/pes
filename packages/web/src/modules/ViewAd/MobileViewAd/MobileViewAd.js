@@ -34,6 +34,7 @@ import AdAddress from 'components/AdAddress/AdAddress';
 import AdDate from 'components/AdDate/AdDate';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
+import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import Conversation from 'modules/Messenger/Conversation/Conversation';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import EditAdLink from '../EditAdLink/EditAdLink';
@@ -41,7 +42,6 @@ import StaticMap from '../StaticMap/StaticMap';
 import ToggleSold from '../ToggleSold/ToggleSold';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
-import FavoriteAd from '../FavoriteAd/FavoriteAd';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import Action from '../Action/Action';
 import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
@@ -75,7 +75,6 @@ const styles = theme => ({
   },
   actionIconButton: {
     '& svg': {
-      fill: 'currentColor',
       width: 30,
       height: 30,
     },
@@ -268,7 +267,6 @@ class MobileViewAd extends React.Component {
               className={classes.actionIconButton}
               ad={ad}
               adId={adId}
-              uid={uid}
             />
           </div>
         </div>
