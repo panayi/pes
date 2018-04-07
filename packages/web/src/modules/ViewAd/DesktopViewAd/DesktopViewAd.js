@@ -290,7 +290,7 @@ const DesktopViewAd = ({
       <DesktopScreen>
         <div className={classes.offset}>
           <div className={classes.shareButtons}>
-            <ShareButtons />
+            <ShareButtons ad={ad} />
           </div>
         </div>
       </DesktopScreen>
