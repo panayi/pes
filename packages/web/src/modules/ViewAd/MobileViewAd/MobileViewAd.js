@@ -25,7 +25,6 @@ import requireUserToCallAction from 'hocs/requireUserToCallAction';
 import connectSearch from 'hocs/connectSearch';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Link from 'components/Link/Link';
-import A from 'components/A/A';
 import Button from 'components/Button/Button';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
@@ -38,15 +37,14 @@ import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import Conversation from 'modules/Messenger/Conversation/Conversation';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import EditAdLink from '../EditAdLink/EditAdLink';
-import StaticMap from '../StaticMap/StaticMap';
 import ToggleSold from '../ToggleSold/ToggleSold';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import Action from '../Action/Action';
-import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
 import BackToListButton from '../BackToListButton/BackToListButton';
 import ShareAd from './ShareAd/ShareAd';
+import Map from '../Map/Map';
 
 const gutters = (theme, styles = {}) => ({
   paddingLeft: theme.spacing.unit * 2,
@@ -150,7 +148,6 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
     marginBottom: theme.spacing.unit,
-    color: theme.palette.primary.main,
   },
   posted: {
     display: 'flex',
@@ -168,10 +165,8 @@ const styles = theme => ({
   address: {
     color: theme.palette.text.secondary,
   },
-  map: {
+  staticMap: {
     display: 'flex',
-    maxWidth: '100%',
-    height: 'auto',
   },
   sellerBox: gutters(theme, {
     display: 'flex',
@@ -316,19 +311,13 @@ class MobileViewAd extends React.Component {
               <div className={classes.info}>
                 <div className={classes.location}>
                   <PlaceIcon className={classes.locationIcon} />
-                  <MapDirectionsUrl ad={ad}>
-                    {({ url }) => (
-                      <AdAddress ad={ad}>
-                        {({ address }) =>
-                          address ? (
-                            <A href={url} target="_blank">
-                              {address}
-                            </A>
-                          ) : null
-                        }
-                      </AdAddress>
-                    )}
-                  </MapDirectionsUrl>
+                  <AdAddress ad={ad}>
+                    {({ address }) =>
+                      address ? (
+                        <Typography color="inherit">{address}</Typography>
+                      ) : null
+                    }
+                  </AdAddress>
                 </div>
                 <div className={classes.posted}>
                   <div className={classes.date}>
@@ -342,12 +331,14 @@ class MobileViewAd extends React.Component {
                 </div>
               </div>
             </div>
-            <StaticMap
-              id={adId}
-              className={classes.map}
-              center={R.path(['location', 'geoposition'], ad)}
-              width={768}
-              height={360}
+            <Map
+              ad={ad}
+              adId={adId}
+              staticMapProps={{
+                width: 768,
+                height: 360,
+                className: classes.staticMap,
+              }}
             />
             <div
               role="link"

@@ -31,7 +31,7 @@ const styles = {
 const CenteredSpinner = withStyles(styles)(
   ({ className, overlay, classes, ...otherProps }) => (
     <div
-      className={classNames(classes.centered, {
+      className={classNames(classes.centered, className, {
         [classes.overlay]: overlay,
       })}
     >

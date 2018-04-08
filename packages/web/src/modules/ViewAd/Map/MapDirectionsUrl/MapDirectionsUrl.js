@@ -3,9 +3,12 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import env from '@pesposa/core/src/config/env';
 import { selectors as userInfoSelectors } from 'store/userInfo';
 
-const BASE_URL = 'https://www.google.com/maps/dir/?api=1';
+const BASE_URL = `https://www.google.com/maps/embed/v1/directions?key=${
+  env.googleApisKey
+}`;
 
 class MapDirectionsUrl extends React.Component {
   getUrl() {

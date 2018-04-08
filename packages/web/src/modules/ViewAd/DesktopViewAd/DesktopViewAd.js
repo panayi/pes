@@ -12,19 +12,16 @@ import PlaceIcon from 'material-ui-icons/Place';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { withUserProfileData } from 'hocs/withProfileData';
-import A from 'components/A/A';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdAddress from 'components/AdAddress/AdAddress';
 import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import ImageSlider from '../ImageSlider/ImageSlider';
-import StaticMap from '../StaticMap/StaticMap';
 import EditAdLink from '../EditAdLink/EditAdLink';
 import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import ToggleSold from '../ToggleSold/ToggleSold';
-import MapDirectionsUrl from '../MapDirectionsUrl/MapDirectionsUrl';
 import BrowseAds from './BrowseAds/BrowseAds';
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
 import SellerBox from './SellerBox/SellerBox';
@@ -33,6 +30,7 @@ import AdDateChip from './AdDateChip/AdDateChip';
 import ShareButtons from './ShareButtons/ShareButtons';
 import BrowseButton from './BrowseButton/BrowseButton';
 import AdBody from './AdBody/AdBody';
+import Map from '../Map/Map';
 
 type Props = {
   ad: Ad,
@@ -151,16 +149,10 @@ const styles = theme => ({
     width: 19,
     height: 19,
     marginRight: 2,
-    color: theme.palette.primary.main,
-  },
-  mapWrap: {
-    width: '100%',
-    margin: [theme.spacing.unit * 2, 0],
+    color: theme.palette.text.secondary,
   },
   map: {
-    display: 'block',
-    maxWidth: '100%',
-    height: 'auto',
+    margin: [theme.spacing.unit * 2, 0],
   },
   seller: {
     position: 'absolute',
@@ -238,35 +230,28 @@ const DesktopViewAd = ({
           <div className={classes.date}>
             <AdDateChip ad={ad} />
           </div>
-          <MapDirectionsUrl ad={ad}>
-            {({ url }) => (
-              <AdAddress ad={ad}>
-                {({ address }) =>
-                  address ? (
-                    <div className={classes.location}>
-                      <PlaceIcon className={classes.locationIcon} />
-                      <A
-                        href={url}
-                        target="_blank"
-                        title="View directions on map"
-                      >
-                        {address}
-                      </A>
-                    </div>
-                  ) : null
-                }
-              </AdAddress>
-            )}
-          </MapDirectionsUrl>
-          <div className={classes.mapWrap}>
-            <StaticMap
-              id={adId}
-              className={classes.map}
-              center={R.path(['location', 'geoposition'], ad)}
-              width={400}
-              height={190}
-            />
-          </div>
+          <AdAddress ad={ad}>
+            {({ address }) =>
+              address ? (
+                <div className={classes.location}>
+                  <PlaceIcon className={classes.locationIcon} />
+                  <Typography
+                    className={classes.address}
+                    color="textSecondary"
+                    component="div"
+                  >
+                    {address}
+                  </Typography>
+                </div>
+              ) : null
+            }
+          </AdAddress>
+          <Map
+            className={classes.map}
+            ad={ad}
+            adId={adId}
+            staticMapProps={{ width: 400, height: 190 }}
+          />
           <TabletScreen>
             <ShareButtons />
           </TabletScreen>
