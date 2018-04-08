@@ -490,7 +490,7 @@ class MobileViewAd extends React.Component {
         buyerId={uid}
         adId={adId}
         variant="box"
-        inputPlaceholder={`Ask ${sellerName} a question`}
+        inputPlaceholder={`Ask ${sellerName || 'seller'} a question`}
         sendMessageAction={
           <IconButton onClick={viewAd}>
             <CloseIcon />

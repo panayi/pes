@@ -267,7 +267,7 @@ const DesktopViewAd = ({
                   buyer={
                     <SendMessage
                       variant="float"
-                      placeholder={`Ask ${sellerName} a question`}
+                      placeholder={`Ask ${sellerName || 'seller'} a question`}
                       adId={adId}
                       onSuccess={addMessage}
                     />
