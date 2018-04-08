@@ -64,4 +64,4 @@ then
 fi
 
 # Switch back to development environment
-firebase use development
+yarn firebase use development
