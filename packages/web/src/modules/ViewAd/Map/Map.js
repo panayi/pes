@@ -15,6 +15,8 @@ const styles = theme => ({
   root: {
     width: '100%',
     position: 'relative',
+    cursor: 'pointer',
+    outline: 0,
   },
   staticMap: {
     display: 'block',
@@ -37,24 +39,30 @@ const Map = ({ ad, adId, staticMapProps, className, openModal, classes }) => {
     ...restStaticMapProps
   } = staticMapProps;
   return (
-    <div className={classNames(classes.root, className)}>
-      <StaticMap
-        id={adId}
-        className={classNames(classes.staticMap, staticMapClassName)}
-        center={R.path(['location', 'geoposition'], ad)}
-        {...restStaticMapProps}
-      />
+    <React.Fragment>
       <MapDirectionsUrl ad={ad}>
         {({ url }) => (
-          <Button
-            className={classes.directionsButton}
-            variant="raised"
-            size="small"
+          <div
+            className={classNames(classes.root, className)}
             onClick={() => openModal('googleMapsDirections', { ad, url })}
+            role="button"
+            tabIndex="-1"
           >
-            <DirectionsIcon className={classes.leftIcon} />
-            Directions
-          </Button>
+            <StaticMap
+              id={adId}
+              className={classNames(classes.staticMap, staticMapClassName)}
+              center={R.path(['location', 'geoposition'], ad)}
+              {...restStaticMapProps}
+            />
+            <Button
+              className={classes.directionsButton}
+              variant="raised"
+              size="small"
+            >
+              <DirectionsIcon className={classes.leftIcon} />
+              Directions
+            </Button>
+          </div>
         )}
       </MapDirectionsUrl>
       <ReduxModal
@@ -62,7 +70,7 @@ const Map = ({ ad, adId, staticMapProps, className, openModal, classes }) => {
         content={GoogleMapsDirections}
         maxWidth={false}
       />
-    </div>
+    </React.Fragment>
   );
 };
 
