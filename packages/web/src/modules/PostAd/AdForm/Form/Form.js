@@ -78,14 +78,16 @@ class Form extends Component {
           helperText={errors.category}
         >
           <option value="">Select category</option>
-          {R.map(
-            category => (
+          {R.compose(
+            R.map(category => (
               <option key={category.id} value={category.id}>
                 {t(category.id)}
               </option>
-            ),
-            R.values(categories),
-          )}
+            )),
+            R.values,
+            R.sortBy(R.prop('order')),
+            R.defaultTo([]),
+          )(categories)}
         </TextField>
       </FormGroup>
     );
