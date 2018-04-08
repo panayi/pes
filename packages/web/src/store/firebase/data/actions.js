@@ -26,10 +26,9 @@ export const createRating = ({ stars, body }) => (dispatch, getState) => {
   const uid = authSelectors.uidSelector(getState());
 
   return dispatch(
-    firebaseApi.ratings.create({
+    firebaseApi.ratings.create(uid, {
       stars,
       body: finalBody,
-      user: uid,
     }),
   );
 };

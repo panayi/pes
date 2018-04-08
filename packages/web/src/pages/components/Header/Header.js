@@ -171,7 +171,7 @@ const Header = ({
       </Drawer>
       <ReduxModal id="createAd" content={CreateAd} />
       <ReduxModal id="support" content={Support} />
-      <Rate />
+      <Rate currentUserId={currentUserId} />
     </React.Fragment>
   </WithConversations>
 );

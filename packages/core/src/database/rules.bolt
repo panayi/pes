@@ -489,8 +489,9 @@ path /support/{id} is SupportMessage {
   create() { true }
 }
 
-path /ratings/{id} is Rating {
-  create() { !this.user || isCurrentUser(this.user) }
+path /ratings/{uid} is Rating {
+  read() { isCurrentUser(uid) }
+  create() { isCurrentUser(uid) }
 }
 
 // BETA

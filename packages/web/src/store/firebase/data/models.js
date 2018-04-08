@@ -48,6 +48,10 @@ export const messages = ({ adSelector, buyerSelector }) =>
   createModelConnections(
     createSelector(adSelector, buyerSelector, modelPaths.MESSAGES),
   );
+export const rating = createModelConnections(
+  createSelector(authSelectors.uidSelector, modelPaths.RATINGS),
+  { singleton: true },
+);
 
 // BETA
 export const betaUsers = createModelConnections(modelPaths.BETA_USERS);

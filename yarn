@@ -62,3 +62,6 @@ if [ -f "$BACKUP_SERVICE_ACCOUNT_KEY_PATH" ]
 then
   mv -v "$BACKUP_SERVICE_ACCOUNT_KEY_PATH" "$TARGET_SERVICE_ACCOUNT_KEY_PATH"
 fi
+
+# Switch back to development environment
+firebase use development
