@@ -45,11 +45,11 @@ const styles = theme => ({
   },
   favoriteButton: {
     color: theme.palette.primary.main,
-    width: 44,
-    height: 44,
+    width: 38,
+    height: 37,
     '& svg': {
-      width: 28,
-      height: 28,
+      width: 26,
+      height: 26,
     },
   },
   header: {
