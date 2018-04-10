@@ -24,7 +24,7 @@
   <mj-body>
     <mj-section>
       <mj-column width="100%">
-        <mj-image src="https://gallery.mailchimp.com/c831ab35db27891cad87bdbf1/images/86ce275f-eeb7-4684-bf3b-1407f277ddd6.png" alt="header image" padding="0px"></mj-image>
+        <mj-image src="https://pesposa-production.firebaseapp.com/logo.png" alt="header image" padding="0px"></mj-image>
       </mj-column>
     </mj-section>
     <mj-section padding="10px 0 20px 0">
