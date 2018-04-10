@@ -44,8 +44,8 @@ module.exports = {
         loader: 'svg-inline-loader',
       },
       {
-        test: /\.html$/,
-        loader: 'html-loader',
+        test: /\.mjml$/,
+        use: 'raw-loader',
       },
     ],
   },

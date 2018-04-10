@@ -5,7 +5,7 @@ import sendBetaInviteEmail from '../emails/betaInvite';
 const handleCreate = async (snap, context) => {
   const { id } = context.params;
   const betaInvite = await betaInviteModel.getWithUrl(id);
-  return sendBetaInviteEmail(betaInvite.email, betaInvite.url);
+  return sendBetaInviteEmail(betaInvite);
 };
 
 export const betaInviteCreated = functions.database

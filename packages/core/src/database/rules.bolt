@@ -300,9 +300,19 @@ type Rating {
   user: String | Null
 }
 
+// See https://pesposa.app.waitlisted.co/settings/webhooks
 type BetaInvite {
+  id: String,
+  uuid: String,
   email: Email,
-  code: String
+  name: String,
+  code: String,
+  activated_at: String,
+  safe_name: String,
+  position: Number,
+  affiliate: String,
+  created_at: String,
+  referred_by: String,
 }
 
 // ------------------------------------

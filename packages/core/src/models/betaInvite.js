@@ -1,9 +1,11 @@
 import * as R from 'ramda';
-import nanoid from 'nanoid';
 import env from '../config/env';
 import { database } from '../config/firebaseClient';
 
-const getAll = async () => database.ref(`/betaInvites`).once('value');
+const getAll = async () => {
+  const snap = await database.ref(`/betaInvites`).once('value');
+  return snap ? snap.val() : [];
+};
 
 export const get = async id => database.ref(`/betaInvites/${id}`).once('value');
 
@@ -21,7 +23,7 @@ export const getWithUrl = async id => {
 };
 
 const findByEmail = async email => {
-  const betaInvites = (await getAll()).val();
+  const betaInvites = await getAll();
 
   return R.compose(R.find(R.propEq('email', email)), R.defaultTo([]), R.values)(
     betaInvites,
@@ -29,7 +31,7 @@ const findByEmail = async email => {
 };
 
 const findByEmailAndCode = async ({ email, code }) => {
-  const betaInvites = (await getAll()).val();
+  const betaInvites = await getAll();
 
   return R.compose(
     R.find(obj => obj.code === code && obj.email === email),
@@ -38,15 +40,15 @@ const findByEmailAndCode = async ({ email, code }) => {
   )(betaInvites);
 };
 
-export const create = async email => {
+export const create = async props => {
+  const { email } = props;
   const betaInviteSnapshot = await findByEmail(email);
 
   if (betaInviteSnapshot && betaInviteSnapshot.val()) {
     return Promise.reject('Beta invite for this email already exists');
   }
 
-  const code = nanoid();
-  return database.ref(`/betaInvites`).push({ email, code });
+  return database.ref(`/betaInvites`).push(props);
 };
 
 export const valid = async ({ email, code }) => {
