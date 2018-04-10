@@ -16,6 +16,9 @@
       .no-underline {
         text-decoration: none!important;
       }
+      .button {
+        letter-spacing: 0.5px;
+      }
     </mj-style>
   </mj-head>
   <mj-body>
@@ -39,17 +42,17 @@
         <mj-text>
           Ready to get started?
         </mj-text>
-        <mj-button href={{url}} line-height="180%" font-family="Arial" background-color="#ff6762" color="white" padding="45px 0 25px 0" font-size="24px" border-radius="4px">
+        <mj-button href={{url}} line-height="180%" font-family="Arial" background-color="#ff6762" color="white" padding="45px 0 25px 0" font-size="24px" font-weight="bold" border-radius="4px" css-class="button">
           Get Started
         </mj-button>
         <mj-divider border-width="2px" border-style="solid" border-color="#EAEAEA" padding-bottom="15px" />
-        <mj-text align="center" font-size="16px" font-weight="bold">
+        <mj-text align="center" font-size="14px" font-weight="bold">
           Pesposa · All rights reserved
         </mj-text>
-        <mj-text align="center" font-size="16px">
+        <mj-text align="center" font-size="14px">
           <a href="mailto:{{mainEmail}}" class="no-underline">{{mainEmail}}</a>
         </mj-text>
-        <mj-text align="center" font-size="16px" padding-top="10px">
+        <mj-text align="center" font-size="14px" padding-top="10px">
           <a href="TODO">Unsubscribe</a>
         </mj-text>
       </mj-column>
