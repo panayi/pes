@@ -301,8 +301,8 @@ type Rating {
 }
 
 type BetaInvite {
-  code: String,
-  email: Email
+  email: Email,
+  code: String
 }
 
 // ------------------------------------
@@ -497,10 +497,10 @@ path /ratings/{uid} is Rating {
 // BETA
 path /betaUsers {
   read() { true }
-  create() { false }
+  write() { false }
 }
 
 path /betaInvites is BetaInvite[] {
   read() { false }
-  create() { false }
+  write() { false }
 }

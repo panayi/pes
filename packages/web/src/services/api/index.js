@@ -18,7 +18,7 @@ const migrateAnonymousUser = ({ token, anonymousUserToken }) => () => {
 // BETA
 
 const createBetaUser = (data, token) => () => {
-  const url = `${env.firebaseFunctionsBaseUrl}/beta-users/create`;
+  const url = `${env.firebaseFunctionsBaseUrl}/beta-users`;
 
   return fetch(url, {
     method: 'POST',

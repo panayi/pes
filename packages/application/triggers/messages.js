@@ -1,20 +1,9 @@
-/* @flow */
 import * as functions from 'firebase-functions';
 import { database } from '@pesposa/core/src/config/firebaseClient';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 
-type Event = {
-  params: {
-    adId: ID,
-    buyerId: ID,
-  },
-  // TODO: How to specify **what type of snapshot** should expect?
-  // In other words, how to specify what val() returns?
-  data: $npm$firebase$database$DataSnapshot,
-};
-
 const updateUserConversation = async (adId, buyerId, userId, isSender, createdAt) => {
-  const conversation: Conversation = {
+  const conversation = {
     ad: adId,
     buyer: buyerId,
   };
@@ -39,11 +28,10 @@ const updateUsersConversation = async (adId, buyerId, fromBuyer, createdAt) => {
   ]);
 };
 
-const handleCreate = async (event: Event) => {
-  const snapshot = event.data;
-  const message: Message = snapshot.val();
+const handleCreate = async (snap, context) => {
+  const message = snap.val();
   const { fromBuyer, createdAt } = message;
-  const { adId, buyerId } = event.params;
+  const { adId, buyerId } = context.params;
 
   await updateUsersConversation(adId, buyerId, fromBuyer, createdAt);
 };

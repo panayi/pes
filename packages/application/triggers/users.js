@@ -2,16 +2,21 @@ import * as functions from 'firebase-functions';
 import * as avatarModel from '@pesposa/core/src/models/avatar';
 import * as legacyAdModel from '@pesposa/core/src/models/legacyAd';
 
-const handleCreatedOrUpdated = async event => {
-  const snapshot = event.data;
-  const { userId } = event.params;
-  await avatarModel.download(snapshot, userId);
-  return legacyAdModel.associateUserToLegacyAds(snapshot, userId);
+const handleCreate = async (snap, context) => {
+  const { userId } = context.params;
+  await avatarModel.download(snap, userId);
+  return legacyAdModel.associateUserToLegacyAds(snap, userId);
+};
+
+const handleUpdate = async (change, context) => {
+  const { userId } = context.params;
+  await avatarModel.download(change.after, userId);
+  return legacyAdModel.associateUserToLegacyAds(change.after, userId);
 };
 
 export const userCreated = functions.database
   .ref('/users/{userId}')
-  .onCreate(handleCreatedOrUpdated);
+  .onCreate(handleCreate);
 export const userUpdated = functions.database
   .ref('/users/{userId}')
-  .onUpdate(handleCreatedOrUpdated);
+  .onUpdate(handleUpdate);

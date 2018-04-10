@@ -8,6 +8,7 @@ import { isAuthenticated } from './utils';
 import reverseGeocode from './reverseGeocode';
 import geoip from './geoip';
 import migrateAnonymousUser from './migrateAnonymousUser';
+import createBetaInvite from './createBetaInvite';
 import createBetaUser from './createBetaUser';
 
 const app = express();
@@ -40,7 +41,13 @@ app.post(
 );
 
 app.post(
-  '/beta-users/create',
+  '/beta-invites',
+  bodyParser.json(),
+  createBetaInvite,
+)
+
+app.post(
+  '/beta-users',
   isAuthenticated(),
   bodyParser.json(),
   createBetaUser
