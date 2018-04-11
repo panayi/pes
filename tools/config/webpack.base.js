@@ -43,6 +43,10 @@ module.exports = {
         test: /\.svg$/,
         loader: 'svg-inline-loader',
       },
+      {
+        test: /\.mjml$/,
+        use: 'raw-loader',
+      },
     ],
   },
   externals: [

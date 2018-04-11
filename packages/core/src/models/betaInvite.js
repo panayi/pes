@@ -1,20 +1,56 @@
 import * as R from 'ramda';
 import { isPlainObj } from 'ramda-adjunct';
+import env from '../config/env';
 import { database } from '../config/firebaseClient';
 
-const getAll = async () => database.ref(`/betaInvites`).once('value');
-
-const get = async ({ code, email }) => {
-  const betaInvites = (await getAll()).val();
-
-  return R.compose(
-    R.find(obj => obj.code === code && obj.email === email),
-    R.defaultTo([]),
-    R.values,
-  )(betaInvites);
+const getAll = async () => {
+  const snap = await database.ref(`/betaInvites`).once('value');
+  return snap ? snap.val() : [];
 };
 
-export const valid = async ({ code, email }) => {
-  const betaInvite = await get({ code, email });
-  return isPlainObj(betaInvite);
+export const get = async id => database.ref(`/betaInvites/${id}`).once('value');
+
+export const getUrl = ({ code, name }) =>
+  `https://${env.domain}/beta?code=${code}&name=${name}`;
+
+export const getWithUrl = async id => {
+  const betaInviteSnapshot = await database
+    .ref(`/betaInvites/${id}`)
+    .once('value');
+  const betaInvite = betaInviteSnapshot.val();
+  return betaInvite
+    ? R.merge(betaInvite, { url: getUrl(betaInvite) })
+    : betaInvite;
+};
+
+const findByEmail = async email => {
+  const betaInvites = await getAll();
+
+  return R.compose(R.find(R.propEq('email', email)), R.defaultTo([]), R.values)(
+    betaInvites,
+  );
+};
+
+const findByCode = async code => {
+  const betaInvites = await getAll();
+
+  return R.compose(R.find(R.propEq('code', code)), R.defaultTo([]), R.values)(
+    betaInvites,
+  );
+};
+
+export const create = async props => {
+  const { email } = props;
+  const betaInviteSnapshot = await findByEmail(email);
+
+  if (betaInviteSnapshot && betaInviteSnapshot.val()) {
+    return Promise.reject('Beta invite for this email already exists');
+  }
+
+  return database.ref(`/betaInvites`).push(props);
+};
+
+export const validate = async code => {
+  const betaInviteSnapshot = await findByCode(code);
+  return isPlainObj(betaInviteSnapshot);
 };

@@ -18,7 +18,7 @@ import * as selectors from './selectors';
 
 // Hacky code!
 // TODO: refactor or remove soon
-const isInBetaPage = () => R.equals(window.location.pathname, '/beta');
+const isInBetaPage = () => R.test(/^\/beta/, window.location.pathname);
 
 export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
   if (!process.browser) {
@@ -157,13 +157,13 @@ export const logout = () => async (dispatch, getState, getFirebase) => {
 
 // BETA
 
-export const createBetaUser = ({ code, email }) => async (
+export const createBetaUser = code => async (
   dispatch,
   getState,
   getFirebase,
 ) => {
   const token = selectors.tokenSelector(getState());
-  const response = await dispatch(api.createBetaUser({ code, email }, token));
+  const response = await dispatch(api.createBetaUser({ code }, token));
 
   if (response.ok) {
     // Refetch beta users

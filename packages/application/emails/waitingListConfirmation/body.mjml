@@ -1,0 +1,84 @@
+<mjml>
+  <mj-head>
+    <mj-title>{{title}}</mj-title>
+    <mj-attributes>
+      <mj-all padding="0px"></mj-all>
+      <mj-text font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" padding="0 25px" font-size="16px" line-height="150%"></mj-text>
+      <mj-section background-color="#ffffff"></mj-section>
+      <mj-class name="preheader" color="#000000" font-size="11px"></mj-class>
+    </mj-attributes>
+    <mj-style inline="inline">
+      a {
+        color: #a0a0a0;
+        font-weight: normal;
+        text-decoration: underline;
+      }
+      .email-link {
+        color: #000000!important;
+        text-decoration: none!important;
+      }
+      .button {
+        letter-spacing: 0.5px;
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column width="100%">
+        <mj-image src="https://pesposa-production.firebaseapp.com/logo.png" alt="Pesposa" padding="0px"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="10px 0 20px 0">
+      <mj-column>
+        <mj-text padding="20px 25px 25px 25px" font-size="28px" font-weight="bold" color="#ff6762">You've been added to Pesposa waitlist.</mj-text>
+        <mj-text padding-bottom="15px">
+          Hello {{name}},
+        </mj-text>
+        <mj-text padding-bottom="15px">
+          Thanks for your interest! You've been added to our waitlist.
+        </mj-text>
+        <mj-text padding-bottom="15px" font-weight="bold">
+          Interested in priority access?
+        </mj-text>
+        <mj-text padding-bottom="15px">
+          Get early access by referring your friends. Get 5 friends to join and skip the waitlist! Just share this link:<br />
+          <a href="{{referralUrl}}">{{referralUrl}}</a>
+        </mj-text>
+        <mj-text>
+          Or click to share on social
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-social font-size="15px" icon-size="30px" mode="horizontal" align="left" padding="0 25px">
+          <mj-social-element name="facebook" href="{{referralUrl}}" padding="0 8px 0 0">
+          </mj-social-element>
+          <mj-social-element name="twitter" href="{{referralUrl}}" padding="0 8px 0 0">
+          </mj-social-element>
+          <mj-social-element  name="google" href="{{referralUrl}}" padding="0 8px 0 0">
+          </mj-social-element>
+          <mj-social-element  name="linkedin" href="{{referralUrl}}" padding="0 8px 0 0">
+          </mj-social-element>
+        </mj-social>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="35px 0 25px 0">
+      <mj-column>
+        <mj-divider border-width="2px" border-style="solid" border-color="#EAEAEA" padding-bottom="15px" />
+        <mj-text align="center" font-size="14px" font-weight="bold">
+          Pesposa · All rights reserved
+        </mj-text>
+        <mj-text align="center" font-size="14px">
+          <a href="mailto:{{mainEmail}}" class="email-link">{{mainEmail}}</a>
+        </mj-text>
+        <mj-text align="center" font-size="14px">
+          <a href="{{facebookPageUrl}}" >Follow us on Facebook</a>
+        </mj-text>
+        <mj-text align="center" font-size="14px" padding-top="15px">
+          <a href="%tag_unsubscribe_url%">Unsubscribe</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

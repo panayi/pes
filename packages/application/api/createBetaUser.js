@@ -6,8 +6,8 @@ import { getUserId } from './utils';
 const createBetaUser = async (req, res) => {
   try {
     const userId = getUserId(req);
-    const { code, email } = req.body;
-    await betaUserModel.create({ code, email }, userId);
+    const { code } = req.body;
+    await betaUserModel.create(code, userId);
     res.send('OK');
   } catch (error) {
     log.error('Failed to create beta user');

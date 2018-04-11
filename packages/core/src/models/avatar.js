@@ -38,14 +38,17 @@ const getGoogleImageUrl = async uid => {
 
 export const download = async (userSnapshot, userId) => {
   try {
+    const avatarPath = userSnapshot.child('avatarPath').val();
+
+    if (avatarPath) {
+      return null;
+    }
+
     const user = userSnapshot.val();
     const provider = findProviderWithProp('photoURL')(user);
     const providerId = R.prop('providerId', provider);
 
-    if (
-      isNilOrEmpty(providerId) ||
-      !userSnapshot.child('providerData').changed()
-    ) {
+    if (isNilOrEmpty(providerId)) {
       return null;
     }
 

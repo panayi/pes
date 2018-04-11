@@ -16,11 +16,13 @@ import { actions as authActions } from 'store/firebase/auth';
 import Layout from 'layouts/Layout/Layout';
 import Login from 'modules/Login/Login';
 import needsNonBetaUser from 'hocs/needsNonBetaUser';
-import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Button from 'components/Button/Button';
+import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Logo from 'components/Logo/Logo';
 import Spinner from 'components/Spinner/Spinner';
-import LoginSuccess from './LoginSuccess/LoginSuccess';
+import CreateBetaUserFailed from './CreateBetaUserFailed/CreateBetaUserFailed';
+import Waitlisted from './Waitlisted/Waitlisted';
+import WaitlistedJoinButton from './Waitlisted/WaitlistedJoinButton/WaitlistedJoinButton';
 
 // BETA
 const customTheme = R.assocPath(
@@ -107,25 +109,23 @@ const styles = theme => ({
   waitText: {
     marginTop: theme.spacing.unit * 3,
   },
+  loginButton: {
+    color: theme.palette.common.white,
+    borderColor: theme.palette.common.white,
+    marginTop: theme.spacing.unit,
+    [theme.breakpoints.up(theme.map.laptop)]: {
+      position: 'absolute',
+      top: theme.spacing.unit * 3,
+      right: theme.spacing.unit * 4,
+      fontSize: theme.typography.subheading.fontSize,
+    },
+  },
 });
 
 class Beta extends React.Component {
-  getButtonLabel = () => {
-    if (this.hasBetaInvite()) {
-      return 'Create Account';
-    }
-
-    return 'Get Early Access';
-  };
-
-  hasBetaInvite = () => {
-    const { code, email } = this.props;
-    return !isNilOrEmpty(code) && !isNilOrEmpty(email);
-  };
-
   handleCreateBetaUserFail = () => {
     this.props.setLoginSuccess(true);
-    this.props.openModal('loginSuccess');
+    this.props.openModal('createBetaUserFailed');
   };
 
   handleCreateBetaUserSuccess = () => {
@@ -133,14 +133,10 @@ class Beta extends React.Component {
   };
 
   handleLoginSuccess = async () => {
-    const { code, email, createBetaUser, setIsCreatingBetaUser } = this.props;
-
-    if (!this.hasBetaInvite()) {
-      return this.handleCreateBetaUserFail();
-    }
+    const { code, createBetaUser, setIsCreatingBetaUser } = this.props;
 
     setIsCreatingBetaUser(true);
-    const result = await createBetaUser({ code, email });
+    const result = await createBetaUser(code);
 
     if (result) {
       return this.handleCreateBetaUserSuccess();
@@ -156,69 +152,89 @@ class Beta extends React.Component {
     openModal('login', { onSuccess: this.handleLoginSuccess });
   };
 
-  renderBody = () => {
-    const { name, loginSuccess, location, classes } = this.props;
-    const buttonLabel = this.getButtonLabel();
+  renderJoinWaitlist() {
+    const {
+      hasBetaInviteCode,
+      isCreatingBetaUser,
+      openModal,
+      location,
+      classes,
+    } = this.props;
 
-    if (loginSuccess) {
+    if (hasBetaInviteCode || isCreatingBetaUser) {
       return null;
     }
 
-    if (this.hasBetaInvite()) {
-      return (
-        <React.Fragment>
-          <Helmet
-            {...getMetaTags({
-              title: `Pesposa Beta`,
-              path: location.pathname,
-            })}
-          />
-          <strong className={classes.name}>Hello {name || 'beta user'}!</strong>
-          <span className={classes.fade}>
-            Thanks for accepting the beta invitation.
-          </span>
-          <br />
-          <span className={classes.fade}>
-            Click the button above to create an account and enter the new
-            Pesposa.
-          </span>
-        </React.Fragment>
-      );
+    return (
+      <React.Fragment>
+        <Helmet
+          {...getMetaTags({
+            path: location.pathname,
+            title: `The new Pesposa is launching soon. Join the waitlist!`,
+            description:
+              'People are selling stuff on Pesposa. Join the waitlist to become one of the earliest users of the new Pesposa!',
+          })}
+        />
+        <Button
+          className={classes.loginButton}
+          variant="outline"
+          onClick={() => openModal('login')}
+        >
+          Login
+        </Button>
+        <div className={classNames(classes.item, classes.brand)}>
+          <Logo className={classes.logo} />
+          <Typography className={classes.title} variant="title" color="inherit">
+            Buy and sell stuff in Cyprus.
+          </Typography>
+        </div>
+        <div className={classes.item}>
+          <div className={classes.buttonWrap}>
+            <WaitlistedJoinButton
+              className={classes.button}
+              size="large"
+              color="primary"
+              variant="raised"
+              fullWidth
+            >
+              Join the Waitlist
+            </WaitlistedJoinButton>
+          </div>
+          <Typography className={classes.body} color="inherit">
+            <strong className={classes.name}>
+              The all new Pesposa is launching soon.
+            </strong>
+            <span className={classes.fade}>
+              Join the waitlist to become one of the earliest users of the new
+              Pesposa!
+            </span>
+          </Typography>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  renderCreateBetaUser() {
+    const {
+      hasBetaInviteCode,
+      isCreatingBetaUser,
+      name,
+      location,
+      classes,
+    } = this.props;
+
+    if (!hasBetaInviteCode || isCreatingBetaUser) {
+      return null;
     }
 
     return (
       <React.Fragment>
-        <strong>The all new Pesposa is launching soon.</strong>
-        <br />
-        <span className={classes.fade}>
-          {`Click "${buttonLabel}" to start using it today!`}
-        </span>
-      </React.Fragment>
-    );
-  };
-
-  renderIsCreatingBetaUser() {
-    const { classes } = this.props;
-
-    return (
-      <div className={classes.wait}>
-        <Spinner />
-        <Typography
-          className={classes.waitText}
-          variant="title"
-          color="inherit"
-        >
-          Please wait while your beta account is created
-        </Typography>
-      </div>
-    );
-  }
-
-  renderDefault() {
-    const { loginSuccess, classes } = this.props;
-
-    return (
-      <React.Fragment>
+        <Helmet
+          {...getMetaTags({
+            path: location.pathname,
+            title: `Welcome to the new Pesposa`,
+          })}
+        />
         <div className={classNames(classes.item, classes.brand)}>
           <Logo className={classes.logo} />
           <Typography className={classes.title} variant="title" color="inherit">
@@ -228,21 +244,56 @@ class Beta extends React.Component {
         <div className={classes.item}>
           <div className={classes.buttonWrap}>
             <Button
-              className={classNames(classes.button, {
-                [classes.disabled]: loginSuccess,
-              })}
-              disabled={loginSuccess}
+              className={classes.button}
               size="large"
               color="primary"
               variant="raised"
               fullWidth
               onClick={this.handleLoginClick}
             >
-              {loginSuccess ? 'Thank you!' : this.getButtonLabel()}
+              Create an account
             </Button>
           </div>
           <Typography className={classes.body} color="inherit">
-            {this.renderBody()}
+            <strong className={classes.name}>
+              {isNilOrEmpty(name) ? 'Hello,' : `Hello ${name},`}
+            </strong>
+            <span className={classes.fade}>
+              You are almost ready to join the new Pesposa!
+            </span>
+            <br />
+            <span className={classes.fade}>
+              Just click the button above to create an account.
+            </span>
+          </Typography>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  renderIsCreatingBetaUser() {
+    const { isCreatingBetaUser, location, classes } = this.props;
+
+    if (!isCreatingBetaUser) {
+      return null;
+    }
+
+    return (
+      <React.Fragment>
+        <Helmet
+          {...getMetaTags({
+            path: location.pathname,
+            title: `Please wait...`,
+          })}
+        />
+        <div className={classes.wait}>
+          <Spinner />
+          <Typography
+            className={classes.waitText}
+            variant="title"
+            color="inherit"
+          >
+            Please wait while your beta account is created
           </Typography>
         </div>
       </React.Fragment>
@@ -250,19 +301,23 @@ class Beta extends React.Component {
   }
 
   render() {
-    const { isCreatingBetaUser, classes } = this.props;
+    const { classes } = this.props;
 
     return (
       <MuiThemeProvider theme={customTheme}>
         <Layout fixed>
           <div className={classes.root}>
-            {isCreatingBetaUser
-              ? this.renderIsCreatingBetaUser()
-              : this.renderDefault()}
+            {this.renderJoinWaitlist()}
+            {this.renderCreateBetaUser()}
+            {this.renderIsCreatingBetaUser()}
           </div>
           <ReduxModal id="login" content={Login} />
-          <ReduxModal id="loginSuccess" content={LoginSuccess} />
+          <ReduxModal
+            id="createBetaUserFailed"
+            content={CreateBetaUserFailed}
+          />
         </Layout>
+        <Waitlisted />
       </MuiThemeProvider>
     );
   }
@@ -281,10 +336,11 @@ export default R.compose(
   withProps(props => {
     const search = R.pathOr('', ['location', 'search'], props);
     const params = qs.parse(search);
+    const hasBetaInviteCode = !isNilOrEmpty(params.code);
     return {
       code: params.code,
-      email: params.email,
       name: params.name,
+      hasBetaInviteCode,
     };
   }),
   withState('loginSuccess', 'setLoginSuccess', false),

@@ -23,4 +23,5 @@ export const SCROLL_OFFSET_FETCH_TRIGGER = 300;
 export const IMGIX_PARAMS = {
   auto: 'compress,format',
   w: THUMBNAIL_WIDTH,
+  bg: '#ffa8a5',
 };
