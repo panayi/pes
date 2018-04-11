@@ -133,10 +133,10 @@ class Beta extends React.Component {
   };
 
   handleLoginSuccess = async () => {
-    const { code, email, createBetaUser, setIsCreatingBetaUser } = this.props;
+    const { code, createBetaUser, setIsCreatingBetaUser } = this.props;
 
     setIsCreatingBetaUser(true);
-    const result = await createBetaUser({ code, email });
+    const result = await createBetaUser(code);
 
     if (result) {
       return this.handleCreateBetaUserSuccess();
@@ -154,14 +154,14 @@ class Beta extends React.Component {
 
   renderJoinWaitlist() {
     const {
-      hasBetaInvite,
+      hasBetaInviteCode,
       isCreatingBetaUser,
       openModal,
       location,
       classes,
     } = this.props;
 
-    if (hasBetaInvite || isCreatingBetaUser) {
+    if (hasBetaInviteCode || isCreatingBetaUser) {
       return null;
     }
 
@@ -216,14 +216,14 @@ class Beta extends React.Component {
 
   renderCreateBetaUser() {
     const {
-      hasBetaInvite,
+      hasBetaInviteCode,
       isCreatingBetaUser,
       name,
       location,
       classes,
     } = this.props;
 
-    if (!hasBetaInvite || isCreatingBetaUser) {
+    if (!hasBetaInviteCode || isCreatingBetaUser) {
       return null;
     }
 
@@ -251,7 +251,7 @@ class Beta extends React.Component {
               fullWidth
               onClick={this.handleLoginClick}
             >
-              Enter Pesposa
+              Create an account
             </Button>
           </div>
           <Typography className={classes.body} color="inherit">
@@ -337,13 +337,11 @@ export default R.compose(
   withProps(props => {
     const search = R.pathOr('', ['location', 'search'], props);
     const params = qs.parse(search);
-    const hasBetaInvite =
-      !isNilOrEmpty(params.code) && !isNilOrEmpty(params.email);
+    const hasBetaInviteCode = !isNilOrEmpty(params.code);
     return {
       code: params.code,
-      email: params.email,
       name: params.name,
-      hasBetaInvite,
+      hasBetaInviteCode,
     };
   }),
   withState('loginSuccess', 'setLoginSuccess', false),

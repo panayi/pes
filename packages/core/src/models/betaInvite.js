@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { isPlainObj } from 'ramda-adjunct';
 import env from '../config/env';
 import { database } from '../config/firebaseClient';
 
@@ -9,8 +10,8 @@ const getAll = async () => {
 
 export const get = async id => database.ref(`/betaInvites/${id}`).once('value');
 
-export const getUrl = ({ email, code, name }) =>
-  `https://${env.domain}/beta?email=${email}&code=${code}&name=${name}`;
+export const getUrl = ({ code, name }) =>
+  `https://${env.domain}/beta?code=${code}&name=${name}`;
 
 export const getWithUrl = async id => {
   const betaInviteSnapshot = await database
@@ -30,14 +31,12 @@ const findByEmail = async email => {
   );
 };
 
-const findByEmailAndCode = async ({ email, code }) => {
+const findByCode = async code => {
   const betaInvites = await getAll();
 
-  return R.compose(
-    R.find(obj => obj.code === code && obj.email === email),
-    R.defaultTo([]),
-    R.values,
-  )(betaInvites);
+  return R.compose(R.find(R.propEq('code', code)), R.defaultTo([]), R.values)(
+    betaInvites,
+  );
 };
 
 export const create = async props => {
@@ -51,7 +50,7 @@ export const create = async props => {
   return database.ref(`/betaInvites`).push(props);
 };
 
-export const valid = async ({ email, code }) => {
-  const betaInviteSnapshot = await findByEmailAndCode({ email, code });
-  return betaInviteSnapshot && betaInviteSnapshot.val();
+export const validate = async code => {
+  const betaInviteSnapshot = await findByCode(code);
+  return isPlainObj(betaInviteSnapshot);
 };
