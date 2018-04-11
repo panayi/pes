@@ -109,6 +109,17 @@ const styles = theme => ({
   waitText: {
     marginTop: theme.spacing.unit * 3,
   },
+  loginButton: {
+    color: theme.palette.common.white,
+    borderColor: theme.palette.common.white,
+    marginTop: theme.spacing.unit,
+    [theme.breakpoints.up(theme.map.laptop)]: {
+      position: 'absolute',
+      top: theme.spacing.unit * 3,
+      right: theme.spacing.unit * 4,
+      fontSize: theme.typography.subheading.fontSize,
+    },
+  },
 });
 
 class Beta extends React.Component {
@@ -142,7 +153,12 @@ class Beta extends React.Component {
   };
 
   renderJoinWaitlist() {
-    const { hasBetaInvite, isCreatingBetaUser, classes } = this.props;
+    const {
+      hasBetaInvite,
+      isCreatingBetaUser,
+      openModal,
+      classes,
+    } = this.props;
 
     if (hasBetaInvite || isCreatingBetaUser) {
       return null;
@@ -150,6 +166,13 @@ class Beta extends React.Component {
 
     return (
       <React.Fragment>
+        <Button
+          className={classes.loginButton}
+          variant="outline"
+          onClick={() => openModal('login')}
+        >
+          Login
+        </Button>
         <div className={classNames(classes.item, classes.brand)}>
           <Logo className={classes.logo} />
           <Typography className={classes.title} variant="title" color="inherit">
@@ -169,11 +192,12 @@ class Beta extends React.Component {
             </WaitlistedJoinButton>
           </div>
           <Typography className={classes.body} color="inherit">
-            <strong>The all new Pesposa is launching soon.</strong>
-            <br />
+            <strong className={classes.name}>
+              The all new Pesposa is launching soon.
+            </strong>
             <span className={classes.fade}>
-              Click the button above to join the waitlist, and become one of the
-              earliest users of the new Pesposa!
+              Join the waitlist to become one of the earliest users of the new
+              Pesposa!
             </span>
           </Typography>
         </div>
@@ -211,12 +235,15 @@ class Beta extends React.Component {
           </div>
           <Typography className={classes.body} color="inherit">
             <strong className={classes.name}>
-              Hello {name || 'beta user'}!
+              {isNilOrEmpty(name) ? 'Hello!' : `Hello ${name}!`}
             </strong>
-            <span className={classes.fade}>Ready to get started?</span>
+            <span className={classes.fade}>
+              Thanks for joining the new Pesposa.
+            </span>
             <br />
             <span className={classes.fade}>
-              Click the button above to enter the new Pesposa.
+              Click the button above to create an account and enter the new
+              Pesposa.
             </span>
           </Typography>
         </div>

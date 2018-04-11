@@ -18,7 +18,7 @@ import * as selectors from './selectors';
 
 // Hacky code!
 // TODO: refactor or remove soon
-const isInBetaPage = () => R.equals(window.location.pathname, '/beta');
+const isInBetaPage = () => R.test(/^\/beta/, window.location.pathname);
 
 export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
   if (!process.browser) {
