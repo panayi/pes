@@ -256,15 +256,14 @@ class Beta extends React.Component {
           </div>
           <Typography className={classes.body} color="inherit">
             <strong className={classes.name}>
-              {isNilOrEmpty(name) ? 'Hello!' : `Hello ${name}!`}
+              {isNilOrEmpty(name) ? 'Hello,' : `Hello ${name},`}
             </strong>
             <span className={classes.fade}>
-              Thanks for joining the new Pesposa.
+              You are almost ready to join the new Pesposa!
             </span>
             <br />
             <span className={classes.fade}>
-              Click the button above to create an account and enter the new
-              Pesposa.
+              Just click the button above to create an account.
             </span>
           </Typography>
         </div>
