@@ -52,7 +52,7 @@ class Menu extends Component {
   };
 
   renderUserLinks() {
-    const { isAuthenticated, classes } = this.props;
+    const { isAuthenticated, currentUserId, classes } = this.props;
 
     return isAuthenticated ? (
       <React.Fragment>
@@ -64,7 +64,10 @@ class Menu extends Component {
           </UnreadConversationsBadge>
           <ListItemText primary="Messages" />
         </ListItem>
-        <ListItem button onClick={() => this.navigateTo('/profile')}>
+        <ListItem
+          button
+          onClick={() => this.navigateTo(`/user/${currentUserId}`)}
+        >
           <ListItemIcon>
             <AccountCircleIcon />
           </ListItemIcon>
@@ -94,7 +97,7 @@ class Menu extends Component {
             isAuthenticated={isAuthenticated}
             currentUserId={currentUserId}
             openModal={this.openModal}
-            onClick={() => this.navigateTo('/profile')}
+            onClick={() => this.navigateTo(`/user/${currentUserId}`)}
           />
           <List component="nav">
             <ListItem button onClick={() => this.navigateTo('/')}>

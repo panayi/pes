@@ -141,7 +141,7 @@ class ProfileBox extends Component {
           <DesktopScreen>
             <Link
               className={classes.profileLink}
-              to="/profile"
+              to={`/user/${currentUserId}`}
               variant="raised"
               size="small"
               color="primary"

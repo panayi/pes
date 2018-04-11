@@ -6,13 +6,6 @@ const Placeholder = () => <Spinner overlay centered />;
 
 const routes = [
   {
-    path: '/profile/:tab?',
-    component: asyncComponent({
-      loader: () => import('./pages/profile/index'),
-      Placeholder,
-    }),
-  },
-  {
     path: '/user/:userId/:tab?',
     component: asyncComponent({
       loader: () => import('./pages/profile/index'),
