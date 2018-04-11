@@ -8,6 +8,7 @@ import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import withStyles from 'material-ui/styles/withStyles';
 import { Link } from 'react-router-dom';
+import TouchDevice from 'components/TouchDevice/TouchDevice';
 import Truncate from 'components/Truncate/Truncate';
 import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import Imgix from 'components/Imgix/Imgix';
@@ -117,18 +118,23 @@ const AdCard = ({
             image={src}
             style={{ height: `${thumbnailHeight}px` }}
           >
-            {hovered && (
-              <Paper
-                className={classes.favorite}
-                onClick={e => e.preventDefault()}
-              >
-                <FavoriteAd
-                  className={classes.favoriteButton}
-                  ad={hit}
-                  adId={hit.objectID}
-                />
-              </Paper>
-            )}
+            <TouchDevice>
+              {({ hide }) =>
+                hovered &&
+                hide(
+                  <Paper
+                    className={classes.favorite}
+                    onClick={e => e.preventDefault()}
+                  >
+                    <FavoriteAd
+                      className={classes.favoriteButton}
+                      ad={hit}
+                      adId={hit.objectID}
+                    />
+                  </Paper>,
+                )
+              }
+            </TouchDevice>
           </CardMedia>
           <CardContent className={classes.content}>
             <AdTitle

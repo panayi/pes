@@ -89,7 +89,12 @@ export const searchParamsSelector = createSelector(
     // Setting `ids` overrides everything else
     return {
       // Prefix with '\', since firebase IDs can start with '-'. See why: https://goo.gl/nqPUrG
-      facetFilters: R.map(id => `objectID:\\${id}`, ids),
+      filters: R.compose(
+        R.join(' OR '),
+        R.map(
+          id => (R.head(id) === '-' ? `objectID:\\${id}` : `objectID:${id}`),
+        ),
+      )(ids),
     };
   },
 );

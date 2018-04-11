@@ -1,6 +1,5 @@
 import React from 'react';
 import * as R from 'ramda';
-import { isNilOrEmpty } from 'ramda-adjunct';
 import { withProps, setStatic } from 'recompose';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -40,7 +39,6 @@ const ProfilePage = ({ userId, tab, displayName, avatarUrl, location }) => (
 export default R.compose(
   setStatic('getInitialProps', async ({ store, match }) => {
     const { tab, userId } = match.params;
-    const currentUserId = authSelectors.uidSelector(store.getState());
     const actions = bindActionCreators(
       {
         loadFirstPage: searchActions.loadFirstPage,
@@ -50,33 +48,18 @@ export default R.compose(
       searchConstants.PROFILE_SEARCH_ID,
     );
 
-    if (isNilOrEmpty(userId) && isNilOrEmpty(currentUserId)) {
-      return store.getState();
-    }
+    await store.firebase.promiseEvents([
+      {
+        path: models
+          .profiles(propSelector('userId'))
+          .query(store.getState(), { userId }).path,
+        type: 'once',
+      },
+    ]);
 
-    const isCurrentUser = isNilOrEmpty(userId);
-    if (isCurrentUser) {
-      await store.firebase.promiseEvents([
-        {
-          path: models.favorites.all.query(store.getState()).path,
-          type: 'once',
-        },
-      ]);
-    } else {
-      await store.firebase.promiseEvents([
-        {
-          path: models
-            .profiles(propSelector('userId'))
-            .query(store.getState(), { userId }).path,
-          type: 'once',
-        },
-      ]);
-    }
-
-    const finalUserId = userId || currentUserId;
     const searchParamsFromProps = searchParamsByTabSelector(store.getState(), {
       tab,
-      userId: finalUserId,
+      userId,
     });
     actions.setParamsFromProps(searchParamsFromProps);
 

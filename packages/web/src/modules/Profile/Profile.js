@@ -42,16 +42,15 @@ const styles = theme => ({
 
 class Profile extends Component {
   handleChangeTab = (event, value) => {
-    const { userId, isCurrentUser } = this.props;
-    const basePath = isCurrentUser ? '/profile' : `/user/${userId}`;
+    const { userId } = this.props;
+    const basePath = `/user/${userId}`;
     const path = value === 'selling' ? basePath : `${basePath}/${value}`;
     this.props.history.push(path);
   };
 
   render() {
-    const { userId, currentUserId, tab, searchParams, classes } = this.props;
+    const { userId, tab, searchParams, isCurrentUser, classes } = this.props;
     const currentTab = tab || 'selling';
-    const isCurrentUser = userId === currentUserId;
 
     return (
       <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
@@ -68,7 +67,9 @@ class Profile extends Component {
             >
               <Tab label="Selling" value="selling" />
               <Tab label="Sold" value="sold" />
-              {isCurrentUser && <Tab label="Favorites" value="favorites" />}
+              {isCurrentUser ? (
+                <Tab label="Favorites" value="favorites" />
+              ) : null}
             </Tabs>
             <div className={classes.list}>
               <ListUserAds params={searchParams} />
@@ -117,8 +118,7 @@ export default R.compose(
   branch(R.compose(isNilOrEmpty, R.prop('userId')), needsUser()),
   connect(mapStateToProps),
   withProps(({ userId, currentUserId }) => ({
-    isCurrentUser: isNilOrEmpty(userId),
-    userId: userId || currentUserId,
+    isCurrentUser: userId === currentUserId,
   })),
   branch(R.prop('isCurrentUser'), connectData(mapDataToProps)),
   connect(
