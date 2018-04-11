@@ -313,7 +313,7 @@
     methmeth "^1.0.0"
     string-format-obj "^1.0.0"
 
-"@google-cloud/firestore@^0.13.0":
+"@google-cloud/firestore@^0.13.0", "@google-cloud/firestore@^0.13.1":
   version "0.13.1"
   resolved "https://registry.yarnpkg.com/@google-cloud/firestore/-/firestore-0.13.1.tgz#40e376852d9aa19aee62deb0334ffc437ebd8d64"
   dependencies:
@@ -5204,9 +5204,23 @@ firebase-admin@^5.11.0:
     jsonwebtoken "8.1.0"
     node-forge "0.7.1"
 
-firebase-bolt@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/firebase-bolt/-/firebase-bolt-0.8.2.tgz#0a5674a3d2fdc233b6ee30552f1f6561f2d37c5c"
+firebase-admin@^5.12.0:
+  version "5.12.0"
+  resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-5.12.0.tgz#3291b0466b4d161cb4135e83c97f9878e7768cac"
+  dependencies:
+    "@firebase/app" "^0.1.10"
+    "@firebase/database" "^0.2.0"
+    "@google-cloud/firestore" "^0.13.1"
+    "@google-cloud/storage" "^1.6.0"
+    "@types/google-cloud__storage" "^1.1.7"
+    "@types/node" "^8.0.53"
+    faye-websocket "0.9.3"
+    jsonwebtoken "8.1.0"
+    node-forge "0.7.4"
+
+firebase-bolt@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/firebase-bolt/-/firebase-bolt-0.8.3.tgz#3e977275624f4d481aed54fea3bf54a305383310"
   dependencies:
     chai "^3.2.0"
     es6-promise "^3.2.1"
@@ -9744,6 +9758,10 @@ node-fetch@^2.0.0:
 node-forge@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.1.tgz#9da611ea08982f4b94206b3beb4cc9665f20c300"
+
+node-forge@0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.4.tgz#8e6e9f563a1e32213aa7508cded22aa791dbf986"
 
 node-forge@^0.7.1, node-forge@^0.7.4:
   version "0.7.5"
