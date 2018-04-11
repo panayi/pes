@@ -9,7 +9,7 @@
     </mj-attributes>
     <mj-style inline="inline">
       a {
-        color: #a5a5a5;
+        color: #a0a0a0;
         font-weight: normal;
         text-decoration: underline;
       }
@@ -28,24 +28,39 @@
         <mj-image src="https://pesposa-production.firebaseapp.com/logo.png" alt="Pesposa" padding="0px"></mj-image>
       </mj-column>
     </mj-section>
-    <mj-section padding-top="10px">
+    <mj-section padding="10px 0 20px 0">
       <mj-column>
-        <mj-text padding="20px 25px 25px 25px" font-size="28px" font-weight="bold" color="#ff6762">The wait is over, enter the new Pesposa!</mj-text>
+        <mj-text padding="20px 25px 25px 25px" font-size="28px" font-weight="bold" color="#ff6762">You've been added to Pesposa waitlist.</mj-text>
         <mj-text padding-bottom="15px">
           Hello {{name}},
         </mj-text>
-        <mj-text padding-bottom="20px">
-          You can now join the new Pesposa. Pesposa is the fastest way to buy and sell products in Cyprus. We are currently in beta, and you are among the first to experience it.
+        <mj-text padding-bottom="15px">
+          Thanks for your interest! You've been added to our waitlist.
         </mj-text>
-        <mj-text padding-bottom="20px">
-          While we are in beta, we are working full-speed to roll-out improvements and new features. <a class="link" href="mailto:{{supportEmail}}">Let us know</a> if you hit any issues, or if you have any ideas for improvements.
+        <mj-text padding-bottom="15px" font-weight="bold">
+          Interested in priority access?
+        </mj-text>
+        <mj-text padding-bottom="15px">
+          Get early access by referring your friends. Get 5 friends to join and skip the waitlist! Just share this link:<br />
+          <a href="{{referralUrl}}">{{referralUrl}}</a>
         </mj-text>
         <mj-text>
-          Ready to get started?
+          Or click to share on social
         </mj-text>
-        <mj-button href={{url}} line-height="180%" font-family="Arial" background-color="#ff6762" color="white" padding-top="40px" font-size="24px" font-weight="bold" border-radius="4px" css-class="button">
-          Get Started
-        </mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section>
+      <mj-column>
+        <mj-social font-size="15px" icon-size="30px" mode="horizontal" align="left" padding="0 25px">
+          <mj-social-element name="facebook" href="{{referralUrl}}" padding="0 8px 0 0">
+          </mj-social-element>
+          <mj-social-element name="twitter" href="{{referralUrl}}" padding="0 8px 0 0">
+          </mj-social-element>
+          <mj-social-element  name="google" href="{{referralUrl}}" padding="0 8px 0 0">
+          </mj-social-element>
+          <mj-social-element  name="linkedin" href="{{referralUrl}}" padding="0 8px 0 0">
+          </mj-social-element>
+        </mj-social>
       </mj-column>
     </mj-section>
     <mj-section padding="35px 0 25px 0">
@@ -56,6 +71,9 @@
         </mj-text>
         <mj-text align="center" font-size="14px">
           <a href="mailto:{{mainEmail}}" class="email-link">{{mainEmail}}</a>
+        </mj-text>
+        <mj-text align="center" font-size="14px">
+          <a href="{{facebookPageUrl}}" >Follow us on Facebook</a>
         </mj-text>
         <mj-text align="center" font-size="14px" padding-top="15px">
           <a href="%tag_unsubscribe_url%">Unsubscribe</a>

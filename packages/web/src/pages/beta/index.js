@@ -157,6 +157,7 @@ class Beta extends React.Component {
       hasBetaInvite,
       isCreatingBetaUser,
       openModal,
+      location,
       classes,
     } = this.props;
 
@@ -166,6 +167,14 @@ class Beta extends React.Component {
 
     return (
       <React.Fragment>
+        <Helmet
+          {...getMetaTags({
+            path: location.pathname,
+            title: `The new Pesposa is launching soon. Join the waitlist!`,
+            description:
+              'People are selling stuff on Pesposa. Join the waitlist to become one of the earliest users of the new Pesposa!',
+          })}
+        />
         <Button
           className={classes.loginButton}
           variant="outline"
@@ -206,7 +215,13 @@ class Beta extends React.Component {
   }
 
   renderCreateBetaUser() {
-    const { hasBetaInvite, isCreatingBetaUser, name, classes } = this.props;
+    const {
+      hasBetaInvite,
+      isCreatingBetaUser,
+      name,
+      location,
+      classes,
+    } = this.props;
 
     if (!hasBetaInvite || isCreatingBetaUser) {
       return null;
@@ -214,6 +229,12 @@ class Beta extends React.Component {
 
     return (
       <React.Fragment>
+        <Helmet
+          {...getMetaTags({
+            path: location.pathname,
+            title: `Welcome to the new Pesposa`,
+          })}
+        />
         <div className={classNames(classes.item, classes.brand)}>
           <Logo className={classes.logo} />
           <Typography className={classes.title} variant="title" color="inherit">
@@ -252,37 +273,39 @@ class Beta extends React.Component {
   }
 
   renderIsCreatingBetaUser() {
-    const { isCreatingBetaUser, classes } = this.props;
+    const { isCreatingBetaUser, location, classes } = this.props;
 
     if (!isCreatingBetaUser) {
       return null;
     }
 
     return (
-      <div className={classes.wait}>
-        <Spinner />
-        <Typography
-          className={classes.waitText}
-          variant="title"
-          color="inherit"
-        >
-          Please wait while your beta account is created
-        </Typography>
-      </div>
+      <React.Fragment>
+        <Helmet
+          {...getMetaTags({
+            path: location.pathname,
+            title: `Please wait...`,
+          })}
+        />
+        <div className={classes.wait}>
+          <Spinner />
+          <Typography
+            className={classes.waitText}
+            variant="title"
+            color="inherit"
+          >
+            Please wait while your beta account is created
+          </Typography>
+        </div>
+      </React.Fragment>
     );
   }
 
   render() {
-    const { location, classes } = this.props;
+    const { classes } = this.props;
 
     return (
       <MuiThemeProvider theme={customTheme}>
-        <Helmet
-          {...getMetaTags({
-            title: `Pesposa Beta`,
-            path: location.pathname,
-          })}
-        />
         <Layout fixed>
           <div className={classes.root}>
             {this.renderJoinWaitlist()}

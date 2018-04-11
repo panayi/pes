@@ -28,7 +28,7 @@ const ProfilePage = ({ userId, tab, displayName, avatarUrl, location }) => (
       {...getMetaTags({
         title: displayName
           ? `${displayName} is selling stuff on Pesposa`
-          : null,
+          : 'People are selling stuff on Pesposa',
         image: avatarUrl,
         path: location.pathname,
       })}

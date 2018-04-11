@@ -9,25 +9,33 @@ const mailgun = createMailgunClient({
   domain: env.mailgunDomain,
 });
 
-export const send = mailOptions => {
-  const finalMailOptions = R.merge(
-    {
-      from: pesposaConfig.NO_REPLY_EMAIL_ADDRESS,
-    },
-    mailOptions,
-  );
-  const mail = new MailComposer(finalMailOptions);
+export const send = mailOptions =>
+  new Promise((resolve, reject) => {
+    const finalMailOptions = R.merge(
+      {
+        from: pesposaConfig.NO_REPLY_EMAIL_ADDRESS,
+      },
+      mailOptions,
+    );
+    const mail = new MailComposer(finalMailOptions);
 
-  return mail.compile().build((err, message) => {
-    const dataToSend = {
-      to: mailOptions.to,
-      message: message.toString('ascii'),
-    };
-
-    mailgun.messages().sendMime(dataToSend, sendError => {
-      if (sendError) {
-        console.log(sendError); // eslint-disable-line no-console
+    mail.compile().build((err, message) => {
+      if (err) {
+        reject(err);
+        return;
       }
+
+      const dataToSend = {
+        to: mailOptions.to,
+        message: message.toString('ascii'),
+      };
+
+      mailgun.messages().sendMime(dataToSend, sendError => {
+        if (sendError) {
+          reject(sendError);
+        } else {
+          resolve();
+        }
+      });
     });
   });
-};

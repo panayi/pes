@@ -1,13 +1,17 @@
 /* @flow */
+import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import express from 'express';
 import bodyParser from 'body-parser';
 import createCors from 'cors';
+import log from '@pesposa/core/src/utils/log';
+import * as respond from '@pesposa/core/src/utils/respond';
 import env from '@pesposa/core/src/config/env';
 import { isAuthenticated } from './utils';
 import reverseGeocode from './reverseGeocode';
 import geoip from './geoip';
 import migrateAnonymousUser from './migrateAnonymousUser';
+import confirmAddToWaitlist from './confirmAddToWaitlist';
 import createBetaInvite from './createBetaInvite';
 import createBetaUser from './createBetaUser';
 
@@ -41,9 +45,22 @@ app.post(
 );
 
 app.post(
-  '/beta-invites',
+  '/waitlisted/callback',
   bodyParser.json(),
-  createBetaInvite,
+  async (req, res) => {
+    const event = R.prop('event', req.body);
+    if (event === 'reservation_created') {
+      return confirmAddToWaitlist(req, res);
+    }
+
+    if (event === 'reservation_activated') {
+      return createBetaInvite(req, res);
+    }
+
+    log.error('body', req.body);
+    respond.internalServerError(res);
+    return null;
+  }
 )
 
 app.post(
