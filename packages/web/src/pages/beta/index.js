@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import Typography from 'material-ui/Typography';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import withStyles from 'material-ui/styles/withStyles';
+import env from '@pesposa/core/src/config/env';
 import getMetaTags from 'utils/getMetaTags';
 import defaultTheme from 'config/theme';
 import { actions as modalActions } from 'store/modals';
@@ -141,6 +142,27 @@ const styles = theme => ({
 });
 
 class Beta extends React.Component {
+  componentDidMount() {
+    if (env.firebaseProject === 'pesposa-production') {
+      // Hotjar Tracking Code for beta.pesposa.com/beta
+      /* eslint-disable */
+      (function(h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function() {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 845878, hjsv: 6 };
+        a = o.getElementsByTagName('head')[0];
+        r = o.createElement('script');
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+      /* eslint-enable */
+    }
+  }
+
   handleCreateBetaUserFail = () => {
     this.props.setLoginSuccess(true);
     this.props.openModal('createBetaUserFailed');
