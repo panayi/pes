@@ -17,6 +17,7 @@ import Layout from 'layouts/Layout/Layout';
 import Login from 'modules/Login/Login';
 import needsNonBetaUser from 'hocs/needsNonBetaUser';
 import Button from 'components/Button/Button';
+import Imgix from 'components/Imgix/Imgix';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Logo from 'components/Logo/Logo';
 import Spinner from 'components/Spinner/Spinner';
@@ -25,6 +26,14 @@ import Waitlisted from './Waitlisted/Waitlisted';
 import WaitlistedJoinButton from './Waitlisted/WaitlistedJoinButton/WaitlistedJoinButton';
 
 // BETA
+
+const imgixParams = {
+  auto: 'compress,format,enhance',
+  blend: defaultTheme.palette.secondary.main,
+  bm: 'saturation',
+  balph: 80,
+};
+
 const customTheme = R.assocPath(
   ['overrides', 'MuiBackdrop'],
   null,
@@ -119,6 +128,15 @@ const styles = theme => ({
       right: theme.spacing.unit * 4,
       fontSize: theme.typography.subheading.fontSize,
     },
+  },
+  bg: {
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundSize: 'cover',
+    opacity: 0.05,
   },
 });
 
@@ -306,16 +324,30 @@ class Beta extends React.Component {
     return (
       <MuiThemeProvider theme={customTheme}>
         <Layout fixed>
-          <div className={classes.root}>
-            {this.renderJoinWaitlist()}
-            {this.renderCreateBetaUser()}
-            {this.renderIsCreatingBetaUser()}
-          </div>
-          <ReduxModal id="login" content={Login} />
-          <ReduxModal
-            id="createBetaUserFailed"
-            content={CreateBetaUserFailed}
-          />
+          <Imgix
+            image={{ fullPath: 'uploads/beta-bg.jpg' }}
+            params={imgixParams}
+            lqip={false}
+          >
+            {({ src }) => (
+              <React.Fragment>
+                <div
+                  className={classes.bg}
+                  style={{ backgroundImage: `url(${src})` }}
+                />
+                <div className={classes.root}>
+                  {this.renderJoinWaitlist()}
+                  {this.renderCreateBetaUser()}
+                  {this.renderIsCreatingBetaUser()}
+                </div>
+                <ReduxModal id="login" content={Login} />
+                <ReduxModal
+                  id="createBetaUserFailed"
+                  content={CreateBetaUserFailed}
+                />
+              </React.Fragment>
+            )}
+          </Imgix>
         </Layout>
         <Waitlisted />
       </MuiThemeProvider>
