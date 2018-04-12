@@ -274,9 +274,8 @@ class MobileViewAd extends React.Component {
           >
             <SoldRibbon sold={ad.sold} />
             <ImageSlider
-              className={classes.imageSlider}
               images={imagesList}
-              imgixParams={{ w: 900, auto: 'compress,format' }}
+              imgixParams={{ w: 900, fit: 'clip', auto: 'compress,format' }}
               afterChange={setCurrentSlide}
               swipeToSlide
               arrows={false}
@@ -471,7 +470,7 @@ class MobileViewAd extends React.Component {
         <ImageSlider
           className={classes.slideshow}
           images={imagesList}
-          imgixParams={{ w: 900, auto: 'compress,format' }}
+          imgixParams={{ w: 900, fit: 'clip', auto: 'compress,format' }}
           swipeToSlide
           initialSlide={currentSlideIndex}
           arrows={false}
