@@ -144,8 +144,9 @@ const styles = theme => ({
 class Beta extends React.Component {
   componentDidMount() {
     if (env.firebaseProject === 'pesposa-production') {
-      // Hotjar Tracking Code for beta.pesposa.com/beta
       /* eslint-disable */
+
+      // Hotjar Tracking Code for beta.pesposa.com/beta
       (function(h, o, t, j, a, r) {
         h.hj =
           h.hj ||
@@ -159,6 +160,33 @@ class Beta extends React.Component {
         r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
         a.appendChild(r);
       })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+
+      // Facebook pixel tracking code
+      !(function(f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function() {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = '2.0';
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        'script',
+        'https://connect.facebook.net/en_US/fbevents.js',
+      );
+      fbq('init', '423541348091230');
+      fbq('track', 'PageView');
       /* eslint-enable */
     }
   }
