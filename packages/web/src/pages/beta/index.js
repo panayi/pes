@@ -81,7 +81,7 @@ const styles = theme => ({
     textAlign: 'center',
     [theme.breakpoints.up(theme.map.tablet)]: {
       marginBottom: theme.spacing.unit * 2.5,
-      fontSize: '1.2em',
+      fontSize: '1.3em',
       lineHeight: '1.7em',
     },
   },
