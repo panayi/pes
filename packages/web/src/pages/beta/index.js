@@ -23,6 +23,7 @@ import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Logo from 'components/Logo/Logo';
 import Spinner from 'components/Spinner/Spinner';
 import CreateBetaUserFailed from './CreateBetaUserFailed/CreateBetaUserFailed';
+import CreateBetaCodeAndUserFailed from './CreateBetaCodeAndUserFailed/CreateBetaCodeAndUserFailed';
 import Waitlisted from './Waitlisted/Waitlisted';
 import WaitlistedJoinButton from './Waitlisted/WaitlistedJoinButton/WaitlistedJoinButton';
 
@@ -113,6 +114,10 @@ const styles = theme => ({
   fade: {
     opacity: 0.8,
   },
+  link: {
+    textDecoration: 'underline',
+    cursor: 'pointer',
+  },
   wait: {
     display: 'flex',
     alignItems: 'center',
@@ -141,6 +146,7 @@ const styles = theme => ({
     right: 0,
     bottom: 0,
     left: 0,
+    zIndex: -1,
     backgroundSize: 'cover',
     opacity: 0.05,
   },
@@ -197,8 +203,11 @@ class Beta extends React.Component {
   }
 
   handleCreateBetaUserFail = () => {
-    this.props.setLoginSuccess(true);
     this.props.openModal('createBetaUserFailed');
+  };
+
+  handleCreateBetaCodeAndUserFail = () => {
+    this.props.openModal('createBetaCodeAndUserFailed');
   };
 
   handleCreateBetaUserSuccess = () => {
@@ -225,16 +234,102 @@ class Beta extends React.Component {
     openModal('login', { onSuccess: this.handleLoginSuccess });
   };
 
-  renderJoinWaitlist() {
+  handleInstantLoginSuccess = async () => {
+    const { createBetaCodeAndUser, setIsCreatingBetaUser } = this.props;
+
+    setIsCreatingBetaUser(true);
+    const result = await createBetaCodeAndUser();
+
+    if (result) {
+      return this.handleCreateBetaUserSuccess();
+    }
+
+    setIsCreatingBetaUser(false);
+    return this.handleCreateBetaCodeAndUserFail();
+  };
+
+  handleInstantLoginClick = async () => {
+    const { logout, openModal } = this.props;
+    await logout();
+    openModal('login', {
+      disablePhone: true,
+      onSuccess: this.handleInstantLoginSuccess,
+      title: 'Create an account to enter the new Pesposa',
+    });
+  };
+
+  renderInstantCreateBetaUser() {
     const {
-      hasBetaInviteCode,
+      instantCreateBetaUser,
       isCreatingBetaUser,
       openModal,
       location,
       classes,
     } = this.props;
 
-    if (hasBetaInviteCode || isCreatingBetaUser) {
+    if (!instantCreateBetaUser || isCreatingBetaUser) {
+      return null;
+    }
+
+    return (
+      <React.Fragment>
+        <Helmet
+          {...getMetaTags({
+            path: location.pathname,
+            title: `Welcome to the new Pesposa`,
+          })}
+        />
+        <div className={classNames(classes.item, classes.brand)}>
+          <Logo className={classes.logo} />
+          <Typography className={classes.title} variant="title" color="inherit">
+            Buy and sell stuff in Cyprus.
+          </Typography>
+        </div>
+        <div className={classes.item}>
+          <div className={classes.buttonWrap}>
+            <Button
+              className={classes.button}
+              size="large"
+              color="primary"
+              variant="raised"
+              fullWidth
+              onClick={this.handleInstantLoginClick}
+            >
+              Create an account
+            </Button>
+          </div>
+          <Typography className={classes.body} color="inherit">
+            <strong className={classes.name} style={{ marginBottom: 0 }}>
+              Welcome to the new Pesposa!
+            </strong>
+            <span className={classes.fade}>
+              Create an account to enter.&nbsp;
+            </span>
+            <span
+              className={classNames(classes.link, classes.fade)}
+              role="button"
+              tabIndex="-1"
+              onClick={() => openModal('login')}
+            >
+              Already have an account?
+            </span>
+          </Typography>
+        </div>
+      </React.Fragment>
+    );
+  }
+
+  renderJoinWaitlist() {
+    const {
+      hasBetaInviteCode,
+      instantCreateBetaUser,
+      isCreatingBetaUser,
+      openModal,
+      location,
+      classes,
+    } = this.props;
+
+    if (hasBetaInviteCode || instantCreateBetaUser || isCreatingBetaUser) {
       return null;
     }
 
@@ -329,7 +424,7 @@ class Beta extends React.Component {
           </div>
           <Typography className={classes.body} color="inherit">
             <strong className={classes.name}>
-              {isNilOrEmpty(name) ? 'Hello,' : `Hello ${name},`}
+              {isNilOrEmpty(name) ? 'Hello!' : `Hello ${name},`}
             </strong>
             <span className={classes.fade}>
               You are almost ready to join the new Pesposa!
@@ -366,7 +461,7 @@ class Beta extends React.Component {
             variant="title"
             color="inherit"
           >
-            Please wait while your beta account is created
+            Please wait while your account is created
           </Typography>
         </div>
       </React.Fragment>
@@ -391,6 +486,7 @@ class Beta extends React.Component {
                   style={{ backgroundImage: `url(${src})` }}
                 />
                 <div className={classes.root}>
+                  {this.renderInstantCreateBetaUser()}
                   {this.renderJoinWaitlist()}
                   {this.renderCreateBetaUser()}
                   {this.renderIsCreatingBetaUser()}
@@ -399,6 +495,10 @@ class Beta extends React.Component {
                 <ReduxModal
                   id="createBetaUserFailed"
                   content={CreateBetaUserFailed}
+                />
+                <ReduxModal
+                  id="createBetaCodeAndUserFailed"
+                  content={CreateBetaCodeAndUserFailed}
                 />
               </React.Fragment>
             )}
@@ -412,6 +512,7 @@ class Beta extends React.Component {
 
 const mapDispatchToProps = {
   createBetaUser: authActions.createBetaUser,
+  createBetaCodeAndUser: authActions.createBetaCodeAndUser,
   logout: authActions.logout,
   openModal: modalActions.openModal,
 };
@@ -421,16 +522,18 @@ export default R.compose(
   needsNonBetaUser,
   connect(null, mapDispatchToProps),
   withProps(props => {
+    const pathname = R.path(['location', 'pathname'], props);
     const search = R.pathOr('', ['location', 'search'], props);
     const params = qs.parse(search);
+    const instantCreateBetaUser = pathname === '/beta/in';
     const hasBetaInviteCode = !isNilOrEmpty(params.code);
     return {
       code: params.code,
       name: params.name,
+      instantCreateBetaUser,
       hasBetaInviteCode,
     };
   }),
-  withState('loginSuccess', 'setLoginSuccess', false),
   withState('isCreatingBetaUser', 'setIsCreatingBetaUser', false),
   withStyles(styles),
 )(Beta);

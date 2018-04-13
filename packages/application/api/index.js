@@ -14,6 +14,7 @@ import migrateAnonymousUser from './migrateAnonymousUser';
 import confirmAddToWaitlist from './confirmAddToWaitlist';
 import createBetaInvite from './createBetaInvite';
 import createBetaUser from './createBetaUser';
+import createBetaCodeAndUser from './createBetaCodeAndUser';
 
 const app = express();
 
@@ -68,6 +69,12 @@ app.post(
   isAuthenticated(),
   bodyParser.json(),
   createBetaUser
+)
+
+app.post(
+  '/beta',
+  isAuthenticated(),
+  createBetaCodeAndUser
 )
 
 export default functions.https.onRequest(app);

@@ -29,6 +29,17 @@ const createBetaUser = (data, token) => () => {
     },
   });
 };
+const createBetaCodeAndUser = token => () => {
+  const url = `http://localhost:5000/pesposa-dev/us-central1/api/beta`;
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
 
 const reverseGeocode = data => async () => {
   const url = `${env.firebaseFunctionsBaseUrl}/reverse-geocode`;
@@ -61,6 +72,7 @@ const geoip = data => async () => {
 const api = {
   migrateAnonymousUser,
   createBetaUser,
+  createBetaCodeAndUser,
   reverseGeocode,
   geoip,
 };
