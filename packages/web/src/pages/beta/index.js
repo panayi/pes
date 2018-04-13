@@ -269,7 +269,7 @@ class Beta extends React.Component {
             </WaitlistedJoinButton>
           </div>
           <Typography className={classes.body} color="inherit">
-            <strong className={classes.name}>
+            <strong className={classes.name} style={{ marginBottom: 0 }}>
               The all new Pesposa is launching soon.
             </strong>
             <span className={classes.fade}>
