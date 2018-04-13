@@ -64,8 +64,13 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      flex: 'none',
+    },
   },
   brand: {
+    flex: 2,
     [theme.breakpoints.down(theme.map.phone)]: {
       flex: 1,
     },
