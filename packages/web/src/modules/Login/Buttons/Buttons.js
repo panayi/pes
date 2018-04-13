@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import Grid from 'material-ui/Grid';
 import withStyles from 'material-ui/styles/withStyles';
 import { actions as authActions } from 'store/firebase/auth';
-import TextDivider from 'components/TextDivider/TextDivider';
 import GeneralErrorMessage from 'components/GeneralErrorMessage/GeneralErrorMessage';
 import LoginWithFacebook from './WithFacebook/WithFacebook';
 import LoginWithGoogle from './WithGoogle/WithGoogle';
@@ -28,10 +27,6 @@ const styles = theme => ({
   },
   error: {
     marginTop: theme.spacing.unit,
-  },
-  divider: {
-    marginTop: theme.spacing.unit * 3.5,
-    marginBottom: theme.spacing.unit * 5,
   },
 });
 
@@ -64,11 +59,8 @@ class LoginButtons extends React.Component<Props> {
             <GeneralErrorMessage />
           </Grid>
         )}
-        <Grid item xs={1} />
-        <Grid item xs={10} className={classes.divider}>
-          <TextDivider variant="subheading" color="textSecondary">
-            or login with your phone
-          </TextDivider>
+        <Grid item xs={12}>
+          &nbsp;
         </Grid>
       </React.Fragment>
     );

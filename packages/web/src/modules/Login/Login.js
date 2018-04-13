@@ -11,6 +11,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import ArrowBack from 'material-ui-icons/ArrowBack';
 import { selectors as loginSelectors } from 'store/login';
 import withSpinnerWhen from 'hocs/withSpinnerWhen';
+import TextDivider from 'components/TextDivider/TextDivider';
 import LoginWithPhone from './WithPhone/WithPhone';
 import LoginButtons from './Buttons/Buttons';
 
@@ -26,16 +27,21 @@ type Props = {
   classes: Object,
 };
 
-const styles = () => ({
+const styles = theme => ({
   root: {
     width: 370,
     margin: '0 auto',
+  },
+  divider: {
+    marginTop: theme.spacing.unit * 3.5,
+    marginBottom: theme.spacing.unit * 5,
   },
 });
 
 const Login = ({
   onSuccess,
   phoneOnly,
+  disablePhone,
   title,
   DialogTitle,
   DialogContent,
@@ -72,13 +78,27 @@ const Login = ({
           <Grid container alignContent="center">
             {!showingSmsCodeValidation &&
               !phoneOnly && <LoginButtons onSuccess={onSuccess} />}
-            <Grid item xs={12}>
-              <LoginWithPhone
-                onSuccess={onSuccess}
-                step={loginWithPhoneStep}
-                onStepChange={setLoginWithPhoneStep}
-              />
-            </Grid>
+            {!disablePhone && (
+              <React.Fragment>
+                {!phoneOnly && (
+                  <React.Fragment>
+                    <Grid item xs={1} />
+                    <Grid item xs={10} className={classes.divider}>
+                      <TextDivider variant="subheading" color="textSecondary">
+                        or login with your phone
+                      </TextDivider>
+                    </Grid>
+                  </React.Fragment>
+                )}
+                <Grid item xs={12}>
+                  <LoginWithPhone
+                    onSuccess={onSuccess}
+                    step={loginWithPhoneStep}
+                    onStepChange={setLoginWithPhoneStep}
+                  />
+                </Grid>
+              </React.Fragment>
+            )}
           </Grid>
         </div>
       </DialogContent>

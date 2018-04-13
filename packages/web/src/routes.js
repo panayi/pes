@@ -48,6 +48,12 @@ const routes = [
     }),
   },
   {
+    path: '/beta/in',
+    component: asyncComponent({
+      loader: () => import('./pages/beta/index'),
+    }),
+  },
+  {
     path: '/:category?/:place?',
     component: asyncComponent({
       loader: () => import('./pages/home/index'),

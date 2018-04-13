@@ -12,6 +12,7 @@
     "firebase-functions": "^1.0.1",
     "mjml": "^4.0.3",
     "mustache": "^2.3.0",
+    "nanoid": "^1.0.2",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^2.6.0",
     "request-ip": "^2.0.2"

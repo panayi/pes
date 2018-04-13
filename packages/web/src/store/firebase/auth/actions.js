@@ -176,3 +176,23 @@ export const createBetaUser = code => async (
 
   return false;
 };
+
+export const createBetaCodeAndUser = () => async (
+  dispatch,
+  getState,
+  getFirebase,
+) => {
+  const token = selectors.tokenSelector(getState());
+  const response = await dispatch(api.createBetaCodeAndUser(token));
+
+  if (response.ok) {
+    // Refetch beta users
+    await getFirebase()
+      .ref(modelPaths.BETA_USERS.string)
+      .once('value');
+
+    return true;
+  }
+
+  return false;
+};

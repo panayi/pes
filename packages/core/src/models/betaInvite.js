@@ -41,9 +41,9 @@ const findByCode = async code => {
 
 export const create = async props => {
   const { email } = props;
-  const betaInviteSnapshot = await findByEmail(email);
+  const betaInvite = await findByEmail(email);
 
-  if (betaInviteSnapshot && betaInviteSnapshot.val()) {
+  if (isPlainObj(betaInvite)) {
     return Promise.reject('Beta invite for this email already exists');
   }
 
@@ -51,6 +51,6 @@ export const create = async props => {
 };
 
 export const validate = async code => {
-  const betaInviteSnapshot = await findByCode(code);
-  return isPlainObj(betaInviteSnapshot);
+  const betaInvite = await findByCode(code);
+  return isPlainObj(betaInvite);
 };
