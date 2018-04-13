@@ -30,7 +30,7 @@ const createBetaUser = (data, token) => () => {
   });
 };
 const createBetaCodeAndUser = token => () => {
-  const url = `http://localhost:5000/pesposa-dev/us-central1/api/beta`;
+  const url = `${env.firebaseFunctionsBaseUrl}/beta`;
 
   return fetch(url, {
     method: 'POST',
