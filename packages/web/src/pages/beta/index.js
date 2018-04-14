@@ -278,7 +278,9 @@ class Beta extends React.Component {
         <Helmet
           {...getMetaTags({
             path: location.pathname,
-            title: `Welcome to the new Pesposa`,
+            title: 'Welcome to the new Pesposa',
+            description:
+              'The new Pesposa is easier and faster to use. Try it today!',
           })}
         />
         <div className={classNames(classes.item, classes.brand)}>
