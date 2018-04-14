@@ -231,7 +231,10 @@ class Beta extends React.Component {
   handleLoginClick = async () => {
     const { logout, openModal } = this.props;
     await logout();
-    openModal('login', { onSuccess: this.handleLoginSuccess });
+    openModal('login', {
+      disablePhone: true,
+      onSuccess: this.handleLoginSuccess,
+    });
   };
 
   handleInstantLoginSuccess = async () => {
@@ -349,7 +352,12 @@ class Beta extends React.Component {
         <Button
           className={classes.loginButton}
           variant="outline"
-          onClick={() => openModal('login')}
+          onClick={() =>
+            openModal('login', {
+              disablePhone: true,
+              onSuccess: this.handleCreateBetaCodeAndUserFail,
+            })
+          }
         >
           Login
         </Button>
