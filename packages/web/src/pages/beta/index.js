@@ -52,7 +52,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    height: '100vh',
+    height: '100%',
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.common.white,

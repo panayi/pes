@@ -12,7 +12,7 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: theme.spacing.unit * 3,
+    margin: `0 auto ${theme.spacing.unit * 3}px auto`,
   },
 });
 

@@ -13,6 +13,7 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    margin: '0 auto',
   },
   success: {
     marginBottom: theme.spacing.unit * 3,
