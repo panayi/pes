@@ -14,6 +14,7 @@ import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
 import { selectors as responsiveSelectors } from 'store/responsive';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
+import HotjarProvider from 'components/HotjarProvider/HotjarProvider';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import routes from 'routes';
 
@@ -59,6 +60,7 @@ ensureReady(routes).then(data => {
               </MuiThemeProvider>
             </JssProvider>
           </SearchProvider>
+          <HotjarProvider />
         </ErrorBoundary>
       </Provider>
     </BrowserRouter>,
