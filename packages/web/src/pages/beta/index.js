@@ -248,13 +248,13 @@ class Beta extends React.Component {
     return this.handleCreateBetaCodeAndUserFail();
   };
 
-  handleInstantLoginClick = async () => {
+  handleInstantLoginClick = async title => {
     const { logout, openModal } = this.props;
     await logout();
     openModal('login', {
       disablePhone: true,
       onSuccess: this.handleInstantLoginSuccess,
-      title: 'Create an account to enter the new Pesposa',
+      title,
     });
   };
 
@@ -262,7 +262,6 @@ class Beta extends React.Component {
     const {
       instantCreateBetaUser,
       isCreatingBetaUser,
-      openModal,
       location,
       classes,
     } = this.props;
@@ -293,7 +292,11 @@ class Beta extends React.Component {
               color="primary"
               variant="raised"
               fullWidth
-              onClick={this.handleInstantLoginClick}
+              onClick={() =>
+                this.handleInstantLoginClick(
+                  'Create an account to enter the new Pesposa',
+                )
+              }
             >
               Create an account
             </Button>
@@ -309,7 +312,7 @@ class Beta extends React.Component {
               className={classNames(classes.link, classes.fade)}
               role="button"
               tabIndex="-1"
-              onClick={() => openModal('login')}
+              onClick={() => this.handleInstantLoginClick()}
             >
               Already have an account?
             </span>
