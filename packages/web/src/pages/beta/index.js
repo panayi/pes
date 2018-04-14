@@ -97,6 +97,9 @@ const styles = theme => ({
   },
   buttonWrap: {
     marginBottom: theme.spacing.unit * 4,
+    [theme.breakpoints.down(theme.map.phone)]: {
+      marginBottom: theme.spacing.unit * 2,
+    },
   },
   button: {
     width: 350,

@@ -17,11 +17,14 @@ const styles = theme => ({
     body: {
       backgroundColor: '#f0f1f2',
     },
+    'html,body,#root,#root2,#root > div,#root2 > div': {
+      height: '100%',
+    },
   },
   root: {
     display: 'flex',
     alignItems: 'stretch',
-    height: '100vh',
+    height: '100%',
     width: '100%',
   },
   hasHeader: {
