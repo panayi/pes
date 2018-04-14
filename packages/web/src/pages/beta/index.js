@@ -303,7 +303,7 @@ class Beta extends React.Component {
               Welcome to the new Pesposa!
             </strong>
             <span className={classes.fade}>
-              Create an account to enter.&nbsp;
+              Create an account to continue.&nbsp;
             </span>
             <span
               className={classNames(classes.link, classes.fade)}
