@@ -276,6 +276,7 @@ type Conversation {
   buyer: String,
   lastMessageReceivedAt: CurrentTimestamp | Null,
   lastActiveAt: CurrentTimestamp | Null,
+  notified: Boolean | Null,
 }
 
 type Message {

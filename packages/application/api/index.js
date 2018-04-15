@@ -15,6 +15,7 @@ import confirmAddToWaitlist from './confirmAddToWaitlist';
 import createBetaInvite from './createBetaInvite';
 import createBetaUser from './createBetaUser';
 import createBetaCodeAndUser from './createBetaCodeAndUser';
+import sendNotifications from './sendNotifications';
 
 const app = express();
 
@@ -75,6 +76,11 @@ app.post(
   '/beta',
   isAuthenticated(),
   createBetaCodeAndUser
+)
+
+app.get(
+  '/send-notifications',
+  sendNotifications
 )
 
 export default functions.https.onRequest(app);
