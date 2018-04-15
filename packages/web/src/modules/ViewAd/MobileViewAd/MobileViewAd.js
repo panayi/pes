@@ -36,7 +36,7 @@ import UserFullName from 'components/UserFullName/UserFullName';
 import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import Conversation from 'modules/Messenger/Conversation/Conversation';
 import ImageSlider from '../ImageSlider/ImageSlider';
-import EditAdLink from '../EditAdLink/EditAdLink';
+import EditAdButton from '../EditAdButton/EditAdButton';
 import ToggleSold from '../ToggleSold/ToggleSold';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
@@ -380,7 +380,7 @@ class MobileViewAd extends React.Component {
                     size="small"
                     variant="outline"
                   />
-                  <EditAdLink
+                  <EditAdButton
                     className={classes.actionButton}
                     adId={adId}
                     ad={ad}
@@ -389,7 +389,7 @@ class MobileViewAd extends React.Component {
                     fullWidth
                   >
                     Edit your ad
-                  </EditAdLink>
+                  </EditAdButton>
                 </React.Fragment>
               }
               buyer={

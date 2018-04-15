@@ -18,7 +18,7 @@ import AdAddress from 'components/AdAddress/AdAddress';
 import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import ImageSlider from '../ImageSlider/ImageSlider';
-import EditAdLink from '../EditAdLink/EditAdLink';
+import EditAdButton from '../EditAdButton/EditAdButton';
 import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import ToggleSold from '../ToggleSold/ToggleSold';
@@ -207,7 +207,7 @@ const DesktopViewAd = ({
               color="textSecondary"
             />
             <div className={classes.headerAction}>
-              <EditAdLink adId={adId} ad={ad} />
+              <EditAdButton adId={adId} ad={ad} />
               <FavoriteAd
                 className={classes.favoriteButton}
                 ad={ad}
