@@ -140,7 +140,7 @@ Messenger.propTypes = {
 Messenger.defaultProps = {
   conversationId: null,
   selectedConversation: null,
-  conversations: null,
+  conversations: undefined,
 };
 
 const mapStateToProps = createStructuredSelector({
