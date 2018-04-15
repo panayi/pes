@@ -44,7 +44,9 @@ ensureReady(routes).then(data => {
     renderMethod = ReactDOM.render;
   } else {
     const root2El = document.getElementById('root2');
-    root2El.parentNode.removeChild(root2El);
+    if (root2El) {
+      root2El.parentNode.removeChild(root2El);
+    }
   }
 
   renderMethod(
