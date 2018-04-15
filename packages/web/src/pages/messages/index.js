@@ -1,9 +1,12 @@
 import React from 'react';
+import * as R from 'ramda';
+import { setStatic } from 'recompose';
 import { Switch, Route } from 'react-router-dom';
 import { MobileScreen, DesktopScreen } from 'react-responsive-redux';
 import { Helmet } from 'react-helmet';
 import getMetaTags from 'utils/getMetaTags';
 import Layout from 'layouts/Layout/Layout';
+import needsBetaUser from 'hocs/needsBetaUser';
 import Messenger from 'modules/Messenger/Messenger';
 import Header from 'pages/components/Header/Header';
 
@@ -39,4 +42,7 @@ const Messages = ({ location }) => {
   );
 };
 
-export default Messages;
+export default R.compose(
+  setStatic('getInitialProps', async ({ store }) => store.getState()),
+  needsBetaUser,
+)(Messages);
