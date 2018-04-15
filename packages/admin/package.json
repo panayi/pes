@@ -5,10 +5,10 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "@pesposa/core": "^0.1.0",
     "commander": "^2.14.1",
     "node-fetch": "^2.0.0",
-    "@pesposa/core": "^0.1.0",
     "ramda": "^0.25.0",
-    "ramda-adjunct": "^2.5.0"
+    "ramda-adjunct": "^2.6.0"
   }
 }
