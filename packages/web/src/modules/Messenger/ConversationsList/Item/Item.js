@@ -81,6 +81,7 @@ const ConversationItem = ({
   >
     <div className={classes.adThumbnail}>
       <UnreadConversationsBadge
+        context={conversation}
         withNumber={false}
         classes={{ badge: classes.unreadBadge }}
       >

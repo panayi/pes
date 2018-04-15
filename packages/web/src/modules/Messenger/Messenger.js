@@ -12,7 +12,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import { models } from 'store/firebase/data';
 import needsUser from 'hocs/needsUser';
 import Spinner from 'components/Spinner/Spinner';
-import Conversations from './Conversations/Conversations';
+import ConversationsList from './ConversationsList/ConversationsList';
 import Conversation from './Conversation/Conversation';
 import NoConversations from './NoConversations/NoConversations';
 import NoConversationSelected from './NoConversationSelected/NoConversationSelected';
@@ -62,7 +62,7 @@ class Messenger extends Component {
     return (
       <React.Fragment>
         <Grid className={classes.list} item xs={3}>
-          <Conversations conversations={conversations} />
+          <ConversationsList conversations={conversations} />
         </Grid>
         <Grid className={classes.conversationWrap} item xs={9}>
           {selectedConversation ? (
@@ -87,7 +87,7 @@ class Messenger extends Component {
       return null;
     }
 
-    return <Conversations conversations={conversations} />;
+    return <ConversationsList conversations={conversations} />;
   }
 
   renderConversation() {
@@ -119,7 +119,7 @@ class Messenger extends Component {
             {this.renderConversationsSplitView()}
           </Grid>
         </DesktopScreen>
-        <MobileScreen className={classes.fullHeight}>
+        <MobileScreen component={React.Fragment}>
           {this.renderLoadingConversations()}
           {this.renderNoConversations()}
           {conversationId

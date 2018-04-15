@@ -28,7 +28,7 @@ const styles = theme => ({
 
 const ConversationsList = ({ conversations, classes }: Props) => (
   <div className={classes.root}>
-    <DesktopScreen>
+    <DesktopScreen component={React.Fragment}>
       <div className={classes.header}>
         <Typography variant="subheading">Conversations</Typography>
       </div>

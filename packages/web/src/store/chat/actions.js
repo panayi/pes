@@ -66,6 +66,7 @@ export const activateConversation = conversationId => async (
   const currentConversationId = selectors.activeConversationSelector(
     getState(),
   );
+
   if (currentConversationId === conversationId) {
     return null;
   }
@@ -74,6 +75,7 @@ export const activateConversation = conversationId => async (
 
   // Begin activation
   dispatch(setActiveConversation(conversationId));
+  await dispatch(setLastActiveAt(conversationId));
   return dispatch(setLastActiveAtOnDisconnect(conversationId));
 };
 

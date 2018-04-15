@@ -10,6 +10,7 @@ const updateUserConversation = async (adId, buyerId, userId, isSender, createdAt
 
   if (!isSender) {
     conversation.lastMessageReceivedAt = createdAt;
+    conversation.notified = false;
   }
 
   await database

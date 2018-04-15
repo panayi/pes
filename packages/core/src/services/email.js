@@ -11,11 +11,12 @@ const mailgun = createMailgunClient({
 
 export const send = mailOptions =>
   new Promise((resolve, reject) => {
+    const fromName = R.propOr('Pesposa', 'fromName', mailOptions);
     const finalMailOptions = R.merge(
       {
-        from: pesposaConfig.NO_REPLY_EMAIL_ADDRESS,
+        from: `${fromName} <${pesposaConfig.NO_REPLY_EMAIL_ADDRESS}>`,
       },
-      mailOptions,
+      R.omit(['fromName'], mailOptions),
     );
     const mail = new MailComposer(finalMailOptions);
 
