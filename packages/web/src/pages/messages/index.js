@@ -27,12 +27,12 @@ const Messages = ({ location }) => {
           path: location.pathname,
         })}
       />
-      <DesktopScreen>
+      <DesktopScreen component={React.Fragment}>
         <Layout header={Header} fixed flex wide>
           {content}
         </Layout>
       </DesktopScreen>
-      <MobileScreen>
+      <MobileScreen component={React.Fragment}>
         <Layout header={Header}>{content}</Layout>
       </MobileScreen>
     </React.Fragment>
