@@ -17,7 +17,7 @@ Thanks for your interest! You've been added to our waitlist.
 
 Interested in priority access?
 
-Get early access by referring your friends. Get 5 friends to join and skip the waitlist! Just share this link:
+Get early access by referring your friends. Get 2 friends to join and skip the waitlist! Just share this link:
 ${referralUrl}
 
 Or share on Facebook:

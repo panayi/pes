@@ -41,7 +41,7 @@
           Interested in priority access?
         </mj-text>
         <mj-text padding-bottom="15px">
-          Get early access by referring your friends. Get 5 friends to join and skip the waitlist! Just share this link:<br />
+          Get early access by referring your friends. Get 2 friends to join and skip the waitlist! Just share this link:<br />
           <a href="{{referralUrl}}">{{referralUrl}}</a>
         </mj-text>
         <mj-text>
