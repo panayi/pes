@@ -12,13 +12,17 @@ const breakpoints = theme.breakpoints.values;
 
 const getWidthBreakpoint = width =>
   R.converge(R.prop, [
-    R.compose(R.find(value => width >= value), R.reverse, R.values),
+    R.compose(R.find(pair => width >= pair[1]), R.reverse, R.toPairs),
     R.invert,
   ])(breakpoints);
 
 export const fakeWidthBreakpointSelector = createSelector(
   fakeWidthSelector,
-  getWidthBreakpoint,
+  R.compose(
+    (name, value) => (name === 'xl' ? breakpoints.lg : value),
+    R.when(R.equals('xl'), R.always('lg')),
+    getWidthBreakpoint,
+  ),
 );
 
 export const actualWidthBreakpointSelector = () => {

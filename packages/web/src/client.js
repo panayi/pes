@@ -42,6 +42,9 @@ ensureReady(routes).then(data => {
     }
     rootId = 'root2';
     renderMethod = ReactDOM.render;
+  } else {
+    const root2El = document.getElementById('root2');
+    root2El.parentNode.removeChild(root2El);
   }
 
   renderMethod(
