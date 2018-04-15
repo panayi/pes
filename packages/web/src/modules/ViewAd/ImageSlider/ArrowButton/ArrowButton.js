@@ -30,29 +30,27 @@ const styles = theme => ({
   next: {
     right: theme.spacing.unit * 2,
   },
-  disabled: {
-    opacity: 0.5,
-    pointerEvents: 'none',
-  },
 });
 
-const isDisabled = (direction, props) =>
-  direction === 'prev'
-    ? props.currentSlide === 0
-    : props.currentSlide === props.slideCount - 1;
+const isDisabled = R.curry(
+  (direction, props) =>
+    direction === 'prev'
+      ? props.currentSlide === 0
+      : props.currentSlide === props.slideCount - 1,
+);
 
 const createArrowButton = (Icon, direction) =>
   R.compose(
-    renderNothingWhen(R.propEq('slideCount', 1)),
+    renderNothingWhen(
+      R.either(R.propEq('slideCount', 1), isDisabled(direction)),
+    ),
     withStyles(styles),
     mapProps(props => ({
       onClick: props.onClick,
       disableRipple: true,
       children: <Icon />,
       classes: {
-        root: classNames(props.classes.root, props.classes[direction], {
-          [props.classes.disabled]: isDisabled(direction, props),
-        }),
+        root: classNames(props.classes.root, props.classes[direction]),
       },
     })),
   )(IconButton);
