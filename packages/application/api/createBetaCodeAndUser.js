@@ -15,7 +15,7 @@ const createBetaCodeAndUser = async (req, res) => {
 
     const userId = getUserId(req);
     const code = nanoid();
-    await betaInviteModel.create({ code });
+    await betaInviteModel.create({ code }, { force: true });
     await betaUserModel.create(code, userId);
     res.send('OK');
   } catch (error) {

@@ -39,11 +39,12 @@ const findByCode = async code => {
   );
 };
 
-export const create = async props => {
+export const create = async (props, options = {}) => {
   const { email } = props;
+  const { force } = options;
   const betaInvite = await findByEmail(email);
 
-  if (isPlainObj(betaInvite)) {
+  if (!R.isNil(email) && !force && isPlainObj(betaInvite)) {
     return Promise.reject('Beta invite for this email already exists');
   }
 
