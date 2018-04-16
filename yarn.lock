@@ -9237,6 +9237,10 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
+mixpanel-browser@^2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.20.0.tgz#07cc666b3c7c95ac35b302a0fbc787b71921e595"
+
 mjml-accordion@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/mjml-accordion/-/mjml-accordion-4.0.2.tgz#48b4ea6078a08f246c70609e260215033a8733f5"
@@ -11482,6 +11486,15 @@ react-dev-utils@^4.0.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-dom@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.1.tgz#6a3c90a4fb62f915bdbcf6204422d93a7d4ca573"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
 react-dropzone@^4.2.9:
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-4.2.9.tgz#98156ce4d4cb018f7c5099eeb2eaff6dc21836fd"
@@ -11527,6 +11540,10 @@ react-helmet@^5.2.0:
 react-is@^16.3.0:
   version "16.3.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.3.0.tgz#f0e8bfd8c09b480dd610b8639d9ed65c13601224"
+
+react-is@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.3.1.tgz#ee66e6d8283224a83b3030e110056798488359ba"
 
 react-jss@^8.1.0, react-jss@^8.4.0:
   version "8.4.0"
@@ -11693,6 +11710,15 @@ react-test-renderer@^16.0.0-0, react-test-renderer@^16.2.0:
     prop-types "^15.6.0"
     react-is "^16.3.0"
 
+react-test-renderer@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-16.3.1.tgz#d9257936d8535bd40f57f3d5a84e7b0452fb17f2"
+  dependencies:
+    fbjs "^0.8.16"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+    react-is "^16.3.1"
+
 react-text-mask@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/react-text-mask/-/react-text-mask-5.2.1.tgz#26f7e492b265a03f7d1a32d78bc3a214a40812c9"
@@ -11714,10 +11740,6 @@ react-themeable@^1.1.0:
 react-timeago@^3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-3.4.3.tgz#eb9061eefb044e4a2b09ce8c99d34645b2dbfa25"
-
-react-timeago@^4.1.8:
-  version "4.1.8"
-  resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-4.1.8.tgz#bef42a918187aa431d9e937c93747c9d95fab9d6"
 
 react-tooltip@^3.4.0:
   version "3.4.0"
@@ -11753,6 +11775,15 @@ react-virtualized@^9.18.5:
 "react@^15 || ^16", react@^16.2.0:
   version "16.3.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.3.0.tgz#fc5a01c68f91e9b38e92cf83f7b795ebdca8ddff"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react@^16.3.1:
+  version "16.3.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.3.1.tgz#4a2da433d471251c69b6033ada30e2ed1202cfd8"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"

@@ -27,6 +27,7 @@ const output = {
   algoliaSearchKey: process.env.RAZZLE_ALGOLIA_SEARCH_KEY,
   imgixHost: process.env.RAZZLE_IMGIX_HOST,
   googleApisKey: process.env.RAZZLE_GOOGLE_APIS_KEY,
+  mixpanelToken: process.env.RAZZLE_MIXPANEL_TOKEN,
   googleApisServerKey: process.env.GOOGLE_APIS_SERVER_KEY,
   algoliaApiKey: process.env.ALGOLIA_API_KEY,
   mailgunApiKey: process.env.MAILGUN_API_KEY,

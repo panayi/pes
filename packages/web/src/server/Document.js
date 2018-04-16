@@ -8,6 +8,7 @@ import theme from 'config/theme';
 import jss from 'config/styles';
 import { constants as searchConstants } from 'store/search';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
+import MixpanelProvider from 'components/MixpanelProvider/MixpanelProvider';
 import WidthMatch from 'components/WidthMatch/WidthMatch';
 import OutdatedBrowser from 'components/OutdatedBrowser/OutdatedBrowser';
 import SearchProvider from 'modules/Search/Provider/Provider';
@@ -21,16 +22,18 @@ class Document extends React.Component {
 
     const page = await renderPage(Component => props => (
       <ErrorBoundary>
-        <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-          <JssProvider registry={sheetsRegistry} jss={jss}>
-            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-              <CssBaseline />
-              <WidthMatch>
-                <Component {...props} />
-              </WidthMatch>
-            </MuiThemeProvider>
-          </JssProvider>
-        </SearchProvider>
+        <MixpanelProvider>
+          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+            <JssProvider registry={sheetsRegistry} jss={jss}>
+              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                <CssBaseline />
+                <WidthMatch>
+                  <Component {...props} />
+                </WidthMatch>
+              </MuiThemeProvider>
+            </JssProvider>
+          </SearchProvider>
+        </MixpanelProvider>
       </ErrorBoundary>
     ));
 
