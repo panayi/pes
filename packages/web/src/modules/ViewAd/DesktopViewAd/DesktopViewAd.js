@@ -18,7 +18,7 @@ import AdAddress from 'components/AdAddress/AdAddress';
 import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import ImageSlider from '../ImageSlider/ImageSlider';
-import EditAdLink from '../EditAdLink/EditAdLink';
+import EditAdButton from '../EditAdButton/EditAdButton';
 import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import ToggleSold from '../ToggleSold/ToggleSold';
@@ -31,6 +31,7 @@ import ShareButtons from './ShareButtons/ShareButtons';
 import BrowseButton from './BrowseButton/BrowseButton';
 import AdBody from './AdBody/AdBody';
 import Map from '../Map/Map';
+import DeleteAdButton from '../DeleteAdButton/DeleteAdButton';
 
 type Props = {
   ad: Ad,
@@ -121,6 +122,7 @@ const styles = theme => ({
     wordBreak: 'break-word',
   },
   headerAction: {
+    display: 'flex',
     position: 'absolute',
     top: -11,
     right: 0,
@@ -207,7 +209,8 @@ const DesktopViewAd = ({
               color="textSecondary"
             />
             <div className={classes.headerAction}>
-              <EditAdLink adId={adId} ad={ad} />
+              <EditAdButton adId={adId} ad={ad} />
+              <DeleteAdButton adId={adId} ad={ad} />
               <FavoriteAd
                 className={classes.favoriteButton}
                 ad={ad}

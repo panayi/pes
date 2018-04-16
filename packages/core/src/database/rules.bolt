@@ -375,6 +375,7 @@ path /ads/legacy/{id} {
 path /ads/published/{id} {
   read() { true }
   update() { isSeller(id) }
+  delete() { isSeller(id) }
 
   validate() {
     categoryIsValid(this.category) &&

@@ -1,6 +1,8 @@
+import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import * as algoliaService from '@pesposa/core/src/services/algolia';
 import * as adModel from '@pesposa/core/src/models/ad';
+import * as adImageModel from '@pesposa/core/src/models/adImage';
 
 const handleAdUpdated = async (change, context) => {
   const { adId } = context.params;
@@ -10,6 +12,15 @@ const handleAdUpdated = async (change, context) => {
 
 const handleAdDeleted = async (snap, context) => {
   const { adId } = context.params;
+  const adImagesSnapshot = await adImageModel.getAll(adId);
+
+  if (adImagesSnapshot.exists()) {
+    const adImages = R.values(adImagesSnapshot.val());
+    await Promise.all(R.map(adImageModel.removeFile, adImages))
+  }
+
+  await adImageModel.removeAll(adId);
+
   return algoliaService.remove(adId);
 };
 

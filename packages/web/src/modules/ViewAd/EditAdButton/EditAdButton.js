@@ -27,7 +27,13 @@ const styles = theme => ({
   },
 });
 
-const EditAdLink = ({ adId, openModal, children, classes, ...rest }: Props) => (
+const EditAdButton = ({
+  adId,
+  openModal,
+  children,
+  classes,
+  ...rest
+}: Props) => (
   <React.Fragment>
     <Button
       className={classes.root}
@@ -50,4 +56,4 @@ export default R.compose(
   withUserWithId(R.compose(R.path(['ad', 'user']), propsSelector)),
   connect(null, mapDispatchToProps),
   withStyles(styles),
-)(EditAdLink);
+)(EditAdButton);

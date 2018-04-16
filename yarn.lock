@@ -11284,7 +11284,7 @@ railroad-diagrams@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/railroad-diagrams/-/railroad-diagrams-1.0.0.tgz#eb7e6267548ddedfb899c1b90e57374559cddb7e"
 
-ramda-adjunct@^2.5.0, ramda-adjunct@^2.6.0:
+ramda-adjunct@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/ramda-adjunct/-/ramda-adjunct-2.6.0.tgz#ec71a0868054bd2b957ef6e5ab046a6c702fedf4"
 
@@ -11710,6 +11710,10 @@ react-themeable@^1.1.0:
   resolved "https://registry.yarnpkg.com/react-themeable/-/react-themeable-1.1.0.tgz#7d4466dd9b2b5fa75058727825e9f152ba379a0e"
   dependencies:
     object-assign "^3.0.0"
+
+react-timeago@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-3.4.3.tgz#eb9061eefb044e4a2b09ce8c99d34645b2dbfa25"
 
 react-timeago@^4.1.8:
   version "4.1.8"

@@ -19,6 +19,8 @@ const handleDelete = async (snap, context) => {
   const { adId } = context.params;
   const adSnapshot = await adModel.get(adId);
 
+  await adImageModel.removeFile(snap.val());
+
   // If the ad doesn't exist, it was (or will be) deleted from Algolia anyway
   if (adSnapshot.exists()) {
     return syncAngolia(adId);
@@ -32,6 +34,7 @@ const handleDelete = async (snap, context) => {
 export const adImageCreated = functions.database
   .ref('/ads/images/{adId}/{imageId}')
   .onCreate(handleCreate);
-export const adImageDeleted = functions.database
+
+  export const adImageDeleted = functions.database
   .ref('/ads/images/{adId}/{imageId}')
   .onDelete(handleDelete);
