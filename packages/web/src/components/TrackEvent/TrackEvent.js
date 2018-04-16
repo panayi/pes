@@ -1,20 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { getContext } from 'recompose';
+import { MixpanelContext } from 'components/MixpanelProvider/MixpanelProvider';
 
 export class TrackEvent extends React.Component {
-  track = (callback, eventName, eventProps) => (...args) => {
+  track = mixpanel => (callback, eventName, eventProps) => (...args) => {
     callback(...args);
-    this.props.mixpanel.track(eventName, eventProps);
+    mixpanel.track(eventName, eventProps);
   };
 
   render() {
-    return this.props.children({
-      track: this.track,
-    });
+    return (
+      <MixpanelContext.Consumer>
+        {mixpanel =>
+          this.props.children({
+            track: this.track(mixpanel),
+          })
+        }
+      </MixpanelContext.Consumer>
+    );
   }
 }
 
-export default getContext({
-  mixpanel: PropTypes.shape(),
-})(TrackEvent);
+export default TrackEvent;

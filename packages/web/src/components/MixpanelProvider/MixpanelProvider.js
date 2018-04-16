@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import { withState, withContext } from 'recompose';
+import { withState } from 'recompose';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import mixpanelBrowser from 'mixpanel-browser';
@@ -12,7 +11,9 @@ import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as userInfoselectors } from 'store/userInfo';
 import { selectors as profileSelectors } from 'store/firebase/profile';
 
-export class MixpanelProvider extends React.Component {
+export const MixpanelContext = React.createContext();
+
+class MixpanelProvider extends React.Component {
   componentDidMount() {
     mixpanelBrowser.init(env.mixpanelToken, {
       loaded: this.handleMixpanelLoaded,
@@ -42,7 +43,6 @@ export class MixpanelProvider extends React.Component {
 
   setProfile() {
     const { mixpanelProfile, isAuthenticated, mixpanel } = this.props;
-
     if (mixpanel && isAuthenticated && !isNilOrEmpty(mixpanelProfile)) {
       mixpanel.people.set(mixpanelProfile);
     }
@@ -56,13 +56,20 @@ export class MixpanelProvider extends React.Component {
 
   identify() {
     const { currentUserId, isAuthenticated, mixpanel } = this.props;
+
     if (mixpanel && isAuthenticated && currentUserId) {
       mixpanel.identify(currentUserId);
     }
   }
 
   render() {
-    return React.Children.only(this.props.children);
+    const { mixpanel, children } = this.props;
+
+    return (
+      <MixpanelContext.Provider value={mixpanel}>
+        {children}
+      </MixpanelContext.Provider>
+    );
   }
 }
 
@@ -88,10 +95,4 @@ const mapStateToProps = createStructuredSelector({
 export default R.compose(
   connect(mapStateToProps),
   withState('mixpanel', 'setMixpanel', null),
-  withContext(
-    {
-      mixpanel: PropTypes.shape(),
-    },
-    R.pick(['mixpanel']),
-  ),
 )(MixpanelProvider);
