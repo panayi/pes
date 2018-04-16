@@ -31,6 +31,7 @@ import ShareButtons from './ShareButtons/ShareButtons';
 import BrowseButton from './BrowseButton/BrowseButton';
 import AdBody from './AdBody/AdBody';
 import Map from '../Map/Map';
+import DeleteAdButton from '../DeleteAdButton/DeleteAdButton';
 
 type Props = {
   ad: Ad,
@@ -121,6 +122,7 @@ const styles = theme => ({
     wordBreak: 'break-word',
   },
   headerAction: {
+    display: 'flex',
     position: 'absolute',
     top: -11,
     right: 0,
@@ -208,6 +210,7 @@ const DesktopViewAd = ({
             />
             <div className={classes.headerAction}>
               <EditAdButton adId={adId} ad={ad} />
+              <DeleteAdButton adId={adId} ad={ad} />
               <FavoriteAd
                 className={classes.favoriteButton}
                 ad={ad}

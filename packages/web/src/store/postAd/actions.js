@@ -63,3 +63,5 @@ export const saveAd = (adId: string, ad: Ad) => (dispatch: Dispatch) => {
   const finalAd = R.omit(['images'], serializedAd);
   return dispatch(firebaseApi.ads.update(adId, finalAd));
 };
+
+export const removeAd = (adId: string) => (dispatch: Dispatch) => dispatch(firebaseApi.ads.remove(adId));

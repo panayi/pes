@@ -51,3 +51,8 @@ export const uploadImage = (
     });
     stream.end(buffer);
   });
+
+export const removeFile = path => {
+  const file = storage.file(path);
+  return file.delete();
+};

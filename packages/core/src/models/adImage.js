@@ -1,12 +1,12 @@
-/* @flow */
 import * as R from 'ramda';
 import { database } from '../config/firebaseClient';
 import getImageDimensions from '../utils/getImageDimensions';
+import * as storageService from '../services/storage';
 
-export const getAll = async (adId: ID) =>
+export const getAll = async adId =>
   database.ref(`/ads/images/${adId}`).once('value');
 
-export const setAdImages = async (images: { [id: ID]: Image }, adId: ID) => {
+export const setAdImages = async (images, adId) => {
   const dimensions = await Promise.all(
     R.map(
       async image => getImageDimensions(image.downloadURL),
@@ -22,8 +22,16 @@ export const setAdImages = async (images: { [id: ID]: Image }, adId: ID) => {
   return imagesWithDimensions;
 };
 
-export const setDimensions = async (imageSnapshot): Promise<boolean> => {
+export const setDimensions = async imageSnapshot => {
   const image = imageSnapshot.val();
   const dimensions = await getImageDimensions(image.downloadURL);
   return imageSnapshot.ref.set(R.merge(image, { dimensions }));
+};
+
+export const removeAll = async adId =>
+  database.ref(`/ads/images/${adId}`).remove();
+
+export const removeFile = async adImage => {
+  const { fullPath } = adImage;
+  return storageService.removeFile(fullPath);
 };
