@@ -9237,6 +9237,10 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
+mixpanel-browser@^2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/mixpanel-browser/-/mixpanel-browser-2.20.0.tgz#07cc666b3c7c95ac35b302a0fbc787b71921e595"
+
 mjml-accordion@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/mjml-accordion/-/mjml-accordion-4.0.2.tgz#48b4ea6078a08f246c70609e260215033a8733f5"
@@ -11714,10 +11718,6 @@ react-themeable@^1.1.0:
 react-timeago@^3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-3.4.3.tgz#eb9061eefb044e4a2b09ce8c99d34645b2dbfa25"
-
-react-timeago@^4.1.8:
-  version "4.1.8"
-  resolved "https://registry.yarnpkg.com/react-timeago/-/react-timeago-4.1.8.tgz#bef42a918187aa431d9e937c93747c9d95fab9d6"
 
 react-tooltip@^3.4.0:
   version "3.4.0"
