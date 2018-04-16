@@ -11,8 +11,15 @@ const syncAngolia = async (adId) => {
 
 const handleCreate = async (snap, context) => {
   const { adId } = context.params;
+  const adSnapshot = await adModel.get(adId);
+
   await adImageModel.setDimensions(snap);
-  return syncAngolia(adId);
+
+  if (adSnapshot.exists()) {
+    return syncAngolia(adId);
+  }
+
+  return null;
 };
 
 const handleDelete = async (snap, context) => {
