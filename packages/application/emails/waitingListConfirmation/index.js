@@ -37,7 +37,7 @@ const send = (betaInvite) => {
   const props = {
     title: subject,
     name,
-    referralUrl: `https://${env.domain}/beta?refcode=${affiliate}`,
+    referralUrl: `https://${env.domain}/join?refcode=${affiliate}`,
     facebookPageUrl: pesposaConfig.FACEBOOK_PAGE_URL,
     mainEmail: pesposaConfig.MAIN_EMAIL_ADDRESS,
   };

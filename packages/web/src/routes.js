@@ -53,7 +53,9 @@ const routes = [
   },
   {
     path: '/beta',
-    redirectTo: '/join',
+    component: asyncComponent({
+      loader: () => import('./pages/beta/index'),
+    }),
   },
   {
     path: '/join',

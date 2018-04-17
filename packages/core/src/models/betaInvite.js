@@ -11,7 +11,7 @@ const getAll = async () => {
 export const get = async id => database.ref(`/betaInvites/${id}`).once('value');
 
 export const getUrl = ({ code, name }) =>
-  `https://${env.domain}/beta?code=${code}&name=${name}`;
+  `https://${env.domain}/login?code=${code}&name=${name}`;
 
 export const getWithUrl = async id => {
   const betaInviteSnapshot = await database
