@@ -22,7 +22,7 @@ const needsBetaUser = branch(
     withRouter,
     connectData(mapDataToProps),
     connectedRouterRedirect({
-      redirectPath: '/beta',
+      redirectPath: '/login',
       allowRedirectBack: false,
       authenticatedSelector: authSelectors.isBetaUserSelector,
       authenticatingSelector: authSelectors.isAuthenticatingSelector,
