@@ -15,7 +15,6 @@ import { constants as searchConstants } from 'store/search';
 import { selectors as responsiveSelectors } from 'store/responsive';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import HotjarProvider from 'components/HotjarProvider/HotjarProvider';
-import MixpanelProvider from 'components/MixpanelProvider/MixpanelProvider';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import routes from 'routes';
 
@@ -54,23 +53,21 @@ ensureReady(routes).then(data => {
     <BrowserRouter>
       <Provider store={store}>
         <ErrorBoundary>
-          <MixpanelProvider>
-            <React.Fragment>
-              <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-                <JssProvider registry={sheetsRegistry} jss={jss}>
-                  <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-                    <React.Fragment>
-                      <CssBaseline />
-                      <div>
-                        <After data={data} routes={routes} store={store} />
-                      </div>
-                    </React.Fragment>
-                  </MuiThemeProvider>
-                </JssProvider>
-              </SearchProvider>
-              <HotjarProvider />
-            </React.Fragment>
-          </MixpanelProvider>
+          <React.Fragment>
+            <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+              <JssProvider registry={sheetsRegistry} jss={jss}>
+                <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                  <React.Fragment>
+                    <CssBaseline />
+                    <div>
+                      <After data={data} routes={routes} store={store} />
+                    </div>
+                  </React.Fragment>
+                </MuiThemeProvider>
+              </JssProvider>
+            </SearchProvider>
+            <HotjarProvider />
+          </React.Fragment>
         </ErrorBoundary>
       </Provider>
     </BrowserRouter>,
