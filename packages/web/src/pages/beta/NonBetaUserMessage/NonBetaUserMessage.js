@@ -20,7 +20,7 @@ const styles = theme => ({
   },
 });
 
-const LoginSuccess = ({
+const NonBetaUserMessage = ({
   DialogContent,
   DialogActions,
   classes,
@@ -45,4 +45,4 @@ const LoginSuccess = ({
   </React.Fragment>
 );
 
-export default withStyles(styles)(LoginSuccess);
+export default withStyles(styles)(NonBetaUserMessage);

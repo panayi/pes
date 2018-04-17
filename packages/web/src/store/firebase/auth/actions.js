@@ -1,7 +1,6 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import authConfig from '@pesposa/core/src/config/auth';
-import env from '@pesposa/core/src/config/env';
 import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
@@ -18,7 +17,8 @@ import * as selectors from './selectors';
 
 // Hacky code!
 // TODO: refactor or remove soon
-const isInBetaPage = () => R.test(/^\/beta/, window.location.pathname);
+const isInBetaPage = () =>
+  R.contains(window.location.pathname, ['/join', '/login', '/enter']);
 
 export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
   if (!process.browser) {
@@ -147,13 +147,8 @@ export const linkProvider = providerId => async (
   dispatch(profileActions.updateProfile(newUser));
 };
 
-export const logout = () => async (dispatch, getState, getFirebase) => {
-  await getFirebase().logout();
-
-  if (env.betaEnabled && !isInBetaPage()) {
-    window.location.href = '/beta';
-  }
-};
+export const logout = () => async (dispatch, getState, getFirebase) =>
+  getFirebase().logout();
 
 // BETA
 

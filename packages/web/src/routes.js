@@ -42,15 +42,29 @@ const routes = [
   },
   // BETA
   {
-    path: '/beta',
+    path: '/beta/in',
+    redirectTo: '/enter',
+  },
+  {
+    path: '/enter',
     component: asyncComponent({
-      loader: () => import('./pages/beta/index'),
+      loader: () => import('./pages/beta/enter'),
     }),
   },
   {
-    path: '/beta/in',
+    path: '/beta',
+    redirectTo: '/join',
+  },
+  {
+    path: '/join',
     component: asyncComponent({
-      loader: () => import('./pages/beta/index'),
+      loader: () => import('./pages/beta/join'),
+    }),
+  },
+  {
+    path: '/login',
+    component: asyncComponent({
+      loader: () => import('./pages/beta/login'),
     }),
   },
   {
