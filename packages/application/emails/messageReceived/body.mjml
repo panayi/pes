@@ -9,13 +9,16 @@
     </mj-attributes>
     <mj-style inline="inline">
       a {
-        color: #a0a0a0;
+        color: #048beb;
         font-weight: normal;
         text-decoration: underline;
       }
       .email-link {
         color: #000000!important;
         text-decoration: none!important;
+      }
+      .footer-link {
+        color: #a5a5a5;
       }
       .button {
         letter-spacing: 0.5px;
@@ -56,10 +59,10 @@
           <a href="mailto:{{mainEmail}}" class="email-link">{{mainEmail}}</a>
         </mj-text>
         <mj-text align="center" font-size="14px">
-          <a href="{{facebookPageUrl}}" >Follow us on Facebook</a>
+          <a class="footer-link" href="{{facebookPageUrl}}" >Follow us on Facebook</a>
         </mj-text>
         <mj-text align="center" font-size="14px" padding-top="15px">
-          <a href="%tag_unsubscribe_url%">Unsubscribe</a>
+          <a class="footer-link" href="%tag_unsubscribe_url%">Unsubscribe</a>
         </mj-text>
       </mj-column>
     </mj-section>
