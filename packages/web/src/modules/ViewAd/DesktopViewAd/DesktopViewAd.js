@@ -117,7 +117,7 @@ const styles = theme => ({
     borderBottom: ['1px', 'solid', theme.palette.divider],
   },
   title: {
-    marginRight: 48,
+    marginRight: 80,
     wordBreak: 'break-word',
   },
   headerAction: {
