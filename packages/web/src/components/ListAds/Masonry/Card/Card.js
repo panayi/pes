@@ -69,8 +69,10 @@ const styles = theme => ({
     boxSizing: 'border-box',
     overflow: 'hidden',
   },
-  title: {
+  titleWrap: {
     marginBottom: 5,
+  },
+  title: {
     textAlign: 'center',
     fontSize: theme.typography.subheading.fontSize,
     lineHeight: '1.2em',
@@ -137,14 +139,16 @@ const AdCard = ({
             </TouchDevice>
           </CardMedia>
           <CardContent className={classes.content}>
-            <AdTitle
-              className={classes.title}
-              component={Truncate}
-              variant="subheading"
-              ad={hit}
-              lines={2}
-              tagName="h3"
-            />
+            <div className={classes.titleWrap}>
+              <AdTitle
+                className={classes.title}
+                component={Truncate}
+                variant="subheading"
+                ad={hit}
+                lines={2}
+                tagName="h3"
+              />
+            </div>
             <div className={classes.location}>
               <AdAddress ad={hit}>
                 {({ address }) =>
