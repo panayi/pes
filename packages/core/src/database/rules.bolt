@@ -96,7 +96,7 @@ type UUID extends String {
 }
 
 type Price extends Number {
-  validate() { this >= 0 }
+  validate() { this >= 0 && this <= 999999999 }
 }
 
 type PhoneNumber extends String {

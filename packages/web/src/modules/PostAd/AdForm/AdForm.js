@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import yup from 'yup';
 import { withProps, withState } from 'recompose';
 import withStyles from 'material-ui/styles/withStyles';
+import * as adsConfig from '@pesposa/core/src/config/ads';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import Button from 'components/Button/Button';
@@ -80,7 +81,11 @@ class AdForm extends Component<Props> {
         .number()
         .typeError('Price should be a number')
         .required('Price is required')
-        .positive('Price should be positive'),
+        .positive('Price should be positive')
+        .max(
+          adsConfig.MAX_PRICE,
+          `Price should be smaller than 1 billion (999,999,999.00)`,
+        ),
       category: yup.string().required('Category is required'),
     });
 
