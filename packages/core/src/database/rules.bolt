@@ -180,7 +180,7 @@ type Image {
 }
 
 type AdTitle extends String {
-  validate() { this.length > 0 && this.length <= 60 }
+  validate() { this.length > 0 && this.length <= 150 }
 }
 
 type AdBody extends String {

@@ -75,15 +75,21 @@ class AdForm extends Component<Props> {
 
   getValidationSchema = () =>
     yup.object().shape({
-      title: yup.string().required('Title is required'),
-      body: yup.string().required('Description is required'),
+      title: yup
+        .string()
+        .required('Title is required')
+        .max(adsConfig.TITLE_MAX_LENGTH, `Title should be less than ${adsConfig.TITLE_MAX_LENGTH} characters`),
+      body: yup
+      .string()
+      .required('Description is required')
+      .max(adsConfig.BODY_MAX_LENGTH, `Description should be less than ${adsConfig.BODY_MAX_LENGTH} characters`),
       price: yup
         .number()
         .typeError('Price should be a number')
         .required('Price is required')
         .positive('Price should be positive')
         .max(
-          adsConfig.MAX_PRICE,
+          adsConfig.PRICE_MAX,
           `Price should be smaller than 1 billion (999,999,999.00)`,
         ),
       category: yup.string().required('Category is required'),

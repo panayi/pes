@@ -100,11 +100,10 @@ const styles = theme => ({
     },
   },
   content: {
-    display: 'flex',
-    flexDirection: 'column',
     flex: 1,
     paddingTop: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 4,
+    overflowY: 'auto',
   },
   slider: {
     flex: 1,
@@ -118,7 +117,7 @@ const styles = theme => ({
     borderBottom: ['1px', 'solid', theme.palette.divider],
   },
   title: {
-    marginRight: 48,
+    marginRight: 80,
     wordBreak: 'break-word',
   },
   headerAction: {

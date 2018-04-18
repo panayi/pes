@@ -8,19 +8,20 @@ import translate from 'hocs/translate';
 import Link from 'components/Link/Link';
 import AdAddress from 'components/AdAddress/AdAddress';
 import AdTitle from 'components/AdTitle/AdTitle';
+import BreakWord from 'components/BreakWord/BreakWord';
 import BackToListButton from '../../BackToListButton/BackToListButton';
 
 const styles = theme => ({
   root: {
     display: 'flex',
-    alignItems: 'center',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
+    alignItems: 'flex-start',
+    marginTop: theme.spacing.unit / 2,
   },
   homeButton: {
     minWidth: 80,
     minHeight: 0,
     padding: [theme.spacing.unit / 2, theme.spacing.unit],
+    marginTop: -theme.spacing.unit / 2,
     boxShadow: 'none',
     background: 'white',
     borderRadius: '50em',
@@ -47,9 +48,8 @@ const styles = theme => ({
     margin: [0, theme.spacing.unit / 2],
     color: theme.palette.text.secondary,
   },
-  ellipsis: {
-    textOverflow: 'ellipsis',
-    overflow: 'hidden',
+  title: {
+    flex: 1,
   },
 });
 
@@ -75,7 +75,11 @@ const BreadCrumbs = ({ ad, t, classes }) => (
       {t(ad.category)}
     </Link>
     <Typography className={classes.separator}>/</Typography>
-    <AdTitle className={classNames(classes.item, classes.ellipsis)} ad={ad} />
+    <BreakWord
+      component={AdTitle}
+      className={classNames(classes.item, classes.title)}
+      ad={ad}
+    />
   </div>
 );
 
