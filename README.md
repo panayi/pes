@@ -129,8 +129,6 @@ Update git submodules
 
 <!-- - Seed Firebase DB: `yarn seed` -->
 
-<!-- - Sync with legacy MySQL DB: http://localhost:3000/admin -->
-
 ## 3. Deploy
 
 We use CircleCI to automatically deploy the latest code to Firebase Hosting. You
