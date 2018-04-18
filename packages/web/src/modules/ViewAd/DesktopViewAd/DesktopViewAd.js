@@ -267,12 +267,14 @@ const DesktopViewAd = ({
                   currentUserId={uid}
                   seller={<ToggleSold ad={ad} variant="raised" />}
                   buyer={
-                    <SendMessage
-                      variant="float"
-                      placeholder={`Ask ${sellerName || 'seller'} a question`}
-                      adId={adId}
-                      onSuccess={addMessage}
-                    />
+                    ad.sold ? null : (
+                      <SendMessage
+                        variant="float"
+                        placeholder={`Ask ${sellerName || 'seller'} a question`}
+                        adId={adId}
+                        onSuccess={addMessage}
+                      />
+                    )
                   }
                 />
               </div>
