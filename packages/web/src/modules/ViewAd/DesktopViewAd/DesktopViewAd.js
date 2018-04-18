@@ -100,11 +100,10 @@ const styles = theme => ({
     },
   },
   content: {
-    display: 'flex',
-    flexDirection: 'column',
     flex: 1,
     paddingTop: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 4,
+    overflowY: 'auto',
   },
   slider: {
     flex: 1,
