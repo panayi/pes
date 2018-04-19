@@ -1,10 +1,10 @@
 import * as R from 'ramda';
-import * as geolocationConfig from '@pesposa/core/src/config/geolocation';
+import * as locationConfig from '@pesposa/core/src/config/location';
 
 const DEFAULT_OPTIONS = {
   enableHighAccuracy: false,
-  timeout: geolocationConfig.TIMEOUT,
-  maximumAge: geolocationConfig.MAXIMUM_AGE, // cache position for `maximumAge`
+  timeout: locationConfig.GEOLOCATION_TIMEOUT,
+  maximumAge: locationConfig.GEOLOCATION_MAXIMUM_AGE, // cache position for `maximumAge`
 };
 
 const getCurrentPosition = options => {

@@ -1,4 +1,6 @@
 import React from 'react';
+import * as R from 'ramda';
+import { setStatic } from 'recompose';
 import { Helmet } from 'react-helmet';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
@@ -135,4 +137,7 @@ class Join extends React.Component {
   }
 }
 
-export default withStyles(styles)(Join);
+export default R.compose(
+  setStatic('getInitialProps', async ({ store }) => store.getState()),
+  withStyles(styles),
+)(Join);

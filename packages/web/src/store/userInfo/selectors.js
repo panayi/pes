@@ -1,32 +1,14 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
-import * as countryModel from '@pesposa/core/src/models/country';
 import * as languageModel from '@pesposa/core/src/models/language';
-
+import * as locationConfig from '@pesposa/core/src/config/location';
+import { selectors as siteSelectors } from 'store/site';
 import * as constants from './constants';
 
-const countries = countryModel.getAll();
-const defaultCountry = countryModel.getDefault();
 const defaultLanguage = languageModel.getDefault();
 
-export const actualLocationSelector = R.path(constants.LOCATION_PATH);
-
-export const locationSelector = createSelector(
-  actualLocationSelector,
-  location => {
-    const countryCode = R.path(['address', 'country'], location);
-    return countryModel.isCountrySupported(countryCode)
-      ? location
-      : {
-          address: {
-            country: defaultCountry.code,
-          },
-          geoposition: defaultCountry.geoposition,
-          from: 'default',
-        };
-  },
-);
+export const locationSelector = R.path(constants.LOCATION_PATH);
 
 export const languageSelector = R.pathOr(
   defaultLanguage,
@@ -42,38 +24,94 @@ export const geopositionSelector = createSelector(
 
 const addressSelector = createSelector(locationSelector, R.prop('address'));
 
-export const countryCodeSelector = createSelector(
+export const countrySelector = createSelector(
   addressSelector,
   R.prop('country'),
 );
 
-export const countrySelector = createSelector(
-  countryCodeSelector,
-  countryCode => R.find(R.propEq('code', countryCode), countries),
+export const citySelector = createSelector(addressSelector, R.prop('city'));
+
+export const countryCodeSelector = createSelector(
+  countrySelector,
+  R.prop('cca2'),
 );
 
 export const countryNameSelector = createSelector(
   countrySelector,
-  R.prop('name'),
+  R.path(['name', 'common']),
 );
 
-const citySelector = createSelector(addressSelector, R.prop('city'));
+const getAddressString = (countryName, city) => {
+  const noCity = isNilOrEmpty(city);
+  const noCountryName = isNilOrEmpty(countryName);
+
+  if (noCity && noCountryName) {
+    return null;
+  }
+
+  if (noCity) {
+    return countryName;
+  }
+
+  return `${city}, ${countryName}`;
+};
 
 export const addressStringSelector = createSelector(
   countryNameSelector,
   citySelector,
-  (countryName, city) => {
-    const noCity = isNilOrEmpty(city);
-    const noCountryName = isNilOrEmpty(countryName);
+  getAddressString,
+);
 
-    if (noCity && noCountryName) {
-      return null;
+export const locationForSiteSelector = createSelector(
+  countryCodeSelector,
+  locationSelector,
+  siteSelectors.countryCodeSelector,
+  siteSelectors.countrySelector,
+  (userCountryCode, userLocation, siteCountryCode, siteCountry) => {
+    if (userCountryCode === siteCountryCode) {
+      return userLocation;
     }
 
-    if (noCity) {
-      return countryName;
-    }
-
-    return `${city}, ${countryName}`;
+    return {
+      geoposition: {
+        latitude: siteCountry.latlng[0],
+        longitude: siteCountry.latlng[1],
+      },
+      address: {
+        country: siteCountry,
+      },
+      source: locationConfig.DEFAULT_SOURCE_ID,
+    };
   },
+);
+
+export const geopositionForSiteSelector = createSelector(
+  locationForSiteSelector,
+  R.prop('geoposition'),
+);
+
+const addressForSiteSelector = createSelector(
+  locationForSiteSelector,
+  R.prop('address'),
+);
+
+const countryForSiteSelector = createSelector(
+  addressForSiteSelector,
+  R.prop('country'),
+);
+
+const cityForSiteSelector = createSelector(
+  addressForSiteSelector,
+  R.prop('city'),
+);
+
+const countryNameForSiteSelector = createSelector(
+  countryForSiteSelector,
+  R.path(['name', 'common']),
+);
+
+export const addressStringForSiteSelector = createSelector(
+  countryNameForSiteSelector,
+  cityForSiteSelector,
+  getAddressString,
 );

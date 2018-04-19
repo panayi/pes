@@ -6,11 +6,8 @@ import { withState, withProps } from 'recompose';
 import { Formik } from 'formik';
 import yup from 'yup';
 import * as phoneNumbersConfig from '@pesposa/core/src/config/phoneNumbers';
-import * as countryModel from '@pesposa/core/src/models/country';
 import GeneralErrorMessage from 'components/GeneralErrorMessage/GeneralErrorMessage';
 import Form from './Form/Form';
-
-const countries = countryModel.getAll();
 
 type Props = {
   countryCode: string,
@@ -34,7 +31,7 @@ class PhoneNumberForm extends Component<Props> {
   };
 
   getValidationSchema = () => {
-    const numberRegex = R.path(['phoneNumberFormat', 'regex'], this.props);
+    const numberRegex = R.path(['phoneConfig', 'regex'], this.props);
 
     return yup.object().shape({
       countryCode: yup.string().required('Select a country'),
@@ -46,12 +43,12 @@ class PhoneNumberForm extends Component<Props> {
   };
 
   mapValues = values => {
-    const { countryCode, number } = values;
-    const country = R.find(R.propEq('code', countryCode), countries);
+    const { number } = values;
+    const callingCode = R.path(['phoneConfig', 'callingCode'], this.props);
 
-    const phoneNumber = isNilOrEmpty(country)
+    const phoneNumber = isNilOrEmpty(callingCode)
       ? number
-      : country.callingCode + number;
+      : callingCode + number;
 
     return {
       ...values,
@@ -83,9 +80,9 @@ class PhoneNumberForm extends Component<Props> {
   };
 
   render() {
-    const { countryCode, number, children, phoneNumberFormat } = this.props;
+    const { countryCode, number, children } = this.props;
     const initialValues = { countryCode, number };
-    const mask = R.propOr([], 'mask', phoneNumberFormat);
+    const mask = R.pathOr([], ['phoneConfig', 'mask'], this.props);
 
     return (
       <Formik
@@ -109,10 +106,10 @@ class PhoneNumberForm extends Component<Props> {
 export default R.compose(
   withState('selectedCountryCode', 'setSelectedCountryCode', null),
   withProps(({ selectedCountryCode, countryCode }) => ({
-    phoneNumberFormat: R.propOr(
-      [],
-      selectedCountryCode || countryCode,
-      phoneNumbersConfig.FORMAT_BY_COUNTRY_CODE,
+    phoneConfig: R.pathOr(
+      {},
+      [selectedCountryCode || countryCode],
+      phoneNumbersConfig.BY_COUNTRY,
     ),
   })),
 )(PhoneNumberForm);

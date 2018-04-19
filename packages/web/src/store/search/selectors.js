@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import propSelector from '@pesposa/core/src/utils/propSelector';
+import { selectors as siteSelectors } from 'store/site';
 import * as paramsSelectors from './params/selectors';
 import * as paramsConstants from './params/constants';
 import * as pageSelectors from './page/selectors';
@@ -18,11 +19,12 @@ const facetFiltersSelector = createSelector(
   ),
   paramsSelectors.userSelector,
   paramsSelectors.soldSelector,
+  siteSelectors.countryCodeSelector,
   R.compose(
     R.map(R.join(':')),
     R.toPairs,
     R.reject(isNilOrEmpty),
-    R.zipObj(['category', 'user', 'sold']),
+    R.zipObj(['category', 'user', 'sold', 'location.address.country']),
     R.unapply(R.identity),
   ),
 );

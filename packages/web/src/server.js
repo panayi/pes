@@ -5,6 +5,7 @@ import serviceAccountKey from '@pesposa/core/src/config/serviceAccountKey.json';
 import appRoute from 'server/routes/app';
 import createStore from 'server/middleware/createStore';
 import setLocation from 'server/middleware/setLocation';
+import setCountrySubdomain from 'server/middleware/setCountrySubdomain';
 import setLanguage from 'server/middleware/setLanguage';
 import setIsBot from 'server/middleware/setIsBot';
 
@@ -24,6 +25,14 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR));
 
 // Default route
-server.get('/*', createStore, setLocation, setLanguage, setIsBot, appRoute);
+server.get(
+  '/*',
+  createStore,
+  setLocation,
+  setCountrySubdomain,
+  setLanguage,
+  setIsBot,
+  appRoute,
+);
 
 export default server;

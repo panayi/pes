@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { withState } from 'recompose';
+import { withState, setStatic } from 'recompose';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import Typography from 'material-ui/Typography';
@@ -151,6 +151,7 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
+  setStatic('getInitialProps', async ({ store }) => store.getState()),
   connect(null, mapDispatchToProps),
   withState('isCreatingBetaUser', 'setIsCreatingBetaUser', false),
   withStyles(styles),

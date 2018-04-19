@@ -14,7 +14,7 @@ import { selectors as authSelectors } from 'store/firebase/auth';
 import { withUserProfileData } from 'hocs/withProfileData';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
-import AdAddress from 'components/AdAddress/AdAddress';
+import AdPlace from 'components/AdPlace/AdPlace';
 import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import ImageSlider from '../ImageSlider/ImageSlider';
@@ -232,22 +232,18 @@ const DesktopViewAd = ({
           <div className={classes.date}>
             <AdDateChip ad={ad} />
           </div>
-          <AdAddress ad={ad}>
-            {({ address }) =>
-              address ? (
+          <AdPlace ad={ad}>
+            {({ place }) =>
+              place ? (
                 <div className={classes.location}>
                   <PlaceIcon className={classes.locationIcon} />
-                  <Typography
-                    className={classes.address}
-                    color="textSecondary"
-                    component="div"
-                  >
-                    {address}
+                  <Typography color="textSecondary" component="div">
+                    {place}
                   </Typography>
                 </div>
               ) : null
             }
-          </AdAddress>
+          </AdPlace>
           <Map
             className={classes.map}
             ad={ad}

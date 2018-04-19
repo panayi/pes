@@ -14,6 +14,7 @@ import { selectors as routerSelectors } from 'store/router';
 import needsBetaUser from 'hocs/needsBetaUser';
 import hydrateAd from 'hocs/hydrateAd';
 import Layout from 'layouts/Layout/Layout';
+import AdPlace from 'components/AdPlace/AdPlace';
 import ViewAd from 'modules/ViewAd/ViewAd';
 import Header from 'pages/components/Header/Header';
 
@@ -25,22 +26,24 @@ type Props = {
 
 const Content = ({ ad, adId, legacy, location }: Props) => (
   <React.Fragment>
-    <Helmet
-      {...getMetaTags({
-        title: ad
-          ? `${ad.title} in ${R.path(['location', 'address', 'city'], ad)}`
-          : null,
-        description: R.prop('body', ad),
-        image: R.compose(
-          buildUrl,
-          R.prop('fullPath'),
-          R.head,
-          R.values,
-          R.propOr({}, 'images'),
-        )(ad),
-        path: location.pathname,
-      })}
-    />
+    <AdPlace ad={ad}>
+      {({ place }) => (
+        <Helmet
+          {...getMetaTags({
+            title: ad ? `${ad.title} in ${place}` : null,
+            description: R.prop('body', ad),
+            image: R.compose(
+              buildUrl,
+              R.prop('fullPath'),
+              R.head,
+              R.values,
+              R.propOr({}, 'images'),
+            )(ad),
+            path: location.pathname,
+          })}
+        />
+      )}
+    </AdPlace>
     <ViewAd ad={ad} adId={adId} legacy={legacy} />
   </React.Fragment>
 );

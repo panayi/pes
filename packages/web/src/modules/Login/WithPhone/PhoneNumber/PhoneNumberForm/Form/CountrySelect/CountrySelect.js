@@ -1,9 +1,9 @@
 import React from 'react';
 import * as R from 'ramda';
 import TextField from 'material-ui/TextField';
-import * as countryModel from '@pesposa/core/src/models/country';
+import * as phoneNumbersConfig from '@pesposa/core/src/config/phoneNumbers';
 
-const countries = countryModel.getAll();
+const options = R.pair(phoneNumbersConfig.BY_COUNTRY);
 
 const CountrySelect = ({ getLabel, name, value, onChange, onBlur }) => (
   <TextField
@@ -16,18 +16,17 @@ const CountrySelect = ({ getLabel, name, value, onChange, onBlur }) => (
   >
     <option value="">Select Country</option>
     {R.map(
-      country => (
-        <option key={country.code} value={country.code}>
-          {getLabel(country)}
+      ([countryCode, countryProps]) => (
+        <option key={countryCode} value={countryCode}>
+          {getLabel(countryProps)}
         </option>
       ),
-      countries,
+      options,
     )}
   </TextField>
 );
 
 CountrySelect.defaultProps = {
-  countries: [],
   getLabel: R.prop('name'),
 };
 

@@ -11,6 +11,7 @@ import userInfoReducer, { constants as userInfoConstants } from './userInfo';
 import chatReducer, { constants as chatConstants } from './chat';
 import loginReducer, { constants as loginConstants } from './login';
 import modalsReducer, { constants as modalConstants } from './modals';
+import siteReducer, { constants as siteConstants } from './site';
 import { constants as responsiveConstants } from './responsive';
 import postAdReducer from './postAd';
 import searchReducers from './search';
@@ -25,6 +26,7 @@ export const makeRootReducer = asyncReducers =>
     [chatConstants.ROOT_KEY]: chatReducer,
     [loginConstants.ROOT_KEY]: loginReducer,
     [modalConstants.ROOT_KEY]: modalsReducer,
+    [siteConstants.ROOT_KEY]: siteReducer,
     postAd: postAdReducer,
     ...searchReducers,
     ...asyncReducers,

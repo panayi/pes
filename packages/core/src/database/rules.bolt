@@ -134,7 +134,7 @@ type Address {
 type Location {
   geoposition: Geoposition,
   address: Address,
-  from: String
+  source: String
 }
 
 // Application Types

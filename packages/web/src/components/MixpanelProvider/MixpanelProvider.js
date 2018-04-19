@@ -75,11 +75,12 @@ class MixpanelProvider extends React.Component {
 
 // Mixpanel reference: https://mixpanel.com/help/reference/http#people-special-properties
 const mixpanelProfileSelector = createSelector(
-  userInfoselectors.actualLocationSelector,
+  userInfoselectors.countryCodeSelector,
+  userInfoselectors.citySelector,
   profileSelectors.profileSelector,
-  (location, profile) => ({
-    country: R.path(['address', 'country'], location),
-    city: R.path(['address', 'city'], location),
+  (countryCode, city, profile) => ({
+    country: countryCode,
+    city,
     $name: R.path(['profile', 'displayName'], profile),
     $email: R.prop('email', profile),
     $phone: R.path(['profile', 'phoneNumber'], profile),

@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import round from '@pesposa/core/src/utils/round';
 import { selectors as userInfoSelectors } from 'store/userInfo';
@@ -37,7 +38,7 @@ export const selectedAddressSelector = R.compose(
 
 export const addressSelector = createSelector(
   selectedAddressSelector,
-  userInfoSelectors.addressStringSelector,
+  userInfoSelectors.addressStringForSiteSelector,
   R.or,
 );
 
@@ -48,8 +49,8 @@ const selectedGeopositionSelector = R.compose(
 
 export const geopositionSelector = createSelector(
   selectedGeopositionSelector,
-  userInfoSelectors.geopositionSelector,
-  R.compose(R.map(round), R.or),
+  userInfoSelectors.geopositionForSiteSelector,
+  R.compose(R.unless(isNilOrEmpty, R.map(round)), R.or),
 );
 
 // Price
