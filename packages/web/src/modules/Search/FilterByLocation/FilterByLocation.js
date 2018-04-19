@@ -20,7 +20,7 @@ import {
   selectors as paramsSelectors,
   actions as paramsActions,
 } from 'store/search/params';
-import { selectors as userInfoSelectors } from 'store/userInfo';
+import { selectors as siteSelectors } from 'store/site';
 import connectSearch from 'hocs/connectSearch';
 import poweredByGoogleImage from './images/poweredByGoogleSm.png';
 
@@ -290,7 +290,7 @@ class SearchLocation extends Component<Props, State> {
 
 const mapStateToProps = createStructuredSelector({
   address: paramsSelectors.addressSelector,
-  countryCode: userInfoSelectors.countryCodeSelector,
+  countryCode: siteSelectors.countryCodeSelector,
   hasValue: paramsSelectors.locationHasValueSelector,
 });
 

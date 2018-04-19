@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import classNames from 'classnames';
 import qs from 'querystringify';
-import { withProps, withState } from 'recompose';
+import { withProps, withState, setStatic } from 'recompose';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { NavLink } from 'react-router-dom';
@@ -220,6 +220,7 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
+  setStatic('getInitialProps', async ({ store }) => store.getState()),
   connect(null, mapDispatchToProps),
   withProps(props => {
     const search = R.pathOr('', ['location', 'search'], props);

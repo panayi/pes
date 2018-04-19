@@ -13,7 +13,7 @@ import Truncate from 'components/Truncate/Truncate';
 import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import Imgix from 'components/Imgix/Imgix';
 import AdTitle from 'components/AdTitle/AdTitle';
-import AdAddress from 'components/AdAddress/AdAddress';
+import AdPlace from 'components/AdPlace/AdPlace';
 import AdDistance from 'components/AdDistance/AdDistance';
 import LinkToViewAd from 'components/LinkToViewAd/LinkToViewAd';
 import * as constants from '../../constants';
@@ -150,15 +150,15 @@ const AdCard = ({
               />
             </div>
             <div className={classes.location}>
-              <AdAddress ad={hit}>
-                {({ address }) =>
-                  address ? (
+              <AdPlace ad={hit}>
+                {({ place }) =>
+                  place ? (
                     <Typography variant="caption" align="center">
-                      {address}
+                      {place}
                     </Typography>
                   ) : null
                 }
-              </AdAddress>
+              </AdPlace>
               <AdDistance
                 ad={hit}
                 variant="caption"

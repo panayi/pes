@@ -4,10 +4,9 @@ import { createAction } from 'redux-actions';
 import debounce from 'lodash.debounce';
 import firebaseApi from 'services/firebase';
 import { selectors as authSelectors } from 'store/firebase/auth';
-import { selectors as userInfoSelectors } from 'store/userInfo';
 import * as types from './types';
+import * as selectors from './selectors';
 import { serializeAd } from './utils';
-import { isCreateAdIdleSelector } from './selectors';
 
 export const createAdPending = createAction(types.AD_CREATE_PENDING);
 export const createAdCompleted = createAction(types.AD_CREATE_COMPLETED);
@@ -18,7 +17,7 @@ const DEBOUNCE_TIMEOUT = 200; // ms
 const updateDraft = debounce(
   (ad: Ad | {}, dispatch: Dispatch, getState: Function) => {
     const state = getState();
-    const isIdle = isCreateAdIdleSelector(state);
+    const isIdle = selectors.isCreateAdIdleSelector(state);
 
     if (!isIdle) {
       return Promise.reject();
@@ -47,7 +46,7 @@ export const createAd = (ad: Ad) => (
   const state = getState();
   const additionalData = {
     user: authSelectors.uidSelector(state),
-    location: userInfoSelectors.locationSelector(state),
+    location: selectors.newAdLocationSelector(state),
   };
   const finalAd = R.compose(serializeAd, R.merge(ad))(additionalData);
 
@@ -64,4 +63,5 @@ export const saveAd = (adId: string, ad: Ad) => (dispatch: Dispatch) => {
   return dispatch(firebaseApi.ads.update(adId, finalAd));
 };
 
-export const removeAd = (adId: string) => (dispatch: Dispatch) => dispatch(firebaseApi.ads.remove(adId));
+export const removeAd = (adId: string) => (dispatch: Dispatch) =>
+  dispatch(firebaseApi.ads.remove(adId));

@@ -6,7 +6,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import HomeIcon from 'material-ui-icons/Home';
 import translate from 'hocs/translate';
 import Link from 'components/Link/Link';
-import AdAddress from 'components/AdAddress/AdAddress';
+import AdPlace from 'components/AdPlace/AdPlace';
 import AdTitle from 'components/AdTitle/AdTitle';
 import BreakWord from 'components/BreakWord/BreakWord';
 import BackToListButton from '../../BackToListButton/BackToListButton';
@@ -63,13 +63,11 @@ const BreadCrumbs = ({ ad, t, classes }) => (
       <HomeIcon className={classes.icon} />Home
     </BackToListButton>
     <Typography className={classes.separator}>/</Typography>
-    <AdAddress ad={ad}>
-      {({ address }) =>
-        address ? (
-          <Typography className={classes.item}>{address}</Typography>
-        ) : null
+    <AdPlace ad={ad}>
+      {({ place }) =>
+        place ? <Typography className={classes.item}>{place}</Typography> : null
       }
-    </AdAddress>
+    </AdPlace>
     <Typography className={classes.separator}>/</Typography>
     <Link to={`/${ad.category}`} className={classes.linkItem}>
       {t(ad.category)}

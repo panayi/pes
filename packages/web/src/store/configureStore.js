@@ -8,7 +8,10 @@ import * as storageConfig from '@pesposa/core/src/config/storage';
 import env from '@pesposa/core/src/config/env';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import { actions as authActions } from './firebase/auth';
-import { constants as userInfoConstants } from './userInfo';
+import {
+  constants as userInfoConstants,
+  utils as userInfoUtils,
+} from './userInfo';
 import {
   utils as profileUtils,
   constants as profileConstants,
@@ -50,7 +53,12 @@ const configureStore = (initialState = {}, history) => {
   // Store Enhancers
   let enhancers = [reactReduxFirebase(firebase, reduxFirebaseConfig)];
   if (process.browser) {
-    enhancers = [...enhancers, persistState(userInfoConstants.ROOT_KEY)];
+    enhancers = [
+      ...enhancers,
+      persistState(userInfoConstants.ROOT_KEY, {
+        merge: userInfoUtils.mergeState,
+      }),
+    ];
   }
   const composeEnhancers = composeWithDevTools;
 

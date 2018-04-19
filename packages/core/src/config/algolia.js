@@ -61,7 +61,12 @@ export const INDEXES = [
     ],
     settings: {
       searchableAttributes: ['title', 'body'],
-      attributesForFaceting: ['category', 'user', 'sold'],
+      attributesForFaceting: [
+        'category',
+        'user',
+        'sold',
+        'location.address.country',
+      ],
       paginationLimitedTo: PAGINATION_LIMIT,
     },
   },

@@ -29,7 +29,7 @@ import Button from 'components/Button/Button';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdPrice from 'components/AdPrice/AdPrice';
 import AdBody from 'components/AdBody/AdBody';
-import AdAddress from 'components/AdAddress/AdAddress';
+import AdPlace from 'components/AdPlace/AdPlace';
 import AdDate from 'components/AdDate/AdDate';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import UserFullName from 'components/UserFullName/UserFullName';
@@ -310,13 +310,13 @@ class MobileViewAd extends React.Component {
               <div className={classes.info}>
                 <div className={classes.location}>
                   <PlaceIcon className={classes.locationIcon} />
-                  <AdAddress ad={ad}>
-                    {({ address }) =>
-                      address ? (
-                        <Typography color="inherit">{address}</Typography>
+                  <AdPlace ad={ad}>
+                    {({ place }) =>
+                      place ? (
+                        <Typography color="inherit">{place}</Typography>
                       ) : null
                     }
-                  </AdAddress>
+                  </AdPlace>
                 </div>
                 <div className={classes.posted}>
                   <div className={classes.date}>

@@ -80,12 +80,22 @@ node_modules
 
 ## 2. Development
 
-1. Clone the repo locally: `git clone git@gitlab.com:pesposa/webapp.git`
-2. Install dependencies: `cd webapp && yarn`
+1. Clone the repo `git clone git@bitbucket.org:pesposa/webapp.git`
+2. Add the following line in `/etc/hosts`:
 
-### `yarn start`
+```
+127.0.0.1	pesposa.test
+127.0.0.1	cy.pesposa.test
+# 127.0.0.1	<any country code>.pesposa.test
+```
 
-Run the app in development mode.
+where `<any country code>` is any [valid ISO ALPHAT-2 country code](http://www.nationsonline.org/oneworld/country_code_list.htm)
+
+3. Install dependencies: `yarn`
+
+### `yarn start:web`
+
+Run the web app in development mode.
 
 ### `yarn lint`
 

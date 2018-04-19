@@ -33,7 +33,7 @@ class MapDirectionsUrl extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  location: userInfoSelectors.actualLocationSelector,
+  location: userInfoSelectors.locationSelector,
 });
 
 export default connect(mapStateToProps)(MapDirectionsUrl);
