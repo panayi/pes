@@ -8,7 +8,7 @@ const confirmAddToWaitlist = async (req, res) => {
   try {
     const reservation = R.compose(
       renameKeys({ activation_code: 'code' }),
-      R.prop('reservation')
+      R.prop('reservation'),
     )(req.body);
     await sendWaitingListConfirmationEmail(reservation);
     res.send('OK');

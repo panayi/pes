@@ -11,9 +11,9 @@ export class TouchDevice extends React.Component {
     window.removeEventListener('touchstart', this.handleTouchStart, false);
   };
 
-  renderOnTouchDevice = node => this.props.isTouch ? node : null;
+  renderOnTouchDevice = node => (this.props.isTouch ? node : null);
 
-  renderOnNonTouchDevice = node => this.props.isTouch ? null : node;
+  renderOnNonTouchDevice = node => (this.props.isTouch ? null : node);
 
   render() {
     return this.props.children({

@@ -16,7 +16,7 @@ const handleAdDeleted = async (snap, context) => {
 
   if (adImagesSnapshot.exists()) {
     const adImages = R.values(adImagesSnapshot.val());
-    await Promise.all(R.map(adImageModel.removeFile, adImages))
+    await Promise.all(R.map(adImageModel.removeFile, adImages));
   }
 
   await adImageModel.removeAll(adId);

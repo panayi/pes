@@ -24,16 +24,8 @@ const cors = createCors({ credentials: true, origin });
 app.use(cors);
 
 // Public routes
-app.post(
-  '/reverse-geocode',
-  bodyParser.json(),
-  reverseGeocode
-)
-app.post(
-  '/geoip',
-  bodyParser.json(),
-  geoip
-)
+app.post('/reverse-geocode', bodyParser.json(), reverseGeocode);
+app.post('/geoip', bodyParser.json(), geoip);
 
 // Protected routes
 app.post(
@@ -46,41 +38,25 @@ app.post(
   migrateAnonymousUser,
 );
 
-app.post(
-  '/waitlisted/callback',
-  bodyParser.json(),
-  async (req, res) => {
-    const event = R.prop('event', req.body);
-    if (event === 'reservation_created') {
-      return confirmAddToWaitlist(req, res);
-    }
-
-    if (event === 'reservation_activated') {
-      return createBetaInvite(req, res);
-    }
-
-    log.error('body', req.body);
-    respond.internalServerError(res);
-    return null;
+app.post('/waitlisted/callback', bodyParser.json(), async (req, res) => {
+  const event = R.prop('event', req.body);
+  if (event === 'reservation_created') {
+    return confirmAddToWaitlist(req, res);
   }
-)
 
-app.post(
-  '/beta-users',
-  isAuthenticated(),
-  bodyParser.json(),
-  createBetaUser
-)
+  if (event === 'reservation_activated') {
+    return createBetaInvite(req, res);
+  }
 
-app.post(
-  '/beta',
-  isAuthenticated(),
-  createBetaCodeAndUser
-)
+  log.error('body', req.body);
+  respond.internalServerError(res);
+  return null;
+});
 
-app.get(
-  '/send-notifications',
-  sendNotifications
-)
+app.post('/beta-users', isAuthenticated(), bodyParser.json(), createBetaUser);
+
+app.post('/beta', isAuthenticated(), createBetaCodeAndUser);
+
+app.get('/send-notifications', sendNotifications);
 
 export default functions.https.onRequest(app);

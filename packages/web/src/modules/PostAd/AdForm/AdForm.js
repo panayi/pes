@@ -78,11 +78,19 @@ class AdForm extends Component<Props> {
       title: yup
         .string()
         .required('Title is required')
-        .max(adsConfig.TITLE_MAX_LENGTH, `Title should be less than ${adsConfig.TITLE_MAX_LENGTH} characters`),
+        .max(
+          adsConfig.TITLE_MAX_LENGTH,
+          `Title should be less than ${adsConfig.TITLE_MAX_LENGTH} characters`,
+        ),
       body: yup
-      .string()
-      .required('Description is required')
-      .max(adsConfig.BODY_MAX_LENGTH, `Description should be less than ${adsConfig.BODY_MAX_LENGTH} characters`),
+        .string()
+        .required('Description is required')
+        .max(
+          adsConfig.BODY_MAX_LENGTH,
+          `Description should be less than ${
+            adsConfig.BODY_MAX_LENGTH
+          } characters`,
+        ),
       price: yup
         .number()
         .typeError('Price should be a number')

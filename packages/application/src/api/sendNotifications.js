@@ -8,13 +8,10 @@ const sendNotifictions = async (req, res) => {
   try {
     const conversations = await conversationModel.getAllShouldNotify();
     await Promise.all(
-      R.map(
-        async conversation => {
-          await sendMessageReceivedEmail(conversation);
-          await conversationModel.markAsNotified(conversation.path);
-        },
-        conversations
-      )
+      R.map(async conversation => {
+        await sendMessageReceivedEmail(conversation);
+        await conversationModel.markAsNotified(conversation.path);
+      }, conversations),
     );
 
     res.send('OK');

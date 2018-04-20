@@ -14,25 +14,25 @@ const ConfirmContent = ({
   onClick,
   isPending,
 }) => (
-    <React.Fragment>
-      <DialogContent>
-        <Typography variant="subheading">{message}</Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => closeModal()} disabled={isPending}>
-          {rejectLabel}
-        </Button>
-        <Button
-          variant="raised"
-          color="primary"
-          onClick={onClick}
-          disabled={isPending}
-        >
-          {acceptLabel}
-        </Button>
-      </DialogActions>
-    </React.Fragment>
-  );
+  <React.Fragment>
+    <DialogContent>
+      <Typography variant="subheading">{message}</Typography>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={() => closeModal()} disabled={isPending}>
+        {rejectLabel}
+      </Button>
+      <Button
+        variant="raised"
+        color="primary"
+        onClick={onClick}
+        disabled={isPending}
+      >
+        {acceptLabel}
+      </Button>
+    </DialogActions>
+  </React.Fragment>
+);
 
 export default R.compose(
   withState('isPending', 'setIsPending', false),
