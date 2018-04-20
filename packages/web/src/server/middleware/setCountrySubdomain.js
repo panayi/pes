@@ -8,7 +8,8 @@ import { selectors as userInfoSelectors } from 'store/userInfo';
 
 const setCountrySubdomain = async (req, res, next) => {
   const { store } = res.locals;
-  const countryCode = R.compose(R.last, R.prop('subdomains'))(req);
+  const host = req.headers['x-forwarded-host'] || req.get('host');
+  const countryCode = R.compose(R.head, R.split('.'))(host);
   const country = isNilOrEmpty(countryCode)
     ? null
     : getCountryByCode(countryCode);
@@ -19,8 +20,9 @@ const setCountrySubdomain = async (req, res, next) => {
   } else {
     const state = store.getState();
     const userCountryCode = userInfoSelectors.countryCodeSelector(state);
-    const newCountryCode =
-      userCountryCode || locationConfig.DEFAULT_COUNTRY_CODE;
+    const newCountryCode = R.toLower(
+      userCountryCode || locationConfig.DEFAULT_COUNTRY_CODE,
+    );
     const newUrl = `https://${newCountryCode}.${env.domain}${req.originalUrl}`;
     res.redirect(newUrl);
   }
