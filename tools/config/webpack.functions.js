@@ -16,7 +16,7 @@ module.exports = merge.smart(baseConfig, {
     extensions: ['.js'],
     modules: ['node_modules', path.join(constants.paths.application, 'src')],
   },
-  entry: path.join(constants.paths.application, 'index.js'),
+  entry: path.join(constants.paths.application, 'src', 'index.js'),
   output: {
     // To deploy functions, package.json and node_modules
     // needs to be at the same directory level.

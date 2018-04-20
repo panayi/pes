@@ -42,7 +42,11 @@ export const isAuthenticated = (options: Options = {}) => (
       const isActualUser = provider && provider !== 'anonymous';
 
       if (headerKey !== 'authorization' || isActualUser) {
-        log.info(`Authenticated with id=${decodedIdToken.user_id}, ${decodedIdToken.firebase.sign_in_provider}`);
+        log.info(
+          `Authenticated with id=${decodedIdToken.user_id}, ${
+            decodedIdToken.firebase.sign_in_provider
+          }`,
+        );
         req[propKey] = decodedIdToken;
         next();
       } else {

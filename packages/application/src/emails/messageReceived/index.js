@@ -27,7 +27,7 @@ ${mainEmail}
 Unsubscribe: %tag_unsubscribe_url%
 `;
 
-const send = (conversation) => {
+const send = conversation => {
   const { thisUser, otherUser, ad, conversationId } = conversation;
   const otherUserName = R.path(['profile', 'displayName'], otherUser);
   const otherUserPhotoUrl = R.path(['profile', 'avatarUrl'], otherUser);
@@ -43,7 +43,7 @@ const send = (conversation) => {
     replyUrl,
     mainEmail: pesposaConfig.MAIN_EMAIL_ADDRESS,
   };
-  const mjml = Mustache.render(body, props)
+  const mjml = Mustache.render(body, props);
   const output = mjml2html(mjml);
   const message = {
     fromName: otherUserName,
@@ -53,10 +53,10 @@ const send = (conversation) => {
     text: text(props),
     headers: {
       'X-Mailgun-Tag': 'unreadMessage',
-    }
+    },
   };
 
   return emailService.send(message);
-}
+};
 
 export default send;

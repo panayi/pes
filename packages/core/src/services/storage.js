@@ -15,42 +15,63 @@ const getFileUrl = (path, token) =>
     storageConfig.BUCKET
   }/o/${encodeURIComponent(path)}?alt=media&token=${token}`;
 
-export const uploadImage = (
+export const readFile = path => {
+  const file = storage.file(path);
+  return new Promise((resolve, reject) => {
+    file.download((error, contents) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(contents);
+      }
+    });
+  });
+};
+
+export const writeFile = (buffer, contentType, path, metadata) =>
+  new Promise((resolve, reject) => {
+    const file = storage.file(path);
+    const stream = file.createWriteStream({
+      uploadType: 'media',
+      metadata: {
+        contentType,
+        metadata,
+      },
+    });
+
+    stream.on('error', error => reject(error));
+    stream.on('finish', () => {
+      resolve();
+    });
+    stream.end(buffer);
+  });
+
+export const uploadImage = async (
   buffer,
   contentType,
   path,
   filename,
   saveMetadata,
-) =>
-  new Promise((resolve, reject) => {
-    const finalPath = `${path}/${filename}`;
-    const file = storage.file(finalPath);
-    const token = uuid();
-    const stream = file.createWriteStream({
-      uploadType: 'media',
-      metadata: {
-        contentType,
-        metadata: {
-          firebaseStorageDownloadTokens: token,
-        },
-      },
-    });
+) => {
+  const finalPath = `${path}/${filename}`;
+  const token = uuid();
+  const metadata = {
+    firebaseStorageDownloadTokens: token,
+  };
 
-    stream.on('error', error => reject(error));
-    stream.on('finish', async () => {
-      if (saveMetadata) {
-        const metadata = {
-          name: filename,
-          fullPath: finalPath,
-          downloadURL: getFileUrl(finalPath, token),
-        };
-        await saveMetadata(metadata);
-      }
+  await writeFile(buffer, contentType, finalPath, metadata);
 
-      resolve(finalPath);
-    });
-    stream.end(buffer);
-  });
+  if (saveMetadata) {
+    const metadataToSave = {
+      name: filename,
+      fullPath: finalPath,
+      downloadURL: getFileUrl(path, token),
+    };
+    await saveMetadata(metadataToSave);
+  }
+
+  return finalPath;
+};
 
 export const removeFile = path => {
   const file = storage.file(path);

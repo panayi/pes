@@ -5,7 +5,7 @@ import * as pesposaConfig from '@pesposa/core/src/config/pesposa';
 import * as emailService from '@pesposa/core/src/services/email';
 import body from './body.mjml';
 
-const subject = 'You\'ve been added to Pesposa waitlist';
+const subject = "You've been added to Pesposa waitlist";
 
 const text = ({ title, name, referralUrl, mainEmail }) => `
 ${title}
@@ -32,7 +32,7 @@ ${mainEmail}
 Unsubscribe: %tag_unsubscribe_url%
 `;
 
-const send = (betaInvite) => {
+const send = betaInvite => {
   const { email, name, affiliate } = betaInvite;
   const props = {
     title: subject,
@@ -41,7 +41,7 @@ const send = (betaInvite) => {
     facebookPageUrl: pesposaConfig.FACEBOOK_PAGE_URL,
     mainEmail: pesposaConfig.MAIN_EMAIL_ADDRESS,
   };
-  const mjml = Mustache.render(body, props)
+  const mjml = Mustache.render(body, props);
   const output = mjml2html(mjml);
   const message = {
     to: email,
@@ -49,11 +49,11 @@ const send = (betaInvite) => {
     html: output.html,
     text: text(props),
     headers: {
-     'X-Mailgun-Tag': 'waitinglist',
-    }
+      'X-Mailgun-Tag': 'waitinglist',
+    },
   };
 
   return emailService.send(message);
-}
+};
 
 export default send;

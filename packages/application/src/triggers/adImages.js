@@ -3,7 +3,7 @@ import * as algoliaService from '@pesposa/core/src/services/algolia';
 import * as adImageModel from '@pesposa/core/src/models/adImage';
 import * as adModel from '@pesposa/core/src/models/ad';
 
-const syncAngolia = async (adId) => {
+const syncAngolia = async adId => {
   const adImagesSnapshot = await adImageModel.getAll(adId);
   const adImages = adImagesSnapshot.val();
   return algoliaService.update({ images: adImages }, adId);
@@ -42,6 +42,6 @@ export const adImageCreated = functions.database
   .ref('/ads/images/{adId}/{imageId}')
   .onCreate(handleCreate);
 
-  export const adImageDeleted = functions.database
+export const adImageDeleted = functions.database
   .ref('/ads/images/{adId}/{imageId}')
   .onDelete(handleDelete);

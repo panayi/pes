@@ -21,9 +21,7 @@ const setCountrySubdomain = async (req, res, next) => {
     const userCountryCode = userInfoSelectors.countryCodeSelector(state);
     const newCountryCode =
       userCountryCode || locationConfig.DEFAULT_COUNTRY_CODE;
-    const newUrl = `${req.protocol}://${newCountryCode}.${env.domain}${
-      req.originalUrl
-    }`;
+    const newUrl = `https://${newCountryCode}.${env.domain}${req.originalUrl}`;
     res.redirect(newUrl);
   }
 };

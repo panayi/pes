@@ -31,7 +31,7 @@ ${mainEmail}
 Unsubscribe: %tag_unsubscribe_url%
 `;
 
-const send = (betaInvite) => {
+const send = betaInvite => {
   const { email, name, url } = betaInvite;
   const props = {
     title: subject,
@@ -40,7 +40,7 @@ const send = (betaInvite) => {
     mainEmail: pesposaConfig.MAIN_EMAIL_ADDRESS,
     supportEmail: pesposaConfig.SUPPORT_EMAIL_ADDRESS,
   };
-  const mjml = Mustache.render(body, props)
+  const mjml = Mustache.render(body, props);
   const output = mjml2html(mjml);
   const message = {
     to: email,
@@ -49,10 +49,10 @@ const send = (betaInvite) => {
     text: text(props),
     headers: {
       'X-Mailgun-Tag': 'waitinglist',
-    }
+    },
   };
 
   return emailService.send(message);
-}
+};
 
 export default send;

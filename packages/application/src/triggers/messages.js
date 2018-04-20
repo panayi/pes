@@ -2,7 +2,13 @@ import * as functions from 'firebase-functions';
 import { database } from '@pesposa/core/src/config/firebaseClient';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 
-const updateUserConversation = async (adId, buyerId, userId, isSender, createdAt) => {
+const updateUserConversation = async (
+  adId,
+  buyerId,
+  userId,
+  isSender,
+  createdAt,
+) => {
   const conversation = {
     ad: adId,
     buyer: buyerId,
