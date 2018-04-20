@@ -8,7 +8,7 @@ import { selectors as userInfoSelectors } from 'store/userInfo';
 
 const setCountrySubdomain = async (req, res, next) => {
   const { store } = res.locals;
-  const countryCode = R.compose(R.head, R.prop('subdomains'))(req);
+  const countryCode = R.compose(R.last, R.prop('subdomains'))(req);
   const country = isNilOrEmpty(countryCode)
     ? null
     : getCountryByCode(countryCode);
