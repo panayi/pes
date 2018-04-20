@@ -1,24 +1,5 @@
-import imageSize from 'image-size';
-import https from 'https';
-import url from 'url';
+import requestImageSize from 'request-image-size';
 
-const getImageDimensions = imageUrl => {
-  const options = url.parse(imageUrl);
-
-  return new Promise(resolve => {
-    https.get(options, response => {
-      const chunks = [];
-
-      response
-        .on('data', chunk => {
-          chunks.push(chunk);
-        })
-        .on('end', () => {
-          const buffer = Buffer.concat(chunks);
-          resolve(imageSize(buffer));
-        });
-    });
-  });
-};
+const getImageDimensions = imageUrl => requestImageSize(imageUrl);
 
 export default getImageDimensions;
