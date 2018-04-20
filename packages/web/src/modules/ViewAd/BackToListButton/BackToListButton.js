@@ -4,7 +4,9 @@ import { selectors as paramsSelectors } from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
 import Link from 'components/Link/Link';
 
-const BackToListButton = ({ component: Komponent, category, ...rest }) => <Komponent to={category ? `/${category}` : '/'} {...rest} />;
+const BackToListButton = ({ component: Komponent, category, ...rest }) => (
+  <Komponent to={category ? `/${category}` : '/'} {...rest} />
+);
 
 BackToListButton.defaultProps = {
   component: Link,

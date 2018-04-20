@@ -33,19 +33,19 @@ const GoogleMapsDirections = ({
   DialogContent,
   classes,
 }) => (
-    <React.Fragment>
-      <DialogTitle title={ad ? `Directions to ${ad.title}` : 'Directions'} />
-      <DialogContent className={classes.content}>
-        <iframe
-          className={classes.frame}
-          title="Directions"
-          src={url}
-          width="100%"
-          height="100%"
-        />
-        <Spinner centered className={classes.spinner} />
-      </DialogContent>
-    </React.Fragment>
-  );
+  <React.Fragment>
+    <DialogTitle title={ad ? `Directions to ${ad.title}` : 'Directions'} />
+    <DialogContent className={classes.content}>
+      <iframe
+        className={classes.frame}
+        title="Directions"
+        src={url}
+        width="100%"
+        height="100%"
+      />
+      <Spinner centered className={classes.spinner} />
+    </DialogContent>
+  </React.Fragment>
+);
 
 export default withStyles(styles)(GoogleMapsDirections);
