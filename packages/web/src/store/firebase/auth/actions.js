@@ -20,29 +20,6 @@ import * as selectors from './selectors';
 const isInBetaPage = () =>
   R.contains(window.location.pathname, ['/join', '/login', '/enter']);
 
-export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
-  if (!process.browser) {
-    return;
-  }
-
-  // If user is not logged in => login anonymously
-  if (isNilOrEmpty(authData)) {
-    if (!isInBetaPage()) {
-      dispatch(firebaseApi.auth.loginAnonymously());
-    }
-    return;
-  }
-
-  if (authData.isAnonymous) {
-    return;
-  }
-
-  // Otherwise, user was just logged in
-
-  // Migrate when user has just logged in and not anonymous
-  await dispatch(migrateAnonymousUser());
-};
-
 export const login = credentials => async dispatch => {
   dispatch(loginActions.loginStarted());
 
@@ -149,6 +126,36 @@ export const linkProvider = providerId => async (
 
 export const logout = () => async (dispatch, getState, getFirebase) =>
   getFirebase().logout();
+
+const setUserInfo = () => (dispatch, getState) => {
+  const token = selectors.tokenSelector(getState());
+
+  return dispatch(api.setUserInfo(token));
+};
+
+export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
+  if (!process.browser) {
+    return;
+  }
+
+  // If user is not logged in => login anonymously
+  if (isNilOrEmpty(authData)) {
+    if (!isInBetaPage()) {
+      dispatch(firebaseApi.auth.loginAnonymously());
+    }
+    return;
+  }
+
+  if (authData.isAnonymous) {
+    return;
+  }
+
+  // Otherwise, user was just logged in
+
+  // Migrate when user has just logged in and not anonymous
+  await dispatch(migrateAnonymousUser());
+  await dispatch(setUserInfo());
+};
 
 // BETA
 

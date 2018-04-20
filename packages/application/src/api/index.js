@@ -11,6 +11,7 @@ import { isAuthenticated } from './utils';
 import reverseGeocode from './reverseGeocode';
 import geoip from './geoip';
 import migrateAnonymousUser from './migrateAnonymousUser';
+import setUserInfo from './setUserInfo';
 import confirmAddToWaitlist from './confirmAddToWaitlist';
 import createBetaInvite from './createBetaInvite';
 import createBetaUser from './createBetaUser';
@@ -38,6 +39,10 @@ app.post(
   migrateAnonymousUser,
 );
 
+app.post('/users/info', isAuthenticated(), setUserInfo);
+
+app.get('/send-notifications', sendNotifications);
+
 app.post('/waitlisted/callback', bodyParser.json(), async (req, res) => {
   const event = R.prop('event', req.body);
   if (event === 'reservation_created') {
@@ -56,7 +61,5 @@ app.post('/waitlisted/callback', bodyParser.json(), async (req, res) => {
 app.post('/beta-users', isAuthenticated(), bodyParser.json(), createBetaUser);
 
 app.post('/beta', isAuthenticated(), createBetaCodeAndUser);
-
-app.get('/send-notifications', sendNotifications);
 
 export default functions.https.onRequest(app);

@@ -64,7 +64,6 @@
     "redux-localstorage": "^0.4.1",
     "redux-thunk": "^2.2.0",
     "reimgix": "^0.1.0",
-    "request-ip": "^2.0.2",
     "reselect": "^3.0.1",
     "slick-carousel": "^1.8.1",
     "swipe-js-iso": "^2.0.4",

@@ -15,27 +15,11 @@ const migrateAnonymousUser = ({ token, anonymousUserToken }) => () => {
   });
 };
 
-// BETA
-
-const createBetaUser = (data, token) => () => {
-  const url = `${env.firebaseFunctionsBaseUrl}/beta-users`;
-
-  return fetch(url, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  });
-};
-const createBetaCodeAndUser = token => () => {
-  const url = `${env.firebaseFunctionsBaseUrl}/beta`;
-
+const setUserInfo = token => () => {
+  const url = `${env.firebaseFunctionsBaseUrl}/users/info`;
   return fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
   });
@@ -69,12 +53,40 @@ const geoip = data => async () => {
   return response.ok ? response.json() : null;
 };
 
+// BETA
+
+const createBetaUser = (data, token) => () => {
+  const url = `${env.firebaseFunctionsBaseUrl}/beta-users`;
+
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+const createBetaCodeAndUser = token => () => {
+  const url = `${env.firebaseFunctionsBaseUrl}/beta`;
+
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 const api = {
   migrateAnonymousUser,
-  createBetaUser,
-  createBetaCodeAndUser,
+  setUserInfo,
   reverseGeocode,
   geoip,
+  createBetaUser,
+  createBetaCodeAndUser,
 };
 
 export default api;
