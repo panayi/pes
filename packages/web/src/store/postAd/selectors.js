@@ -8,22 +8,26 @@ import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as userInfoSelectors } from 'store/userInfo';
 import * as constants from './constants';
 
-export const createAdPath = ['postAd', 'create'];
-
-export const createAdSelector = R.path(createAdPath);
+const createAdStatusSelector = R.path(constants.CREATE_STATUS_PATH);
+export const createAdErrorSelector = R.path(constants.CREATE_ERROR_PATH);
 
 export const isCreateAdIdleSelector = createSelector(
-  createAdSelector,
+  createAdStatusSelector,
   R.equals(constants.AD_CREATE_IDLE_STATE),
 );
 
 export const isCreateAdPendingSelector = createSelector(
-  createAdSelector,
+  createAdStatusSelector,
   R.equals(constants.AD_CREATE_PENDING_STATE),
 );
 
+export const isCreateAdFailedSelector = createSelector(
+  createAdStatusSelector,
+  R.equals(constants.AD_CREATE_FAILED_STATE),
+);
+
 export const isCreateAdCompletedSelector = createSelector(
-  createAdSelector,
+  createAdStatusSelector,
   R.equals(constants.AD_CREATE_COMPLETED_STATE),
 );
 
@@ -40,7 +44,7 @@ export const draftAdImagesPathSelector = createSelector(
 );
 
 export const newAdLocationSelector = createSelector(
-  userInfoSelectors.locationForSiteSelector,
+  userInfoSelectors.locationSelector,
   location => {
     const countryCode = R.path(['address', 'country', 'cca2'], location);
     return isNilOrEmpty(countryCode)

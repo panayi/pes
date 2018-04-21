@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 /* @flow */
 // export type Env = {|
 //   REACT_APP_FIREBASE_API_KEY: string,
@@ -16,6 +17,9 @@
 // const env = ((process.env: any): Env);
 
 const output = {
+  countrySites: R.compose(R.split(','), R.defaultTo(''))(
+    process.env.RAZZLE_COUNTRY_SITES,
+  ),
   firebaseApiKey: process.env.RAZZLE_FIREBASE_API_KEY,
   firebaseProject: process.env.RAZZLE_FIREBASE_PROJECT,
   firebaseDatabaseUrl: process.env.RAZZLE_FIREBASE_DATABASE_URL,

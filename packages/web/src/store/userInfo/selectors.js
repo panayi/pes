@@ -62,13 +62,18 @@ export const addressStringSelector = createSelector(
   getAddressString,
 );
 
-export const locationForSiteSelector = createSelector(
+export const isInSameCountrySelector = createSelector(
   countryCodeSelector,
-  locationSelector,
   siteSelectors.countryCodeSelector,
+  R.equals,
+);
+
+const locationForSiteSelector = createSelector(
+  isInSameCountrySelector,
+  locationSelector,
   siteSelectors.countrySelector,
-  (userCountryCode, userLocation, siteCountryCode, siteCountry) => {
-    if (userCountryCode === siteCountryCode) {
+  (isInSameCountry, userLocation, siteCountry) => {
+    if (isInSameCountry) {
       return userLocation;
     }
 

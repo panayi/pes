@@ -8,6 +8,7 @@ import {
   selectors as postAdSelectors,
 } from 'store/postAd';
 import CreateAdForm from './Form/Form';
+import CreateAdFailure from './Failure/Failure';
 import CreateAdSuccess from './Success/Success';
 
 type Props = {
@@ -21,16 +22,22 @@ class CreateAdContent extends Component<Props> {
   }
 
   render() {
-    const { isCreateAdCompleted, ...rest } = this.props;
+    const { isCreateAdFailed, isCreateAdCompleted, ...rest } = this.props;
 
-    return isCreateAdCompleted ? (
-      <CreateAdSuccess
-        {...rest}
-        onPostAnotherClick={this.props.createAdReset}
-      />
-    ) : (
-      <CreateAdForm {...rest} />
-    );
+    if (isCreateAdFailed) {
+      return <CreateAdFailure {...rest} />;
+    }
+
+    if (isCreateAdCompleted) {
+      return (
+        <CreateAdSuccess
+          {...rest}
+          onPostAnotherClick={this.props.createAdReset}
+        />
+      );
+    }
+
+    return <CreateAdForm {...rest} />;
   }
 }
 
@@ -40,6 +47,8 @@ const mapDataToProps = {
 
 const mapStateToProps = createStructuredSelector({
   isCreateAdCompleted: postAdSelectors.isCreateAdCompletedSelector,
+  isCreateAdFailed: postAdSelectors.isCreateAdFailedSelector,
+  error: postAdSelectors.createAdErrorSelector,
 });
 
 const mapDispatchToProps = {

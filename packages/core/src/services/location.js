@@ -1,8 +1,8 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import requestIp from 'request-ip';
 import geoip from 'geoip-lite';
 import * as locationConfig from '../config/location';
+import getClientIp from '../utils/getClientIp';
 import getCountryByCode from '../utils/getCountryByCode';
 import * as gmapsService from '../services/gmaps';
 
@@ -27,7 +27,7 @@ export const getFromIp = (ip, req) => {
   // If we are working locally, the IP sent from the local web server
   // is not the public IP. In this case, get the IP
   // from the request which contains the real public IP.
-  const finalIp = ip === '::ffff:127.0.0.1' ? requestIp.getClientIp(req) : ip;
+  const finalIp = ip === '::ffff:127.0.0.1' ? getClientIp(req) : ip;
 
   if (isNilOrEmpty(finalIp)) {
     return null;

@@ -28,10 +28,17 @@ export const setDimensions = async imageSnapshot => {
   return imageSnapshot.ref.set(R.merge(image, { dimensions }));
 };
 
-export const removeAll = async adId =>
-  database.ref(`/ads/images/${adId}`).remove();
-
 export const removeFile = async adImage => {
   const { fullPath } = adImage;
   return storageService.removeFile(fullPath);
+};
+
+export const removeAll = async adId => {
+  const adImagesSnapshot = await getAll(adId);
+
+  if (adImagesSnapshot.exists()) {
+    const adImages = R.values(adImagesSnapshot.val());
+    await Promise.all(R.map(removeFile, adImages));
+    await database.ref(`/ads/images/${adId}`).remove();
+  }
 };

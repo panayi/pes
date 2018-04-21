@@ -12,10 +12,7 @@ import {
   constants as userInfoConstants,
   utils as userInfoUtils,
 } from './userInfo';
-import {
-  utils as profileUtils,
-  constants as profileConstants,
-} from './firebase/profile';
+import { utils as profileUtils } from './firebase/profile';
 import makeRootReducer from './reducers';
 
 const configureStore = (initialState = {}, history) => {
@@ -28,7 +25,6 @@ const configureStore = (initialState = {}, history) => {
 
   const reduxFirebaseConfig = {
     userProfile: modelPaths.USERS.string,
-    profileParamsToPopulate: profileConstants.PROFILE_POPULATES,
     profileFactory: profileUtils.profileFactory,
     onAuthStateChanged: authActions.handleAuthStateChanged,
     preserveOnLogout: [

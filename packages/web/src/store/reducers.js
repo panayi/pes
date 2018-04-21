@@ -13,7 +13,7 @@ import loginReducer, { constants as loginConstants } from './login';
 import modalsReducer, { constants as modalConstants } from './modals';
 import siteReducer, { constants as siteConstants } from './site';
 import { constants as responsiveConstants } from './responsive';
-import postAdReducer from './postAd';
+import postAdReducer, { constants as postAdConstants } from './postAd';
 import searchReducers from './search';
 
 export const makeRootReducer = asyncReducers =>
@@ -27,7 +27,7 @@ export const makeRootReducer = asyncReducers =>
     [loginConstants.ROOT_KEY]: loginReducer,
     [modalConstants.ROOT_KEY]: modalsReducer,
     [siteConstants.ROOT_KEY]: siteReducer,
-    postAd: postAdReducer,
+    [postAdConstants.ROOT_KEY]: postAdReducer,
     ...searchReducers,
     ...asyncReducers,
   });
