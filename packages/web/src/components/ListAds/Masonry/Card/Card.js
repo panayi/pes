@@ -148,7 +148,7 @@ const AdCard = ({
                 className={classes.title}
                 variant="subheading"
                 ad={hit}
-                tagName="h3"
+                component="h3"
               />
             </div>
             <div className={classes.location}>

@@ -195,7 +195,7 @@ const DesktopViewAd = ({
           <ImageSlider
             className={classes.slider}
             images={R.values(ad.images)}
-            imgixParams={{ w: 900, fit: 'clip', auto: 'compress,format' }}
+            imgixParams={{ w: 900, auto: 'compress,format' }}
             flex
           />
         </div>

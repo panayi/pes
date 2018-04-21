@@ -69,6 +69,7 @@ const styles = theme => ({
   portrait: {
     width: 'auto',
     height: '100%',
+    flexBasis: 0,
   },
   landscape: {
     width: '100%',
