@@ -7,7 +7,7 @@ import { selectors as userInfoSelectors } from 'store/userInfo';
 
 const setCountrySubdomain = async (req, res, next) => {
   const { store } = res.locals;
-  const { country } = siteModel.get(req);
+  const country = R.prop('country', siteModel.get(req));
 
   if (country) {
     store.dispatch(siteActions.setCountry(country));
@@ -18,7 +18,10 @@ const setCountrySubdomain = async (req, res, next) => {
     const newCountryCode = R.toLower(
       userCountryCode || locationConfig.DEFAULT_COUNTRY_CODE,
     );
-    const newUrl = `https://${newCountryCode}.${env.domain}${req.originalUrl}`;
+
+    const newUrl = `${req.protocol}://${newCountryCode}.${env.domain}${
+      req.originalUrl
+    }`;
     res.redirect(newUrl);
   }
 };

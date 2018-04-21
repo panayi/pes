@@ -1,16 +1,20 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import env from '../config/env';
 import getCountryByCode from '../utils/getCountryByCode';
 
 export const get = req => {
   const host = req.headers['x-forwarded-host'] || req.get('host');
-  const countryCode = R.compose(R.head, R.split('.'))(host);
-  const country = isNilOrEmpty(countryCode)
-    ? null
-    : getCountryByCode(countryCode);
+  const countryCode = R.compose(R.toUpper, R.head, R.split('.'))(host);
+  const siteForCountryCodeExists = R.contains(countryCode, env.countrySites);
+  console.log(process.env, env.countrySites, countryCode);
 
-  return {
-    countryCode,
-    country,
-  };
+  if (!isNilOrEmpty(countryCode) && siteForCountryCodeExists) {
+    return {
+      countryCode,
+      country: getCountryByCode(countryCode),
+    };
+  }
+
+  return null;
 };
