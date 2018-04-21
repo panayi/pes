@@ -1,6 +1,27 @@
-/* @flow */
+import React from 'react';
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
+import { createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
-import AdProp from '../AdProp/AdProp';
+import Typography from 'material-ui/Typography';
+import renderNothingWhen from 'hocs/renderNothingWhen';
+import Truncate from 'components/Truncate/Truncate';
 
-export default withProps({ getProp: R.prop('title') })(AdProp);
+const AdTitle = ({ title, truncate, ...rest }) => {
+  const komponent = truncate ? Truncate : null;
+
+  return (
+    <Typography {...rest} component={komponent}>
+      {title}
+    </Typography>
+  );
+};
+
+export default R.compose(
+  withProps(
+    createStructuredSelector({
+      title: R.path(['ad', 'title']),
+    }),
+  ),
+  renderNothingWhen(R.propSatisfies(isNilOrEmpty, 'title')),
+)(AdTitle);

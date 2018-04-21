@@ -9,7 +9,6 @@ import Paper from 'material-ui/Paper';
 import withStyles from 'material-ui/styles/withStyles';
 import { Link } from 'react-router-dom';
 import TouchDevice from 'components/TouchDevice/TouchDevice';
-import Truncate from 'components/Truncate/Truncate';
 import FavoriteAd from 'components/FavoriteAd/FavoriteAd';
 import Imgix from 'components/Imgix/Imgix';
 import AdTitle from 'components/AdTitle/AdTitle';
@@ -70,6 +69,7 @@ const styles = theme => ({
     overflow: 'hidden',
   },
   titleWrap: {
+    width: '100%',
     marginBottom: 5,
   },
   title: {
@@ -142,11 +142,11 @@ const AdCard = ({
             <div className={classes.titleWrap}>
               <AdTitle
                 className={classes.title}
-                component={Truncate}
                 variant="subheading"
                 ad={hit}
-                lines={2}
                 tagName="h3"
+                lines="2"
+                truncate
               />
             </div>
             <div className={classes.location}>

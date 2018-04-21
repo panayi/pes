@@ -95,8 +95,8 @@ const ConversationHeader = ({
           className={classes.title}
           ad={ad}
           variant="subheading"
-          component={Truncate}
           lines={1}
+          truncate
         />
         <AdBody ad={ad} component={Truncate} variant="caption" lines={1} />
       </div>
