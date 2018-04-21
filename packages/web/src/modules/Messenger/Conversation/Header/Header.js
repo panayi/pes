@@ -6,7 +6,6 @@ import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import Link from 'components/Link/Link';
-import Truncate from 'components/Truncate/Truncate';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
 import AdTitle from 'components/AdTitle/AdTitle';
 import AdBody from 'components/AdBody/AdBody';
@@ -41,8 +40,22 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'flex-end',
     textAlign: 'right',
-    maxWidth: 250,
+    maxWidth: 220,
     paddingRight: theme.spacing.unit,
+  },
+  title: {
+    webkitLineClamp: 1,
+    maxHeight: 24,
+    maxWidth: 220,
+    overflow: 'hidden',
+    textOveflow: 'ellipsis',
+  },
+  body: {
+    webkitLineClamp: 1,
+    maxHeight: 15,
+    maxWidth: 220,
+    overflow: 'hidden',
+    textOveflow: 'ellipsis',
   },
   backButton: {
     width: 40,
@@ -96,9 +109,8 @@ const ConversationHeader = ({
           ad={ad}
           variant="subheading"
           lines={1}
-          truncate
         />
-        <AdBody ad={ad} component={Truncate} variant="caption" lines={1} />
+        <AdBody className={classes.body} ad={ad} variant="caption" lines={1} />
       </div>
       <AdThumbnail ad={ad} />
     </div>

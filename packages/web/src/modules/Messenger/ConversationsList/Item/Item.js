@@ -55,14 +55,20 @@ const styles = theme => ({
   },
   info: {
     flex: 1,
+    width: 'calc(100% - 100px)',
   },
   title: {
     fontWeight: theme.typography.fontWeightMedium,
+    webkitLineClamp: 1,
+    maxHeight: 16,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   profileImage: {
     display: 'flex',
     flex: 0,
     flexBasis: 50,
+    width: 50,
     justifyContent: 'flex-end',
   },
 });
@@ -92,13 +98,7 @@ const ConversationItem = ({
         userId={otherUserId}
         render={({ userFullName }) => <Typography>{userFullName}</Typography>}
       />
-      <AdTitle
-        className={classes.title}
-        ad={ad}
-        variant="caption"
-        lines={1}
-        truncate
-      />
+      <AdTitle className={classes.title} ad={ad} variant="caption" lines={1} />
       <Typography variant="caption">
         <TimeAgo date={conversation.lastMessageReceivedAt} minPeriod={30} />
       </Typography>

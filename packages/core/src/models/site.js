@@ -7,7 +7,6 @@ export const get = req => {
   const host = req.headers['x-forwarded-host'] || req.get('host');
   const countryCode = R.compose(R.toUpper, R.head, R.split('.'))(host);
   const siteForCountryCodeExists = R.contains(countryCode, env.countrySites);
-  console.log(process.env, env.countrySites, countryCode);
 
   if (!isNilOrEmpty(countryCode) && siteForCountryCodeExists) {
     return {

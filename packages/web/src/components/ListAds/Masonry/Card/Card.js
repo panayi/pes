@@ -76,6 +76,10 @@ const styles = theme => ({
     textAlign: 'center',
     fontSize: theme.typography.subheading.fontSize,
     lineHeight: '1.2em',
+    webkitLineClamp: 2,
+    maxHeight: 38,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   location: {
     display: 'flex',
@@ -145,8 +149,6 @@ const AdCard = ({
                 variant="subheading"
                 ad={hit}
                 tagName="h3"
-                lines="2"
-                truncate
               />
             </div>
             <div className={classes.location}>

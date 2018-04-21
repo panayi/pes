@@ -5,17 +5,8 @@ import { createStructuredSelector } from 'reselect';
 import { withProps } from 'recompose';
 import Typography from 'material-ui/Typography';
 import renderNothingWhen from 'hocs/renderNothingWhen';
-import Truncate from 'components/Truncate/Truncate';
 
-const AdTitle = ({ title, truncate, ...rest }) => {
-  const komponent = truncate ? Truncate : null;
-
-  return (
-    <Typography {...rest} component={komponent}>
-      {title}
-    </Typography>
-  );
-};
+const AdTitle = ({ title, ...rest }) => <Typography {...rest}>{title}</Typography>;
 
 export default R.compose(
   withProps(

@@ -32,7 +32,6 @@ class AdBody extends React.Component {
             ...<A onClick={() => setExpanded(true)}>Read more</A>
           </React.Fragment>
         }
-        onTruncate={this.handleTruncate}
       />
     );
   }
