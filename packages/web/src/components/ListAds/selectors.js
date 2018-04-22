@@ -49,7 +49,7 @@ export const thumbnailHeightSelector = createCachedSelector(
 
     return isPlainObj(dimensions)
       ? columnWidth / dimensions.width * dimensions.height
-      : 0;
+      : constants.DEFAULT_THUMBNAIL_HEIGHT;
   },
 )(hitIdSelector);
 

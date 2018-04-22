@@ -384,8 +384,7 @@ path /ads/published/{id} {
 }
 
 path /ads/pendingReview/{id} is PendingReviewAd {
-  read() { true }
-
+  read() { isCurrentUser(this.user) }
   create() { isCurrentUser(this.user) }
 
   validate() {
