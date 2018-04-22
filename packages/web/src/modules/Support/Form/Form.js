@@ -46,9 +46,11 @@ const Form = props => {
         onBlur={handleBlur}
         value={values.subject}
         label="Subject"
-        type="textarea"
         error={R.has('subject', errors)}
         helperText={errors.subject}
+        InputProps={{
+          multiline: true,
+        }}
       >
         <option value="">Choose...</option>
         {R.map(

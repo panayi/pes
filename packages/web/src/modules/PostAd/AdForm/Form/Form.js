@@ -50,9 +50,11 @@ class Form extends Component {
           onBlur={handleBlur}
           value={values.body}
           label="Please write a short description"
-          type="textarea"
           error={R.has('body', errors)}
           helperText={errors.body}
+          InputProps={{
+            multiline: true,
+          }}
         />
         <TextField
           margin="dense"
