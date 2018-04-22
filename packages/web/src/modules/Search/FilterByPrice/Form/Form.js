@@ -46,6 +46,7 @@ class Form extends Component<Props> {
           onBlur={handleBlur}
           value={values.min}
           placeholder="€ min"
+          type="number"
           margin="none"
         />
         <TextField
@@ -55,6 +56,7 @@ class Form extends Component<Props> {
           onBlur={handleBlur}
           value={values.max}
           placeholder="€ max"
+          type="number"
           margin="none"
         />
       </form>
