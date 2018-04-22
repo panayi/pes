@@ -10,9 +10,10 @@ const styles = theme => ({
     position: 'absolute',
     left: 0,
     zIndex: 1,
-    fontWeight: theme.typography.fontWeightBold,
+    fontWeight: 700,
     color: theme.palette.getContrastText(theme.palette.primary.main),
     background: theme.palette.primary.main,
+    textTransform: 'uppercase',
     [theme.breakpoints.down(theme.map.tablet)]: {
       bottom: theme.spacing.unit * 3,
       padding: [theme.spacing.unit, theme.spacing.unit * 2],
@@ -29,7 +30,7 @@ const styles = theme => ({
 });
 
 const SoldRibbon = ({ className, classes }) => (
-  <Typography variant="button" className={classNames(classes.root, className)}>
+  <Typography variant="title" className={classNames(classes.root, className)}>
     Sold
   </Typography>
 );
