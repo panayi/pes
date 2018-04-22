@@ -46,16 +46,12 @@ class Search extends React.Component {
       nextProps.indexName,
       this.props.indexName,
     );
-    const isInitialParams = R.equals(
-      nextProps.paramsState,
-      this.initialParamsState,
-    );
     const searchParamsChanged = !R.equals(
       nextProps.searchParams,
       this.props.searchParams,
     );
 
-    if (indexNameChanged || (!isInitialParams && searchParamsChanged)) {
+    if (indexNameChanged || searchParamsChanged) {
       this.handleLoadFirstPage(nextProps);
     }
   }
