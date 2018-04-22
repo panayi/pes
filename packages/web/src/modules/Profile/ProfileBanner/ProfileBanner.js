@@ -1,6 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
+import { withProps } from 'recompose';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import SettingsIcon from 'material-ui-icons/Settings';
@@ -9,6 +10,7 @@ import defaultTheme from 'config/theme';
 import { connectData } from 'lib/connectData';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { models } from 'store/firebase/data';
+import { selectors as profileSelectors } from 'store/firebase/profile';
 import Imgix from 'components/Imgix/Imgix';
 import UserFullName from 'components/UserFullName/UserFullName';
 import ProfileImage from 'components/ProfileImage/ProfileImage';
@@ -111,14 +113,18 @@ export const ProfileBanner = ({
 );
 
 const mapDataToProps = {
-  avatarPath: models.users.one(propSelector('userId')).child('avatarPath'),
+  userAvatarPath: models.users.one(propSelector('userId')).child('avatarPath'),
 };
 
 const mapStateToProps = createStructuredSelector({
   isCurrentUser: authSelectors.isCurrentUserSelector(propSelector('userId')),
+  currentUserAvatarPath: profileSelectors.profilePropSelector(['avatarPath']),
 });
 
 export default R.compose(
   connectData(mapDataToProps, mapStateToProps),
+  withProps(({ userAvatarPath, currentUserAvatarPath, isCurrentUser }) => ({
+    avatarPath: isCurrentUser ? currentUserAvatarPath : userAvatarPath,
+  })),
   withStyles(styles),
 )(ProfileBanner);
