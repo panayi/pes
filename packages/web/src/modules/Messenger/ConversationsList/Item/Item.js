@@ -45,7 +45,7 @@ const styles = theme => ({
   },
   unreadBadge: {
     top: 'auto',
-    bottom: -17,
+    bottom: -15,
     left: 0,
     right: 0,
     margin: [0, 'auto'],
@@ -56,6 +56,7 @@ const styles = theme => ({
   info: {
     flex: 1,
     width: 'calc(100% - 100px)',
+    overflow: 'hidden',
   },
   title: {
     fontWeight: theme.typography.fontWeightMedium,
