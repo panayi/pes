@@ -53,7 +53,7 @@ class LoginButtons extends React.Component<Props> {
         providerId === firebaseConfig.PROVIDER_IDS.facebook
           ? 'Google'
           : 'Facebook';
-      errorMsg = `You have already created an account using ${otherProvider}, please try clicking ${otherProvider} button.`;
+      errorMsg = `You have already created an account using ${otherProvider}, please try clicking the ${otherProvider} button.`;
     }
 
     this.props.setErrorMsg(errorMsg);
@@ -72,10 +72,10 @@ class LoginButtons extends React.Component<Props> {
         </Grid>
         {!R.isNil(errorMsg) && (
           <Grid item xs={12} className={classes.error}>
-            {errorMsg ? (
-              <Typography color="error">{errorMsg}</Typography>
-            ) : (
+            {errorMsg === '' ? (
               <GeneralErrorMessage />
+            ) : (
+              <Typography color="error">{errorMsg}</Typography>
             )}
           </Grid>
         )}

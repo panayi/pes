@@ -4,25 +4,25 @@ import { connect } from 'react-redux';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import { actions as modalActions } from 'store/modals';
+import A from 'components/A/A';
 
 const styles = () => ({
   link: {
-    cursor: 'pointer',
-    textDecoration: 'underline',
+    display: 'inline',
   },
 });
 
-const GeneralErrorMessage = ({ openModal, classes }) => (
-  <Typography color="error">
+const GeneralErrorMessage = ({ openModal, className, classes }) => (
+  <Typography className={className} color="error">
     Something went wrong. Try again or{' '}
-    <a
+    <A
       className={classes.link}
       onClick={() => openModal('support')}
       role="button"
       tabIndex="-1"
     >
       contact support
-    </a>.
+    </A>.
   </Typography>
 );
 

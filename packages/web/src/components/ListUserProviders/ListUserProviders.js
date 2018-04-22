@@ -5,10 +5,14 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { defaultProps, withProps } from 'recompose';
 import withStyles from 'material-ui/styles/withStyles';
+import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import authConfig from '@pesposa/core/src/config/auth';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { actions as authActions } from 'store/firebase/auth';
+import { actions as modalActions } from 'store/modals';
 import withProfileData from 'hocs/withProfileData';
+import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
+import ErrorModal from 'components/ErrorModal/ErrorModal';
 import ProviderIcon from 'components/ProviderIcon/ProviderIcon';
 
 type Props = {
@@ -39,7 +43,17 @@ class UserProviders extends Component<Props> {
     try {
       await linkProvider(providerId);
     } catch (error) {
-      alert('Something went wrong. Please try again.'); // eslint-disable-line no-alert
+      const code = R.prop('code', error);
+      const providerName =
+        providerId === firebaseConfig.PROVIDER_IDS.facebook
+          ? 'Facebook'
+          : 'Google';
+      const accountExists = code === 'auth/email-already-in-use';
+      const title = `Cannot link your ${providerName} profile`;
+      const errorMsg = accountExists
+        ? `Your ${providerName} profile is already associated with a different Pesposa account. Linking multiple Pesposa accounts is not supported.`
+        : null;
+      this.props.openModal('error', { title, errorMsg });
     }
   };
 
@@ -68,6 +82,7 @@ class UserProviders extends Component<Props> {
             providers,
           )}
         </div>
+        <ReduxModal id="error" content={ErrorModal} />
       </React.Fragment>
     );
   }
@@ -75,6 +90,7 @@ class UserProviders extends Component<Props> {
 
 const mapDispatchToProps = {
   linkProvider: authActions.linkProvider,
+  openModal: modalActions.openModal,
 };
 
 export default R.compose(
