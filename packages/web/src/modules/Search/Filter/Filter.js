@@ -11,7 +11,7 @@ const styles = theme => ({
     [theme.breakpoints.up(theme.map.laptop)]: {
       paddingBottom: 0,
       border: [1, 'solid', theme.palette.divider],
-      boxShadow: '0px 2px 4px 0px rgba(0,0,0,0.06)',
+      borderRadius: theme.borderRadius.md,
     },
   },
   sectionContent: {

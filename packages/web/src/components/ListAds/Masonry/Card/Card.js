@@ -29,14 +29,14 @@ const styles = theme => ({
   },
   adPaperRoot: {
     width: '100%',
-    borderRadius: theme.borderRadius.xl,
+    borderRadius: theme.borderRadius.md,
   },
   media: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
     width: '100%',
-    borderRadius: `${theme.borderRadius.xl}px ${theme.borderRadius.xl}px 0 0`,
+    borderRadius: `${theme.borderRadius.md}px ${theme.borderRadius.md}px 0 0`,
   },
   favorite: {
     position: 'absolute',
