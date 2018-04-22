@@ -1,9 +1,18 @@
 import * as R from 'ramda';
+import { createSelector } from 'reselect';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import * as algoliaConfig from '@pesposa/core/src/config/algolia';
+import { selectors as changesSelectors } from 'store/postAd/changes';
 import * as constants from './constants';
 
-export const hitsSelector = R.path(constants.ROOT_PATH);
+const algoliaHitsSelector = R.path(constants.ROOT_PATH);
+
+export const hitsSelector = createSelector(
+  algoliaHitsSelector,
+  changesSelectors.deletedAdsSelector,
+  (hits, deletedAds) =>
+    R.reject(hit => R.contains(hit.objectID, deletedAds), hits),
+);
 
 export const isHitsEmptySelector = R.compose(R.isEmpty, hitsSelector);
 

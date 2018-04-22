@@ -28,6 +28,9 @@ export const profiles = userIdSelector =>
   });
 export const ads = legacySelector =>
   createModelConnections(createSelector(legacySelector, modelPaths.ADS));
+export const pendingReviewAds = createModelConnections(
+  modelPaths.PENDING_REVIEW_ADS,
+);
 export const adImages = adIdSelector =>
   createModelConnections(createSelector(adIdSelector, modelPaths.AD_IMAGES));
 export const draftAd = createModelConnections(

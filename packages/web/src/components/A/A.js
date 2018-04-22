@@ -17,13 +17,17 @@ const styles = theme => ({
   },
 });
 
-const A = ({ className, classes, ...rest }) => (
+const A = ({ component, className, classes, ...rest }) => (
   <Typography
     className={classNames(classes.root, className)}
     {...rest}
     color="primary"
-    component="a"
+    component={component}
   />
 );
+
+A.defaultProps = {
+  component: 'a',
+};
 
 export default withStyles(styles)(A);

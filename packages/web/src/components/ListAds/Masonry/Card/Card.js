@@ -22,6 +22,7 @@ const styles = theme => ({
   root: {
     display: 'flex',
     padding: 1,
+    cursor: 'pointer',
   },
   ad: {
     textDecoration: 'none',
@@ -116,8 +117,9 @@ const AdCard = ({
             root: classes.adPaperRoot,
           }}
           elevation={1}
-          component={AdLink}
           ad={hit}
+          component={hit.onClick ? undefined : AdLink}
+          onClick={hit.onClick}
         >
           <CardMedia
             className={classes.media}

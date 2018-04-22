@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { isNilOrEmpty } from 'ramda-adjunct';
+import { isNilOrEmpty, noop } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { branch, withProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
@@ -10,12 +10,17 @@ import withStyles from 'material-ui/styles/withStyles';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
+import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { constants as searchConstants } from 'store/search';
+import { selectors as changesSelectors } from 'store/postAd/changes';
 import needsUser from 'hocs/needsUser';
+import ListAds from 'components/ListAds/ListAds';
+import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import ProfileBanner from './ProfileBanner/ProfileBanner';
 import ListUserAds from './ListUserAds/ListUserAds';
+import PendingReviewAdStatus from './PendingReviewAdStatus/PendingReviewAdStatus';
 
 const styles = theme => ({
   root: {
@@ -42,15 +47,26 @@ const styles = theme => ({
 
 class Profile extends Component {
   handleChangeTab = (event, value) => {
-    const { userId } = this.props;
+    const { userId, tab } = this.props;
     const basePath = `/user/${userId}`;
+
+    if (value === tab) {
+      return;
+    }
+
     const path = value === 'selling' ? basePath : `${basePath}/${value}`;
     this.props.history.push(path);
   };
 
   render() {
-    const { userId, tab, searchParams, isCurrentUser, classes } = this.props;
-    const currentTab = tab || 'selling';
+    const {
+      userId,
+      searchParams,
+      tab,
+      isCurrentUser,
+      createdAds,
+      classes,
+    } = this.props;
 
     return (
       <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
@@ -59,12 +75,15 @@ class Profile extends Component {
           <div className={classes.tabsWrap}>
             <Tabs
               className={classes.tabs}
-              value={currentTab}
+              value={tab}
               onChange={this.handleChangeTab}
               indicatorColor="primary"
               textColor="primary"
               centered
             >
+              {isCurrentUser && !isNilOrEmpty(createdAds) ? (
+                <Tab label="Pending" value="pending" />
+              ) : null}
               <Tab label="Selling" value="selling" />
               <Tab label="Sold" value="sold" />
               {isCurrentUser ? (
@@ -72,14 +91,38 @@ class Profile extends Component {
               ) : null}
             </Tabs>
             <div className={classes.list}>
-              <ListUserAds params={searchParams} />
+              {tab === 'pending' ? (
+                <ListAds hits={createdAds} loadNextPage={noop} />
+              ) : (
+                <ListUserAds params={searchParams} />
+              )}
             </div>
           </div>
+          <ReduxModal
+            id="pendingReviewAdStatus"
+            content={PendingReviewAdStatus}
+          />
         </div>
       </SearchProvider>
     );
   }
 }
+
+const tabSelector = createSelector(
+  propSelector('tab'),
+  propSelector('createdAds'),
+  (tab, createdAds) => {
+    if (isNilOrEmpty(tab)) {
+      return 'selling';
+    }
+
+    if (tab === 'pending' && isNilOrEmpty(createdAds)) {
+      return 'selling';
+    }
+
+    return tab;
+  },
+);
 
 export const searchParamsByTabSelector = createSelector(
   propSelector('tab'),
@@ -92,9 +135,17 @@ export const searchParamsByTabSelector = createSelector(
         sold: true,
         ids: null,
       };
-    } else if (tab === 'favorites') {
+    }
+
+    if (tab === 'favorites') {
       return {
         ids: isNilOrEmpty(favoriteAds) ? ['dummy'] : R.pluck('id', favoriteAds),
+      };
+    }
+
+    if (tab === 'pending') {
+      return {
+        ids: ['dummy'],
       };
     }
 
@@ -112,13 +163,28 @@ const mapDataToProps = {
 
 const mapStateToProps = createStructuredSelector({
   currentUserId: authSelectors.uidSelector,
+  createdAds: changesSelectors.createdAdsSelector,
 });
+
+const mapDispatchToProps = {
+  openModal: modalActions.openModal,
+};
 
 export default R.compose(
   branch(R.compose(isNilOrEmpty, R.prop('userId')), needsUser()),
-  connect(mapStateToProps),
-  withProps(({ userId, currentUserId }) => ({
+  connect(mapStateToProps, mapDispatchToProps),
+  withProps(({ tab, userId, currentUserId, createdAds, openModal }) => ({
+    tab: tabSelector({ tab, createdAds }),
     isCurrentUser: userId === currentUserId,
+    createdAds: R.map(
+      ad =>
+        R.assoc(
+          'onClick',
+          () => openModal('pendingReviewAdStatus', { ad }),
+          ad,
+        ),
+      createdAds,
+    ),
   })),
   branch(R.prop('isCurrentUser'), connectData(mapDataToProps)),
   connect(
