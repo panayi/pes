@@ -4,7 +4,9 @@ import * as R from 'ramda';
 import { withState } from 'recompose';
 import { connect } from 'react-redux';
 import Grid from 'material-ui/Grid';
+import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
+import * as firebaseConfig from '@pesposa/core/src/config/firebase';
 import { actions as authActions } from 'store/firebase/auth';
 import GeneralErrorMessage from 'components/GeneralErrorMessage/GeneralErrorMessage';
 import LoginWithFacebook from './WithFacebook/WithFacebook';
@@ -13,8 +15,8 @@ import LoginWithGoogle from './WithGoogle/WithGoogle';
 type Props = {
   onSuccess: Function,
   login: Function,
-  errored: boolean,
-  setErrored: Function,
+  errorMsg: boolean,
+  setErrorMsg: Function,
   classes: Object,
 };
 
@@ -32,19 +34,33 @@ const styles = theme => ({
 
 class LoginButtons extends React.Component<Props> {
   login = (...args) => {
-    const { login, onSuccess, setErrored } = this.props;
-    setErrored(false);
+    const { login, onSuccess, setErrorMsg } = this.props;
+    setErrorMsg(null);
     login(...args)
       .then(onSuccess)
       .catch(this.handleError);
   };
 
-  handleError = () => {
-    this.props.setErrored(true);
+  handleError = error => {
+    const errorCode = R.prop('code', error);
+    const providerId = R.path(['credential', 'providerId'], error);
+    const accountExists =
+      errorCode === 'auth/account-exists-with-different-credential';
+    let errorMsg = '';
+
+    if (accountExists) {
+      const otherProvider =
+        providerId === firebaseConfig.PROVIDER_IDS.facebook
+          ? 'Google'
+          : 'Facebook';
+      errorMsg = `You have already created an account using ${otherProvider}, please try clicking ${otherProvider} button.`;
+    }
+
+    this.props.setErrorMsg(errorMsg);
   };
 
   render() {
-    const { errored, classes } = this.props;
+    const { errorMsg, classes } = this.props;
 
     return (
       <React.Fragment>
@@ -54,9 +70,13 @@ class LoginButtons extends React.Component<Props> {
         <Grid item xs={12} className={classes.second}>
           <LoginWithGoogle login={this.login} fullWidth />
         </Grid>
-        {errored && (
+        {!R.isNil(errorMsg) && (
           <Grid item xs={12} className={classes.error}>
-            <GeneralErrorMessage />
+            {errorMsg ? (
+              <Typography color="error">{errorMsg}</Typography>
+            ) : (
+              <GeneralErrorMessage />
+            )}
           </Grid>
         )}
         <Grid item xs={12}>
@@ -73,6 +93,6 @@ const mapDispatchToProps = {
 
 export default R.compose(
   connect(null, mapDispatchToProps),
-  withState('errored', 'setErrored', false),
+  withState('errorMsg', 'setErrorMsg', null),
   withStyles(styles),
 )(LoginButtons);
