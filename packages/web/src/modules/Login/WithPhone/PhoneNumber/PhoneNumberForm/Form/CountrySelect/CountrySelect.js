@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import TextField from 'material-ui/TextField';
 import * as phoneNumbersConfig from '@pesposa/core/src/config/phoneNumbers';
 
-const options = R.pair(phoneNumbersConfig.BY_COUNTRY);
+const options = R.toPairs(phoneNumbersConfig.BY_COUNTRY);
 
 const CountrySelect = ({ getLabel, name, value, onChange, onBlur }) => (
   <TextField

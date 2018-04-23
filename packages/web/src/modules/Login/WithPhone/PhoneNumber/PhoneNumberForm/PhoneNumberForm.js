@@ -60,6 +60,7 @@ class PhoneNumberForm extends Component<Props> {
     try {
       await this.handleCallback(this.props.onSubmit, values);
     } catch (error) {
+      console.log(error);
       formikBag.setErrors({
         number: <GeneralErrorMessage />,
       });

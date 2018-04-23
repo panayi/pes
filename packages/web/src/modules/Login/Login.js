@@ -80,16 +80,17 @@ const Login = ({
               !phoneOnly && <LoginButtons onSuccess={onSuccess} />}
             {!disablePhone && (
               <React.Fragment>
-                {!phoneOnly && (
-                  <React.Fragment>
-                    <Grid item xs={1} />
-                    <Grid item xs={10} className={classes.divider}>
-                      <TextDivider variant="subheading" color="textSecondary">
-                        or login with your phone
-                      </TextDivider>
-                    </Grid>
-                  </React.Fragment>
-                )}
+                {!phoneOnly &&
+                  !showingSmsCodeValidation && (
+                    <React.Fragment>
+                      <Grid item xs={1} />
+                      <Grid item xs={10} className={classes.divider}>
+                        <TextDivider variant="subheading" color="textSecondary">
+                          or login with your phone
+                        </TextDivider>
+                      </Grid>
+                    </React.Fragment>
+                  )}
                 <Grid item xs={12}>
                   <LoginWithPhone
                     onSuccess={onSuccess}
