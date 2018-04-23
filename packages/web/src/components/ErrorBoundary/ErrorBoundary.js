@@ -2,40 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { withState } from 'recompose';
-import { fade } from 'material-ui/styles/colorManipulator';
 import * as pesposaConfig from '@pesposa/core/src/config/pesposa';
-import theme from 'config/theme';
-
-const rootStyles = {
-  margin: '14vh auto 0',
-  padding: '32px 0 24px 0',
-  maxWidth: '600px',
-  width: '100%',
-  boxSizing: 'borderBox',
-  textAlign: 'center',
-  fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif',
-  background: fade(theme.palette.primary.light, 0.4),
-};
-
-const buttonWrapStyles = {
-  display: 'inline-block',
-  margin: 8,
-};
-
-const buttonStyles = styles => ({
-  minHeight: 38,
-  background: 'white',
-  color: 'black',
-  textDecoration: 'none',
-  padding: '10px 24px',
-  border: 0,
-  borderRadius: 4,
-  fontSize: '15px',
-  fontWeight: 400,
-  fontFamily: 'Arial',
-  cursor: 'pointer',
-  ...styles,
-});
+import ErrorPage from 'components/ErrorPage/ErrorPage';
 
 export class ErrorBoundary extends Component {
   static propTypes = {
@@ -50,47 +18,31 @@ export class ErrorBoundary extends Component {
     this.props.setErrored(true);
   }
 
-  renderError = () => (
-    <div>
-      <div style={rootStyles}>
-        <h2 variant="title" style={{ marginTop: 0 }}>
-          Something went terribly wrong.
-        </h2>
-        <p style={{ marginBottom: 32 }}>
-          Please contact Pesposa support for assistance.
-        </p>
-        <div>
-          <div style={buttonWrapStyles}>
-            <a
-              href={`mailto:${
-                pesposaConfig.SUPPORT_EMAIL_ADDRESS
-              }?subject=Support Request`}
-              style={buttonStyles()}
-            >
-              Contact Support
-            </a>
-          </div>
-          <div style={buttonWrapStyles}>
-            <button
-              onClick={() => window.location.reload()}
-              style={buttonStyles({
-                background: theme.palette.secondary.main,
-                color: 'white',
-              })}
-            >
-              Reload Pesposa
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
   render() {
     const { errored, children } = this.props;
 
     if (errored) {
-      return this.renderError();
+      return (
+        <ErrorPage
+          title="Something went terribly wrong"
+          body="Please contact Pesposa support for assistance."
+        >
+          {({ PrimaryButton, SecondaryButton }) => (
+            <React.Fragment>
+              <SecondaryButton
+                href={`mailto:${
+                  pesposaConfig.SUPPORT_EMAIL_ADDRESS
+                }?subject=Support Request`}
+              >
+                Contact Support
+              </SecondaryButton>
+              <PrimaryButton onClick={() => window.location.reload()}>
+                Reload Pesposa
+              </PrimaryButton>
+            </React.Fragment>
+          )}
+        </ErrorPage>
+      );
     }
 
     return children;
