@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import * as R from 'ramda';
 import { Formik } from 'formik';
 import yup from 'yup';
+import GeneralErrorMessage from 'components/GeneralErrorMessage/GeneralErrorMessage';
 import Form from './Form/Form';
 
 type Props = {
@@ -28,13 +29,9 @@ class SmsCodeValidationForm extends Component<Props> {
     try {
       await this.props.onSubmit(values);
     } catch (error) {
-      const message =
-        error.code === 'auth/invalid-verification-code'
-          ? 'Wrong code. Try again.'
-          : 'Something went wrong. Try again.';
-
+      const finalErrorMsg = error.message || <GeneralErrorMessage />;
       formikBag.setErrors({
-        code: message,
+        code: finalErrorMsg,
       });
     }
     formikBag.setSubmitting(false);

@@ -51,7 +51,7 @@ class UserProviders extends Component<Props> {
       const accountExists = code === 'auth/email-already-in-use';
       const title = `Cannot link your ${providerName} profile`;
       const errorMsg = accountExists
-        ? `Your ${providerName} profile is already associated with a different Pesposa account. Linking multiple Pesposa accounts is not supported.`
+        ? `Your ${providerName} profile is already associated with a different Pesposa account. Linking existing Pesposa accounts is not supported.`
         : null;
       this.props.openModal('error', { title, errorMsg });
     }

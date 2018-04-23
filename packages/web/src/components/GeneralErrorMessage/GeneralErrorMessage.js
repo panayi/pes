@@ -9,6 +9,7 @@ import A from 'components/A/A';
 const styles = () => ({
   link: {
     display: 'inline',
+    textDecoration: 'underline',
   },
 });
 

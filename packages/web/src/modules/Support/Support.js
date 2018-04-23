@@ -78,6 +78,7 @@ class Support extends Component {
       DialogContent,
       DialogActions,
       status,
+      closeModal,
       classes,
     } = this.props;
     const initialValues = {
@@ -107,7 +108,10 @@ class Support extends Component {
               <Form {...formikProps} />
             </DialogContent>
             <DialogActions>
-              <Button type="submit">Send</Button>
+              <Button onClick={() => closeModal()}>Cancel</Button>
+              <Button type="submit" variant="raised" color="primary">
+                Send
+              </Button>
             </DialogActions>
           </form>
         )}

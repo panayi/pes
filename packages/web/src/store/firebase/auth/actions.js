@@ -83,16 +83,16 @@ export const validateSmsCode = (code, confirmationResult) => async (
     }
     dispatch(loginActions.loginSucceeded());
   } catch (error) {
+    let errorMsg;
+
     if (error.code === 'auth/credential-already-in-use') {
-      // TODO: Use a proper dialog and provide a better UX (e.g. a button to click for requesting merge accounts)
-      /* eslint-disable no-alert */
-      window.alert(
-        'This phone number is already associated with another user. Please contact support: contact-us@pesposa.com',
-      );
-      /* eslint-enable no-alert */
+      errorMsg =
+        'Cannot link this phone number as it is already associated with another Pesposa account.';
+    } else if (error.code === 'auth/invalid-verification-code') {
+      errorMsg = 'Wrong code. Try again.';
     }
-    dispatch(loginActions.loginFailed());
-    throw error;
+    dispatch(loginActions.loginFailed(errorMsg));
+    throw new Error(errorMsg);
   }
 };
 
