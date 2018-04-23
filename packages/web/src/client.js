@@ -13,6 +13,7 @@ import theme from 'config/theme';
 import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
 import { selectors as responsiveSelectors } from 'store/responsive';
+import MixpanelProvider from 'components/MixpanelProvider/MixpanelProvider';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import HotjarProvider from 'components/HotjarProvider/HotjarProvider';
 import SearchProvider from 'modules/Search/Provider/Provider';
@@ -50,10 +51,10 @@ ensureReady(routes).then(data => {
   }
 
   renderMethod(
-    <BrowserRouter>
-      <Provider store={store}>
-        <ErrorBoundary>
-          <React.Fragment>
+    <Provider store={store}>
+      <MixpanelProvider>
+        <BrowserRouter>
+          <ErrorBoundary>
             <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
               <JssProvider registry={sheetsRegistry} jss={jss}>
                 <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
@@ -67,10 +68,10 @@ ensureReady(routes).then(data => {
               </JssProvider>
             </SearchProvider>
             <HotjarProvider />
-          </React.Fragment>
-        </ErrorBoundary>
-      </Provider>
-    </BrowserRouter>,
+          </ErrorBoundary>
+        </BrowserRouter>
+      </MixpanelProvider>
+    </Provider>,
     document.getElementById(rootId),
     () => {
       // [ReHydratation](https://github.com/cssinjs/jss/blob/master/docs/ssr.md)
