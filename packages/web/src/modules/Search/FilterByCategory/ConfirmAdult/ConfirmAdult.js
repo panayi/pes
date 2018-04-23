@@ -10,23 +10,26 @@ class ConfirmAdult extends React.Component {
     pending: false,
   };
 
-  handleClick = async () => {
-    const { onSuccess, confirmAdult, closeModal } = this.props;
+  handleAccept = async () => {
+    const { onAccept, confirmAdult, closeModal } = this.props;
     this.setState({
       pending: true,
     });
     await confirmAdult();
-    onSuccess();
+    onAccept();
+    closeModal();
+  };
+
+  handleReject = () => {
+    const { onReject, closeModal } = this.props;
+    if (onReject) {
+      onReject();
+    }
     closeModal();
   };
 
   render() {
-    const {
-      DialogTitle,
-      DialogContent,
-      DialogActions,
-      closeModal,
-    } = this.props;
+    const { DialogTitle, DialogContent, DialogActions } = this.props;
     const { pending } = this.state;
 
     return (
@@ -47,9 +50,9 @@ class ConfirmAdult extends React.Component {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => closeModal()}>Disagree</Button>
-          <Button variant="raised" color="primary" onClick={this.handleClick}>
-            Agree
+          <Button onClick={this.handleReject}>I disagree, take me back</Button>
+          <Button variant="raised" color="primary" onClick={this.handleAccept}>
+            I agree, show me&nbsp;<u>Personals</u>&nbsp;listings
           </Button>
         </DialogActions>
       </React.Fragment>

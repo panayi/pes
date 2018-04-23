@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
+import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { defaultProps } from 'recompose';
 import {
@@ -33,39 +34,46 @@ type Props = {
   classes: Object,
 };
 
-const styles = {
+const styles = theme => ({
+  confirmAdultBackdrop: {
+    backgroundColor: theme.palette.common.black,
+  },
   list: {
     flex: 0,
     padding: 0,
   },
-};
+});
 
 class FilterByCategory extends React.Component<Props> {
+  componentDidMount() {
+    const { currentCategory, categories, history } = this.props;
+    const category = R.find(R.propEq('id', currentCategory), categories);
+
+    if (category && category.requireAdult) {
+      this.confirmAdult(category, () => history.replace('/'));
+    }
+  }
+
   setCategory = category => {
     const id = category.id === 'all' ? null : category.id;
     this.props.setCategory(id);
   };
 
-  confirmAdult = category => {
+  confirmAdult = (category, onReject) => {
     const { adult, openModal } = this.props;
 
     if (adult) {
       this.setCategory(category);
     } else {
       openModal('confirmAdult', {
-        onSuccess: () => this.setCategory(category),
+        onAccept: () => this.setCategory(category),
+        onReject,
       });
     }
   };
 
   handleCategoryClick = category => {
-    const { isAuthenticated, openModal } = this.props;
-
-    if (category.requireAdult && !isAuthenticated) {
-      openModal('login', {
-        onSuccess: () => this.confirmAdult(category),
-      });
-    } else if (category.requireAdult && isAuthenticated) {
+    if (category.requireAdult) {
       this.confirmAdult(category);
     } else {
       this.setCategory(category);
@@ -95,7 +103,13 @@ class FilterByCategory extends React.Component<Props> {
             R.values(categoryLinks),
           )}
         </List>
-        <ReduxModal id="confirmAdult" content={ConfirmAdult} />
+        <ReduxModal
+          BackdropProps={{ className: classes.confirmAdultBackdrop }}
+          id="confirmAdult"
+          content={ConfirmAdult}
+          disableEscapeKeyDown
+          disableBackdropClick
+        />
       </React.Fragment>
     );
   };
@@ -144,6 +158,7 @@ const mapDispatchToProps = {
 export default R.compose(
   connectData({ categories: models.categories.all }),
   translate('categories'),
+  withRouter,
   defaultProps({
     categories: [],
   }),

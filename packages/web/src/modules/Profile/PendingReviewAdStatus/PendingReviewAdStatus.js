@@ -98,7 +98,7 @@ class PendingReviewAdStatus extends React.Component {
             <ProfileImage userId={ad.user} />
             <div className={classes.adInfo}>
               <Typography variant="subheading">{ad.title}</Typography>
-              <Typography variant="caption" color="text-secondary">
+              <Typography variant="caption" color="textSecondary">
                 {t(ad.category)}
               </Typography>
             </div>
