@@ -7,6 +7,13 @@ const Placeholder = () => <Spinner overlay centered />;
 
 const routes = [
   {
+    // Legacy
+    path: /\/(post)|(advertise-on-pesposa)|(users\/sign-in)|(users\/sign-up)|(terms)|(featured-ads)/,
+    component: asyncComponent({
+      loader: () => import('./components/NotFound/NotFound'),
+    }),
+  },
+  {
     path: '/user/:userId/:tab?',
     component: asyncComponent({
       loader: () => import('./pages/profile/index'),

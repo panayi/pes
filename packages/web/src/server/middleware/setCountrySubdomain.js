@@ -23,6 +23,7 @@ const setCountrySubdomain = async (req, res, next) => {
       req.originalUrl
     }`;
     res.redirect(newUrl);
+    res.end();
   }
 };
 

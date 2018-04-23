@@ -1,11 +1,11 @@
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import env from '../config/env';
+import getSubdomain from '../utils/getSubdomain';
 import getCountryByCode from '../utils/getCountryByCode';
 
 export const get = req => {
-  const host = req.headers['x-forwarded-host'] || req.get('host');
-  const countryCode = R.compose(R.toUpper, R.head, R.split('.'))(host);
+  const countryCode = R.compose(R.toUpper, getSubdomain)(req);
   const siteForCountryCodeExists = R.contains(countryCode, env.countrySites);
 
   if (!isNilOrEmpty(countryCode) && siteForCountryCodeExists) {

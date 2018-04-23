@@ -3,6 +3,7 @@ import firebase from 'firebase-admin';
 import env from '@pesposa/core/src/config/env';
 import serviceAccountKey from '@pesposa/core/src/config/serviceAccountKey.json';
 import appRoute from 'server/routes/app';
+import redirectLegacyUrl from 'server/middleware/redirectLegacyUrl';
 import createStore from 'server/middleware/createStore';
 import setLocation from 'server/middleware/setLocation';
 import setCountrySubdomain from 'server/middleware/setCountrySubdomain';
@@ -27,6 +28,7 @@ server
 // Default route
 server.get(
   '/*',
+  redirectLegacyUrl,
   createStore,
   setLocation,
   setCountrySubdomain,

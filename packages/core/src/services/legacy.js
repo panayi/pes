@@ -13,6 +13,8 @@ import computedProp from '../utils/computedProp';
 import promiseSerial from '../utils/promiseSerial';
 import * as fetchService from '../services/fetch';
 import * as storageService from '../services/storage';
+import getLegacyAdId from '../utils/getLegacyAdId';
+import mapLegacyToNewCategory from '../utils/mapLegacyToNewCategory';
 import log from '../utils/log';
 import renameFile from '../utils/renameFile';
 import * as gmapsService from '../services/gmaps';
@@ -32,65 +34,6 @@ const getAdUrl = (id, category) =>
   }/${category}/${id}`;
 
 const getAdPath = adId => `/ads/legacy/${adId}`;
-
-const mapLegacyToNewCategory = ad => {
-  const { categoryParent, categoryChild } = ad;
-
-  if (categoryParent === 'real_estate') {
-    return 'real-estate';
-  }
-
-  if (categoryParent === 'personals') {
-    return 'personals';
-  }
-
-  if (categoryChild === 'cars') {
-    return 'cars';
-  }
-
-  if (categoryParent === 'vehicles') {
-    return 'other-vehicles-and-parts';
-  }
-
-  if (categoryChild === 'home_and_garden') {
-    return 'home-and-garden';
-  }
-
-  if (
-    R.contains(categoryChild, [
-      'home_appliances',
-      'electronics',
-      'computing',
-      'cell_phones',
-      'cameras_and_accessories',
-    ])
-  ) {
-    return 'electronics';
-  }
-
-  if (
-    R.contains(categoryChild, [
-      'hunting_stuff',
-      'fishing_diving_stuff',
-      'musical_instruments',
-      'toys_and_hobbies',
-      'video_games',
-      'sporting_goods',
-      'antiques_collectibles',
-      'books',
-    ])
-  ) {
-    return 'sports-and-leisure';
-  }
-
-  if (R.contains(categoryChild, ['jewelry_watches', 'clothing'])) {
-    return 'fashion';
-  }
-
-  return 'other';
-};
-
-const getLegacyAdId = ({ id, categoryParent }) => `${categoryParent}-${id}`;
 
 // Transform old ad attributes (MySQL DB) to new ad attributes
 const transformAdProperties = R.compose(
@@ -133,7 +76,9 @@ const transformAdProperties = R.compose(
     R.compose(R.when(R.equals('Lefkoşa'), R.always('Nicosia')), R.prop('city')),
   ),
   computedProp('body', R.compose(striptags, R.prop('description'))),
-  computedProp('category', mapLegacyToNewCategory),
+  computedProp('category', ({ categoryParent, categoryChild }) =>
+    mapLegacyToNewCategory(categoryParent, categoryChild),
+  ),
   computedProp(
     'createdAt',
     R.compose(
