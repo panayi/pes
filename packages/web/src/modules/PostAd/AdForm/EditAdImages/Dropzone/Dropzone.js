@@ -57,7 +57,7 @@ export class Dropzone extends Component<Props> {
     const { isLoading, classes } = this.props;
 
     if (isLoading) {
-      return <Spinner size={30} spinnerWidth={3} />;
+      return <Spinner size={24} spinnerWidth={3} />;
     }
 
     if (isDragReject) {

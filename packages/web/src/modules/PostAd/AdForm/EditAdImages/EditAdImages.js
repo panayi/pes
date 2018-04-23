@@ -73,11 +73,13 @@ const styles = theme => ({
     alignItems: 'center',
   },
   deleteButton: {
+    height: 40,
+    width: 40,
     color: theme.palette.common.white,
     background: theme.palette.action.disabled,
     '& svg': {
-      width: '1.2em',
-      height: '1.2em',
+      width: 24,
+      height: 24,
     },
   },
   disabled: {
@@ -110,7 +112,7 @@ export class EditAdImages extends Component<Props> {
     const { isDeleting, imagesCount, published, classes } = this.props;
 
     if (isDeleting === imageId) {
-      return <Spinner className={classes.spinner} centered />;
+      return <Spinner size={24} className={classes.spinner} centered />;
     }
 
     if (isDeleting) {
