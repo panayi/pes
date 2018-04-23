@@ -12118,12 +12118,6 @@ regjsparser@^0.1.4:
   dependencies:
     jsesc "~0.5.0"
 
-reimgix@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/reimgix/-/reimgix-0.1.0.tgz#bec7787fc9e4c62ad6c3b91a7376722d8851fd79"
-  dependencies:
-    query-string "^5.0.1"
-
 relateurl@0.2.x:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"

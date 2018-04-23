@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import { isNotNil } from 'ramda-adjunct';
 import { withProps } from 'recompose';
 import withStyles from 'material-ui/styles/withStyles';
-import MixpanelProvider from 'components/MixpanelProvider/MixpanelProvider';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Login from 'modules/Login/Login';
 import Header from './Header/Header';
@@ -50,31 +49,29 @@ const Layout = ({
   hasSidebar,
   classes,
 }) => (
-  <MixpanelProvider>
-    <div className={classes.root}>
-      {hasHeader && (
-        <Header className={headerClassName}>
-          <HeaderContent />
-        </Header>
-      )}
-      {hasSidebar && (
-        <Sidebar className={sidebarClassName}>
-          <SidebarContent />
-        </Sidebar>
-      )}
-      <Page
-        className={classNames(pageClassName, {
-          [classes.hasHeader]: hasHeader,
-        })}
-        fixed={fixed}
-        flex={flex}
-        wide={wide}
-      >
-        {children}
-      </Page>
-      <ReduxModal id="login" content={Login} />
-    </div>
-  </MixpanelProvider>
+  <div className={classes.root}>
+    {hasHeader && (
+      <Header className={headerClassName}>
+        <HeaderContent />
+      </Header>
+    )}
+    {hasSidebar && (
+      <Sidebar className={sidebarClassName}>
+        <SidebarContent />
+      </Sidebar>
+    )}
+    <Page
+      className={classNames(pageClassName, {
+        [classes.hasHeader]: hasHeader,
+      })}
+      fixed={fixed}
+      flex={flex}
+      wide={wide}
+    >
+      {children}
+    </Page>
+    <ReduxModal id="login" content={Login} />
+  </div>
 );
 
 Layout.propTypes = {
