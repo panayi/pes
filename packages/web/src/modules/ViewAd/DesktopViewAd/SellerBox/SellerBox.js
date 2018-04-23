@@ -17,6 +17,9 @@ const styles = theme => ({
   avatarWrap: {
     padding: 0,
     minWidth: 'auto',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
   },
   avatar: {
     border: [4, 'solid', theme.palette.common.white],
@@ -53,12 +56,11 @@ const styles = theme => ({
 
 const SellerBox = ({ ad, className, classes }) => (
   <div className={classNames(classes.root, className)}>
-    <Link
-      className={classes.avatarWrap}
-      to={ad.user ? `/user/${ad.user}` : null}
-    >
-      <ProfileImage className={classes.avatar} userId={ad.user} />
-    </Link>
+    {ad.user ? (
+      <Link className={classes.avatarWrap} to={`/user/${ad.user}`}>
+        <ProfileImage className={classes.avatar} userId={ad.user} />
+      </Link>
+    ) : null}
     <div className={classes.details}>
       {ad.user && (
         <React.Fragment>
