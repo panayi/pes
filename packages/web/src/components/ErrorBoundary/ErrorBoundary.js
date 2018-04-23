@@ -51,34 +51,36 @@ export class ErrorBoundary extends Component {
   }
 
   renderError = () => (
-    <div style={rootStyles}>
-      <h2 variant="title" style={{ marginTop: 0 }}>
-        Something went terribly wrong.
-      </h2>
-      <p style={{ marginBottom: 32 }}>
-        Please contact Pesposa support for assistance.
-      </p>
-      <div>
-        <div style={buttonWrapStyles}>
-          <a
-            href={`mailto:${
-              pesposaConfig.SUPPORT_EMAIL_ADDRESS
-            }?subject=Support Request`}
-            style={buttonStyles()}
-          >
-            Contact Support
-          </a>
-        </div>
-        <div style={buttonWrapStyles}>
-          <button
-            onClick={() => window.location.reload()}
-            style={buttonStyles({
-              background: theme.palette.secondary.main,
-              color: 'white',
-            })}
-          >
-            Reload Pesposa
-          </button>
+    <div>
+      <div style={rootStyles}>
+        <h2 variant="title" style={{ marginTop: 0 }}>
+          Something went terribly wrong.
+        </h2>
+        <p style={{ marginBottom: 32 }}>
+          Please contact Pesposa support for assistance.
+        </p>
+        <div>
+          <div style={buttonWrapStyles}>
+            <a
+              href={`mailto:${
+                pesposaConfig.SUPPORT_EMAIL_ADDRESS
+              }?subject=Support Request`}
+              style={buttonStyles()}
+            >
+              Contact Support
+            </a>
+          </div>
+          <div style={buttonWrapStyles}>
+            <button
+              onClick={() => window.location.reload()}
+              style={buttonStyles({
+                background: theme.palette.secondary.main,
+                color: 'white',
+              })}
+            >
+              Reload Pesposa
+            </button>
+          </div>
         </div>
       </div>
     </div>
