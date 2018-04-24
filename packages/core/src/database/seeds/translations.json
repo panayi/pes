@@ -1,9 +1,10 @@
 {
   "en": {
     "categories": {
+      "all": "All",
       "real-estate": "Real Estate",
       "cars": "Cars",
-      "other-vehicles-and-parts": "Other Vehicles and Parts",
+      "other-vehicles-and-parts": "Other Vehicles & Parts",
       "electronics": "Electronics",
       "home-and-garden": "Home and Garden",
       "fashion-and-accessories": "Fashion and Accessories",
@@ -21,9 +22,10 @@
   },
   "el": {
     "categories": {
+      "all": "Όλα",
       "real-estate": "Ακίνητα",
       "cars": "Αυτοκίνητα",
-      "other-vehicles-and-parts": "Άλλα Οχήματα και Εξαρτήματα",
+      "other-vehicles-and-parts": "Άλλα Οχήματα & Εξαρτήματα",
       "electronics": "Ηλεκτρονικά",
       "home-and-garden": "Σπίτι και Κήπος",
       "fashion-and-accessories": "Μόδα και Αξεσουάρ",
