@@ -25,7 +25,7 @@ import PendingReviewAdStatus from './PendingReviewAdStatus/PendingReviewAdStatus
 const styles = theme => ({
   root: {
     [theme.breakpoints.up(theme.map.laptop)]: {
-      margin: [theme.spacing.unit, 0, theme.spacing.unit * 3, 0],
+      padding: [theme.spacing.unit, 0, theme.spacing.unit * 3, 0],
     },
   },
   tabsWrap: {
