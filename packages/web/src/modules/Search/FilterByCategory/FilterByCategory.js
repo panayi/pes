@@ -106,7 +106,7 @@ const categoryLinksSelector = (state, props) => {
   return R.compose(
     R.prepend({
       id: 'all',
-      label: t('All'),
+      label: t('all'),
     }),
     R.map(category => ({
       ...category,
