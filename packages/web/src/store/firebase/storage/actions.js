@@ -8,11 +8,9 @@ export const uploadImage = (file: File, dbPath: string) => (
   dispatch: Dispatch,
 ) =>
   dispatch(
-    firebaseApi.files.create(
-      `${storageConfig.IMAGES_PATH}/${generateId()}`,
-      file,
-      dbPath,
-    ),
+    firebaseApi.files.create(storageConfig.IMAGES_PATH, file, dbPath, {
+      name: generateId,
+    }),
   );
 
 export const uploadImages = (files: Array<File>, dbPath: string) => (
