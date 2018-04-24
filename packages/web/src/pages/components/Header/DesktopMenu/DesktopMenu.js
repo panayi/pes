@@ -88,6 +88,7 @@ class DesktopMenu extends Component {
           className={classes.profileButton}
           size="small"
           onClick={this.handleAnchorClick}
+          title="Profile"
         >
           <ProfileImage userId={currentUserId} />
         </Button>
