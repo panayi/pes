@@ -103,7 +103,7 @@ export const ProfileBanner = ({
           <ListUserProviders
             className={classes.providers}
             userId={userId}
-            link={isCurrentUser}
+            canLink={isCurrentUser}
           />
           <SettingsIcon className={classes.settingsIcon} />
         </div>

@@ -16,7 +16,7 @@ import ErrorModal from 'components/ErrorModal/ErrorModal';
 import ProviderIcon from 'components/ProviderIcon/ProviderIcon';
 
 type Props = {
-  link: ?boolean,
+  canLink: ?boolean,
   providerComponent: React$Node,
   className: string | null,
   providers: Array<Object>,
@@ -30,11 +30,14 @@ const styles = {
   },
 };
 
-class UserProviders extends Component<Props> {
-  handleProviderClick = async provider => {
-    const { link, linkProvider } = this.props;
+class ListUserProviders extends Component<Props> {
+  canLinkProvider = provider =>
+    this.props.canLink && provider && provider.disabled;
 
-    if (!link) {
+  handleProviderClick = async provider => {
+    const { linkProvider } = this.props;
+
+    if (!this.canLinkProvider(provider)) {
       return;
     }
 
@@ -43,12 +46,16 @@ class UserProviders extends Component<Props> {
     try {
       await linkProvider(providerId);
     } catch (error) {
+      console.log(error);
       const code = R.prop('code', error);
       const providerName =
         providerId === firebaseConfig.PROVIDER_IDS.facebook
           ? 'Facebook'
           : 'Google';
-      const accountExists = code === 'auth/email-already-in-use';
+      const accountExists = R.contains(code, [
+        'auth/email-already-in-use',
+        'auth/credential-already-in-use',
+      ]);
       const title = `Cannot link your ${providerName} profile`;
       const errorMsg = accountExists
         ? `Your ${providerName} profile is already associated with a different Pesposa account. Linking existing Pesposa accounts is not supported.`
@@ -57,31 +64,28 @@ class UserProviders extends Component<Props> {
     }
   };
 
+  renderProvider = provider => {
+    const { providerComponent: Provider, classes } = this.props;
+
+    return (
+      <Provider
+        className={classNames({
+          [classes.clickable]: this.canLinkProvider(provider),
+        })}
+        key={provider.providerId}
+        onClick={() => this.handleProviderClick(provider)}
+        {...provider}
+      />
+    );
+  };
+
   render() {
-    const {
-      providerComponent: Provider,
-      prefix,
-      className,
-      providers,
-      link,
-      classes,
-    } = this.props;
+    const { prefix, className, providers } = this.props;
 
     return (
       <React.Fragment>
         {providers.length ? prefix : null}
-        <div className={classNames({ [classes.clickable]: link }, className)}>
-          {R.map(
-            provider => (
-              <Provider
-                key={provider.providerId}
-                onClick={() => this.handleProviderClick(provider)}
-                {...provider}
-              />
-            ),
-            providers,
-          )}
-        </div>
+        <div className={className}>{R.map(this.renderProvider, providers)}</div>
         <ReduxModal id="error" content={ErrorModal} />
       </React.Fragment>
     );
@@ -115,4 +119,4 @@ export default R.compose(
     )(authConfig.providers),
   })),
   withStyles(styles),
-)(UserProviders);
+)(ListUserProviders);
