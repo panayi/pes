@@ -1,5 +1,6 @@
 import React from 'react';
-import { withProps } from 'recompose';
+import * as R from 'ramda';
+import { withProps, setStatic } from 'recompose';
 import { Helmet } from 'react-helmet';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
@@ -319,4 +320,7 @@ const Privacy = ({ location, classes }) => (
   </React.Fragment>
 );
 
-export default withStyles(styles)(Privacy);
+export default R.compose(
+  setStatic('getInitialProps', async ({ store }) => store.getState()),
+  withStyles(styles),
+)(Privacy);
