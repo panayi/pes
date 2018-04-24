@@ -11,4 +11,10 @@ export const BY_COUNTRY = {
     mask: [/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
     regex: /^\d{3}-\d{7}$/,
   },
+  PK: {
+    name: 'Pakistan',
+    callingCode: '+92',
+    mask: [/\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
+    regex: /^\d{3}-\d{7}$/,
+  },
 };

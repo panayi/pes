@@ -1,28 +1,32 @@
 import React from 'react';
 import * as R from 'ramda';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import TextField from 'material-ui/TextField';
-import * as phoneNumbersConfig from '@pesposa/core/src/config/phoneNumbers';
+import { selectors as siteSelectors } from 'store/site';
 
-const options = R.toPairs(phoneNumbersConfig.BY_COUNTRY);
-
-const CountrySelect = ({ getLabel, name, value, onChange, onBlur }) => (
+const CountrySelect = ({
+  getLabel,
+  name,
+  value,
+  phoneNumberConfig,
+  onChange,
+  onBlur,
+}) => (
   <TextField
     select
-    SelectProps={{ native: true }}
+    SelectProps={{ native: true, disabled: true }}
     name={name}
     value={value}
     onChange={onChange}
     onBlur={onBlur}
   >
-    <option value="">Select Country</option>
-    {R.map(
-      ([countryCode, countryProps]) => (
-        <option key={countryCode} value={countryCode}>
-          {getLabel(countryProps)}
-        </option>
-      ),
-      options,
-    )}
+    <option
+      key={phoneNumberConfig.countryCode}
+      value={phoneNumberConfig.countryCode}
+    >
+      {getLabel(phoneNumberConfig)}
+    </option>
   </TextField>
 );
 
@@ -30,4 +34,8 @@ CountrySelect.defaultProps = {
   getLabel: R.prop('name'),
 };
 
-export default CountrySelect;
+const mapStateToProps = createStructuredSelector({
+  phoneNumberConfig: siteSelectors.phoneNumberConfigSelector,
+});
+
+export default connect(mapStateToProps)(CountrySelect);
