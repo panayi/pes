@@ -17,9 +17,8 @@ import { actions as modalActions } from 'store/modals';
 import { selectors as profileSelectors } from 'store/firebase/profile';
 import connectSearch from 'hocs/connectSearch';
 import translate from 'hocs/translate';
-import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
+import RequireAdult from 'components/RequireAdult/RequireAdult';
 import FilterOption from '../FilterOption/FilterOption';
-import ConfirmAdult from './ConfirmAdult/ConfirmAdult';
 
 type LinkType = {
   id: String,
@@ -29,7 +28,7 @@ type LinkType = {
 
 type Props = {
   categoryLinks: Array<LinkType>,
-  currentCategory: string,
+  currentCategoryId: string,
   setCategory: Function,
   classes: Object,
 };
@@ -45,72 +44,49 @@ const styles = theme => ({
 });
 
 class FilterByCategory extends React.Component<Props> {
-  componentDidMount() {
-    const { currentCategory, categories, history } = this.props;
-    const category = R.find(R.propEq('id', currentCategory), categories);
-
-    if (category && category.requireAdult) {
-      this.confirmAdult(category, () => history.replace('/'));
-    }
-  }
-
   setCategory = category => {
     const id = category.id === 'all' ? null : category.id;
     this.props.setCategory(id);
   };
 
-  confirmAdult = (category, onReject) => {
-    const { adult, openModal } = this.props;
-
-    if (adult) {
-      this.setCategory(category);
-    } else {
-      openModal('confirmAdult', {
-        onAccept: () => this.setCategory(category),
-        onReject,
-      });
-    }
-  };
-
-  handleCategoryClick = category => {
+  handleCategoryClick = (category, confirmAdult) => {
     if (category.requireAdult) {
-      this.confirmAdult(category);
+      confirmAdult({
+        onAccept: () => this.setCategory(category),
+      });
     } else {
       this.setCategory(category);
     }
   };
 
   renderContent = () => {
-    const { categoryLinks, currentCategory, classes } = this.props;
+    const { categoryLinks, currentCategoryId, classes } = this.props;
 
     return (
-      <React.Fragment>
-        <List classes={{ root: classes.list }}>
-          {R.map(
-            category => (
-              <FilterOption
-                key={category.id}
-                active={
-                  category.id === 'all'
-                    ? R.isNil(currentCategory)
-                    : category.id === currentCategory
-                }
-                onClick={() => this.handleCategoryClick(category)}
-              >
-                {category.label}
-              </FilterOption>
-            ),
-            R.values(categoryLinks),
-          )}
-        </List>
-        <ReduxModal
-          BackdropProps={{ className: classes.confirmAdultBackdrop }}
-          id="confirmAdult"
-          content={ConfirmAdult}
-          disableEscapeKeyDown
-          disableBackdropClick
-        />
-      </React.Fragment>
+      <RequireAdult>
+        {({ confirmAdult }) => (
+          <List classes={{ root: classes.list }}>
+            {R.map(
+              category => (
+                <FilterOption
+                  key={category.id}
+                  active={
+                    category.id === 'all'
+                      ? R.isNil(currentCategoryId)
+                      : category.id === currentCategoryId
+                  }
+                  onClick={() =>
+                    this.handleCategoryClick(category, confirmAdult)
+                  }
+                >
+                  {category.label}
+                </FilterOption>
+              ),
+              R.values(categoryLinks),
+            )}
+          </List>
+        )}
+      </RequireAdult>
     );
   };
 
@@ -142,7 +118,7 @@ const categoryLinksSelector = (state, props) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  currentCategory: paramsSelectors.categorySelector,
+  currentCategoryId: paramsSelectors.categorySelector,
   hasValue: paramsSelectors.categoryHasValueSelector,
   categoryLinks: categoryLinksSelector,
   isAuthenticated: authSelectors.isAuthenticatedSelector,
