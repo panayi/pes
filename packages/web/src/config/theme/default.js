@@ -43,6 +43,9 @@ export default createMuiTheme({
       dark: '#000000',
       contrastText: '#fff',
     },
+    success: {
+      main: '#41B350',
+    },
   },
   typography: {
     fontFamily:

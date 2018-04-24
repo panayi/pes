@@ -6,7 +6,6 @@ import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import DoneIcon from 'material-ui-icons/CheckCircle';
 import HourglassEmptyIcon from 'material-ui-icons/HourglassEmpty';
-import propSelector from '@pesposa/core/src/utils/propSelector';
 import { connectData } from 'lib/connectData';
 import { models } from 'store/firebase/data';
 import translate from 'hocs/translate';
@@ -38,6 +37,9 @@ const styles = theme => ({
   link: {
     display: 'inline',
   },
+  success: {
+    color: theme.palette.success.main,
+  },
 });
 
 class PendingReviewAdStatus extends React.Component {
@@ -56,13 +58,18 @@ class PendingReviewAdStatus extends React.Component {
 
   renderTitle() {
     const { published, classes } = this.props;
+
     return (
       <div className={classes.title}>
-        {published ? <DoneIcon /> : <HourglassEmptyIcon />}
+        {published ? (
+          <DoneIcon className={classes.success} />
+        ) : (
+          <HourglassEmptyIcon />
+        )}
         <div className={classes.titleText}>
           {published
             ? 'Your ad has been published!'
-            : 'Your ad is pending review'}
+            : 'Your ad is being reviewed'}
         </div>
       </div>
     );
@@ -117,14 +124,21 @@ PendingReviewAdStatus.defaultProps = {
 };
 
 const mapDataToProps = {
-  pendingReviewAd: models.pendingReviewAds.one(propSelector(['ad', 'id'])),
+  pendingReviewAds: models.pendingReviewAds.all,
 };
 
 export default R.compose(
   connectData(mapDataToProps),
   translate('categories'),
-  withProps(({ pendingReviewAd }) => ({
-    published: isNilOrEmpty(pendingReviewAd),
-  })),
+  withProps(({ pendingReviewAds, ad }) => {
+    const adId = R.prop('id', ad);
+    return {
+      published: R.compose(
+        isNilOrEmpty,
+        R.find(R.propEq('id', adId)),
+        R.defaultTo([]),
+      )(pendingReviewAds),
+    };
+  }),
   withStyles(styles),
 )(PendingReviewAdStatus);
