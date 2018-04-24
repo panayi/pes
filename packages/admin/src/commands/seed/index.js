@@ -9,14 +9,17 @@ import categories from '@pesposa/core/src/database/seeds/categories.json';
 import translations from '@pesposa/core/src/database/seeds/translations.json';
 
 const seedCategories = async () => {
+  log.info('Firebase: seeding categories...');
   await database.ref('categories').set(categories);
 };
 
 const seedTranslations = async () => {
+  log.info('Firebase: seeding translations...');
   await database.ref('translations').set(translations);
 };
 
 const seedCountryFlags = async () => {
+  log.info('Firebase: seeding country flags...');
   const parentPath = path.join(
     process.cwd(),
     'packages',
