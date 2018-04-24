@@ -96,7 +96,12 @@ const findImageWithGoogle = async ad => {
       keyword: title,
       num: 10,
     });
-    const result = results[random(0, results.length - 1)];
+
+    const finalResults = R.reject(
+      R.propSatisfies(R.test(/offer\.com\.cy/), 'url'),
+      results,
+    );
+    const result = finalResults[random(0, results.length - 1)];
     const url = result && result.url;
 
     if (!url) {
