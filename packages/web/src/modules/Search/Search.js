@@ -3,6 +3,8 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
+import { connectData } from 'lib/connectData';
+import { models } from 'store/firebase/data';
 import {
   actions as searchActions,
   selectors as searchSelectors,
@@ -14,6 +16,7 @@ import {
   actions as paramsActions,
 } from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
+import RequireAdult from 'components/RequireAdult/RequireAdult';
 
 class Search extends React.Component {
   componentDidMount() {
@@ -77,17 +80,25 @@ class Search extends React.Component {
   };
 
   render() {
-    const { hits, children } = this.props;
+    const { hits, currentCategory, history, children } = this.props;
 
-    return children({
-      hits,
-      loadNextPage: this.handleLoadNextPage,
-    });
+    return (
+      <RequireAdult
+        enabled={currentCategory && currentCategory.requireAdult}
+        onReject={() => history.replace('/')}
+      >
+        {children({
+          hits,
+          loadNextPage: this.handleLoadNextPage,
+        })}
+      </RequireAdult>
+    );
   }
 }
 
 const mapStateToProps = createStructuredSelector({
   paramsState: paramsSelectors.paramsSelector,
+  currentCategory: paramsSelectors.categoryObjectSelector(),
   searchParams: searchSelectors.searchParamsSelector,
   indexName: searchSelectors.indexNameSelector,
   hits: hitsSelectors.hitsSelector,
@@ -101,6 +112,7 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
+  connectData({ categories: models.categories.all }),
   connectSearch(mapStateToProps, mapDispatchToProps),
   withRouter,
 )(Search);

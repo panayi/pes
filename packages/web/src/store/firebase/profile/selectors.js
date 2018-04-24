@@ -9,11 +9,8 @@ export const profileSelector = R.path([
   'profile',
 ]);
 
-// isProfileLoadedSelector :: State -> Boolean
-export const isProfileLoadedSelector = createSelector(
-  profileSelector,
-  isLoaded,
-);
+// profileLoadedSelector :: State -> Boolean
+export const profileLoadedSelector = createSelector(profileSelector, isLoaded);
 
 // profilePropSelector :: ([String], Options) -> State -> Any
 //  Options = { populated: Boolean }

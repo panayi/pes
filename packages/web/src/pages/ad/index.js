@@ -82,10 +82,12 @@ export default R.compose(
     const adQuery = adConnection.query(state, props).path;
     const adImagesConnection = models.adImages(adIdSelector).allObjects;
     const adImagesQuery = adImagesConnection.query(state, props).path;
+    const categoriesQuery = models.categories.all.query(state, props).path;
 
     await store.firebase.promiseEvents([
       { path: adQuery, type: 'once' },
       { path: adImagesQuery, type: 'once' },
+      { path: categoriesQuery, type: 'once' },
       {
         path: modelPaths.TRANSLATIONS('en', 'categories').string,
         type: 'once',

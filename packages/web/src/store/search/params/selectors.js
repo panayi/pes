@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import round from '@pesposa/core/src/utils/round';
+import { models } from 'store/firebase/data';
 import { selectors as userInfoSelectors } from 'store/userInfo';
 import * as constants from './constants';
 import { initialState } from './reducer';
@@ -14,6 +15,13 @@ export const categorySelector = R.compose(
   R.prop(constants.CATEGORY_KEY),
   paramsSelector,
 );
+
+export const categoryObjectSelector = (categoryIdSelector = categorySelector) =>
+  createSelector(
+    categoryIdSelector,
+    R.compose(R.defaultTo([]), models.categories.all.selector),
+    (categoryId, categories) => R.find(R.propEq('id', categoryId), categories),
+  );
 
 export const categoryHasValueSelector = R.compose(
   R.complement(R.equals(initialState[constants.CATEGORY_KEY])),

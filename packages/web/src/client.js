@@ -25,7 +25,10 @@ const history = createHistory();
 const sheetsManager = new WeakMap();
 
 ensureReady(routes).then(data => {
-  const finalData = R.compose(R.dissocPath(['firebase', 'auth']))(data);
+  const finalData = R.compose(
+    R.dissocPath(['firebase', 'profile']),
+    R.dissocPath(['firebase', 'auth']),
+  )(data);
   const store = configureStore(finalData, history);
 
   const sheetsRegistry = new SheetsRegistry();
