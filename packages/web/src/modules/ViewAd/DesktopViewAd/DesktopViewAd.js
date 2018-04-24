@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 import * as R from 'ramda';
-import { withStateHandlers } from 'recompose';
+import { withStateHandlers, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { DesktopScreen, TabletScreen } from 'react-responsive-redux';
@@ -321,7 +321,17 @@ export default R.compose(
       addMessage: ({ sentMessages }) => ({ body }) => ({
         sentMessages: R.append(body, sentMessages),
       }),
+      resetSentMessages: () => () => ({
+        sentMessages: [],
+      }),
     },
   ),
+  lifecycle({
+    componentDidUpdate(prevProps) {
+      if (this.props.adId !== prevProps.adId) {
+        this.props.resetSentMessages();
+      }
+    },
+  }),
   withStyles(styles),
 )(DesktopViewAd);
