@@ -38,7 +38,7 @@
         <mj-text align="center" padding-top="8px" font-weight="bold" font-size="20px">
           {{otherUserName}},
         </mj-text>
-        <mj-text align="center" padding="12px 0">
+        <mj-text align="center" padding="8px 0">
           sent you a message about
         </mj-text>
         <mj-text align="center" font-weight="bold" font-size="18px">
