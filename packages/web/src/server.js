@@ -27,7 +27,7 @@ server
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR));
 
 if (env.firebaseProject === 'pesposa-dev') {
-  server.use(morgan('combined'));
+  server.use(morgan('combined', { stream: { write: console.log } }));
 }
 
 // Default route

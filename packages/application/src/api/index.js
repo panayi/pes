@@ -26,7 +26,7 @@ const cors = createCors({ credentials: true, origin });
 app.use(cors);
 
 if (env.firebaseProject === 'pesposa-dev') {
-  app.use(morgan('combined'));
+  app.use(morgan('combined', { stream: { write: console.log } }));
 }
 
 // Public routes
