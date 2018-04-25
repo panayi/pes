@@ -192,17 +192,3 @@ We have a custom yarn script at `./yarn` for allowing operations on multiple dep
 ```
 ssh deploy@178.79.164.250 -p 16888 -R 52698:localhost:52698
 ```
-
-Edit model actions:
-
-```
-cd /var/www/html/pesposa.com/public_html/system/application/frontend/models
-sudo rsub mposts.php
-```
-
-Edit controller actions:
-
-```
-cd /var/www/html/pesposa.com/public_html/system/application/frontend/controllers
-sudo rsub view.php
-```
