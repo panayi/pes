@@ -2,6 +2,7 @@
 import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import express from 'express';
+import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import createCors from 'cors';
 import log from '@pesposa/core/src/utils/log';
@@ -23,6 +24,10 @@ const app = express();
 const origin = env.firebaseProject === 'pesposa-dev' ? '*' : /pesposa\.com$/;
 const cors = createCors({ credentials: true, origin });
 app.use(cors);
+
+if (env.firebaseProject === 'pesposa-dev') {
+  app.use(morgan('combined'));
+}
 
 // Public routes
 app.post('/reverse-geocode', bodyParser.json(), reverseGeocode);
