@@ -25,9 +25,7 @@ const styles = theme => ({
   },
   noResults: {
     marginTop: theme.spacing.unit,
-    maxWidth: 400,
-  },
-  hero: {
+    maxWidth: 600,
     color: theme.palette.text.secondary,
   },
   spinner: {
@@ -47,15 +45,12 @@ class FetchAdsProgress extends Component {
   }
 
   renderNoResults() {
-    const { noResults, isProfileSearch, classes } = this.props;
+    const { hasNoResults, noResults, classes } = this.props;
 
-    return noResults ? (
+    return hasNoResults ? (
       <div className={classes.noResults}>
-        {isProfileSearch ? (
-          <EmptyHero className={classes.hero} tagline="No listings yet!" />
-        ) : (
+        {noResults || (
           <EmptyHero
-            className={classes.hero}
             icon={MoodBadIcon}
             title="Oh snap!"
             tagline="No results found, try looking for something different."
@@ -89,7 +84,7 @@ class FetchAdsProgress extends Component {
 
 const mapStateToProps = createStructuredSelector({
   isLoading: requestSelectors.isRequestPendingSelector,
-  noResults: pagesCountSelectors.noResultsSelector,
+  hasNoResults: pagesCountSelectors.noResultsSelector,
   noMoreResults: searchSelectors.noMoreResultsSelector,
   isProfileSearch: searchSelectors.isProfileSearchSelector,
 });

@@ -35,14 +35,15 @@ export class ListAds extends Component {
   static propTypes = {
     hits: PropTypes.arrayOf(PropTypes.shape({})),
     loadNextPage: PropTypes.func.isRequired,
+    noResults: PropTypes.node,
     scrollPosition: PropTypes.number.isRequired,
     setScrollPosition: PropTypes.func.isRequired,
     classes: PropTypes.shape({}).isRequired,
   };
 
   static defaultProps = {
-    params: null,
     hits: [],
+    noResults: null,
   };
 
   componentDidMount() {
@@ -129,7 +130,7 @@ export class ListAds extends Component {
   };
 
   render() {
-    const { serverHeight, classes } = this.props;
+    const { serverHeight, noResults, classes } = this.props;
 
     return (
       <div className={classes.root}>
@@ -139,7 +140,7 @@ export class ListAds extends Component {
         >
           {this.renderAutoSizer}
         </WindowScroller>
-        <FetchAdsProgress />
+        <FetchAdsProgress noResults={noResults} />
       </div>
     );
   }

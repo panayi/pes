@@ -21,6 +21,7 @@ import SearchProvider from 'modules/Search/Provider/Provider';
 import ProfileBanner from './ProfileBanner/ProfileBanner';
 import ListUserAds from './ListUserAds/ListUserAds';
 import PendingReviewAdStatus from './PendingReviewAdStatus/PendingReviewAdStatus';
+import NoResults from './NoResults/NoResults';
 
 const styles = theme => ({
   root: {
@@ -67,6 +68,9 @@ class Profile extends Component {
       createdAds,
       classes,
     } = this.props;
+    const noResults = (
+      <NoResults tab={tab} isCurrentUser={isCurrentUser} userId={userId} />
+    );
 
     return (
       <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
@@ -92,9 +96,13 @@ class Profile extends Component {
             </Tabs>
             <div className={classes.list}>
               {tab === 'pending' ? (
-                <ListAds hits={createdAds} loadNextPage={noop} />
+                <ListAds
+                  hits={createdAds}
+                  loadNextPage={noop}
+                  noResults={noResults}
+                />
               ) : (
-                <ListUserAds params={searchParams} />
+                <ListUserAds params={searchParams} noResults={noResults} />
               )}
             </div>
           </div>
