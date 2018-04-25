@@ -62,22 +62,34 @@ const BreadCrumbs = ({ ad, t, classes }) => (
     >
       <HomeIcon className={classes.icon} />Home
     </BackToListButton>
-    <Typography className={classes.separator}>/</Typography>
     <AdPlace ad={ad}>
       {({ place }) =>
-        place ? <Typography className={classes.item}>{place}</Typography> : null
+        place ? (
+          <React.Fragment>
+            <Typography className={classes.separator}>/</Typography>
+            <Typography className={classes.item}>{place}</Typography>
+          </React.Fragment>
+        ) : null
       }
     </AdPlace>
-    <Typography className={classes.separator}>/</Typography>
-    <Link to={`/${ad.category}`} className={classes.linkItem}>
-      {t(ad.category)}
-    </Link>
-    <Typography className={classes.separator}>/</Typography>
-    <BreakWord
-      component={AdTitle}
-      className={classNames(classes.item, classes.title)}
-      ad={ad}
-    />
+    {ad.category ? (
+      <React.Fragment>
+        <Typography className={classes.separator}>/</Typography>
+        <Link to={`/${ad.category}`} className={classes.linkItem}>
+          {t(ad.category)}
+        </Link>
+      </React.Fragment>
+    ) : null}
+    {ad.title ? (
+      <React.Fragment>
+        <Typography className={classes.separator}>/</Typography>
+        <BreakWord
+          component={AdTitle}
+          className={classNames(classes.item, classes.title)}
+          ad={ad}
+        />
+      </React.Fragment>
+    ) : null}
   </div>
 );
 
