@@ -1,5 +1,5 @@
 import requestIp from 'request-ip';
 
-const getClientIp = requestIp.getClientIp;
+const getClientIp = req => req.headers['fastly-client-ip'] || requestIp.getClientIp(req);
 
 export default getClientIp;
