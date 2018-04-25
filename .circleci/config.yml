@@ -94,9 +94,21 @@ jobs:
     <<: *defaults
     steps:
       - *attach_workspace
+
+       - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
       - deploy:
           name: Deploy to Development environment
           command: CI=false DEPLOYMENT=development ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+
+      - save_cache:
+          paths:
+            - build/functions/node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
 
   deploy_production:
     <<: *defaults
