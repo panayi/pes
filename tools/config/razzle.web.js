@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 const BUILD_PATH = path.join(__dirname, '..', '..', 'build', 'web');
 
@@ -29,6 +30,19 @@ module.exports = {
       appConfig.output.path = path.join(BUILD_PATH, 'server');
       appConfig.output.filename = 'server.bundle.js';
       appConfig.output.libraryTarget = 'commonjs2';
+
+      appConfig.externals = [
+        nodeExternals({
+          whitelist: [
+            /^@pesposa/,
+            /\.(eot|woff|woff2|ttf|otf)$/,
+            /\.(svg|png|jpg|jpeg|gif|ico)$/,
+            /\.(mp4|mp3|ogg|swf|webp)$/,
+            /\.(css|scss|sass|sss|less)$/,
+          ].filter(x => x),
+          modulesDir: path.join(__dirname, '..', '..', 'node_modules'),
+        }),
+      ];
     }
 
     if (target === 'node') {

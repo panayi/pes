@@ -63,7 +63,7 @@
     "build:admin": "webpack --config ./tools/config/webpack.admin.js",
     "admin": "yarn build:admin && node ./build/admin/index.js",
     "build:web": "cd packages/web && yarn build",
-    "build:functions": "node ./tools/scripts/build.functions.js && cd build/functions && yarn && npm rebuild",
+    "build:functions": "node ./tools/scripts/build.functions.js && cd build/functions && yarn",
     "build:database": "node ./tools/scripts/build.database.js",
     "build": "yarn build:web && yarn build:functions && yarn build:database",
     "deploy:web": "yarn firebase deploy --only hosting",

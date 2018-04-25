@@ -38,6 +38,7 @@ const build = () => {
         R.assoc('ms', '^2.1.1'),
         R.assoc('isarray', '^1.0.0'),
         R.assoc('faye-websocket', '^0.11.1'),
+        R.assoc('babel-runtime', '^6.26.0'),
         R.pickBy((val, key) => !R.test(/^@pesposa/, key)),
       ),
     }),
