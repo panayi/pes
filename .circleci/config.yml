@@ -95,7 +95,7 @@ jobs:
     steps:
       - *attach_workspace
 
-       - restore_cache:
+      - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           # fallback to using the latest cache if no exact match is found
