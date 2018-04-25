@@ -123,7 +123,7 @@ const uploadImage = async (buffer, filename, contentType, dbPath, database) => {
   const newFilename = renameFile(generateId(), filename);
   const storagePath = `${storageConfig.IMAGES_PATH}/${newFilename}`;
 
-  return storageService.uploadImage(
+  return storageService.uploadFile(
     buffer,
     contentType,
     storagePath,

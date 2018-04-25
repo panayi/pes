@@ -2,6 +2,7 @@ import Mustache from 'mustache';
 import mjml2html from 'mjml';
 import * as pesposaConfig from '@pesposa/core/src/config/pesposa';
 import * as emailService from '@pesposa/core/src/services/email';
+import * as constants from '../constants';
 import body from './body.mjml';
 
 const subject = 'Great news! You can now enter the new Pesposa!';
@@ -39,6 +40,7 @@ const send = betaInvite => {
     url,
     mainEmail: pesposaConfig.MAIN_EMAIL_ADDRESS,
     supportEmail: pesposaConfig.SUPPORT_EMAIL_ADDRESS,
+    logoUrl: constants.LOGO_URL,
   };
   const mjml = Mustache.render(body, props);
   const output = mjml2html(mjml);

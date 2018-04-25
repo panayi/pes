@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import * as R from 'ramda';
+import mime from 'mime-types';
 import { database } from '@pesposa/core/src/config/firebaseClient';
 import log from '@pesposa/core/src/utils/log';
 import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
@@ -43,7 +44,7 @@ const seedCountryFlags = async () => {
         const file = require('@pesposa/core/src/database/seeds/images/countries/' +
           filename);
         /* eslint-enable */
-        return storageService.uploadImage(
+        return storageService.uploadFile(
           file,
           'image/png',
           'countries',
@@ -57,10 +58,48 @@ const seedCountryFlags = async () => {
   );
 };
 
+const uploadFiles = async () => {
+  log.info('Firebase: uploading files...');
+  const parentPath = path.join(
+    process.cwd(),
+    'packages',
+    'core',
+    'src',
+    'database',
+    'seeds',
+    'images',
+    'uploads',
+  );
+
+  const filenames = fs
+    .readdirSync(parentPath)
+    .filter(f => fs.statSync(path.join(parentPath, f)).isFile());
+
+  return promiseSerial(
+    R.map(
+      filename => () => {
+        /* eslint-disable */
+        const file = require('@pesposa/core/src/database/seeds/images/uploads/' +
+          filename);
+        const contentType = mime.lookup(filename);
+        /* eslint-enable */
+        return storageService.uploadFile(
+          file,
+          contentType,
+          'uploads',
+          filename,
+        );
+      },
+      filenames,
+    ),
+  );
+};
+
 export const seed = async () => {
   try {
     await seedCategories();
     await seedTranslations();
+    await uploadFiles();
     await seedCountryFlags();
     log.info('Firebase: Seeded categories, locales, countries');
   } catch (error) {

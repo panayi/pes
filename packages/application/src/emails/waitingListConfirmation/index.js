@@ -3,6 +3,7 @@ import mjml2html from 'mjml';
 import env from '@pesposa/core/src/config/env';
 import * as pesposaConfig from '@pesposa/core/src/config/pesposa';
 import * as emailService from '@pesposa/core/src/services/email';
+import * as constants from '../constants';
 import body from './body.mjml';
 
 const subject = "You've been added to Pesposa waitlist";
@@ -40,6 +41,7 @@ const send = betaInvite => {
     referralUrl: `https://${env.domain}/join?refcode=${affiliate}`,
     facebookPageUrl: pesposaConfig.FACEBOOK_PAGE_URL,
     mainEmail: pesposaConfig.MAIN_EMAIL_ADDRESS,
+    logoUrl: constants.LOGO_URL,
   };
   const mjml = Mustache.render(body, props);
   const output = mjml2html(mjml);

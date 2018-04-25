@@ -28,7 +28,7 @@
   <mj-body>
     <mj-section>
       <mj-column width="100%">
-        <mj-image src="https://pesposa.imgix.net/uploads/rlogo.png?auto=compress%2Cformat&ixlib=js-1.1.1&w=140" alt="Pesposa" width="140" padding="32px 0 0 0"></mj-image>
+        <mj-image src="{{logoUrl}}" alt="Pesposa" width="140" padding="32px 0 0 0"></mj-image>
       </mj-column>
     </mj-section>
     <mj-section padding-top="10px">

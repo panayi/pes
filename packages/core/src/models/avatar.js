@@ -69,7 +69,7 @@ export const download = async (userSnapshot, userId) => {
     const path = `profileImages/${userId}`;
     const { buffer, contentType } = await fetchService.getImage(imageUrl);
 
-    const fullPath = await storageService.uploadImage(
+    const fullPath = await storageService.uploadFile(
       buffer,
       contentType,
       path,

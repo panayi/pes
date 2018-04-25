@@ -6,8 +6,8 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import createCachedSelector from 're-reselect';
 import { withProps } from 'recompose';
 import propSelector from '@pesposa/core/src/utils/propSelector';
+import { buildUrl } from '@pesposa/core/src/services/imgix';
 import omitProps from 'utils/omitProps';
-import { buildUrl } from 'services/imgix';
 import Reimgix from './Reimgix/Reimgix';
 
 type Props = {

@@ -46,7 +46,7 @@ export const writeFile = (buffer, contentType, path, metadata) =>
     stream.end(buffer);
   });
 
-export const uploadImage = async (
+export const uploadFile = async (
   buffer,
   contentType,
   path,
