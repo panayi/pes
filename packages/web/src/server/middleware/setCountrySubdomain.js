@@ -5,7 +5,7 @@ import * as siteModel from '@pesposa/core/src/models/site';
 import { actions as siteActions } from 'store/site';
 import { selectors as userInfoSelectors } from 'store/userInfo';
 
-const setCountrySubdomain = async (req, res, next) => {
+const setCountrySubdomain = (req, res, next) => {
   const { store } = res.locals;
   const country = R.prop('country', siteModel.get(req));
 

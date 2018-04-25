@@ -4,7 +4,6 @@ const sendErrorResponse = (code, res, error) => {
   res.status(code).send({
     error: error || HttpStatus.getStatusText(code),
   });
-  res.end();
 };
 
 export const internalServerError = (res, error) =>

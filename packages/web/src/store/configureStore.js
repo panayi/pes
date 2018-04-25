@@ -25,6 +25,7 @@ const configureStore = (initialState = {}, history) => {
 
   const reduxFirebaseConfig = {
     userProfile: modelPaths.USERS.string,
+    enableLogging: env.firebaseProject === 'pesposa-dev',
     profileFactory: profileUtils.profileFactory,
     onAuthStateChanged: authActions.handleAuthStateChanged,
     preserveOnLogout: [

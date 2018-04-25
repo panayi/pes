@@ -90,7 +90,7 @@ const childCategories = [
 
 const formatCategory = str => R.replace(/-/g, '_', str);
 
-const redirectLegacyUrl = async (req, res, next) => {
+const redirectLegacyUrl = (req, res, next) => {
   const subdomain = getSubdomain(req);
   const segments = R.compose(
     R.reject(isNilOrEmpty),
