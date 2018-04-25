@@ -21,50 +21,54 @@ import sendNotifications from './sendNotifications';
 
 const app = express();
 
-const origin = env.firebaseProject === 'pesposa-dev' ? '*' : /pesposa\.com$/;
-const cors = createCors({ credentials: true, origin });
-app.use(cors);
+try {
+  const origin = env.firebaseProject === 'pesposa-dev' ? '*' : /pesposa\.com$/;
+  const cors = createCors({ credentials: true, origin });
+  app.use(cors);
 
-if (env.firebaseProject === 'pesposa-dev') {
-  app.use(morgan('combined', { stream: { write: console.log } }));
+  if (env.firebaseProject === 'pesposa-dev') {
+    app.use(morgan('combined', { stream: { write: console.log } }));
+  }
+
+  // Public routes
+  app.post('/reverse-geocode', bodyParser.json(), reverseGeocode);
+  app.post('/geoip', bodyParser.json(), geoip);
+
+  // Protected routes
+  app.post(
+    '/users/migrate',
+    isAuthenticated(),
+    isAuthenticated({
+      headerKey: 'anonymous-authorization',
+      propKey: 'anonymousUser',
+    }),
+    migrateAnonymousUser,
+  );
+
+  app.post('/users/info', isAuthenticated(), setUserInfo);
+
+  app.get('/send-notifications', sendNotifications);
+
+  app.post('/waitlisted/callback', bodyParser.json(), async (req, res) => {
+    const event = R.prop('event', req.body);
+    if (event === 'reservation_created') {
+      return confirmAddToWaitlist(req, res);
+    }
+
+    if (event === 'reservation_activated') {
+      return createBetaInvite(req, res);
+    }
+
+    log.error('body', req.body);
+    respond.internalServerError(res);
+    return null;
+  });
+
+  app.post('/beta-users', isAuthenticated(), bodyParser.json(), createBetaUser);
+
+  app.post('/beta', isAuthenticated(), createBetaCodeAndUser);
+} catch (error) {
+  console.error('UNEXPECTED ERROR', error);
 }
-
-// Public routes
-app.post('/reverse-geocode', bodyParser.json(), reverseGeocode);
-app.post('/geoip', bodyParser.json(), geoip);
-
-// Protected routes
-app.post(
-  '/users/migrate',
-  isAuthenticated(),
-  isAuthenticated({
-    headerKey: 'anonymous-authorization',
-    propKey: 'anonymousUser',
-  }),
-  migrateAnonymousUser,
-);
-
-app.post('/users/info', isAuthenticated(), setUserInfo);
-
-app.get('/send-notifications', sendNotifications);
-
-app.post('/waitlisted/callback', bodyParser.json(), async (req, res) => {
-  const event = R.prop('event', req.body);
-  if (event === 'reservation_created') {
-    return confirmAddToWaitlist(req, res);
-  }
-
-  if (event === 'reservation_activated') {
-    return createBetaInvite(req, res);
-  }
-
-  log.error('body', req.body);
-  respond.internalServerError(res);
-  return null;
-});
-
-app.post('/beta-users', isAuthenticated(), bodyParser.json(), createBetaUser);
-
-app.post('/beta', isAuthenticated(), createBetaCodeAndUser);
 
 export default functions.https.onRequest(app);
