@@ -42,19 +42,22 @@ jobs:
           command: git submodule update --init --recursive
 
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          - yarn-packages-{{ .Branch }}
+          - yarn-packages-dev
+          - yarn-packages-
 
       - run:
           name: Install dependencies
           command: yarn install
 
       - save_cache:
+          name: Save Yarn Package Cache
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
 
       - persist_to_workspace:
           root: *workspace_root
