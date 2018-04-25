@@ -1,5 +1,4 @@
 import express from 'express';
-import morgan from 'morgan';
 import firebase from 'firebase-admin';
 import env from '@pesposa/core/src/config/env';
 import serviceAccountKey from '@pesposa/core/src/config/serviceAccountKey.json';
@@ -25,10 +24,6 @@ const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR));
-
-if (env.firebaseProject === 'pesposa-dev') {
-  server.use(morgan('combined', { stream: { write: console.log } }));
-}
 
 // Default route
 server.get(

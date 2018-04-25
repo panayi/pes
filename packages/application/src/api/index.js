@@ -2,7 +2,6 @@
 import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import express from 'express';
-import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import createCors from 'cors';
 import log from '@pesposa/core/src/utils/log';
@@ -21,54 +20,46 @@ import sendNotifications from './sendNotifications';
 
 const app = express();
 
-try {
-  const origin = env.firebaseProject === 'pesposa-dev' ? '*' : /pesposa\.com$/;
-  const cors = createCors({ credentials: true, origin });
-  app.use(cors);
+const origin = env.firebaseProject === 'pesposa-dev' ? '*' : /pesposa\.com$/;
+const cors = createCors({ credentials: true, origin });
+app.use(cors);
 
-  if (env.firebaseProject === 'pesposa-dev') {
-    app.use(morgan('combined', { stream: { write: console.log } }));
+// Public routes
+app.post('/reverse-geocode', bodyParser.json(), reverseGeocode);
+app.post('/geoip', bodyParser.json(), geoip);
+
+// Protected routes
+app.post(
+  '/users/migrate',
+  isAuthenticated(),
+  isAuthenticated({
+    headerKey: 'anonymous-authorization',
+    propKey: 'anonymousUser',
+  }),
+  migrateAnonymousUser,
+);
+
+app.post('/users/info', isAuthenticated(), setUserInfo);
+
+app.get('/send-notifications', sendNotifications);
+
+app.post('/waitlisted/callback', bodyParser.json(), async (req, res) => {
+  const event = R.prop('event', req.body);
+  if (event === 'reservation_created') {
+    return confirmAddToWaitlist(req, res);
   }
 
-  // Public routes
-  app.post('/reverse-geocode', bodyParser.json(), reverseGeocode);
-  app.post('/geoip', bodyParser.json(), geoip);
+  if (event === 'reservation_activated') {
+    return createBetaInvite(req, res);
+  }
 
-  // Protected routes
-  app.post(
-    '/users/migrate',
-    isAuthenticated(),
-    isAuthenticated({
-      headerKey: 'anonymous-authorization',
-      propKey: 'anonymousUser',
-    }),
-    migrateAnonymousUser,
-  );
+  log.error('body', req.body);
+  respond.internalServerError(res);
+  return null;
+});
 
-  app.post('/users/info', isAuthenticated(), setUserInfo);
+app.post('/beta-users', isAuthenticated(), bodyParser.json(), createBetaUser);
 
-  app.get('/send-notifications', sendNotifications);
-
-  app.post('/waitlisted/callback', bodyParser.json(), async (req, res) => {
-    const event = R.prop('event', req.body);
-    if (event === 'reservation_created') {
-      return confirmAddToWaitlist(req, res);
-    }
-
-    if (event === 'reservation_activated') {
-      return createBetaInvite(req, res);
-    }
-
-    log.error('body', req.body);
-    respond.internalServerError(res);
-    return null;
-  });
-
-  app.post('/beta-users', isAuthenticated(), bodyParser.json(), createBetaUser);
-
-  app.post('/beta', isAuthenticated(), createBetaCodeAndUser);
-} catch (error) {
-  console.error('UNEXPECTED ERROR', error);
-}
+app.post('/beta', isAuthenticated(), createBetaCodeAndUser);
 
 export default functions.https.onRequest(app);
