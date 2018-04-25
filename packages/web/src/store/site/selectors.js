@@ -1,6 +1,8 @@
 import * as R from 'ramda';
+import { isArray } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import env from '@pesposa/core/src/config/env';
+import * as locationConfig from '@pesposa/core/src/config/location';
 import * as phoneNumbersConfig from '@pesposa/core/src/config/phoneNumbers';
 import * as constants from './constants';
 
@@ -26,4 +28,13 @@ export const countryDomainSelector = createSelector(
 export const phoneNumberConfigSelector = createSelector(
   countryCodeSelector,
   R.prop(R.__, phoneNumbersConfig.BY_COUNTRY),
+);
+
+export const currencySelector = createSelector(
+  countrySelector,
+  R.compose(
+    R.defaultTo(locationConfig.DEFAULT_CURRENCY),
+    R.when(isArray, R.head),
+    R.propOr([], 'currency'),
+  ),
 );

@@ -1,5 +1,6 @@
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { selectors as siteSelectors } from 'store/site';
 import { selectors as userInfoSelectors } from 'store/userInfo';
 
 const Currency = ({ value, language, currency }) =>
@@ -7,7 +8,7 @@ const Currency = ({ value, language, currency }) =>
 
 const mapStateToProps = createStructuredSelector({
   language: userInfoSelectors.languageSelector,
-  currency: userInfoSelectors.currencySelector,
+  currency: siteSelectors.currencySelector,
 });
 
 export default connect(mapStateToProps)(Currency);

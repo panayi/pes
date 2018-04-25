@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { isNilOrEmpty, isArray } from 'ramda-adjunct';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { createSelector } from 'reselect';
 import * as languageModel from '@pesposa/core/src/models/language';
 import * as locationConfig from '@pesposa/core/src/config/location';
@@ -39,15 +39,6 @@ export const countryCodeSelector = createSelector(
 export const countryNameSelector = createSelector(
   countrySelector,
   R.path(['name', 'common']),
-);
-
-export const currencySelector = createSelector(
-  countrySelector,
-  R.compose(
-    R.defaultTo(locationConfig.DEFAULT_CURRENCY),
-    R.when(isArray, R.head),
-    R.propOr([], 'currency'),
-  ),
 );
 
 const getAddressString = (countryName, city) => {
