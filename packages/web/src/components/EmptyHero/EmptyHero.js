@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -14,7 +14,6 @@ const styles = theme => ({
     width: '100%',
     height: '100%',
     textAlign: 'center',
-    color: theme.palette.text.default,
   },
   icon: {
     color: 'inherit',
@@ -62,7 +61,7 @@ const EmptyHero = ({
 EmptyHero.propTypes = {
   icon: elementType,
   title: PropTypes.string,
-  tagline: PropTypes.string.isRequired,
+  tagline: PropTypes.node.isRequired,
   small: PropTypes.bool,
   children: PropTypes.node,
 };
