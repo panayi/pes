@@ -161,7 +161,7 @@ Build all the apps (UI, functions, database, admin).
 
 Deploy all apps Firebase Hosting.
 
-## 5. Environment Variables
+## 4. Environment Variables
 
 Find variables inherited by create-react-app
 [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md#advanced-configuration).
@@ -175,7 +175,7 @@ Find variables inherited by create-react-app
 | REACT_APP_ALGOLIA_POSTS_INDEX_NAME | :white_check_mark: | :white_check_mark: | :white_check_mark: | Algolia index for Posts.                                                                                                 |
 | ALGOLIA_API_KEY                    |        :x:         | :white_check_mark: | :white_check_mark: | Algolia Admin API key. Should be kept secret (not to be used on the frontend).                                           |
 
-## 4. Deployments
+## 5. Deployments
 
 | Name        |    Branch    |                                                                                                                                                           Description                                                                                                                                                            |
 | :---------- | :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -184,10 +184,10 @@ Find variables inherited by create-react-app
 | Production  | `production` |                                                                                                                                     Runs the currently released version of the application.                                                                                                                                      |
 
 
-## 5. Custom yarn script
+## 6. Custom yarn script
 We have a custom yarn script at `./yarn` for allowing operations on multiple deployments. Don't edit `.env` or `serviceAccountKey.json` files directly; instead edit them in `secrets` repo and update the submodule. Next time `DEPLOYMENT=development ./yarn <command>` runs will update these files.
 
-## 6. Edit old Code
+## 7. Edit old Code
 
 ```
 ssh deploy@178.79.164.250 -p 16888 -R 52698:localhost:52698
