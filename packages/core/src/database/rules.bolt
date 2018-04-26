@@ -503,6 +503,7 @@ path /support/{id} is SupportMessage {
 path /ratings/{uid} is Rating {
   read() { isCurrentUser(uid) }
   create() { isCurrentUser(uid) }
+  update() { isCurrentUser(uid) }
 }
 
 // BETA

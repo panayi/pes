@@ -25,6 +25,9 @@ const Form = props => {
       <TextField
         margin="dense"
         name="email"
+        inputProps={{
+          inputMode: 'email',
+        }}
         onChange={handleChange}
         onBlur={handleBlur}
         value={values.email}

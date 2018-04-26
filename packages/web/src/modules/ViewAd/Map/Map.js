@@ -54,14 +54,16 @@ const Map = ({ ad, adId, staticMapProps, className, openModal, classes }) => {
               center={R.path(['location', 'geoposition'], ad)}
               {...restStaticMapProps}
             />
-            <Button
-              className={classes.directionsButton}
-              variant="raised"
-              size="small"
-            >
-              <DirectionsIcon className={classes.leftIcon} />
-              Directions
-            </Button>
+            {url ? (
+              <Button
+                className={classes.directionsButton}
+                variant="raised"
+                size="small"
+              >
+                <DirectionsIcon className={classes.leftIcon} />
+                Directions
+              </Button>
+            ) : null}
           </div>
         )}
       </MapDirectionsUrl>

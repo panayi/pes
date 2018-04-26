@@ -154,7 +154,6 @@ const styles = theme => ({
   },
   date: {
     display: 'flex',
-    color: theme.palette.text.secondary,
   },
   locationIcon: {
     width: 19,
