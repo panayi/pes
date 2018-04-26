@@ -36,6 +36,9 @@ const styles = theme => ({
       background: `${theme.palette.secondary.main} !important`,
     },
   },
+  page: {
+    height: '100%',
+  },
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -124,7 +127,7 @@ class Beta extends React.Component {
 
     return (
       <MuiThemeProvider theme={customTheme}>
-        <Layout fixed>
+        <Layout fixed pageClassName={classes.page}>
           <Imgix
             image={{ fullPath: 'uploads/beta-bg.jpg' }}
             params={imgixParams}
