@@ -6,7 +6,7 @@ import * as emailService from '@pesposa/core/src/services/email';
 import * as constants from '../constants';
 import body from './body.mjml';
 
-const subject = "You've been added to Pesposa waitlist";
+const subject = "You've been added to the Pesposa waitlist";
 
 const text = ({ title, name, referralUrl, mainEmail }) => `
 ${title}

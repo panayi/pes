@@ -134,7 +134,7 @@ class BetaLogin extends React.Component {
                 )
               }
             >
-              Create an account
+              Create an account to enter
             </Button>
           </div>
           <Typography className={classes.body} color="inherit">

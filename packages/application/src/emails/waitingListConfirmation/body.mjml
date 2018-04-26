@@ -33,7 +33,7 @@
     </mj-section>
     <mj-section padding="10px 0 20px 0">
       <mj-column>
-        <mj-text padding="20px 25px 25px 25px" font-size="28px" font-weight="bold" color="#ff6762">You've been added to Pesposa waitlist.</mj-text>
+        <mj-text padding="20px 25px 25px 25px" font-size="28px" font-weight="bold" color="#ff6762">You've been added to the Pesposa waitlist.</mj-text>
         <mj-text padding-bottom="15px">
           Hello {{name}},
         </mj-text>
