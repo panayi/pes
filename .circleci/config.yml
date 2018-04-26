@@ -46,7 +46,6 @@ jobs:
           keys:
           - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
           - yarn-packages-{{ .Branch }}
-          - yarn-packages-dev
           - yarn-packages-
 
       - run:
@@ -117,9 +116,21 @@ jobs:
     <<: *defaults
     steps:
       - *attach_workspace
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
       - deploy:
           name: Deploy to Production environment
           command: CI=false DEPLOYMENT=production ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+
+      - save_cache:
+          paths:
+            - build/functions/node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
 
 workflows:
   version: 2
