@@ -30,7 +30,6 @@ module.exports = {
       appConfig.output.path = path.join(BUILD_PATH, 'server');
       appConfig.output.filename = 'server.bundle.js';
       // appConfig.output.libraryTarget = 'commonjs2';
-
       // appConfig.externals = [
       //   nodeExternals({
       //     whitelist: [
