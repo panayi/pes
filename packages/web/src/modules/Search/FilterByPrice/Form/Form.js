@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { noop } from 'ramda-adjunct';
-import TextField from 'material-ui/TextField';
 import withStyles from 'material-ui/styles/withStyles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
+import PriceTextField from 'components/PriceTextField/PriceTextField';
 
 const styles = theme => ({
   root: {
@@ -39,24 +39,22 @@ class Form extends Component<Props> {
 
     return (
       <form className={classes.root} onSubmit={handleSubmit}>
-        <TextField
+        <PriceTextField
           className={classes.input}
           name="min"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.min}
           placeholder="€ min"
-          type="number"
           margin="none"
         />
-        <TextField
+        <PriceTextField
           className={classes.input}
           name="max"
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.max}
           placeholder="€ max"
-          type="number"
           margin="none"
         />
       </form>

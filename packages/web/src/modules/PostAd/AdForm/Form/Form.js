@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import withStyles from 'material-ui/styles/withStyles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import translate from 'hocs/translate';
+import PriceTextField from 'components/PriceTextField/PriceTextField';
 
 const styles = theme => ({
   select: {
@@ -56,7 +57,7 @@ class Form extends Component {
             multiline: true,
           }}
         />
-        <TextField
+        <PriceTextField
           margin="dense"
           name="price"
           onChange={handleChange}
@@ -65,7 +66,6 @@ class Form extends Component {
           label="Price (EUR)" // TODO: shouldn't be hard-coded, but based on user location
           error={R.has('price', errors)}
           helperText={errors.price}
-          type="number"
         />
         <TextField
           className={classes.select}
