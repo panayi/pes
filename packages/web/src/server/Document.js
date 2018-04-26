@@ -26,10 +26,12 @@ class Document extends React.Component {
           <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
             <JssProvider registry={sheetsRegistry} jss={jss}>
               <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-                <CssBaseline />
-                <WidthMatch>
-                  <Component {...props} />
-                </WidthMatch>
+                <React.Fragment>
+                  <CssBaseline />
+                  <WidthMatch>
+                    <Component {...props} />
+                  </WidthMatch>
+                </React.Fragment>
               </MuiThemeProvider>
             </JssProvider>
           </SearchProvider>
