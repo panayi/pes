@@ -24,6 +24,9 @@ const styles = theme => ({
   },
   raised: {
     fontWeight: 700,
+    // Fix Safari issue making buttons have text color = black
+    // when inside a form
+    WebkitTextFillColor: theme.palette.common.white,
   },
   sizeSmall: {
     minHeight: 34,

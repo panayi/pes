@@ -15,6 +15,8 @@ const styles = theme => ({
     color: theme.palette.common.white,
   },
   avatarWrap: {
+    border: [4, 'solid', theme.palette.common.white],
+    borderRadius: '50%',
     padding: 0,
     minWidth: 'auto',
     '&:hover': {
@@ -22,13 +24,8 @@ const styles = theme => ({
     },
   },
   avatar: {
-    border: [4, 'solid', theme.palette.common.white],
-    width: '64px !important',
-    height: '64px !important',
-    '& > svg': {
-      width: 52,
-      height: 52,
-    },
+    width: '56px !important',
+    height: '56px !important',
     [theme.breakpoints.down(theme.map.tablet)]: {
       width: '48px !important',
       height: '48px !important',

@@ -19,7 +19,7 @@
     "jss": "^9.8.1",
     "jss-expand": "^5.1.0",
     "lodash.debounce": "^4.0.8",
-    "material-ui": "^1.0.0-beta.38",
+    "material-ui": "1.0.0-beta.43",
     "material-ui-icons": "^1.0.0-beta.36",
     "mdi-react": "^3.3.0",
     "mixpanel-browser": "^2.21.0",
