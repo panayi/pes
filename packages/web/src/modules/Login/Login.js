@@ -29,8 +29,10 @@ type Props = {
 
 const styles = theme => ({
   root: {
-    width: 370,
     margin: '0 auto',
+    [theme.breakpoints.up(theme.map.desktop)]: {
+      width: 370,
+    },
   },
   divider: {
     marginTop: theme.spacing.unit * 3.5,

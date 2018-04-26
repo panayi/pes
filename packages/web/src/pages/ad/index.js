@@ -50,12 +50,12 @@ const Content = ({ ad, adId, legacy, location }: Props) => (
 
 const AdPage = (props: Props) => (
   <React.Fragment>
-    <XsScreenHidden>
+    <XsScreenHidden component={React.Fragment}>
       <Layout header={Header} fixed>
         <Content {...props} />
       </Layout>
     </XsScreenHidden>
-    <XsScreen>
+    <XsScreen component={React.Fragment}>
       <Layout>
         <Content {...props} />
       </Layout>
