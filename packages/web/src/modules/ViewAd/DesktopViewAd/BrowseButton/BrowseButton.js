@@ -77,9 +77,9 @@ const BrowseButton = ({ ad, direction, classes }) => {
         <div className={classes.tabletWrap}>
           <LinkToViewAd
             ad={ad}
-            className={classes.tablet}
             disabled={R.isNil(ad)}
             variant="raised"
+            color="primary"
           >
             {isPrevious ? null : 'Next'}
             <Icon className={classes.icon} />
