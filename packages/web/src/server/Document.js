@@ -10,7 +10,6 @@ import { constants as searchConstants } from 'store/search';
 import MixpanelProvider from 'components/MixpanelProvider/MixpanelProvider';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import WidthMatch from 'components/WidthMatch/WidthMatch';
-import OutdatedBrowser from 'components/OutdatedBrowser/OutdatedBrowser';
 import SearchProvider from 'modules/Search/Provider/Provider';
 
 class Document extends React.Component {
@@ -113,7 +112,6 @@ class Document extends React.Component {
             defer
             crossOrigin="anonymous"
           />
-          <OutdatedBrowser />
         </body>
       </html>
     );
