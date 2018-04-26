@@ -93,6 +93,7 @@ const Form = (props: Props) => {
             type="tel"
             inputProps={{
               mask,
+              inputMode: 'tel',
             }}
           />
           {errors.number && <FormHelperText>{errors.number}</FormHelperText>}
