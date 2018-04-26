@@ -25,6 +25,8 @@ import NoResults from './NoResults/NoResults';
 
 const styles = theme => ({
   root: {
+    // fixes sluggish scrolling
+    transform: 'translateZ(0)',
     [theme.breakpoints.up(theme.map.laptop)]: {
       padding: [theme.spacing.unit, 0, theme.spacing.unit * 3, 0],
     },
