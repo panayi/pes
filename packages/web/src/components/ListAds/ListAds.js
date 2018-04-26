@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import debounce from 'lodash.debounce';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { WindowScroller, AutoSizer } from 'react-virtualized';
 import withStyles from 'material-ui/styles/withStyles';
@@ -63,11 +64,11 @@ export class ListAds extends Component {
     this.ensureCanScroll();
   }
 
-  componentWillUnmount() {
+  setScrollPosition = debounce(() => {
     this.props.setScrollPosition(
       window.pageYOffset || document.documentElement.scrollTop,
     );
-  }
+  }, 100);
 
   ensureCanScroll() {
     const hasHits = R.complement(R.isEmpty)(this.props.hits);
@@ -90,6 +91,8 @@ export class ListAds extends Component {
     ) {
       this.props.loadNextPage();
     }
+
+    this.setScrollPosition();
   };
 
   registerCollection = collectionRef => {

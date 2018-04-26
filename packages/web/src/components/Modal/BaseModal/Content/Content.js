@@ -7,6 +7,7 @@ import withStyles from 'material-ui/styles/withStyles';
 
 const styles = theme => ({
   content: {
+    transform: 'translateZ(0)',
     [theme.breakpoints.down(theme.map.tablet)]: {
       marginTop: theme.spacing.unit * 2,
     },
