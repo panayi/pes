@@ -57,7 +57,7 @@ const styles = theme => ({
     transform: 'translate(-50%, 0)',
   },
   createAdButton: {
-    boxShadow: theme.shadows[5],
+    boxShadow: theme.shadows[7],
     fontSize: theme.typography.subheading.fontSize,
   },
 });
