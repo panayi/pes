@@ -46,7 +46,6 @@ class ListUserProviders extends Component<Props> {
     try {
       await linkProvider(providerId);
     } catch (error) {
-      console.log(error);
       const code = R.prop('code', error);
       const providerName =
         providerId === firebaseConfig.PROVIDER_IDS.facebook

@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 import withStyles from 'material-ui/styles/withStyles';
 import DeleteIcon from 'material-ui-icons/Delete';
 import propsSelector from '@pesposa/core/src/utils/propsSelector';
-import { actions as modalActions } from 'store/modals';
 import { actions as postAdActions } from 'store/postAd';
 import requirePropToRender from 'hocs/requirePropToRender';
 import withUserWithId from 'hocs/withUserWithId';
@@ -21,14 +20,7 @@ const styles = theme => ({
   },
 });
 
-const DeleteAdButton = ({
-  adId,
-  removeAd,
-  history,
-  onAccept,
-  classes,
-  ...rest
-}) => (
+const DeleteAdButton = ({ onAccept, classes }) => (
   <Confirm
     message="Are you sure you want to delete this ad?"
     acceptLabel="Yes, delete it"
@@ -36,12 +28,7 @@ const DeleteAdButton = ({
     onAccept={onAccept}
   >
     {({ openModal }) => (
-      <Button
-        className={classes.root}
-        color="primary"
-        {...rest}
-        onClick={openModal}
-      >
+      <Button className={classes.root} color="primary" onClick={openModal}>
         <DeleteIcon />
       </Button>
     )}
@@ -50,7 +37,6 @@ const DeleteAdButton = ({
 
 const mapDispatchToProps = {
   removeAd: postAdActions.removeAd,
-  openModal: modalActions.openModal,
 };
 
 export default R.compose(
