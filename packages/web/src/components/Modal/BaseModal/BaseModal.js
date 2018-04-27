@@ -24,9 +24,9 @@ class BaseModal extends React.Component {
 
   onExitMobile = () => {
     // Restore styles
-    document.body.style.overflow = this.bodyOverflow;
-    document.body.style.width = this.bodyWidth;
-    document.body.style.position = this.bodyPosition;
+    document.body.style.overflow = '';
+    document.body.style.width = '';
+    document.body.style.position = '';
   };
 
   render() {
