@@ -4,7 +4,7 @@ import log from '@pesposa/core/src/utils/log';
 import * as betaInviteModel from '@pesposa/core/src/models/betaInvite';
 import * as respond from '@pesposa/core/src/utils/respond';
 
-const createBetaUser = async (req, res) => {
+const createBetaInvite = async (req, res) => {
   try {
     const reservation = R.compose(
       renameKeys({ activation_code: 'code' }),
@@ -19,4 +19,4 @@ const createBetaUser = async (req, res) => {
   }
 };
 
-export default createBetaUser;
+export default createBetaInvite;

@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { isPlainObj } from 'ramda-adjunct';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import env from '../config/env';
 import { database } from '../config/firebaseClient';
 
@@ -23,28 +23,28 @@ export const getWithUrl = async id => {
     : betaInvite;
 };
 
-const findByEmail = async email => {
+const findBy = async (key, value) => {
   const betaInvites = await getAll();
 
-  return R.compose(R.find(R.propEq('email', email)), R.defaultTo([]), R.values)(
-    betaInvites,
-  );
+  return R.compose(
+    R.find(arr => arr[1] && arr[1][key] === value),
+    R.defaultTo([]),
+    R.toPairs,
+  )(betaInvites);
 };
 
-const findByCode = async code => {
-  const betaInvites = await getAll();
+const findByEmail = async email => findBy('email', email);
 
-  return R.compose(R.find(R.propEq('code', code)), R.defaultTo([]), R.values)(
-    betaInvites,
-  );
-};
+export const findByCode = async code => findBy('code', code);
+
+export const findByUser = async user => findBy('user', user);
 
 export const create = async (props, options = {}) => {
   const { email } = props;
   const { force } = options;
   const betaInvite = await findByEmail(email);
 
-  if (!R.isNil(email) && !force && isPlainObj(betaInvite)) {
+  if (!R.isNil(email) && !force && !isNilOrEmpty(betaInvite)) {
     return Promise.reject('Beta invite for this email already exists');
   }
 
@@ -53,5 +53,5 @@ export const create = async (props, options = {}) => {
 
 export const validate = async code => {
   const betaInvite = await findByCode(code);
-  return isPlainObj(betaInvite);
+  return !isNilOrEmpty(betaInvite);
 };

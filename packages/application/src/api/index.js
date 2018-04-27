@@ -2,6 +2,7 @@
 import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import express from 'express';
+import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import createCors from 'cors';
 import log from '@pesposa/core/src/utils/log';
@@ -19,6 +20,16 @@ import createBetaCodeAndUser from './createBetaCodeAndUser';
 import sendNotifications from './sendNotifications';
 
 const app = express();
+
+if (env.firebaseProject === 'pesposa-dev') {
+  app.use(
+    morgan('combined', {
+      stream: {
+        write: console.log, // eslint-disable-line no-console
+      },
+    }),
+  );
+}
 
 const origin = env.firebaseProject === 'pesposa-dev' ? '*' : /pesposa\.com$/;
 const cors = createCors({ credentials: true, origin });
@@ -53,7 +64,7 @@ app.post('/waitlisted/callback', bodyParser.json(), async (req, res) => {
     return createBetaInvite(req, res);
   }
 
-  log.error('body', req.body);
+  log.error('Unhandled Waitlisted event', event, req.body);
   respond.internalServerError(res);
   return null;
 });

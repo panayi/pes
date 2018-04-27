@@ -1,11 +1,23 @@
 import * as R from 'ramda';
-import { isNilOrEmpty } from 'ramda-adjunct';
+import { isNilOrEmpty, isArray } from 'ramda-adjunct';
 import log from '../utils/log';
 import * as firebaseConfig from '../config/firebase';
 import { database } from '../config/firebaseClient';
 import * as algoliaService from '../services/algolia';
 import * as adModel from './ad';
 import * as adImageModel from './adImage';
+import * as betaInviteModel from './betaInvite';
+import * as userModel from './user';
+
+export const findByEmail = async email => {
+  const snapshot = await database
+    .ref('/ads/legacy')
+    .orderByChild('email')
+    .equalTo(email)
+    .once('value');
+  const result = snapshot.val() || {};
+  return R.values(result);
+};
 
 const publish = async (userId, adId, ad) => {
   const adToPublish = R.compose(
@@ -24,12 +36,16 @@ const publish = async (userId, adId, ad) => {
   await database.ref(`/ads/published/${adId}`).set(adToPublish);
   await database.ref(`/ads/legacy/${adId}`).remove();
 
+  // Associate ad to user
+  await userModel.associateAd(adId, userId);
+
   const images = (await adImageModel.getAll(adId)).val();
   const adWithImages = R.merge(adToPublish, { images });
   await algoliaService.update(adWithImages, adId);
 };
 
-export const associateUserToLegacyAds = async (userSnapshot, userId) => {
+export const associateUserToLegacyAds = async userId => {
+  const userSnapshot = await userModel.get(userId);
   const user = userSnapshot.val();
   const email = user.email;
   const phoneNumber = R.compose(
@@ -38,6 +54,8 @@ export const associateUserToLegacyAds = async (userSnapshot, userId) => {
     R.find(R.propEq('providerId', firebaseConfig.PROVIDER_IDS.phone)),
     R.propOr([], 'providerData'),
   )(user);
+  const betaInvite = await betaInviteModel.findByUser(userId);
+  const betaInviteEmail = isArray(betaInvite) && R.prop('email', betaInvite[1]);
 
   const snapshot = await database.ref('/ads/legacy').once('value');
   const promises = [];
@@ -51,10 +69,15 @@ export const associateUserToLegacyAds = async (userSnapshot, userId) => {
       !isNilOrEmpty(ad.phone) &&
       !isNilOrEmpty(phoneNumber) &&
       ad.phone === phoneNumber;
-    if (matchingEmail || matchingPhone) {
+    const matchingBetaInviteModel =
+      !isNilOrEmpty(ad.email) &&
+      !isNilOrEmpty(betaInviteEmail) &&
+      ad.email === betaInviteEmail;
+
+    if (matchingEmail || matchingPhone || matchingBetaInviteModel) {
       promises.push(publish(userId, adId, ad));
     }
   });
 
-  return promises;
+  return Promise.all(promises);
 };

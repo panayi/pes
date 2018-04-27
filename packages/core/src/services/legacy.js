@@ -121,12 +121,11 @@ const findImageWithGoogle = async ad => {
 
 const uploadImage = async (buffer, filename, contentType, dbPath, database) => {
   const newFilename = renameFile(generateId(), filename);
-  const storagePath = `${storageConfig.IMAGES_PATH}/${newFilename}`;
 
   return storageService.uploadFile(
     buffer,
     contentType,
-    storagePath,
+    storageConfig.IMAGES_PATH,
     newFilename,
     metadata => database.ref(dbPath).push(metadata),
   );

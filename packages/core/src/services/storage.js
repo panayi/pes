@@ -65,7 +65,7 @@ export const uploadFile = async (
     const metadataToSave = {
       name: filename,
       fullPath: finalPath,
-      downloadURL: getFileUrl(path, token),
+      downloadURL: getFileUrl(finalPath, token),
     };
     await saveMetadata(metadataToSave);
   }

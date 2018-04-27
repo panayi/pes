@@ -14,7 +14,7 @@ ${title}
 
 Hello ${name},
 
-Thanks for your interest! You've been added to our waitlist.
+You've been added to the waitlist for accessing the brand new Pesposa.
 
 Interested in priority access?
 
