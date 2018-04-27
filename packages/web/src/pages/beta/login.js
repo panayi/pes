@@ -1,12 +1,10 @@
 import React from 'react';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
-import classNames from 'classnames';
 import qs from 'querystringify';
 import { withProps, withState, setStatic } from 'recompose';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { NavLink } from 'react-router-dom';
 import Typography from 'material-ui/Typography';
 import withStyles from 'material-ui/styles/withStyles';
 import getMetaTags from 'utils/getMetaTags';
@@ -18,6 +16,7 @@ import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import Beta from './Beta/Beta';
 import CreateBetaUserFailed from './CreateBetaUserFailed/CreateBetaUserFailed';
 import NonBetaUserMessage from './NonBetaUserMessage/NonBetaUserMessage';
+import WaitlistedJoinButton from './Waitlisted/WaitlistedJoinButton/WaitlistedJoinButton';
 
 // BETA
 
@@ -61,8 +60,17 @@ const styles = theme => ({
     opacity: 0.8,
   },
   link: {
-    textDecoration: 'underline',
+    fontSize: 'inherit',
+    display: 'inline',
+    verticalAlign: 'inherit',
+    padding: 0,
+    minHeight: 0,
+    textDecoration: 'underline !important',
     color: 'inherit',
+    opacity: 0.8,
+    '&:hover': {
+      opacity: 1,
+    },
   },
 });
 
@@ -180,12 +188,9 @@ class BetaLogin extends React.Component {
             <span className={classes.fade}>
               Don&apos;t have an account?&nbsp;
             </span>
-            <NavLink
-              to="/join"
-              className={classNames(classes.link, classes.fade)}
-            >
+            <WaitlistedJoinButton className={classes.link} color="inherit">
               Join the waiting list
-            </NavLink>
+            </WaitlistedJoinButton>
           </Typography>
         </div>
       </React.Fragment>
