@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import classNames from 'classnames';
 import { createStructuredSelector } from 'reselect';
 import Typography from 'material-ui/Typography';
 import MoodBadIcon from 'material-ui-icons/MoodBad';
@@ -23,9 +22,11 @@ const styles = theme => ({
     '> div + div': {
       marginTop: 2 * theme.spacing.unit,
     },
-  },
-  notProfile: {
-    minHeight: 64,
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      minHeight: 0,
+      marginTop: 1 * theme.spacing.unit,
+      marginBottom: 8 * theme.spacing.unit,
+    },
   },
   noResults: {
     marginTop: theme.spacing.unit,
@@ -75,13 +76,9 @@ class FetchAdsProgress extends Component {
   }
 
   render() {
-    const { isProfileSearch, classes } = this.props;
+    const { classes } = this.props;
     return (
-      <div
-        className={classNames(classes.root, {
-          [classes.notProfile]: !isProfileSearch,
-        })}
-      >
+      <div className={classes.root}>
         {this.renderSpinner()}
         {this.renderNoResults()}
         {this.renderNoMoreResults()}
