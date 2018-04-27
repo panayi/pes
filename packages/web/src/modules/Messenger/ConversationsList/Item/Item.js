@@ -60,10 +60,13 @@ const styles = theme => ({
   },
   title: {
     fontWeight: theme.typography.fontWeightMedium,
-    webkitLineClamp: 1,
+    WebkitLineClamp: 1,
     maxHeight: 16,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      maxWidth: 200, // TODO: find a proper fix instead of hard-coding width
+    },
   },
   profileImage: {
     display: 'flex',

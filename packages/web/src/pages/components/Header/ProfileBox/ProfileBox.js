@@ -34,6 +34,7 @@ const styles = theme => ({
     flex: 1,
     alignItems: 'center',
     padding: theme.spacing.unit * 2,
+    outline: 'none',
   },
   profileImageWrap: {
     flexBasis: 64,

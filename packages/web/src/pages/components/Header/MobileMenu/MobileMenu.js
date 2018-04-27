@@ -38,6 +38,7 @@ class Menu extends Component {
 
   navigateTo = path => {
     this.props.history.push(path);
+    this.props.onClose();
   };
 
   closeWithDelay = () => {
