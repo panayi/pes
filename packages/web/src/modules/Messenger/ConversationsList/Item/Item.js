@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import TimeAgo from 'react-timeago';
 import Typography from 'material-ui/Typography';
+import Grid from 'material-ui/Grid';
 import withStyles from 'material-ui/styles/withStyles';
 import { blue } from 'material-ui/colors';
 import propSelector from '@pesposa/core/src/utils/propSelector';
@@ -26,9 +27,6 @@ type Props = {
 
 const styles = theme => ({
   root: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     height: 85,
     padding: [theme.spacing.unit * 2, theme.spacing.unit * 1.5],
     borderBottom: [1, 'solid', theme.palette.divider],
@@ -38,9 +36,6 @@ const styles = theme => ({
     background: '#f5f0f0',
   },
   adThumbnail: {
-    flex: 0,
-    flexBasis: 50,
-    width: 50,
     marginRight: theme.spacing.unit,
   },
   unreadBadge: {
@@ -54,8 +49,6 @@ const styles = theme => ({
     background: blue.A200,
   },
   info: {
-    flex: 1,
-    width: 'calc(100% - 100px)',
     overflow: 'hidden',
   },
   title: {
@@ -70,9 +63,6 @@ const styles = theme => ({
   },
   profileImage: {
     display: 'flex',
-    flex: 0,
-    flexBasis: 50,
-    width: 50,
     justifyContent: 'flex-end',
   },
 });
@@ -83,12 +73,14 @@ const ConversationItem = ({
   otherUserId,
   classes,
 }: Props) => (
-  <Link
+  <Grid
+    container
+    component={Link}
     className={classes.root}
     activeClassName={classes.active}
     to={`/messages/${conversation.id}`}
   >
-    <div className={classes.adThumbnail}>
+    <Grid item xs={2} className={classes.adThumbnail}>
       <UnreadConversationsBadge
         context={conversation}
         withNumber={false}
@@ -96,8 +88,8 @@ const ConversationItem = ({
       >
         <AdThumbnail ad={ad} size={48} />
       </UnreadConversationsBadge>
-    </div>
-    <div className={classes.info}>
+    </Grid>
+    <Grid item xs={8} className={classes.info}>
       <UserFullName
         userId={otherUserId}
         render={({ userFullName }) => <Typography>{userFullName}</Typography>}
@@ -106,11 +98,11 @@ const ConversationItem = ({
       <Typography variant="caption">
         <TimeAgo date={conversation.lastMessageReceivedAt} minPeriod={30} />
       </Typography>
-    </div>
-    <div className={classes.profileImage}>
+    </Grid>
+    <Grid item xs={2} className={classes.profileImage}>
       {otherUserId && <ProfileImage userId={otherUserId} />}
-    </div>
-  </Link>
+    </Grid>
+  </Grid>
 );
 
 const mapStateToProps = createStructuredSelector({

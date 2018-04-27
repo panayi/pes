@@ -14,9 +14,6 @@ class BaseModal extends React.Component {
   }
 
   onEnterMobile = () => {
-    this.bodyOverflow = document.body.style.overflow;
-    this.bodyWidth = document.body.style.width;
-    this.bodyPosition = document.body.style.position;
     document.body.style.overflow = 'hidden';
     document.body.style.width = '100%';
     document.body.style.position = 'fixed';
