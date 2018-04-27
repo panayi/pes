@@ -9,6 +9,10 @@ import DialogContent from './Content/Content';
 import DialogActions from './Actions/Actions';
 
 class BaseModal extends React.Component {
+  componentWillUnmount() {
+    this.onExitMobile();
+  }
+
   onEnterMobile = () => {
     this.bodyOverflow = document.body.style.overflow;
     this.bodyWidth = document.body.style.width;
