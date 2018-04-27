@@ -338,32 +338,32 @@ class MobileViewAd extends React.Component {
                 className: classes.staticMap,
               }}
             />
-            <div
-              role="link"
-              tabIndex="-1"
-              className={classes.sellerBox}
-              onClick={ad.user && (() => history.push(`/user/${ad.user}`))}
-            >
-              <ProfileImage
-                className={classes.avatar}
-                userId={ad.user}
-                size={40}
-              />
-              <div className={classes.verifiedWith}>
-                <UserFullName
+            {ad.user ? (
+              <div
+                role="link"
+                tabIndex="-1"
+                className={classes.sellerBox}
+                onClick={ad.user && (() => history.push(`/user/${ad.user}`))}
+              >
+                <ProfileImage
+                  className={classes.avatar}
                   userId={ad.user}
-                  render={({ userFullName }) => (
-                    <Typography>{userFullName}</Typography>
-                  )}
+                  size={40}
                 />
-                <VerifiedWith user={ad.user} />
-              </div>
-              {ad.user && (
+                <div className={classes.verifiedWith}>
+                  <UserFullName
+                    userId={ad.user}
+                    render={({ userFullName }) => (
+                      <Typography>{userFullName}</Typography>
+                    )}
+                  />
+                  <VerifiedWith user={ad.user} />
+                </div>
                 <IconButton className={classes.profileButton}>
                   <KeyboardArrowRight />
                 </IconButton>
-              )}
-            </div>
+              </div>
+            ) : null}
           </div>
         </div>
         <div className={classes.actions}>
