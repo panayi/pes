@@ -13,8 +13,11 @@ const styles = theme => ({
     minHeight: 39,
     fontWeight: theme.typography.fontWeightBold,
     borderRadius: theme.borderRadius.md,
-    boxShadow: 'none !important',
-    textTransform: 'none !important',
+    boxShadow: 'none',
+    textTransform: 'none',
+    '&:active, &:focus, &:hover': {
+      boxShadow: 'none',
+    },
   },
   flatPrimary: {
     borderColor: theme.palette.primary.main,
