@@ -9,8 +9,19 @@ const handleAdUpdated = async (change, context) => {
   return algoliaService.update(ad, adId);
 };
 
-const handleAdDeleted = async (snap, context) => {
+const handleAdDeleted = async (snap, context, legacy) => {
   const { adId } = context.params;
+
+  if (legacy) {
+    // Make sure the legacy delete
+    // is not due to moving to ads/published
+    const adSnapshot = await adModel.get(adId);
+    const dueToPublish = adSnapshot.exists();
+
+    if (dueToPublish) {
+      return null;
+    }
+  }
 
   await adImageModel.removeAll(adId);
 
@@ -27,4 +38,4 @@ export const adDeleted = functions.database
 
 export const legacyAdDeleted = functions.database
   .ref('/ads/legacy/{adId}')
-  .onDelete(handleAdDeleted);
+  .onDelete((snap, context) => handleAdDeleted(snap, context, true));

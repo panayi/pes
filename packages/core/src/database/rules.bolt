@@ -314,6 +314,7 @@ type BetaInvite {
   affiliate: String,
   created_at: String,
   referred_by: String,
+  user: String | Null, // save userId once user creates account and betaUser is created
 }
 
 // ------------------------------------
@@ -358,6 +359,10 @@ path /countryFlags/:countryCode is Image {
 
 path /categories is Category[] {
   read() { true }
+}
+
+path /ads/legacy {
+  index() { ['email'] }
 }
 
 path /ads/legacy/{id} {

@@ -38,7 +38,7 @@
           Hello {{name}},
         </mj-text>
         <mj-text padding-bottom="15px">
-          Thanks for your interest! You've been added to our waitlist.
+          You've been added to the waitlist for accessing the brand new Pesposa.
         </mj-text>
         <mj-text padding-bottom="15px" font-weight="bold">
           Interested in priority access?

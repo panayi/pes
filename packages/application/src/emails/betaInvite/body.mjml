@@ -44,7 +44,7 @@
           While we are in beta, we are working full-speed to roll-out improvements and new features. <a class="link" href="mailto:{{supportEmail}}">Let us know</a> if you hit any issues, or if you have any ideas for improvements.
         </mj-text>
         <mj-text>
-          Ready to get started?
+          {{claimYourAdsText}}Ready to get started?
         </mj-text>
         <mj-button href={{url}} line-height="180%" font-family="Arial" background-color="#ff6762" color="white" padding-top="40px" font-size="24px" font-weight="bold" border-radius="4px" css-class="button">
           Get Started

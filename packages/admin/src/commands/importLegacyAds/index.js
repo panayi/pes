@@ -27,6 +27,7 @@ export const importLegacyAds = async options => {
 const command = program =>
   program
     .command('importLegacyAds')
+    .option('-i, --import <n>', 'How many legacy ads to import')
     .description('Import legacy ads to Firebase and Algolia')
     .action(importLegacyAds);
 
