@@ -11,7 +11,8 @@ const CREATE_RESERVATION_URL =
   'https://pesposa.app.waitlisted.co/api/v2/reservations';
 const WAITLISTED_API_KEY = '67f166d0daf65e9b8ff0dc8761bf50d2';
 
-const create = async (email, name, timeout) => new Promise(resolve => {
+const create = async (email, name, timeout) =>
+  new Promise(resolve => {
     setTimeout(async () => {
       try {
         const response = await fetch(CREATE_RESERVATION_URL, {
@@ -49,23 +50,12 @@ const bulkCreate = async filePath => {
   const readInterface = readline.createInterface({ input });
   let count = 0;
 
-  return new Promise(resolve => {
-    let isLast = false;
-    readInterface.on('line', async line => {
-      const parts = R.split(',', line);
-      const email = parts[0];
-      const name = parts[1] || email;
-      await create(email, name, count * 1000);
-      count += 1;
-
-      if (isLast) {
-        resolve();
-      }
-    });
-
-    readInterface.on('close', () => {
-      isLast = true;
-    });
+  readInterface.on('line', line => {
+    const parts = R.split(',', line);
+    const email = parts[0];
+    const name = parts[1] || email;
+    create(email, name, count * 1000);
+    count += 1;
   });
 };
 
