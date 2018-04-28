@@ -6,6 +6,7 @@ import downloadLegacyAds from './downloadLegacyAds';
 // BETA
 import makeBetaUser from './makeBetaUser';
 import joinWaitingList from './joinWaitingList';
+import deleteReservations from './deleteReservations';
 
 export {
   seed,
@@ -14,4 +15,5 @@ export {
   downloadLegacyAds,
   makeBetaUser,
   joinWaitingList,
+  deleteReservations,
 };

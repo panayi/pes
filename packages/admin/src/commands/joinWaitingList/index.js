@@ -11,53 +11,55 @@ const CREATE_RESERVATION_URL =
   'https://pesposa.app.waitlisted.co/api/v2/reservations';
 const WAITLISTED_API_KEY = '67f166d0daf65e9b8ff0dc8761bf50d2';
 
-const create = async (email, name) => {
-  try {
-    const response = await fetch(CREATE_RESERVATION_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'X-API-Key': WAITLISTED_API_KEY,
-      },
-      body: JSON.stringify({
-        reservation: {
-          name: isNilOrEmpty(name) ? email : name,
-          email,
-        },
-      }),
-    });
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    log.success(
-      `Created Waitlisted reservation for name=${name} email=${email}`,
-    );
-  } catch (error) {
-    log.error(
-      `Failed to create Waitlisted reservation for name=${name} email=${email}`,
-    );
-    log.error(error);
-  }
-};
+const create = async (email, name, timeout) => new Promise(resolve => {
+    setTimeout(async () => {
+      try {
+        const response = await fetch(CREATE_RESERVATION_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            'X-API-Key': WAITLISTED_API_KEY,
+          },
+          body: JSON.stringify({
+            reservation: {
+              name: isNilOrEmpty(name) ? email : name,
+              email,
+            },
+          }),
+        });
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        log.success(
+          `Created Waitlisted reservation for name=${name} email=${email}`,
+        );
+      } catch (error) {
+        log.error(
+          `Failed to create Waitlisted reservation for name=${name} email=${email}`,
+        );
+        log.error(error);
+      }
+      resolve();
+    }, timeout);
+  });
 
 const bulkCreate = async filePath => {
   const input = fs.createReadStream(filePath);
   const readInterface = readline.createInterface({ input });
+  let count = 0;
 
   return new Promise(resolve => {
     let isLast = false;
     readInterface.on('line', async line => {
-      readInterface.pause();
       const parts = R.split(',', line);
       const email = parts[0];
       const name = parts[1] || email;
-      await create(email, name);
+      await create(email, name, count * 1000);
+      count += 1;
 
       if (isLast) {
         resolve();
-      } else {
-        setTimeout(() => readInterface.resume(), 2000);
       }
     });
 
