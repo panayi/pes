@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
+import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
@@ -108,7 +109,7 @@ class Form extends Component<Props> {
           <SearchIcon />
         </div>
         <input
-          className={classes.input}
+          className={classNames('data-hj-whitelist', classes.input)}
           name="query"
           onChange={handleChange}
           onBlur={handleBlur}
