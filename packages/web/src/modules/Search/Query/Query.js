@@ -16,7 +16,7 @@ type Props = {
   classes: Object,
 };
 
-class QueryAds extends Component<Props> {
+class Query extends Component<Props> {
   static defaultProps = {
     inHome: false,
   };
@@ -57,4 +57,4 @@ const mapDispatchToProps = {
   resetQuery: paramsActions.resetQuery,
 };
 
-export default connectSearch(mapStateToProps, mapDispatchToProps)(QueryAds);
+export default connectSearch(mapStateToProps, mapDispatchToProps)(Query);

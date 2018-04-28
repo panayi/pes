@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
 import { noop } from 'ramda-adjunct';
+import debounce from 'lodash.debounce';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -12,6 +13,8 @@ import { selectors as responsiveSelectors } from 'store/responsive';
 
 // Based on:
 // https://github.com/callemall/material-ui/blob/v1-beta/docs/src/modules/components/AppSearch.js
+
+const INSTANT_SEARCH_TIMEOUT = 400;
 
 const styles = theme => ({
   root: {
@@ -70,9 +73,13 @@ const styles = theme => ({
 class Form extends Component<Props> {
   componentWillReceiveProps(nextProps) {
     if (propsChanged(['values'], this.props, nextProps)) {
-      this.props.handleSubmit({ preventDefault: noop });
+      this.handleChange();
     }
   }
+
+  handleChange = debounce(() => {
+    this.props.handleSubmit({ preventDefault: noop });
+  }, INSTANT_SEARCH_TIMEOUT);
 
   handleFormSubmit = (...args) => {
     const { inHome, history, handleSubmit } = this.props;
