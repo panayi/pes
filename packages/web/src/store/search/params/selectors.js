@@ -128,3 +128,9 @@ export const soldHasValueSelector = R.compose(
 
 // Ids
 export const idsSelector = R.compose(R.prop(constants.IDS_KEY), paramsSelector);
+
+// Raw props
+export const rawPropsSelector = R.compose(
+  R.propOr({}, constants.RAW_PROPS_KEY),
+  paramsSelector,
+);

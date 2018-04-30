@@ -28,10 +28,10 @@ const search = (options = {}) => async (
     dispatch(pageActions.resetPage());
   }
 
-  const state = getStateWithSearch(searchId, getState);
+  let state = getStateWithSearch(searchId, getState);
   const indexName = selectors.indexNameSelector(state);
   const params = selectors.searchParamsSelector(state);
-  const currentPage = pageSelectors.pageSelector(state);
+  let currentPage = pageSelectors.pageSelector(state);
 
   const pageToRequest = firstPage ? 0 : currentPage + 1;
   const finalParams = R.merge(params, { page: pageToRequest });
@@ -39,7 +39,16 @@ const search = (options = {}) => async (
   try {
     const result = await algoliaService.search(indexName, finalParams);
     dispatch(requestSucceeded(result));
-    dispatch(pageActions.nextPage());
+
+    state = getStateWithSearch(searchId, getState);
+    currentPage = pageSelectors.pageSelector(state);
+
+    // In case where for some reason the same page was requested twice,
+    // this check ensures we don't increment the page twice.
+    if (currentPage < pageToRequest) {
+      dispatch(pageActions.nextPage());
+    }
+
     return result;
   } catch (error) {
     dispatch(requestFailed(error));

@@ -22,6 +22,7 @@ import EditAdButton from '../EditAdButton/EditAdButton';
 import Action from '../Action/Action';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
 import ToggleSold from '../ToggleSold/ToggleSold';
+import RelatedAds from '../RelatedAds/RelatedAds';
 import BrowseAds from './BrowseAds/BrowseAds';
 import Breadcrumbs from './Breadcrumbs/Breadcrumbs';
 import SellerBox from './SellerBox/SellerBox';
@@ -173,6 +174,11 @@ const styles = theme => ({
       marginTop: -theme.spacing.unit,
     },
   },
+  relatedAdsTitle: {
+    width: '100%',
+    padding: [theme.spacing.unit * 3, 0, theme.spacing.unit * 2, 0],
+    textAlign: 'center',
+  },
 });
 
 const DesktopViewAd = ({
@@ -294,6 +300,12 @@ const DesktopViewAd = ({
         )}
       </BrowseAds>
     </Paper>
+    <div className={classes.relatedAdsTitle}>
+      <Typography variant="title" color="textSecondary">
+        More like this
+      </Typography>
+    </div>
+    <RelatedAds ad={ad} adId={adId} />
   </div>
 );
 
