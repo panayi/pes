@@ -187,6 +187,7 @@ Find variables inherited by create-react-app
 ## 6. Custom yarn script
 We have a custom yarn script at `./yarn` for allowing operations on multiple deployments. Don't edit `.env` or `serviceAccountKey.json` files directly; instead edit them in `secrets` repo and update the submodule. Next time `DEPLOYMENT=development ./yarn <command>` runs will update these files.
 
+
 ## 7. Edit old Code
 
 ```
