@@ -28,3 +28,11 @@ export const newAdLocationSelector = createSelector(
       : R.assocPath(['address', 'country'], countryCode, location);
   },
 );
+
+// adPropsForMixpanelSelector :: Ad -> Object
+export const adPropsForMixpanelSelector = R.compose(
+  R.evolve({
+    location: R.prop('address'),
+  }),
+  R.pick(['title', 'category', 'location']),
+);

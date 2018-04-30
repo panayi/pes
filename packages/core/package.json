@@ -22,6 +22,7 @@
     "imgix-core-js": "^1.1.1",
     "lodash.random": "^3.2.0",
     "mailgun-js": "^0.17.0",
+    "mixpanel": "^0.9.1",
     "node-fetch": "^2.0.0",
     "nodemailer": "^4.6.4",
     "ramda": "^0.25.0",

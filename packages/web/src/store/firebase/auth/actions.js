@@ -6,6 +6,7 @@ import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import createAuthProvider from 'lib/firebase/createAuthProvider';
 import firebaseApi from 'services/firebase';
 import api from 'services/api';
+import { track } from 'services/mixpanel';
 import { migrateAnonymousUser } from 'store/anonymousUserToken/actions';
 import { actions as modalActions } from 'store/modals';
 import { actions as loginActions } from 'store/login';
@@ -124,8 +125,10 @@ export const linkProvider = providerId => async (
   dispatch(profileActions.updateProfile(newUser));
 };
 
-export const logout = () => async (dispatch, getState, getFirebase) =>
+export const logout = () => async (dispatch, getState, getFirebase) => {
   getFirebase().logout();
+  track('logout');
+};
 
 const setUserInfo = () => (dispatch, getState) => {
   const token = selectors.tokenSelector(getState());
@@ -152,9 +155,11 @@ export const handleAuthStateChanged = async (authData, firebase, dispatch) => {
 
   // Otherwise, user was just logged in
 
-  // Migrate when user has just logged in and not anonymous
+  // Migrate when user has just logged in (not anonymously)
   await dispatch(migrateAnonymousUser());
   await dispatch(setUserInfo());
+
+  track('login');
 };
 
 // BETA

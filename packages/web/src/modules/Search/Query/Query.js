@@ -1,5 +1,6 @@
 /* @flow */
 import React, { Component } from 'react';
+import * as R from 'ramda';
 import { createStructuredSelector } from 'reselect';
 import { Formik } from 'formik';
 import {
@@ -7,6 +8,7 @@ import {
   actions as paramsActions,
 } from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
+import TrackOnCall from 'modules/Mixpanel/TrackOnCall/TrackOnCall';
 import Form from './Form/Form';
 
 type Props = {
@@ -29,20 +31,24 @@ class Query extends Component<Props> {
     const { query, inHome, resetQuery, hasValue } = this.props;
 
     return (
-      <Formik
-        initialValues={{ query }}
-        onSubmit={this.handleSubmit}
-        enableReinitialize
-      >
-        {formikProps => (
-          <Form
-            {...formikProps}
-            inHome={inHome}
-            handleClear={() => resetQuery()}
-            hasValue={hasValue}
-          />
+      <TrackOnCall>
+        {({ track }) => (
+          <Formik
+            initialValues={{ query }}
+            onSubmit={track(this.handleSubmit, 'search', R.prop('query'))}
+            enableReinitialize
+          >
+            {formikProps => (
+              <Form
+                {...formikProps}
+                inHome={inHome}
+                handleClear={() => resetQuery()}
+                hasValue={hasValue}
+              />
+            )}
+          </Formik>
         )}
-      </Formik>
+      </TrackOnCall>
     );
   }
 }

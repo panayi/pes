@@ -1,7 +1,7 @@
 import React from 'react';
 import withStyles from 'material-ui/styles/withStyles';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
-import ShowCreateAdButton from 'components/ShowCreateAdButton/ShowCreateAdButton';
+import ShowCreateAdButton from 'modules/PostAd/ShowCreateAdButton/ShowCreateAdButton';
 import UserFullName from 'components/UserFullName/UserFullName';
 
 const styles = theme => ({

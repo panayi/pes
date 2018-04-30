@@ -18,6 +18,7 @@ import { selectors as profileSelectors } from 'store/firebase/profile';
 import connectSearch from 'hocs/connectSearch';
 import translate from 'hocs/translate';
 import RequireAdult from 'components/RequireAdult/RequireAdult';
+import TrackOnCall from 'modules/Mixpanel/TrackOnCall/TrackOnCall';
 import FilterOption from '../FilterOption/FilterOption';
 
 type LinkType = {
@@ -65,26 +66,32 @@ class FilterByCategory extends React.Component<Props> {
     return (
       <RequireAdult>
         {({ confirmAdult }) => (
-          <List classes={{ root: classes.list }}>
-            {R.map(
-              category => (
-                <FilterOption
-                  key={category.id}
-                  active={
-                    category.id === 'all'
-                      ? R.isNil(currentCategoryId)
-                      : category.id === currentCategoryId
-                  }
-                  onClick={() =>
-                    this.handleCategoryClick(category, confirmAdult)
-                  }
-                >
-                  {category.label}
-                </FilterOption>
-              ),
-              R.values(categoryLinks),
+          <TrackOnCall>
+            {({ track }) => (
+              <List classes={{ root: classes.list }}>
+                {R.map(
+                  category => (
+                    <FilterOption
+                      key={category.id}
+                      active={
+                        category.id === 'all'
+                          ? R.isNil(currentCategoryId)
+                          : category.id === currentCategoryId
+                      }
+                      onClick={track(
+                        () => this.handleCategoryClick(category, confirmAdult),
+                        'filterAdsByCategory',
+                        { value: category.id },
+                      )}
+                    >
+                      {category.label}
+                    </FilterOption>
+                  ),
+                  R.values(categoryLinks),
+                )}
+              </List>
             )}
-          </List>
+          </TrackOnCall>
         )}
       </RequireAdult>
     );

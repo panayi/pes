@@ -13,10 +13,10 @@ import theme from 'config/theme';
 import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
 import { selectors as responsiveSelectors } from 'store/responsive';
-import MixpanelProvider from 'components/MixpanelProvider/MixpanelProvider';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import HotjarProvider from 'components/HotjarProvider/HotjarProvider';
 import SearchProvider from 'modules/Search/Provider/Provider';
+import TrackGlobalEvents from 'modules/Mixpanel/TrackGlobalEvents/TrackGlobalEvents';
 import routes from 'routes';
 
 const history = createHistory();
@@ -55,25 +55,24 @@ ensureReady(routes).then(data => {
 
   renderMethod(
     <Provider store={store}>
-      <MixpanelProvider>
-        <BrowserRouter>
-          <ErrorBoundary>
-            <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-              <JssProvider registry={sheetsRegistry} jss={jss}>
-                <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-                  <React.Fragment>
-                    <CssBaseline />
-                    <div>
-                      <After data={data} routes={routes} store={store} />
-                    </div>
-                  </React.Fragment>
-                </MuiThemeProvider>
-              </JssProvider>
-            </SearchProvider>
-            <HotjarProvider />
-          </ErrorBoundary>
-        </BrowserRouter>
-      </MixpanelProvider>
+      <BrowserRouter>
+        <ErrorBoundary>
+          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+            <JssProvider registry={sheetsRegistry} jss={jss}>
+              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+                <React.Fragment>
+                  <CssBaseline />
+                  <div>
+                    <After data={data} routes={routes} store={store} />
+                  </div>
+                </React.Fragment>
+              </MuiThemeProvider>
+            </JssProvider>
+          </SearchProvider>
+          <HotjarProvider />
+          <TrackGlobalEvents />
+        </ErrorBoundary>
+      </BrowserRouter>
     </Provider>,
     document.getElementById(rootId),
     () => {

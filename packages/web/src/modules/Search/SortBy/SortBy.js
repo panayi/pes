@@ -10,6 +10,7 @@ import {
 } from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
 import translate from 'hocs/translate';
+import TrackOnCall from 'modules/Mixpanel/TrackOnCall/TrackOnCall';
 import FilterOption from '../FilterOption/FilterOption';
 
 const styles = {
@@ -24,20 +25,26 @@ class SortBy extends React.Component {
     const { sortBy, setSortBy, t, classes } = this.props;
 
     return (
-      <List classes={{ root: classes.list }}>
-        {R.map(
-          sortByOption => (
-            <FilterOption
-              key={sortByOption}
-              active={sortByOption === sortBy}
-              onClick={() => setSortBy(sortByOption)}
-            >
-              {t(sortByOption)}
-            </FilterOption>
-          ),
-          paramsConstants.SORT_BY_OPTIONS_WITHOUT_DEFAULT_KEYS,
+      <TrackOnCall>
+        {({ track }) => (
+          <List classes={{ root: classes.list }}>
+            {R.map(
+              sortByOption => (
+                <FilterOption
+                  key={sortByOption}
+                  active={sortByOption === sortBy}
+                  onClick={track(() => setSortBy(sortByOption), 'sortAds', {
+                    value: sortByOption,
+                  })}
+                >
+                  {t(sortByOption)}
+                </FilterOption>
+              ),
+              paramsConstants.SORT_BY_OPTIONS_WITHOUT_DEFAULT_KEYS,
+            )}
+          </List>
         )}
-      </List>
+      </TrackOnCall>
     );
   };
 

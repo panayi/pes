@@ -4,7 +4,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import MessageIcon from 'material-ui-icons/Message';
 import Link from 'components/Link/Link';
 import EmptyHero from 'components/EmptyHero/EmptyHero';
-import ShowCreateAdButton from 'components/ShowCreateAdButton/ShowCreateAdButton';
+import ShowCreateAdButton from 'modules/PostAd/ShowCreateAdButton/ShowCreateAdButton';
 
 const styles = theme => ({
   actions: {
