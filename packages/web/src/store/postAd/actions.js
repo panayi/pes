@@ -2,6 +2,7 @@
 import * as R from 'ramda';
 import debounce from 'lodash.debounce';
 import firebaseApi from 'services/firebase';
+import { track } from 'services/mixpanel';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as userInfoSelectors } from 'store/userInfo';
 import * as createAdActions from './createAd/actions';
@@ -62,13 +63,18 @@ export const createAd = (ad: Ad) => (
   return dispatch(firebaseApi.pendingReviewAds.create(finalAd))
     .then(id => dispatch(changesActions.adCreated(R.merge(finalAd, { id }))))
     .then(() => dispatch(createAdActions.createAdCompleted()))
-    .then(() => dispatch(removeDraft()));
+    .then(() => dispatch(removeDraft()))
+    .then(() => {
+      track('createAd', selectors.adPropsForMixpanelSelector(finalAd));
+    });
 };
 
 export const saveAd = (adId: string, ad: Ad) => (dispatch: Dispatch) => {
   const serializedAd = serializeAd(ad);
   const finalAd = R.omit(['images'], serializedAd);
-  return dispatch(firebaseApi.ads.update(adId, finalAd));
+  return dispatch(firebaseApi.ads.update(adId, finalAd)).then(() => {
+    track('editAd', selectors.adPropsForMixpanelSelector(finalAd));
+  });
 };
 
 export const removeAd = (adId: string) => async (dispatch: Dispatch) => {

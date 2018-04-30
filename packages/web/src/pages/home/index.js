@@ -18,7 +18,7 @@ import Layout from 'layouts/Layout/Layout';
 import needsBetaUser from 'hocs/needsBetaUser';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import ListAds from 'components/ListAds/ListAds';
-import ShowCreateAdButton from 'components/ShowCreateAdButton/ShowCreateAdButton';
+import ShowCreateAdButton from 'modules/PostAd/ShowCreateAdButton/ShowCreateAdButton';
 import GetCurrentPosition from 'modules/GetCurrentPosition/GetCurrentPosition';
 import Search from 'modules/Search/Search';
 import SearchFilters from 'modules/Search/Filters/Filters';

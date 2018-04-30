@@ -5,7 +5,7 @@ import withStyles from 'material-ui/styles/withStyles';
 import PhotoCameraIcon from 'material-ui-icons/PhotoCamera';
 import { actions as modalActions } from 'store/modals';
 import Button from 'components/Button/Button';
-import TrackEvent from 'components/TrackEvent/TrackEvent';
+import TrackOnCall from 'modules/Mixpanel/TrackOnCall/TrackOnCall';
 
 const styles = theme => ({
   icon: {
@@ -14,17 +14,17 @@ const styles = theme => ({
 });
 
 const ShowCreateAdButton = ({ openModal, classes, children, ...rest }) => (
-  <TrackEvent>
+  <TrackOnCall>
     {({ track }) => (
       <Button
         {...rest}
-        onClick={track(() => openModal('createAd'), 'opened_create_ad_dialog')}
+        onClick={track(() => openModal('createAd'), 'openedCreateAdDialog')}
       >
         <PhotoCameraIcon className={classes.icon} />
         {children}
       </Button>
     )}
-  </TrackEvent>
+  </TrackOnCall>
 );
 
 const mapDispatchToProps = {

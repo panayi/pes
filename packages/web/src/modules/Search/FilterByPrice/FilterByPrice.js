@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as R from 'ramda';
+import debounce from 'lodash.debounce';
 import { createStructuredSelector } from 'reselect';
 import { Formik } from 'formik';
 import {
@@ -6,7 +8,10 @@ import {
   actions as paramsActions,
 } from 'store/search/params';
 import connectSearch from 'hocs/connectSearch';
+import TrackOnCall from 'modules/Mixpanel/TrackOnCall/TrackOnCall';
 import Form from './Form/Form';
+
+const SUBMIT_TIMEOUT = 300;
 
 class FilterByPrice extends Component {
   handleSubmit = values => {
@@ -17,13 +22,24 @@ class FilterByPrice extends Component {
     const { minPrice, maxPrice } = this.props;
 
     return (
-      <Formik
-        initialValues={{ min: minPrice, max: maxPrice }}
-        onSubmit={this.handleSubmit}
-        enableReinitialize
-      >
-        {formikProps => <Form {...formikProps} />}
-      </Formik>
+      <TrackOnCall>
+        {({ track }) => (
+          <Formik
+            initialValues={{ min: minPrice, max: maxPrice }}
+            onSubmit={debounce(
+              track(
+                this.handleSubmit,
+                'filterAdsByPrice',
+                R.pick(['min', 'max']),
+              ),
+              SUBMIT_TIMEOUT,
+            )}
+            enableReinitialize
+          >
+            {formikProps => <Form {...formikProps} />}
+          </Formik>
+        )}
+      </TrackOnCall>
     );
   };
 

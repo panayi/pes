@@ -9,3 +9,4 @@ export * from './triggers/messages';
 export * from './triggers/pendingReviewAds';
 export * from './triggers/users';
 export * from './triggers/storage';
+export * from './triggers/authentication';

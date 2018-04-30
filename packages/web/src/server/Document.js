@@ -7,7 +7,6 @@ import { ssrBehavior } from 'react-md-spinner';
 import theme from 'config/theme';
 import jss from 'config/styles';
 import { constants as searchConstants } from 'store/search';
-import MixpanelProvider from 'components/MixpanelProvider/MixpanelProvider';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import WidthMatch from 'components/WidthMatch/WidthMatch';
 import SearchProvider from 'modules/Search/Provider/Provider';
@@ -20,22 +19,20 @@ class Document extends React.Component {
     const sheetsRegistry = new SheetsRegistry();
 
     const page = await renderPage(Component => props => (
-      <MixpanelProvider>
-        <ErrorBoundary>
-          <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
-            <JssProvider registry={sheetsRegistry} jss={jss}>
-              <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
-                <React.Fragment>
-                  <CssBaseline />
-                  <WidthMatch>
-                    <Component {...props} />
-                  </WidthMatch>
-                </React.Fragment>
-              </MuiThemeProvider>
-            </JssProvider>
-          </SearchProvider>
-        </ErrorBoundary>
-      </MixpanelProvider>
+      <ErrorBoundary>
+        <SearchProvider id={searchConstants.HOME_SEARCH_ID}>
+          <JssProvider registry={sheetsRegistry} jss={jss}>
+            <MuiThemeProvider sheetsManager={sheetsManager} theme={theme}>
+              <React.Fragment>
+                <CssBaseline />
+                <WidthMatch>
+                  <Component {...props} />
+                </WidthMatch>
+              </React.Fragment>
+            </MuiThemeProvider>
+          </JssProvider>
+        </SearchProvider>
+      </ErrorBoundary>
     ));
 
     const css = sheetsRegistry.toString();
