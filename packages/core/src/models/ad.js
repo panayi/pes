@@ -32,7 +32,11 @@ export const create = async (ad: PendingReviewAd) => {
 
   // Finally, index ad on algolia
   const adToIndex: Ad = await getWithImages(adId);
-  await algoliaService.add(adToIndex, adId);
+  const finalAdToIndex = R.merge(adToIndex, {
+    sold: false,
+    legacy: false,
+  });
+  await algoliaService.add(finalAdToIndex, adId);
 
   return adId;
 };

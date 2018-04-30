@@ -35,7 +35,11 @@ class Query extends Component<Props> {
         {({ track }) => (
           <Formik
             initialValues={{ query }}
-            onSubmit={track(this.handleSubmit, 'search', R.prop('query'))}
+            onSubmit={track(
+              this.handleSubmit,
+              'search',
+              R.compose(R.assoc(R.__, 'query', {}), R.prop('query')),
+            )}
             enableReinitialize
           >
             {formikProps => (
