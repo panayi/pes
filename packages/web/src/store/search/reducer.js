@@ -31,6 +31,12 @@ const searchReducers = {
       constants.PROFILE_SEARCH_ID,
     ),
   }),
+  relatedAds: combineReducers({
+    [constants.ROOT_KEY]: multireducer(
+      searchReducer,
+      constants.RELATED_ADS_SEARCH_ID,
+    ),
+  }),
 };
 
 export default searchReducers;

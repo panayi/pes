@@ -74,7 +74,8 @@ export const searchParamsSelector = createSelector(
   filtersSelector,
   paramsSelectors.geopositionSelector,
   paramsSelectors.idsSelector,
-  (queryValue, facetFilters, filters, geoposition, ids) => {
+  paramsSelectors.rawPropsSelector,
+  (queryValue, facetFilters, filters, geoposition, ids, rawProps) => {
     if (isNilOrEmpty(ids)) {
       return R.reject(isNilOrEmpty, {
         query: queryValue,
@@ -85,6 +86,7 @@ export const searchParamsSelector = createSelector(
           ? `${geoposition.latitude}, ${geoposition.longitude}`
           : null,
         getRankingInfo: true,
+        ...rawProps,
       });
     }
 

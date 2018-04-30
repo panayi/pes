@@ -16,6 +16,7 @@ export const SORT_BY_KEY = 'sortBy';
 export const USER_KEY = 'user';
 export const SOLD_KEY = 'sold';
 export const IDS_KEY = 'ids';
+export const RAW_PROPS_KEY = 'rawProps';
 
 export const ROOT_PATH = [searchConstants.ROOT_KEY, ROOT_KEY];
 
