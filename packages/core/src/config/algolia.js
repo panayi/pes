@@ -60,7 +60,7 @@ export const INDEXES = [
       },
     ],
     settings: {
-      searchableAttributes: ['title', 'body'],
+      searchableAttributes: ['title', 'body', 'convertedText'],
       attributesForFaceting: [
         'category',
         'user',

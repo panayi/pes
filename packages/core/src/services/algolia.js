@@ -5,6 +5,7 @@ import env from '../config/env';
 import * as algoliaConfig from '../config/algolia';
 import computedProp from '../utils/computedProp';
 import log from '../utils/log';
+import * as languageModel from '../models/language';
 
 export const client = algoliasearch(env.algoliaAppId, env.algoliaApiKey);
 
@@ -43,6 +44,7 @@ const serializeAd = (ad, id) =>
       algoliaConfig.ID,
       'title',
       'body',
+      'convertedText',
       'category',
       'price',
       'user',
@@ -72,8 +74,23 @@ const serializeAd = (ad, id) =>
         ),
       ),
     ),
-    computedProp('legacy', R.propOr(false, 'legacy')),
-    computedProp('sold', R.propOr(false, 'sold')),
+    R.unless(
+      R.either(
+        R.propSatisfies(isNilOrEmpty, 'title'),
+        R.propSatisfies(isNilOrEmpty, 'body'),
+      ),
+      computedProp(
+        'convertedText',
+        R.converge(
+          R.compose(
+            languageModel.convertGreek,
+            R.join('. '),
+            R.unapply(R.identity),
+          ),
+          [R.prop('title'), R.prop('body')],
+        ),
+      ),
+    ),
     computedProp(algoliaConfig.ID, R.always(id)),
   )(ad);
 
