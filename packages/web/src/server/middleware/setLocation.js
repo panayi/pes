@@ -6,7 +6,7 @@ const setLocation = async (req, res, next) => {
   try {
     const { store } = res.locals;
     const ip = getClientIp(req);
-    const response = await api.geoip({ ip });
+    const response = await api.geoip({ ip })();
 
     if (response && response.location) {
       store.dispatch(userInfoActions.setLocation(response.location));
