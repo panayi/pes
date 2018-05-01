@@ -38,7 +38,7 @@ class Query extends Component<Props> {
             onSubmit={track(
               this.handleSubmit,
               'search',
-              R.compose(R.assoc(R.__, 'query', {}), R.prop('query')),
+              R.compose(R.assoc('query', R.__, {}), R.prop('query')),
             )}
             enableReinitialize
           >
