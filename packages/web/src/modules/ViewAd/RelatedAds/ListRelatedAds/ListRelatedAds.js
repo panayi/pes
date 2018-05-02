@@ -9,6 +9,7 @@ const ListRelatedAds = ({ ad, adId }) => (
   <Search
     params={{
       sortBy: 'default',
+      category: ad.category,
       rawProps: {
         query: ad.title,
         optionalWords: R.split(' ', ad.title),
