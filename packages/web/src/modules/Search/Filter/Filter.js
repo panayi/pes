@@ -7,6 +7,7 @@ const styles = theme => ({
   section: {
     marginBottom: theme.spacing.unit,
     paddingBottom: theme.spacing.unit * 1.5,
+    overflow: 'visible',
 
     [theme.breakpoints.up(theme.map.laptop)]: {
       paddingBottom: 0,
