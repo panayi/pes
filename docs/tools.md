@@ -5,6 +5,7 @@ Performance & Mobile testing:
 3. <https://developers.google.com/web/tools/lighthouse/>
 4. <https://www.thinkwithgoogle.com/feature/mobile/>
 5. <https://www.thinkwithgoogle.com/tools/>
+6. <https://tools.pingdom.com/>
 
 Cross-browser testing:
 
