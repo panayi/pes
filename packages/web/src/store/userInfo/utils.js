@@ -6,7 +6,10 @@ import * as constants from './constants';
 // For location: prefer GEOLOCATION_SOURCE_ID over IP_SOURCE_ID
 // For everything else: prefer initialState (as it is passed by the server and more recent)
 export const mergeState = (initialState, persistedState) => {
-  const persistedSource = R.path(['userInfo', 'source'], persistedState);
+  const persistedSource = R.path(
+    ['userInfo', 'location', 'source'],
+    persistedState,
+  );
 
   let stateToUseForLocation = initialState || persistedState;
   if (persistedSource === locationConfig.GEOLOCATION_SOURCE_ID) {
