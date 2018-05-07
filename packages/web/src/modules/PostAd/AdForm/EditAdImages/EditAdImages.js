@@ -157,6 +157,9 @@ export class EditAdImages extends Component<Props> {
           <div className={classes.item} key="add">
             <Dropzone
               acceptedFileTypes={imagesConfig.ACCEPTED_TYPES}
+              inputProps={{
+                capture: 'camera',
+              }}
               className={error && classes.errorBox}
               onDrop={this.handleDrop}
               isLoading={isLoading}
