@@ -15,6 +15,7 @@ import { constants as searchConstants } from 'store/search';
 import { selectors as responsiveSelectors } from 'store/responsive';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import HotjarProvider from 'components/HotjarProvider/HotjarProvider';
+import GoogleAnalyticsProvider from 'components/GoogleAnalyticsProvider/GoogleAnalyticsProvider';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import TrackGlobalEvents from 'modules/Mixpanel/TrackGlobalEvents/TrackGlobalEvents';
 import routes from 'routes';
@@ -71,6 +72,7 @@ ensureReady(routes).then(data => {
           </SearchProvider>
           <HotjarProvider />
           <TrackGlobalEvents />
+          <GoogleAnalyticsProvider />
         </ErrorBoundary>
       </BrowserRouter>
     </Provider>,
