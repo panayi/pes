@@ -97,11 +97,11 @@ const redirectLegacyUrl = (req, res, next) => {
     R.split('/'),
     R.when(R.compose(R.equals('/'), R.head), R.tail),
   )(req.path);
+
   const firstSegment = R.head(segments);
   const lastSegment = R.last(segments);
 
   const viewAdPage = R.test(/id--\d+/, lastSegment);
-
   if (viewAdPage) {
     const categoryParent = formatCategory(subdomain);
     const id = R.replace('id--', '', lastSegment);
@@ -111,8 +111,14 @@ const redirectLegacyUrl = (req, res, next) => {
     return;
   }
 
-  const rootPage = R.contains(firstSegment, ['www', 'pesposa']);
+  const isVeryOldUrl = firstSegment === 'view';
+  if (isVeryOldUrl) {
+    const newUrl = `${req.protocol}://cy.${env.domain}`;
+    res.redirect(newUrl);
+    return;
+  }
 
+  const rootPage = R.contains(subdomain, ['www', 'pesposa']);
   if (rootPage) {
     next();
     return;
