@@ -13,6 +13,11 @@ export const openSelector = createSelector(
   R.propOr(false),
 );
 
+export const anyOpenSelector = createSelector(
+  allOpenSelector,
+  R.compose(R.any(R.identity), R.values),
+);
+
 export const modalPropsSelector = createSelector(
   propSelector('id'),
   allModalPropsSelector,

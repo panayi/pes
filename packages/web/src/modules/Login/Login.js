@@ -85,8 +85,8 @@ const Login = ({
                 {!phoneOnly &&
                   !showingSmsCodeValidation && (
                     <React.Fragment>
-                      <Grid item xs={1} />
-                      <Grid item xs={10} className={classes.divider}>
+                      <Grid item md={1} />
+                      <Grid item xs={12} md={10} className={classes.divider}>
                         <TextDivider variant="subheading" color="textSecondary">
                           or login with your phone
                         </TextDivider>

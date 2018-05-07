@@ -13,6 +13,7 @@ import {
 } from 'store/search/scrollPosition';
 import { selectors as userInfoSelectors } from 'store/userInfo';
 import { selectors as responsiveSelectors } from 'store/responsive';
+import { selectors as modalsSelectors } from 'store/modals';
 import connectSearch from 'hocs/connectSearch';
 import * as constants from './constants';
 import Masonry from './Masonry/Masonry';
@@ -83,6 +84,14 @@ export class ListAds extends Component {
   }
 
   handleScroll = ({ scrollTop }) => {
+    // TODO: Hacky way to avoid triggering many requests
+    // when a modal is opened (since on mobile position: fixed is added to <body>).
+    // We should fix all these issues by displaying mobile modals
+    // on dedicated URLs.
+    if (this.props.hasOpenedModal) {
+      return;
+    }
+
     const listHeight = this.collectionRef.getTotalSize().height;
 
     if (
@@ -172,6 +181,7 @@ const mapStateToProps = createStructuredSelector({
   scrollPosition: scrollPositionSelectors.scrollPositionSelector,
   serverWidth: serverWidthSelector,
   serverHeight: serverHeightSelector,
+  hasOpenedModal: modalsSelectors.anyOpenSelector,
 });
 
 const mapDispatchToProps = {
