@@ -30,7 +30,7 @@ const Content = ({ ad, adId, legacy, location }: Props) => (
       {({ place }) => (
         <Helmet
           {...getMetaTags({
-            title: ad ? `${ad.title} in ${place}` : null,
+            title: ad ? `${ad.title} in ${place} - Pesposa` : null,
             description: R.prop('body', ad),
             image: R.compose(
               buildUrl,
