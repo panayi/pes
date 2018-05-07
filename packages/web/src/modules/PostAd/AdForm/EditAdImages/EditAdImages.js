@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import * as imagesConfig from '@pesposa/core/src/config/images';
 import { actions as storageActions } from 'store/firebase/storage';
 import { constants as postAdConstants } from 'store/postAd';
-import Imgix from 'components/Imgix/Imgix';
 import Spinner from 'components/Spinner/Spinner';
 import Dropzone from './Dropzone/Dropzone';
 
@@ -55,6 +54,11 @@ const styles = theme => ({
     '& + $item': {
       marginLeft: theme.spacing.unit * 2,
     },
+  },
+  image: {
+    height: ITEM_SIZE,
+    width: ITEM_SIZE,
+    objectFit: 'cover',
   },
   errorBox: {
     borderColor: theme.palette.error.main,
@@ -142,9 +146,11 @@ export class EditAdImages extends Component<Props> {
     const list = R.compose(
       R.map(([imageId, image]) => (
         <div className={classes.item} key={image.fullPath}>
-          <Imgix
+          <img
+            className={classes.image}
+            src={image.downloadURL}
             image={image}
-            params={{ h: ITEM_SIZE, w: ITEM_SIZE, fit: 'fill', bg: '000' }}
+            alt=""
           />
           {this.renderActionForImage(imageId, image)}
         </div>
