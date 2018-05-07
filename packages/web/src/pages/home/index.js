@@ -125,7 +125,7 @@ export const searchParamsFromPropsSelector = createSelector(
   R.compose(R.defaultTo(null), routerSelectors.routeParamSelector('category')),
   category => ({
     category,
-    sold: false,
+    sold: '-true',
   }),
 );
 
