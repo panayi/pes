@@ -13,18 +13,23 @@ import Button from 'components/Button/Button';
 
 const styles = theme => ({
   root: {
-    width: 450,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     margin: '0 auto',
+    [theme.breakpoints.up(theme.map.laptop)]: {
+      minWidth: 450,
+    },
   },
   success: {
     marginBottom: theme.spacing.unit * 3,
   },
   link: {
     display: 'inline',
+  },
+  profileLink: {
+    textAlign: 'center',
   },
 });
 
@@ -45,7 +50,7 @@ const CreateAdSuccess = ({
             tagline="Your ad has been created!"
             small
           />
-          <Typography>
+          <Typography className={classes.profileLink}>
             Check the status of your ad on{' '}
             <A
               className={classes.link}
