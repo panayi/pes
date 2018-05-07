@@ -15,9 +15,15 @@ const setCountrySubdomain = (req, res, next) => {
   } else {
     const state = store.getState();
     const userCountryCode = userInfoSelectors.countryCodeSelector(state);
-    const newCountryCode = R.toLower(
-      userCountryCode || locationConfig.DEFAULT_COUNTRY_CODE,
+    const defaultCountryCode = locationConfig.DEFAULT_COUNTRY_CODE;
+    const siteForCountryCodeExists = R.contains(
+      userCountryCode,
+      env.countrySites,
     );
+    const finalCountryCode = siteForCountryCodeExists
+      ? userCountryCode || defaultCountryCode
+      : defaultCountryCode;
+    const newCountryCode = R.toLower(finalCountryCode);
 
     const newUrl = `${req.protocol}://${newCountryCode}.${env.domain}${
       req.originalUrl
