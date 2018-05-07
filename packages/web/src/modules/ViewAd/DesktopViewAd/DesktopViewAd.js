@@ -174,9 +174,9 @@ const styles = theme => ({
       marginTop: -theme.spacing.unit,
     },
   },
-  relatedAdsTitle: {
+  relatedAds: {
     width: '100%',
-    padding: [theme.spacing.unit * 3, 0, theme.spacing.unit * 2, 0],
+    paddingTop: theme.spacing.unit * 3,
     textAlign: 'center',
   },
 });
@@ -300,12 +300,9 @@ const DesktopViewAd = ({
         )}
       </BrowseAds>
     </Paper>
-    <div className={classes.relatedAdsTitle}>
-      <Typography variant="title" color="textSecondary">
-        More like this
-      </Typography>
+    <div className={classes.relatedAds}>
+      <RelatedAds ad={ad} adId={adId} />
     </div>
-    <RelatedAds ad={ad} adId={adId} />
   </div>
 );
 

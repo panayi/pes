@@ -1,11 +1,19 @@
 import React from 'react';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import Typography from 'material-ui/Typography';
+import withStyles from 'material-ui/styles/withStyles';
 import renderNothingWhen from 'hocs/renderNothingWhen';
 import ListAds from 'components/ListAds/ListAds';
 import Search from 'modules/Search/Search';
 
-const ListRelatedAds = ({ ad, adId }) => (
+const styles = theme => ({
+  title: {
+    paddingBottom: theme.spacing.unit * 2,
+  },
+});
+
+const ListRelatedAds = ({ ad, adId, classes }) => (
   <Search
     params={{
       sortBy: 'default',
@@ -18,10 +26,24 @@ const ListRelatedAds = ({ ad, adId }) => (
       },
     }}
   >
-    {props => <ListAds {...props} sidebarWidth={0} />}
+    {props =>
+      isNilOrEmpty(props.hits) ? null : (
+        <React.Fragment>
+          <Typography
+            variant="title"
+            color="textSecondary"
+            className={classes.title}
+          >
+            More like this
+          </Typography>
+          <ListAds {...props} sidebarWidth={0} />
+        </React.Fragment>
+      )
+    }
   </Search>
 );
 
-export default renderNothingWhen(
-  R.compose(isNilOrEmpty, R.path(['ad', 'title'])),
+export default R.compose(
+  renderNothingWhen(R.pathSatisfies(isNilOrEmpty, ['ad', 'title'])),
+  withStyles(styles),
 )(ListRelatedAds);
