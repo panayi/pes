@@ -36,11 +36,9 @@ const Form = (props: Props) => {
           fullWidth
           placeholder="Enter SMS code"
           autoComplete="off"
-          type="number"
           inputProps={{
             mask: MASK,
             placeholderChar: '#',
-            inputMode: 'numeric',
           }}
         />
         {errors.code && <FormHelperText>{errors.code}</FormHelperText>}
