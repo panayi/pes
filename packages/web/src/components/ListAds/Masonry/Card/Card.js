@@ -88,6 +88,10 @@ const styles = theme => ({
   },
   distance: {
     paddingLeft: theme.spacing.unit,
+    display: 'none',
+    [theme.breakpoints.up(theme.map.tablet)]: {
+      display: 'block',
+    },
   },
 });
 

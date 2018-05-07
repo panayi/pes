@@ -22,12 +22,12 @@ const getDistance = ad => {
 
   if (distance < VERY_CLOSE) {
     const rounded = roundToClosestMultiple(distance, VERY_CLOSE_FIDELITY);
-    return `< ${rounded}m`;
+    return `<${rounded}m`;
   }
 
   if (distance < CLOSE) {
     const rounded = roundToClosestMultiple(distance, CLOSE_FIDELITY);
-    return `< ${rounded / METERS_PER_KM}km`;
+    return `<${rounded / METERS_PER_KM}km`;
   }
 
   const rounded = roundToClosestMultiple(distance, FAR_FIDELITY);
