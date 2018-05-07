@@ -1,4 +1,3 @@
-/* @flow */
 import React from 'react';
 import * as R from 'ramda';
 import classNames from 'classnames';
@@ -6,17 +5,18 @@ import Slider from 'react-slick';
 import withStyles from 'material-ui/styles/withStyles';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import Imgix from 'components/Imgix/Imgix';
 import ArrowButton from './ArrowButton/ArrowButton';
 
-type Props = {
-  images: Array<Image>,
-  imgixParams: Object,
-  flex: ?boolean,
-  cover: ?boolean,
-  className: ?string,
-  classes: Object,
-};
+// type Props = {
+//   images: Array<Image>,
+//   imgixParams: Object,
+//   flex: ?boolean,
+//   cover: ?boolean,
+//   className: ?string,
+//   classes: Object,
+// };
 
 const styles = theme => ({
   root: {
@@ -83,56 +83,67 @@ const styles = theme => ({
   },
 });
 
-const ImageSlider = (props: Props) => {
-  const {
-    images,
-    imgixParams,
-    flex,
-    cover,
-    className,
-    classes,
-    ...rest
-  } = props;
+class ImageSlider extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (propsChanged(['images'], prevProps, this.props)) {
+      this.slider.slickGoTo(0);
+    }
+  }
 
-  return (
-    <Slider
-      {...rest}
-      className={classNames(
-        classes.root,
-        { [classes.desktop]: flex },
-        className,
-      )}
-    >
-      {R.map(
-        image =>
-          flex ? (
-            <div key={image.fullPath} className={classes.imgContainer}>
-              <div className={classes.imgContainerInner}>
-                <Imgix
-                  className={
-                    image.dimensions &&
-                    image.dimensions.height > image.dimensions.width
-                      ? classes.portrait
-                      : classes.landscape
-                  }
-                  image={image}
-                  params={imgixParams}
-                />
+  render() {
+    const {
+      images,
+      imgixParams,
+      flex,
+      cover,
+      className,
+      classes,
+      ...rest
+    } = this.props;
+
+    return (
+      <Slider
+        {...rest}
+        className={classNames(
+          classes.root,
+          { [classes.desktop]: flex },
+          className,
+        )}
+        ref={slider => {
+          this.slider = slider;
+        }}
+      >
+        {R.map(
+          image =>
+            flex ? (
+              <div key={image.fullPath} className={classes.imgContainer}>
+                <div className={classes.imgContainerInner}>
+                  <Imgix
+                    className={
+                      image.dimensions &&
+                      image.dimensions.height > image.dimensions.width
+                        ? classes.portrait
+                        : classes.landscape
+                    }
+                    image={image}
+                    params={imgixParams}
+                  />
+                </div>
               </div>
-            </div>
-          ) : (
-            <Imgix
-              key={image.fullPath}
-              className={classNames({ [classes.cover]: cover })}
-              image={image}
-              params={imgixParams}
-            />
-          ),
-        images,
-      )}
-    </Slider>
-  );
-};
+            ) : (
+              <Imgix
+                key={image.fullPath}
+                className={classNames({ [classes.cover]: cover })}
+                image={image}
+                params={imgixParams}
+              />
+            ),
+          images,
+        )}
+      </Slider>
+    );
+  }
+}
 
 ImageSlider.defaultProps = {
   images: [],

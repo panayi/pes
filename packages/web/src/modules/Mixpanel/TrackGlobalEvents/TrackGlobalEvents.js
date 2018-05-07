@@ -62,7 +62,6 @@ class TrackGlobalEvents extends React.Component {
 
   trackPageView = location => {
     setTimeout(() => {
-      console.log(document.title);
       if (location && location.pathname) {
         track('pageView', {
           title: document.title,
