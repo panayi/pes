@@ -41,6 +41,7 @@ import ToggleSold from '../ToggleSold/ToggleSold';
 import RevealPhoneButton from '../RevealPhoneButton/RevealPhoneButton';
 import VerifiedWith from '../VerifiedWith/VerifiedWith';
 import SoldRibbon from '../SoldRibbon/SoldRibbon';
+import RelatedAds from '../RelatedAds/RelatedAds';
 import Action from '../Action/Action';
 import BackToListButton from '../BackToListButton/BackToListButton';
 import ShareAd from './ShareAd/ShareAd';
@@ -216,6 +217,11 @@ const styles = theme => ({
     border: 0,
     background: 'none',
   },
+  relatedAds: gutters(theme, {
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    borderTop: [1, 'solid', theme.palette.divider],
+  }),
 });
 
 class MobileViewAd extends React.Component {
@@ -364,6 +370,9 @@ class MobileViewAd extends React.Component {
                 </IconButton>
               </div>
             ) : null}
+            <div className={classes.relatedAds}>
+              <RelatedAds ad={ad} adId={adId} hitsPerPage={4} maxHits={4} />
+            </div>
           </div>
         </div>
         <div className={classes.actions}>
@@ -433,7 +442,7 @@ class MobileViewAd extends React.Component {
               }
               sold={
                 <Link
-                  to="/"
+                  to={ad ? `/${ad.category}` : '/'}
                   className={classes.actionButton}
                   size="small"
                   variant="raised"
