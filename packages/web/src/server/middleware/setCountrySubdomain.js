@@ -29,7 +29,6 @@ const setCountrySubdomain = (req, res, next) => {
       req.originalUrl
     }`;
     res.redirect(newUrl);
-    res.end();
   }
 };
 
