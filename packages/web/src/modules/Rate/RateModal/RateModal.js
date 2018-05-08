@@ -135,7 +135,7 @@ class RateModal extends Component {
   }
 
   renderSuccess() {
-    const { DialogTitle, DialogContent, classes } = this.props;
+    const { DialogTitle, DialogContent, DialogActions, classes } = this.props;
 
     return (
       <React.Fragment>
@@ -149,6 +149,9 @@ class RateModal extends Component {
             />
           </div>
         </DialogContent>
+        <DialogActions>
+          <Button onClick={this.props.closeModal}>Close</Button>
+        </DialogActions>
       </React.Fragment>
     );
   }
