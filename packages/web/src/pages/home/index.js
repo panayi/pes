@@ -18,6 +18,7 @@ import Layout from 'layouts/Layout/Layout';
 import needsBetaUser from 'hocs/needsBetaUser';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import ListAds from 'components/ListAds/ListAds';
+import BackToTopButton from 'components/BackToTopButton/BackToTopButton';
 import ShowCreateAdButton from 'modules/PostAd/ShowCreateAdButton/ShowCreateAdButton';
 import GetCurrentPosition from 'modules/GetCurrentPosition/GetCurrentPosition';
 import Search from 'modules/Search/Search';
@@ -112,6 +113,7 @@ const Home = props => (
           flex
         >
           <Content {...props} />
+          <BackToTopButton />
         </Layout>
       </DesktopScreen>
       <MobileScreen>
