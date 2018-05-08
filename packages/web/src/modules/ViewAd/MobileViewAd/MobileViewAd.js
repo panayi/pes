@@ -370,9 +370,13 @@ class MobileViewAd extends React.Component {
                 </IconButton>
               </div>
             ) : null}
-            <div className={classes.relatedAds}>
-              <RelatedAds ad={ad} adId={adId} hitsPerPage={4} maxHits={4} />
-            </div>
+            <RelatedAds
+              className={classes.relatedAds}
+              ad={ad}
+              adId={adId}
+              hitsPerPage={4}
+              maxHits={4}
+            />
           </div>
         </div>
         <div className={classes.actions}>

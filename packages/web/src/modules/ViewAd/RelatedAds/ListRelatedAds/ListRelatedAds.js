@@ -20,7 +20,7 @@ class ListRelatedAds extends React.Component {
   };
 
   renderContent = searchProps => {
-    const { maxHits, classes } = this.props;
+    const { maxHits, className, classes } = this.props;
     const { hits, loadNextPage } = searchProps;
 
     if (isNilOrEmpty(hits)) {
@@ -30,7 +30,7 @@ class ListRelatedAds extends React.Component {
     const finalLoadNextPage = hits.length >= maxHits ? noop : loadNextPage;
 
     return (
-      <React.Fragment>
+      <div className={className}>
         <Typography
           variant="title"
           color="textSecondary"
@@ -43,7 +43,7 @@ class ListRelatedAds extends React.Component {
           loadNextPage={finalLoadNextPage}
           sidebarWidth={0}
         />
-      </React.Fragment>
+      </div>
     );
   };
 
