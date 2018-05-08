@@ -50,9 +50,9 @@ class ConfirmAdult extends React.Component {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleReject}>I disagree, take me back</Button>
+          <Button onClick={this.handleReject}>I disagree</Button>
           <Button variant="raised" color="primary" onClick={this.handleAccept}>
-            I agree, show me&nbsp;<u>Personals</u>&nbsp;listings
+            I agree
           </Button>
         </DialogActions>
       </React.Fragment>
