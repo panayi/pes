@@ -17,7 +17,6 @@ import { selectors as modalsSelectors } from 'store/modals';
 import connectSearch from 'hocs/connectSearch';
 import * as constants from './constants';
 import Masonry from './Masonry/Masonry';
-import FetchAdsProgress from './FetchAdsProgress/FetchAdsProgress';
 
 const styles = {
   '@global': {
@@ -37,7 +36,6 @@ export class ListAds extends Component {
   static propTypes = {
     hits: PropTypes.arrayOf(PropTypes.shape({})),
     loadNextPage: PropTypes.func.isRequired,
-    noResults: PropTypes.node,
     scrollPosition: PropTypes.number.isRequired,
     setScrollPosition: PropTypes.func.isRequired,
     classes: PropTypes.shape({}).isRequired,
@@ -142,7 +140,7 @@ export class ListAds extends Component {
   };
 
   render() {
-    const { serverHeight, noResults, classes } = this.props;
+    const { serverHeight, classes } = this.props;
 
     return (
       <div className={classes.root}>
@@ -152,7 +150,6 @@ export class ListAds extends Component {
         >
           {this.renderAutoSizer}
         </WindowScroller>
-        <FetchAdsProgress noResults={noResults} />
       </div>
     );
   }

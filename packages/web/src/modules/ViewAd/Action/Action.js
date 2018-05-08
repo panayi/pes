@@ -1,10 +1,14 @@
 import PropTypes from 'prop-types';
 
 const Action = props => {
-  const { noUser, buyer, seller, ad, currentUserId } = props;
+  const { noUser, buyer, seller, sold, ad, currentUserId } = props;
 
   if (ad.user && ad.user === currentUserId) {
     return seller;
+  }
+
+  if (ad.sold) {
+    return sold;
   }
 
   if (ad.user && ad.user !== currentUserId) {

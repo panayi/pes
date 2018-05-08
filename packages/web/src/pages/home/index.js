@@ -21,6 +21,7 @@ import ListAds from 'components/ListAds/ListAds';
 import ShowCreateAdButton from 'modules/PostAd/ShowCreateAdButton/ShowCreateAdButton';
 import GetCurrentPosition from 'modules/GetCurrentPosition/GetCurrentPosition';
 import Search from 'modules/Search/Search';
+import FetchAdsProgress from 'modules/Search/FetchAdsProgress/FetchAdsProgress';
 import SearchFilters from 'modules/Search/Filters/Filters';
 import Header from 'pages/components/Header/Header';
 
@@ -87,6 +88,7 @@ const Content = ({
       {props => (
         <React.Fragment>
           <ListAds {...props} />
+          <FetchAdsProgress />
           <MobileScreen className={classes.createAdButtonWrap}>
             <ShowCreateAdButton className={classes.createAdButton}>
               Sell
