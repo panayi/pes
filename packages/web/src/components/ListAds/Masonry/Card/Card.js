@@ -35,8 +35,18 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    position: 'relative',
     width: '100%',
     borderRadius: `${theme.borderRadius.md}px ${theme.borderRadius.md}px 0 0`,
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    background:
+      'linear-gradient(rgba(80, 80, 80, 0), rgba(80, 80, 80, 0.2) 70%, rgba(80, 80, 80, 0.5))',
   },
   favorite: {
     position: 'absolute',
@@ -132,18 +142,22 @@ const AdCard = ({
           >
             <TouchDevice>
               {({ hide }) =>
-                hovered &&
-                hide(
-                  <Paper
-                    className={classes.favorite}
-                    onClick={e => e.preventDefault()}
-                  >
-                    <FavoriteAd
-                      className={classes.favoriteButton}
-                      ad={hit}
-                      adId={hit.objectID}
-                    />
-                  </Paper>,
+                hovered && (
+                  <React.Fragment>
+                    <div className={classes.overlay} />
+                    {hide(
+                      <Paper
+                        className={classes.favorite}
+                        onClick={e => e.preventDefault()}
+                      >
+                        <FavoriteAd
+                          className={classes.favoriteButton}
+                          ad={hit}
+                          adId={hit.objectID}
+                        />
+                      </Paper>,
+                    )}
+                  </React.Fragment>
                 )
               }
             </TouchDevice>
