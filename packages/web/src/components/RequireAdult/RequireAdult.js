@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import withStyles from 'material-ui/styles/withStyles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import { actions as modalActions } from 'store/modals';
+import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as profileSelectors } from 'store/firebase/profile';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import ConfirmAdult from './ConfirmAdult/ConfirmAdult';
@@ -22,14 +23,14 @@ class RequireAdult extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    if (propsChanged(['enabled', 'profileLoaded'], this.props, prevProps)) {
+    if (propsChanged(['enabled', 'hasUid'], this.props, prevProps)) {
       this.confirmAdultWhenEnabled();
     }
   }
 
   confirmAdultWhenEnabled() {
-    const { enabled, profileLoaded } = this.props;
-    if (enabled && profileLoaded) {
+    const { enabled, hasUid } = this.props;
+    if (enabled && hasUid) {
       this.confirmAdult({
         onAccept: this.props.onAccept,
         onReject: this.props.onReject,
@@ -38,13 +39,14 @@ class RequireAdult extends React.Component<Props> {
   }
 
   confirmAdult = ({ onAccept, onReject }) => {
-    const { adult, openModal } = this.props;
+    const { adult, hasUid, openModal } = this.props;
     const finalOnAccept = onAccept || noop;
     const finalOnReject = onReject || noop;
     if (!adult) {
       openModal('confirmAdult', {
         onAccept: finalOnAccept,
         onReject: finalOnReject,
+        hasUid,
       });
     } else {
       finalOnAccept();
@@ -52,14 +54,14 @@ class RequireAdult extends React.Component<Props> {
   };
 
   render() {
-    const { enabled, profileLoaded, adult, children, classes } = this.props;
+    const { enabled, hasUid, adult, children, classes } = this.props;
     const finalChildren = R.is(Function, children)
       ? children({ confirmAdult: this.confirmAdult })
       : children;
 
     return (
       <React.Fragment>
-        {enabled && profileLoaded && !adult ? null : finalChildren}
+        {enabled && hasUid && !adult ? null : finalChildren}
         <ReduxModal
           BackdropProps={{ className: classes.confirmAdultBackdrop }}
           id="confirmAdult"
@@ -73,7 +75,7 @@ class RequireAdult extends React.Component<Props> {
 }
 
 const mapStateToProps = createStructuredSelector({
-  profileLoaded: profileSelectors.profileLoadedSelector,
+  hasUid: authSelectors.hasUidSelector,
   adult: profileSelectors.profileAdultSelector,
 });
 

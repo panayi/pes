@@ -47,7 +47,6 @@ export const isAuthenticatingSelector = createSelector(
 );
 
 // isAuthenticatedSelector :: State -> Boolean
-// Equals to: !isAuthenticatingSelector && hasUidSelector
 export const isAuthenticatedSelector = createSelector(
   isAuthenticatingSelector,
   hasUidSelector,
