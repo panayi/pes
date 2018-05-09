@@ -66,7 +66,7 @@ const AdPage = (props: Props) => (
 const legacySelector = R.compose(R.test(/^\/il/), R.path(['match', 'path']));
 
 export default R.compose(
-  setStatic('getInitialProps', async ({ match, store, res }) => {
+  setStatic('getInitialProps', async ({ match, store }) => {
     const props = {
       adId: routerSelectors.routeParamSelector('adId')({ match }),
       legacy: legacySelector({ match }),
@@ -91,7 +91,7 @@ export default R.compose(
     const ad = adConnection.selector(store.getState(), props);
 
     if (R.isNil(ad)) {
-      res.redirect('/');
+      // res.redirect('/');
       return store.getState();
     }
 
