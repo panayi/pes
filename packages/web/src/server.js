@@ -18,19 +18,23 @@ if (!firebase.apps.length) {
 
 const server = express();
 
-// Application-level Middleware
-server
-  .disable('x-powered-by')
-  .use(express.static(process.env.RAZZLE_PUBLIC_DIR));
+try {
+  // Application-level Middleware
+  server
+    .disable('x-powered-by')
+    .use(express.static(process.env.RAZZLE_PUBLIC_DIR));
 
-// Default route
-server.get(
-  '/*',
-  redirectLegacyUrl,
-  createStore,
-  setUserInfo,
-  setCountrySubdomain,
-  appRoute,
-);
+  // Default route
+  server.get(
+    '/*',
+    redirectLegacyUrl,
+    createStore,
+    setUserInfo,
+    setCountrySubdomain,
+    appRoute,
+  );
+} catch (error) {
+  console.error(error);
+}
 
 export default server;
