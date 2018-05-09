@@ -18,30 +18,19 @@ if (!firebase.apps.length) {
 
 const server = express();
 
-try {
-  // Application-level Middleware
-  server
-    .disable('x-powered-by')
-    .use(express.static(process.env.RAZZLE_PUBLIC_DIR));
+// Application-level Middleware
+server
+  .disable('x-powered-by')
+  .use(express.static(process.env.RAZZLE_PUBLIC_DIR));
 
-  server.use((req, res, next) => {
-    res.on('header', () => {
-      console.trace('HEADERS GOING TO BE WRITTEN');
-    });
-    next();
-  });
-
-  // Default route
-  server.get(
-    '/*',
-    redirectLegacyUrl,
-    createStore,
-    setUserInfo,
-    setCountrySubdomain,
-    appRoute,
-  );
-} catch (error) {
-  console.error(error);
-}
+// Default route
+server.get(
+  '/*',
+  redirectLegacyUrl,
+  createStore,
+  setUserInfo,
+  setCountrySubdomain,
+  appRoute,
+);
 
 export default server;
