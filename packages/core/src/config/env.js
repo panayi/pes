@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 
 const output = {
+  gitSha: process.env.RAZZLE_GIT_SHA,
   countrySites: R.compose(R.split(','), R.defaultTo(''))(
     process.env.RAZZLE_COUNTRY_SITES,
   ),

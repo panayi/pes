@@ -1,14 +1,6 @@
-import env from '@pesposa/core/src/config/env';
+import rollbarConfig from '@pesposa/core/src/config/rollbar';
 
-let _rollbarConfig = {
-  accessToken: env.rollbarToken,
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-  enabled: env.isProduction,
-  payload: {
-    environment: 'production',
-  },
-};
+let _rollbarConfig = rollbarConfig;
 
 /* eslint-disable */
 // Rollbar Snippet
