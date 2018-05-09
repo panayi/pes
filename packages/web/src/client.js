@@ -10,6 +10,7 @@ import CssBaseline from 'material-ui/CssBaseline';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import jss from 'config/styles';
 import theme from 'config/theme';
+import 'lib/rollbar';
 import configureStore from 'store/configureStore';
 import { constants as searchConstants } from 'store/search';
 import { selectors as responsiveSelectors } from 'store/responsive';
