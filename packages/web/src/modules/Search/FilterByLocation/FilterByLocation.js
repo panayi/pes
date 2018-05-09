@@ -26,7 +26,7 @@ import poweredByGoogleImage from './images/poweredByGoogleSm.png';
 
 const GOOGLE_MAPS_SCRIPT_URL = `https://maps.googleapis.com/maps/api/js?key=${
   env.googleApisKey
-}&v=3.exp&libraries=places`;
+}&v=3&libraries=places`;
 
 type Props = {
   setLocation: Function,
@@ -184,6 +184,7 @@ class SearchLocation extends Component<Props, State> {
   };
 
   loadServices() {
+    console.log(window.google.maps.places);
     this.autocompleteService = new window.google.maps.places.AutocompleteService();
     this.placesService = new window.google.maps.places.PlacesService(
       document.createElement('div'),
