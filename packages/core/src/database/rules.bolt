@@ -298,7 +298,8 @@ type SupportMessage {
 type Rating {
   stars: Number,
   body: String | Null,
-  user: String | Null
+  user: String | Null,
+  ip: String | Null
 }
 
 // See https://pesposa.app.waitlisted.co/settings/webhooks

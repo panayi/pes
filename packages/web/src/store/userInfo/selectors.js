@@ -8,6 +8,8 @@ import * as constants from './constants';
 
 const defaultLanguage = languageModel.getDefault();
 
+export const ipSelector = R.path(constants.IP_PATH);
+
 export const locationSelector = R.path(constants.LOCATION_PATH);
 
 export const languageSelector = R.pathOr(
