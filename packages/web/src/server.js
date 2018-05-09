@@ -24,6 +24,13 @@ try {
     .disable('x-powered-by')
     .use(express.static(process.env.RAZZLE_PUBLIC_DIR));
 
+  server.use((req, res, next) => {
+    res.on('header', () => {
+      console.trace('HEADERS GOING TO BE WRITTEN');
+    });
+    next();
+  });
+
   // Default route
   server.get(
     '/*',
