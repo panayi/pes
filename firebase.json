@@ -11,20 +11,7 @@
         "source": "**/**",
         "function": "app"
       }
-    ],
-    "headers": [{
-      "source": "**/**",
-      "headers": [
-        {
-          "key": "x-frame-options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        }
-      ]
-    }]
+    ]
   },
   "functions": {
     "source": "build/functions"
