@@ -57,7 +57,7 @@ class ListRelatedAds extends React.Component {
           category: ad.category,
           rawProps: {
             query: ad.title,
-            optionalWords: R.split(' ', ad.title),
+            removeWordsIfNoResults: 'allOptional',
             hitsPerPage,
             filters: `NOT objectID:${adId}`,
           },

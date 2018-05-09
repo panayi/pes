@@ -67,11 +67,6 @@ const legacySelector = R.compose(R.test(/^\/il/), R.path(['match', 'path']));
 
 export default R.compose(
   setStatic('getInitialProps', async ({ match, store, res }) => {
-    // TODO: should we do this?
-    if (process.browser) {
-      return null;
-    }
-
     const props = {
       adId: routerSelectors.routeParamSelector('adId')({ match }),
       legacy: legacySelector({ match }),

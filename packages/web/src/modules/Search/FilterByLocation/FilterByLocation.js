@@ -184,7 +184,6 @@ class SearchLocation extends Component<Props, State> {
   };
 
   loadServices() {
-    console.log(window.google.maps.places);
     this.autocompleteService = new window.google.maps.places.AutocompleteService();
     this.placesService = new window.google.maps.places.PlacesService(
       document.createElement('div'),
