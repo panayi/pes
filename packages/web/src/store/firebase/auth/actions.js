@@ -29,6 +29,9 @@ export const login = credentials => async dispatch => {
     dispatch(loginActions.loginSucceeded());
   } catch (error) {
     dispatch(loginActions.loginFailed());
+    if (window.Rollbar) {
+      window.Rollbar.error(error);
+    }
     throw error;
   }
 };
