@@ -1,5 +1,4 @@
 import React from 'react';
-import qs from 'querystringify';
 import { asyncComponent } from '@jaredpalmer/after';
 import Spinner from 'components/Spinner/Spinner';
 
@@ -51,37 +50,23 @@ const routes = [
   // BETA
   {
     path: '/beta/in',
-    redirectTo: '/enter',
+    redirectTo: '/',
   },
   {
     path: '/enter',
-    component: asyncComponent({
-      loader: () => import('./pages/beta/enter'),
-    }),
+    redirectTo: '/',
   },
   {
     path: '/beta',
-    redirectTo: (a, b, path) => {
-      const params = qs.parse(path) || {};
-
-      if (params.code) {
-        return '/login';
-      }
-
-      return '/join';
-    },
+    redirectTo: '/',
   },
   {
     path: '/join',
-    component: asyncComponent({
-      loader: () => import('./pages/beta/join'),
-    }),
+    redirectTo: '/',
   },
   {
     path: '/login',
-    component: asyncComponent({
-      loader: () => import('./pages/beta/login'),
-    }),
+    redirectTo: '/',
   },
   {
     path: '/:category?/:place?',
