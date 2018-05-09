@@ -13,8 +13,17 @@
       }
     ],
     "headers": [{
-      "key": "x-frame-options",
-      "value": "SAMEORIGIN"
+      "source": "**/**",
+      "headers": [
+        {
+          "key": "x-frame-options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
     }]
   },
   "functions": {
