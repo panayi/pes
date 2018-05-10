@@ -15,7 +15,7 @@ type Props = {
 
 const styles = theme => {
   const hSpacing = 1.5 * theme.spacing.unit;
-  const vSpacing = 3 * theme.spacing.unit;
+  const vSpacing = 1.5 * theme.spacing.unit;
   const width = theme.layout.sidebarWidth;
 
   return {

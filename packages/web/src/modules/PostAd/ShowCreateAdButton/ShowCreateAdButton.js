@@ -32,7 +32,7 @@ const mapDispatchToProps = {
 };
 
 ShowCreateAdButton.defaultProps = {
-  children: 'Sell on Pesposa',
+  children: 'Sell',
   variant: 'raised',
   color: 'primary',
 };
