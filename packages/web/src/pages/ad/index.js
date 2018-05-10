@@ -13,6 +13,7 @@ import { models } from 'store/firebase/data';
 import { selectors as routerSelectors } from 'store/router';
 import needsBetaUser from 'hocs/needsBetaUser';
 import hydrateAd from 'hocs/hydrateAd';
+import NotFound from 'components/NotFound/NotFound';
 import Layout from 'layouts/Layout/Layout';
 import AdPlace from 'components/AdPlace/AdPlace';
 import ViewAd from 'modules/ViewAd/ViewAd';
@@ -48,20 +49,23 @@ const Content = ({ ad, adId, legacy, location }: Props) => (
   </React.Fragment>
 );
 
-const AdPage = (props: Props) => (
-  <React.Fragment>
-    <XsScreenHidden component={React.Fragment}>
-      <Layout header={Header} fixed>
-        <Content {...props} />
-      </Layout>
-    </XsScreenHidden>
-    <XsScreen component={React.Fragment}>
-      <Layout>
-        <Content {...props} />
-      </Layout>
-    </XsScreen>
-  </React.Fragment>
-);
+const AdPage = (props: Props) =>
+  props.notFound ? (
+    <NotFound />
+  ) : (
+    <React.Fragment>
+      <XsScreenHidden component={React.Fragment}>
+        <Layout header={Header} fixed>
+          <Content {...props} />
+        </Layout>
+      </XsScreenHidden>
+      <XsScreen component={React.Fragment}>
+        <Layout>
+          <Content {...props} />
+        </Layout>
+      </XsScreen>
+    </React.Fragment>
+  );
 
 const legacySelector = R.compose(R.test(/^\/il/), R.path(['match', 'path']));
 
@@ -91,8 +95,10 @@ export default R.compose(
     const ad = adConnection.selector(store.getState(), props);
 
     if (R.isNil(ad)) {
-      res.redirect('/404');
-      return null;
+      res.status(404);
+      return {
+        notFound: true,
+      };
     }
 
     if (ad.user) {
