@@ -41,7 +41,10 @@ class ConfirmAdult extends React.Component {
     return (
       <React.Fragment>
         {spinner}
-        <DialogTitle title="You must be over 18 and agree to the terms below before continuing:" />
+        <DialogTitle
+          title="You must be over 18 and agree to the terms below before continuing:"
+          action={<span />}
+        />
         <DialogContent>
           {pending ? <Spinner centered overlay /> : null}
           {/* <Typography variant="button">
