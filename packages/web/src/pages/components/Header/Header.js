@@ -10,6 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import withStyles from 'material-ui/styles/withStyles';
 import TuneIcon from 'material-ui-icons/Tune';
 import MenuIcon from 'mdi-react/MenuIcon';
+import * as pesposaConfig from '@pesposa/core/src/config/pesposa';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { actions as modalActions } from 'store/modals';
 import hideUser from 'hocs/hideUser';
@@ -34,6 +35,7 @@ const MessagesButton = hideVisitor('div');
 
 const styles = theme => ({
   logoLink: {
+    paddingLeft: theme.spacing.unit,
     color: theme.palette.secondary.main,
     '&:hover': {
       background: 'none',
@@ -85,10 +87,11 @@ const styles = theme => ({
     top: 2,
     right: 2,
   },
-  loginButton: {
-    margin: [0, theme.spacing.unit],
+  button: {
+    paddingLeft: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
   },
-  messagesButton: {
+  helpButton: {
     marginLeft: theme.spacing.unit,
   },
 });
@@ -134,8 +137,18 @@ const Header = ({
         <ShowCreateAdButton />
       </DesktopScreen>
       <DesktopScreen>
+        <Button
+          href={pesposaConfig.HELPDESK_URL}
+          target="_blank"
+          component="a"
+          className={classNames(classes.button, classes.helpButton)}
+        >
+          Help
+        </Button>
+      </DesktopScreen>
+      <DesktopScreen>
         <LoginButton
-          className={classes.loginButton}
+          className={classes.button}
           color="inherit"
           onClick={() => openModal('login')}
         >
@@ -153,7 +166,7 @@ const Header = ({
         )}
       </MobileScreen>
       <DesktopScreen>
-        <MessagesButton className={classes.messagesButton}>
+        <MessagesButton className={classes.button}>
           <UnreadConversationsBadge classes={{ badge: classes.unreadBadge }}>
             <Link to="/messages">Messages</Link>
           </UnreadConversationsBadge>
