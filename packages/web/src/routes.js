@@ -14,6 +14,14 @@ const routes = [
     }),
   },
   {
+    path: '/profile/:tab?',
+    exact: true,
+    component: asyncComponent({
+      loader: () => import('./pages/profile/me'),
+      Placeholder,
+    }),
+  },
+  {
     path: '/i/:adId',
     exact: true,
     component: asyncComponent({
