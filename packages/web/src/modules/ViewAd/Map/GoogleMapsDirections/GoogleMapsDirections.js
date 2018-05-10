@@ -11,7 +11,7 @@ const styles = theme => ({
     height: '34vw',
     maxHeight: '70vh',
     padding: 0,
-    marginRight: '-1px', // iframe width is 100% - 1px
+    margin: 0,
     [theme.breakpoints.down(theme.map.tablet)]: {
       width: '100vw',
       height: 'calc(100vh - 56px)',
@@ -23,6 +23,7 @@ const styles = theme => ({
     border: 0,
     padding: 0,
     margin: 0,
+    display: 'block',
   },
   spinner: {
     zIndex: -1,
