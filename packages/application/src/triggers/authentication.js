@@ -3,8 +3,6 @@ import mixpanelEvents from '@pesposa/core/src/config/mixpanelEvents';
 import mixpanelService from '@pesposa/core/src/services/mixpanel';
 
 const handleSignup = async user => {
-  // TODO: remove me
-  console.log(user);
   // TODO: Dirty way to tell whether user is anonymous
   if (!user.email && !user.phoneNumber) {
     return null;
