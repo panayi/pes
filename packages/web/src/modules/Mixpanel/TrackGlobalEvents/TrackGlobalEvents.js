@@ -5,7 +5,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
-import mixpanelService, { track } from 'services/mixpanel';
+import mixpanelService from 'services/mixpanel';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as userInfoselectors } from 'store/userInfo';
 import { selectors as profileSelectors } from 'store/firebase/profile';
@@ -17,11 +17,6 @@ class TrackGlobalEvents extends React.Component {
 
     // Track user profile
     this.setProfile();
-
-    // Track page view
-    this.setupTrackPageView();
-    const location = R.path(['history', 'location'], this.props);
-    this.trackPageView(location);
   }
 
   componentDidUpdate(prevProps) {
@@ -48,10 +43,6 @@ class TrackGlobalEvents extends React.Component {
     }
   }
 
-  setupTrackPageView = () => {
-    this.props.history.listen(this.trackPageView);
-  };
-
   identify() {
     const { currentUserId, isAuthenticated } = this.props;
 
@@ -59,17 +50,6 @@ class TrackGlobalEvents extends React.Component {
       mixpanelService.identify(currentUserId);
     }
   }
-
-  trackPageView = location => {
-    setTimeout(() => {
-      if (location && location.pathname) {
-        track('pageView', {
-          title: document.title,
-          url: location.pathname,
-        });
-      }
-    }, 1000);
-  };
 
   render() {
     return null;

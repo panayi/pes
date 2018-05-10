@@ -1,5 +1,6 @@
 const events = {
-  pageView: 'Page View', // tracking
+  pageView: 'Page View',
+  viewAd: 'View Ad', // tracking
   signUp: 'Sign up', // tracking
   login: 'Login', // tracking
   logout: 'Logout', // tracking
