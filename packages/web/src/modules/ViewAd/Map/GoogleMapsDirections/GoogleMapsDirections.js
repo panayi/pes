@@ -3,6 +3,9 @@ import withStyles from 'material-ui/styles/withStyles';
 import Spinner from 'components/Spinner/Spinner';
 
 const styles = theme => ({
+  title: {
+    width: '60vw',
+  },
   content: {
     width: '60vw',
     height: '34vw',
@@ -34,7 +37,10 @@ const GoogleMapsDirections = ({
   classes,
 }) => (
   <React.Fragment>
-    <DialogTitle title={ad ? `Directions to ${ad.title}` : 'Directions'} />
+    <DialogTitle
+      className={classes.title}
+      title={ad ? `Directions to ${ad.title}` : 'Directions'}
+    />
     <DialogContent className={classes.content}>
       <iframe
         className={classes.frame}
