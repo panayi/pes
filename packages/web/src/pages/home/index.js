@@ -84,7 +84,7 @@ const Content = ({
     />
     <Search
       params={searchParamsFromProps}
-      mapParamsToUrl={({ category: cat }) => (cat ? `/${cat}` : '/')}
+      mapParamsToUrl={({ category: cat }) => (cat ? `/c/${cat}` : '/')}
     >
       {props => (
         <React.Fragment>

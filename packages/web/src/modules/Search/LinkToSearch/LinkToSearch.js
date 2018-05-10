@@ -20,7 +20,7 @@ const LinkToSearch = ({
   } else if (finalLocation) {
     path = `/all/${finalLocation}`;
   } else if (finalCategory) {
-    path = `/${finalCategory}`;
+    path = `/c/${finalCategory}`;
   }
 
   return <Link to={path} {...rest} />;

@@ -31,10 +31,15 @@ const app = async (req, res) => {
       customRenderer,
       store,
     });
-    res.send(html);
+
+    if (!res.headersSent) {
+      res.send(html);
+    }
   } catch (error) {
     console.error(error); // eslint-disable-line no-console
-    res.json(error);
+    if (!res.headersSent) {
+      res.json(error);
+    }
   }
 };
 

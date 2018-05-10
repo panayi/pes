@@ -152,7 +152,7 @@ const redirectLegacyUrl = (req, res, next) => {
       finalCategoryParent,
       categoryChild,
     );
-    const newUrl = `${req.protocol}://cy.${env.domain}/${newCategory}`;
+    const newUrl = `${req.protocol}://cy.${env.domain}/c/${newCategory}`;
     res.redirect(newUrl);
     return;
   }

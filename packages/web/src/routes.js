@@ -6,14 +6,8 @@ const Placeholder = () => <Spinner overlay centered />;
 
 const routes = [
   {
-    // Legacy
-    path: /\/(post)|(advertise-on-pesposa)|(users\/sign-in)|(users\/sign-up)|(terms)|(featured-ads)/,
-    component: asyncComponent({
-      loader: () => import('./components/NotFound/NotFound'),
-    }),
-  },
-  {
     path: '/user/:userId/:tab?',
+    exact: true,
     component: asyncComponent({
       loader: () => import('./pages/profile/index'),
       Placeholder,
@@ -21,6 +15,7 @@ const routes = [
   },
   {
     path: '/i/:adId',
+    exact: true,
     component: asyncComponent({
       loader: () => import('./pages/ad/index'),
       Placeholder,
@@ -28,6 +23,7 @@ const routes = [
   },
   {
     path: '/il/:adId',
+    exact: true,
     component: asyncComponent({
       loader: () => import('./pages/ad/index'),
       Placeholder,
@@ -42,6 +38,7 @@ const routes = [
   },
   {
     path: '/privacy',
+    exact: true,
     component: asyncComponent({
       loader: () => import('./pages/privacy/index'),
       Placeholder,
@@ -50,29 +47,49 @@ const routes = [
   // BETA
   {
     path: '/beta/in',
+    exact: true,
     redirectTo: '/',
   },
   {
     path: '/enter',
+    exact: true,
     redirectTo: '/',
   },
   {
     path: '/beta',
+    exact: true,
     redirectTo: '/',
   },
   {
     path: '/join',
+    exact: true,
     redirectTo: '/',
   },
   {
     path: '/login',
+    exact: true,
     redirectTo: '/',
   },
   {
-    path: '/:category?/:place?',
+    path: '/c/:category?/:place?',
+    exact: true,
     component: asyncComponent({
       loader: () => import('./pages/home/index'),
       Placeholder,
+    }),
+  },
+  {
+    path: '/',
+    exact: true,
+    component: asyncComponent({
+      loader: () => import('./pages/home/index'),
+      Placeholder,
+    }),
+  },
+  {
+    path: '**',
+    component: asyncComponent({
+      loader: () => import('./components/NotFound/NotFound'),
     }),
   },
 ];

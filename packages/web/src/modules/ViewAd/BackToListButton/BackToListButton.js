@@ -5,7 +5,7 @@ import connectSearch from 'hocs/connectSearch';
 import Link from 'components/Link/Link';
 
 const BackToListButton = ({ component: Komponent, category, ...rest }) => (
-  <Komponent to={category ? `/${category}` : '/'} {...rest} />
+  <Komponent to={category ? `/c/${category}` : '/'} {...rest} />
 );
 
 BackToListButton.defaultProps = {

@@ -446,7 +446,7 @@ class MobileViewAd extends React.Component {
               }
               sold={
                 <Link
-                  to={ad ? `/${ad.category}` : '/'}
+                  to={ad ? `/c/${ad.category}` : '/'}
                   className={classes.actionButton}
                   size="small"
                   variant="raised"

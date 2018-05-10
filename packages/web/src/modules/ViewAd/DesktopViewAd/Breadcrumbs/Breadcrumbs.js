@@ -75,7 +75,7 @@ const BreadCrumbs = ({ ad, t, classes }) => (
     {ad.category ? (
       <React.Fragment>
         <Typography className={classes.separator}>/</Typography>
-        <Link to={`/${ad.category}`} className={classes.linkItem}>
+        <Link to={`/c/${ad.category}`} className={classes.linkItem}>
           {t(ad.category)}
         </Link>
       </React.Fragment>

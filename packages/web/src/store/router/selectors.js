@@ -22,7 +22,7 @@ export const searchPathSelector = createSelector(
     } else if (finalPlace) {
       return `/all/${finalPlace}`;
     } else if (finalCategory) {
-      return `/${finalCategory}`;
+      return `/c/${finalCategory}`;
     }
 
     return '/';
