@@ -40,9 +40,9 @@ const styles = theme => ({
 
 class FetchAdsProgress extends Component {
   renderSpinner() {
-    const { isLoading, classes } = this.props;
+    const { showNoResults, isLoading, classes } = this.props;
 
-    return isLoading ? (
+    return !showNoResults && isLoading ? (
       <div className={classes.spinner}>
         <Spinner />
       </div>
@@ -50,9 +50,9 @@ class FetchAdsProgress extends Component {
   }
 
   renderNoResults() {
-    const { hasNoResults, noResults, classes } = this.props;
+    const { showNoResults, hasNoResults, noResults, classes } = this.props;
 
-    return hasNoResults ? (
+    return showNoResults || hasNoResults ? (
       <div className={classes.noResults}>
         {noResults || (
           <EmptyHero
@@ -66,9 +66,9 @@ class FetchAdsProgress extends Component {
   }
 
   renderNoMoreResults() {
-    const { noMoreResults, isProfileSearch } = this.props;
+    const { showNoResults, noMoreResults, isProfileSearch } = this.props;
 
-    return noMoreResults && !isProfileSearch ? (
+    return !showNoResults && noMoreResults && !isProfileSearch ? (
       <Typography variant="subheading" color="textSecondary">
         End of results
       </Typography>
@@ -77,6 +77,7 @@ class FetchAdsProgress extends Component {
 
   render() {
     const { classes } = this.props;
+
     return (
       <div className={classes.root}>
         {this.renderSpinner()}

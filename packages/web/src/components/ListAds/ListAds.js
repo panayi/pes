@@ -43,7 +43,6 @@ export class ListAds extends Component {
 
   static defaultProps = {
     hits: [],
-    noResults: null,
   };
 
   componentDidMount() {

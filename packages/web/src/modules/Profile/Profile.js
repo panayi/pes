@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
-import { isNilOrEmpty, noop } from 'ramda-adjunct';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import { connect } from 'react-redux';
 import { branch, withProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
@@ -8,20 +8,25 @@ import { withRouter } from 'react-router-dom';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import withStyles from 'material-ui/styles/withStyles';
 import propSelector from '@pesposa/core/src/utils/propSelector';
-import { connectData } from 'lib/connectData';
-import { models } from 'store/firebase/data';
 import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { constants as searchConstants } from 'store/search';
 import { selectors as changesSelectors } from 'store/postAd/changes';
 import needsUser from 'hocs/needsUser';
-import ListAds from 'components/ListAds/ListAds';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import SearchProvider from 'modules/Search/Provider/Provider';
 import ProfileBanner from './ProfileBanner/ProfileBanner';
-import ListUserAds from './ListUserAds/ListUserAds';
 import PendingReviewAdStatus from './PendingReviewAdStatus/PendingReviewAdStatus';
-import NoResults from './NoResults/NoResults';
+import ListFavoriteAds from './ListFavoriteAds/ListFavoriteAds';
+import ListPendingAds from './ListPendingAds/ListPendingAds';
+import ListUserAds from './ListUserAds/ListUserAds';
+
+const mapTabToContent = {
+  pending: ListPendingAds,
+  selling: ListUserAds,
+  sold: ListUserAds,
+  favorites: ListFavoriteAds,
+};
 
 const styles = theme => ({
   root: {
@@ -62,17 +67,9 @@ class Profile extends Component {
   };
 
   render() {
-    const {
-      userId,
-      searchParams,
-      tab,
-      isCurrentUser,
-      createdAds,
-      classes,
-    } = this.props;
-    const noResults = (
-      <NoResults tab={tab} isCurrentUser={isCurrentUser} userId={userId} />
-    );
+    const { userId, tab, isCurrentUser, createdAds, classes } = this.props;
+
+    const TabContent = mapTabToContent[tab];
 
     return (
       <SearchProvider id={searchConstants.PROFILE_SEARCH_ID}>
@@ -97,15 +94,12 @@ class Profile extends Component {
               ) : null}
             </Tabs>
             <div className={classes.list}>
-              {tab === 'pending' ? (
-                <ListAds
-                  hits={createdAds}
-                  loadNextPage={noop}
-                  noResults={noResults}
-                />
-              ) : (
-                <ListUserAds params={searchParams} noResults={noResults} />
-              )}
+              <TabContent
+                userId={userId}
+                isCurrentUser={isCurrentUser}
+                sold={tab === 'sold'}
+                createdAds={createdAds}
+              />
             </div>
           </div>
           <ReduxModal
@@ -134,43 +128,6 @@ const tabSelector = createSelector(
   },
 );
 
-export const searchParamsByTabSelector = createSelector(
-  propSelector('tab'),
-  propSelector('userId'),
-  models.favorites.all.selector,
-  (tab, userId, favoriteAds) => {
-    if (tab === 'sold') {
-      return {
-        user: userId,
-        sold: true,
-        ids: null,
-      };
-    }
-
-    if (tab === 'favorites') {
-      return {
-        ids: isNilOrEmpty(favoriteAds) ? ['dummy'] : R.pluck('id', favoriteAds),
-      };
-    }
-
-    if (tab === 'pending') {
-      return {
-        ids: ['dummy'],
-      };
-    }
-
-    return {
-      user: userId,
-      sold: false,
-      ids: null,
-    };
-  },
-);
-
-const mapDataToProps = {
-  favoriteAds: models.favorites.all,
-};
-
 const mapStateToProps = createStructuredSelector({
   currentUserId: authSelectors.uidSelector,
   createdAds: changesSelectors.createdAdsSelector,
@@ -196,12 +153,6 @@ export default R.compose(
       createdAds,
     ),
   })),
-  branch(R.prop('isCurrentUser'), connectData(mapDataToProps)),
-  connect(
-    createStructuredSelector({
-      searchParams: searchParamsByTabSelector,
-    }),
-  ),
   withRouter,
   withStyles(styles),
 )(Profile);

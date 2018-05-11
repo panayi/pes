@@ -22,9 +22,6 @@ const setUserInfo = async (req, res, next) => {
     const { store } = res.locals;
     const ip = getClientIp(req);
 
-    // TODO: remove me
-    console.log('IP: ', ip);
-
     const location = await getLocation(ip);
     const language = getLanguage(req);
     const isUserBot = getIsBot(req);

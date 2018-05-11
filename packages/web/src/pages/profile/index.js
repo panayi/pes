@@ -18,7 +18,7 @@ import getMetaTags from 'utils/getMetaTags';
 import Layout from 'layouts/Layout/Layout';
 import needsBetaUser from 'hocs/needsBetaUser';
 import withProfileData from 'hocs/withProfileData';
-import Profile, { searchParamsByTabSelector } from 'modules/Profile/Profile';
+import Profile from 'modules/Profile/Profile';
 import Header from 'pages/components/Header/Header';
 
 const ProfilePage = ({ userId, tab, displayName, avatarUrl, location }) => (
@@ -57,13 +57,16 @@ export default R.compose(
       },
     ]);
 
-    const searchParamsFromProps = searchParamsByTabSelector(store.getState(), {
-      tab,
-      userId,
-    });
-    actions.setParamsFromProps(searchParamsFromProps);
-
-    await actions.loadFirstPage();
+    if (!tab || tab === 'selling' || tab === 'sold') {
+      const searchParams = {
+        user: userId,
+        sold: tab === 'sold',
+        ids: null,
+        category: ' ', // TODO: hacky way to include all categories
+      };
+      actions.setParamsFromProps(searchParams);
+      await actions.loadFirstPage();
+    }
 
     return store.getState();
   }),
