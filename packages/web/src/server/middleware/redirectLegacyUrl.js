@@ -3,90 +3,10 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import env from '@pesposa/core/src/config/env';
 import getSubdomain from '@pesposa/core/src/utils/getSubdomain';
 import getLegacyAdId from '@pesposa/core/src/utils/getLegacyAdId';
-import mapLegacyToNewCategory from '@pesposa/core/src/utils/mapLegacyToNewCategory';
-
-const parentCategories = [
-  'real-estate',
-  'vehicles',
-  'jobs',
-  'pets',
-  'for-sale',
-  'classes',
-  'community',
-  'personals',
-];
-const childCategories = [
-  'homes',
-  'apartments',
-  'land-plots',
-  'offices-commercial-space',
-  'looking-for-roommates',
-  'education-teaching-jobs',
-  'sales-jobs',
-  'hotel-tourist-jobs',
-  'customer-service-jobs',
-  'marketing-administration-jobs',
-  'advertising-public-relation-jobs',
-  'accounting-finance-jobs',
-  'restaurant-food-service-jobs',
-  'construction-development-jobs',
-  'internet-based-jobs',
-  'engineering-architecture-jobs',
-  'hairdresser-beauty-jobs',
-  'manual-labor-jobs',
-  'secretarial-jobs',
-  'transportation-delivery-jobs',
-  'other-jobs',
-  'dogs',
-  'cats',
-  'fish',
-  'birds',
-  'horses',
-  'reptiles',
-  'other-pets',
-  'cars',
-  'parts-and-accessories',
-  'motorcycles',
-  'boats',
-  'trucks-commercial',
-  'caravans',
-  'other-vehicles',
-  'language-classes',
-  'computers-multimedia-classes',
-  'music-classes',
-  'dance-classes',
-  'other-classes',
-  'seminars-conferences',
-  'community-activities',
-  'events',
-  'volunteers',
-  'lost-and-found',
-  'home-appliances',
-  'electronics',
-  'home-and-garden',
-  'hunting-stuff',
-  'fishing-diving-stuff',
-  'computing',
-  'cell-phones',
-  'cameras-and-accessories',
-  'books',
-  'musical-instruments',
-  'jewelry-watches',
-  'health-and-beauty',
-  'clothing',
-  'food',
-  'toys-and-hobbies',
-  'video-games',
-  'sporting-goods',
-  'antiques-collectibles',
-  'everything-else',
-  'men-looking-for-women',
-  'women-looking-for-men',
-  'men-looking-for-men',
-  'women-looking-for-women',
-  'astrology-medium',
-  'massage',
-];
+import mapLegacyToNewCategory, {
+  parentCategories,
+  childCategories,
+} from '@pesposa/core/src/utils/mapLegacyToNewCategory';
 
 const formatCategory = str => R.replace(/-/g, '_', str);
 
@@ -107,6 +27,20 @@ const redirectLegacyUrl = (req, res, next) => {
     const id = R.replace('id--', '', lastSegment);
     const legacyAdId = getLegacyAdId({ categoryParent, id });
     const newUrl = `${req.protocol}://cy.${env.domain}/il/${legacyAdId}`;
+    res.redirect(newUrl);
+    return;
+  }
+
+  const isBrowsePage = firstSegment === 'browse';
+  const validCategoryChild = R.compose(
+    R.contains(R.__, childCategories),
+    R.nth(1),
+  )(segments);
+
+  if (isBrowsePage && validCategoryChild) {
+    const categoryChild = R.nth(1, segments);
+    const newCategory = mapLegacyToNewCategory(null, categoryChild);
+    const newUrl = `${req.protocol}://cy.${env.domain}/c/${newCategory}`;
     res.redirect(newUrl);
     return;
   }
