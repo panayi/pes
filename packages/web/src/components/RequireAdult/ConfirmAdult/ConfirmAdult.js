@@ -1,5 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
+import { noop } from 'ramda-adjunct';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Typography from 'material-ui/Typography';
@@ -10,8 +11,11 @@ import { actions as profileActions } from 'store/firebase/profile';
 
 class ConfirmAdult extends React.Component {
   static propTypes = {
-    onAccept: PropTypes.func.isRequired,
-    onReject: PropTypes.func.isRequired,
+    onReject: PropTypes.func,
+  };
+
+  static defaultProps = {
+    onReject: noop,
   };
 
   state = {
@@ -19,13 +23,11 @@ class ConfirmAdult extends React.Component {
   };
 
   handleAccept = async () => {
-    const { onAccept, confirmAdult, closeModal } = this.props;
+    const { confirmAdult } = this.props;
     this.setState({
       pending: true,
     });
-    await confirmAdult();
-    onAccept();
-    closeModal();
+    confirmAdult();
   };
 
   handleReject = () => {
@@ -47,9 +49,6 @@ class ConfirmAdult extends React.Component {
         />
         <DialogContent>
           {pending ? <Spinner centered overlay /> : null}
-          {/* <Typography variant="button">
-            You must be over 18 and agree to the terms below before continuing:
-          </Typography> */}
           <Typography component="ul">
             <li>I have attained the Age of Majority in my country.</li>
             <li>
@@ -75,9 +74,9 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  withSpinnerWhen(R.complement(R.prop('hasUid')), {
+  connect(null, mapDispatchToProps),
+  withSpinnerWhen(R.prop('isLoading'), {
     centered: true,
     overlay: true,
   }),
-  connect(null, mapDispatchToProps),
 )(ConfirmAdult);

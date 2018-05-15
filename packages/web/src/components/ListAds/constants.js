@@ -15,7 +15,7 @@ export const MIN_WIDTHS = R.compose(
   R.map(parseInt),
   R.keys,
 )(COLUMN_COUNTS);
-export const GUTTER = 9;
+export const GUTTER = 8;
 export const CARD_CONTENT_HEIGHT = 80;
 export const THUMBNAIL_WIDTH = 250;
 export const DEFAULT_THUMBNAIL_HEIGHT = 250;
