@@ -45,7 +45,6 @@ const getTitle = ({ place, category }) => {
 const styles = theme => ({
   page: {
     paddingTop: theme.spacing.unit * 1.5,
-    paddingLeft: theme.spacing.unit * 0.5,
     paddingRight: theme.spacing.unit * 1.5,
     [theme.breakpoints.down(theme.map.tablet)]: {
       paddingTop: theme.spacing.unit,
