@@ -80,13 +80,13 @@ class Search extends React.Component {
   };
 
   render() {
-    const { hits, currentCategory, history, children } = this.props;
+    const { hits, currentCategory, setCategory, children } = this.props;
 
     return (
       <RequireAdult
         id="Search-confirmAdult"
         enabled={currentCategory && currentCategory.requireAdult}
-        onReject={() => history.replace('/')}
+        onReject={() => setCategory(null)}
       >
         {children({
           hits,
@@ -108,6 +108,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   setParamsFromProps: paramsActions.setParamsFromProps,
+  setCategory: paramsActions.setCategory,
   loadFirstPage: searchActions.loadFirstPage,
   loadPage: searchActions.loadPage,
 };
