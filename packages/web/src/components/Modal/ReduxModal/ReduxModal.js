@@ -16,7 +16,12 @@ class ReduxModal extends React.Component {
   }
 
   render() {
-    const { contentProps, closeModal, ...rest } = this.props;
+    const {
+      contentProps,
+      contentPropsFromState,
+      closeModal,
+      ...rest
+    } = this.props;
     const finalContentProps = {
       ...contentProps,
       closeModal,

@@ -29,8 +29,11 @@ class RequireAdult extends React.Component<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    if (propsChanged(['enabled'], this.props, prevProps)) {
+    if (propsChanged(['enabled', 'isLoading'], this.props, prevProps)) {
       this.confirmAdultWhenEnabled();
+      if (prevProps.enabled && !this.props.enabled) {
+        this.props.closeModal(this.id);
+      }
     }
     if (propsChanged(['adult'], this.props, prevProps)) {
       this.checkAdult();
@@ -49,8 +52,8 @@ class RequireAdult extends React.Component<Props> {
   }
 
   confirmAdultWhenEnabled() {
-    const { enabled } = this.props;
-    if (enabled) {
+    const { enabled, isLoading } = this.props;
+    if (enabled && !isLoading) {
       this.confirmAdult({
         onReject: this.props.onReject,
       });
