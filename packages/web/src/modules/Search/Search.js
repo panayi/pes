@@ -84,6 +84,7 @@ class Search extends React.Component {
 
     return (
       <RequireAdult
+        id="Search-confirmAdult"
         enabled={currentCategory && currentCategory.requireAdult}
         onReject={() => history.replace('/')}
       >

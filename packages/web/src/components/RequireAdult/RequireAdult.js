@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import withStyles from 'material-ui/styles/withStyles';
-import generateId from '@pesposa/core/src/utils/generateId';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
@@ -18,11 +17,6 @@ const styles = theme => ({
 });
 
 class RequireAdult extends React.Component<Props> {
-  constructor(props) {
-    super(props);
-    this.id = generateId();
-  }
-
   componentDidMount() {
     this.confirmAdultWhenEnabled();
     this.checkAdult();
@@ -31,9 +25,6 @@ class RequireAdult extends React.Component<Props> {
   componentDidUpdate(prevProps) {
     if (propsChanged(['enabled', 'isLoading'], this.props, prevProps)) {
       this.confirmAdultWhenEnabled();
-      if (prevProps.enabled && !this.props.enabled) {
-        this.props.closeModal(this.id);
-      }
     }
     if (propsChanged(['adult'], this.props, prevProps)) {
       this.checkAdult();
@@ -41,13 +32,13 @@ class RequireAdult extends React.Component<Props> {
   }
 
   checkAdult() {
-    const { adult, closeModal } = this.props;
+    const { id, adult, closeModal } = this.props;
     if (adult) {
       const onAccept = this.props.onAccept || this.onAccept;
       if (onAccept) {
         onAccept();
       }
-      closeModal(this.id);
+      closeModal(id);
     }
   }
 
@@ -61,10 +52,10 @@ class RequireAdult extends React.Component<Props> {
   }
 
   confirmAdult = ({ onAccept, onReject }) => {
-    const { adult, openModal } = this.props;
+    const { id, adult, openModal } = this.props;
     this.onAccept = onAccept;
     if (!adult) {
-      openModal(this.id, {
+      openModal(id, {
         onReject,
       });
     } else {
@@ -73,7 +64,7 @@ class RequireAdult extends React.Component<Props> {
   };
 
   render() {
-    const { enabled, adult, isLoading, children, classes } = this.props;
+    const { id, enabled, adult, isLoading, children, classes } = this.props;
     const finalChildren = R.is(Function, children)
       ? children({ confirmAdult: this.confirmAdult })
       : children;
@@ -82,7 +73,7 @@ class RequireAdult extends React.Component<Props> {
       <React.Fragment>
         {enabled && !isLoading && !adult ? null : finalChildren}
         <ReduxModal
-          id={this.id}
+          id={id}
           BackdropProps={{ className: classes.confirmAdultBackdrop }}
           content={ConfirmAdult}
           contentProps={{ isLoading }}

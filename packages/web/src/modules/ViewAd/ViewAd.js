@@ -41,6 +41,7 @@ class ViewAd extends React.Component {
     return (
       <ScrollManager>
         <RequireAdult
+          id="ViewAd-confirmAdult"
           enabled={R.path(['adCategory', 'requireAdult'], this.props)}
           onReject={() => history.replace('/')}
         >

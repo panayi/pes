@@ -64,7 +64,7 @@ class FilterByCategory extends React.Component<Props> {
     const { categoryLinks, currentCategoryId, classes } = this.props;
 
     return (
-      <RequireAdult>
+      <RequireAdult id="FilterByCategory-confirmAdult">
         {({ confirmAdult }) => (
           <TrackOnCall>
             {({ track }) => (
