@@ -16,3 +16,8 @@
 12. <https://www.tori.fi/>
 13. <https://www.blocket.se/>
 14. <http://www.lazada.sg/>
+15. <https://www.5miles.com/>
+16. <https://www.depop.com/>
+17. <https://www.varagesale.com/>
+18. <https://carousell.com/>
+19. <https://rakuma.rakuten.co.jp/home/?page=2>

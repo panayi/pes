@@ -65,7 +65,7 @@ class Support extends Component {
               }
               small
             />
-          </div>,
+          </div>
         </DialogContent>
       </React.Fragment>
     );

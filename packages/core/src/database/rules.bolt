@@ -293,6 +293,7 @@ type SupportMessage {
   email: Email,
   subject: String | Null,
   body: SupportMessageBody
+  uid: String | Null
 }
 
 type Rating {
@@ -504,6 +505,10 @@ path /messages/{adId} {
 
 path /support/{id} is SupportMessage {
   create() { true }
+
+  validate() {
+    this.uid == null || this.uid == auth.uid
+  }
 }
 
 path /ratings/{uid} is Rating {
