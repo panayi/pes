@@ -19,6 +19,8 @@ export const languageSelector = R.pathOr(
 
 export const isBotSelector = R.path(constants.IS_BOT_PATH);
 
+export const userAgentSelector = R.path(constants.USER_AGENT_PATH);
+
 export const geopositionSelector = createSelector(
   locationSelector,
   R.prop('geoposition'),

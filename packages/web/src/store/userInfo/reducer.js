@@ -40,9 +40,18 @@ const isBotReducer = handleActions(
   initialState,
 );
 
+const userAgentReducer = handleActions(
+  {
+    [types.SET_USER_INFO]: (state, { payload }) =>
+      payload[constants.USER_AGENT_KEY],
+  },
+  initialState,
+);
+
 export default combineReducers({
   [constants.IP_KEY]: ipReducer,
   [constants.LOCATION_KEY]: locationReducer,
   [constants.LANGUAGE_KEY]: languageReducer,
   [constants.IS_BOT_KEY]: isBotReducer,
+  [constants.USER_AGENT_KEY]: userAgentReducer,
 });

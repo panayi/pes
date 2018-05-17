@@ -21,7 +21,6 @@ const setUserInfo = async (req, res, next) => {
   try {
     const { store } = res.locals;
     const ip = getClientIp(req);
-
     const location = await getLocation(ip);
     const language = getLanguage(req);
     const isUserBot = getIsBot(req);
@@ -30,6 +29,7 @@ const setUserInfo = async (req, res, next) => {
       location,
       language,
       isBot: isUserBot,
+      userAgent: req.useragent,
     };
 
     store.dispatch(userInfoActions.setUserInfo(userInfo));
