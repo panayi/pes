@@ -90,6 +90,10 @@ class Document extends React.Component {
           <meta name="theme-color" content={theme.palette.common.white} />
           <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta
+            name="juicyads-site-verification"
+            content="87511f638209ca314f0824477724be6b"
+          />
           {helmet.title.toComponent()}
           {helmet.meta.toComponent()}
           {helmet.link.toComponent()}
