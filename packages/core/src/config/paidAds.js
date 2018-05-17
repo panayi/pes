@@ -11,6 +11,18 @@ const juicyAds = [
     height: 180,
     type: 'juicyAds',
   },
+  {
+    id: 676634,
+    width: 125,
+    height: 137,
+    type: 'juicyAds',
+  },
+  {
+    id: 676635,
+    width: 160,
+    height: 612,
+    type: 'juicyAds',
+  },
 ];
 
 const ads = {
