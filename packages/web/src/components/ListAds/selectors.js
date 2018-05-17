@@ -54,10 +54,14 @@ export const thumbnailHeightSelector = createCachedSelector(
 )(hitIdSelector);
 
 // hitHeightSelector :: { hit, columnWidth } => Number
-const hitHeightSelector = R.compose(
-  thumbnailHeight => Math.ceil(thumbnailHeight + constants.CARD_CONTENT_HEIGHT),
-  thumbnailHeightSelector,
-);
+const hitHeightSelector = ({ hit, columnWidth }) => {
+  if (hit.isPaidAd) {
+    return hit.height + constants.PAID_AD_VERTICAL_PADDING * 2;
+  }
+
+  const thumbnailHeight = thumbnailHeightSelector({ hit, columnWidth });
+  return Math.ceil(thumbnailHeight + constants.CARD_CONTENT_HEIGHT);
+};
 
 export const hitSizeAndPositionSelector = createSelector(
   indexSelector,

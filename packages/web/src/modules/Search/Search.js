@@ -9,7 +9,6 @@ import {
   actions as searchActions,
   selectors as searchSelectors,
 } from 'store/search';
-import { selectors as hitsSelectors } from 'store/search/hits';
 import { selectors as pageSelectors } from 'store/search/page';
 import {
   selectors as paramsSelectors,
@@ -102,7 +101,7 @@ const mapStateToProps = createStructuredSelector({
   currentCategory: paramsSelectors.categoryObjectSelector(),
   searchParams: searchSelectors.searchParamsSelector,
   indexName: searchSelectors.indexNameSelector,
-  hits: hitsSelectors.hitsSelector,
+  hits: searchSelectors.hitsSelector,
   page: pageSelectors.pageSelector,
 });
 

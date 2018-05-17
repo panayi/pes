@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import * as R from 'ramda';
 import { withProps, withStateHandlers } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import Card, { CardMedia, CardContent } from 'material-ui/Card';
+import { CardMedia, CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import withStyles from 'material-ui/styles/withStyles';
@@ -17,19 +17,13 @@ import AdDistance from 'components/AdDistance/AdDistance';
 import LinkToViewAd from 'components/LinkToViewAd/LinkToViewAd';
 import * as constants from '../../constants';
 import * as selectors from '../../selectors';
+import BaseCard from '../BaseCard/BaseCard';
 
 const styles = theme => ({
   root: {
     display: 'flex',
     padding: 1,
     cursor: 'pointer',
-  },
-  ad: {
-    textDecoration: 'none',
-  },
-  adPaperRoot: {
-    width: '100%',
-    borderRadius: theme.borderRadius.md,
   },
   media: {
     display: 'flex',
@@ -125,12 +119,7 @@ const AdCard = ({
   >
     <Imgix params={constants.IMGIX_PARAMS} image={thumbnail}>
       {({ src }) => (
-        <Card
-          className={classes.ad}
-          classes={{
-            root: classes.adPaperRoot,
-          }}
-          elevation={1}
+        <BaseCard
           ad={hit}
           component={hit.onClick ? undefined : AdLink}
           onClick={hit.onClick}
@@ -189,7 +178,7 @@ const AdCard = ({
               />
             </div>
           </CardContent>
-        </Card>
+        </BaseCard>
       )}
     </Imgix>
   </div>
