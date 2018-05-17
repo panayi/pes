@@ -6,6 +6,7 @@ import * as requestSelectors from './request/selectors';
 import * as pageSelectors from './page/selectors';
 import * as pagesCountSelectors from './pagesCount/selectors';
 import * as pageActions from './page/actions';
+import * as paidAdsActions from './paidAds/actions';
 import * as selectors from './selectors';
 import * as types from './types';
 import { getStateWithSearch } from './utils';
@@ -45,8 +46,11 @@ const search = (options = {}) => async (
 
     // In case where for some reason the same page was requested twice,
     // this check ensures we don't increment the page twice.
-    if (currentPage < pageToRequest) {
+    if (firstPage || currentPage < pageToRequest) {
       dispatch(pageActions.nextPage());
+
+      // Add a paid ad to the page
+      dispatch(paidAdsActions.addPaidAd(pageToRequest));
     }
 
     return result;

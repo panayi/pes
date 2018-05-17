@@ -7,6 +7,7 @@ import { Collection } from 'react-virtualized';
 import withStyles from 'material-ui/styles/withStyles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import Card from './Card/Card';
+import PaidAdCard from './PaidAdCard/PaidAdCard';
 import * as constants from '../constants';
 import * as selectors from '../selectors';
 
@@ -73,7 +74,11 @@ class Masonry extends PureComponent<Props> {
     const { hits, columnWidth } = this.props;
     const hit = hits[index];
 
-    return <Card key={key} style={style} hit={hit} columnWidth={columnWidth} />;
+    return hit.isPaidAd ? (
+      <PaidAdCard key={key} style={style} hit={hit} />
+    ) : (
+      <Card key={key} style={style} hit={hit} columnWidth={columnWidth} />
+    );
   };
 
   render() {

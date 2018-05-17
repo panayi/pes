@@ -20,6 +20,7 @@ export const CARD_CONTENT_HEIGHT = 80;
 export const THUMBNAIL_WIDTH = 250;
 export const DEFAULT_THUMBNAIL_HEIGHT = 250;
 export const DEFAULT_CARD_HEIGHT = 450;
+export const PAID_AD_VERTICAL_PADDING = 8;
 export const SCROLL_OFFSET_FETCH_TRIGGER = 300;
 export const IMGIX_PARAMS = {
   auto: 'compress,format',

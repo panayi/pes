@@ -7,6 +7,8 @@ import * as paramsSelectors from './params/selectors';
 import * as paramsConstants from './params/constants';
 import * as pageSelectors from './page/selectors';
 import * as pagesCountSelectors from './pagesCount/selectors';
+import * as hitsSelectors from './hits/selectors';
+import * as paidAdsSelectors from './paidAds/selectors';
 import * as constants from './constants';
 
 const facetFiltersSelector = createSelector(
@@ -95,6 +97,21 @@ export const searchParamsSelector = createSelector(
       filters: R.compose(R.join(' OR '), R.map(id => `objectID:${id}`))(ids),
     };
   },
+);
+
+export const hitsSelector = createSelector(
+  hitsSelectors.hitsSelector,
+  paidAdsSelectors.paidAdsSelector,
+  (hits, paidAds) =>
+    R.addIndex(R.reduce)(
+      (acc, paidAd, index) => {
+        const { ad, position } = paidAd;
+        const finalAd = R.assoc('isPaidAd', true, ad);
+        return R.insert(position + index, finalAd, acc);
+      },
+      hits,
+      paidAds,
+    ),
 );
 
 export const noMoreResultsSelector = createSelector(
