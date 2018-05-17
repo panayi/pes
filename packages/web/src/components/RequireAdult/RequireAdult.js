@@ -7,6 +7,7 @@ import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import { actions as modalActions } from 'store/modals';
 import { selectors as authSelectors } from 'store/firebase/auth';
 import { selectors as profileSelectors } from 'store/firebase/profile';
+import { selectors as userInfoSelectors } from 'store/userInfo';
 import ReduxModal from 'components/Modal/ReduxModal/ReduxModal';
 import ConfirmAdult from './ConfirmAdult/ConfirmAdult';
 
@@ -26,14 +27,14 @@ class RequireAdult extends React.Component<Props> {
     if (propsChanged(['enabled', 'isLoading'], this.props, prevProps)) {
       this.confirmAdultWhenEnabled();
     }
-    if (propsChanged(['adult'], this.props, prevProps)) {
+    if (propsChanged(['allow'], this.props, prevProps)) {
       this.checkAdult();
     }
   }
 
   checkAdult() {
-    const { id, adult, closeModal } = this.props;
-    if (adult) {
+    const { id, allow, closeModal } = this.props;
+    if (allow) {
       const onAccept = this.props.onAccept || this.onAccept;
       if (onAccept) {
         onAccept();
@@ -52,9 +53,9 @@ class RequireAdult extends React.Component<Props> {
   }
 
   confirmAdult = ({ onAccept, onReject }) => {
-    const { id, adult, openModal } = this.props;
+    const { id, allow, openModal } = this.props;
     this.onAccept = onAccept;
-    if (!adult) {
+    if (!allow) {
       openModal(id, {
         onReject,
       });
@@ -64,14 +65,14 @@ class RequireAdult extends React.Component<Props> {
   };
 
   render() {
-    const { id, enabled, adult, isLoading, children, classes } = this.props;
+    const { id, enabled, allow, isLoading, children, classes } = this.props;
     const finalChildren = R.is(Function, children)
       ? children({ confirmAdult: this.confirmAdult })
       : children;
 
     return (
       <React.Fragment>
-        {enabled && !isLoading && !adult ? null : finalChildren}
+        {enabled && !isLoading && !allow ? null : finalChildren}
         <ReduxModal
           id={id}
           BackdropProps={{ className: classes.confirmAdultBackdrop }}
@@ -93,8 +94,14 @@ export const isLoadingSelector = createSelector(
     !profileLoaded || isAuthenticating || !hasUid,
 );
 
+const allowSelector = createSelector(
+  profileSelectors.profileAdultSelector,
+  userInfoSelectors.isBotSelector,
+  R.or,
+);
+
 const mapStateToProps = createStructuredSelector({
-  adult: profileSelectors.profileAdultSelector,
+  allow: allowSelector,
   isLoading: isLoadingSelector,
 });
 

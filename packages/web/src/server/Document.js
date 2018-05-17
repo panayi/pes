@@ -7,6 +7,7 @@ import { ssrBehavior } from 'react-md-spinner';
 import theme from 'config/theme';
 import jss from 'config/styles';
 import { constants as searchConstants } from 'store/search';
+import { selectors as userInfoSelectors } from 'store/userInfo';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import WidthMatch from 'components/WidthMatch/WidthMatch';
 import SearchProvider from 'modules/Search/Provider/Provider';
@@ -48,6 +49,7 @@ class Document extends React.Component {
 
   render() {
     const { helmet, assets, data, css, userAgent } = this.props;
+    const isBot = userInfoSelectors.isBotSelector(data);
 
     // get attributes from React Helmet
     const htmlAttrs = helmet.htmlAttributes.toComponent();
@@ -96,7 +98,9 @@ class Document extends React.Component {
           )}
           {css ? <style id="jss-ssr">{css}</style> : ''}
           {ssrBehavior.getStylesheetComponent(userAgent)}
-          <script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
+          {!isBot && (
+            <script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
+          )}
         </head>
         <body {...bodyAttrs}>
           <AfterRoot />
