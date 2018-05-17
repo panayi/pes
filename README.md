@@ -13,7 +13,6 @@ and find an example project [here](https://github.com/diegohaz/arc).
 
 `src/components` is split into the following folders:
 
-
 * `src/components/atoms`: An **atom** is the most basic component, that renders
   only HTML tags (i.e., they don't import other components). An atom should
   represent the smallest possible component within which it wouldn’t make sense
