@@ -18,6 +18,7 @@ import createBetaInvite from './createBetaInvite';
 import createBetaUser from './createBetaUser';
 import createBetaCodeAndUser from './createBetaCodeAndUser';
 import sendNotifications from './sendNotifications';
+import generateSitemap from './generateSitemap';
 
 const app = express();
 
@@ -53,6 +54,8 @@ app.post(
 app.post('/users/info', isAuthenticated(), setUserInfo);
 
 app.get('/send-notifications', sendNotifications);
+
+app.get('/sitemap.xml', generateSitemap);
 
 app.post('/waitlisted/callback', bodyParser.json(), async (req, res) => {
   const event = R.prop('event', req.body);

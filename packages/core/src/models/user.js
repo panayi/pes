@@ -4,6 +4,8 @@ import { isNilOrEmpty } from 'ramda-adjunct';
 import { database } from '../config/firebaseClient';
 import * as draftAdModel from './draftAd';
 
+export const getAll = async () => database.ref(`/users`).once('value');
+
 export const get = async (userId: ID) =>
   database.ref(`/users/${userId}`).once('value');
 

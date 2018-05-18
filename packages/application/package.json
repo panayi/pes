@@ -15,6 +15,7 @@
     "mustache": "^2.3.0",
     "nanoid": "^1.0.2",
     "ramda": "^0.25.0",
-    "ramda-adjunct": "^2.7.0"
+    "ramda-adjunct": "^2.7.0",
+    "sitemap": "^1.13.0"
   }
 }
