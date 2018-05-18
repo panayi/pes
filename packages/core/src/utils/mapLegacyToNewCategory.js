@@ -142,7 +142,7 @@ const mapLegacyToNewCategory = (categoryParent, categoryChild) => {
   }
 
   if (R.contains(categoryChild, ['jewelry_watches', 'clothing'])) {
-    return 'fashion';
+    return 'fashion-and-accessories';
   }
 
   return 'other';
