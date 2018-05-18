@@ -9,6 +9,8 @@ import * as adImageModel from './adImage';
 import * as betaInviteModel from './betaInvite';
 import * as userModel from './user';
 
+export const getAll = async () => database.ref(`/ads/legacy`).once('value');
+
 export const findByEmail = async email => {
   const snapshot = await database
     .ref('/ads/legacy')

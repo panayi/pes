@@ -5,6 +5,8 @@ import { database } from '../config/firebaseClient';
 import * as algoliaService from '../services/algolia';
 import * as adImageModel from './adImage';
 
+export const getAll = async () => database.ref(`/ads/published`).once('value');
+
 export const get = async (adId: ID) =>
   database.ref(`/ads/published/${adId}`).once('value');
 
