@@ -40,11 +40,13 @@ const generateUrl = (path, req, countryCode, options) => {
 
 const getAdCountryCode = R.pathOr('', ['location', 'address', 'country']);
 
-const getAdsUrls = (adsSnap, prefix, req) => {
+const getAdsUrls = (adsSnap, prefix, req, options) => {
   const adsUrls = [];
   adsSnap.forEach(adSnap => {
     const countryCode = getAdCountryCode(adSnap.val());
-    adsUrls.push(generateUrl(`${prefix}/${adSnap.key}`, req, countryCode));
+    adsUrls.push(
+      generateUrl(`${prefix}/${adSnap.key}`, req, countryCode, options),
+    );
   });
 
   return adsUrls;
@@ -68,7 +70,9 @@ const generateSitemap = async (req, res) => {
   )(categoriesSnap.val() || {});
 
   const adsUrls = getAdsUrls(adsSnap, 'i', req);
-  const legacyAdsUrls = getAdsUrls(legacyAdsSnap, 'il', req);
+  const legacyAdsUrls = getAdsUrls(legacyAdsSnap, 'il', req, {
+    changefreq: 'monthly',
+  });
 
   const usersUrls = [];
   usersSnap.forEach(userSnap => {
