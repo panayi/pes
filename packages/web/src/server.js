@@ -4,6 +4,7 @@ import useragent from 'express-useragent';
 import env from '@pesposa/core/src/config/env';
 import serviceAccountKey from '@pesposa/core/src/config/serviceAccountKey.json';
 import appRoute from 'server/routes/app';
+import robotsTxtRoute from 'server/routes/robots.txt';
 import redirectLegacyUrl from 'server/middleware/redirectLegacyUrl';
 import createStore from 'server/middleware/createStore';
 import setUserInfo from 'server/middleware/setUserInfo';
@@ -24,6 +25,14 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .use(useragent.express());
+
+server.get(
+  '/robots.txt',
+  createStore,
+  setUserInfo,
+  setCountrySubdomain,
+  robotsTxtRoute,
+);
 
 // Default route
 server.get(
