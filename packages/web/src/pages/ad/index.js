@@ -71,9 +71,12 @@ const legacySelector = R.compose(R.test(/^\/il/), R.path(['match', 'path']));
 
 export default R.compose(
   setStatic('getInitialProps', async ({ match, store, res }) => {
+    const adId = routerSelectors.routeParamSelector('adId')({ match });
+    const legacy = legacySelector({ match });
+
     const props = {
-      adId: routerSelectors.routeParamSelector('adId')({ match }),
-      legacy: legacySelector({ match }),
+      adId,
+      legacy,
     };
     const state = store.getState();
     const adIdSelector = propSelector('adId');
@@ -95,6 +98,25 @@ export default R.compose(
     const ad = adConnection.selector(store.getState(), props);
 
     if (R.isNil(ad)) {
+      if (legacy) {
+        // Check if the legacy ad is now in published
+        // and redirect there
+        const publishedAdConnection = models.ads(R.F).one(adIdSelector);
+        const publishedAdQuery = publishedAdConnection.query(state, props).path;
+        await store.firebase.promiseEvents([
+          { path: publishedAdQuery, type: 'once' },
+        ]);
+        const publishedAd = publishedAdConnection.selector(
+          store.getState(),
+          props,
+        );
+
+        if (!R.isNil(publishedAd)) {
+          res.redirect(301, `/i/${adId}`);
+          return null;
+        }
+      }
+
       res.status(404);
       return {
         notFound: true,
