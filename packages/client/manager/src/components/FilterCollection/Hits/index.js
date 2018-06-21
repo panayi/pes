@@ -16,7 +16,7 @@ const ROW_HEIGHT = 69;
 
 const getUrlParts = R.compose(R.filter(R.identity), R.split('/'));
 
-class BaseHits extends React.Component {
+export class BaseHits extends React.Component {
   static propTypes = {
     // eslint-disable-next-line react/no-typos
     hitComponent: elementType.isRequired,

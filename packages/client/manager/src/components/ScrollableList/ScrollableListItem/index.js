@@ -65,7 +65,7 @@ const styles = theme => ({
   },
 });
 
-class ScrollableListItem extends React.Component {
+export class ScrollableListItem extends React.Component {
   renderAvatar() {
     const { placeholder, image, primary, firstCharacter } = this.props;
 
