@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "packages/web/build/public",
+    "public": "packages/client/web/build/public",
     "ignore": [
       "firebase.json",
       "**/.*",

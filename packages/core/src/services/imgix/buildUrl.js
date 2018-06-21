@@ -1,4 +1,3 @@
-/* @flow */
 import { isNilOrEmpty } from 'ramda-adjunct';
 import createCachedSelector from 're-reselect';
 import client from './client';

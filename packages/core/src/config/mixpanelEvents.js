@@ -3,10 +3,10 @@ const events = {
   viewAd: 'View Ad', // tracking
   signUp: 'Sign up', // tracking
   login: 'Login', // tracking
-  logout: 'Logout', // tracking
+  logout: 'Logout',
   sessionLength: 'Session length',
   search: 'Search', // tracking
-  openedCreateAdDialog: 'Opened create ad dialog', // tracking
+  openedCreateAdDialog: 'Opened create ad dialog',
   createAd: 'Create Ad', // tracking
   editAd: 'Edit Ad', // tracking
   deleteAd: 'Delete ad',

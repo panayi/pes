@@ -12,6 +12,7 @@
 8. <http://www.quikr.com/>
 9. <http://bj.ganji.com/>
 10. <http://g.58.com/city>
+11. <http://nanjing.baixing.com/>
 11. <https://snapsale.com/browse>
 12. <https://www.tori.fi/>
 13. <https://www.blocket.se/>
@@ -21,3 +22,5 @@
 17. <https://www.varagesale.com/>
 18. <https://carousell.com/>
 19. <https://rakuma.rakuten.co.jp/home/?page=2>
+20. <https://www.flipkart.com/>
+21. <https://www.kijiji.ca/>

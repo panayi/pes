@@ -11,10 +11,12 @@ module.exports = {
     appConfig.module.rules[0].include = [
       appConfig.module.rules[0].include,
       path.join(__dirname, '..', '..', 'packages/core/src'),
+      path.join(__dirname, '..', '..', 'packages/client/core/src'),
     ];
     appConfig.module.rules[1].include = [
       ...appConfig.module.rules[1].include,
       path.join(__dirname, '..', '..', 'packages/core/src'),
+      path.join(__dirname, '..', '..', 'packages/client/core/src'),
     ];
 
     if (target === 'node' && !dev) {
@@ -23,6 +25,7 @@ module.exports = {
         '..',
         '..',
         'packages',
+        'client',
         'web',
         'src',
         'server.js',

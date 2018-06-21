@@ -1,8 +1,8 @@
 import * as R from 'ramda';
+import { ensureArray } from 'ramda-adjunct';
 import propsSelector from './propsSelector';
-import makeArray from './makeArray';
 
 const propSelector = path =>
-  R.compose(R.compose(R.path, makeArray)(path), propsSelector);
+  R.compose(R.compose(R.path, ensureArray)(path), propsSelector);
 
 export default propSelector;

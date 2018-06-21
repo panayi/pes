@@ -1,0 +1,62 @@
+{
+  "nicosia": {
+    "geoposition": {
+      "latitude": 35.1666667,
+      "longitude": 33.3666667
+    },
+    "address": {
+      "city": "Nicosia",
+      "country": "CY"
+    }
+  },
+  "limassol": {
+    "geoposition": {
+      "latitude": 34.675,
+      "longitude": 33.0333333
+    },
+    "address": {
+      "city": "Limassol",
+      "country": "CY"
+    }
+  },
+  "larnaca": {
+    "geoposition": {
+      "latitude": 34.9166667,
+      "longitude": 33.6291667
+    },
+    "address": {
+      "city": "Larnaca",
+      "country": "CY"
+    }
+  },
+  "paphos": {
+    "geoposition": {
+      "latitude": 34.7666667,
+      "longitude": 32.4166667
+    },
+    "address": {
+      "city": "Paphos",
+      "country": "CY"
+    }
+  },
+  "famagusta": {
+    "geoposition": {
+      "latitude": 35.125,
+      "longitude": 33.95
+    },
+    "address": {
+      "city": "Famagusta",
+      "country": "CY"
+    }
+  },
+  "keryneia": {
+    "geoposition": {
+      "latitude": 35.3416667,
+      "longitude": 33.3166667
+    },
+    "address": {
+      "city": "Keryneia",
+      "country": "CY"
+    }
+  }
+}

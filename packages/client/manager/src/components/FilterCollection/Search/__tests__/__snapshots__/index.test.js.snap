@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterCollection Search should handle onChange and call setQuery action 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "id": "myAwesomeId",
+      "value": "myAwesomeQuery",
+    },
+    "type": "filterCollection/setQuery",
+  },
+]
+`;
+
+exports[`FilterCollection Search should render correctly 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <withContext(Component)
+    myId="myAwesomeId"
+  >
+    <Component
+      myId="myAwesomeId"
+    >
+      <withFilterCollectionId(Connect(withProps(WithStyles(pure(SearchInput)))))>
+        <renameProp(Connect(withProps(WithStyles(pure(SearchInput)))))
+          filterCollectionId="myAwesomeId"
+        >
+          <Connect(withProps(WithStyles(pure(SearchInput))))
+            id="myAwesomeId"
+          >
+            <withProps(WithStyles(pure(SearchInput)))
+              id="myAwesomeId"
+              query=""
+              setQuery={[Function]}
+            >
+              <WithStyles(pure(SearchInput))
+                id="myAwesomeId"
+                onChange={[Function]}
+                query=""
+                setQuery={[Function]}
+                value=""
+              >
+                <pure(SearchInput)
+                  classes={
+                    Object {
+                      "input": "SearchInput-input-3",
+                      "search": "SearchInput-search-2",
+                      "wrapper": "SearchInput-wrapper-1",
+                    }
+                  }
+                  id="myAwesomeId"
+                  onChange={[Function]}
+                  query=""
+                  setQuery={[Function]}
+                  value=""
+                >
+                  <SearchInput
+                    classes={
+                      Object {
+                        "input": "SearchInput-input-3",
+                        "search": "SearchInput-search-2",
+                        "wrapper": "SearchInput-wrapper-1",
+                      }
+                    }
+                    id="myAwesomeId"
+                    onChange={[Function]}
+                    placeholder=""
+                    query=""
+                    setQuery={[Function]}
+                    value=""
+                  >
+                    <div
+                      className="SearchInput-wrapper-1"
+                    >
+                      <div
+                        className="SearchInput-search-2"
+                      >
+                        <pure(Search)>
+                          <Search>
+                            <WithStyles(SvgIcon)>
+                              <SvgIcon
+                                classes={
+                                  Object {
+                                    "colorAction": "MuiSvgIcon-colorAction-7",
+                                    "colorDisabled": "MuiSvgIcon-colorDisabled-8",
+                                    "colorError": "MuiSvgIcon-colorError-9",
+                                    "colorPrimary": "MuiSvgIcon-colorPrimary-5",
+                                    "colorSecondary": "MuiSvgIcon-colorSecondary-6",
+                                    "root": "MuiSvgIcon-root-4",
+                                  }
+                                }
+                                color="inherit"
+                                viewBox="0 0 24 24"
+                              >
+                                <svg
+                                  aria-hidden="true"
+                                  className="MuiSvgIcon-root-4"
+                                  focusable="false"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                  />
+                                </svg>
+                              </SvgIcon>
+                            </WithStyles(SvgIcon)>
+                          </Search>
+                        </pure(Search)>
+                      </div>
+                      <input
+                        className="SearchInput-input-3"
+                        onChange={[Function]}
+                        placeholder=""
+                        value=""
+                      />
+                    </div>
+                  </SearchInput>
+                </pure(SearchInput)>
+              </WithStyles(pure(SearchInput))>
+            </withProps(WithStyles(pure(SearchInput)))>
+          </Connect(withProps(WithStyles(pure(SearchInput))))>
+        </renameProp(Connect(withProps(WithStyles(pure(SearchInput)))))>
+      </withFilterCollectionId(Connect(withProps(WithStyles(pure(SearchInput)))))>
+    </Component>
+  </withContext(Component)>
+</Provider>
+`;

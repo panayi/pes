@@ -1,0 +1,158 @@
+<mjml>
+  <mj-head>
+    <mj-title>{{subject}}</mj-title>
+    <mj-attributes>
+      <mj-all font-family="Helvetica, Arial, sans-serif" padding="0px"></mj-all>
+      <mj-text font-family="Helvetica, Arial, sans-serif" padding="0 25px" font-size="16px" line-height="150%" color="#484848"></mj-text>
+      <mj-button font-family="Helvetica, Arial, sans-serif"></mj-button>
+      <mj-section></mj-section>
+      <mj-class name="preheader" color="#000000" font-size="11px"></mj-class>
+      <mj-accordion border="0" />
+      <mj-accordion-element background-color="red" icon-wrapped-url="{{downArrowImageUrl}}" icon-unwrapped-url="{{upArrowImageUrl}}" icon-wrapped-alt="+" icon-height="24px" icon-width="24px" />
+      <mj-accordion-title background-color="#fff" padding="19px 2px" color="#008489" font-size="18px" />
+      <mj-accordion-text background-color="#fff" padding="0 2px 20px 2px" color="#505050" font-size="16px" />
+    </mj-attributes>
+    <mj-style inline="inline">
+      a {
+        color: #048beb;
+        font-weight: normal;
+        text-decoration: underline;
+      }
+      .email-link {
+        color: #000000!important;
+        text-decoration: none!important;
+      }
+      .footer-link {
+        color: #a5a5a5;
+      }
+      .button {
+        letter-spacing: 0.5px;
+      }
+      .ad-title {
+        word-break: break-word;
+      }
+      .question {
+        border-bottom: 1px solid #e0e0e0;
+      }
+      .answer {
+        line-height: 20px;
+      }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#F2F2F2">
+    <mj-section padding="30px 0 60px 0" background-color="#ffffff" background-url="{{bgImageUrl}}">
+      <mj-column width="100%">
+        <mj-image src="{{logoUrl}}" alt="Pesposa" width="65"></mj-image>
+        <mj-text padding="30px 25px 25px 25px" align="center" font-size="32px" font-weight="700">Your ad is posted on Pesposa!</mj-text>
+      </mj-column>
+      <mj-column vertical-align="middle" width="250px" background-color="#FFFFFF" border="1px solid #E0E0E0">
+        <mj-image src="{{adImageUrl}}" width="250px" alt="" align="center" border="none"></mj-image>
+        <mj-text align="center" padding="20px 20px 0 20px" color="#1D83A8" font-size="24px" line-height="30px" css-class="ad-title">{{adTitle}}</mj-text>
+        <mj-text align="center" padding="10px 20px" font-size="22px" line-height="30px">&euro; {{adPrice}}</mj-text>
+        <mj-button href="{{viewAdUrl}}" background-color="#ff6762" color="#ffffff" padding="10px 20px 20px 20px" border-radius="4px">view your ad</mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#05323F" padding="50px 0 60px 0">
+      <mj-column width="100%">
+        <mj-text align="center" font-size="26px" color="#ffffff">
+          Don't miss the chance to sell your item fast!
+        </mj-text>
+        <mj-text align="center" font-size="17px" line-height="20px" color="#a2a2a2">
+          Sign up to edit your ad and respond to potential buyers.
+        </mj-text>
+        <mj-button href={{registerUrl}} line-height="180%" font-family="Arial" background-color="#f53942" color="white" padding-top="40px" font-size="24px" font-weight="bold" border-radius="4px" css-class="button">
+          Sign up
+        </mj-button>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="40px 30px 60px 30px" background-color="#ffffff">
+      <mj-column>
+        <mj-text padding="10px 0" font-size="26px">
+          Frequently asked questions
+        </mj-text>
+        <mj-accordion>
+          <mj-accordion-element css-class="question">
+            <mj-accordion-title>I didn't post this ad, who did?</mj-accordion-title>
+            <mj-accordion-text>
+              <span class="answer">
+                Your ad was automatically discovered on the web and posted on Pesposa.
+              </span>
+            </mj-accordion-text>
+          </mj-accordion-element>
+          <mj-accordion-element css-class="question">
+            <mj-accordion-title>Can I make changes to my ads?</mj-accordion-title>
+            <mj-accordion-text>
+              <span class="answer">
+                Of course! Click the <a href="{{registerUrl}}">Sign up</a> button above. Once you sign up successfully, you take full control of your ads.
+              </span>
+            </mj-accordion-text>
+          </mj-accordion-element>
+          <mj-accordion-element css-class="question">
+            <mj-accordion-title>Why do I need to sign up?</mj-accordion-title>
+            <mj-accordion-text>
+              <span class="answer">
+                By creating a Pesposa account you will be able to receive messages and respond to potential buyers.
+              </span>
+            </mj-accordion-text>
+          </mj-accordion-element>
+          <mj-accordion-element css-class="question">
+            <mj-accordion-title>How do I remove my ads?</mj-accordion-title>
+            <mj-accordion-text>
+              <span class="answer">
+                If for any reason you want to remove your ads from Pesposa, <a href="{{removeAdUrl}}">click here</a>.
+              </span>
+            </mj-accordion-text>
+          </mj-accordion-element>
+          <mj-accordion-element css-class="question">
+            <mj-accordion-title>What is Pesposa?</mj-accordion-title>
+            <mj-accordion-text>
+              <span class="answer">
+                Pesposa is an online community for buying and selling locally. Pesposa is focused on a single goal: to provide you with the simplest and most trusted tool for exchanging products and services with other people in your area.
+              </span>
+            </mj-accordion-text>
+          </mj-accordion-element>
+          <mj-accordion-element css-class="question">
+            <mj-accordion-title>Why sell on Pesposa?</mj-accordion-title>
+            <mj-accordion-text>
+              <span class="answer">
+                By selling on Pesposa you reach thousands of potential buyers. Pesposa makes it very easy for buyers to find what they need. For you, as a seller, it means you sell your items faster and earn money.
+              </span>
+            </mj-accordion-text>
+          </mj-accordion-element>
+          <mj-accordion-element css-class="question">
+            <mj-accordion-title>How do I increase my chances of selling?</mj-accordion-title>
+            <mj-accordion-text>
+              <span class="answer">
+                Sign up to Pesposa so that you can edit your ads. Add clear and well-lit photos of your items. Use relevant keywords in your description, such as brand and model. Make sure the price is right. Finally, share your ad on Facebook.
+              </span>
+            </mj-accordion-text>
+          </mj-accordion-element>
+          <mj-accordion-element css-class="question">
+            <mj-accordion-title>How do I contact Pesposa?</mj-accordion-title>
+            <mj-accordion-text>
+              <span class="answer">
+                For any additional question you might have, send us an email at <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.
+              </span>
+            </mj-accordion-text>
+          </mj-accordion-element>
+        </mj-accordion>
+      </mj-column>
+    </mj-section>
+    <mj-section padding="40px 0 30px 0">
+      <mj-column>
+        <mj-text align="center" font-size="14px" font-weight="bold">
+          Pesposa · All rights reserved
+        </mj-text>
+        <mj-text align="center" font-size="14px">
+          <a href="mailto:{{mainEmail}}" class="email-link">{{mainEmail}}</a>
+        </mj-text>
+        <mj-text align="center" font-size="14px">
+          <a class="footer-link" href="{{facebookPageUrl}}">Follow us on Facebook</a>
+        </mj-text>
+        <mj-text align="center" font-size="14px" padding-top="15px">
+          <a class="footer-link" href="%tag_unsubscribe_url%">Unsubscribe</a>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

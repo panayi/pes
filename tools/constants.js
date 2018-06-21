@@ -1,7 +1,7 @@
 const path = require('path');
 
 // Folders
-const ADMIN = 'admin';
+const DEVOPS = 'devops';
 const FUNCTIONS = 'functions';
 const SHARED = 'shared';
 const BUILD = 'build';
@@ -12,7 +12,7 @@ const PACKAGES = path.join(ROOT, 'packages');
 
 module.exports = {
   folders: {
-    admin: ADMIN,
+    devops: DEVOPS,
     functions: FUNCTIONS,
     shared: SHARED,
     build: BUILD,
@@ -20,9 +20,10 @@ module.exports = {
   paths: {
     root: ROOT,
     core: path.join(PACKAGES, 'core'),
-    application: path.join(PACKAGES, 'application'),
-    admin: path.join(PACKAGES, 'admin'),
-    web: path.join(PACKAGES, 'web'),
+    serverCore: path.join(PACKAGES, 'server', 'core'),
+    application: path.join(PACKAGES, 'server', 'application'),
+    devops: path.join(PACKAGES, 'server', 'devops'),
+    web: path.join(PACKAGES, 'client', 'web'),
     build: path.join(ROOT, 'build'),
   },
 };

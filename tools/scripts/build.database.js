@@ -9,6 +9,7 @@ const INPUT_PATH = path.join(
   '..',
   '..',
   'packages',
+  'server',
   'core',
   'src',
   'database',

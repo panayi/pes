@@ -1,7 +1,0 @@
-const functions = require('firebase-functions');
-const baseFunctions = require('./functions.js');
-const appFunction = require('./server.bundle.js').default;
-
-baseFunctions.app = functions.https.onRequest(appFunction);
-
-module.exports = baseFunctions;

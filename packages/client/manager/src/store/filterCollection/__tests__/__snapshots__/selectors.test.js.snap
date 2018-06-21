@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`filterCollection selectors hitsSelector returns items that match query 1`] = `
+Array [
+  Object {
+    "id": 3,
+    "matches": Object {
+      "name": Array [
+        Array [
+          0,
+          5,
+        ],
+      ],
+    },
+    "name": "Christina",
+  },
+  Object {
+    "id": 4,
+    "matches": Object {
+      "name": Array [
+        Array [
+          0,
+          5,
+        ],
+      ],
+    },
+    "name": "Chris",
+  },
+]
+`;
