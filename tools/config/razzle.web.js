@@ -57,17 +57,6 @@ module.exports = {
       appConfig.resolve.mainFields = ['main', 'module'];
     }
 
-    if (target !== 'node' && !dev) {
-      appConfig.output.path = path.join(
-        __dirname,
-        '..',
-        '..',
-        'build',
-        'hosting',
-        'web',
-      );
-    }
-
     return appConfig;
   },
 };

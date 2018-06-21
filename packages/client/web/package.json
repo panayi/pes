@@ -62,6 +62,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "firebase-server": "^1.0.0-rc.2",
     "jest-enzyme": "^4.2.0",
+    "mvy": "^0.1.0",
     "nightwatch": "^0.9.19",
     "raf": "^3.4.0",
     "react-test-renderer": "^16.3.2",
@@ -71,6 +72,7 @@
   "scripts": {
     "start": "NODE_PATH=src/ PORT=3000 razzle start",
     "build": "NODE_PATH=src/ razzle build",
+    "postbuild": "../../../node_modules/.bin/mvy build ../../../build/hosting/web",
     "test": "NODE_PATH=src/ razzle test --env=jsdom",
     "setup:e2e": "selenium-standalone install",
     "test:e2e": "nightwatch",

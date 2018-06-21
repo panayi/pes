@@ -72,15 +72,6 @@ class AdForm extends Component {
     DialogActions: 'div',
   };
 
-  componentDidUpdate(prevProps) {
-    if (
-      propsChanged(['images'], prevProps, this.props) &&
-      this.setImagesFieldValue
-    ) {
-      this.setImagesFieldValue(this.props.images);
-    }
-  }
-
   static getValidationSchema() {
     return yup.object().shape({
       title: yup
@@ -106,11 +97,20 @@ class AdForm extends Component {
         .positive('Price should be positive')
         .max(
           adsConfig.PRICE_MAX,
-          `Price should be smaller than 1 billion (999,999,999.00)`,
+          'Price should be smaller than 1 billion (999,999,999.00)',
         ),
       category: yup.string().required('Category is required'),
       images: yup.mixed().required('At least 1 image is required'),
     });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      propsChanged(['images'], prevProps, this.props) &&
+      this.setImagesFieldValue
+    ) {
+      this.setImagesFieldValue(this.props.images);
+    }
   }
 
   renderForm = (formikProps, props = {}) => {
