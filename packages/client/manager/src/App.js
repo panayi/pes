@@ -16,7 +16,7 @@ const store = configureStore({}, history);
 
 const App = () => (
   <Provider store={store}>
-    <BrowserRouter>
+    <BrowserRouter basename="/manager">
       <JssProvider jss={jss}>
         <MuiThemeProvider theme={theme}>
           <Pages />

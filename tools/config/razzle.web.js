@@ -2,8 +2,6 @@
 const path = require('path');
 // const nodeExternals = require('webpack-node-externals');
 
-const BUILD_PATH = path.join(__dirname, '..', '..', 'build', 'web');
-
 module.exports = {
   modify(config, { target, dev }) {
     const appConfig = config; // stay immutable here
@@ -30,9 +28,17 @@ module.exports = {
         'src',
         'server.js',
       );
-      appConfig.output.path = path.join(BUILD_PATH, 'server');
+      appConfig.output.path = path.join(
+        __dirname,
+        '..',
+        '..',
+        'build',
+        'web',
+        'server',
+      );
       appConfig.output.filename = 'server.bundle.js';
       appConfig.output.libraryTarget = 'commonjs2';
+      appConfig.output.publicPath = '/web';
       // appConfig.externals = [
       //   nodeExternals({
       //     whitelist: [
@@ -49,6 +55,17 @@ module.exports = {
 
     if (target === 'node') {
       appConfig.resolve.mainFields = ['main', 'module'];
+    }
+
+    if (target !== 'node' && !dev) {
+      appConfig.output.path = path.join(
+        __dirname,
+        '..',
+        '..',
+        'build',
+        'hosting',
+        'web',
+      );
     }
 
     return appConfig;

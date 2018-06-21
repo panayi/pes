@@ -66,13 +66,15 @@
     "build:devops": "webpack --config ./tools/config/webpack.devops.js",
     "devops": "node ./build/devops/index.js",
     "build:web": "cd packages/client/web && yarn build",
+    "build:manager": "cd packages/client/manager && yarn build",
+    "build:hosting": "yarn build web && yarn build:manager",
     "build:functions": "node ./tools/scripts/build.functions.js && cd build/functions && yarn",
     "build:database": "node ./tools/scripts/build.database.js",
-    "build": "yarn build:web && yarn build:functions && yarn build:database",
-    "deploy:web": "yarn firebase deploy --only hosting",
+    "build": "yarn build:hosting && yarn build:functions && yarn build:database",
+    "deploy:hosting": "yarn firebase deploy --only hosting",
     "deploy:functions": "yarn firebase deploy --only functions",
     "deploy:database": "yarn firebase deploy --only database",
-    "deploy": "RAZZLE_GIT_SHA=`git rev-parse HEAD` yarn build && yarn deploy:functions && yarn deploy:database && yarn deploy:web"
+    "deploy": "RAZZLE_GIT_SHA=`git rev-parse HEAD` yarn build && yarn deploy:functions && yarn deploy:database && yarn deploy:hosting"
   },
   "lint-staged": {
     "{packages/core/src,packages/client/*/src,packages/server/*/src,packages/client/web/test,tools}/**/*.{js,jsx}": [

@@ -12,6 +12,7 @@ codeclimate-output.html
 # production
 build/
 packages/client/web/build/
+packages/client/manager/build/
 
 # OS X
 .DS_Store

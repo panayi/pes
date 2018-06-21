@@ -44,6 +44,7 @@
   "scripts": {
     "start": "NODE_PATH=src/ PORT=3001 react-scripts start",
     "build": "NODE_PATH=src/ react-scripts build",
+    "postbuild": "../../../node_modules/.bin/mvy build ../../../build/hosting/manager",
     "test": "NODE_PATH=src/ react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -61,6 +62,7 @@
     ]
   },
   "devDependencies": {
-    "enzyme": "^3.3.0"
+    "enzyme": "^3.3.0",
+    "mvy": "^0.1.0"
   }
 }
