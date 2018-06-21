@@ -72,6 +72,15 @@ class AdForm extends Component {
     DialogActions: 'div',
   };
 
+  componentDidUpdate(prevProps) {
+    if (
+      propsChanged(['images'], prevProps, this.props) &&
+      this.setImagesFieldValue
+    ) {
+      this.setImagesFieldValue(this.props.images);
+    }
+  }
+
   static getValidationSchema() {
     return yup.object().shape({
       title: yup
@@ -102,15 +111,6 @@ class AdForm extends Component {
       category: yup.string().required('Category is required'),
       images: yup.mixed().required('At least 1 image is required'),
     });
-  }
-
-  componentDidUpdate(prevProps) {
-    if (
-      propsChanged(['images'], prevProps, this.props) &&
-      this.setImagesFieldValue
-    ) {
-      this.setImagesFieldValue(this.props.images);
-    }
   }
 
   renderForm = (formikProps, props = {}) => {
