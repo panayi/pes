@@ -48,6 +48,37 @@ const getInitialValues = R.compose(
 //   setSubmitted: Function,
 // };
 
+const getValidationSchema = () =>
+  yup.object().shape({
+    title: yup
+      .string()
+      .required('Title is required')
+      .max(
+        adsConfig.TITLE_MAX_LENGTH,
+        `Title should be less than ${adsConfig.TITLE_MAX_LENGTH} characters`,
+      ),
+    body: yup
+      .string()
+      .required('Description is required')
+      .max(
+        adsConfig.BODY_MAX_LENGTH,
+        `Description should be less than ${
+          adsConfig.BODY_MAX_LENGTH
+        } characters`,
+      ),
+    price: yup
+      .number()
+      .typeError('Price should be a number')
+      .required('Price is required')
+      .positive('Price should be positive')
+      .max(
+        adsConfig.PRICE_MAX,
+        'Price should be smaller than 1 billion (999,999,999.00)',
+      ),
+    category: yup.string().required('Category is required'),
+    images: yup.mixed().required('At least 1 image is required'),
+  });
+
 const styles = theme => ({
   root: {
     all: 'inherit',
@@ -71,38 +102,6 @@ class AdForm extends Component {
     DialogContent: 'div',
     DialogActions: 'div',
   };
-
-  static getValidationSchema() {
-    return yup.object().shape({
-      title: yup
-        .string()
-        .required('Title is required')
-        .max(
-          adsConfig.TITLE_MAX_LENGTH,
-          `Title should be less than ${adsConfig.TITLE_MAX_LENGTH} characters`,
-        ),
-      body: yup
-        .string()
-        .required('Description is required')
-        .max(
-          adsConfig.BODY_MAX_LENGTH,
-          `Description should be less than ${
-            adsConfig.BODY_MAX_LENGTH
-          } characters`,
-        ),
-      price: yup
-        .number()
-        .typeError('Price should be a number')
-        .required('Price is required')
-        .positive('Price should be positive')
-        .max(
-          adsConfig.PRICE_MAX,
-          'Price should be smaller than 1 billion (999,999,999.00)',
-        ),
-      category: yup.string().required('Category is required'),
-      images: yup.mixed().required('At least 1 image is required'),
-    });
-  }
 
   componentDidUpdate(prevProps) {
     if (
@@ -167,7 +166,7 @@ class AdForm extends Component {
         initialValues={getInitialValues(this.props)}
         onSubmit={onSubmit}
         enableReinitialize={enableReinitialize}
-        validationSchema={AdForm.getValidationSchema}
+        validationSchema={getValidationSchema}
         validateOnChange={false}
         validateOnBlur={false}
       >
