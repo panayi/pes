@@ -1,3 +1,0 @@
-[submodule "secrets"]
-	path = secrets
-	url = git@bitbucket.org:pesposa/secrets.git
