@@ -1,0 +1,3 @@
+[submodule "razzle"]
+	path = razzle
+	url = git@github.com:panayi/razzle.git

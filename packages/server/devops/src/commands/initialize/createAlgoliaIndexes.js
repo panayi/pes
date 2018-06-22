@@ -1,7 +1,7 @@
 import * as R from 'ramda';
+import logger from 'winston-color';
 import * as algoliaConfig from '@pesposa/server-core/src/config/algolia';
 import * as algoliaService from '@pesposa/server-core/src/services/algolia';
-import log from '@pesposa/core/src/utils/log';
 
 const createAlgoliaIndexes = async () => {
   const { INDEXES } = algoliaConfig;
@@ -41,13 +41,16 @@ const createAlgoliaIndexes = async () => {
     );
 
     return R.forEach(({ name, replicas }) => {
-      const replicasList = R.compose(R.join(', '), R.pluck('name'))(replicas);
-      log.info(
+      const replicasList = R.compose(
+        R.join(', '),
+        R.pluck('name'),
+      )(replicas);
+      logger.info(
         `Algolia: Created "${name}" index with replicas [${replicasList}]`,
       );
     }, INDEXES);
   } catch (error) {
-    log.error('Algolia: Create indexes failed');
+    logger.error('Algolia: Create indexes failed');
     throw error;
   }
 };

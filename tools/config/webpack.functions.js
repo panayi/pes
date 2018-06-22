@@ -2,6 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const Dotenv = require('dotenv-webpack');
 const baseConfig = require('./webpack.base.js');
 const constants = require('../constants');
 
@@ -25,6 +26,9 @@ module.exports = entries =>
       libraryTarget: 'this',
     },
     plugins: [
+      new Dotenv({
+        path: path.join(constants.paths.root, '.env'),
+      }),
       new webpack.DefinePlugin({
         'process.env.IS_FIREBASE_FUNCTIONS_ENV': true,
       }),

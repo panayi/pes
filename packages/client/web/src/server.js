@@ -23,7 +23,7 @@ const server = express();
 // Application-level Middleware
 server
   .disable('x-powered-by')
-  .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
+  .use(express.static(process.env.REACT_APP_PUBLIC_DIR))
   .use(useragent.express());
 
 server.get(

@@ -3,13 +3,13 @@ import path from 'path';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import shuffle from 'lodash.shuffle';
+import logger from 'winston-color';
 import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
 import env from '@pesposa/core/src/config/env';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import * as storageConfig from '@pesposa/core/src/config/storage';
 import * as sellerTypes from '@pesposa/core/src/config/sellerTypes';
 import generateId from '@pesposa/core/src/utils/generateId';
-import log from '@pesposa/core/src/utils/log';
 import client from '@pesposa/core/src/client';
 import { nameSelector } from '@pesposa/core/src/selectors/users';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
@@ -43,7 +43,7 @@ const uploadImages = (images, adId) => {
 
 const createAd = async dirname => {
   try {
-    log.info(
+    logger.info(
       `Publishing test ad from ${path.join(
         pathsConfig.LEGACY_ADS_OUTPUT_PATH,
         dirname,
@@ -115,7 +115,7 @@ const createAd = async dirname => {
     )(ad.images);
     await uploadImages(imagesWithBuffer, adId, externalUser);
   } catch (error) {
-    log.error(error.message);
+    logger.error(error.message);
     throw error;
   }
 };
@@ -127,7 +127,10 @@ const importAds = async howManyToImport => {
   const localAdIds = dirs(pathsConfig.LEGACY_ADS_OUTPUT_PATH);
   const finalLocalAdIds = R.isNil(howManyToImport)
     ? localAdIds
-    : R.compose(R.take(howManyToImport), shuffle)(localAdIds);
+    : R.compose(
+        R.take(howManyToImport),
+        shuffle,
+      )(localAdIds);
 
   await promiseSerial(R.map(adId => () => createAd(adId), finalLocalAdIds));
 

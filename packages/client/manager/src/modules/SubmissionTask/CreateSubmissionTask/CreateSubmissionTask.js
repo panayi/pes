@@ -50,7 +50,7 @@ class CreateSubmissionTask extends React.Component {
           color="primary"
           onClick={() => this.handleCreateClick(baseProps)}
         >
-          Create
+          Submit
         </Button>
       </DialogActions>
     );
@@ -78,7 +78,10 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withRouter,
   withStyles(styles),
 )(CreateSubmissionTask);

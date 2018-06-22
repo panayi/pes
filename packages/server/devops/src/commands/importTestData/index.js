@@ -1,14 +1,14 @@
 import * as R from 'ramda';
-import log from '@pesposa/core/src/utils/log';
+import logger from 'winston-color';
 import importAdsToFirebase from './firebase';
 
 export const importTestData = async options => {
   try {
     const howManyToImport = R.propOr(20, 'numberOfAds', options);
     const numberOfAds = await importAdsToFirebase(howManyToImport);
-    log.info(`Firebase: Imported ${numberOfAds} ads`);
+    logger.info(`Firebase: Imported ${numberOfAds} ads`);
   } catch (error) {
-    log.error('Firebase: Failed to import ads');
+    logger.error('Firebase: Failed to import ads');
     throw error;
   }
 

@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import * as R from 'ramda';
 import mime from 'mime-types';
-import log from '@pesposa/core/src/utils/log';
+import logger from 'winston-color';
 import env from '@pesposa/core/src/config/env';
 import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
@@ -14,22 +14,22 @@ import rejectionReasons from '@pesposa/server-core/src/database/seeds/rejectionR
 import messageTemplates from '@pesposa/server-core/src/database/seeds/messageTemplates.json';
 
 const seedCategories = async () => {
-  log.info('Firebase: seeding categories...');
+  logger.info('Firebase: seeding categories...');
   await firebase.set('categories', categories);
 };
 
 const seedTranslations = async () => {
-  log.info('Firebase: seeding translations...');
+  logger.info('Firebase: seeding translations...');
   await firebase.set('translations', translations);
 };
 
 const seedLocations = async () => {
-  log.info('Firebase: seeding locations...');
+  logger.info('Firebase: seeding locations...');
   await firebase.set('locations', locations);
 };
 
 const seedRejectionReasons = async () => {
-  log.info('Firebase: seeding rejectionReasons...');
+  logger.info('Firebase: seeding rejectionReasons...');
   await Promise.all(
     R.map(
       rejectionReason =>
@@ -40,12 +40,12 @@ const seedRejectionReasons = async () => {
 };
 
 const seedMessageTemplates = async () => {
-  log.info('Firebase: seeding messageTemplates...');
+  logger.info('Firebase: seeding messageTemplates...');
   await firebase.set('messageTemplates', messageTemplates);
 };
 
 const seedCountryFlags = async () => {
-  log.info('Firebase: seeding country flags...');
+  logger.info('Firebase: seeding country flags...');
 
   const { countrySites } = env;
   const countriesToAdd = R.map(R.toLower, countrySites);
@@ -86,7 +86,7 @@ const seedCountryFlags = async () => {
 };
 
 const uploadFiles = async () => {
-  log.info('Firebase: uploading files...');
+  logger.info('Firebase: uploading files...');
   const parentPath = path.join(
     process.cwd(),
     'packages',
@@ -137,9 +137,9 @@ export const seed = async () => {
     await seedMessageTemplates();
     await uploadFiles();
     await seedCountryFlags();
-    log.info('Firebase: Done');
+    logger.info('Firebase: Done');
   } catch (error) {
-    log.error('Firebase: Failed to seed data');
+    logger.error('Firebase: Failed to seed data');
     throw error;
   }
 };

@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import routes from 'routes';
 import Document from '../Document';
 
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
+const assets = require(process.env.REACT_APP_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
 
 const app = async (req, res) => {
   try {

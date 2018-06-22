@@ -1,4 +1,4 @@
-import log from '@pesposa/core/src/utils/log';
+import logger from 'winston-color';
 import { seed } from '../seed';
 import { importTestData } from '../importTestData';
 import createAlgoliaIndexes from './createAlgoliaIndexes';
@@ -6,20 +6,20 @@ import canInitializeFirebase from './canInitializeFirebase';
 import canInitializeAlgolia from './canInitializeAlgolia';
 
 const canInitialize = async () => {
-  log.info('Checking ability to initialize');
+  logger.info('Checking ability to initialize');
 
   await canInitializeFirebase();
-  log.success('Firebase: OK');
+  logger.success('Firebase: OK');
 
   await canInitializeAlgolia();
-  log.success('Algolia: OK');
+  logger.success('Algolia: OK');
 };
 
 const initialize = async options => {
-  log.info('Starting initialization script');
+  logger.info('Starting initialization script');
 
   if (options.force) {
-    log.info('Forced initialization');
+    logger.info('Forced initialization');
   } else {
     await canInitialize();
   }
@@ -33,7 +33,7 @@ const action = async options => {
   try {
     await initialize(options);
   } catch (error) {
-    log.error(error.message);
+    logger.error(error.message);
   }
   process.exit();
 };

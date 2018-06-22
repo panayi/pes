@@ -15,6 +15,8 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-latest": "^6.24.1",
     "buffer-loader": "^0.0.1",
+    "chalk": "^2.4.1",
+    "commander": "^2.15.1",
     "dotenv-webpack": "^1.5.4",
     "eslint": "^4.9.0",
     "eslint-config-airbnb": "16.1.0",
@@ -63,7 +65,7 @@
     "test:web": "cd packages/client/web && CI=true yarn test --bail",
     "firebase": "./node_modules/.bin/firebase",
     "codeclimate": "codeclimate analyze ./packages/**/src -f html > codeclimate-output.html",
-    "build:devops": "webpack --config ./tools/config/webpack.devops.js",
+    "build:devops": "node ./tools/scripts/build.devops.js",
     "devops": "node ./build/devops/index.js",
     "build:web": "cd packages/client/web && yarn build",
     "build:manager": "cd packages/client/manager && yarn build",
@@ -74,7 +76,7 @@
     "deploy:hosting": "yarn firebase deploy --only hosting",
     "deploy:functions": "yarn firebase deploy --only functions",
     "deploy:database": "yarn firebase deploy --only database",
-    "deploy": "RAZZLE_GIT_SHA=`git rev-parse HEAD` yarn build && yarn deploy:functions && yarn deploy:database && yarn deploy:hosting"
+    "deploy": "REACT_APP_GIT_SHA=`git rev-parse HEAD` yarn build && yarn deploy:functions && yarn deploy:database && yarn deploy:hosting"
   },
   "lint-staged": {
     "{packages/core/src,packages/client/*/src,packages/server/*/src,packages/client/web/test,tools}/**/*.{js,jsx}": [

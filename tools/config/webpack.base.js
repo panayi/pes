@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
 const nodeExternals = require('webpack-node-externals');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const constants = require('../constants');
@@ -53,9 +52,6 @@ module.exports = {
     }),
   ],
   plugins: [
-    new Dotenv({
-      path: path.join(constants.paths.root, '.env'),
-    }),
     new UglifyJSPlugin({
       uglifyOptions: {
         compress: {
