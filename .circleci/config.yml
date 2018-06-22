@@ -103,7 +103,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - switch_firebase_project:
+      - run:
           name: Switch to development projection
           command: yarn firebase use development
 
@@ -121,7 +121,7 @@ jobs:
     steps:
       - *attach_workspace
 
-      - setup_production_env:
+      - run:
           name: Use production .env and serviceAccountKey
           command: git pull git@bitbucket.org:pesposa/secrets.git secrets && mv -f ./secrets/.env.production ./.env && mv -f ./secrets/serviceAccountKeys/production.json ./packages/core/src/config/serviceAccountKey.json
 
@@ -131,7 +131,7 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - switch_firebase_project:
+      - run:
           name: Switch to production projection
           command: yarn firebase use production
 
