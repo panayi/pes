@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "packages/client/web/build/public",
+    "public": "build/hosting/public",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -13,7 +13,7 @@
       },
       {
         "source": "/manager/**",
-        "destination": "manager/index.html"
+        "destination": "/manager/index.html"
       },
       {
         "source": "**/**",

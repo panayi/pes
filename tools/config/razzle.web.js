@@ -38,7 +38,6 @@ module.exports = {
       );
       appConfig.output.filename = 'server.bundle.js';
       appConfig.output.libraryTarget = 'commonjs2';
-      appConfig.output.publicPath = '/web';
       // appConfig.externals = [
       //   nodeExternals({
       //     whitelist: [

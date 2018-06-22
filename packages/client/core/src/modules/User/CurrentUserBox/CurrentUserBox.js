@@ -15,7 +15,9 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { selectors as authSelectors } from '../../../store/firebase/auth';
 import { selectors as profileSelectors } from '../../../store/firebase/profile';
+import A from '../../../components/A/A';
 import Link from '../../../components/Link/Link';
 import UserImage from '../UserImage/UserImage';
 import UserName from '../UserName/UserName';
@@ -73,11 +75,14 @@ const styles = theme => ({
       color: lighten(theme.palette.primary.main, 0.9),
     },
   },
-  privacyLink: {
-    color: theme.palette.primary.main,
-    textDecoration: 'underline',
+  links: {
+    marginTop: theme.spacing.unit / 2,
   },
-  profileLink: {
+  linkSeparator: {
+    margin: [0, theme.spacing.unit / 2],
+    color: theme.palette.text.secondary,
+  },
+  profileButton: {
     marginTop: theme.spacing.unit * 2,
   },
 });
@@ -99,6 +104,7 @@ class CurrentUserBox extends Component {
       email,
       phone,
       currentUserId,
+      isAdmin,
       classes,
     } = this.props;
 
@@ -135,17 +141,21 @@ class CurrentUserBox extends Component {
             </Typography>
           )}
           <DesktopScreen>
-            <Typography
-              className={classes.privacyLink}
-              component={NavLink}
-              to="/privacy"
-            >
-              Privacy
-            </Typography>
+            <div className={classes.links}>
+              {isAdmin ? (
+                <React.Fragment>
+                  <A href="/manager">Manager</A>
+                  <span className={classes.linkSeparator}>–</span>
+                </React.Fragment>
+              ) : null}
+              <A component={NavLink} to="/privacy">
+                Privacy
+              </A>
+            </div>
           </DesktopScreen>
           <DesktopScreen>
             <Link
-              className={classes.profileLink}
+              className={classes.profileButton}
               to={`/user/${currentUserId}`}
               variant="raised"
               size="small"
@@ -189,10 +199,12 @@ class CurrentUserBox extends Component {
 }
 
 const mapStateToProps = createStructuredSelector({
+  isAdmin: authSelectors.isAdminSelector,
   email: profileSelectors.profileEmailSelector,
   phone: profileSelectors.profilePhoneSelector,
 });
 
-export default R.compose(connect(mapStateToProps), withStyles(styles))(
-  CurrentUserBox,
-);
+export default R.compose(
+  connect(mapStateToProps),
+  withStyles(styles),
+)(CurrentUserBox);
