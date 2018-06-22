@@ -45,8 +45,7 @@
     "start": "NODE_PATH=src/ PORT=3001 react-scripts start",
     "build": "NODE_PATH=src/ react-scripts build",
     "postbuild": "../../../node_modules/.bin/mvy build ../../../build/hosting/public/manager",
-    "test": "NODE_PATH=src/ react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "test": "NODE_PATH=src/ react-scripts test --env=jsdom"
   },
   "homepage": "/manager",
   "browserslist": {

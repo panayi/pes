@@ -24,8 +24,6 @@ const OUTPUT_PATH = path.join(
   'rules.json',
 );
 
-ensureDirectoryExists(OUTPUT_PATH);
-
 const callback = (err, data) => {
   if (!err) {
     logger.info(data || 'Build database completed');
@@ -34,4 +32,6 @@ const callback = (err, data) => {
   }
 };
 
+// Run
+ensureDirectoryExists(OUTPUT_PATH);
 cmd.get(`firebase-bolt ${INPUT_PATH} --output ${OUTPUT_PATH}`, callback);

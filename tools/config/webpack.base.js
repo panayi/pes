@@ -54,7 +54,7 @@ module.exports = {
   ],
   plugins: [
     new Dotenv({
-      path: path.join(constants.paths.web, '.env'),
+      path: path.join(constants.paths.root, '.env'),
     }),
     new UglifyJSPlugin({
       uglifyOptions: {

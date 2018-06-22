@@ -24,6 +24,7 @@ module.exports = {
     application: path.join(PACKAGES, 'server', 'application'),
     devops: path.join(PACKAGES, 'server', 'devops'),
     web: path.join(PACKAGES, 'client', 'web'),
+    manager: path.join(PACKAGES, 'client', 'manager'),
     build: path.join(ROOT, 'build'),
   },
 };

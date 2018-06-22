@@ -103,9 +103,13 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - switch_firebase_project:
+          name: Switch to development projection
+          command: yarn firebase use development
+
       - deploy:
           name: Deploy to Development environment
-          command: CI=false DEPLOYMENT=development ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+          command: CI=false yarn deploy --token=$FIREBASE_TOKEN --non-interactive
 
       - save_cache:
           paths:
@@ -117,15 +121,23 @@ jobs:
     steps:
       - *attach_workspace
 
+      - setup_production_env:
+          name: Use production .env and serviceAccountKey
+          command: git pull git@bitbucket.org:pesposa/secrets.git secrets && mv -f ./secrets/.env.production ./.env && mv -f ./secrets/serviceAccountKeys/production.json ./packages/core/src/config/serviceAccountKey.json
+
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - switch_firebase_project:
+          name: Switch to production projection
+          command: yarn firebase use production
+
       - deploy:
           name: Deploy to Production environment
-          command: CI=false DEPLOYMENT=production ./yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+          command: CI=false yarn deploy --token=$FIREBASE_TOKEN --non-interactive
 
       - save_cache:
           paths:

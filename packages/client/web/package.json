@@ -75,8 +75,7 @@
     "postbuild": "../../../node_modules/.bin/mvy build ../../../build/hosting",
     "test": "NODE_PATH=src/ razzle test --env=jsdom",
     "setup:e2e": "selenium-standalone install",
-    "test:e2e": "nightwatch",
-    "start:prod": "NODE_PATH=src/ NODE_ENV=production node build/server.js"
+    "test:e2e": "nightwatch"
   },
   "jest": {
     "transformIgnorePatterns": [

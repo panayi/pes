@@ -7,40 +7,7 @@ const webpack = require('webpack');
 const logger = require('winston-color');
 const constants = require('../constants');
 const createConfig = require('../config/webpack.functions');
-
-const ensureDirectoryExists = filePath => {
-  const dirname = path.dirname(filePath);
-
-  if (fs.existsSync(dirname)) {
-    return;
-  }
-
-  ensureDirectoryExists(dirname);
-  fs.mkdirSync(dirname);
-};
-
-const getFunctionsFiles = callback => {
-  const triggersDir = path.join(constants.paths.application, 'src', 'triggers');
-  glob(`${triggersDir}/**/*.js`, (err, files) => {
-    const fileObjects = files.map(file => ({
-      name: file
-        .split('/')
-        .pop()
-        .split('.')
-        .shift(),
-      path: file,
-    }));
-    fileObjects.push({
-      name: 'api',
-      path: path.join(constants.paths.application, 'src', 'api', 'index.js'),
-    });
-    const entries = fileObjects.reduce((acc, item) => {
-      acc[item.name] = item.path;
-      return acc;
-    }, {});
-    callback(entries);
-  });
-};
+const ensureDirectoryExists = require('../utils/ensureDirectoryExists');
 
 const build = entries => {
   // Create package.json
@@ -133,4 +100,28 @@ const build = entries => {
   });
 };
 
+const getFunctionsFiles = callback => {
+  const triggersDir = path.join(constants.paths.application, 'src', 'triggers');
+  glob(`${triggersDir}/**/*.js`, (err, files) => {
+    const fileObjects = files.map(file => ({
+      name: file
+        .split('/')
+        .pop()
+        .split('.')
+        .shift(),
+      path: file,
+    }));
+    fileObjects.push({
+      name: 'api',
+      path: path.join(constants.paths.application, 'src', 'api', 'index.js'),
+    });
+    const entries = fileObjects.reduce((acc, item) => {
+      acc[item.name] = item.path;
+      return acc;
+    }, {});
+    callback(entries);
+  });
+};
+
+// Run
 getFunctionsFiles(build);
