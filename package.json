@@ -67,7 +67,7 @@
     "devops": "node ./build/devops/index.js",
     "build:web": "cd packages/client/web && yarn build",
     "build:manager": "cd packages/client/manager && yarn build",
-    "build:hosting": "yarn build web && yarn build:manager",
+    "build:hosting": "yarn build:web && yarn build:manager",
     "build:functions": "node ./tools/scripts/build.functions.js && cd build/functions && yarn",
     "build:database": "node ./tools/scripts/build.database.js",
     "build": "yarn build:hosting && yarn build:functions && yarn build:database",
