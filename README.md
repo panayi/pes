@@ -145,12 +145,9 @@ can find CircleCI configuration at `.circleci/config.yml`. You should never need
 to run the following commands manually, besides `yarn devops` for setting a new
 deployment.
 
-### `yarn devops initialize`
+### `yarn devops <command> [-p]`
 
-Seed a Firebase DB, and initial import to Algolia. You should typically run this
-to setup a new deployment.
-
-Run `yarn devops` to see all available dev operations.
+Run `<command>` in development or production (when `-p` is passed) deployment. Run `yarn devops` to see all available development operations.
 
 ### `yarn build`
 
