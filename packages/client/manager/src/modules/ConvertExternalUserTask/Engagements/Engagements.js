@@ -86,12 +86,8 @@ const Engagements = props => {
 };
 
 Engagements.propTypes = {
-  engagements: PropTypes.shape({}),
+  engagements: PropTypes.array.isRequired,
   classes: PropTypes.shape({}).isRequired,
-};
-
-Engagements.defaultProps = {
-  engagements: {},
 };
 
 const engagementsSelector = createSelector(

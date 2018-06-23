@@ -27,7 +27,7 @@
     "react-redux": "^5.0.7",
     "react-redux-firebase": "^2.1.5",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "^2.0.0-next.b2fd8db8",
+    "react-scripts": "^2.0.0-next.3e165448",
     "react-select": "^2.0.0-beta.2",
     "react-timeago": "^4.1.9",
     "react-virtualized": "^9.19.1",
@@ -48,6 +48,10 @@
     "test": "NODE_PATH=src/ react-scripts test --env=jsdom"
   },
   "homepage": "/manager",
+  "devDependencies": {
+    "enzyme": "^3.3.0",
+    "mvy": "^0.1.0"
+  },
   "browserslist": {
     "development": [
       "last 2 chrome versions",
@@ -55,14 +59,9 @@
       "last 2 edge versions"
     ],
     "production": [
-      ">1%",
-      "last 4 versions",
-      "Firefox ESR",
-      "not ie < 11"
+      ">0.25%",
+      "not op_mini all",
+      "ie 11"
     ]
-  },
-  "devDependencies": {
-    "enzyme": "^3.3.0",
-    "mvy": "^0.1.0"
   }
 }
