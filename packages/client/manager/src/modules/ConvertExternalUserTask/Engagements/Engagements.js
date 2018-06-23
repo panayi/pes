@@ -86,7 +86,7 @@ const Engagements = props => {
 };
 
 Engagements.propTypes = {
-  engagements: PropTypes.array.isRequired,
+  engagements: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   classes: PropTypes.shape({}).isRequired,
 };
 
