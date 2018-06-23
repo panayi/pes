@@ -54,36 +54,27 @@ const styles = theme => ({
 });
 
 /* eslint-disable-next-line react/prefer-stateless-function */
-class AdsList extends React.Component {
-  render() {
-    const {
-      ads,
-      onAdClick,
-      className,
-      children,
-      classes,
-      ...rest
-    } = this.props;
+const AdsList = props => {
+  const { ads, onAdClick, className, children, classes, ...rest } = props;
 
-    return (
-      <Slider {...rest} className={classNames(classes.root, className)}>
-        {R.map(
-          ad => (
-            <div key={ad.id}>
-              <Card
-                hit={{ ...ad, onClick: onAdClick }}
-                columnWidth={300}
-                fixedCardHeight={400}
-              />
-              {children ? children(ad) : null}
-            </div>
-          ),
-          ads,
-        )}
-      </Slider>
-    );
-  }
-}
+  return (
+    <Slider {...rest} className={classNames(classes.root, className)}>
+      {R.map(
+        ad => (
+          <div key={ad.id}>
+            <Card
+              hit={{ ...ad, onClick: onAdClick }}
+              columnWidth={300}
+              fixedCardHeight={400}
+            />
+            {children ? children(ad) : null}
+          </div>
+        ),
+        ads,
+      )}
+    </Slider>
+  );
+};
 
 const arrowHoc = direction =>
   R.compose(
