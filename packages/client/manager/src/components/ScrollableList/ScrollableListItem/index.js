@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import elementType from 'prop-types-extra/lib/elementType';
 import * as R from 'ramda';
+import classNames from 'classnames';
 import { withProps } from 'recompose';
 import { createSelector, createStructuredSelector } from 'reselect';
 import propSelector from '@pesposa/core/src/utils/propSelector';
 import { withRouter } from 'react-router-dom';
-import classNames from 'classnames';
 import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { yellow } from '@material-ui/core/colors';
+import StarIcon from '@material-ui/icons/Star';
 import stringToHexColor from '@pesposa/core/src/utils/stringToHexColor';
 import Imgix from '@pesposa/client-core/src/components/Imgix/Imgix';
 import Truncate from '@pesposa/client-core/src/components/Truncate/Truncate';
@@ -63,6 +65,17 @@ const styles = theme => ({
     marginTop: '0.6em',
     backgroundColor: theme.palette.divider,
   },
+  star: {
+    position: 'absolute',
+    top: 6,
+    left: 6,
+    width: 16,
+    height: 16,
+    color: theme.palette.grey[200],
+  },
+  starEnabled: {
+    color: yellow[700],
+  },
 });
 
 export class ScrollableListItem extends React.Component {
@@ -85,7 +98,14 @@ export class ScrollableListItem extends React.Component {
   }
 
   renderText() {
-    const { placeholder, primary, secondary, classes } = this.props;
+    const {
+      placeholder,
+      primary,
+      secondary,
+      withStar,
+      starEnabled,
+      classes,
+    } = this.props;
 
     if (placeholder) {
       return (
@@ -100,7 +120,18 @@ export class ScrollableListItem extends React.Component {
 
     return (
       <ListItemText
-        primary={<Truncate lines={1}>{primary}</Truncate>}
+        primary={
+          <React.Fragment>
+            <Truncate lines={1}>{primary}</Truncate>
+            {withStar && (
+              <StarIcon
+                className={classNames(classes.star, {
+                  [classes.starEnabled]: starEnabled,
+                })}
+              />
+            )}
+          </React.Fragment>
+        }
         secondary={<Truncate lines={1}>{secondary}</Truncate>}
       />
     );
@@ -193,7 +224,12 @@ ScrollableListItem.defaultProps = {
 
 const firstCharacterSelector = createSelector(
   propSelector('primary'),
-  R.compose(R.toUpper, R.defaultTo(''), R.head, R.defaultTo('')),
+  R.compose(
+    R.toUpper,
+    R.defaultTo(''),
+    R.head,
+    R.defaultTo(''),
+  ),
 );
 
 export default R.compose(

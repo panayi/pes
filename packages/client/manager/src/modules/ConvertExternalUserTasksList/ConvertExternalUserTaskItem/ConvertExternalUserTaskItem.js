@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as R from 'ramda';
+import { createSelector, createStructuredSelector } from 'reselect';
+import { withProps } from 'recompose';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import HighlightMatch from 'components/HighlightMatch';
 import ScrollableList from 'components/ScrollableList';
 import FirebaseConsoleLink from 'components/FirebaseConsoleLink/FirebaseConsoleLink';
@@ -8,8 +11,8 @@ import FirebaseConsoleLink from 'components/FirebaseConsoleLink/FirebaseConsoleL
 const namePath = ['externalUser', 'profile', 'name'];
 
 const ConvertExternalUserTaskItem = props => {
-  const { hit, getFirebasePath, ...rest } = props;
-  const { engagements, matches = [] } = hit;
+  const { hit, engagementsCount, getFirebasePath, ...rest } = props;
+  const { matches = [] } = hit;
   const name = R.path(namePath, hit);
   const nameMatches = R.path(namePath, matches);
   const primary = nameMatches ? (
@@ -17,15 +20,18 @@ const ConvertExternalUserTaskItem = props => {
   ) : (
     name
   );
-  const engagementsCount = R.compose(R.length, R.defaultTo([]))(engagements);
-  const secondaryText =
-    engagementsCount > 0 ? `${engagementsCount} engagements` : 'No engagements';
+  const hasEngagements = engagementsCount > 0;
+  const secondaryText = hasEngagements
+    ? `${engagementsCount} engagements`
+    : 'No engagements';
 
   return (
     <ScrollableList.item
       primary={primary}
       secondary={secondaryText}
       action={<FirebaseConsoleLink firebasePath={getFirebasePath(hit)} />}
+      starEnabled={!hasEngagements}
+      withStar
       {...rest}
     />
   );
@@ -50,4 +56,17 @@ ConvertExternalUserTaskItem.defaultProps = {
   style: null,
 };
 
-export default ConvertExternalUserTaskItem;
+const engagementsCountSelector = createSelector(
+  propSelector(['hit', 'engagements']),
+  R.compose(
+    R.length,
+    R.values,
+    R.defaultTo({}),
+  ),
+);
+
+export default withProps(
+  createStructuredSelector({
+    engagementsCount: engagementsCountSelector,
+  }),
+)(ConvertExternalUserTaskItem);
