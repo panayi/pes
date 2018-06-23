@@ -13,4 +13,4 @@ packages/client/web/build/
 .circleci/**
 types/**
 resources/**
-secrets/**
+razzle/**
