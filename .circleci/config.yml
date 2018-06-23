@@ -104,7 +104,7 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: Switch to development projection
+          name: Switch to development project
           command: yarn firebase use development
 
       - deploy:
@@ -132,7 +132,7 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: Switch to production projection
+          name: Switch to production project
           command: yarn firebase use production
 
       - deploy:
