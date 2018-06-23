@@ -109,7 +109,7 @@ jobs:
 
       - deploy:
           name: Deploy to Development environment
-          command: CI=false yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+          command: CI=false DEBUG=babel yarn deploy --token=$FIREBASE_TOKEN --non-interactive
 
       - save_cache:
           paths:
