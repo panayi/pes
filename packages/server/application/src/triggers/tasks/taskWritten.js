@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
 import server from '@pesposa/server-core/src/server';
@@ -11,7 +12,7 @@ const handleTaskWritten = async (change, context) => {
     return null;
   }
 
-  const { taskType } = context.params;
+  const taskType = R.path(['params', 'taskType'], context);
   return server.taskCounters.set(firebase, taskType);
 };
 

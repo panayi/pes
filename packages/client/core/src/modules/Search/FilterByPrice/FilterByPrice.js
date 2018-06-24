@@ -8,14 +8,15 @@ import {
   actions as paramsActions,
 } from '../../../store/search/params';
 import connectSearch from '../../../hocs/connectSearch';
-import TrackOnCall from '../../../modules/Mixpanel/TrackOnCall/TrackOnCall';
+import TrackOnCall from '../../Mixpanel/TrackOnCall/TrackOnCall';
 import Form from './Form/Form';
 
 const SUBMIT_TIMEOUT = 300;
 
 class FilterByPrice extends Component {
   handleSubmit = values => {
-    this.props.setPrice(values);
+    const { setPrice } = this.props;
+    setPrice(values);
   };
 
   renderContent = () => {

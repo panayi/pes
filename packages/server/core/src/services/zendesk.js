@@ -30,14 +30,15 @@ const createOrUpdateUser = props =>
 
 export const createTicket = props =>
   new Promise((resolve, reject) => {
+    const { subject, body } = props;
     const userProps = R.pick(['uid', 'email', 'name'], props);
     createOrUpdateUser(userProps)
       .then(zendeskUserId => {
         const payload = {
           ticket: {
-            subject: props.subject,
+            subject,
             comment: {
-              body: props.body,
+              body,
             },
             requester_id: zendeskUserId,
           },

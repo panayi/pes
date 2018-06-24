@@ -4,14 +4,19 @@ import { actions as sourcesActions } from 'store/sources';
 import SourceForm from '../SourceForm/SourceForm';
 
 class CreateSource extends React.Component {
-  handleSubmit = source => this.props.createSource(source);
+  handleSubmit = source => {
+    const { createSource } = this.props;
+    return createSource(source);
+  };
 
   render() {
+    const { basePath } = this.props;
+
     return (
       <SourceForm
         onSubmit={this.handleSubmit}
         buttonLabel="Create Source"
-        basePath={this.props.basePath}
+        basePath={basePath}
       />
     );
   }
@@ -21,4 +26,7 @@ const mapDispatchToProps = {
   createSource: sourcesActions.create,
 };
 
-export default connect(null, mapDispatchToProps)(CreateSource);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(CreateSource);

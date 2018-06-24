@@ -21,6 +21,7 @@ export class HotjarProvider extends Component {
       /* eslint-enable */
     }
   }
+
   render() {
     return null;
   }

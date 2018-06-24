@@ -72,15 +72,16 @@ const styles = theme => ({
 });
 
 class Form extends Component {
+  handleChange = debounce(() => {
+    const { handleSubmit } = this.props;
+    handleSubmit({ preventDefault: noop });
+  }, INSTANT_SEARCH_TIMEOUT);
+
   componentDidUpdate(prevProps) {
     if (propsChanged(['values'], prevProps, this.props)) {
       this.handleChange();
     }
   }
-
-  handleChange = debounce(() => {
-    this.props.handleSubmit({ preventDefault: noop });
-  }, INSTANT_SEARCH_TIMEOUT);
 
   handleFormSubmit = (...args) => {
     const { inHome, history, handleSubmit } = this.props;

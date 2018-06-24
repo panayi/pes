@@ -41,6 +41,7 @@ class LoginButtons extends React.Component {
   };
 
   handleError = error => {
+    const { setErrorMsg } = this.props;
     const errorCode = R.prop('code', error);
     const providerId = R.path(['credential', 'providerId'], error);
     const accountExists =
@@ -55,7 +56,7 @@ class LoginButtons extends React.Component {
       errorMsg = `You have already created an account using ${otherProvider}, please try clicking the ${otherProvider} button.`;
     }
 
-    this.props.setErrorMsg(errorMsg);
+    setErrorMsg(errorMsg);
   };
 
   render() {
@@ -91,7 +92,10 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withState('errorMsg', 'setErrorMsg', null),
   withStyles(styles),
 )(LoginButtons);

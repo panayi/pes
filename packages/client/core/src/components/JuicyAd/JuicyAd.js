@@ -9,14 +9,15 @@ class JuicyAd extends React.Component {
   };
 
   componentDidMount() {
+    const { id } = this.props;
     const script = document.createElement('script');
     script.src = '//adserver.juicyads.com/js/jads.js';
     script.async = true;
-    script.setAttribute('data-id', this.props.id);
+    script.setAttribute('data-id', id);
     document.body.appendChild(script);
 
     (window.adsbyjuicy = window.adsbyjuicy || []).push({
-      adzone: this.props.id,
+      adzone: id,
     });
   }
 
@@ -25,9 +26,8 @@ class JuicyAd extends React.Component {
   }
 
   componentWillUnmount() {
-    const scriptNode = document.querySelectorAll(
-      `[data-id="${this.props.id}"]`,
-    );
+    const { id } = this.props;
+    const scriptNode = document.querySelectorAll(`[data-id="${id}"]`);
     if (scriptNode && scriptNode.parentNode) {
       scriptNode.parentNode.removeChild(scriptNode);
     }

@@ -23,7 +23,8 @@ class Query extends Component {
   };
 
   handleSubmit = values => {
-    this.props.setQuery(values.query);
+    const { setQuery } = this.props;
+    setQuery(values.query);
   };
 
   render() {
@@ -37,7 +38,10 @@ class Query extends Component {
             onSubmit={track(
               this.handleSubmit,
               'search',
-              R.compose(R.assoc('query', R.__, {}), R.prop('query')),
+              R.compose(
+                R.assoc('query', R.__, {}),
+                R.prop('query'),
+              ),
             )}
             enableReinitialize
           >

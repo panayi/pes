@@ -21,11 +21,11 @@ import SmsCodeValidation from './SmsCodeValidation/SmsCodeValidation';
 // };
 
 export class LoginWithPhone extends Component {
+  confirmationResult = noop;
+
   static defaultProps = {
     onStepChange: noop,
   };
-
-  confirmationResult = noop;
 
   handleSubmitPhoneNumber = async (values, recaptcha) => {
     const { login, setValues, onStepChange } = this.props;
@@ -39,12 +39,14 @@ export class LoginWithPhone extends Component {
   };
 
   handleSubmitSmsCodeValidation = async values => {
-    await this.props.validateSmsCode(values.code, this.confirmationResult);
-    this.props.onSuccess();
+    const { validateSmsCode, onSuccess } = this.props;
+    await validateSmsCode(values.code, this.confirmationResult);
+    onSuccess();
   };
 
   handleBackToPhoneNumber = () => {
-    this.props.onStepChange('phoneNumber');
+    const { onStepChange } = this.props;
+    onStepChange('phoneNumber');
   };
 
   render() {
@@ -79,7 +81,10 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withStateHandlers(initialState, {
     setValues: () => values => ({ values }),
     resetValues: () => R.always(initialState),

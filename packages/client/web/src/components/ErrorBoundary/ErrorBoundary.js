@@ -15,7 +15,8 @@ export class ErrorBoundary extends Component {
   };
 
   componentDidCatch() {
-    this.props.setErrored(true);
+    const { setErrored } = this.props;
+    setErrored(true);
   }
 
   render() {

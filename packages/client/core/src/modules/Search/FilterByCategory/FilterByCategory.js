@@ -17,7 +17,7 @@ import { selectors as profileSelectors } from '../../../store/firebase/profile';
 import connectSearch from '../../../hocs/connectSearch';
 import translate from '../../../hocs/translate';
 import RequireAdult from '../../../components/RequireAdult/RequireAdult';
-import TrackOnCall from '../../../modules/Mixpanel/TrackOnCall/TrackOnCall';
+import TrackOnCall from '../../Mixpanel/TrackOnCall/TrackOnCall';
 import FilterOption from '../FilterOption/FilterOption';
 
 // type LinkType = {
@@ -45,8 +45,9 @@ const styles = theme => ({
 
 class FilterByCategory extends React.Component {
   setCategory = category => {
+    const { setCategory } = this.props;
     const id = category.id === 'all' ? null : category.id;
-    this.props.setCategory(id);
+    setCategory(id);
   };
 
   handleCategoryClick = (category, confirmAdult) => {

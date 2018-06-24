@@ -46,8 +46,10 @@ const Content = ({ ad, adId, location }) => (
   </React.Fragment>
 );
 
-const AdPage = props =>
-  props.notFound ? (
+const AdPage = props => {
+  const { notFound } = props;
+
+  return notFound ? (
     <NotFound />
   ) : (
     <React.Fragment>
@@ -63,6 +65,7 @@ const AdPage = props =>
       </XsScreen>
     </React.Fragment>
   );
+};
 
 export default R.compose(
   setStatic('getInitialProps', async ({ match, store, res }) => {

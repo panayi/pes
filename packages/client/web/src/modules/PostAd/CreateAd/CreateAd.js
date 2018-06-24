@@ -17,7 +17,8 @@ import CreateAdSuccess from './Success/Success';
 
 class CreateAdContent extends Component {
   componentDidMount() {
-    this.props.createAdReset();
+    const { createAdReset } = this.props;
+    createAdReset();
   }
 
   render() {
@@ -33,12 +34,8 @@ class CreateAdContent extends Component {
     }
 
     if (isCreateAdCompleted) {
-      return (
-        <CreateAdSuccess
-          {...rest}
-          onPostAnotherClick={this.props.createAdReset}
-        />
-      );
+      const { createAdReset } = rest;
+      return <CreateAdSuccess {...rest} onPostAnotherClick={createAdReset} />;
     }
 
     return <CreateAdForm isSaving={isCreateAdPending} {...rest} />;

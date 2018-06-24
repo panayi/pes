@@ -33,7 +33,8 @@ class ScrollToTop extends React.Component {
     const scrollCapture = () => {
       requestAnimationFrame(() => {
         const { pageXOffset: x, pageYOffset: y } = window;
-        const { pathname } = this.props.location;
+        const { location } = this.props;
+        const { pathname } = location;
 
         // use browser history instead of router history
         // to avoid infinite history.replace loop
@@ -73,10 +74,11 @@ class ScrollToTop extends React.Component {
     };
 
     const scrollSync = (x = 0, y = 0) => {
+      const { scrollSyncAttemptLimit } = this.props;
       this.scrollSyncData = {
         x,
         y,
-        attemptsRemaining: this.props.scrollSyncAttemptLimit,
+        attemptsRemaining: scrollSyncAttemptLimit,
       };
       _scrollSync();
     };
@@ -89,13 +91,15 @@ class ScrollToTop extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
+    const { location } = this.props;
+    if (location !== prevProps.location) {
       this.debouncedScrollSync(0, 0);
     }
   }
 
   render() {
-    return this.props.children;
+    const { children } = this.props;
+    return children;
   }
 }
 

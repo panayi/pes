@@ -149,18 +149,24 @@ function getSuggestionValue(suggestion) {
 }
 
 class SearchLocation extends Component {
+  autocompleteService = null;
+
+  placesService = null;
+
   static defaultProps = {
     setLocation: noop,
   };
 
   componentDidMount() {
-    if (this.props.isScriptLoadSucceed) {
+    const { isScriptLoadSucceed } = this.props;
+    if (isScriptLoadSucceed) {
       this.loadServices();
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (!prevProps.isScriptLoadSucceed && this.props.isScriptLoadSucceed) {
+    const { isScriptLoadSucceed } = this.props;
+    if (!prevProps.isScriptLoadSucceed && isScriptLoadSucceed) {
       this.loadServices();
     }
   }
@@ -182,26 +188,18 @@ class SearchLocation extends Component {
     }
   };
 
-  loadServices() {
-    this.autocompleteService = new window.google.maps.places.AutocompleteService();
-    this.placesService = new window.google.maps.places.PlacesService(
-      document.createElement('div'),
-    );
-  }
-
-  autocompleteService = null;
-  placesService = null;
-
   handleFocus = event => {
     event.target.select();
   };
 
   handleBlur = () => {
-    this.props.handleBlur();
+    const { handleBlur } = this.props;
+    handleBlur();
   };
 
   handleChange = (event, { newValue }) => {
-    this.props.setValue(newValue);
+    const { setValue } = this.props;
+    setValue(newValue);
   };
 
   handleSuggestionsFetchRequested = ({ value }) => {
@@ -209,10 +207,12 @@ class SearchLocation extends Component {
   };
 
   handleSuggestionsClearRequested = () => {
-    this.props.setResults([]);
+    const { setResults } = this.props;
+    setResults([]);
   };
 
   handleSuggestionSelected = (event, { suggestion }) => {
+    const { setLocation, selectAddress } = this.props;
     const placeId = R.prop('place_id', suggestion);
 
     if (!this.placesService || isNilOrEmpty(placeId)) {
@@ -230,11 +230,18 @@ class SearchLocation extends Component {
         latitude: location.lat(),
         longitude: location.lng(),
       };
-      this.props.setLocation(address, geoposition);
+      setLocation(address, geoposition);
 
-      this.props.selectAddress(address);
+      selectAddress(address);
     });
   };
+
+  loadServices() {
+    this.autocompleteService = new window.google.maps.places.AutocompleteService();
+    this.placesService = new window.google.maps.places.PlacesService(
+      document.createElement('div'),
+    );
+  }
 
   renderContent = () => {
     const { value, isScriptLoadSucceed, results, classes } = this.props;

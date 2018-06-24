@@ -5,20 +5,36 @@ import * as auth from '@pesposa/core/src/client/auth';
 import * as api from '@pesposa/core/src/client/api';
 import authConfig from '../../../config/auth';
 import createAuthProvider from '../../../lib/firebase/createAuthProvider';
-import { actions as modalActions } from '../../../store/modals';
-import { actions as loginActions } from '../../../store/login';
+import { actions as modalActions } from '../../modals';
+import { actions as loginActions } from '../../login';
 import { track } from '../../../services/mixpanel';
+import { actions as profileActions, utils as profileUtils } from '../profile';
 import {
-  actions as profileActions,
-  utils as profileUtils,
-} from '../../../store/firebase/profile';
-import { migrateAnonymousUser } from '../../../store/anonymousUserToken/actions';
+  selectors as anonymousUserTokenSelectors,
+  actions as anonymousUserTokenActions,
+} from '../../anonymousUserToken';
 import * as selectors from './selectors';
 
 const setUserInfo = () => (dispatch, getState) => {
   const token = selectors.tokenSelector(getState());
 
   return api.setUserInfo(token);
+};
+
+export const migrateAnonymousUser = () => async (dispatch, getState) => {
+  const state = getState();
+
+  const anonymousUserToken = anonymousUserTokenSelectors.anonymousUserTokenSelector(
+    state,
+  );
+
+  if (R.isNil(anonymousUserToken)) {
+    return Promise.resolve();
+  }
+
+  const token = selectors.tokenSelector(state);
+  await api.migrateAnonymousUser({ token, anonymousUserToken });
+  return dispatch(anonymousUserTokenActions.reset());
 };
 
 export const handleAuthStateChanged = async (authData, firebase, dispatch) => {

@@ -25,8 +25,9 @@ const validationSchema = yup.object().shape({
 
 class SmsCodeValidationForm extends Component {
   handleSubmit = async (values, formikBag) => {
+    const { onSubmit } = this.props;
     try {
-      await this.props.onSubmit(values);
+      await onSubmit(values);
     } catch (error) {
       const finalErrorMsg = error.message || <GeneralErrorMessage />;
       formikBag.setErrors({

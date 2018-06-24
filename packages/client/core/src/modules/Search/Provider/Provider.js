@@ -12,12 +12,14 @@ export default class SearchProvider extends Component {
   };
 
   getChildContext() {
+    const { id } = this.props;
     return {
-      [searchConstants.CONTEXT_SEARCH_ID_KEY]: this.props.id,
+      [searchConstants.CONTEXT_SEARCH_ID_KEY]: id,
     };
   }
 
   render() {
-    return Children.only(this.props.children);
+    const { children } = this.props;
+    return Children.only(children);
   }
 }

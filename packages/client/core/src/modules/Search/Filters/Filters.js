@@ -38,12 +38,14 @@ class Filters extends React.Component {
   };
 
   componentDidMount() {
-    this.initialSearchParams = this.props.searchParams;
+    const { searchParams } = this.props;
+    this.initialSearchParams = searchParams;
   }
 
   handleCancel = () => {
-    this.props.setSearchParams(this.initialSearchParams);
-    this.props.closeModal();
+    const { setSearchParams, closeModal } = this.props;
+    setSearchParams(this.initialSearchParams);
+    closeModal();
   };
 
   render() {

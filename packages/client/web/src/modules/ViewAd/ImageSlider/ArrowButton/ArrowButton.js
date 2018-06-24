@@ -32,12 +32,13 @@ const styles = theme => ({
   },
 });
 
-const isDisabled = R.curry(
-  (direction, props) =>
-    direction === 'prev'
-      ? props.currentSlide === 0
-      : props.currentSlide === props.slideCount - 1,
-);
+const isDisabled = R.curry((direction, props) => {
+  const { currentSlide, slideCount } = props;
+
+  return direction === 'prev'
+    ? currentSlide === 0
+    : currentSlide === slideCount - 1;
+});
 
 const createArrowButton = (Icon, direction) =>
   R.compose(
@@ -45,14 +46,17 @@ const createArrowButton = (Icon, direction) =>
       R.either(R.propEq('slideCount', 1), isDisabled(direction)),
     ),
     withStyles(styles),
-    mapProps(props => ({
-      onClick: props.onClick,
-      disableRipple: true,
-      children: <Icon />,
-      classes: {
-        root: classNames(props.classes.root, props.classes[direction]),
-      },
-    })),
+    mapProps(props => {
+      const { onClick, classes } = props;
+      return {
+        onClick,
+        disableRipple: true,
+        children: <Icon />,
+        classes: {
+          root: classNames(classes.root, classes[direction]),
+        },
+      };
+    }),
   )(IconButton);
 
 const ArrowButton = {

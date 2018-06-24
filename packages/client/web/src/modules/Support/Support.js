@@ -40,9 +40,10 @@ class Support extends Component {
     });
 
   handleSubmit = async values => {
-    this.props.setStatus('pending');
-    await this.props.createSupportMessage(values);
-    this.props.setStatus('success');
+    const { setStatus, createSupportMessage } = this.props;
+    setStatus('pending');
+    await createSupportMessage(values);
+    setStatus('success');
   };
 
   renderSuccess() {
@@ -130,6 +131,9 @@ const mapDispatchToProps = {
 
 export default R.compose(
   withState('status', 'setStatus', null),
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withStyles(styles),
 )(Support);

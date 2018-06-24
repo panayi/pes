@@ -40,18 +40,21 @@ class CurrentUserMobileMenu extends Component {
   };
 
   navigateTo = path => {
-    this.props.history.push(path);
-    this.props.onClose();
+    const { onClose, history } = this.props;
+    history.push(path);
+    onClose();
   };
 
   closeWithDelay = () => {
+    const { onClose } = this.props;
     setTimeout(() => {
-      this.props.onClose();
+      onClose();
     }, 500);
   };
 
   openModal = modalId => {
-    this.props.openModal(modalId);
+    const { openModal } = this.props;
+    openModal(modalId);
     this.closeWithDelay();
   };
 
@@ -142,7 +145,10 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withStyles(styles),
   withRouter,
 )(CurrentUserMobileMenu);

@@ -11,7 +11,8 @@ class TrackGlobalEvents extends React.Component {
   }
 
   setupTrackPageView = () => {
-    this.props.history.listen(this.trackPageView);
+    const { history } = this.props;
+    history.listen(this.trackPageView);
   };
 
   trackPageView = location => {

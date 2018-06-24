@@ -9,16 +9,23 @@ const rootPath = ['filterCollection'];
 const selectedPath = [...rootPath, 'selected'];
 const queryPath = [...rootPath, 'query'];
 
-export const selectedSelector = (state, props) =>
-  R.path([...selectedPath, props.id], state);
+export const selectedSelector = (state, props) => {
+  const { id } = props;
+  return R.path([...selectedPath, id], state);
+};
 
 // queryValueSelector :: (State, Props) -> String
-export const queryValueSelector = (state, props) =>
-  R.pathOr('', [...queryPath, props.id], state);
+export const queryValueSelector = (state, props) => {
+  const { id } = props;
+  return R.pathOr('', [...queryPath, id], state);
+};
 
 const collectionSelector = createCachedSelector(
   propSelector('collection'),
-  R.compose(R.filter(R.identity), R.defaultTo([])),
+  R.compose(
+    R.filter(R.identity),
+    R.defaultTo([]),
+  ),
 )(propSelector('id'));
 
 // hitsSelector :: (State, Props) => Hits

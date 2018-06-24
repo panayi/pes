@@ -33,8 +33,8 @@ class BrowseAds extends Component {
   }
 
   render() {
-    const { previousAd, nextAd } = this.props;
-    return this.props.children({ previousAd, nextAd });
+    const { previousAd, nextAd, children } = this.props;
+    return children({ previousAd, nextAd });
   }
 }
 

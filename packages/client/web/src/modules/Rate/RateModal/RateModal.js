@@ -135,7 +135,13 @@ class RateModal extends Component {
   }
 
   renderSuccess() {
-    const { DialogTitle, DialogContent, DialogActions, classes } = this.props;
+    const {
+      DialogTitle,
+      DialogContent,
+      DialogActions,
+      closeModal,
+      classes,
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -150,7 +156,7 @@ class RateModal extends Component {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.props.closeModal}>Close</Button>
+          <Button onClick={closeModal}>Close</Button>
         </DialogActions>
       </React.Fragment>
     );
@@ -170,6 +176,9 @@ export default R.compose(
   withProps(({ numberOfStars }) => ({
     canSubmit: isValidNumber(numberOfStars),
   })),
-  connect(null, { createRating: dataActions.createRating }),
+  connect(
+    null,
+    { createRating: dataActions.createRating },
+  ),
   withStyles(styles),
 )(RateModal);

@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import * as externalUserEngagementChannels from '@pesposa/core/src/config/externalUserEngagementChannels';
 import client from '@pesposa/core/src/client';
@@ -7,7 +8,7 @@ import sendExternalUserEngagementEmail from '../../emails/externalUserEngagement
 
 const handleSendEmail = async (data, context) => {
   const { externalUserId, adId } = data;
-  const { admin } = context.auth.token;
+  const admin = R.path(['auth', 'token', 'amdin'], context);
 
   if (!admin) {
     throw new functions.https.HttpsError('permission-denied', 'Unauthorized');

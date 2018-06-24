@@ -100,31 +100,38 @@ const Content = ({
   </React.Fragment>
 );
 
-const Home = props => (
-  <GetCurrentPosition>
-    <React.Fragment>
-      <DesktopScreen>
-        <Layout
-          header={<HomeHeader />}
-          sidebar={<SearchFilters />}
-          pageClassName={props.classes.page}
-          flex
-        >
-          <Content {...props} />
-          <BackToTopButton />
-        </Layout>
-      </DesktopScreen>
-      <MobileScreen>
-        <Layout header={<HomeHeader />} pageClassName={props.classes.page} flex>
-          <Content {...props} />
-        </Layout>
-      </MobileScreen>
-    </React.Fragment>
-  </GetCurrentPosition>
-);
+const Home = props => {
+  const { classes } = props;
+
+  return (
+    <GetCurrentPosition>
+      <React.Fragment>
+        <DesktopScreen>
+          <Layout
+            header={<HomeHeader />}
+            sidebar={<SearchFilters />}
+            pageClassName={classes.page}
+            flex
+          >
+            <Content {...props} />
+            <BackToTopButton />
+          </Layout>
+        </DesktopScreen>
+        <MobileScreen>
+          <Layout header={<HomeHeader />} pageClassName={classes.page} flex>
+            <Content {...props} />
+          </Layout>
+        </MobileScreen>
+      </React.Fragment>
+    </GetCurrentPosition>
+  );
+};
 
 export const searchParamsFromPropsSelector = createSelector(
-  R.compose(R.defaultTo(null), routerSelectors.routeParamSelector('category')),
+  R.compose(
+    R.defaultTo(null),
+    routerSelectors.routeParamSelector('category'),
+  ),
   category => ({
     category,
     sold: '-true',

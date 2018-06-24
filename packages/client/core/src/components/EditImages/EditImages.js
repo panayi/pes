@@ -101,16 +101,18 @@ export class EditImages extends Component {
   }
 
   addLocalImage = file => {
+    const { addLocalImage } = this.props;
     const id = generateId();
-    this.props.addLocalImage(id, file);
+    addLocalImage(id, file);
     return id;
   };
 
   previewImage = (id, file) => {
+    const { setPreviewUrl } = this.props;
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      this.props.setPreviewUrl(id, reader.result);
+      setPreviewUrl(id, reader.result);
     };
 
     reader.readAsDataURL(file);
@@ -118,11 +120,12 @@ export class EditImages extends Component {
 
   uploadImage = async (id, file, dbPath) => {
     const {
+      dbPath: dbPathFromProps,
       uploadImage,
       willUploadLocalImage,
       didUploadLocalImage,
     } = this.props;
-    const finalDbPath = dbPath || this.props.dbPath;
+    const finalDbPath = dbPath || dbPathFromProps;
 
     if (!finalDbPath) {
       return;
@@ -134,13 +137,16 @@ export class EditImages extends Component {
     didUploadLocalImage(id, result);
   };
 
-  uploadLocalImages = dbPath =>
-    Promise.all(
+  uploadLocalImages = dbPath => {
+    const { localImages } = this.props;
+
+    return Promise.all(
       R.map(
         ({ id, image }) => this.uploadImage(id, image, dbPath),
-        this.props.localImages,
+        localImages,
       ),
     );
+  };
 
   handleDrop = files => {
     R.forEach(file => {
@@ -338,6 +344,9 @@ export default R.compose(
     localImages: R.filter(R.propEq('local', true), images),
     uploadedImages: R.reject(R.propEq('local', true), images),
   })),
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withStyles(styles),
 )(EditImages);

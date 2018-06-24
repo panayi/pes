@@ -63,26 +63,28 @@ class NavItem extends React.Component {
   };
 
   state = {
+    // eslint-disable-next-line react/destructuring-assignment
     open: this.props.openImmediately,
   };
 
   componentDidMount() {
+    const { openImmediately, classes } = this.props;
+
     // So we only run this logic once.
-    if (!this.props.openImmediately) {
+    if (!openImmediately) {
       return;
     }
 
     // Center the selected item in the list container.
-    const activeElement = document.querySelector(
-      `.${this.props.classes.active}`,
-    );
+    const activeElement = document.querySelector(`.${classes.active}`);
     if (activeElement && activeElement.scrollIntoView) {
       activeElement.scrollIntoView({});
     }
   }
 
   handleClick = () => {
-    this.setState({ open: !this.state.open });
+    const { open } = this.state;
+    this.setState({ open: !open });
   };
 
   render() {
@@ -97,6 +99,7 @@ class NavItem extends React.Component {
       secondaryText,
       ...other
     } = this.props;
+    const { open } = this.state;
 
     const style = {
       paddingLeft: 8 * (3 + 2 * depth),
@@ -134,7 +137,7 @@ class NavItem extends React.Component {
         >
           {title}
         </Button>
-        <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+        <Collapse in={open} timeout="auto" unmountOnExit>
           {children}
         </Collapse>
       </ListItem>

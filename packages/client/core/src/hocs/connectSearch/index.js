@@ -14,7 +14,7 @@ const createMapStateToProps = mapStateToProps => {
   }
 
   return (state, props) => {
-    const searchId = props[searchConstants.CONTEXT_SEARCH_ID_KEY];
+    const { [searchConstants.CONTEXT_SEARCH_ID_KEY]: searchId } = props;
     const finalState = searchUtils.getStateWithSearch(
       searchId,
       R.always(state),
@@ -30,8 +30,7 @@ const mapDispatchToProps = actionsObj => {
   }
 
   return (dispatch, props) => {
-    const searchId = props[searchConstants.CONTEXT_SEARCH_ID_KEY];
-
+    const { [searchConstants.CONTEXT_SEARCH_ID_KEY]: searchId } = props;
     return bindActionCreators(actionsObj, dispatch, searchId);
   };
 };

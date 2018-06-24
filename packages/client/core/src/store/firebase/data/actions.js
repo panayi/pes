@@ -4,8 +4,8 @@ import * as ads from '@pesposa/core/src/client/ads';
 import * as favorites from '@pesposa/core/src/client/favorites';
 import * as ratings from '@pesposa/core/src/client/ratings';
 import { track } from '../../../services/mixpanel';
-import { selectors as authSelectors } from '../../../store/firebase/auth';
-import { selectors as userInfoSelectors } from '../../../store/userInfo';
+import { selectors as authSelectors } from '../auth';
+import { selectors as userInfoSelectors } from '../../userInfo';
 
 export const toggleSold = ad => (dispatch, getState, getFirebase) =>
   ads.updateProp(getFirebase(), ad.id, 'sold', !ad.sold);

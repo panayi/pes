@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import * as sellerTypes from '@pesposa/core/src/config/sellerTypes';
 import client from '@pesposa/core/src/client';
@@ -6,7 +7,8 @@ import firebase from '@pesposa/server-core/src/config/firebaseClient';
 import * as algoliaService from '@pesposa/server-core/src/services/algolia';
 
 const handleAdCreated = async (snap, context) => {
-  const { id } = context.params;
+  const id = R.path(['params', 'id'], context);
+
   // Get it again, since it may have changed in the meantime
   const adSnap = await client.ads.get(firebase, id);
   const ad = adSnap.val();

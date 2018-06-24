@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
 import client from '@pesposa/core/src/client';
@@ -41,7 +42,8 @@ const updateUsersConversation = async (adId, buyerId, fromBuyer, createdAt) => {
 const handleCreate = async (snap, context) => {
   const message = snap.val();
   const { fromBuyer, createdAt } = message;
-  const { adId, buyerId } = context.params;
+  const adId = R.path(['params', 'adId'], context);
+  const buyerId = R.path(['params', 'buyerId'], context);
 
   await updateUsersConversation(adId, buyerId, fromBuyer, createdAt);
 };

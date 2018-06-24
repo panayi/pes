@@ -58,19 +58,22 @@ class Conversation extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { messages } = this.props;
     this.activateConversation(this.props);
 
-    if (this.props.messages.length > prevProps.messages.length) {
+    if (messages.length > prevProps.messages.length) {
       this.scrollToBottom();
     }
   }
 
   componentWillUnmount() {
-    this.props.deactivateConversation();
+    const { deactivateConversation } = this.props;
+    deactivateConversation();
   }
 
   activateConversation(props) {
-    this.props.activateConversation(R.path(['conversation', 'id'], props));
+    const { activateConversation } = this.props;
+    activateConversation(R.path(['conversation', 'id'], props));
   }
 
   scrollToBottom() {

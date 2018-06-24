@@ -1,10 +1,11 @@
+import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import server from '@pesposa/server-core/src/server';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
 
 const handleMigrateToUser = async (data, context) => {
   const { code } = data;
-  const userId = context.auth.uid;
+  const userId = R.path(['auth', 'uid'], context);
   const externalUserCodeSnap = await server.externalUserCodes.get(
     firebase,
     code,

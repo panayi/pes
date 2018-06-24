@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import * as functions from 'firebase-functions';
 import client from '@pesposa/core/src/client';
@@ -10,7 +11,7 @@ const handleExternalUserEmailWritten = async (change, context) => {
     return;
   }
 
-  const { id } = context.params;
+  const id = R.path(['params', 'id'], context);
   const hasUser = await client.externalUsers.hasUser(firebase, id);
   if (hasUser) {
     return;

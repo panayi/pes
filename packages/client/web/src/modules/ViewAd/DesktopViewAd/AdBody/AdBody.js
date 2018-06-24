@@ -13,8 +13,9 @@ const component = withProps({
 
 class AdBody extends React.Component {
   componentDidUpdate(prevProps) {
+    const { setExpanded } = this.props;
     if (propsChanged(['adId'], prevProps, this.props)) {
-      this.props.setExpanded(false);
+      setExpanded(false);
     }
   }
 

@@ -26,7 +26,8 @@ class OpenModalOnBounce extends React.Component {
   };
 
   handleOpen = () => {
-    this.props.openModal(this.props.modalId);
+    const { openModal, modalId } = this.props;
+    openModal(modalId);
   };
 
   render() {
@@ -38,4 +39,7 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
 };
 
-export default connect(null, mapDispatchToProps)(OpenModalOnBounce);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(OpenModalOnBounce);

@@ -15,7 +15,10 @@ const mapDispatchToProps = {
 
 const requireUserToCallAction = actionKey =>
   R.compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(
+      mapStateToProps,
+      mapDispatchToProps,
+    ),
     mapProps(({ isAuthenticated, __openModal, ...props }) => ({
       ...props,
       [actionKey]: (...args) => {
@@ -26,7 +29,8 @@ const requireUserToCallAction = actionKey =>
         return new Promise(resolve =>
           __openModal('login', {
             onSuccess: async () => {
-              const result = await props[actionKey](...args);
+              const { [actionKey]: action } = props;
+              const result = await action(...args);
               resolve(result);
             },
           }),

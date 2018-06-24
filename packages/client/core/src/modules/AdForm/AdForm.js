@@ -104,11 +104,12 @@ class AdForm extends Component {
   };
 
   componentDidUpdate(prevProps) {
+    const { images } = this.props;
     if (
       propsChanged(['images'], prevProps, this.props) &&
       this.setImagesFieldValue
     ) {
-      this.setImagesFieldValue(this.props.images);
+      this.setImagesFieldValue(images);
     }
   }
 

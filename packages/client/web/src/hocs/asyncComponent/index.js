@@ -11,6 +11,7 @@ const asyncComponent = getComponent =>
 
     // eslint-disable-next-line camelcase
     UNSAFE_componentWillMount() {
+      // eslint-disable-next-line react/destructuring-assignment
       if (!this.state.Component) {
         getComponent().then(({ default: Component }) => {
           AsyncComponent.Component = Component;

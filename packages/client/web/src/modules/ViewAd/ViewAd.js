@@ -25,10 +25,11 @@ class ViewAd extends React.Component {
   }
 
   trackViewAd() {
+    const { adId } = this.props;
     setTimeout(
       () =>
         track('viewAd', {
-          id: this.props.adId,
+          id: adId,
           title: window.document.title,
         }),
       1000,
@@ -63,4 +64,7 @@ const mapStateToProps = createStructuredSelector({
   ),
 });
 
-export default R.compose(connect(mapStateToProps), withRouter)(ViewAd);
+export default R.compose(
+  connect(mapStateToProps),
+  withRouter,
+)(ViewAd);

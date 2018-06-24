@@ -6,7 +6,7 @@ import firebase from '@pesposa/server-core/src/config/firebaseClient';
 import * as algoliaService from '@pesposa/server-core/src/services/algolia';
 
 const handleAdPropsUpdated = async (change, context) => {
-  const { id } = context.params;
+  const id = R.path(['params', 'id'], context);
   const { before } = change;
   const beforeAdProps = before.val();
   const finalAd = await server.ads.setInternalProps(firebase, id);

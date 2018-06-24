@@ -6,7 +6,7 @@ import firebase from '@pesposa/server-core/src/config/firebaseClient';
 import * as zendeskService from '@pesposa/server-core/src/services/zendesk';
 
 const handleCreate = async (snap, context) => {
-  const { id } = context.params;
+  const id = R.path(['params', 'id'], context);
   const support = snap.val();
   const { uid, email } = support;
   let finalName = email;

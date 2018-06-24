@@ -49,7 +49,7 @@ const styles = theme => ({
 
 class Profile extends Component {
   handleChangeTab = (event, value) => {
-    const { userId, userType, tab } = this.props;
+    const { userId, userType, tab, history } = this.props;
     const basePath =
       userType === sellerTypes.EXTERNAL_USER
         ? `/user/e/${userId}`
@@ -60,7 +60,7 @@ class Profile extends Component {
     }
 
     const path = value === 'selling' ? basePath : `${basePath}/${value}`;
-    this.props.history.push(path);
+    history.push(path);
   };
 
   render() {
@@ -107,8 +107,17 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  branch(R.compose(isNilOrEmpty, R.prop('userId')), needsUser()),
-  connect(mapStateToProps, mapDispatchToProps),
+  branch(
+    R.compose(
+      isNilOrEmpty,
+      R.prop('userId'),
+    ),
+    needsUser(),
+  ),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withProps(({ tab, userId, currentUserId }) => ({
     tab: R.defaultTo('selling', tab),
     isCurrentUser: userId === currentUserId,

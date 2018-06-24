@@ -8,22 +8,16 @@ import generateClassName from '@pesposa/core/src/utils/generateClassName';
 // };
 
 export default class Recaptcha extends Component {
+  RECAPTCHA_ID = generateClassName();
+
+  verifier = null;
+
   componentDidMount() {
     this.createRecaptcha();
   }
 
   shouldComponentUpdate() {
     return false;
-  }
-
-  RECAPTCHA_ID = generateClassName();
-  verifier = null;
-
-  createRecaptcha() {
-    const { RecaptchaVerifier } = this.props.firebase.auth;
-    this.verifier = new RecaptchaVerifier(this.RECAPTCHA_ID, {
-      size: 'invisible',
-    });
   }
 
   reset = () =>
@@ -33,6 +27,14 @@ export default class Recaptcha extends Component {
         reset(widgetId);
       }
     });
+
+  createRecaptcha() {
+    const { firebase } = this.props;
+    const { RecaptchaVerifier } = firebase.auth;
+    this.verifier = new RecaptchaVerifier(this.RECAPTCHA_ID, {
+      size: 'invisible',
+    });
+  }
 
   render() {
     return (

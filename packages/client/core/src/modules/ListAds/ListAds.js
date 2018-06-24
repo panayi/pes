@@ -53,7 +53,8 @@ export class ListAds extends Component {
   };
 
   componentDidMount() {
-    window.scrollTo(0, this.props.scrollPosition);
+    const { scrollPosition } = this.props;
+    window.scrollTo(0, scrollPosition);
     this.ensureCanScroll();
   }
 
@@ -68,29 +69,17 @@ export class ListAds extends Component {
   }
 
   setScrollPosition = debounce(() => {
-    this.props.setScrollPosition(
-      window.pageYOffset || document.documentElement.scrollTop,
-    );
+    const { setScrollPosition } = this.props;
+    setScrollPosition(window.pageYOffset || document.documentElement.scrollTop);
   }, 100);
 
-  ensureCanScroll() {
-    const hasHits = R.complement(R.isEmpty)(this.props.hits);
-    const shouldFetchMore =
-      document.documentElement.scrollHeight -
-        document.documentElement.clientHeight <
-      400;
-
-    if (hasHits && shouldFetchMore) {
-      this.props.loadNextPage();
-    }
-  }
-
   handleScroll = ({ scrollTop }) => {
+    const { hasOpenedModal, loadNextPage } = this.props;
     // TODO: Hacky way to avoid triggering many requests
     // when a modal is opened (since on mobile position: fixed is added to <body>).
     // We should fix all these issues by displaying mobile modals
     // on dedicated URLs.
-    if (this.props.hasOpenedModal) {
+    if (hasOpenedModal) {
       return;
     }
 
@@ -100,7 +89,7 @@ export class ListAds extends Component {
       scrollTop >=
       listHeight - this.containerHeight - constants.SCROLL_OFFSET_FETCH_TRIGGER
     ) {
-      this.props.loadNextPage();
+      loadNextPage();
     }
 
     this.setScrollPosition();
@@ -109,6 +98,19 @@ export class ListAds extends Component {
   registerCollection = collectionRef => {
     this.collectionRef = collectionRef;
   };
+
+  ensureCanScroll() {
+    const { hits, loadNextPage } = this.props;
+    const hasHits = R.complement(R.isEmpty)(hits);
+    const shouldFetchMore =
+      document.documentElement.scrollHeight -
+        document.documentElement.clientHeight <
+      400;
+
+    if (hasHits && shouldFetchMore) {
+      loadNextPage();
+    }
+  }
 
   renderContent = ({ height, scrollTop }) => ({ width }) => {
     const { hits, size, fixedCardHeight } = this.props;
@@ -162,7 +164,10 @@ export class ListAds extends Component {
 }
 
 const serverWidthSelector = createSelector(
-  R.compose(R.defaultTo(0), responsiveSelectors.fakeWidthSelector),
+  R.compose(
+    R.defaultTo(0),
+    responsiveSelectors.fakeWidthSelector,
+  ),
   responsiveSelectors.isPhoneSelector,
   userInfoSelectors.isBotSelector,
   (fakeWidth, isPhone, isBot) => {
@@ -176,7 +181,7 @@ const serverWidthSelector = createSelector(
 );
 
 const serverHeightSelector = R.compose(
-  serverWidth => serverWidth * 16 / 9,
+  serverWidth => (serverWidth * 16) / 9,
   serverWidthSelector,
 );
 

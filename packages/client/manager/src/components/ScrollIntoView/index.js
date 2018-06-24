@@ -26,13 +26,14 @@ class ScrollIntoView extends Component {
   };
 
   render() {
+    const { children } = this.props;
     return (
       <div
         ref={node => {
           this.node = node;
         }}
       >
-        {this.props.children}
+        {children}
       </div>
     );
   }

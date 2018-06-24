@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
 import server from '@pesposa/server-core/src/server';
@@ -8,7 +9,7 @@ const handleUserProviderDataWritten = async (change, context) => {
     return null;
   }
 
-  const { id } = context.params;
+  const id = R.path(['params', 'id'], context);
   const userSnap = await server.users.get(firebase, id);
 
   // Download avatar for use on user profile

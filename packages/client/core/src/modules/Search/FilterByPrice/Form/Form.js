@@ -24,7 +24,8 @@ const styles = theme => ({
 class Form extends Component {
   componentDidUpdate(prevProps) {
     if (propsChanged(['values'], prevProps, this.props)) {
-      this.props.handleSubmit({ preventDefault: noop });
+      const { handleSubmit } = this.props;
+      handleSubmit({ preventDefault: noop });
     }
   }
 

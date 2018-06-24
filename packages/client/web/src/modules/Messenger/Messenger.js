@@ -42,7 +42,8 @@ const styles = theme => ({
 
 class Messenger extends Component {
   renderLoadingConversations() {
-    return !isLoaded(this.props.conversations) ? <Spinner centered /> : null;
+    const { conversations } = this.props;
+    return !isLoaded(conversations) ? <Spinner centered /> : null;
   }
 
   renderNoConversations() {
@@ -153,8 +154,14 @@ export default R.compose(
   withProps(
     createStructuredSelector({
       selectedConversation: R.converge(R.find, [
-        R.compose(R.propEq('id'), R.prop('conversationId')),
-        R.compose(R.defaultTo([]), R.prop('conversations')),
+        R.compose(
+          R.propEq('id'),
+          R.prop('conversationId'),
+        ),
+        R.compose(
+          R.defaultTo([]),
+          R.prop('conversations'),
+        ),
       ]),
     }),
   ),

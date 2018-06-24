@@ -40,23 +40,23 @@ class Search extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!R.equals(prevProps.params, this.props.params)) {
-      this.props.setParamsFromProps(this.props.params);
+    const { params, indexName, searchParams, setParamsFromProps } = this.props;
+    if (!R.equals(prevProps.params, params)) {
+      setParamsFromProps(params);
     }
 
-    const indexNameChanged = !R.equals(
-      prevProps.indexName,
-      this.props.indexName,
-    );
-    const searchParamsChanged = !R.equals(
-      prevProps.searchParams,
-      this.props.searchParams,
-    );
+    const indexNameChanged = !R.equals(prevProps.indexName, indexName);
+    const searchParamsChanged = !R.equals(prevProps.searchParams, searchParams);
 
     if (indexNameChanged || searchParamsChanged) {
       this.handleLoadFirstPage();
     }
   }
+
+  handleLoadNextPage = () => {
+    const { page, loadPage } = this.props;
+    loadPage(page + 1);
+  };
 
   handleLoadFirstPage() {
     const {
@@ -78,11 +78,6 @@ class Search extends React.Component {
       }
     }
   }
-
-  handleLoadNextPage = () => {
-    const { page, loadPage } = this.props;
-    loadPage(page + 1);
-  };
 
   render() {
     const { hits, currentCategory, setCategory, children } = this.props;

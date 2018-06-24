@@ -19,7 +19,7 @@
     "commander": "^2.15.1",
     "dotenv-webpack": "^1.5.4",
     "eslint": "4.19.1",
-    "eslint-config-airbnb": "16.1.0",
+    "eslint-config-airbnb": "^17.0.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-import-resolver-webpack": "^0.10.1",
     "eslint-plugin-import": "^2.7.0",

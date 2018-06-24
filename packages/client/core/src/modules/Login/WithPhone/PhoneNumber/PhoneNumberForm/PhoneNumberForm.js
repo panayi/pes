@@ -56,8 +56,9 @@ class PhoneNumberForm extends Component {
   };
 
   handleSubmit = async (values, formikBag) => {
+    const { onSubmit } = this.props;
     try {
-      await this.handleCallback(this.props.onSubmit, values);
+      await this.handleCallback(onSubmit, values);
     } catch (error) {
       formikBag.setErrors({
         number: <GeneralErrorMessage />,
@@ -67,8 +68,9 @@ class PhoneNumberForm extends Component {
   };
 
   handleChange = values => {
-    this.props.setSelectedCountryCode(values.countryCode);
-    this.handleCallback(this.props.onChange, values);
+    const { onChange, setSelectedCountryCode } = this.props;
+    setSelectedCountryCode(values.countryCode);
+    this.handleCallback(onChange, values);
   };
 
   handleCallback = async (callback, values) => {

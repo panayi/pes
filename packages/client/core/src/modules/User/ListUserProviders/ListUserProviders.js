@@ -30,11 +30,13 @@ const styles = {
 };
 
 class ListUserProviders extends Component {
-  canLinkProvider = provider =>
-    this.props.canLink && provider && provider.disabled;
+  canLinkProvider = provider => {
+    const { canLink } = this.props;
+    return canLink && provider && provider.disabled;
+  };
 
   handleProviderClick = async provider => {
-    const { linkProvider } = this.props;
+    const { linkProvider, openModal } = this.props;
 
     if (!this.canLinkProvider(provider)) {
       return;
@@ -58,7 +60,7 @@ class ListUserProviders extends Component {
       const errorMsg = accountExists
         ? `Your ${providerName} profile is already associated with a different Pesposa account. Linking existing Pesposa accounts is not supported.`
         : null;
-      this.props.openModal('error', { title, errorMsg });
+      openModal('error', { title, errorMsg });
     }
   };
 
@@ -96,7 +98,10 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withProfileData(
     {
       providerIds: ['providerIds'],

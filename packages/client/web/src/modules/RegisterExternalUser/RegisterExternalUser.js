@@ -105,7 +105,8 @@ const styles = theme => ({
 
 export class RegisterExternalUser extends React.Component {
   goHome = () => {
-    this.props.history.replace('/');
+    const { history } = this.props;
+    history.replace('/');
   };
 
   goToProfile = () => {
@@ -308,9 +309,10 @@ const sellerAdsSelector = createSelector(
     }
 
     const currentAd = R.nth(currentAdIndex, finalSellerAds);
-    return R.compose(R.prepend(currentAd), R.remove(currentAdIndex, 1))(
-      finalSellerAds,
-    );
+    return R.compose(
+      R.prepend(currentAd),
+      R.remove(currentAdIndex, 1),
+    )(finalSellerAds);
   },
 );
 

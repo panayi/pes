@@ -15,8 +15,9 @@ const styles = theme => ({
 
 class Form extends Component {
   componentDidUpdate(prevProps) {
+    const { values, onChange } = this.props;
     if (propsChanged(['values'], prevProps, this.props)) {
-      this.props.onChange(this.props.values);
+      onChange(values);
     }
   }
 
@@ -97,4 +98,7 @@ class Form extends Component {
   }
 }
 
-export default R.compose(translate('categories'), withStyles(styles))(Form);
+export default R.compose(
+  translate('categories'),
+  withStyles(styles),
+)(Form);

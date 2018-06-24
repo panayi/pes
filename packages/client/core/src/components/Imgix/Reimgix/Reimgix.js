@@ -65,7 +65,8 @@ class Reimgix extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.lqip) {
+    const { lqip } = this.props;
+    if (lqip) {
       this.image = document.createElement('img');
       this.image.addEventListener('load', this.handleOriginalLoad);
       this.image.src = this.src.original;
@@ -73,7 +74,8 @@ class Reimgix extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.props.lqip && this.image) {
+    const { lqip } = this.props;
+    if (lqip && this.image) {
       this.image.removeEventListener('load', this.handleOriginalLoad);
     }
   }

@@ -32,26 +32,6 @@ class RequireAdult extends React.Component {
     }
   }
 
-  checkAdult() {
-    const { id, allow, closeModal } = this.props;
-    if (allow) {
-      const onAccept = this.props.onAccept || this.onAccept;
-      if (onAccept) {
-        onAccept();
-      }
-      closeModal(id);
-    }
-  }
-
-  confirmAdultWhenEnabled() {
-    const { enabled, isLoading } = this.props;
-    if (enabled && !isLoading) {
-      this.confirmAdult({
-        onReject: this.props.onReject,
-      });
-    }
-  }
-
   confirmAdult = ({ onAccept, onReject }) => {
     const { id, allow, openModal } = this.props;
     this.onAccept = onAccept;
@@ -63,6 +43,26 @@ class RequireAdult extends React.Component {
       this.checkAdult();
     }
   };
+
+  confirmAdultWhenEnabled() {
+    const { enabled, isLoading, onReject } = this.props;
+    if (enabled && !isLoading) {
+      this.confirmAdult({
+        onReject,
+      });
+    }
+  }
+
+  checkAdult() {
+    const { id, allow, onAccept, closeModal } = this.props;
+    if (allow) {
+      const finalOnAccept = onAccept || this.onAccept;
+      if (finalOnAccept) {
+        finalOnAccept();
+      }
+      closeModal(id);
+    }
+  }
 
   render() {
     const { id, enabled, allow, isLoading, children, classes } = this.props;
@@ -111,6 +111,9 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withStyles(styles),
 )(RequireAdult);

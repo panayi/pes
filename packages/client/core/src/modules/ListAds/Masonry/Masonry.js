@@ -66,8 +66,9 @@ class Masonry extends PureComponent {
   };
 
   registerCollection = ref => {
+    const { registerCollection } = this.props;
     this.collectionRef = ref;
-    this.props.registerCollection(ref);
+    registerCollection(ref);
   };
 
   renderCell = ({ index, key, style }) => {

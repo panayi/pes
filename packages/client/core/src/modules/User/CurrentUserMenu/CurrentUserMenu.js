@@ -52,6 +52,8 @@ const styles = theme => ({
 });
 
 class CurrentUserMenu extends Component {
+  button = null;
+
   static propTypes = {
     classes: PropTypes.shape({}).isRequired,
   };
@@ -74,8 +76,6 @@ class CurrentUserMenu extends Component {
       open: false,
     });
   };
-
-  button = null;
 
   render() {
     const { currentUserId, openModal, classes } = this.props;
@@ -136,6 +136,9 @@ const mapDispatchToProps = {
 
 export default R.compose(
   hideVisitor,
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withStyles(styles),
 )(CurrentUserMenu);
