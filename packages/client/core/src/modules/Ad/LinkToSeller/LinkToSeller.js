@@ -31,15 +31,24 @@ const LinkToSeller = ({
 };
 
 LinkToSeller.propTypes = {
-  sellerId: PropTypes.string.isRequired,
-  sellerType: PropTypes.oneOf(R.values(sellerTypes)).isRequired,
+  sellerId: PropTypes.string,
+  sellerType: PropTypes.oneOf(R.values(sellerTypes)),
+};
+
+LinkToSeller.defaultProps = {
+  sellerId: null,
+  sellerType: null,
 };
 
 const sellerProfilePathSelector = createSelector(
   propSelector(['sellerId']),
   propSelector(['sellerType']),
   (sellerId, sellerType) =>
-    `/user${sellerType === sellerTypes.EXTERNAL_USER ? '/e' : ''}/${sellerId}`,
+    sellerId && sellerType
+      ? `/user${
+          sellerType === sellerTypes.EXTERNAL_USER ? '/e' : ''
+        }/${sellerId}`
+      : null,
 );
 
 export default R.compose(

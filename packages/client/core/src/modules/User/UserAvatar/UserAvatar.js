@@ -34,6 +34,9 @@ const UserAvatar = withRenderProps(
       loaded: isLoaded.avatar,
       children,
     })),
+    defaultProps({
+      avatar: {},
+    }),
   ),
 );
 

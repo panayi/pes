@@ -29,7 +29,7 @@ const makeLink = R.compose(
   }),
   withStyles(styles),
   withProps(({ to, classes, className }) => ({
-    component: to ? NavLink : null,
+    component: to ? NavLink : undefined,
     className: classNames(classes.root, className, {
       [classes.clickable]: !!to,
     }),
