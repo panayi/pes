@@ -28,10 +28,6 @@ server
   .use(useragent.express())
   .use(checkMaintenance);
 
-server.use((req, res) => {
-  res.send('hello');
-});
-
 server.get(
   '/robots.txt',
   createStore,
