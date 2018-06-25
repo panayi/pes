@@ -1,35 +1,36 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const constants = require('../constants');
 
 module.exports = {
   target: 'node',
+  mode: 'production',
+  bail: true,
   module: {
     rules: [
       {
         test: /\.js?$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
-        query: {
-          babelrc: false,
-          presets: [
-            [
-              'env',
-              {
-                targets: {
-                  node: 'current',
-                },
-              },
-            ],
-          ],
-          plugins: ['transform-async-to-generator'],
-        },
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              babelrc: false,
+              presets: [
+                [
+                  'env',
+                  {
+                    targets: {
+                      node: 'current',
+                    },
+                  },
+                ],
+              ],
+              plugins: ['transform-async-to-generator'],
+            },
+          },
+        ],
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
@@ -49,21 +50,6 @@ module.exports = {
     nodeExternals({
       whitelist: [/^@pesposa/],
       modulesDir: path.join(constants.paths.root, 'node_modules'),
-    }),
-  ],
-  plugins: [
-    new UglifyJSPlugin({
-      uglifyOptions: {
-        compress: {
-          warnings: false,
-          unused: true,
-          dead_code: true,
-        },
-        output: {
-          comments: false,
-          beautify: false,
-        },
-      },
     }),
   ],
 };
