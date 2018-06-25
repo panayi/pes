@@ -7,6 +7,12 @@
       "**/node_modules/**"
     ],
     "rewrites": [
+      // Comment/uncomment to toggle maintenance mode
+      {
+        "source": "**/**",
+        "destination": "/maintenance.html",
+        "type": 503
+      },
       {
         "source": "/sitemap.xml",
         "function": "api"
