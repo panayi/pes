@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import env from '@pesposa/core/src/config/env';
 import { selectors as authSelectors } from '../../../store/firebase/auth';
 import { selectors as profileSelectors } from '../../../store/firebase/profile';
 import A from '../../../components/A/A';
@@ -144,7 +145,11 @@ class CurrentUserBox extends Component {
             <div className={classes.links}>
               {isAdmin ? (
                 <React.Fragment>
-                  <A href="/manager">Manager</A>
+                  {env.isManagerApp ? (
+                    <A href="/">App</A>
+                  ) : (
+                    <A href="/manager">Manager</A>
+                  )}
                   <span className={classes.linkSeparator}>–</span>
                 </React.Fragment>
               ) : null}

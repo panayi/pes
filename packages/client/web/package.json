@@ -70,10 +70,10 @@
     "selenium-standalone": "^6.12.0"
   },
   "scripts": {
-    "start": "NODE_PATH=src/ PORT=3000 razzle start",
-    "build": "NODE_PATH=src/ razzle build",
+    "start": "REACT_APP_APP=web NODE_PATH=src/ razzle start",
+    "build": "REACT_APP_APP=web NODE_PATH=src/ razzle build",
     "postbuild": "../../../node_modules/.bin/mvy build ../../../build/hosting",
-    "test": "NODE_PATH=src/ razzle test --env=jsdom",
+    "test": "REACT_APP_APP=web NODE_PATH=src/ razzle test --env=jsdom",
     "setup:e2e": "selenium-standalone install",
     "test:e2e": "nightwatch"
   },

@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 
 const firebaseProject = process.env.REACT_APP_FIREBASE_PROJECT;
+const app = process.env.REACT_APP_APP;
 
 const output = {
   countrySites: R.compose(
@@ -30,6 +31,9 @@ const output = {
   zendeskToken: process.env.ZENDESK_TOKEN,
   zendeskUsername: process.env.ZENDESK_USERNAME,
   zendeskApiUrl: process.env.ZENDESK_API_URL,
+  app,
+  isManagerApp: app === 'manager',
+  isWebApp: app === 'web',
   isProductionDeployment: firebaseProject === 'pesposa-production',
   isDevelopment: process.env.NODE_ENV === 'development',
   isProduction: process.env.NODE_ENV === 'production',

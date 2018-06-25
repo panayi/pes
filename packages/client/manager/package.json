@@ -42,10 +42,10 @@
     "yup": "^0.25.1"
   },
   "scripts": {
-    "start": "NODE_PATH=src/ PORT=3001 react-scripts start",
-    "build": "NODE_PATH=src/ react-scripts build",
+    "start": "REACT_APP_APP=manager NODE_PATH=src/ PORT=3002 react-scripts start",
+    "build": "REACT_APP_APP=manager NODE_PATH=src/ react-scripts build",
     "postbuild": "../../../node_modules/.bin/mvy build ../../../build/hosting/public/manager",
-    "test": "NODE_PATH=src/ react-scripts test --env=jsdom"
+    "test": "REACT_APP_APP=manager NODE_PATH=src/ react-scripts test --env=jsdom"
   },
   "homepage": "/manager",
   "devDependencies": {
