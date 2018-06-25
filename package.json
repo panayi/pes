@@ -60,7 +60,7 @@
     "build:web": "cd packages/client/web && yarn build",
     "build:manager": "cd packages/client/manager && yarn build",
     "build:hosting": "yarn build:web && yarn build:manager",
-    "build:functions": "node ./tools/scripts/build.functions.js && cd build/functions && yarn",
+    "build:functions": "node ./tools/scripts/build.functions.js && cd build/functions && yarn && npm rebuild",
     "build:database": "node ./tools/scripts/build.database.js",
     "build": "yarn build:hosting && yarn build:functions && yarn build:database",
     "deploy:hosting": "yarn firebase deploy --only hosting",

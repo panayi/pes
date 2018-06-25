@@ -29,8 +29,7 @@ const build = entries => {
     JSON.stringify,
     R.evolve({
       dependencies: R.compose(
-        R.pickBy((val, key) => !R.test(/^@pesposa/, key)),
-        R.assoc('razzle', '../../razzle/packages/razzle')
+        R.pickBy((val, key) => !R.test(/^@pesposa/, key) && key !== 'razzle'),
       ),
     }),
     R.omit(['devDependencies']),
