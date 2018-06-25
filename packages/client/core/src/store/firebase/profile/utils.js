@@ -3,7 +3,10 @@ import { nameSelector } from '@pesposa/core/src/selectors/users';
 
 // getPropInProviderData :: String -> Object | Null
 const findProviderWithProp = propKey =>
-  R.compose(R.find(R.prop(propKey)), R.propOr([], 'providerData'));
+  R.compose(
+    R.find(R.prop(propKey)),
+    R.propOr([], 'providerData'),
+  );
 
 // getPhoneNumber :: User -> String | Null
 const getPhoneNumber = R.compose(
@@ -15,7 +18,10 @@ const getPhoneNumber = R.compose(
 const getDisplayName = R.converge(
   (name, phone, email) => nameSelector({ name, phone, email }),
   [
-    R.compose(R.prop('displayName'), findProviderWithProp('displayName')),
+    R.compose(
+      R.prop('displayName'),
+      findProviderWithProp('displayName'),
+    ),
     getPhoneNumber,
     R.propOr(null, 'email'),
   ],

@@ -6,7 +6,10 @@ import AdProp from '../AdProp/AdProp';
 export default withProps({
   getProp: R.ifElse(
     R.prop('isLegacy'),
-    R.compose(renderHtml, R.prop('body')),
+    R.compose(
+      renderHtml,
+      R.prop('body'),
+    ),
     R.prop('body'),
   ),
 })(AdProp);

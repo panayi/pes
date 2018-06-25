@@ -124,4 +124,7 @@ const ConversationHeader = ({
   </div>
 );
 
-export default R.compose(withRouter, withStyles(styles))(ConversationHeader);
+export default R.compose(
+  withRouter,
+  withStyles(styles),
+)(ConversationHeader);

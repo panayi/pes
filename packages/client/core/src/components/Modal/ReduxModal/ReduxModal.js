@@ -42,7 +42,10 @@ class ReduxModal extends React.Component {
 const openSelector = createSelector(
   selectors.openSelector,
   propSelector(['open']),
-  R.compose(R.defaultTo(false), R.or),
+  R.compose(
+    R.defaultTo(false),
+    R.or,
+  ),
 );
 
 const mapStateToProps = createStructuredSelector({
@@ -59,7 +62,10 @@ const mapDispatchToProps = (dispatch, { id }) =>
   );
 
 export default R.compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withProps(({ contentPropsFromState, contentProps }) => ({
     contentProps: R.merge(contentPropsFromState, contentProps),
   })),

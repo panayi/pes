@@ -72,7 +72,10 @@ export class Sell extends React.Component {
 
     const ad = R.find(R.propEq('id', adId), sellerAds);
     if (!ad) {
-      const firstAdId = R.compose(R.prop('id'), R.head)(sellerAds);
+      const firstAdId = R.compose(
+        R.prop('id'),
+        R.head,
+      )(sellerAds);
       return history.replace(urlPaths.sell({ code, adId: firstAdId }));
     }
 

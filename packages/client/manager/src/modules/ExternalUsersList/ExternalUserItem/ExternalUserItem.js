@@ -72,7 +72,11 @@ ExternalUserItem.defaultProps = {
 
 const imageSelector = createCachedSelector(
   propSelector(['hit', 'avatar']),
-  R.compose(R.head, R.values, R.defaultTo({})),
+  R.compose(
+    R.head,
+    R.values,
+    R.defaultTo({}),
+  ),
 )(propSelector(['hit', 'id']));
 
 export default withProps(

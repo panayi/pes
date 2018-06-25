@@ -54,7 +54,10 @@ export const createAd = adProps => async (dispatch, getState, getFirebase) => {
   const additionalData = {
     location,
   };
-  const finalAdProps = R.compose(serializeAd, R.merge(adProps))(additionalData);
+  const finalAdProps = R.compose(
+    serializeAd,
+    R.merge(adProps),
+  )(additionalData);
   const rootProps = {
     seller: authSelectors.uidSelector(state),
     sellerType: sellerTypes.USER,

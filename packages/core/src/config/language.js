@@ -14,7 +14,10 @@ const SUPPORTED_LANGUAGES = [
 
 const GREEK_LANGUAGE_CODE = 'ell';
 
-export const getAll = R.compose(R.pluck('id'), R.always(SUPPORTED_LANGUAGES));
+export const getAll = R.compose(
+  R.pluck('id'),
+  R.always(SUPPORTED_LANGUAGES),
+);
 
 export const getDefault = () => {
   const defaultLanguage = R.find(R.prop('default'), SUPPORTED_LANGUAGES);

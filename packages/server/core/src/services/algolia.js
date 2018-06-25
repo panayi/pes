@@ -42,12 +42,18 @@ const serializeAd = (id, ad) =>
       R.compose(
         computedProp(
           'location',
-          R.compose(R.omit(['geoposition']), R.prop('location')),
+          R.compose(
+            R.omit(['geoposition']),
+            R.prop('location'),
+          ),
         ),
         computedProp(
           '_geoloc',
           R.converge(
-            R.compose(R.zipObj(['lat', 'lng']), R.unapply(R.identity)),
+            R.compose(
+              R.zipObj(['lat', 'lng']),
+              R.unapply(R.identity),
+            ),
             [
               R.path(['location', 'geoposition', 'latitude']),
               R.path(['location', 'geoposition', 'longitude']),

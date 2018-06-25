@@ -76,6 +76,7 @@ const mapStateToProps = createStructuredSelector({
   mixpanelProfile: mixpanelProfileSelector,
 });
 
-export default R.compose(connect(mapStateToProps), withRouter)(
-  TrackGlobalEvents,
-);
+export default R.compose(
+  connect(mapStateToProps),
+  withRouter,
+)(TrackGlobalEvents);

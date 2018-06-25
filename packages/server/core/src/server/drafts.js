@@ -10,9 +10,10 @@ export const move = async (firebase, sourceUserId, targetUserId) => {
   }
 
   const sourceDraftAd = sourceSnapshot.val();
-  const isSourceDraftAdEmtpy = R.compose(R.all(isNilOrEmpty), R.values)(
-    sourceDraftAd,
-  );
+  const isSourceDraftAdEmtpy = R.compose(
+    R.all(isNilOrEmpty),
+    R.values,
+  )(sourceDraftAd);
 
   if (isSourceDraftAdEmtpy) {
     return null;

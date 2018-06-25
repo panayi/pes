@@ -12,7 +12,14 @@ const serializePrice = R.compose(
 
 const serializeImages = computedProp(
   'images',
-  R.compose(R.map(R.omit(['dimensions'])), R.defaultTo({}), R.prop('images')),
+  R.compose(
+    R.map(R.omit(['dimensions'])),
+    R.defaultTo({}),
+    R.prop('images'),
+  ),
 );
 
-export const serializeAd = R.compose(serializePrice, serializeImages);
+export const serializeAd = R.compose(
+  serializePrice,
+  serializeImages,
+);

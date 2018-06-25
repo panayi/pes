@@ -28,9 +28,10 @@ const connectData = (dataConnections, mapStateToProps, mapDispatchToProps) => {
           : {};
 
         const isDataLoaded = R.map(isLoaded, data);
-        const allDataLoaded = R.compose(R.all(R.identity), R.values)(
-          isDataLoaded,
-        );
+        const allDataLoaded = R.compose(
+          R.all(R.identity),
+          R.values,
+        )(isDataLoaded);
 
         return {
           ...resolveProps,
@@ -42,7 +43,10 @@ const connectData = (dataConnections, mapStateToProps, mapDispatchToProps) => {
       };
 
   return R.compose(
-    connect(finalMapStateToProps, mapDispatchToProps),
+    connect(
+      finalMapStateToProps,
+      mapDispatchToProps,
+    ),
     firebaseConnect(R.propOr([], QUERIES_PROP)),
   );
 };

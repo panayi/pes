@@ -20,7 +20,10 @@ const mapDispatchToProps = {
 
 const EditAdContent = R.compose(
   hydrateAd(propSelector(['adId'])),
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withProps(({ adId, ad, saveAd, closeModal }) => ({
     title: 'Edit your ad',
     submitButtonLabel: 'Save',

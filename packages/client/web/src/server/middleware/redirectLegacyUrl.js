@@ -15,7 +15,13 @@ const redirectLegacyUrl = (req, res, next) => {
   const segments = R.compose(
     R.reject(isNilOrEmpty),
     R.split('/'),
-    R.when(R.compose(R.equals('/'), R.head), R.tail),
+    R.when(
+      R.compose(
+        R.equals('/'),
+        R.head,
+      ),
+      R.tail,
+    ),
   )(req.path);
 
   const firstSegment = R.head(segments);

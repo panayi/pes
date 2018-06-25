@@ -93,6 +93,7 @@ const BreadCrumbs = ({ ad, t, classes }) => (
   </div>
 );
 
-export default R.compose(translate('categories'), withStyles(styles))(
-  BreadCrumbs,
-);
+export default R.compose(
+  translate('categories'),
+  withStyles(styles),
+)(BreadCrumbs);

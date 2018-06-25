@@ -46,7 +46,10 @@ export const getFromIp = (ip, req) => {
     geoposition,
     address: {
       city: R.prop('city', result),
-      country: R.compose(getCountryByCode, R.prop('country'))(result),
+      country: R.compose(
+        getCountryByCode,
+        R.prop('country'),
+      )(result),
     },
     source: locationConfig.IP_SOURCE_ID,
   };

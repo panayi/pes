@@ -46,7 +46,15 @@ const mapDispatchToProps = {
 
 export default R.compose(
   requirePropToRender('ad'),
-  withUserWithId(R.compose(R.path(['ad', 'seller']), propsSelector)),
-  connect(null, mapDispatchToProps),
+  withUserWithId(
+    R.compose(
+      R.path(['ad', 'seller']),
+      propsSelector,
+    ),
+  ),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withStyles(styles),
 )(EditAdButton);

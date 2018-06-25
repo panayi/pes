@@ -4,7 +4,10 @@ import propsSelector from './propsSelector';
 
 export const propOrSelector = (defaultValue, path) =>
   R.compose(
-    R.compose(R.pathOr(defaultValue), ensureArray)(path),
+    R.compose(
+      R.pathOr(defaultValue),
+      ensureArray,
+    )(path),
     propsSelector,
   );
 

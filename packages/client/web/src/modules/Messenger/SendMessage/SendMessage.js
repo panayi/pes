@@ -50,6 +50,9 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   requireUserToCallAction('createMessage'),
 )(SendMessage);

@@ -22,9 +22,11 @@ export const COLUMN_COUNTS = {
   },
 };
 export const MIN_WIDTHS = size =>
-  R.compose(R.sort(R.flip(R.subtract)), R.map(parseInt), R.keys)(
-    COLUMN_COUNTS[size],
-  );
+  R.compose(
+    R.sort(R.flip(R.subtract)),
+    R.map(parseInt),
+    R.keys,
+  )(COLUMN_COUNTS[size]);
 export const GUTTER = 8;
 export const CARD_CONTENT_HEIGHT = 80;
 export const THUMBNAIL_WIDTH = 250;

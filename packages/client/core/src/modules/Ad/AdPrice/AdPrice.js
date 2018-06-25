@@ -15,5 +15,10 @@ export default R.compose(
       price: R.path(['ad', 'price']),
     }),
   ),
-  renderNothingWhen(R.compose(R.complement(isPositive), R.prop('price'))),
+  renderNothingWhen(
+    R.compose(
+      R.complement(isPositive),
+      R.prop('price'),
+    ),
+  ),
 )(AdPrice);

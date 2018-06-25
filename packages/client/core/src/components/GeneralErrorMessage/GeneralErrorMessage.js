@@ -35,6 +35,10 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
 };
 
-export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
-  GeneralErrorMessage,
-);
+export default R.compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
+  withStyles(styles),
+)(GeneralErrorMessage);

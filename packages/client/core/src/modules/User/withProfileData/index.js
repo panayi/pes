@@ -16,7 +16,10 @@ const IS_CURRENT_USER = '____is_current_user';
 export const withMyProfileData = mapPropsToPaths => {
   const dataSelector = createStructuredSelector(
     R.map(
-      R.compose(profileSelectors.profilePropSelector, R.prepend('profile')),
+      R.compose(
+        profileSelectors.profilePropSelector,
+        R.prepend('profile'),
+      ),
       mapPropsToPaths,
     ),
   );
@@ -31,7 +34,10 @@ export const withMyProfileData = mapPropsToPaths => {
     };
   };
 
-  return connect(mapStateToProps, {});
+  return connect(
+    mapStateToProps,
+    {},
+  );
 };
 
 export const withUserProfileData = (mapPropsToPaths, userIdSelector) => {
@@ -57,7 +63,10 @@ const withProfileData = (mapPropsToPaths, userIdSelector) => {
     defaultProps({
       isLoaded: {},
     }),
-    connect(mapStateToProps, {}),
+    connect(
+      mapStateToProps,
+      {},
+    ),
     branch(
       R.propSatisfies(R.complement(isNilOrEmpty), USER_ID),
       branch(

@@ -74,7 +74,10 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withSpinnerWhen(R.prop('isLoading'), {
     centered: true,
     overlay: true,

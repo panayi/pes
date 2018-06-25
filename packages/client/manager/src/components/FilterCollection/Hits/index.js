@@ -14,7 +14,10 @@ import NoHits from '../NoHits/NoHits';
 
 const ROW_HEIGHT = 69;
 
-const getUrlParts = R.compose(R.filter(R.identity), R.split('/'));
+const getUrlParts = R.compose(
+  R.filter(R.identity),
+  R.split('/'),
+);
 
 export class BaseHits extends React.Component {
   static propTypes = {
@@ -173,6 +176,9 @@ const mapDispatchToProps = {
 export default R.compose(
   withFilterCollectionId,
   renameProp('selected', 'selectedFromProps'),
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withRouter,
 )(Hits);

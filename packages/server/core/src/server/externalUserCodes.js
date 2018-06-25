@@ -21,7 +21,11 @@ export const getByValue = async (firebase, value) =>
 
 export const getCodeForExternalUser = async (firebase, externalUserId) => {
   const codeSnap = await getByValue(firebase, externalUserId);
-  return R.compose(R.head, R.keys, R.defaultTo({}))(codeSnap.val());
+  return R.compose(
+    R.head,
+    R.keys,
+    R.defaultTo({}),
+  )(codeSnap.val());
 };
 
 /*

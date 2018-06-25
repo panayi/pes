@@ -80,7 +80,10 @@ const modelConnectionsFactory = dataPath => {
   const createByChildSelector = (key, valueSelector, ...paths) =>
     createSelector(
       valueSelector,
-      R.compose(R.defaultTo([]), createCollectionSelector(...paths)),
+      R.compose(
+        R.defaultTo([]),
+        createCollectionSelector(...paths),
+      ),
       R.useWith(R.filter, [R.propEq(key), R.identity]),
     );
 

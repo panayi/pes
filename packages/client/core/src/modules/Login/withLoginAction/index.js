@@ -9,7 +9,10 @@ const mapDispatchToProps = {
 };
 
 const withLoginAction = R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   defaultProps({
     onSuccess: noop,
     onError: noop,

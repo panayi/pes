@@ -14,7 +14,12 @@ const findComponentByType = (types, results) =>
     R.prop('short_name'),
     R.defaultTo({}),
     R.find(
-      R.compose(R.not, R.isEmpty, R.intersection(types), R.propOr([], 'types')),
+      R.compose(
+        R.not,
+        R.isEmpty,
+        R.intersection(types),
+        R.propOr([], 'types'),
+      ),
     ),
   )(results);
 

@@ -92,7 +92,11 @@ Engagements.propTypes = {
 
 const engagementsSelector = createSelector(
   propSelector('engagements'),
-  R.compose(R.reverse, R.toPairs, R.defaultTo({})),
+  R.compose(
+    R.reverse,
+    R.toPairs,
+    R.defaultTo({}),
+  ),
 );
 
 export default R.compose(

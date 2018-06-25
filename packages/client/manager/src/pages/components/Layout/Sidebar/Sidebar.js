@@ -89,4 +89,7 @@ Sidebar.propTypes = {
   classes: PropTypes.shape({}).isRequired,
 };
 
-export default R.compose(withRouter, withStyles(styles))(Sidebar);
+export default R.compose(
+  withRouter,
+  withStyles(styles),
+)(Sidebar);

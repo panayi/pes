@@ -145,7 +145,10 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   withProps(
     createStructuredSelector({
       emailEngagements: emailEngagementsSelector,

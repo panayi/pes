@@ -13,7 +13,10 @@ const avatarSelector = createSelector(
   (userType, avatar) =>
     userType === sellerTypes.USER
       ? avatar
-      : R.compose(R.head, R.values)(avatar),
+      : R.compose(
+          R.head,
+          R.values,
+        )(avatar),
 );
 
 const mapDataToProps = {

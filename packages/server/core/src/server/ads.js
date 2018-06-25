@@ -52,8 +52,14 @@ export const setInternalProps = async (firebase, id) => {
     .ref(`/${modelPaths.ADS.string}/${id}/internalProps/imageDimensions`)
     .once('value');
   if (imagesSnap.exists()) {
-    const firstImage = R.compose(R.head, R.values)(imagesSnap.val());
-    const firstImageKey = R.compose(R.head, R.keys)(imagesSnap.val());
+    const firstImage = R.compose(
+      R.head,
+      R.values,
+    )(imagesSnap.val());
+    const firstImageKey = R.compose(
+      R.head,
+      R.keys,
+    )(imagesSnap.val());
     const thumbnail = R.merge(firstImage, {
       dimensions: imageDimensionsSnap.val()[firstImageKey],
     });

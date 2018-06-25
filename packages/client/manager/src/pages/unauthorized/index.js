@@ -21,4 +21,7 @@ const Unauthorized = ({ classes }) => (
   </Layout>
 );
 
-export default R.compose(needsNonAdmin(), withStyles(styles))(Unauthorized);
+export default R.compose(
+  needsNonAdmin(),
+  withStyles(styles),
+)(Unauthorized);

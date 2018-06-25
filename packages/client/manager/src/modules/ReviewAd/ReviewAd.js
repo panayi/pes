@@ -199,7 +199,10 @@ export default R.compose(
   withProps(
     createStructuredSelector({
       adId: routeParamSelector('adId'),
-      currentTab: R.compose(R.defaultTo(null), routeParamSelector('tab')),
+      currentTab: R.compose(
+        R.defaultTo(null),
+        routeParamSelector('tab'),
+      ),
     }),
   ),
   connectData(mapDataToProps, null, mapDispatchToProps),

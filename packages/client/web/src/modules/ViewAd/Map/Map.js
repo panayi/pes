@@ -84,6 +84,10 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
 };
 
-export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
-  Map,
-);
+export default R.compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
+  withStyles(styles),
+)(Map);

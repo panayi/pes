@@ -95,6 +95,7 @@ const mapStateToProps = createStructuredSelector({
   isCurrentUser: authSelectors.isCurrentUserSelector(propSelector('userId')),
 });
 
-export default R.compose(connect(mapStateToProps), withStyles(styles))(
-  ProfileBanner,
-);
+export default R.compose(
+  connect(mapStateToProps),
+  withStyles(styles),
+)(ProfileBanner);

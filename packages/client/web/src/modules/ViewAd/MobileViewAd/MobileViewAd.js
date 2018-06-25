@@ -536,7 +536,10 @@ export default R.compose(
   connectSearch(mapStateToProps, mapDispatchToProps),
   withProps(
     createStructuredSelector({
-      imagesList: R.compose(R.values, R.pathOr({}, ['ad', 'images'])),
+      imagesList: R.compose(
+        R.values,
+        R.pathOr({}, ['ad', 'images']),
+      ),
     }),
   ),
   withStateHandlers(

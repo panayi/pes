@@ -8,7 +8,10 @@ import * as fetchService from '../services/fetch';
 import * as storageService from '../services/storage';
 
 const findProviderWithProp = propKey =>
-  R.compose(R.find(R.prop(propKey)), R.propOr([], 'providerData'));
+  R.compose(
+    R.find(R.prop(propKey)),
+    R.propOr([], 'providerData'),
+  );
 
 const getFacebookImageUrl = uid =>
   `https://graph.facebook.com/${uid}/picture?height=1000`;

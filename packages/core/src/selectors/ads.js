@@ -27,7 +27,11 @@ const sellerImageSelector = createSelector(
 
     return ad.sellerType === sellerTypes.USER
       ? R.prop('originalUrl', avatar)
-      : R.compose(R.prop('downloadURL'), R.head, R.values)(avatar);
+      : R.compose(
+          R.prop('downloadURL'),
+          R.head,
+          R.values,
+        )(avatar);
   },
 );
 

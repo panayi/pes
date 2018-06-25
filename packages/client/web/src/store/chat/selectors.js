@@ -9,7 +9,10 @@ export const activeConversationSelector = R.path(constants.ROOT_PATH);
 
 export const unreadConversationsSelector = createSelector(
   propSelector('context'),
-  R.compose(R.defaultTo([]), models.conversations.all.selector),
+  R.compose(
+    R.defaultTo([]),
+    models.conversations.all.selector,
+  ),
   activeConversationSelector,
   (conversation, conversations, activeConversationId) =>
     R.compose(

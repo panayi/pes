@@ -77,6 +77,7 @@ const mapStateToProps = createStructuredSelector({
   currentUserId: authSelectors.uidSelector,
 });
 
-export default R.compose(connect(mapStateToProps), withStyles(styles))(
-  CreateAdSuccess,
-);
+export default R.compose(
+  connect(mapStateToProps),
+  withStyles(styles),
+)(CreateAdSuccess);

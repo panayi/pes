@@ -39,4 +39,7 @@ const mapDispatchToProps = {
   openModal: modalActions.openModal,
 };
 
-export default connect(null, mapDispatchToProps)(Confirm);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Confirm);

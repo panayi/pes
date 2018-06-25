@@ -14,23 +14,44 @@ export const hitsSelector = createSelector(
     R.reject(hit => R.contains(hit.objectID, deletedAds), hits),
 );
 
-export const isHitsEmptySelector = R.compose(R.isEmpty, hitsSelector);
+export const isHitsEmptySelector = R.compose(
+  R.isEmpty,
+  hitsSelector,
+);
 
-export const hitsCountSelector = R.compose(R.length, hitsSelector);
+export const hitsCountSelector = R.compose(
+  R.length,
+  hitsSelector,
+);
 
-const hitIdsSelectors = R.compose(R.pluck(algoliaConfig.ID), hitsSelector);
+const hitIdsSelectors = R.compose(
+  R.pluck(algoliaConfig.ID),
+  hitsSelector,
+);
 
 export const hitIndexSelector = R.useWith(R.flip(R.findIndex), [
   hitIdsSelectors,
-  R.compose(R.equals, propSelector('id')),
+  R.compose(
+    R.equals,
+    propSelector('id'),
+  ),
 ]);
 
 export const previousHitSelector = R.converge(
   (index, hits) => (index < 0 ? null : R.nth(index, hits)),
-  [R.compose(R.dec, hitIndexSelector), hitsSelector],
+  [
+    R.compose(
+      R.dec,
+      hitIndexSelector,
+    ),
+    hitsSelector,
+  ],
 );
 
 export const nextHitSelector = R.converge(R.nth, [
-  R.compose(R.inc, hitIndexSelector),
+  R.compose(
+    R.inc,
+    hitIndexSelector,
+  ),
   hitsSelector,
 ]);

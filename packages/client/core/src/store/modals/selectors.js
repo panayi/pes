@@ -15,7 +15,10 @@ export const openSelector = createSelector(
 
 export const anyOpenSelector = createSelector(
   allOpenSelector,
-  R.compose(R.any(R.identity), R.values),
+  R.compose(
+    R.any(R.identity),
+    R.values,
+  ),
 );
 
 export const modalPropsSelector = createSelector(

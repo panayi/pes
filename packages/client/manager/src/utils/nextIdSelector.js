@@ -11,9 +11,10 @@ const nextIdSelector = createSelector(
     const collectionWithoutCurrent = R.remove(index, 1, collection);
     const totalItems = R.length(collectionWithoutCurrent);
     const finalIndex = index > totalItems - 1 ? 0 : index;
-    return R.compose(R.prop('id'), R.nth(R.__, collectionWithoutCurrent))(
-      finalIndex,
-    );
+    return R.compose(
+      R.prop('id'),
+      R.nth(R.__, collectionWithoutCurrent),
+    )(finalIndex);
   },
 );
 

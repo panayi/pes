@@ -26,15 +26,27 @@ const types = {
 };
 
 const createMap = getter =>
-  R.compose(R.values, R.map(getter), R.pick(R.__, types));
+  R.compose(
+    R.values,
+    R.map(getter),
+    R.pick(R.__, types),
+  );
 
 const mimeFor = createMap(R.prop('mimeType'));
 
-const acceptFor = R.compose(R.join(','), mimeFor);
+const acceptFor = R.compose(
+  R.join(','),
+  mimeFor,
+);
 
 const extensionFor = createMap(R.prop('extension'));
 
-const prettyPrintFor = createMap(R.pipe(R.prop('extension'), R.concat('.')));
+const prettyPrintFor = createMap(
+  R.pipe(
+    R.prop('extension'),
+    R.concat('.'),
+  ),
+);
 
 const files = {
   typeKeys,

@@ -86,7 +86,10 @@ export default R.compose(
   branch(
     propSelector('externalUserId'),
     connectData(mapDataToProps, null, mapDispatchToProps),
-    connect(null, mapDispatchToProps),
+    connect(
+      null,
+      mapDispatchToProps,
+    ),
   ),
   withStyles(styles),
 )(ExternalUser);

@@ -19,4 +19,7 @@ const mapDispatchToProps = {
   toggleDrawer: drawerActions.toggle,
 };
 
-export default connect(null, mapDispatchToProps)(ToggleDrawer);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(ToggleDrawer);

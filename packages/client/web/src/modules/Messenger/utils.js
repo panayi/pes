@@ -20,6 +20,9 @@ export const createOtherUserIdSelector = ({
 export const createOtherUserTypeSelector = (buyerSelector, adSelector) =>
   createSelector(
     createIsBuyerSelector(buyerSelector),
-    R.compose(R.defaultTo({}), adSelector),
+    R.compose(
+      R.defaultTo({}),
+      adSelector,
+    ),
     (isBuyer, ad) => (isBuyer ? ad.sellerType : sellerTypes.USER),
   );

@@ -10,7 +10,10 @@ const hitsSelector = propSelector('hits');
 const hitSelector = propSelector('hit');
 const sizeSelector = propSelector('size');
 const fixedCardHeightSelector = propSelector('fixedCardHeight');
-const hitIdSelector = R.compose(id, hitSelector);
+const hitIdSelector = R.compose(
+  id,
+  hitSelector,
+);
 const containerWidthSelector = propSelector('containerWidth');
 const indexSelector = propSelector('index');
 const columnHeightsSelector = propSelector('columnHeights');
@@ -25,7 +28,10 @@ const currentMinWidthSelector = createSelector(
 export const columnCountSelector = createSelector(
   sizeSelector,
   currentMinWidthSelector,
-  R.compose(R.path(R.__, constants.COLUMN_COUNTS), R.unapply(R.identity)),
+  R.compose(
+    R.path(R.__, constants.COLUMN_COUNTS),
+    R.unapply(R.identity),
+  ),
 );
 
 // columnWidthSelector :: { containerWidth } -> Number
@@ -57,7 +63,7 @@ export const thumbnailHeightSelector = createCachedSelector(
 
     const dimensions = R.prop('dimensions', thumbnail);
     return isPlainObj(dimensions)
-      ? columnWidth / dimensions.width * dimensions.height
+      ? (columnWidth / dimensions.width) * dimensions.height
       : constants.DEFAULT_THUMBNAIL_HEIGHT;
   },
 )(hitIdSelector);

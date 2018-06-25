@@ -71,7 +71,10 @@ export default R.compose(
   branch(
     propSelector('sourceId'),
     connectData(mapDataToProps, null, mapDispatchToProps),
-    connect(null, mapDispatchToProps),
+    connect(
+      null,
+      mapDispatchToProps,
+    ),
   ),
   withStyles(styles),
 )(Source);

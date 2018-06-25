@@ -78,7 +78,11 @@ AdItem.defaultProps = {
 
 const imageSelector = createCachedSelector(
   propSelector(['hit', 'images']),
-  R.compose(R.head, R.values, R.defaultTo({})),
+  R.compose(
+    R.head,
+    R.values,
+    R.defaultTo({}),
+  ),
 )(propSelector(['hit', 'id']));
 
 export default R.compose(

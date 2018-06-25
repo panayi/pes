@@ -29,6 +29,10 @@ ShowCreateAdButton.defaultProps = {
   color: 'primary',
 };
 
-export default R.compose(connect(null, mapDispatchToProps), withStyles(styles))(
-  ShowCreateAdButton,
-);
+export default R.compose(
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
+  withStyles(styles),
+)(ShowCreateAdButton);

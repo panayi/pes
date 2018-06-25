@@ -99,6 +99,7 @@ const mapStateToProps = createStructuredSelector({
   noMoreResults: searchSelectors.noMoreResultsSelector,
 });
 
-export default R.compose(connectSearch(mapStateToProps), withStyles(styles))(
-  FetchAdsProgress,
-);
+export default R.compose(
+  connectSearch(mapStateToProps),
+  withStyles(styles),
+)(FetchAdsProgress);

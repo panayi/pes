@@ -19,7 +19,10 @@ const mapDispatchToProps = {
 };
 
 export default R.compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withProps({
     title: 'Sell on Pesposa',
     submitButtonLabel: 'Post Ad',

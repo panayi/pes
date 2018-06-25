@@ -1,4 +1,7 @@
 import * as R from 'ramda';
 import { mapProps } from 'recompose';
 
-export default R.compose(mapProps, R.omit);
+export default R.compose(
+  mapProps,
+  R.omit,
+);

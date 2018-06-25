@@ -36,7 +36,11 @@ const ListFavoriteAds = ({ favoriteAdIds, isLoaded }) => {
 
 const favoriteAdIdsSelector = createSelector(
   propSelector('favoriteAds'),
-  R.compose(R.keys, R.filter(R.identity), R.defaultTo([])),
+  R.compose(
+    R.keys,
+    R.filter(R.identity),
+    R.defaultTo([]),
+  ),
 );
 
 const mapDataToProps = {

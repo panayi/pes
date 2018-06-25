@@ -12,7 +12,11 @@ const breakpoints = theme.breakpoints.values;
 
 const getWidthBreakpoint = width =>
   R.converge(R.prop, [
-    R.compose(R.find(pair => width >= pair[1]), R.reverse, R.toPairs),
+    R.compose(
+      R.find(pair => width >= pair[1]),
+      R.reverse,
+      R.toPairs,
+    ),
     R.invert,
   ])(breakpoints);
 

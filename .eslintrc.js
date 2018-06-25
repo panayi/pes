@@ -23,8 +23,6 @@ module.exports = {
 
     // See why we do this here:
     // https://github.com/facebook/create-react-app/issues/2631#issuecomment-312894470
-    "jsx-a11y/href-no-hash": "off",
-    "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }],
 
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",

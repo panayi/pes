@@ -28,4 +28,7 @@ const mapDispatchToProps = {
   updateExternalUser: externalUsersActions.update,
 };
 
-export default connect(null, mapDispatchToProps)(EditExternalUser);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(EditExternalUser);

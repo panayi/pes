@@ -81,5 +81,9 @@ export const isCurrentUserSelector = userIdSelector =>
 
 export const isAdminSelector = createSelector(
   tokenSelector,
-  R.compose(R.prop('admin'), R.defaultTo({}), decodeJwt),
+  R.compose(
+    R.prop('admin'),
+    R.defaultTo({}),
+    decodeJwt,
+  ),
 );

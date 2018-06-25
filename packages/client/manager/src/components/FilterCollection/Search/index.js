@@ -16,7 +16,10 @@ const mapDispatchToProps = {
 
 export default compose(
   withFilterCollectionId,
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
   withProps(({ id, query, setQuery, onChange }) => ({
     value: query,
     onChange: event => {

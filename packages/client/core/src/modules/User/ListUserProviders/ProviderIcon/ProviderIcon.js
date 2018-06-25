@@ -124,6 +124,7 @@ const providerPropsSelector = createCachedSelector(
   },
 )(propSelector('providerId'));
 
-export default R.compose(withStyles(styles), withProps(providerPropsSelector))(
-  ProviderIcon,
-);
+export default R.compose(
+  withStyles(styles),
+  withProps(providerPropsSelector),
+)(ProviderIcon);

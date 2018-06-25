@@ -49,6 +49,7 @@ const mapStateToProps = createStructuredSelector({
   siteDomain: siteSelectors.countryDomainSelector,
 });
 
-export default R.compose(connect(mapStateToProps), withStyles(styles))(
-  CreateAdFailure,
-);
+export default R.compose(
+  connect(mapStateToProps),
+  withStyles(styles),
+)(CreateAdFailure);

@@ -19,7 +19,10 @@ export const categorySelector = R.compose(
 export const categoryObjectSelector = (categoryIdSelector = categorySelector) =>
   createSelector(
     categoryIdSelector,
-    R.compose(R.defaultTo([]), models.categories.all.selector),
+    R.compose(
+      R.defaultTo([]),
+      models.categories.all.selector,
+    ),
     (categoryId, categories) => R.find(R.propEq('id', categoryId), categories),
   );
 
@@ -58,7 +61,10 @@ const selectedGeopositionSelector = R.compose(
 export const geopositionSelector = createSelector(
   selectedGeopositionSelector,
   userInfoSelectors.geopositionForSiteSelector,
-  R.compose(R.unless(isNilOrEmpty, R.map(round)), R.or),
+  R.compose(
+    R.unless(isNilOrEmpty, R.map(round)),
+    R.or,
+  ),
 );
 
 // Price
@@ -127,7 +133,10 @@ export const soldHasValueSelector = R.compose(
 );
 
 // Ids
-export const idsSelector = R.compose(R.prop(constants.IDS_KEY), paramsSelector);
+export const idsSelector = R.compose(
+  R.prop(constants.IDS_KEY),
+  paramsSelector,
+);
 
 // Raw props
 export const rawPropsSelector = R.compose(

@@ -28,4 +28,7 @@ const mapDispatchToProps = {
   updateSource: sourcesActions.update,
 };
 
-export default connect(null, mapDispatchToProps)(EditSource);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(EditSource);

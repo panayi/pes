@@ -12,7 +12,10 @@ const mapDispatchToProps = {
 let alreadyScheduled = false;
 
 export default R.compose(
-  connect(null, mapDispatchToProps),
+  connect(
+    null,
+    mapDispatchToProps,
+  ),
   lifecycle({
     componentDidMount() {
       if (alreadyScheduled) {

@@ -19,7 +19,14 @@ const facetFiltersSelector = createSelector(
     paramsSelectors.categorySelector,
   ),
   R.compose(
-    R.when(R.compose(R.equals('-'), R.head, R.defaultTo('')), R.concat('\\')),
+    R.when(
+      R.compose(
+        R.equals('-'),
+        R.head,
+        R.defaultTo(''),
+      ),
+      R.concat('\\'),
+    ),
     paramsSelectors.sellerSelector,
   ),
   paramsSelectors.soldSelector,
@@ -96,7 +103,10 @@ export const searchParamsSelector = createSelector(
 
     // Setting `ids` overrides everything else
     return {
-      filters: R.compose(R.join(' OR '), R.map(id => `objectID:${id}`))(ids),
+      filters: R.compose(
+        R.join(' OR '),
+        R.map(id => `objectID:${id}`),
+      )(ids),
     };
   },
 );

@@ -13,10 +13,16 @@ export const fileMetadataFactory = (uploadTaskSnapshot, firebase, metadata) =>
     ]),
     computedProp(
       'createdAt',
-      R.compose(date => new Date(date).getTime(), R.propOr([], 'timeCreated')),
+      R.compose(
+        date => new Date(date).getTime(),
+        R.propOr([], 'timeCreated'),
+      ),
     ),
     computedProp(
       'downloadURL',
-      R.compose(R.head, R.propOr([], 'downloadURLs')),
+      R.compose(
+        R.head,
+        R.propOr([], 'downloadURLs'),
+      ),
     ),
   )(metadata);

@@ -13,11 +13,28 @@ const censorEmail = email => {
 };
 
 const censorPhone = R.compose(
-  R.converge(R.compose(R.join(''), R.flatten, R.unapply(R.identity)), [
-    R.compose(R.nth(0), R.splitAt(4)),
-    R.compose(R.times(R.always('*')), R.subtract(R.__, 7), R.length),
-    R.compose(R.nth(1), R.splitAt(-3)),
-  ]),
+  R.converge(
+    R.compose(
+      R.join(''),
+      R.flatten,
+      R.unapply(R.identity),
+    ),
+    [
+      R.compose(
+        R.nth(0),
+        R.splitAt(4),
+      ),
+      R.compose(
+        R.times(R.always('*')),
+        R.subtract(R.__, 7),
+        R.length,
+      ),
+      R.compose(
+        R.nth(1),
+        R.splitAt(-3),
+      ),
+    ],
+  ),
   R.split(''),
 );
 

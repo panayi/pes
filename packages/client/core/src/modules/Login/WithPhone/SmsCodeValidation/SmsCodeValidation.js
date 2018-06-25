@@ -92,10 +92,14 @@ export const SmsCodeValidation = props => {
 
 const mapDataToProps = {
   countryFlag: models.countryFlags.one(
-    R.compose(R.toLower, propSelector('countryCode')),
+    R.compose(
+      R.toLower,
+      propSelector('countryCode'),
+    ),
   ),
 };
 
-export default R.compose(connectData(mapDataToProps), withStyles(styles))(
-  SmsCodeValidation,
-);
+export default R.compose(
+  connectData(mapDataToProps),
+  withStyles(styles),
+)(SmsCodeValidation);

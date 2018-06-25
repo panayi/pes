@@ -25,4 +25,7 @@ const mapDispatchToProps = (dispatch, { ad }) =>
     dispatch,
   );
 
-export default connect(null, mapDispatchToProps)(ToggleSold);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(ToggleSold);
