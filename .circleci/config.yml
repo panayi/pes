@@ -107,6 +107,10 @@ jobs:
           name: Switch to development project
           command: yarn firebase use development
 
+      - run:
+          name: Hack to fix build:manager
+          command: rm -rf node_modules && npm install && yarn
+
       - deploy:
           name: Deploy to Development environment
           command: CI=false yarn deploy --token=$FIREBASE_TOKEN --non-interactive
