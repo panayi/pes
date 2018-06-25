@@ -19,6 +19,7 @@
     "jss": "^9.8.1",
     "jss-expand": "^5.3.0",
     "lodash.debounce": "^4.0.8",
+    "maintenance": "^0.0.2",
     "mdi-react": "^3.4.0",
     "multireducer": "^3.1.2",
     "ouibounce": "^0.0.12",

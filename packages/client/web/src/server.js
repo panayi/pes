@@ -9,6 +9,7 @@ import redirectLegacyUrl from 'server/middleware/redirectLegacyUrl';
 import createStore from 'server/middleware/createStore';
 import setUserInfo from 'server/middleware/setUserInfo';
 import setCountrySubdomain from 'server/middleware/setCountrySubdomain';
+import checkMaintenance from './server/middleware/checkMaintenance';
 
 // Create Firebase app
 if (!firebase.apps.length) {
@@ -24,7 +25,12 @@ const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.REACT_APP_PUBLIC_DIR))
-  .use(useragent.express());
+  .use(useragent.express())
+  .use(checkMaintenance);
+
+server.use((req, res) => {
+  res.send('hello');
+});
 
 server.get(
   '/robots.txt',

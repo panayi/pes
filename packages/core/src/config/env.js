@@ -4,6 +4,7 @@ const firebaseProject = process.env.REACT_APP_FIREBASE_PROJECT;
 const app = process.env.REACT_APP_APP;
 
 const output = {
+  maintenance: process.env.MAINTENANCE === 'true',
   countrySites: R.compose(
     R.split(','),
     R.defaultTo(''),

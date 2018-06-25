@@ -1,3 +1,6 @@
+import env from '@pesposa/core/src/config/env';
+
+const maintenanceHtml = `
 <!doctype html>
 <html lang="en">
   <head>
@@ -17,8 +20,21 @@
     <h1>We&rsquo;ll be back soon!</h1>
     <div>
       <p>Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment. If you need to you can always <a href="mailto:hello@pesposa.com">contact us</a>, otherwise we&rsquo;ll be back online shortly!</p>
-      <p>&mdash; The Pesposa Team</p>
+      <p><strong>&mdash; The Pesposa Team</strong></p>
     </div>
   </article>
   </body>
 </html>
+`;
+
+const checkMaintenance = (req, res, next) => {
+  const { maintenance } = env;
+
+  if (maintenance) {
+    res.status(503).send(maintenanceHtml);
+  } else {
+    next();
+  }
+};
+
+export default checkMaintenance;
