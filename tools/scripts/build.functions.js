@@ -30,6 +30,7 @@ const build = entries => {
     R.evolve({
       dependencies: R.compose(
         R.pickBy((val, key) => !R.test(/^@pesposa/, key)),
+        R.assoc('razzle', '../../razzle/packages/razzle')
       ),
     }),
     R.omit(['devDependencies']),
