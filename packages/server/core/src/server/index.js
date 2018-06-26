@@ -8,6 +8,7 @@ import * as convertExternalUserTasks from './convertExternalUserTasks';
 import * as reviewAdTasks from './reviewAdTasks';
 import * as users from './users';
 import * as taskCounters from './taskCounters';
+import * as support from './support';
 
 const server = {
   ads,
@@ -20,6 +21,7 @@ const server = {
   reviewAdTasks,
   users,
   taskCounters,
+  support,
 };
 
 export default server;

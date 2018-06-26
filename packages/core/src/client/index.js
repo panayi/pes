@@ -12,7 +12,6 @@ import * as profile from './profile';
 import * as ratings from './ratings';
 import * as sources from './sources';
 import * as sellerAds from './sellerAds';
-import * as support from './support';
 import * as supportMessages from './supportMessages';
 import * as reviewAdTasks from './reviewAdTasks';
 import * as submissionTasks from './submissionTasks';
@@ -25,7 +24,6 @@ const client = {
   pendingTasks,
   convertExternalUserTasks,
   sources,
-  support,
   reviewAdTasks,
   submissionTasks,
   auth,
