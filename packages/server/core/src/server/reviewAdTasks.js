@@ -46,20 +46,23 @@ export const adWasUpdated = async (firebase, adId, change) => {
 
   if (alreadyApproved) {
     // Approve it!
-    return client.ads.apprve(firebase, adId);
+    return client.ads.approve(firebase, adId);
   }
 
   // Check if a task already exists for this ad
-  const snap = await client.reviewAdTasks.get(firebase, adId);
+  const taskSnap = await client.reviewAdTasks.get(firebase, adId);
 
   let finalBeforeAd = beforeAd;
-  if (snap.exists()) {
-    const task = snap.val();
+  if (taskSnap.exists()) {
+    const task = taskSnap.val();
     finalBeforeAd = task.beforeAd;
   }
 
-  // Check if before and after is the same and approve if it is
+  // When before and after is the same, approve it.
+  // This can happen when the user makes a change,
+  // and then reverts that change.
   const isSame =
+    finalBeforeAd &&
     JSON.stringify(finalBeforeAd.props) === JSON.stringify(afterAd.props);
   if (isSame) {
     // Approve it!
