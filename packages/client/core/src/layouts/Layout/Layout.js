@@ -26,6 +26,9 @@ const styles = theme => ({
     minHeight: '100%',
     width: '100%',
   },
+  fixedHeight: {
+    height: '100%',
+  },
   hasHeader: {
     marginTop: theme.layout.headerHeight.tablet,
     [theme.breakpoints.down(theme.map.phone)]: {
@@ -41,6 +44,7 @@ const Layout = ({
   pageClassName,
   headerClasses,
   sidebarClassName,
+  fixedHeight,
   fixed,
   flex,
   wide,
@@ -48,7 +52,9 @@ const Layout = ({
   hasSidebar,
   classes,
 }) => (
-  <div className={classes.root}>
+  <div
+    className={classNames(classes.root, { [classes.fixedHeight]: fixedHeight })}
+  >
     {hasHeader && <Header classes={headerClasses}>{header}</Header>}
     {hasSidebar && <Sidebar className={sidebarClassName}>{sidebar}</Sidebar>}
     <Page

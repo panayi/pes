@@ -17,9 +17,9 @@ export const createOtherUserIdSelector = ({
     (isBuyer, sellerId, buyerId) => (isBuyer ? sellerId : buyerId),
   );
 
-export const createOtherUserTypeSelector = (buyerSelector, adSelector) =>
+export const createOtherUserTypeSelector = ({ buyerIdSelector, adSelector }) =>
   createSelector(
-    createIsBuyerSelector(buyerSelector),
+    createIsBuyerSelector(buyerIdSelector),
     R.compose(
       R.defaultTo({}),
       adSelector,

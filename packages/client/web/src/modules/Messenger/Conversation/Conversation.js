@@ -137,6 +137,7 @@ const buyerIdSelector = R.either(
   propSelector('buyerId'),
   propSelector(['conversation', 'buyer']),
 );
+
 const adIdSelector = R.either(
   propSelector('adId'),
   propSelector(['conversation', 'ad']),
@@ -157,6 +158,10 @@ const mapStateToProps = createStructuredSelector({
     buyerIdSelector,
     sellerIdSelector: propSelector(['ad', 'seller']),
   }),
+  otherUserType: utils.createOtherUserTypeSelector({
+    buyerIdSelector,
+    adSelector: propSelector('ad'),
+  }),
 });
 
 const mapDispatchToProps = {
@@ -170,10 +175,6 @@ export default R.compose(
   withProps(
     createStructuredSelector({
       messages: propOrSelector([], 'messages'),
-      otherUserType: utils.createOtherUserTypeSelector(
-        propSelector('buyerId'),
-        propSelector('ad'),
-      ),
     }),
   ),
   withStyles(styles),

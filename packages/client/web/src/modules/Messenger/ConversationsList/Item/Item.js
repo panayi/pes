@@ -115,10 +115,10 @@ const mapStateToProps = createStructuredSelector({
     buyerIdSelector,
     sellerIdSelector: propSelector(['ad', 'seller']),
   }),
-  otherUserType: utils.createOtherUserTypeSelector(
+  otherUserType: utils.createOtherUserTypeSelector({
     buyerIdSelector,
-    propSelector('ad'),
-  ),
+    adSelector: propSelector('ad'),
+  }),
 });
 
 export default R.compose(

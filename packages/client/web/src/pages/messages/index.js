@@ -30,12 +30,14 @@ const Messages = ({ location }) => {
         })}
       />
       <DesktopScreen component={React.Fragment}>
-        <Layout header={<Header />} fixed flex wide>
+        <Layout header={<Header />} fixedHeight fixed flex wide>
           {content}
         </Layout>
       </DesktopScreen>
       <MobileScreen component={React.Fragment}>
-        <Layout header={<Header />}>{content}</Layout>
+        <Layout header={<Header />} fixedHeight>
+          {content}
+        </Layout>
       </MobileScreen>
     </React.Fragment>
   );
