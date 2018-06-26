@@ -651,8 +651,7 @@ path /ads/{id} is PublishableAd {
     canWriteAd(prior(this)) &&
     // TODO[MIGRATION-ONLY]: Uncomment below when migration is done
     // equalAds(prior(this), root.sellerAds[prior(this).seller].deleted[id]) &&
-    (root.sellerAds[prior(this).seller].published[id] == null) &&
-    (root.sellerAds[prior(this).seller].rejected[id] == null)
+    (root.sellerAds[prior(this).seller].published[id] == null)
   }
 
   validate() {
