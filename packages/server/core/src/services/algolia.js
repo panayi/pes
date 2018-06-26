@@ -83,6 +83,11 @@ const serializeAd = (id, ad) =>
     adObject => deserializeAdSelector({ ad: adObject, adId: id }),
   )(ad);
 
+export const get = async id => {
+  const index = initIndex(adsIndexName);
+  return index.getObject(id);
+};
+
 export const addMany = async ads => {
   try {
     const index = initIndex(adsIndexName);

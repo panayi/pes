@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import * as functions from 'firebase-functions';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
+import server from '@pesposa/server-core/src/server';
 import client from '@pesposa/core/src/client';
 
 const updateUserConversation = async (
@@ -20,7 +21,7 @@ const updateUserConversation = async (
     conversation.notified = false;
   }
 
-  return client.conversations.update(
+  return server.conversations.update(
     firebase,
     userId,
     adId,

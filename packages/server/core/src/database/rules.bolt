@@ -152,12 +152,9 @@ type Locale {
 }
 
 type Category {
-  name: String,
-  categories: Map<String, SubCategory>,
-}
-
-type SubCategory {
-  name: String,
+  id: String,
+  order: Number,
+  requireAdult: Boolean | Null,
 }
 
 type Dimensions {
@@ -319,7 +316,7 @@ type AdProps {
 }
 
 type Thumbnail extends Image {
-  dimensions: Dimensions
+  dimensions: Dimensions | Null // TODO: Sometimes getting image dimensions fails??? Need to deal with this case.
 }
 
 type AdInternalProps {
@@ -451,7 +448,9 @@ isSeller(adId) {
 }
 valueIsNow(value) { value == now }
 requireUserHasIp(userId) { root.users[userId].ip != null }
-isAdmin() { auth.token.admin == true }
+isDevopsService() { auth.uid == 'DevopsService_hmH39L1i' }
+isFirebaseFunctionsService() { auth.uid == 'FirebaseFunctionsService_13UjOUHT' }
+isAdmin() { (auth.token.admin == true) || isDevopsService() || isFirebaseFunctionsService() }
 equalAdProps(adProps1, adProps2) {
   (adProps1.title == adProps2.title) &&
   (adProps1.body == adProps2.body) &&
@@ -473,39 +472,49 @@ equalAds(ad1, ad2) {
 // General
 path /locales is Locale[] {
   read() { true }
+  write() { isDevopsService() }
   index() { return 'default' }
 }
 
 path /translations {
   read() { true }
+  write() { isDevopsService() }
 }
 
 path /countryFlags is Image[] {
   read() { true }
+  write() { isDevopsService() }
 }
 
 path /countryFlags/:countryCode is Image {
   read() { true }
+  write() { isDevopsService() }
 }
 
 path /categories is Category[] {
   read() { true }
+  write() { isDevopsService() }
 }
 
 path /locations {
   read() { isAdmin() }
+  write() { isDevopsService() }
 }
 
 path /locations/{id} is Location {
-  read() { isAdmin() }
 }
 
 path /rejectionReasons {
   read() { isAdmin() }
 }
 
-path /rejectionReasons{id} {
+path /rejectionReasons/{id} {
   read() { true }
+  write() { isDevopsService() }
+}
+
+path /messageTemplates {
+  write() { isDevopsService() }
 }
 
 path /messageTemplates/{templateId}/{language} {
@@ -520,6 +529,7 @@ path /tasks/reviewAd {
 }
 
 path /tasks/reviewAd/{adId} is ReviewAdTask {
+  create() { isFirebaseFunctionsService() }
   delete() { isAdmin() }
 
   validate() {
@@ -563,6 +573,7 @@ path /tasks/convertExternalUser {
 }
 
 path /tasks/convertExternalUser/{externalUserId} is ConvertExternalUserTask {
+  create() { isFirebaseFunctionsService() }
   delete() { isAdmin() }
 
   validate() {
@@ -591,19 +602,16 @@ path /taskCounters {
 }
 
 path /taskCounters/{taskType} {
-  validate() {
-    (
-      prior(this) && (
-        ((this - prior(this)) == 1) || ((prior(this) - this) == 1)
-      )
-    ) || (this == 1)
-  }
+  write() { isFirebaseFunctionsService() }
 }
 
 
 // Ads
 canWriteAd(ad) {
-  (ad.sellerType == 'user' && isCurrentUser(ad.seller)) || isAdmin()
+  (ad.sellerType == 'user' && isCurrentUser(ad.seller)) ||
+  // TODO[MIGRATION-ONLY]: Disabled only for migration (uncomment below line, remove the 2nd line below)
+  // (ad.sellerType == 'externalUser' && isAdmin())
+  isAdmin()
 }
 
 // - Sources
@@ -621,7 +629,9 @@ path /sources/{id} is Source {
 // - Draft
 path /drafts/{uid} is DraftAd {
   read() { isCurrentUser(uid) }
-  write() { isCurrentUser(uid) }
+  create() { isCurrentUser(uid) || isDevopsService() } // TODO[MIGRATION-ONLY]: isDevopsService needed only for migration
+  update() { isCurrentUser(uid) }
+  delete() { isFirebaseFunctionsService() }
 }
 
 // - Published
@@ -639,19 +649,22 @@ path /ads/{id} is PublishableAd {
   }
   delete() {
     canWriteAd(prior(this)) &&
-    equalAds(prior(this), root.sellerAds[prior(this).seller].deleted[id]) &&
+    // TODO[MIGRATION-ONLY]: Uncomment below when migration is done
+    // equalAds(prior(this), root.sellerAds[prior(this).seller].deleted[id]) &&
     (root.sellerAds[prior(this).seller].published[id] == null) &&
     (root.sellerAds[prior(this).seller].rejected[id] == null)
   }
 
   validate() {
-    initial(this.createdAt, now) &&
+    // initial(this.createdAt, now) && // TODO[MIGRATION-ONLY]: disabled only for migration
     equalAds(this, root.sellerAds[this.seller].published[id]) &&
-    categoryIsValid(this.props.category) &&
-    (
-      (this.sellerType == 'externalUser') ||
-      (this.props.location.address.country == root.users[this.seller].location.address.country)
-    )
+    categoryIsValid(this.props.category) // &&
+    // TODO[MIGRATION-ONLY]: Uncomment the 5 lines below when done with migration
+    // (
+    //   (this.sellerType == 'externalUser') ||
+    //   (this.props.location.address.country == root.users[this.seller].location.address.country) ||
+    //   root.users[this.seller].location.address.country == null // TODO: Sometimes this is null. Need to address this issue.
+    // )
   }
 }
 
@@ -717,13 +730,15 @@ path /sellerAds/{sellerId}/deleted/{id} {
 
 // Users
 path /users {
+  read() { isFirebaseFunctionsService() }
+
   index() { return ['email', 'phone'] }
 }
 
 path /users/{uid} is User {
-  read() { isCurrentUser(uid) }
+  read() { isCurrentUser(uid) || isFirebaseFunctionsService() }
   create() { isCurrentUser(uid) }
-  update() { isCurrentUser(uid) }
+  update() { isCurrentUser(uid) || isFirebaseFunctionsService() }
 
   validate() {
     (isAnonymous() || this.profile != null) &&
@@ -776,11 +791,11 @@ path /externalUserCodes {
 
 path /externalUserCodes/{id} {
   read() { true }
+  create() { isAdmin() }
 
   validate() {
      (root.externalUsers[this] != null) &&
-     setOnce(this) &&
-    root.externalUsers[this].code == this
+     setOnce(this)
   }
 }
 
@@ -802,10 +817,14 @@ path /favorites/{uid}/{adId} {
 // Messages
 path /myConversations/{uid} {
   read() { isCurrentUser(uid) }
+  write() { isFirebaseFunctionsService() }
 }
 
 path /myConversations/{uid}/{adIdBuyerId} is Conversation {
   read() { isCurrentUser(uid) }
+  create() { isFirebaseFunctionsService() }
+  update() { isFirebaseFunctionsService() }
+  delete() { isFirebaseFunctionsService() }
 
   index() { return 'lastMessageReceivedAt' }
 }
@@ -849,4 +868,43 @@ path /ratings/{uid} is Rating {
   read() { isCurrentUser(uid) }
   create() { isCurrentUser(uid) }
   update() { isCurrentUser(uid) }
+}
+
+
+// TODO[MIGRATION-ONLY]: ONLY FOR MIGRATION
+path /ads/draft {
+  read() { isDevopsService() }
+  write() { isDevopsService() }
+}
+
+path /ads/legacy {
+  read() { isDevopsService() }
+}
+
+path /ads/published {
+  read() { isDevopsService() }
+}
+
+path /ads/images {
+  read() { isDevopsService() }
+}
+
+path /ads/legacy/{legacyAdId} {
+  write() { isDevopsService() }
+}
+
+path /ads/published/{adId} {
+  write() { isDevopsService() }
+}
+
+path /ads/images/{adId} {
+  write() { isDevopsService() }
+}
+
+path /ads/byUser {
+  write() { isDevopsService() }
+}
+
+path / {
+  write() { isDevopsService() }
 }

@@ -1,7 +1,6 @@
 import * as R from 'ramda';
 import chalk from 'chalk';
-
-const isFirebaseFunctionsEnv = process.env.IS_FIREBASE_FUNCTIONS_ENV;
+import env from '../config/env';
 
 const typeToColor = {
   info: 'cyan',
@@ -11,7 +10,7 @@ const typeToColor = {
 };
 
 const logger = R.curry((type, message) => {
-  if (isFirebaseFunctionsEnv) {
+  if (env.isApplicationApp) {
     // There's no console.success
     const finalType = type === 'success' ? 'info' : type;
     return console[finalType](message); // eslint-disable-line no-console
