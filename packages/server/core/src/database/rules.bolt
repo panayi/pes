@@ -628,9 +628,9 @@ path /sources/{id} is Source {
 
 // - Draft
 path /drafts/{uid} is DraftAd {
-  read() { isCurrentUser(uid) }
-  create() { isCurrentUser(uid) || isDevopsService() } // TODO[MIGRATION-ONLY]: isDevopsService needed only for migration
-  update() { isCurrentUser(uid) }
+  read() { isCurrentUser(uid) || isFirebaseFunctionsService() }
+  create() { isCurrentUser(uid) || isFirebaseFunctionsService() || isDevopsService() } // TODO[MIGRATION-ONLY]: `isDevopsService` is needed only for migration
+  update() { isCurrentUser(uid) || isFirebaseFunctionsService() }
   delete() { isFirebaseFunctionsService() }
 }
 
