@@ -8,6 +8,11 @@ import * as gmapsService from './gmaps';
 
 export const getFromGeoposition = async geoposition => {
   const address = await gmapsService.reverseGeocode(geoposition);
+
+  if (isNilOrEmpty(address)) {
+    return null;
+  }
+
   const finalAddress = R.evolve(
     {
       country: getCountryByCode,

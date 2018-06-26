@@ -1,7 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
 import * as R from 'ramda';
-import { isNilOrEmpty } from 'ramda-adjunct';
 import shuffle from 'lodash.shuffle';
 import logger from 'winston-color';
 import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
@@ -11,7 +10,6 @@ import * as storageConfig from '@pesposa/core/src/config/storage';
 import * as sellerTypes from '@pesposa/core/src/config/sellerTypes';
 import generateId from '@pesposa/core/src/utils/generateId';
 import client from '@pesposa/core/src/client';
-import { nameSelector } from '@pesposa/core/src/selectors/users';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
 import renameFile from '@pesposa/server-core/src/utils/renameFile';
 import * as storageService from '@pesposa/server-core/src/services/storage';
@@ -56,41 +54,11 @@ const createAd = async dirname => {
     );
     const ad = fs.readJsonSync(path.join(localAdPath, 'data.json'), 'utf8');
     const { email, phone } = ad;
-    let externalUser;
-    let externalUserSnap;
-
-    if (!isNilOrEmpty(email)) {
-      externalUserSnap = await client.externalUsers.findByEmail(
-        firebase,
-        email,
-      );
-      if (externalUserSnap) {
-        externalUser = externalUserSnap.key;
-      }
-    }
-
-    if (!externalUser && !isNilOrEmpty(phone)) {
-      externalUserSnap = await client.externalUsers.findByPhone(
-        firebase,
-        phone,
-      );
-      if (externalUserSnap) {
-        externalUser = externalUserSnap.key;
-      }
-    }
-
-    if (!externalUser) {
-      const finalPhone = phone || null;
-      const finalEmail = email || null;
-      const name = nameSelector({ phone: finalPhone, email: finalEmail });
-      externalUser = await client.externalUsers.create(firebase, {
-        email: finalEmail,
-        profile: {
-          name,
-          phone: finalPhone,
-        },
-      });
-    }
+    const externalUserSnap = await client.externalUsers.findOrCreate(firebase, {
+      email,
+      phone,
+    });
+    const externalUser = externalUserSnap.key;
 
     const adProps = R.compose(
       R.omit(['images', 'email', 'phone']),

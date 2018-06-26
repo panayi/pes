@@ -3,8 +3,9 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const Dotenv = require('dotenv-webpack');
-const baseConfig = require('./webpack.base.js');
+const apps = require('../../packages/core/src/config/apps');
 const constants = require('../constants');
+const baseConfig = require('./webpack.base.js');
 
 const outputPath = path.join(
   constants.paths.build,
@@ -30,7 +31,7 @@ module.exports = entries =>
         path: path.join(constants.paths.root, '.env'),
       }),
       new webpack.DefinePlugin({
-        'process.env.IS_FIREBASE_FUNCTIONS_ENV': true,
+        'process.env.REACT_APP_APP': JSON.stringify(apps.APPLICATION.name),
       }),
     ],
   });

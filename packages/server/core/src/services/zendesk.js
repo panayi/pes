@@ -3,7 +3,7 @@ import { renameKeys } from 'ramda-adjunct';
 import zendesk from 'node-zendesk';
 import env from '@pesposa/core/src/config/env';
 
-const client = zendesk.createClient({
+const zendeskClient = zendesk.createClient({
   username: env.zendeskUsername,
   token: env.zendeskToken,
   remoteUri: env.zendeskApiUrl,
@@ -19,7 +19,7 @@ const createOrUpdateUser = props =>
         }),
       )(props),
     };
-    client.users.createOrUpdate(payload, (error, req, result) => {
+    zendeskClient.users.createOrUpdate(payload, (error, req, result) => {
       if (error) {
         reject(error);
       } else {
@@ -43,7 +43,7 @@ export const createTicket = props =>
             requester_id: zendeskUserId,
           },
         };
-        client.tickets.create(payload, error => {
+        zendeskClient.tickets.create(payload, error => {
           if (error) {
             reject(error);
           } else {

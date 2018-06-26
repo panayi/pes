@@ -1,8 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const Dotenv = require('dotenv-webpack');
 const baseConfig = require('./webpack.base.js');
+const apps = require('../../packages/core/src/config/apps');
 const constants = require('../constants');
 
 const outputPath = path.join(constants.paths.build, constants.folders.devops);
@@ -38,6 +40,9 @@ module.exports = paths => {
     plugins: [
       new Dotenv({
         path: envPath,
+      }),
+      new webpack.DefinePlugin({
+        'process.env.REACT_APP_APP': JSON.stringify(apps.DEVOPS.name),
       }),
     ],
   });

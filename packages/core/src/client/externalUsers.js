@@ -1,3 +1,4 @@
+import { isNilOrEmpty } from 'ramda-adjunct';
 import * as modelPaths from '../config/modelPaths';
 
 /*
@@ -34,6 +35,19 @@ export const findByPhone = async (firebase, phone) => {
   snap.forEach(child => {
     externalUserSnap = child;
   });
+
+  return externalUserSnap;
+};
+
+export const find = async (firebase, { email, phone }) => {
+  let externalUserSnap;
+  if (!isNilOrEmpty(email)) {
+    externalUserSnap = await findByEmail(firebase, email);
+  }
+
+  if (!externalUserSnap && !isNilOrEmpty(phone)) {
+    externalUserSnap = await findByPhone(firebase, phone);
+  }
 
   return externalUserSnap;
 };

@@ -17,12 +17,6 @@ const getLastActiveAtPath = (uid, conversationId) =>
 | Write
 |--------------------------------------------------------------------------
 */
-export const update = (firebase, uid, adId, buyerId, conversation) =>
-  firebase.update(
-    modelPaths.CONVERSATION(uid, adId, buyerId).string,
-    conversation,
-  );
-
 export const setLastActiveAt = (firebase, uid, conversationId) =>
   firebase.set(
     getLastActiveAtPath(uid, conversationId),

@@ -7,8 +7,11 @@ import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import * as users from './users';
 import * as externalUserCodes from './externalUserCodes';
 
-// TODO: extract paths to modelPaths
-
+/*
+|--------------------------------------------------------------------------
+| Read
+|--------------------------------------------------------------------------
+*/
 export const getAll = async firebase =>
   firebase.ref(modelPaths.ALL_CONVERSATIONS.string).once('value');
 
@@ -113,6 +116,17 @@ export const getAllShouldNotify = async firebase => {
     conversationsList,
   );
 };
+
+/*
+|--------------------------------------------------------------------------
+| Write
+|--------------------------------------------------------------------------
+*/
+export const update = (firebase, uid, adId, buyerId, conversation) =>
+  firebase.update(
+    modelPaths.CONVERSATION(uid, adId, buyerId).string,
+    conversation,
+  );
 
 export const markAsNotified = (firebase, path) =>
   firebase.set(

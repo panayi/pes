@@ -1,5 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
+const webpack = require('webpack');
+const apps = require('../../packages/core/src/config/apps');
 // const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -50,6 +52,11 @@ module.exports = {
       //     modulesDir: path.join(__dirname, '..', '..', 'node_modules'),
       //   }),
       // ];
+      appConfig.plugins.push(
+        new webpack.DefinePlugin({
+          'process.env.APP': JSON.stringify(apps.APPLICATION.name),
+        }),
+      );
     }
 
     if (target === 'node') {

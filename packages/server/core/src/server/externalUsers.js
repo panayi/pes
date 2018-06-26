@@ -4,6 +4,7 @@ import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import * as sellerTypes from '@pesposa/core/src/config/sellerTypes';
 import * as adStatuses from '@pesposa/core/src/config/adStatuses';
 import client from '@pesposa/core/src/client';
+import { nameSelector } from '@pesposa/core/src/selectors/users';
 import * as externalUserCodes from './externalUserCodes';
 
 /*
@@ -11,6 +12,31 @@ import * as externalUserCodes from './externalUserCodes';
 | Write
 |--------------------------------------------------------------------------
 */
+export const findOrCreate = async (firebase, { email, phone }) => {
+  const externalUserSnap = await client.externalUsers.find(firebase, {
+    email,
+    phone,
+  });
+
+  if (externalUserSnap) {
+    return externalUserSnap;
+  }
+
+  // Create a new ExternalUser;
+  const finalPhone = phone || null;
+  const finalEmail = email || null;
+  const name = nameSelector({ phone: finalPhone, email: finalEmail });
+  const externalUserId = await client.externalUsers.create(firebase, {
+    email: finalEmail,
+    profile: {
+      name,
+      phone: finalPhone,
+    },
+  });
+
+  return client.externalUsers.get(firebase, externalUserId);
+};
+
 export const migrate = async (firebase, externalUserId, userId) => {
   const updates = {};
 
@@ -104,8 +130,8 @@ export const migrate = async (firebase, externalUserId, userId) => {
     const externalUserConversations = externalUserConversationsSnap.val();
     const userConversations = userConversationsSnap.val() || {};
     const conversations = R.merge(externalUserConversations, userConversations);
-    updates[`${modelPaths.CONVERSATIONS(externalUserId).string}`] = null;
-    updates[`${modelPaths.CONVERSATIONS(userId).string}`] = conversations;
+    updates[modelPaths.CONVERSATIONS(externalUserId).string] = null;
+    updates[modelPaths.CONVERSATIONS(userId).string] = conversations;
   }
 
   await firebase.update('/', updates);
