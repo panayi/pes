@@ -2,7 +2,6 @@ import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import logger from 'winston-color';
 import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
-import env from '@pesposa/core/src/config/env';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import * as sellerTypes from '@pesposa/core/src/config/sellerTypes';
 import * as locationConfig from '@pesposa/core/src/config/location';
@@ -15,34 +14,8 @@ import * as locationService from '@pesposa/server-core/src/services/location';
 import server from '@pesposa/server-core/src/server';
 import { seed } from '../seed';
 import createAlgoliaIndexes from '../initialize/createAlgoliaIndexes';
-import productionJsonData from './pesposa-production-export.json';
 
 const LEGACY_SOURCE_NAME = 'legacyPesposa';
-
-const splitObjectEvery = (length, obj) =>
-  R.compose(
-    R.map(R.fromPairs),
-    R.splitEvery(length),
-    R.toPairs,
-  )(obj);
-
-const setTestData = async () => {
-  const { ads } = productionJsonData;
-  const { legacy, images } = ads;
-  await firebase.set('/', null);
-  const withoutAds = R.omit(['ads'], productionJsonData);
-  const adsObj = R.omit(['legacy', 'images'], ads);
-  await firebase.set('/', withoutAds);
-  await firebase.set('/ads', adsObj);
-  const imageGroups = splitObjectEvery(400, images);
-  await Promise.all(
-    R.map(group => firebase.update('/ads/images', group), imageGroups),
-  );
-  const legacyGroups = splitObjectEvery(400, legacy);
-  await Promise.all(
-    R.map(group => firebase.update('/ads/legacy', group), legacyGroups),
-  );
-};
 
 // getImagesWithoutDimensions :: Images -> Images
 const getImagesWithoutDimensions = R.map(R.omit(['dimensions']));
@@ -121,14 +94,8 @@ const getLocation = async ad => {
   return R.omit(['source'], location);
 };
 
-export const migrateData = async options => {
+export const migrateData = async () => {
   try {
-    if (options.addTestDataOnly && !env.isProductionDeployment) {
-      await setTestData();
-      process.exit();
-      return;
-    }
-
     // -2. Re-create algolia indexes
     await createAlgoliaIndexes();
 
@@ -391,7 +358,6 @@ export const migrateData = async options => {
 const command = program =>
   program
     .command('migrateData')
-    .option('-t, --addTestDataOnly', 'Import production data for testing')
     .description('Migrate data to new schema')
     .action(migrateData);
 
