@@ -338,7 +338,42 @@ export const migrateData = async options => {
       }, R.toPairs(drafts)),
     );
 
-    // 4. Cleanup
+    // 4. Transform users
+    logger.info('Migrating users...');
+    const usersSnap = await firebase.ref('users').once('value');
+    const users = usersSnap.val();
+    await Promise.all(
+      R.map(([id, user]) => {
+        const profile = R.prop('profile', user);
+        if (!profile) {
+          return Promise.resolve();
+        }
+
+        const phone = profile.phone || profile.phoneNumber || null;
+        const name = profile.name || profile.displayName || null;
+        const originalUrl =
+          profile.avatarUrl || R.path(['avatar', 'originalUrl'], user) || null;
+        const fullPath =
+          profile.avatarPath || R.path(['avatar', 'fullPath'], user) || null;
+
+        const updates = {
+          'profile/name': name,
+          'profile/phone': phone,
+          phone,
+          'profile/avatarPath': null,
+          'profile/displayName': null,
+          'profile/avatarUrl': null,
+          'profile/phoneNumber': null,
+        };
+        if (originalUrl || fullPath) {
+          updates.avatar = { originalUrl, fullPath };
+        }
+
+        return firebase.update(`/users/${id}`, updates);
+      }, R.toPairs(users)),
+    );
+
+    // 5. Cleanup
     logger.info('deleting /ads/byUser');
     await firebase.set('/ads/byUser', null);
   } catch (error) {
