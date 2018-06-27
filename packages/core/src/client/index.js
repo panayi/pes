@@ -1,5 +1,6 @@
 import * as ads from './ads';
 import * as auth from './auth';
+import * as categories from './categories';
 import * as conversations from './conversations';
 import * as convertExternalUserTasks from './convertExternalUserTasks';
 import * as drafts from './drafts';
@@ -20,6 +21,7 @@ import * as taskCounters from './taskCounters';
 
 const client = {
   ads,
+  categories,
   externalUsers,
   pendingTasks,
   convertExternalUserTasks,
