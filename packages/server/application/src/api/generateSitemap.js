@@ -74,10 +74,10 @@ const generateSitemap = async (req, res) => {
   usersSnap.forEach(userSnap => {
     const user = userSnap.val();
 
+    // ignore anonymous users
     if (user.providerData) {
-      // ignore anonymous users
       usersUrls.push(
-        generateUrl(`user/${userSnap.key}`, req, null, { naked: true }),
+        generateUrl(`user/${userSnap.key}`, req, null, { naked: false }),
       );
     }
   });
@@ -87,10 +87,9 @@ const generateSitemap = async (req, res) => {
     const externalUser = externalUserSnap.val();
 
     if (!externalUser.user) {
-      // ignore anonymous users
       externalUsersUrls.push(
         generateUrl(`user/e/${externalUserSnap.key}`, req, null, {
-          naked: true,
+          naked: false,
         }),
       );
     }
@@ -100,7 +99,7 @@ const generateSitemap = async (req, res) => {
     generateUrl('privacy', req, null, {
       changefreq: 'yearly',
       priority: 0.4,
-      naked: true,
+      naked: false,
     }),
   ];
 
