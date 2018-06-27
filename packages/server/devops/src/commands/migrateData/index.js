@@ -354,12 +354,16 @@ export const migrateData = async options => {
         const originalUrl =
           profile.avatarUrl || R.path(['avatar', 'originalUrl'], user) || null;
         const fullPath =
-          profile.avatarPath || R.path(['avatar', 'fullPath'], user) || null;
+          user.avatarPath ||
+          profile.avatarPath ||
+          R.path(['avatar', 'fullPath'], user) ||
+          null;
 
         const updates = {
           'profile/name': name,
           'profile/phone': phone,
           phone,
+          avatarPath: null,
           'profile/avatarPath': null,
           'profile/displayName': null,
           'profile/avatarUrl': null,
