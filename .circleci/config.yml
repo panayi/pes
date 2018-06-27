@@ -143,9 +143,17 @@ jobs:
           name: Switch to production project
           command: yarn firebase use production
 
+      - run:
+          name: Hack to fix build:manager
+          command: rm -rf node_modules && npm install && yarn
+
+      - run:
+          name: Build
+          command: CI=false yarn build:web && CI=false yarn build:manager && CI=false yarn build:functions && CI=false yarn build:database
+
       - deploy:
           name: Deploy to Production environment
-          command: CI=false yarn build:web && CI=false yarn build:manager && CI=false yarn build:functions && CI=false yarn build:database && yarn deploy:functions --token=$FIREBASE_TOKEN --non-interactive && yarn deploy:database --token=$FIREBASE_TOKEN --non-interactive && yarn deploy:hosting --token=$FIREBASE_TOKEN --non-interactive
+          command: yarn deploy:functions --token=$FIREBASE_TOKEN --non-interactive && yarn deploy:database --token=$FIREBASE_TOKEN --non-interactive && yarn deploy:hosting --token=$FIREBASE_TOKEN --non-interactive
 
       - save_cache:
           paths:
