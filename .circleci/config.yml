@@ -131,7 +131,7 @@ jobs:
 
       - run:
           name: Use production .env and serviceAccountKey
-          command: git clone git@bitbucket.org:pesposa/secrets.git secrets && mv -f ./secrets/.env.production ./repo/.env && mv -f ./secrets/serviceAccountKeys/production.json ./repo/packages/core/src/config/serviceAccountKey.json
+          command: git clone git@bitbucket.org:pesposa/secrets.git ~/secrets && mv -f ~/secrets/.env.production ~/repo/.env && mv -f ~/secrets/serviceAccountKeys/production.json ~/repo/packages/core/src/config/serviceAccountKey.json
 
       - restore_cache:
           keys:
