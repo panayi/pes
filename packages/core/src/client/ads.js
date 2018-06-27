@@ -15,9 +15,6 @@ export const get = async (firebase, id) =>
     .child(id)
     .once('value');
 
-export const getAll = async firebase =>
-  firebase.ref(modelPaths.ADS.string).once('value');
-
 export const getSeller = async (firebase, id) => {
   const adSnapshot = await get(firebase, id);
   return adSnapshot.exists() ? adSnapshot.val().seller : null;

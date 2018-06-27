@@ -5,6 +5,7 @@ import env from '@pesposa/core/src/config/env';
 import * as locationConfig from '@pesposa/core/src/config/location';
 import * as siteConfig from '@pesposa/core/src/config/site';
 import client from '@pesposa/core/src/client';
+import server from '@pesposa/server-core/src/server';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
 
 const defaultCountryCode = R.toLower(locationConfig.DEFAULT_COUNTRY_CODE);
@@ -52,8 +53,8 @@ const getAdsUrls = (adsSnap, prefix, req, options) => {
 
 const generateSitemap = async (req, res) => {
   const categoriesSnap = await client.categories.getAll(firebase);
-  const adsSnap = await client.ads.getAll(firebase);
-  const usersSnap = await client.users.getAll(firebase);
+  const adsSnap = await server.ads.getAll(firebase);
+  const usersSnap = await server.users.getAll(firebase);
 
   const categoriesUrls = R.compose(
     R.prepend(generateUrl('', req, null, { changefreq: 'daily', priority: 1 })),
