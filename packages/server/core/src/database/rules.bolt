@@ -574,6 +574,7 @@ path /tasks/convertExternalUser {
 
 path /tasks/convertExternalUser/{externalUserId} is ConvertExternalUserTask {
   create() { isFirebaseFunctionsService() }
+  update() { isFirebaseFunctionsService() }
   delete() { isAdmin() }
 
   validate() {
@@ -609,9 +610,7 @@ path /taskCounters/{taskType} {
 // Ads
 canWriteAd(ad) {
   (ad.sellerType == 'user' && isCurrentUser(ad.seller)) ||
-  // TODO[MIGRATION-ONLY]: Disabled only for migration (uncomment below line, remove the 2nd line below)
-  // (ad.sellerType == 'externalUser' && isAdmin())
-  isAdmin()
+  (ad.sellerType == 'externalUser' && isAdmin())
 }
 
 // - Sources
@@ -629,7 +628,7 @@ path /sources/{id} is Source {
 // - Draft
 path /drafts/{uid} is DraftAd {
   read() { isCurrentUser(uid) || isFirebaseFunctionsService() }
-  create() { isCurrentUser(uid) || isFirebaseFunctionsService() || isDevopsService() } // TODO[MIGRATION-ONLY]: `isDevopsService` is needed only for migration
+  create() { isCurrentUser(uid) || isFirebaseFunctionsService() }
   update() { isCurrentUser(uid) || isFirebaseFunctionsService() }
   delete() { isFirebaseFunctionsService() }
 }
@@ -653,21 +652,19 @@ path /ads/{id} is PublishableAd {
   }
   delete() {
     canWriteAd(prior(this)) &&
-    // TODO[MIGRATION-ONLY]: Uncomment below when migration is done
-    // equalAds(prior(this), root.sellerAds[prior(this).seller].deleted[id]) &&
+    equalAds(prior(this), root.sellerAds[prior(this).seller].deleted[id]) &&
     (root.sellerAds[prior(this).seller].published[id] == null)
   }
 
   validate() {
-    // initial(this.createdAt, now) && // TODO[MIGRATION-ONLY]: disabled only for migration
+    initial(this.createdAt, now) &&
     equalAds(this, root.sellerAds[this.seller].published[id]) &&
-    categoryIsValid(this.props.category) // &&
-    // TODO[MIGRATION-ONLY]: Uncomment the 5 lines below when done with migration
-    // (
-    //   (this.sellerType == 'externalUser') ||
-    //   (this.props.location.address.country == root.users[this.seller].location.address.country) ||
-    //   root.users[this.seller].location.address.country == null // TODO: Sometimes this is null. Need to address this issue.
-    // )
+    categoryIsValid(this.props.category) &&
+    (
+      (this.sellerType == 'externalUser') ||
+      (this.props.location.address.country == root.users[this.seller].location.address.country) ||
+      root.users[this.seller].location.address.country == null // TODO: Sometimes this is null. Need to address this issue.
+    )
   }
 }
 
@@ -684,6 +681,10 @@ path /ads/{id}/props/images {
 }
 
 // - By Seller
+path /sellerAds/{sellerId} {
+  read() { isFirebaseFunctionsService() }
+}
+
 path /sellerAds/{sellerId}/published {
   read() { true }
 }
@@ -873,43 +874,4 @@ path /ratings/{uid} is Rating {
   read() { isCurrentUser(uid) }
   create() { isCurrentUser(uid) }
   update() { isCurrentUser(uid) }
-}
-
-
-// TODO[MIGRATION-ONLY]: ONLY FOR MIGRATION
-path /ads/draft {
-  read() { isDevopsService() }
-  write() { isDevopsService() }
-}
-
-path /ads/legacy {
-  read() { isDevopsService() }
-}
-
-path /ads/published {
-  read() { isDevopsService() }
-}
-
-path /ads/images {
-  read() { isDevopsService() }
-}
-
-path /ads/legacy/{legacyAdId} {
-  write() { isDevopsService() }
-}
-
-path /ads/published/{adId} {
-  write() { isDevopsService() }
-}
-
-path /ads/images/{adId} {
-  write() { isDevopsService() }
-}
-
-path /ads/byUser {
-  write() { isDevopsService() }
-}
-
-path / {
-  write() { isDevopsService() }
 }
