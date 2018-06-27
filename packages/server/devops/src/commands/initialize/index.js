@@ -9,10 +9,10 @@ const canInitialize = async () => {
   logger.info('Checking ability to initialize');
 
   await canInitializeFirebase();
-  logger.success('Firebase: OK');
+  logger.info('Firebase: OK');
 
   await canInitializeAlgolia();
-  logger.success('Algolia: OK');
+  logger.info('Algolia: OK');
 };
 
 const initialize = async options => {
@@ -41,7 +41,7 @@ const action = async options => {
 const command = program =>
   program
     .command('initialize')
-    .option('-n, --numberOfAds <n>', 'How many ads to import')
+    .option('-n, --numberOfAds <n>', 'How many ads to import. Defaults to 20')
     .option(
       '-f, --force',
       'Force initialization. WARNING !!! This can potentially overwrite data',

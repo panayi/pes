@@ -14,22 +14,22 @@ import rejectionReasons from '@pesposa/server-core/src/database/seeds/rejectionR
 import messageTemplates from '@pesposa/server-core/src/database/seeds/messageTemplates.json';
 
 const seedCategories = async () => {
-  logger.info('Firebase: seeding categories...');
+  logger.info('Seeding categories...');
   await firebase.set('categories', categories);
 };
 
 const seedTranslations = async () => {
-  logger.info('Firebase: seeding translations...');
+  logger.info('Seeding translations...');
   await firebase.set('translations', translations);
 };
 
 const seedLocations = async () => {
-  logger.info('Firebase: seeding locations...');
+  logger.info('Seeding locations...');
   await firebase.set('locations', locations);
 };
 
 const seedRejectionReasons = async () => {
-  logger.info('Firebase: seeding rejectionReasons...');
+  logger.info('Seeding rejectionReasons...');
   await Promise.all(
     R.map(
       rejectionReason =>
@@ -40,12 +40,12 @@ const seedRejectionReasons = async () => {
 };
 
 const seedMessageTemplates = async () => {
-  logger.info('Firebase: seeding messageTemplates...');
+  logger.info('Seeding messageTemplates...');
   await firebase.set('messageTemplates', messageTemplates);
 };
 
 const seedCountryFlags = async () => {
-  logger.info('Firebase: seeding country flags...');
+  logger.info('Seeding country flags...');
 
   const { countrySites } = env;
   const countriesToAdd = R.map(R.toLower, countrySites);
@@ -86,7 +86,7 @@ const seedCountryFlags = async () => {
 };
 
 const uploadFiles = async () => {
-  logger.info('Firebase: uploading files...');
+  logger.info('Uploading files...');
   const parentPath = path.join(
     process.cwd(),
     'packages',
@@ -137,9 +137,9 @@ export const seed = async () => {
     await seedMessageTemplates();
     await uploadFiles();
     await seedCountryFlags();
-    logger.info('Firebase: Done');
+    logger.info('Done seeding data!');
   } catch (error) {
-    logger.error('Firebase: Failed to seed data');
+    logger.error('Failed to seed data');
     throw error;
   }
 };
