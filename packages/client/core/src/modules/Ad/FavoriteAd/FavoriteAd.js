@@ -25,7 +25,7 @@ class FavoriteAd extends React.Component {
   };
 
   componentDidMount() {
-    this.maybeSetIsFavorited(this.props, {});
+    this.maybeSetIsFavorited({}, this.props);
   }
 
   componentDidUpdate(prevProps) {
@@ -38,9 +38,9 @@ class FavoriteAd extends React.Component {
     });
   };
 
-  maybeSetIsFavorited(nextProps, props) {
-    if (propsChanged(['favorite'], nextProps, props)) {
-      this.setIsFavorited(!!nextProps.favorite);
+  maybeSetIsFavorited(prevProps, props) {
+    if (propsChanged(['favorite'], prevProps, props)) {
+      this.setIsFavorited(!!props.favorite);
     }
   }
 
