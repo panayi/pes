@@ -125,9 +125,9 @@ jobs:
     steps:
       - *attach_workspace
 
-      - add_ssh_keys:
-          fingerprints:
-            - "97:8c:1b:f2:6f:14:6b:5c:3b:ec:aa:46:46:74:7c:40"
+      - run:
+          name: Add Bitbucket SSH fingerprint
+          command: echo '97:8c:1b:f2:6f:14:6b:5c:3b:ec:aa:46:46:74:7c:40' >> ~/.ssh/known_hosts
 
       - run:
           name: Use production .env and serviceAccountKey
