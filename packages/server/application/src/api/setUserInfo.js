@@ -30,6 +30,7 @@ const setUserInfo = async (req, res) => {
 
     res.send('OK');
   } catch (error) {
+    log.error('/users/info failed');
     log.error(error);
     respond.internalServerError(res);
   }

@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import sm from 'sitemap';
 import log from '@pesposa/core/src/utils/log';
+import * as respond from '@pesposa/core/src/utils/respond';
 import env from '@pesposa/core/src/config/env';
 import * as locationConfig from '@pesposa/core/src/config/location';
 import * as siteConfig from '@pesposa/core/src/config/site';
@@ -52,80 +53,87 @@ const getAdsUrls = (adsSnap, prefix, req, options) => {
 };
 
 const generateSitemap = async (req, res) => {
-  const categoriesSnap = await client.categories.getAll(firebase);
-  const adsSnap = await server.ads.getAll(firebase);
-  const usersSnap = await server.users.getAll(firebase);
-  const externalUsersSnap = await server.externalUsers.getAll(firebase);
+  try {
+    const categoriesSnap = await client.categories.getAll(firebase);
+    const adsSnap = await server.ads.getAll(firebase);
+    const usersSnap = await server.users.getAll(firebase);
+    const externalUsersSnap = await server.externalUsers.getAll(firebase);
 
-  const categoriesUrls = R.compose(
-    R.prepend(generateUrl('', req, null, { changefreq: 'daily', priority: 1 })),
-    R.map(category =>
-      generateUrl(`c/${category.id}`, req, null, {
-        changefreq: 'daily',
-        priority: 0.8,
-      }),
-    ),
-    R.values,
-  )(categoriesSnap.val() || {});
-
-  const adsUrls = getAdsUrls(adsSnap, 'i', req);
-
-  const usersUrls = [];
-  usersSnap.forEach(userSnap => {
-    const user = userSnap.val();
-
-    // ignore anonymous users
-    if (user.providerData) {
-      usersUrls.push(
-        generateUrl(`user/${userSnap.key}`, req, null, { naked: false }),
-      );
-    }
-  });
-
-  const externalUsersUrls = [];
-  externalUsersSnap.forEach(externalUserSnap => {
-    const externalUser = externalUserSnap.val();
-
-    if (!externalUser.user) {
-      externalUsersUrls.push(
-        generateUrl(`user/e/${externalUserSnap.key}`, req, null, {
-          naked: false,
+    const categoriesUrls = R.compose(
+      R.prepend(
+        generateUrl('', req, null, { changefreq: 'daily', priority: 1 }),
+      ),
+      R.map(category =>
+        generateUrl(`c/${category.id}`, req, null, {
+          changefreq: 'daily',
+          priority: 0.8,
         }),
-      );
-    }
-  });
+      ),
+      R.values,
+    )(categoriesSnap.val() || {});
 
-  const staticUrls = [
-    generateUrl('privacy', req, null, {
-      changefreq: 'yearly',
-      priority: 0.4,
-      naked: false,
-    }),
-  ];
+    const adsUrls = getAdsUrls(adsSnap, 'i', req);
 
-  const urls = R.flatten([
-    categoriesUrls,
-    adsUrls,
-    usersUrls,
-    externalUsersUrls,
-    staticUrls,
-  ]);
+    const usersUrls = [];
+    usersSnap.forEach(userSnap => {
+      const user = userSnap.val();
 
-  const sitemap = sm.createSitemap({
-    hostname: `https://${env.domain}`,
-    cacheTime: 600000, // 600 sec - cache purge period
-    urls,
-  });
+      // ignore anonymous users
+      if (user.providerData) {
+        usersUrls.push(
+          generateUrl(`user/${userSnap.key}`, req, null, { naked: false }),
+        );
+      }
+    });
 
-  sitemap.toXML((err, xml) => {
-    if (err) {
-      log.error(err);
-      return res.status(500).end();
-    }
-    res.header('Content-Type', 'application/xml');
-    res.send(xml);
-    return null;
-  });
+    const externalUsersUrls = [];
+    externalUsersSnap.forEach(externalUserSnap => {
+      const externalUser = externalUserSnap.val();
+
+      if (!externalUser.user) {
+        externalUsersUrls.push(
+          generateUrl(`user/e/${externalUserSnap.key}`, req, null, {
+            naked: false,
+          }),
+        );
+      }
+    });
+
+    const staticUrls = [
+      generateUrl('privacy', req, null, {
+        changefreq: 'yearly',
+        priority: 0.4,
+        naked: false,
+      }),
+    ];
+
+    const urls = R.flatten([
+      categoriesUrls,
+      adsUrls,
+      usersUrls,
+      externalUsersUrls,
+      staticUrls,
+    ]);
+
+    const sitemap = sm.createSitemap({
+      hostname: `https://${env.domain}`,
+      cacheTime: 600000, // 600 sec - cache purge period
+      urls,
+    });
+
+    sitemap.toXML((error, xml) => {
+      if (error) {
+        throw error;
+      }
+      res.header('Content-Type', 'application/xml');
+      res.send(xml);
+      return null;
+    });
+  } catch (error) {
+    log.error('/api/sitemap.xml failed');
+    log.error(error);
+    respond.internalServerError(res, error);
+  }
 };
 
 export default generateSitemap;

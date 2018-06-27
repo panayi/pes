@@ -19,7 +19,7 @@ const sendNotifications = async (req, res) => {
 
     res.send('OK');
   } catch (error) {
-    log.error('Failed to send email notifications');
+    log.error('/api/send-notifications failed');
     log.error(error);
     respond.internalServerError(res);
   }

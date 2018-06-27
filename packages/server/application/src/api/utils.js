@@ -3,11 +3,6 @@ import firebase from '@pesposa/server-core/src/config/firebaseClient';
 import log from '@pesposa/core/src/utils/log';
 import * as respond from '@pesposa/core/src/utils/respond';
 
-// type Options = {
-//   headerKey?: string,
-//   propKey?: string,
-// };
-
 // Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header
 // like this:

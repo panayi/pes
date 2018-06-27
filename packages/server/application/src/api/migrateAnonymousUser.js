@@ -13,7 +13,7 @@ const migrateAnonymousUser = async (req, res) => {
 
     res.send('OK');
   } catch (error) {
-    log.error('Failed to migrate anonymous user');
+    log.error('/api/users/migrate failed');
     log.error(error);
     respond.internalServerError(res);
   }
