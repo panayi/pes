@@ -7,15 +7,20 @@ import promiseSerial from '@pesposa/core/src/utils/promiseSerial';
 import env from '@pesposa/core/src/config/env';
 import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import * as storageConfig from '@pesposa/core/src/config/storage';
+import apps from '@pesposa/core/src/config/apps';
 import * as sellerTypes from '@pesposa/core/src/config/sellerTypes';
 import generateId from '@pesposa/core/src/utils/generateId';
 import client from '@pesposa/core/src/client';
 import firebase from '@pesposa/server-core/src/config/firebaseClient';
+import getValidPhoneNumber from '@pesposa/server-core/src/utils/getValidPhoneNumber';
+import server from '@pesposa/server-core/src/server';
 import renameFile from '@pesposa/server-core/src/utils/renameFile';
 import * as storageService from '@pesposa/server-core/src/services/storage';
 import * as pathsConfig from '../../config/paths';
 
-const uploadImage = async (buffer, filename, contentType, adId) => {
+const devopsUid = apps.DEVOPS.uid;
+
+const uploadImage = async (buffer, filename, contentType) => {
   const newFilename = renameFile(generateId(), filename);
 
   return storageService.uploadFile(
@@ -24,14 +29,17 @@ const uploadImage = async (buffer, filename, contentType, adId) => {
     storageConfig.IMAGES_PATH,
     newFilename,
     metadata =>
-      firebase.push(`${modelPaths.ADS.string}/${adId}/props/images`, metadata),
+      firebase.push(
+        `${modelPaths.DRAFTS(devopsUid).string}/images`,
+        metadata,
+      ),
   );
 };
 
-const uploadImages = (images, adId) => {
+const uploadImages = images => {
   const funcs = R.compose(
     R.map(image => () =>
-      uploadImage(image.buffer, image.filename, image.contentType, adId),
+      uploadImage(image.buffer, image.filename, image.contentType),
     ),
     R.defaultTo([]),
   )(images);
@@ -54,23 +62,25 @@ const createAd = async dirname => {
     );
     const ad = fs.readJsonSync(path.join(localAdPath, 'data.json'), 'utf8');
     const { email, phone } = ad;
-    const externalUserSnap = await client.externalUsers.findOrCreate(firebase, {
+    const countryCode = R.path(['location', 'address', 'country'], ad);
+    const finalPhone = getValidPhoneNumber(phone, countryCode);
+    const externalUserSnap = await server.externalUsers.findOrCreate(firebase, {
       email,
-      phone,
+      phone: finalPhone,
     });
     const externalUser = externalUserSnap.key;
 
     const adProps = R.compose(
       R.omit(['images', 'email', 'phone']),
-      R.evolve({ body: str => str.substring(0, env.algoliaMaxBodyLength) }),
+      R.evolve({
+        body: str => str.substring(0, env.algoliaMaxBodyLength),
+        price: R.defaultTo(0),
+      }),
     )(ad);
     const rootProps = {
       seller: externalUser,
       sellerType: sellerTypes.EXTERNAL_USER,
     };
-    const adSnap = await client.ads.create(firebase, adProps, rootProps);
-    const adId = adSnap.key;
-
     const imagesWithBuffer = R.compose(
       R.map(image =>
         R.assoc(
@@ -81,7 +91,14 @@ const createAd = async dirname => {
       ),
       R.defaultTo([]),
     )(ad.images);
-    await uploadImages(imagesWithBuffer, adId, externalUser);
+    await uploadImages(imagesWithBuffer, externalUser);
+
+    const draftSnap = await client.drafts.get(firebase, devopsUid);
+    const images = R.prop('images', draftSnap.val());
+    const finalAdProps = R.assoc('images', images, adProps);
+
+    await client.ads.create(firebase, finalAdProps, rootProps);
+    await client.drafts.remove(firebase, devopsUid);
   } catch (error) {
     logger.error(error.message);
     throw error;

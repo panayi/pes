@@ -46,11 +46,11 @@ const createAlgoliaIndexes = async () => {
         R.pluck('name'),
       )(replicas);
       logger.info(
-        `Algolia: Created "${name}" index with replicas [${replicasList}]`,
+        `Created "${name}" Algolia index with replicas [${replicasList}]`,
       );
     }, INDEXES);
   } catch (error) {
-    logger.error('Algolia: Create indexes failed');
+    logger.error('Create Algolia indexes failed');
     throw error;
   }
 };
