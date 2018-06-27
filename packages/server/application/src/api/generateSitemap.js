@@ -55,6 +55,7 @@ const generateSitemap = async (req, res) => {
   const categoriesSnap = await client.categories.getAll(firebase);
   const adsSnap = await server.ads.getAll(firebase);
   const usersSnap = await server.users.getAll(firebase);
+  const externalUsersSnap = await server.externalUsers.getAll(firebase);
 
   const categoriesUrls = R.compose(
     R.prepend(generateUrl('', req, null, { changefreq: 'daily', priority: 1 })),
@@ -81,6 +82,20 @@ const generateSitemap = async (req, res) => {
     }
   });
 
+  const externalUsersUrls = [];
+  externalUsersSnap.forEach(externalUserSnap => {
+    const externalUser = externalUserSnap.val();
+
+    if (!externalUser.user) {
+      // ignore anonymous users
+      externalUsersUrls.push(
+        generateUrl(`user/e/${externalUserSnap.key}`, req, null, {
+          naked: true,
+        }),
+      );
+    }
+  });
+
   const staticUrls = [
     generateUrl('privacy', req, null, {
       changefreq: 'yearly',
@@ -89,7 +104,13 @@ const generateSitemap = async (req, res) => {
     }),
   ];
 
-  const urls = R.flatten([categoriesUrls, adsUrls, usersUrls, staticUrls]);
+  const urls = R.flatten([
+    categoriesUrls,
+    adsUrls,
+    usersUrls,
+    externalUsersUrls,
+    staticUrls,
+  ]);
 
   const sitemap = sm.createSitemap({
     hostname: `https://${env.domain}`,
