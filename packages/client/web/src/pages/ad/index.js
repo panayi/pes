@@ -70,6 +70,12 @@ const AdPage = props => {
 export default R.compose(
   setStatic('getInitialProps', async ({ match, store, res }) => {
     const adId = routerSelectors.routeParamSelector('adId')({ match });
+
+    if (R.test(/^\/il/, match.path)) {
+      res.redirect(301, `/i/${adId}`);
+      return store.getState();
+    }
+
     let props = {
       adId,
     };
