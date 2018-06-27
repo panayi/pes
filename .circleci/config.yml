@@ -127,7 +127,7 @@ jobs:
 
       - run:
           name: Use production .env and serviceAccountKey
-          command: git clone git@bitbucket.org:pesposa/secrets.git secrets && mv -f ./secrets/.env.production ./.env && mv -f ./secrets/serviceAccountKeys/production.json ./packages/core/src/config/serviceAccountKey.json
+          command: git clone git@bitbucket.org:pesposa/secrets.git secrets && mv -f ./secrets/.env.production ./repo/.env && mv -f ./secrets/serviceAccountKeys/production.json ./repo/packages/core/src/config/serviceAccountKey.json
 
       - restore_cache:
           keys:
@@ -139,9 +139,17 @@ jobs:
           name: Switch to production project
           command: yarn firebase use production
 
+      - run:
+          name: Hack to fix build:manager
+          command: rm -rf node_modules && npm install && yarn
+
+      - run:
+          name: Build
+          command: CI=false yarn build:web && CI=false yarn build:manager && CI=false yarn build:functions && CI=false yarn build:database
+
       - deploy:
           name: Deploy to Production environment
-          command: CI=false yarn deploy --token=$FIREBASE_TOKEN --non-interactive
+          command: yarn deploy:functions --token=$FIREBASE_TOKEN --non-interactive && yarn deploy:database --token=$FIREBASE_TOKEN --non-interactive && yarn deploy:hosting --token=$FIREBASE_TOKEN --non-interactive
 
       - save_cache:
           paths:
