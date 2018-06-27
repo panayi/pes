@@ -66,7 +66,7 @@
     "deploy:hosting": "yarn firebase deploy --only hosting",
     "deploy:functions": "yarn firebase deploy --only functions",
     "deploy:database": "yarn firebase deploy --only database",
-    "deploy": "yarn build:web && yarn build:functions && yarn build:database && yarn build:manager && yarn deploy:functions && yarn deploy:database && yarn deploy:hosting"
+    "deploy": "yarn build:web && yarn build:manager && yarn build:functions && yarn build:database && yarn deploy:functions && yarn deploy:database && yarn deploy:hosting"
   },
   "lint-staged": {
     "{packages/core/src,packages/client/*/src,packages/server/*/src,packages/client/web/test,tools}/**/*.{js,jsx}": [

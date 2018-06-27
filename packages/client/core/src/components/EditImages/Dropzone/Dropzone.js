@@ -19,8 +19,6 @@ import Spinner from '../../Spinner/Spinner';
 //   classes: Object,
 // };
 
-const dropzonePropKeys = R.keys(ReactDropzone.propTypes);
-
 const styles = theme => ({
   root: {
     position: 'relative',
@@ -73,7 +71,7 @@ export class Dropzone extends Component {
       <ReactDropzone
         onDropAccepted={onDrop}
         style={{ height: '100%' }}
-        {...R.pick(dropzonePropKeys, otherProps)}
+        {...otherProps}
       >
         {dropzoneProps => (
           <Grid
