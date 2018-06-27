@@ -818,6 +818,10 @@ path /favorites/{uid}/{adId} {
 }
 
 // Messages
+path /myConversations {
+  read() { isFirebaseFunctionsService() }
+}
+
 path /myConversations/{uid} {
   read() { isCurrentUser(uid) || isFirebaseFunctionsService() }
   write() { isFirebaseFunctionsService() } // TODO: This is needed for externalUser migration. Could we do some validation?
