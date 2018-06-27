@@ -740,7 +740,7 @@ path /sellerAds/{sellerId}/deleted/{id} {
 
 // Users
 path /users {
-  read() { isFirebaseFunctionsService() }
+  read() { isFirebaseFunctionsService() || isDevopsService() }
 
   index() { return ['email', 'phone'] }
 }

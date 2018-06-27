@@ -9,6 +9,7 @@
     "@pesposa/server-core": "^0.1.0",
     "chalk": "^2.4.1",
     "commander": "^2.15.1",
+    "firebase-admin": "^5.12.1",
     "fs-extra": "^6.0.1",
     "lodash.shuffle": "^4.2.0",
     "mime-types": "^2.1.18",
