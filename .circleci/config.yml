@@ -126,10 +126,6 @@ jobs:
       - *attach_workspace
 
       - run:
-          name: Add Bitbucket SSH fingerprint
-          command: echo '97:8c:1b:f2:6f:14:6b:5c:3b:ec:aa:46:46:74:7c:40' >> ~/.ssh/known_hosts
-
-      - run:
           name: Use production .env and serviceAccountKey
           command: git clone git@bitbucket.org:pesposa/secrets.git secrets && mv -f ./secrets/.env.production ./repo/.env && mv -f ./secrets/serviceAccountKeys/production.json ./repo/packages/core/src/config/serviceAccountKey.json
 
