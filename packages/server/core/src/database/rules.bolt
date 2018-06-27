@@ -357,8 +357,14 @@ type Profile {
   providerIds: Map<String, Any> | Null
 }
 
-type Avatar extends Image {
-  originalUrl: String
+type Avatar {
+  originalUrl: URL,
+  fullPath: String | Null,
+  name: String | Null,
+  downloadURL: URL | Null,
+  contentType: String | Null,
+  size: Number | Null,
+  createdAt: Number | Null,
 }
 
 type User {
