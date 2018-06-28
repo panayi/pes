@@ -47,6 +47,7 @@ const styles = theme => ({
   ad: {
     height: 300,
     maxHeight: '50%',
+    overflow: 'auto',
     background: theme.palette.common.white,
   },
   tabs: {

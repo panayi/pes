@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { withProps } from 'recompose';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import { red, green, orange } from '@material-ui/core/colors';
 import withStyles from '@material-ui/core/styles/withStyles';
 import propSelector from '@pesposa/core/src/utils/propSelector';
@@ -23,14 +24,13 @@ import AdImages from './AdImages/AdImages';
 
 const styles = theme => ({
   root: {
-    display: 'flex',
     flex: 1,
     padding: theme.spacing.unit * 2,
   },
+  container: {
+    flexGrow: 1,
+  },
   main: {
-    flex: 1,
-    paddingRight: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
     borderRight: [1, 'solid', theme.palette.divider],
   },
   images: {
@@ -86,117 +86,119 @@ const AdLink = withProps({
 
 const Ad = ({ ad, adId, beforeAd, classes }) => (
   <div className={classes.root}>
-    <div className={classes.main}>
-      <div className={classes.images}>
-        <AdImages
-          adId={adId}
-          images={ad.images}
-          beforeImages={beforeAd ? beforeAd.images : null}
-        />
-      </div>
-      <LabelValue
-        className={classes.title}
-        label="Title"
-        value={
-          <span className={classes.compare}>
-            {beforeAd &&
-              !R.equals(beforeAd.title, ad.title) && (
-                <AdTitle
-                  component="span"
-                  className={classes.before}
-                  ad={beforeAd}
-                />
-              )}
-            <AdTitle className={classes.after} ad={ad} component="span" />
-          </span>
-        }
-      />
-      <span className={classes.compare}>
-        {beforeAd &&
-          !R.equals(beforeAd.body, ad.body) && (
-            <AdBody className={classes.before} ad={beforeAd} />
-          )}
-        <AdBody className={classes.after} ad={ad} />
-      </span>
-    </div>
-    <div>
-      <div className={classes.seller}>
-        <SellerImage ad={ad} />
-        <SellerName ad={ad}>
-          {({ name }) => (
-            <Typography className={classes.sellerName}>{name}</Typography>
-          )}
-        </SellerName>
-      </div>
-      <LabelValue
-        label="Category"
-        value={
-          <span className={classes.compare}>
-            {beforeAd &&
-              !R.equals(beforeAd.category, ad.category) && (
-                <span className={classes.before}>{beforeAd.category}</span>
-              )}
-            <span className={classes.after}>{ad.category}</span>
-          </span>
-        }
-      />
-      <AdPrice ad={ad}>
-        {({ price }) => (
-          <LabelValue
-            label="Price"
-            value={
-              <span className={classes.compare}>
-                {beforeAd &&
-                  !R.equals(beforeAd.price, ad.price) && (
-                    <AdPrice component="span" ad={beforeAd}>
-                      {({ price: beforePrice }) => (
-                        <span className={classes.before}>{beforePrice}</span>
-                      )}
-                    </AdPrice>
-                  )}
-                <span className={classes.after}>{price}</span>
-              </span>
-            }
+    <Grid className={classes.container} spacing={16} container>
+      <Grid className={classes.main} xs={6} sm={7} md={8} lg={9} item>
+        <div className={classes.images}>
+          <AdImages
+            adId={adId}
+            images={ad.images}
+            beforeImages={beforeAd ? beforeAd.images : null}
           />
-        )}
-      </AdPrice>
-      <AdPlace ad={ad}>
-        {({ place }) => (
-          <LabelValue
-            label="Location"
-            value={
-              <span className={classes.compare}>
-                {beforeAd &&
-                  !R.equals(beforeAd.location, ad.location) && (
-                    <AdPlace component="span" ad={beforeAd}>
-                      {({ place: beforePlace }) => (
-                        <span className={classes.before}>{beforePlace}</span>
-                      )}
-                    </AdPlace>
-                  )}
-                <span className={classes.after}>{place}</span>
-              </span>
-            }
-          />
-        )}
-      </AdPlace>
-      <AdDate ad={ad}>
-        {({ date }) => <LabelValue label="Created" value={date} />}
-      </AdDate>
-      {ad.status && (
+        </div>
         <LabelValue
-          label="Status"
+          className={classes.title}
+          label="Title"
           value={
-            <span className={classNames(classes.status, classes[ad.status])}>
-              {ad.status}
+            <span className={classes.compare}>
+              {beforeAd &&
+                !R.equals(beforeAd.title, ad.title) && (
+                  <AdTitle
+                    component="span"
+                    className={classes.before}
+                    ad={beforeAd}
+                  />
+                )}
+              <AdTitle className={classes.after} ad={ad} component="span" />
             </span>
           }
         />
-      )}
-      <AdLink color="primary" ad={ad} target="_blank">
-        View on Pesposa App
-      </AdLink>
-    </div>
+        <span className={classes.compare}>
+          {beforeAd &&
+            !R.equals(beforeAd.body, ad.body) && (
+              <AdBody className={classes.before} ad={beforeAd} />
+            )}
+          <AdBody className={classes.after} ad={ad} />
+        </span>
+      </Grid>
+      <Grid xs={6} sm={5} md={4} lg={3} item>
+        <div className={classes.seller}>
+          <SellerImage ad={ad} />
+          <SellerName ad={ad}>
+            {({ name }) => (
+              <Typography className={classes.sellerName}>{name}</Typography>
+            )}
+          </SellerName>
+        </div>
+        <LabelValue
+          label="Category"
+          value={
+            <span className={classes.compare}>
+              {beforeAd &&
+                !R.equals(beforeAd.category, ad.category) && (
+                  <span className={classes.before}>{beforeAd.category}</span>
+                )}
+              <span className={classes.after}>{ad.category}</span>
+            </span>
+          }
+        />
+        <AdPrice ad={ad}>
+          {({ price }) => (
+            <LabelValue
+              label="Price"
+              value={
+                <span className={classes.compare}>
+                  {beforeAd &&
+                    !R.equals(beforeAd.price, ad.price) && (
+                      <AdPrice component="span" ad={beforeAd}>
+                        {({ price: beforePrice }) => (
+                          <span className={classes.before}>{beforePrice}</span>
+                        )}
+                      </AdPrice>
+                    )}
+                  <span className={classes.after}>{price}</span>
+                </span>
+              }
+            />
+          )}
+        </AdPrice>
+        <AdPlace ad={ad}>
+          {({ place }) => (
+            <LabelValue
+              label="Location"
+              value={
+                <span className={classes.compare}>
+                  {beforeAd &&
+                    !R.equals(beforeAd.location, ad.location) && (
+                      <AdPlace component="span" ad={beforeAd}>
+                        {({ place: beforePlace }) => (
+                          <span className={classes.before}>{beforePlace}</span>
+                        )}
+                      </AdPlace>
+                    )}
+                  <span className={classes.after}>{place}</span>
+                </span>
+              }
+            />
+          )}
+        </AdPlace>
+        <AdDate ad={ad}>
+          {({ date }) => <LabelValue label="Created" value={date} />}
+        </AdDate>
+        {ad.status && (
+          <LabelValue
+            label="Status"
+            value={
+              <span className={classNames(classes.status, classes[ad.status])}>
+                {ad.status}
+              </span>
+            }
+          />
+        )}
+        <AdLink color="primary" ad={ad} target="_blank">
+          View on Pesposa App
+        </AdLink>
+      </Grid>
+    </Grid>
   </div>
 );
 
