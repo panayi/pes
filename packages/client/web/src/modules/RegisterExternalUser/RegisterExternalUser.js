@@ -240,7 +240,7 @@ export class RegisterExternalUser extends React.Component {
   renderContent() {
     const { sellerAds, isCurrentUser, isAuthenticating, classes } = this.props;
 
-    if (isAuthenticating) {
+    if (isAuthenticating || !process.browser) {
       return (
         <div className={classes.actionSection}>
           <Spinner centered />
