@@ -155,6 +155,7 @@ const Layout = props => {
         id={CREATE_SUBMISSION_MODAL_ID}
         maxWidth="md"
         content={CreateSubmissionTask}
+        contentProps={{ basePath: '/tasks/submissions' }}
       />
     </BaseLayout>
   );

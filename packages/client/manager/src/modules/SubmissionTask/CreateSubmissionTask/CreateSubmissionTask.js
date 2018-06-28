@@ -32,12 +32,20 @@ const styles = theme => ({
 
 class CreateSubmissionTask extends React.Component {
   handleCreateClick = async ({ submission, uploadImages }) => {
-    const { basePath, create, history } = this.props;
+    const { basePath, create, closeModal, history } = this.props;
     const createdId = await create(submission);
+
     await uploadImages(
       `${modelPaths.SUBMISSION_TASKS.string}/${createdId}/submission/images`,
     );
-    history.push(`${basePath}/${createdId}`);
+
+    if (closeModal) {
+      closeModal();
+    }
+
+    if (basePath) {
+      history.push(`${basePath}/${createdId}`);
+    }
   };
 
   renderContent = baseProps => {
