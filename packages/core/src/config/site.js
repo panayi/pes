@@ -7,6 +7,7 @@ import getCountryByCode from '../utils/getCountryByCode';
 export const get = req => {
   const countryCode = R.compose(
     R.toUpper,
+    R.defaultTo(''),
     getSubdomain,
   )(req);
   const siteForCountryCodeExists = R.contains(countryCode, env.countrySites);

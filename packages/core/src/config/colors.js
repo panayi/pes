@@ -1,2 +1,2 @@
-export const FACEBOOK = '#4769B0';
+export const FACEBOOK = '#3F5E97';
 export const TWITTER = '#55acee';

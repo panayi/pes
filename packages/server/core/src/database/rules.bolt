@@ -618,7 +618,18 @@ path /taskCounters/{taskType} {
 
 
 // Ads
-canWriteAd(ad) {
+canCreateAd(ad) {
+  (ad.sellerType == 'user' && isCurrentUser(ad.seller)) ||
+  (ad.sellerType == 'externalUser' && isAdmin())
+}
+canUpdateAd(ad) {
+  (isFirebaseFunctionsService() || (ad.sellerType == 'externalUser' && isAdmin()))
+}
+canDeleteAd(ad) {
+  (ad.sellerType == 'user' && isCurrentUser(ad.seller)) ||
+  isAdmin()
+}
+canUpdateAdProps(ad) {
   (ad.sellerType == 'user' && isCurrentUser(ad.seller)) ||
   (ad.sellerType == 'externalUser' && isAdmin())
 }
@@ -649,25 +660,28 @@ path /ads {
 path /ads/{id} is PublishableAd {
   read() { true }
   create() {
-    canWriteAd(this) &&
+    canCreateAd(this) &&
     (root.sellerAds[this.seller].rejected[id] == null) &&
     (root.sellerAds[this.seller].deleted[id] == null)
   }
   update() {
-    isAdmin() &&
+    canUpdateAd(this) &&
     (root.sellerAds[this.seller].rejected[id] == null) &&
     (root.sellerAds[this.seller].deleted[id] == null)
   }
   delete() {
-    canWriteAd(prior(this)) &&
-    equalAds(prior(this), root.sellerAds[prior(this).seller].deleted[id]) &&
+    canDeleteAd(prior(this)) &&
+    (
+      // An ad can be removed from /ads only when it's either deleted or rejected
+      equalAds(prior(this), root.sellerAds[prior(this).seller].deleted[id]) ||
+      equalAds(prior(this), root.sellerAds[prior(this).seller].rejected[id])
+    ) &&
     (root.sellerAds[prior(this).seller].published[id] == null)
   }
 
   validate() {
     initial(this.createdAt, now) &&
     equalAds(this, root.sellerAds[this.seller].published[id]) &&
-    categoryIsValid(this.props.category) &&
     (
       (this.sellerType == 'externalUser') ||
       (this.props.location.address.country == root.users[this.seller].location.address.country) ||
@@ -681,7 +695,11 @@ path /ads/{id}/internalProps is AdInternalProps {
 }
 
 path /ads/{id}/props is AdProps {
-  update() { canWriteAd(this.parent()) }
+  update() { canUpdateAdProps(this.parent()) }
+
+  validate() {
+    categoryIsValid(this.category)
+  }
 }
 
 path /ads/{id}/props/images {
@@ -698,20 +716,21 @@ path /sellerAds/{sellerId}/published {
 }
 
 path /sellerAds/{sellerId}/published/{id} is PublishableAd {
-  create() { canWriteAd(this) }
-  update() { isAdmin() }
+  create() { canCreateAd(this) }
+  update() { canUpdateAd(this) }
   delete() {
-    canWriteAd(prior(this)) &&
+    canDeleteAd(prior(this)) &&
     (root.ads[id] == null)
   }
 
   validate() {
+    (this.seller === sellerId || !this) &&
     equalAds(this, root.ads[id])
   }
 }
 
 path /sellerAds/{sellerId}/published/{id}/props is AdProps {
-  update() { canWriteAd(this.parent()) }
+  update() { canUpdateAdProps(this.parent()) }
 }
 
 path /sellerAds/{sellerId}/rejected {
@@ -721,6 +740,7 @@ path /sellerAds/{sellerId}/rejected {
 path /sellerAds/{sellerId}/rejected/{id} {
   create() {
     isAdmin() &&
+    (this.seller === sellerId) &&
     (root.ads[id] == null) &&
     (root.sellerAds[sellerId].published[id] == null) &&
     (root.sellerAds[sellerId].deleted[id] == null)
@@ -733,7 +753,8 @@ path /sellerAds/{sellerId}/deleted {
 
 path /sellerAds/{sellerId}/deleted/{id} {
   create() {
-    canWriteAd(this) &&
+    canDeleteAd(this) &&
+    (this.seller === sellerId) &&
     (root.ads[id] == null) &&
     (root.sellerAds[sellerId].published[id] == null) &&
     (root.sellerAds[sellerId].rejected[id] == null)
