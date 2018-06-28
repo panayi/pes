@@ -25,7 +25,7 @@
       "wrongCategory": "Wrong category",
       "lowQuality": "Low quality",
       "includesContactInformation": "Title or description includes contact information",
-      "prohibitedItem": "Prohibited item",
+      "disallowedItem": "Disallowed item",
       "personalsAd": "No personal ads allowed",
       "other": "General violation of posting rules"
     }
