@@ -25,12 +25,15 @@ const styles = theme => {
       width,
       backgroundColor: 'transparent',
       border: 0,
-      paddingRight: theme.spacing.unit,
+      paddingRight: 18,
       // Fixes sluggish scroll,
       // see: https://stackoverflow.com/a/15147497/359104
       transform: 'translate3d(0, 0, 0)',
       WebkitBackfaceVisibility: 'hidden',
       WebkitPerspective: 1000,
+      [theme.breakpoints.down(theme.map.laptop)]: {
+        paddingRight: 13,
+      },
     },
     content: {
       padding: [vSpacing, 0, vSpacing, hSpacing],

@@ -24,7 +24,6 @@ import BaseCard from '../BaseCard/BaseCard';
 const styles = theme => ({
   root: {
     display: 'flex',
-    padding: 1,
     cursor: 'pointer',
   },
   media: {
@@ -32,8 +31,9 @@ const styles = theme => ({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     position: 'relative',
-    width: '100%',
-    borderRadius: `${theme.borderRadius.md}px ${theme.borderRadius.md}px 0 0`,
+    margin: [4, 4, 0, 4],
+    width: 'calc(100% - 8px)',
+    borderRadius: 6,
   },
   overlay: {
     position: 'absolute',
@@ -77,11 +77,10 @@ const styles = theme => ({
   },
   titleWrap: {
     width: '100%',
-    marginBottom: 5,
+    marginBottom: 6,
   },
   title: {
     textAlign: 'center',
-    fontSize: theme.typography.subheading.fontSize,
     lineHeight: '1.2em',
     webkitLineClamp: 2,
     maxHeight: 38,

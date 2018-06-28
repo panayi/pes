@@ -8,7 +8,6 @@ import * as constants from './constants';
 
 const hitsSelector = propSelector('hits');
 const hitSelector = propSelector('hit');
-const sizeSelector = propSelector('size');
 const fixedCardHeightSelector = propSelector('fixedCardHeight');
 const hitIdSelector = R.compose(
   id,
@@ -20,29 +19,26 @@ const columnHeightsSelector = propSelector('columnHeights');
 
 const currentMinWidthSelector = createSelector(
   containerWidthSelector,
-  sizeSelector,
-  (containerWidth, size) =>
-    R.find(R.gte(containerWidth), constants.MIN_WIDTHS(size)),
+  containerWidth => R.find(R.gte(containerWidth), constants.MIN_WIDTHS),
 );
 
 export const columnCountSelector = createSelector(
-  sizeSelector,
   currentMinWidthSelector,
-  R.compose(
-    R.path(R.__, constants.COLUMN_COUNTS),
-    R.unapply(R.identity),
-  ),
+  R.prop(R.__, constants.COLUMN_COUNTS),
+);
+
+export const gutterSelector = createSelector(
+  currentMinWidthSelector,
+  R.prop(R.__, constants.GUTTER),
 );
 
 // columnWidthSelector :: { containerWidth } -> Number
 export const columnWidthSelector = createSelector(
   containerWidthSelector,
   columnCountSelector,
-  (containerWidth, columnCount) =>
-    Math.max(
-      0,
-      (containerWidth + constants.GUTTER) / columnCount - constants.GUTTER,
-    ),
+  gutterSelector,
+  (containerWidth, columnCount, gutter) =>
+    Math.max(0, (containerWidth + gutter) / columnCount - gutter),
 );
 
 // thumbnailSelector :: { hit } -> Thumbnail
@@ -63,7 +59,7 @@ export const thumbnailHeightSelector = createCachedSelector(
 
     const dimensions = R.prop('dimensions', thumbnail);
     return isPlainObj(dimensions)
-      ? (columnWidth / dimensions.width) * dimensions.height
+      ? Math.ceil((columnWidth / dimensions.width) * dimensions.height)
       : constants.DEFAULT_THUMBNAIL_HEIGHT;
   },
 )(hitIdSelector);
@@ -75,7 +71,7 @@ const hitHeightSelector = ({ hit, columnWidth }) => {
   }
 
   const thumbnailHeight = thumbnailHeightSelector({ hit, columnWidth });
-  return Math.ceil(thumbnailHeight + constants.CARD_CONTENT_HEIGHT);
+  return Math.ceil(thumbnailHeight + constants.CARD_CONTENT_HEIGHT + 4);
 };
 
 export const hitSizeAndPositionSelector = createSelector(
@@ -85,7 +81,16 @@ export const hitSizeAndPositionSelector = createSelector(
   columnCountSelector,
   columnWidthSelector,
   fixedCardHeightSelector,
-  (index, hits, columnHeights, columnCount, columnWidth, fixedCardHeight) => {
+  gutterSelector,
+  (
+    index,
+    hits,
+    columnHeights,
+    columnCount,
+    columnWidth,
+    fixedCardHeight,
+    gutter,
+  ) => {
     const hit = hits[index];
     const minColumnHeight = R.reduce(
       R.min,
@@ -98,7 +103,7 @@ export const hitSizeAndPositionSelector = createSelector(
       (hit && hitHeightSelector({ hit, columnWidth })) ||
       constants.DEFAULT_CARD_HEIGHT;
     const width = columnWidth;
-    const x = column * (constants.GUTTER + width);
+    const x = column * (gutter + width);
     const y = columnHeights[column] || 0;
 
     return {
