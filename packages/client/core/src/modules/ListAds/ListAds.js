@@ -36,7 +36,6 @@ const styles = {
 
 export class ListAds extends Component {
   static propTypes = {
-    size: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     fixedCardHeight: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
     hits: PropTypes.arrayOf(PropTypes.shape({})),
     loadNextPage: PropTypes.func,
@@ -46,7 +45,6 @@ export class ListAds extends Component {
   };
 
   static defaultProps = {
-    size: 'small',
     fixedCardHeight: null,
     hits: [],
     loadNextPage: noop,
@@ -113,7 +111,7 @@ export class ListAds extends Component {
   }
 
   renderContent = ({ height, scrollTop }) => ({ width }) => {
-    const { hits, size, fixedCardHeight } = this.props;
+    const { hits, fixedCardHeight } = this.props;
 
     return (
       <Masonry
@@ -122,7 +120,6 @@ export class ListAds extends Component {
         containerHeight={height}
         scrollTop={scrollTop}
         hits={hits}
-        size={size}
         fixedCardHeight={fixedCardHeight}
       />
     );

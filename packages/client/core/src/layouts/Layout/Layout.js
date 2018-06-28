@@ -14,7 +14,7 @@ import Page from './Page/Page';
 const styles = theme => ({
   '@global': {
     body: {
-      backgroundColor: '#f0f1f2',
+      backgroundColor: '#f2f2f2',
     },
     'html,body,#root,#root2,#root > div,#root2 > div': {
       height: '100%',

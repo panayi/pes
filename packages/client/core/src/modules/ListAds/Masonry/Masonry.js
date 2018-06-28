@@ -8,7 +8,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
 import Card from './Card/Card';
 import PaidAdCard from './PaidAdCard/PaidAdCard';
-import * as constants from '../constants';
 import * as selectors from '../selectors';
 
 const styles = {
@@ -44,23 +43,22 @@ class Masonry extends PureComponent {
   }
 
   getHitSizeAndPosition = ({ index }) => {
+    const { gutter } = this.props;
     const values = selectors.hitSizeAndPositionSelector({
       ...this.props,
       index,
       columnHeights: this.columnHeights,
     });
 
-    this.columnHeights[values.column] =
-      values.y + values.height + constants.GUTTER;
+    this.columnHeights[values.column] = values.y + values.height + gutter;
     return values;
   };
 
   resetColumnHeights = () => {
-    const { containerWidth, size } = this.props;
+    const { containerWidth } = this.props;
     const columnCount =
       selectors.columnCountSelector({
         containerWidth,
-        size,
       }) || 0;
     this.columnHeights = R.times(R.always(0), columnCount);
   };
@@ -123,6 +121,7 @@ export default R.compose(
   withProps(
     createStructuredSelector({
       columnWidth: selectors.columnWidthSelector,
+      gutter: selectors.gutterSelector,
     }),
   ),
   withStyles(styles),

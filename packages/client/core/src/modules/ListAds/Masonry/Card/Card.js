@@ -11,11 +11,10 @@ import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import TouchDevice from '../../../../components/TouchDevice/TouchDevice';
-import FavoriteAd from '../../../Ad/FavoriteAd/FavoriteAd';
 import Imgix from '../../../../components/Imgix/Imgix';
+import FavoriteAd from '../../../Ad/FavoriteAd/FavoriteAd';
 import AdTitle from '../../../Ad/AdTitle/AdTitle';
-import AdPlace from '../../../Ad/AdPlace/AdPlace';
-import AdDistance from '../../../Ad/AdDistance/AdDistance';
+import AdPrice from '../../../Ad/AdPrice/AdPrice';
 import LinkToAd from '../../../Ad/LinkToAd/LinkToAd';
 import * as constants from '../../constants';
 import * as selectors from '../../selectors';
@@ -24,7 +23,6 @@ import BaseCard from '../BaseCard/BaseCard';
 const styles = theme => ({
   root: {
     display: 'flex',
-    padding: 1,
     cursor: 'pointer',
   },
   media: {
@@ -32,8 +30,9 @@ const styles = theme => ({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     position: 'relative',
-    width: '100%',
-    borderRadius: `${theme.borderRadius.md}px ${theme.borderRadius.md}px 0 0`,
+    margin: [4, 4, 0, 4],
+    width: 'calc(100% - 8px)',
+    borderRadius: 6,
   },
   overlay: {
     position: 'absolute',
@@ -77,26 +76,20 @@ const styles = theme => ({
   },
   titleWrap: {
     width: '100%',
-    marginBottom: 5,
+    marginBottom: theme.spacing.unit / 2,
   },
   title: {
     textAlign: 'center',
-    fontSize: theme.typography.subheading.fontSize,
     lineHeight: '1.2em',
     webkitLineClamp: 2,
     maxHeight: 38,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
-  location: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  distance: {
-    paddingLeft: theme.spacing.unit,
-    display: 'none',
-    [theme.breakpoints.up(theme.map.tablet)]: {
-      display: 'block',
+  price: {
+    fontSize: theme.typography.pxToRem(20),
+    [theme.breakpoints.down(theme.map.tablet)]: {
+      fontSize: theme.typography.pxToRem(18),
     },
   },
 });
@@ -161,27 +154,24 @@ const AdCard = ({
               <AdTitle
                 className={classes.title}
                 variant="subheading"
+                color="textSecondary"
                 ad={hit}
                 component="h3"
               />
             </div>
-            <div className={classes.location}>
-              <AdPlace ad={hit}>
-                {({ place }) =>
-                  place ? (
-                    <Typography variant="caption" align="center">
-                      {place}
-                    </Typography>
-                  ) : null
-                }
-              </AdPlace>
-              <AdDistance
-                ad={hit}
-                variant="caption"
-                align="center"
-                className={classes.distance}
-              />
-            </div>
+            {hit.category !== 'personals' && (
+              <AdPrice ad={hit} noDecimals>
+                {({ price }) => (
+                  <Typography
+                    className={classes.price}
+                    variant="title"
+                    align="center"
+                  >
+                    {price}
+                  </Typography>
+                )}
+              </AdPrice>
+            )}
           </CardContent>
         </BaseCard>
       )}
