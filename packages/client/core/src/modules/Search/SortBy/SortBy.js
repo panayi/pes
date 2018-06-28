@@ -60,7 +60,7 @@ class SortBy extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  sortBy: paramsSelectors.sortBySelector,
+  sortBy: paramsSelectors.sortByWithDefaultSelector,
   hasValue: paramsSelectors.sortByHasValueSelector,
 });
 

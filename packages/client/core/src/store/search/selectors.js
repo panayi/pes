@@ -63,20 +63,9 @@ const filtersSelector = createSelector(
   },
 );
 
-export const indexNameSelector = createSelector(
-  paramsSelectors.sortBySelector,
-  paramsSelectors.querySelector,
-  (sortBy, queryValue) => {
-    if (!isNilOrEmpty(sortBy)) {
-      return paramsConstants.SORT_BY_OPTIONS[sortBy];
-    }
-
-    if (!isNilOrEmpty(queryValue)) {
-      return paramsConstants.SORT_BY_OPTIONS.default;
-    }
-
-    return paramsConstants.SORT_BY_OPTIONS.byDateDesc;
-  },
+export const indexNameSelector = R.compose(
+  R.prop(R.__, paramsConstants.SORT_BY_OPTIONS),
+  paramsSelectors.sortByWithDefaultSelector,
 );
 
 export const searchParamsSelector = createSelector(

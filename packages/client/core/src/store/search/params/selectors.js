@@ -105,9 +105,35 @@ export const sortBySelector = R.compose(
   paramsSelector,
 );
 
-export const sortByHasValueSelector = R.compose(
-  R.complement(R.equals(initialState[constants.SORT_BY_KEY])),
+export const sortByWithDefaultSelector = createSelector(
   sortBySelector,
+  querySelector,
+  (sortBy, queryValue) => {
+    if (!isNilOrEmpty(sortBy)) {
+      return sortBy;
+    }
+
+    if (!isNilOrEmpty(queryValue)) {
+      return 'default';
+    }
+
+    return 'byDateDesc';
+  },
+);
+
+export const sortByHasValueSelector = createSelector(
+  sortBySelector,
+  querySelector,
+  (sortBy, queryValue) => {
+    const hasSortBy = !isNilOrEmpty(sortBy);
+    console.log(sortBy);
+
+    if (!hasSortBy || (isNilOrEmpty(queryValue) && sortBy === 'byDateDesc')) {
+      return false;
+    }
+
+    return hasSortBy;
+  },
 );
 
 // Seller
