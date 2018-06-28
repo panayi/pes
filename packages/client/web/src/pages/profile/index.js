@@ -10,26 +10,33 @@ import { models } from '@pesposa/client-core/src/store/firebase/data';
 import { selectors as routerSelectors } from '@pesposa/client-core/src/store/router';
 import * as authSelectors from '@pesposa/client-core/src/store/firebase/auth/selectors';
 import Layout from '@pesposa/client-core/src/layouts/Layout/Layout';
+import UserName from '@pesposa/client-core/src/modules/User/UserName/UserName';
 import UserCoverImage from '@pesposa/client-core/src/modules/User/UserCoverImage/UserCoverImage';
 import getMetaTags from 'utils/getMetaTags';
 import Profile from 'modules/Profile/Profile';
 import Header from 'pages/components/Header/Header';
 
-const ProfilePage = ({ userId, userType, tab, name, location }) => (
+const ProfilePage = ({ userId, userType, tab, location }) => (
   <Layout header={<Header />} fixed flex>
-    <UserCoverImage userId={userId} userType={userType}>
-      {({ src }) => (
-        <Helmet
-          {...getMetaTags({
-            title: name
-              ? `${name} is selling stuff on Pesposa`
-              : 'People are selling stuff on Pesposa',
-            image: src,
-            path: location.pathname,
-          })}
-        />
+    <UserName userId={userId} userType={userType}>
+      {({ name }) => (
+        <UserCoverImage userId={userId} userType={userType}>
+          {({ src }) => (
+            <Helmet
+              {...getMetaTags({
+                title: name
+                  ? `${name} is selling stuff on Pesposa`
+                  : 'People are selling stuff on Pesposa',
+                description: `Discover what ${name ||
+                  'this user'} is selling on Pesposa. At Pesposa, you can find cars, houses, electronics and much more, near your location!`,
+                image: src,
+                path: location.pathname,
+              })}
+            />
+          )}
+        </UserCoverImage>
       )}
-    </UserCoverImage>
+    </UserName>
     <Profile userId={userId} userType={userType} tab={tab} />
   </Layout>
 );
