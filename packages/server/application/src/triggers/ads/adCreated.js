@@ -11,6 +11,12 @@ const handleAdCreated = async (snap, context) => {
 
   // Get it again, since it may have changed in the meantime
   const adSnap = await client.ads.get(firebase, id);
+
+  // Ad was deleted in the meantime
+  if (!adSnap.exists()) {
+    return;
+  }
+
   const ad = adSnap.val();
   const sellerId = ad.seller;
 
