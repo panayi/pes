@@ -10,7 +10,7 @@ const robotsTxt = async (req, res) => {
     R.propOr(defaultCountryCode, 'countryCode'),
   )(siteConfig.get(req));
 
-  const baseUrl = `${req.protocol}://${countryCode}.${env.domain}`;
+  const baseUrl = `https://${countryCode}.${env.domain}`;
 
   res.type('text/plain');
   res.send(`Sitemap: ${baseUrl}/sitemap.xml\nUser-agent: *`);

@@ -126,7 +126,6 @@ export const sortByHasValueSelector = createSelector(
   querySelector,
   (sortBy, queryValue) => {
     const hasSortBy = !isNilOrEmpty(sortBy);
-    console.log(sortBy);
 
     if (!hasSortBy || (isNilOrEmpty(queryValue) && sortBy === 'byDateDesc')) {
       return false;

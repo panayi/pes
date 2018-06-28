@@ -32,7 +32,7 @@ const redirectLegacyUrl = (req, res, next) => {
     const categoryParent = formatCategory(subdomain);
     const id = R.replace('id--', '', lastSegment);
     const legacyAdId = getLegacyAdId({ categoryParent, id });
-    const newUrl = `${req.protocol}://cy.${env.domain}/il/${legacyAdId}`;
+    const newUrl = `https://cy.${env.domain}/il/${legacyAdId}`;
     res.redirect(newUrl);
     return;
   }
@@ -46,14 +46,14 @@ const redirectLegacyUrl = (req, res, next) => {
   if (isBrowsePage && validCategoryChild) {
     const categoryChild = R.nth(1, segments);
     const newCategory = mapLegacyToNewCategory(null, categoryChild);
-    const newUrl = `${req.protocol}://cy.${env.domain}/c/${newCategory}`;
+    const newUrl = `https://cy.${env.domain}/c/${newCategory}`;
     res.redirect(newUrl);
     return;
   }
 
   const isVeryOldUrl = firstSegment === 'view';
   if (isVeryOldUrl) {
-    const newUrl = `${req.protocol}://cy.${env.domain}`;
+    const newUrl = `https://cy.${env.domain}`;
     res.redirect(newUrl);
     return;
   }
@@ -92,7 +92,7 @@ const redirectLegacyUrl = (req, res, next) => {
       finalCategoryParent,
       categoryChild,
     );
-    const newUrl = `${req.protocol}://cy.${env.domain}/c/${newCategory}`;
+    const newUrl = `https://cy.${env.domain}/c/${newCategory}`;
     res.redirect(newUrl);
     return;
   }
