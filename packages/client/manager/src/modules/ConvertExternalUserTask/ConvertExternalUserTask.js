@@ -2,7 +2,8 @@ import React from 'react';
 import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
 import classNames from 'classnames';
-import { createStructuredSelector } from 'reselect';
+import { firebaseConnect } from 'react-redux-firebase';
+import { createStructuredSelector, createSelector } from 'reselect';
 import { withProps, withState } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +12,7 @@ import ArchiveIcon from '@material-ui/icons/Archive';
 import EmailIcon from '@material-ui/icons/Email';
 import MessageIcon from '@material-ui/icons/Message';
 import propSelector from '@pesposa/core/src/utils/propSelector';
+import * as modelPaths from '@pesposa/core/src/config/modelPaths';
 import Card from '@pesposa/client-core/src/modules/ListAds/Masonry/Card/Card';
 import { connectData } from '@pesposa/client-core/src/lib/connectData';
 import { models } from '@pesposa/client-core/src/store/firebase/data';
@@ -213,9 +215,24 @@ ConvertExternalUserTask.defaultProps = {
   task: {},
 };
 
+const codeSelector = createSelector(
+  propSelector('externalUserId'),
+  models.externalUserCodes.allObjects.selector,
+  (externalUserId, codes) =>
+    R.compose(
+      R.head,
+      R.defaultTo([]),
+      R.find(([, id]) => id === externalUserId),
+      R.toPairs,
+    )(codes),
+);
+
+const mapStateToProps = createStructuredSelector({
+  code: codeSelector,
+});
+
 const mapDataToProps = {
   task: models.convertExternalUserTasks.one(propSelector('externalUserId')),
-  code: models.externalUsers.one(propSelector('externalUserId')).child('code'),
 };
 
 const mapDispatchToProps = {
@@ -229,7 +246,18 @@ export default R.compose(
       externalUserId: propSelector(['match', 'params', 'externalUserId']),
     }),
   ),
-  connectData(mapDataToProps, null, mapDispatchToProps),
+  firebaseConnect(
+    ({ externalUserId }) =>
+      externalUserId
+        ? [
+            {
+              path: modelPaths.EXTERNAL_USER_CODES.string,
+              queryParams: ['orderByValue', `equalTo=${externalUserId}`],
+            },
+          ]
+        : [],
+  ),
+  connectData(mapDataToProps, mapStateToProps, mapDispatchToProps),
   withSellerAds(propSelector('externalUserId')),
   withState('selectedAdId', 'setSelectedAdId', null),
   withRouter,
