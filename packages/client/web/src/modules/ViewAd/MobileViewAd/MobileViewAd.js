@@ -295,7 +295,12 @@ class MobileViewAd extends React.Component {
           >
             <div className={classes.titleBox}>
               <div className={classes.mainDetails}>
-                <AdTitle className={classes.title} ad={ad} variant="title" />
+                <AdTitle
+                  className={classes.title}
+                  ad={ad}
+                  variant="title"
+                  component="h1"
+                />
                 <AdPrice ad={ad}>
                   {({ price }) =>
                     price ? (

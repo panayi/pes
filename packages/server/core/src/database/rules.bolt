@@ -539,12 +539,8 @@ path /tasks/reviewAd {
 }
 
 path /tasks/reviewAd/{adId} is ReviewAdTask {
-  create() { isFirebaseFunctionsService() }
-  delete() { isAdmin() }
-
-  validate() {
-    root.ads[adId] != null
-  }
+  create() { isFirebaseFunctionsService() && (root.ads[adId] != null) }
+  delete() { isAdmin() && (root.ads[adId] == null) }
 }
 
 path /completedTasks/reviewAd {
@@ -588,9 +584,11 @@ path /tasks/convertExternalUser/{externalUserId} is ConvertExternalUserTask {
   delete() { isAdmin() }
 
   validate() {
-    (root.externalUsers[externalUserId] != null) &&
-    (root.sellerAds[externalUserId].published != null) &&
-    (root.completedTasks.convertExternalUserTasks[externalUserId] == null)
+    !this || (
+      (root.externalUsers[externalUserId] != null) &&
+      (root.sellerAds[externalUserId].published != null) &&
+      (root.completedTasks.convertExternalUserTasks[externalUserId] == null)
+    )
   }
 }
 

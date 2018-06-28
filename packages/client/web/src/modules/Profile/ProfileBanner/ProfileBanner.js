@@ -71,7 +71,11 @@ export const ProfileBanner = ({ userId, userType, isCurrentUser, classes }) => (
             userId={userId}
             userType={userType}
             render={({ name }) => (
-              <Typography className={classes.fullname} variant="title">
+              <Typography
+                className={classes.fullname}
+                variant="title"
+                component="h1"
+              >
                 {name}
               </Typography>
             )}

@@ -35,6 +35,9 @@ const styles = theme => ({
   item: {
     color: theme.palette.text.secondary,
   },
+  linkItemWrap: {
+    lineHeight: 1,
+  },
   linkItem: {
     padding: 0,
     minWidth: 0,
@@ -67,7 +70,9 @@ const BreadCrumbs = ({ ad, t, classes }) => (
         place ? (
           <React.Fragment>
             <Typography className={classes.separator}>/</Typography>
-            <Typography className={classes.item}>{place}</Typography>
+            <Typography className={classes.item} component="h2">
+              {place}
+            </Typography>
           </React.Fragment>
         ) : null
       }
@@ -75,9 +80,11 @@ const BreadCrumbs = ({ ad, t, classes }) => (
     {ad.category ? (
       <React.Fragment>
         <Typography className={classes.separator}>/</Typography>
-        <Link to={`/c/${ad.category}`} className={classes.linkItem}>
-          {t(ad.category)}
-        </Link>
+        <Typography component="h2" className={classes.linkItemWrap}>
+          <Link to={`/c/${ad.category}`} className={classes.linkItem}>
+            {t(ad.category)}
+          </Link>
+        </Typography>
       </React.Fragment>
     ) : null}
     {ad.title ? (

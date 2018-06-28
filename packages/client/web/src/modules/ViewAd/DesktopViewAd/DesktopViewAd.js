@@ -209,6 +209,7 @@ const DesktopViewAd = ({
               ad={ad}
               variant="title"
               color="textSecondary"
+              component="h1"
             />
             <div className={classes.headerAction}>
               <EditAdButton adId={adId} ad={ad} />

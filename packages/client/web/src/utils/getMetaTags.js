@@ -1,8 +1,11 @@
 import * as R from 'ramda';
+import truncate from '@pesposa/core/src/utils/truncate';
 import * as pesposaConfig from '@pesposa/core/src/config/pesposa';
 import urlForPath from 'utils/urlForPath';
 
 const LOGO = 'logo.png';
+
+const DESCRIPTION_MAX_LENGTH = 299;
 
 const getMetaTags = ({
   path,
@@ -40,11 +43,12 @@ const getMetaTags = ({
       ]
     : [];
 
-  const metaDescription = description
+  const finalDescription = truncate(DESCRIPTION_MAX_LENGTH, description);
+  const metaDescription = finalDescription
     ? [
-        { name: 'description', content: description },
-        { property: 'og:description', content: description },
-        { name: 'twitter:description', content: description },
+        { name: 'description', content: finalDescription },
+        { property: 'og:description', content: finalDescription },
+        { name: 'twitter:description', content: finalDescription },
       ]
     : [];
 
