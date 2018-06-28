@@ -69,6 +69,11 @@ const routes = [
     }),
   },
   {
+    path: '/c/fashion',
+    exact: true,
+    redirectTo: '/c/fashion-and-accessories',
+  },
+  {
     path: '/c/:category?/:place?',
     exact: true,
     component: asyncComponent({
