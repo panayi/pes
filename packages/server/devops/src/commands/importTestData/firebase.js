@@ -29,10 +29,7 @@ const uploadImage = async (buffer, filename, contentType) => {
     storageConfig.IMAGES_PATH,
     newFilename,
     metadata =>
-      firebase.push(
-        `${modelPaths.DRAFTS(devopsUid).string}/images`,
-        metadata,
-      ),
+      firebase.push(`${modelPaths.DRAFTS(devopsUid).string}/images`, metadata),
   );
 };
 

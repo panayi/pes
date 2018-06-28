@@ -9,6 +9,7 @@ import {
 } from '../../../store/search/params';
 import connectSearch from '../../../hocs/connectSearch';
 import Button from '../../../components/Button/Button';
+import FindUsOnFacebookButton from '../../../components/FindUsOnFacebookButton/FindUsOnFacebookButton';
 import FilterByCategory from '../FilterByCategory/FilterByCategory';
 import FilterByLocation from '../FilterByLocation/FilterByLocation';
 import FilterByPrice from '../FilterByPrice/FilterByPrice';
@@ -82,6 +83,7 @@ class Filters extends React.Component {
           <Filter title="Categories" filterComponent={FilterByCategory} />
           <Filter title="Price" filterComponent={FilterByPrice} />
           <Filter title="Sort by" filterComponent={SortBy} />
+          <FindUsOnFacebookButton />
         </DialogContent>
       </React.Fragment>
     );
