@@ -33,7 +33,7 @@ const redirectLegacyUrl = (req, res, next) => {
     const id = R.replace('id--', '', lastSegment);
     const legacyAdId = getLegacyAdId({ categoryParent, id });
     const newUrl = `https://cy.${env.domain}/il/${legacyAdId}`;
-    res.redirect(newUrl);
+    res.redirect(301, newUrl);
     return;
   }
 
@@ -47,14 +47,14 @@ const redirectLegacyUrl = (req, res, next) => {
     const categoryChild = R.nth(1, segments);
     const newCategory = mapLegacyToNewCategory(null, categoryChild);
     const newUrl = `https://cy.${env.domain}/c/${newCategory}`;
-    res.redirect(newUrl);
+    res.redirect(301, newUrl);
     return;
   }
 
   const isVeryOldUrl = firstSegment === 'view';
   if (isVeryOldUrl) {
     const newUrl = `https://cy.${env.domain}`;
-    res.redirect(newUrl);
+    res.redirect(301, newUrl);
     return;
   }
 
@@ -93,7 +93,7 @@ const redirectLegacyUrl = (req, res, next) => {
       categoryChild,
     );
     const newUrl = `https://cy.${env.domain}/c/${newCategory}`;
-    res.redirect(newUrl);
+    res.redirect(301, newUrl);
     return;
   }
 

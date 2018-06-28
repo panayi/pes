@@ -26,7 +26,7 @@ const setCountrySubdomain = (req, res, next) => {
     const newCountryCode = R.toLower(finalCountryCode);
 
     const newUrl = `https://${newCountryCode}.${env.domain}${req.originalUrl}`;
-    res.redirect(newUrl);
+    res.redirect(301, newUrl);
   }
 };
 
