@@ -30,7 +30,7 @@ class ExternalUserForm extends Component {
   static getValidationSchema() {
     return yup.object().shape({
       profile: yup.object().shape({
-        name: yup.string().required(),
+        name: yup.string(),
         phone: yup.string(),
       }),
       email: yup.string().email(),

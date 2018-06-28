@@ -789,7 +789,7 @@ path /users/{uid}/avatar is Avatar {
 path /externalUsers {
   read() { isAdmin() }
 
-  index() { return ['email', 'phone', 'code'] }
+  index() { return ['email', 'phone'] }
 }
 
 path /externalUsers/{id} is ExternalUser {

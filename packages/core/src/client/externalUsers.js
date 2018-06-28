@@ -1,4 +1,6 @@
+import * as R from 'ramda';
 import { isNilOrEmpty } from 'ramda-adjunct';
+import { nameSelector } from '../selectors/users';
 import * as modelPaths from '../config/modelPaths';
 
 /*
@@ -64,8 +66,22 @@ export const hasUser = async (firebase, id) => {
 | Write
 |--------------------------------------------------------------------------
 */
-export const create = async (firebase, data) => {
-  const ref = await firebase.push(modelPaths.EXTERNAL_USERS.string, data);
+export const create = async (firebase, externalUser) => {
+  const name = R.path(['profile', 'name'], externalUser);
+  const email = R.prop('email', externalUser);
+  const phone = R.path(['profile', 'phone'], externalUser);
+  const finalName = name || nameSelector({ email, phone });
+  const finalExternalUser = R.compose(
+    R.reject(isNilOrEmpty),
+    R.evolve({
+      profile: R.reject(isNilOrEmpty),
+    }),
+    R.assocPath(['profile', 'name'], finalName),
+  )(externalUser);
+  const ref = await firebase.push(
+    modelPaths.EXTERNAL_USERS.string,
+    finalExternalUser,
+  );
   return ref.getKey();
 };
 
