@@ -1,15 +1,20 @@
-import * as R from 'ramda';
-import renderHtml from 'react-render-html';
+/* eslint-disable react/no-array-index-key */
+import React from 'react';
+import { createSelector } from 'reselect';
 import { withProps } from 'recompose';
+import propSelector from '@pesposa/core/src/utils/propSelector';
 import AdProp from '../AdProp/AdProp';
 
+const bodySelector = createSelector(propSelector('body'), body => body.split('\n').map((line, index, arr) => {
+    const lineItem = <span key={index}>{line}</span>;
+
+    if (index === arr.length - 1) {
+      return lineItem;
+    }
+
+    return [lineItem, <br key={`${index}br`} />];
+  }));
+
 export default withProps({
-  getProp: R.ifElse(
-    R.prop('isLegacy'),
-    R.compose(
-      renderHtml,
-      R.prop('body'),
-    ),
-    R.prop('body'),
-  ),
+  getProp: bodySelector,
 })(AdProp);
