@@ -2,10 +2,11 @@
 import React from 'react';
 import { createSelector } from 'reselect';
 import { withProps } from 'recompose';
-import propSelector from '@pesposa/core/src/utils/propSelector';
+import propOrSelector from '@pesposa/core/src/utils/propOrSelector';
 import AdProp from '../AdProp/AdProp';
 
-const bodySelector = createSelector(propSelector('body'), body => body.split('\n').map((line, index, arr) => {
+const bodySelector = createSelector(propOrSelector('', 'body'), body =>
+  body.split('\n').map((line, index, arr) => {
     const lineItem = <span key={index}>{line}</span>;
 
     if (index === arr.length - 1) {
@@ -13,7 +14,8 @@ const bodySelector = createSelector(propSelector('body'), body => body.split('\n
     }
 
     return [lineItem, <br key={`${index}br`} />];
-  }));
+  }),
+);
 
 export default withProps({
   getProp: bodySelector,
