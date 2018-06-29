@@ -42,7 +42,7 @@ const Content = ({ ad, adId, location }) => (
             })}
           />
           <Helmet>
-            {ad.category === 'personals' ? (
+            {R.path(['props', 'category'], ad) === 'personals' ? (
               <meta name="robots" content="noindex, follow" />
             ) : null}
           </Helmet>

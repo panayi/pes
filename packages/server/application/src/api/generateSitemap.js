@@ -1,4 +1,5 @@
 import * as R from 'ramda';
+import { isNilOrEmpty } from 'ramda-adjunct';
 import sm from 'sitemap';
 import log from '@pesposa/core/src/utils/log';
 import * as respond from '@pesposa/core/src/utils/respond';
@@ -46,7 +47,7 @@ const getAdsUrls = (adsSnap, prefix, req, options) => {
     const countryCode = getAdCountryCode(adSnap.val());
     const ad = adSnap.val();
 
-    if (ad && ad.category !== 'personals') {
+    if (R.path(['props', 'category'], ad) !== 'personals') {
       adsUrls.push(
         generateUrl(`${prefix}/${adSnap.key}`, req, countryCode, options),
       );
@@ -64,14 +65,18 @@ const generateSitemap = async (req, res) => {
     const externalUsersSnap = await server.externalUsers.getAll(firebase);
 
     const categoriesUrls = R.compose(
+      R.reject(isNilOrEmpty),
       R.prepend(
         generateUrl('', req, null, { changefreq: 'daily', priority: 1 }),
       ),
-      R.map(category =>
-        generateUrl(`c/${category.id}`, req, null, {
-          changefreq: 'daily',
-          priority: 0.8,
-        }),
+      R.map(
+        category =>
+          category.id === 'personals'
+            ? null
+            : generateUrl(`c/${category.id}`, req, null, {
+                changefreq: 'daily',
+                priority: 0.8,
+              }),
       ),
       R.values,
     )(categoriesSnap.val() || {});
