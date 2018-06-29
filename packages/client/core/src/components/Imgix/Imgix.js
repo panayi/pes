@@ -28,13 +28,7 @@ const Imgix = ({ url, params, lqip, children, alt, ...rest }) => {
   }
 
   return (
-    <Reimgix
-      lqipParams={LQIP_PARAMS}
-      params={params}
-      src={url}
-      lqip={lqip}
-      className="hello"
-    >
+    <Reimgix lqipParams={LQIP_PARAMS} params={params} src={url} lqip={lqip}>
       {children || (({ src }) => <img {...rest} alt={alt} src={src} />)}
     </Reimgix>
   );
