@@ -233,7 +233,7 @@ const DesktopViewAd = ({
               ) : null
             }
           </AdPrice>
-          <div className={classes.description}>
+          <div className={classes.descriptionWrap}>
             <AdBody className={classes.description} adId={adId} ad={ad} />
           </div>
           <div className={classes.date}>
