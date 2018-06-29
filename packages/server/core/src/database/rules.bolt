@@ -540,7 +540,7 @@ path /tasks/reviewAd {
 
 path /tasks/reviewAd/{adId} is ReviewAdTask {
   create() { isFirebaseFunctionsService() && (root.ads[adId] != null) }
-  delete() { isAdmin() && (root.ads[adId] == null) }
+  delete() { isAdmin() }
 }
 
 path /completedTasks/reviewAd {
