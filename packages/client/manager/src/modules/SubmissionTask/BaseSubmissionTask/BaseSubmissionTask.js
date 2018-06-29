@@ -8,6 +8,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { blueGrey } from '@material-ui/core/colors';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 import AdForm from '@pesposa/client-core/src/modules/AdForm/AdForm';
+import * as adsConfig from 'config/ads';
 import Panel from 'components/Panel/Panel';
 import SubmissionForm from '../SubmissionForm/SubmissionForm';
 
@@ -145,6 +146,7 @@ class BaseSubmissionTask extends React.Component {
         ad={submission}
         filesPath={imageFilesPath}
         isAdLoaded={isLoaded}
+        maxImages={adsConfig.MAXIMUM_IMAGES_PER_AD}
         enableReinitialize
       >
         {this.renderAdForm}

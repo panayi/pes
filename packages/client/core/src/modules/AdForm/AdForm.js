@@ -95,6 +95,7 @@ const styles = theme => ({
 
 class AdForm extends Component {
   static defaultProps = {
+    maxImages: adsConfig.MAXIMUM_IMAGES_PER_AD,
     categories: [],
     children: null,
     onChange: noop,
@@ -115,6 +116,7 @@ class AdForm extends Component {
 
   renderForm = (formikProps, props = {}) => {
     const {
+      maxImages,
       adId,
       categories,
       images,
@@ -135,7 +137,7 @@ class AdForm extends Component {
             error={formikProps.errors.images}
             dbPath={filesPath}
             canDelete={imagesCount => !published || imagesCount > 1}
-            maxImages={adsConfig.MAXIMUM_IMAGES_PER_AD}
+            maxImages={maxImages}
           >
             {props.children}
           </EditImages>

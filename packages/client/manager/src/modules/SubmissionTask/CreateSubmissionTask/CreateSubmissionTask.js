@@ -11,22 +11,19 @@ import BaseSubmissionTask from '../BaseSubmissionTask/BaseSubmissionTask';
 const styles = theme => ({
   content: {
     minWidth: 900,
+    display: 'block',
+    marginBottom: theme.spacing.unit * 3,
     [theme.breakpoints.down(theme.map.tablet)]: {
       minWidth: 0,
-      display: 'block',
-      marginBottom: theme.spacing.unit * 3,
     },
   },
   adForm: {
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      padding: 0,
-    },
+    padding: 0,
   },
   sidebar: {
-    [theme.breakpoints.down(theme.map.tablet)]: {
-      width: 'auto',
-      margin: [theme.spacing.unit * 2, 0],
-    },
+    width: 'auto',
+    margin: [theme.spacing.unit * 2, 0],
+    paddingTop: 0,
   },
 });
 

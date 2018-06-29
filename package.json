@@ -72,8 +72,7 @@
     "{packages/core/src,packages/client/*/src,packages/server/*/src,packages/client/web/test,tools}/**/*.{js,jsx}": [
       "prettier --write",
       "eslint --fix",
-      "git add",
-      "npm run test:web"
+      "git add"
     ]
   }
 }
