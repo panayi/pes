@@ -26,20 +26,27 @@ const Content = ({ ad, adId, location }) => (
   <React.Fragment>
     <AdPlace ad={ad}>
       {({ place }) => (
-        <Helmet
-          {...getMetaTags({
-            title: ad ? `${ad.title} in ${place} - Pesposa` : null,
-            description: R.prop('body', ad),
-            image: R.compose(
-              buildUrl,
-              R.prop('fullPath'),
-              R.head,
-              R.values,
-              R.propOr({}, 'images'),
-            )(ad),
-            path: location.pathname,
-          })}
-        />
+        <React.Fragment>
+          <Helmet
+            {...getMetaTags({
+              title: ad ? `${ad.title} in ${place} - Pesposa` : null,
+              description: R.prop('body', ad),
+              image: R.compose(
+                buildUrl,
+                R.prop('fullPath'),
+                R.head,
+                R.values,
+                R.propOr({}, 'images'),
+              )(ad),
+              path: location.pathname,
+            })}
+          />
+          <Helmet>
+            {ad.category === 'personals' ? (
+              <meta name="robots" content="noindex, follow" />
+            ) : null}
+          </Helmet>
+        </React.Fragment>
       )}
     </AdPlace>
     <ViewAd ad={ad} adId={adId} />

@@ -44,9 +44,13 @@ const getAdsUrls = (adsSnap, prefix, req, options) => {
   const adsUrls = [];
   adsSnap.forEach(adSnap => {
     const countryCode = getAdCountryCode(adSnap.val());
-    adsUrls.push(
-      generateUrl(`${prefix}/${adSnap.key}`, req, countryCode, options),
-    );
+    const ad = adSnap.val();
+
+    if (ad && ad.category !== 'personals') {
+      adsUrls.push(
+        generateUrl(`${prefix}/${adSnap.key}`, req, countryCode, options),
+      );
+    }
   });
 
   return adsUrls;

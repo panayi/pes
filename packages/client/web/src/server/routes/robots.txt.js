@@ -13,7 +13,9 @@ const robotsTxt = async (req, res) => {
   const baseUrl = `https://${countryCode}.${env.domain}`;
 
   res.type('text/plain');
-  res.send(`Sitemap: ${baseUrl}/sitemap.xml\nUser-agent: *`);
+  res.send(
+    `Sitemap: ${baseUrl}/sitemap.xml\nUser-agent: *\nDisallow:/c/personals/\nNoindex:/c/personals/\nDisallow:/c/personals\nNoindex:/c/personals`,
+  );
 };
 
 export default robotsTxt;
