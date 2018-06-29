@@ -6,7 +6,7 @@ import Layout from '../components/Layout/Layout';
 
 const BASE_PATH = '/data/external-users';
 
-const Sellers = () => (
+const ExternalUsers = () => (
   <Layout title="ExternalUsers">
     <Switch>
       <Route
@@ -40,4 +40,4 @@ const Sellers = () => (
   </Layout>
 );
 
-export default Sellers;
+export default ExternalUsers;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as authSelectors from '@pesposa/client-core/src/store/firebase/auth/selectors';
+import * as authSelectors from '../../../store/firebase/auth/selectors';
 import withUserWithId from '../index';
 
 describe('[HOC] withUserWithId', () => {

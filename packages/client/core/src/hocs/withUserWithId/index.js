@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import connectedAuthWrapper from 'redux-auth-wrapper/connectedAuthWrapper';
-import omitProps from '@pesposa/client-core/src/utils/omitProps';
-import { selectors as authSelectors } from '@pesposa/client-core/src/store/firebase/auth';
+import omitProps from '../../utils/omitProps';
+import { selectors as authSelectors } from '../../store/firebase/auth';
 
 const withUserWithId = userIdSelector =>
   R.compose(

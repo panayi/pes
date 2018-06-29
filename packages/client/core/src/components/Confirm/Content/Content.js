@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { withProps, withState } from 'recompose';
 import Typography from '@material-ui/core/Typography';
-import Button from '@pesposa/client-core/src/components/Button/Button';
+import Button from '../../Button/Button';
 
 const ConfirmContent = ({
   message,

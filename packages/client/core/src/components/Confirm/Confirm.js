@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { actions as modalActions } from '@pesposa/client-core/src/store/modals';
-import ReduxModal from '@pesposa/client-core/src/components/Modal/ReduxModal/ReduxModal';
+import { actions as modalActions } from '../../store/modals';
+import ReduxModal from '../Modal/ReduxModal/ReduxModal';
 import Content from './Content/Content';
 
 export class Confirm extends Component {

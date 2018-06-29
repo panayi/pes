@@ -1,16 +1,15 @@
 import React from 'react';
 import * as R from 'ramda';
 import { connect } from 'react-redux';
-import { withProps } from 'recompose';
-import { withRouter } from 'react-router-dom';
+import { withProps, branch } from 'recompose';
 import withStyles from '@material-ui/core/styles/withStyles';
 import DeleteIcon from '@material-ui/icons/Delete';
-import propsSelector from '@pesposa/core/src/utils/propsSelector';
-import { actions as postAdActions } from '@pesposa/client-core/src/store/postAd';
-import requirePropToRender from '@pesposa/client-core/src/hocs/requirePropToRender';
-import withUserWithId from 'hocs/withUserWithId';
-import Button from '@pesposa/client-core/src/components/Button/Button';
-import Confirm from 'components/Confirm/Confirm';
+import propSelector from '@pesposa/core/src/utils/propSelector';
+import { actions as postAdActions } from '../../../store/postAd';
+import requirePropToRender from '../../../hocs/requirePropToRender';
+import withUserWithId from '../../../hocs/withUserWithId';
+import Button from '../../../components/Button/Button';
+import Confirm from '../../../components/Confirm/Confirm';
 
 const styles = theme => ({
   root: {
@@ -41,21 +40,20 @@ const mapDispatchToProps = {
 
 export default R.compose(
   requirePropToRender('ad'),
-  withUserWithId(
-    R.compose(
-      R.path(['ad', 'seller']),
-      propsSelector,
-    ),
+  branch(
+    R.complement(propSelector('alwaysRender')),
+    withUserWithId(propSelector(['ad', 'seller'])),
   ),
   connect(
     null,
     mapDispatchToProps,
   ),
-  withRouter,
-  withProps(({ adId, removeAd, history }) => ({
+  withProps(({ adId, removeAd, onDeleted }) => ({
     onAccept: async () => {
       await removeAd(adId);
-      history.replace('/');
+      if (onDeleted) {
+        onDeleted();
+      }
     },
   })),
   withStyles(styles),

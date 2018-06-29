@@ -71,8 +71,9 @@ const Sidebar = ({ tasksCount, location, classes }) => (
         depth={0}
       >
         <List>
-          <NavItem title="Sources" to="/data/sources" depth={1} />
+          <NavItem title="Ads (external only)" to="/data/ads" depth={1} />
           <NavItem title="ExternalUsers" to="/data/external-users" depth={1} />
+          <NavItem title="Sources" to="/data/sources" depth={1} />
         </List>
       </NavItem>
     </List>

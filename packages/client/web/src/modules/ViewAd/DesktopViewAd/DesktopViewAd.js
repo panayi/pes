@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import { withStateHandlers, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
 import { DesktopScreen, TabletScreen } from 'react-responsive-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +15,7 @@ import AdPrice from '@pesposa/client-core/src/modules/Ad/AdPrice/AdPrice';
 import AdPlace from '@pesposa/client-core/src/modules/Ad/AdPlace/AdPlace';
 import FavoriteAd from '@pesposa/client-core/src/modules/Ad/FavoriteAd/FavoriteAd';
 import SellerName from '@pesposa/client-core/src/modules/Ad/SellerName/SellerName';
+import DeleteAdButton from '@pesposa/client-core/src/modules/Ad/DeleteAdButton/DeleteAdButton';
 import SendMessage from 'modules/Messenger/SendMessage/SendMessage';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import EditAdButton from '../EditAdButton/EditAdButton';
@@ -30,7 +32,6 @@ import ShareButtons from './ShareButtons/ShareButtons';
 import BrowseButton from './BrowseButton/BrowseButton';
 import AdBody from './AdBody/AdBody';
 import Map from '../Map/Map';
-import DeleteAdButton from '../DeleteAdButton/DeleteAdButton';
 
 // type Props = {
 //   ad: Ad,
@@ -188,6 +189,7 @@ const DesktopViewAd = ({
   uid,
   sentMessages,
   addMessage,
+  history,
   classes,
 }) => (
   <div className={classes.root}>
@@ -216,7 +218,11 @@ const DesktopViewAd = ({
             />
             <div className={classes.headerAction}>
               <EditAdButton adId={adId} ad={ad} />
-              <DeleteAdButton adId={adId} ad={ad} />
+              <DeleteAdButton
+                adId={adId}
+                ad={ad}
+                onDeleted={() => history.replace('/')}
+              />
               <FavoriteAd
                 className={classes.favoriteButton}
                 ad={ad}
@@ -339,5 +345,6 @@ export default R.compose(
       }
     },
   }),
+  withRouter,
   withStyles(styles),
 )(DesktopViewAd);

@@ -84,7 +84,7 @@ const modelConnectionsFactory = dataPath => {
         R.defaultTo([]),
         createCollectionSelector(...paths),
       ),
-      R.useWith(R.filter, [R.propEq(key), R.identity]),
+      R.useWith(R.filter, [R.propEq(key), R.reject(R.isNil)]),
     );
 
   // createModelConnections :: ModelPathSelector -> Object

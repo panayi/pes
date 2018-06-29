@@ -659,7 +659,7 @@ path /drafts/{uid} is DraftAd {
 
 // - Published
 path /ads {
-  read() { isFirebaseFunctionsService() }
+  read() { isAdmin() }
 }
 
 path /ads/{id} is PublishableAd {

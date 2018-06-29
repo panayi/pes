@@ -8,7 +8,7 @@ import { actions as modalActions } from '@pesposa/client-core/src/store/modals';
 import requirePropToRender from '@pesposa/client-core/src/hocs/requirePropToRender';
 import Button from '@pesposa/client-core/src/components/Button/Button';
 import ReduxModal from '@pesposa/client-core/src/components/Modal/ReduxModal/ReduxModal';
-import withUserWithId from 'hocs/withUserWithId';
+import withUserWithId from '@pesposa/client-core/src/hocs/withUserWithId';
 import EditAd from 'modules/PostAd/EditAd/EditAd';
 
 // type Props = {
