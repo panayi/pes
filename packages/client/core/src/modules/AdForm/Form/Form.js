@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import * as R from 'ramda';
+import { withProps } from 'recompose';
+import { createSelector, createStructuredSelector } from 'reselect';
 import FormGroup from '@material-ui/core/FormGroup';
 import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import propsChanged from '@pesposa/core/src/utils/propsChanged';
+import propSelector from '@pesposa/core/src/utils/propSelector';
+import env from '@pesposa/core/src/config/env';
 import translate from '../../../hocs/translate';
 import PriceTextField from '../../../components/PriceTextField/PriceTextField';
 
@@ -98,7 +102,22 @@ class Form extends Component {
   }
 }
 
+const categoriesSelector = createSelector(
+  propSelector('categories'),
+  R.compose(
+    R.values,
+    R.sortBy(R.prop('order')),
+    R.unless(R.always(env.isManagerApp), R.reject(R.prop('managerOnly'))),
+    R.defaultTo([]),
+  ),
+);
+
 export default R.compose(
+  withProps(
+    createStructuredSelector({
+      categories: categoriesSelector,
+    }),
+  ),
   translate('categories'),
   withStyles(styles),
 )(Form);

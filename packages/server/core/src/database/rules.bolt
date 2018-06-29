@@ -154,6 +154,8 @@ type Locale {
 type Category {
   id: String,
   order: Number,
+  managerOnly: Boolean | Null,
+  isNew: Boolean | Null,
   requireAdult: Boolean | Null,
 }
 
@@ -648,6 +650,11 @@ path /sources/{id} is Source {
 path /drafts/{uid} is DraftAd {
   read() { isCurrentUser(uid) || isFirebaseFunctionsService() }
   write() { isCurrentUser(uid) || isFirebaseFunctionsService() }
+
+  validate() {
+    categoryIsValid(this.category) &&
+    root.categories[this.category].managerOnly != true
+  }
 }
 
 // - Published

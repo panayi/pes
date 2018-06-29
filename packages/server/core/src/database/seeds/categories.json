@@ -1,4 +1,10 @@
 {
+  "offers": {
+    "id": "offers",
+    "order": 0,
+    "managerOnly": true,
+    "isNew": true
+  },
   "real-estate": {
     "id": "real-estate",
     "order": 1

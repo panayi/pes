@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { defaultProps } from 'recompose';
 import List from '@material-ui/core/List';
+import Chip from '@material-ui/core/Chip';
+
 import withStyles from '@material-ui/core/styles/withStyles';
 import {
   selectors as paramsSelectors,
@@ -40,6 +42,15 @@ const styles = theme => ({
   list: {
     flex: 0,
     padding: 0,
+  },
+  new: {
+    display: 'inline-block',
+    height: 'auto',
+    marginLeft: 6,
+    lineHeight: '1.5em',
+    textDecoration: 'none',
+    background: theme.palette.primary.main,
+    color: theme.palette.common.white,
   },
 });
 
@@ -85,6 +96,9 @@ class FilterByCategory extends React.Component {
                       )}
                     >
                       {category.label}
+                      {category.isNew ? (
+                        <Chip label="New!" className={classes.new} />
+                      ) : null}
                     </FilterOption>
                   ),
                   R.values(categoryLinks),

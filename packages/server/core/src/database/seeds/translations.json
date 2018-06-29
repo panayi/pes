@@ -11,7 +11,8 @@
       "sports-and-leisure": "Sports and Leisure",
       "kids-and-baby": "Kids and Baby",
       "personals": "Personals",
-      "other": "Other"
+      "other": "Other",
+      "offers": "Offers"
     },
     "sortByOptions": {
       "byDateDesc": "Newest",
@@ -42,7 +43,8 @@
       "sports-and-leisure": "Αθλητικά και Ψυχαγωγία",
       "kids-and-baby": "Βρεφικά και Παιδικά",
       "personals": "Προσωπικά",
-      "other": "Άλλα"
+      "other": "Άλλα",
+      "offers": "Προσφορές"
     },
     "sortByOptions": {
       "byDateDesc": "Ημερομηνία",
