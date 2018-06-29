@@ -133,6 +133,7 @@ const styles = theme => ({
   description: gutters(theme, {
     padding: [theme.spacing.unit * 2, 0],
     wordBreak: 'break-word',
+    whiteSpace: 'pre-wrap',
   }),
   placeBox: gutters(theme, {
     borderTop: [1, 'solid', theme.palette.divider],
@@ -484,7 +485,7 @@ class MobileViewAd extends React.Component {
           imgixParams={{ w: 900, fit: 'clip', auto: 'compress,format' }}
           swipeToSlide
           initialSlide={currentSlideIndex}
-          arrows={false}
+          arrows
           dots
           flex
         />

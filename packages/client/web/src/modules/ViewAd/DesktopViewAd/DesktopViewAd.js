@@ -135,9 +135,12 @@ const styles = theme => ({
   price: {
     marginBottom: theme.spacing.unit * 2,
   },
-  description: {
+  descriptionWrap: {
     paddingTop: theme.spacing.unit * 2,
     marginBottom: theme.spacing.unit * 4,
+  },
+  description: {
+    whiteSpace: 'pre-wrap',
   },
   date: {
     marginBottom: theme.spacing.unit * 2,
@@ -231,7 +234,7 @@ const DesktopViewAd = ({
             }
           </AdPrice>
           <div className={classes.description}>
-            <AdBody adId={adId} ad={ad} />
+            <AdBody className={classes.description} adId={adId} ad={ad} />
           </div>
           <div className={classes.date}>
             <AdDateChip ad={ad} />
