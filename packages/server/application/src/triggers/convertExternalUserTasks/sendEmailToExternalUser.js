@@ -8,7 +8,7 @@ import sendExternalUserEngagementEmail from '../../emails/externalUserEngagement
 
 const handleSendEmail = async (data, context) => {
   const { externalUserId, adId } = data;
-  const admin = R.path(['auth', 'token', 'amdin'], context);
+  const admin = R.path(['auth', 'token', 'admin'], context);
 
   if (!admin) {
     throw new functions.https.HttpsError('permission-denied', 'Unauthorized');
