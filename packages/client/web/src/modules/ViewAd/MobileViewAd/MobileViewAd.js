@@ -3,7 +3,6 @@ import * as R from 'ramda';
 import classNames from 'classnames';
 import { withProps, withStateHandlers } from 'recompose';
 import { createStructuredSelector } from 'reselect';
-import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -23,6 +22,7 @@ import connectSearch from '@pesposa/client-core/src/hocs/connectSearch';
 import ReduxModal from '@pesposa/client-core/src/components/Modal/ReduxModal/ReduxModal';
 import Link from '@pesposa/client-core/src/components/Link/Link';
 import Button from '@pesposa/client-core/src/components/Button/Button';
+import Imgix from '@pesposa/client-core/src/components/Imgix/Imgix';
 import SellerImage from '@pesposa/client-core/src/modules/Ad/SellerImage/SellerImage';
 import LinkToSeller from '@pesposa/client-core/src/modules/Ad/LinkToSeller/LinkToSeller';
 import FavoriteAd from '@pesposa/client-core/src/modules/Ad/FavoriteAd/FavoriteAd';
@@ -90,6 +90,7 @@ const styles = theme => ({
     height: '100vw',
     position: 'relative',
     zIndex: 1,
+    cursor: 'pointer', // Needed to fire onClick on iOS (See https://stackoverflow.com/a/27525707/359104)
   },
   details: {
     paddingTop: theme.spacing.unit,
@@ -99,13 +100,12 @@ const styles = theme => ({
   withDots: {
     paddingTop: theme.spacing.unit * 3,
   },
-  avatarWrap: {
+  viewPhotosButtonWrap: {
     position: 'absolute',
     right: theme.spacing.unit * 2,
     top: 'calc(100vw - 12px)',
     zIndex: 2,
     padding: 2,
-    borderRadius: '50%',
   },
   titleBox: gutters(theme, {
     paddingTop: theme.spacing.unit * 2,
@@ -172,6 +172,7 @@ const styles = theme => ({
     alignItems: 'center',
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
+    cursor: 'pointer',
   }),
   verifiedWith: {
     flex: 1,
@@ -221,6 +222,12 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
     borderTop: [1, 'solid', theme.palette.divider],
   }),
+  thumbnail: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    flex: '0 0 auto',
+  },
 });
 
 class MobileViewAd extends React.Component {
@@ -236,11 +243,11 @@ class MobileViewAd extends React.Component {
       uid,
       viewSlideShow,
       viewConversation,
-      setCurrentSlide,
       openModal,
       classes,
     } = this.props;
     const dots = imagesList.length > 1;
+    const firstImage = R.head(imagesList);
 
     return (
       <div className={classes.root}>
@@ -269,26 +276,19 @@ class MobileViewAd extends React.Component {
           </div>
         </div>
         <div className={classes.content}>
-          <div
-            className={classes.images}
-            onClick={viewSlideShow}
-            role="button"
-            tabIndex="-1"
-          >
+          <div className={classes.images} role="button" tabIndex="-1">
             <SoldRibbon sold={ad.sold} />
-            <ImageSlider
-              images={imagesList}
+            <Imgix
+              className={classes.thumbnail}
+              image={firstImage}
               imgixParams={{ w: 900, fit: 'clip', auto: 'compress,format' }}
-              afterChange={setCurrentSlide}
-              swipeToSlide
-              arrows={false}
-              dots={dots}
-              cover
             />
           </div>
-          <Paper className={classes.avatarWrap} elevation={0}>
-            <SellerImage ad={ad} />
-          </Paper>
+          <div className={classes.viewPhotosButtonWrap}>
+            <Button variant="raised" size="small" onClick={viewSlideShow}>
+              View Photos
+            </Button>
+          </div>
           <div
             className={classNames(classes.details, {
               [classes.withDots]: dots,
