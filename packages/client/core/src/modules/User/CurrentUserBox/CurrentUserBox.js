@@ -6,11 +6,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { NavLink } from 'react-router-dom';
 import { DesktopScreen } from 'react-responsive-redux';
-import List, {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '@material-ui/core/List';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
