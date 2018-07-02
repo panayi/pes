@@ -54,7 +54,7 @@
     "prettier": "prettier --write \"{packages/core/src,packages/client/*/src,packages/server/*/src,packages/client/web/test,tools}/**/*.{js,jsx}\"",
     "test:web": "cd packages/client/web && CI=true yarn test --bail",
     "firebase": "./node_modules/.bin/firebase",
-    "codeclimate": "codeclimate analyze ./packages/**/src -f html > codeclimate-output.html",
+    "codeclimate": "codeclimate analyze {packages/core/src,packages/client/*/src,packages/server/*/src,packages/client/web/test,tools} -f html > codeclimate-output.html",
     "build:devops": "node ./tools/scripts/build.devops.js",
     "devops": "node ./build/devops/index.js",
     "build:web": "cd packages/client/web && yarn build",
