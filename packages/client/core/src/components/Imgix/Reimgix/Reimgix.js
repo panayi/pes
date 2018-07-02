@@ -24,8 +24,12 @@ class Reimgix extends React.Component {
     src: null,
   };
 
-  componentDidMount() {
+  /* eslint-disable */
+  UNSAFE_componentWillMount() {
     this.setup();
+  }
+
+  componentDidMount() {
     const { lqip } = this.props;
     if (lqip) {
       this.image = document.createElement('img');
@@ -34,7 +38,6 @@ class Reimgix extends React.Component {
     }
   }
 
-  /* eslint-disable */
   UNSAFE_componentWillUpdate(nextProps) {
     if (propsChanged(['src', 'params'], nextProps, this.props)) {
       this.setState({
@@ -42,7 +45,7 @@ class Reimgix extends React.Component {
       });
     }
   }
-  /* eslint-enable */
+  /* eslint-enable camelcase */
 
   componentDidUpdate(prevProps) {
     if (propsChanged(['src', 'params'], prevProps, this.props)) {
@@ -99,7 +102,7 @@ class Reimgix extends React.Component {
 
     this.setState({
       src:
-        lqip && !Reimgix.cache[this.src.original]
+        process.browser && lqip && !Reimgix.cache[this.src.original]
           ? this.src.lqip
           : this.src.original,
     });
