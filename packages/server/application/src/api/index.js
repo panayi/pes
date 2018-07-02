@@ -14,7 +14,7 @@ import generateSitemap from './generateSitemap';
 
 const app = express();
 
-if (env.firebaseProject === 'pesposa-dev') {
+if (env.firebaseProject === 'pesposa-develop') {
   app.use(
     morgan('combined', {
       stream: {
@@ -24,7 +24,8 @@ if (env.firebaseProject === 'pesposa-dev') {
   );
 }
 
-const origin = env.firebaseProject === 'pesposa-dev' ? '*' : /pesposa\.com$/;
+const origin =
+  env.firebaseProject === 'pesposa-develop' ? '*' : /pesposa\.com$/;
 const cors = createCors({ credentials: true, origin });
 app.use(cors);
 

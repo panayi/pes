@@ -1,6 +1,6 @@
 {
   "projects": {
-    "development": "pesposa-dev",
+    "development": "pesposa-develop",
     "production": "pesposa-production"
   }
 }

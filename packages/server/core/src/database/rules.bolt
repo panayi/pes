@@ -652,8 +652,7 @@ path /drafts/{uid} is DraftAd {
   write() { isCurrentUser(uid) || isFirebaseFunctionsService() }
 
   validate() {
-    categoryIsValid(this.category) &&
-    root.categories[this.category].managerOnly != true
+    !this.category || root.categories[this.category].managerOnly != true
   }
 }
 
