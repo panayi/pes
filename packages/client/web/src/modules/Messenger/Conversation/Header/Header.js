@@ -45,14 +45,14 @@ const styles = theme => ({
     padding: [0, theme.spacing.unit],
   },
   title: {
-    webkitLineClamp: 1,
+    WebkitLineClamp: 1,
     maxHeight: 24,
     maxWidth: '100%',
     overflow: 'hidden',
     textOveflow: 'ellipsis',
   },
   body: {
-    webkitLineClamp: 1,
+    WebkitLineClamp: 1,
     maxHeight: 15,
     maxWidth: '100%',
     overflow: 'hidden',

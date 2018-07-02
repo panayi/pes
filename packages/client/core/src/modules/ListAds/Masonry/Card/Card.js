@@ -81,7 +81,7 @@ const styles = theme => ({
   title: {
     textAlign: 'center',
     lineHeight: '1.2em',
-    webkitLineClamp: 2,
+    WebkitLineClamp: 2,
     maxHeight: 38,
     overflow: 'hidden',
     textOverflow: 'ellipsis',

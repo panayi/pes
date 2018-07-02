@@ -27,7 +27,7 @@ class SortBy extends React.Component {
     return (
       <TrackOnCall>
         {({ track }) => (
-          <List classes={{ root: classes.list }}>
+          <List component="div" classes={{ root: classes.list }}>
             {R.map(
               sortByOption => (
                 <FilterOption

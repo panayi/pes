@@ -79,7 +79,7 @@ class FilterByCategory extends React.Component {
         {({ confirmAdult }) => (
           <TrackOnCall>
             {({ track }) => (
-              <List classes={{ root: classes.list }}>
+              <List component="div" classes={{ root: classes.list }}>
                 {R.map(
                   category => (
                     <FilterOption
@@ -97,7 +97,11 @@ class FilterByCategory extends React.Component {
                     >
                       {category.label}
                       {category.isNew ? (
-                        <Chip label="New!" className={classes.new} />
+                        <Chip
+                          component="span"
+                          label="New!"
+                          className={classes.new}
+                        />
                       ) : null}
                     </FilterOption>
                   ),

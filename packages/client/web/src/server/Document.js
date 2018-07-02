@@ -99,7 +99,11 @@ class Document extends React.Component {
           {assets.client.css && (
             <link rel="stylesheet" href={assets.client.css} />
           )}
-          {css ? <style id="jss-ssr">{css}</style> : ''}
+          {css ? (
+            <style id="jss-ssr" dangerouslySetInnerHTML={{ __html: css }} />
+          ) : (
+            ''
+          )}
           {!isBot && (
             <script src="https://cdn.polyfill.io/v2/polyfill.min.js" />
           )}
